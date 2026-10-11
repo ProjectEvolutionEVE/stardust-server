@@ -1,0 +1,327 @@
+{
+ "_note": "Blueprint materials (10-11): a COPY of quavara-docs stardust-raw-materials-catalogue.json v0.2, the refined or working form of each raw material, with its real density. Weight and size on the blueprint form are worked out from these, never typed in.",
+ "materials": [
+  {
+   "code": "mat-iron",
+   "name": "Iron",
+   "category": "metal",
+   "density_kg_m3": 7874,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-nickel",
+   "name": "Nickel",
+   "category": "metal",
+   "density_kg_m3": 8908,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-native-iron-nickel",
+   "name": "Native iron-nickel (meteoritic metal)",
+   "category": "metal",
+   "density_kg_m3": 7900,
+   "state": "already metal; refine by separating Fe, Ni, Co and PGMs"
+  },
+  {
+   "code": "mat-cobalt",
+   "name": "Cobalt",
+   "category": "metal",
+   "density_kg_m3": 8900,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-copper",
+   "name": "Copper",
+   "category": "metal",
+   "density_kg_m3": 8960,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-aluminium",
+   "name": "Aluminium",
+   "category": "metal",
+   "density_kg_m3": 2700,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-titanium",
+   "name": "Titanium",
+   "category": "metal",
+   "density_kg_m3": 4507,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-magnesium",
+   "name": "Magnesium",
+   "category": "metal",
+   "density_kg_m3": 1740,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-zinc",
+   "name": "Zinc",
+   "category": "metal",
+   "density_kg_m3": 7140,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-tin",
+   "name": "Tin",
+   "category": "metal",
+   "density_kg_m3": 7289,
+   "state": "white (beta) tin, 20 C; grey (alpha) tin ~5770"
+  },
+  {
+   "code": "mat-lead",
+   "name": "Lead",
+   "category": "metal",
+   "density_kg_m3": 11340,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-chromium",
+   "name": "Chromium",
+   "category": "metal",
+   "density_kg_m3": 7150,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-manganese",
+   "name": "Manganese",
+   "category": "metal",
+   "density_kg_m3": 7210,
+   "state": "alpha-Mn, room temperature"
+  },
+  {
+   "code": "mat-tungsten",
+   "name": "Tungsten",
+   "category": "metal",
+   "density_kg_m3": 19300,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-molybdenum",
+   "name": "Molybdenum",
+   "category": "metal",
+   "density_kg_m3": 10280,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-lithium",
+   "name": "Lithium",
+   "category": "metal",
+   "density_kg_m3": 534,
+   "state": "solid metal, room temperature (floats on water)"
+  },
+  {
+   "code": "mat-silver",
+   "name": "Silver",
+   "category": "precious metal",
+   "density_kg_m3": 10490,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-gold",
+   "name": "Gold",
+   "category": "precious metal",
+   "density_kg_m3": 19300,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-platinum",
+   "name": "Platinum",
+   "category": "precious metal",
+   "density_kg_m3": 21450,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-palladium",
+   "name": "Palladium",
+   "category": "precious metal",
+   "density_kg_m3": 12020,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-iridium",
+   "name": "Iridium",
+   "category": "precious metal",
+   "density_kg_m3": 22560,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-silicon",
+   "name": "Silicon",
+   "category": "electronics / structure",
+   "density_kg_m3": 2330,
+   "state": "solid crystalline silicon, room temperature"
+  },
+  {
+   "code": "mat-carbon",
+   "name": "Carbon (graphite)",
+   "category": "electronics / structure",
+   "density_kg_m3": 2250,
+   "state": "solid graphite"
+  },
+  {
+   "code": "mat-diamond",
+   "name": "Diamond (rough)",
+   "category": "electronics / structure",
+   "density_kg_m3": 3510,
+   "state": "solid"
+  },
+  {
+   "code": "mat-boron",
+   "name": "Boron",
+   "category": "electronics / structure",
+   "density_kg_m3": 2340,
+   "state": "solid (beta-rhombohedral), room temperature"
+  },
+  {
+   "code": "mat-sulfur",
+   "name": "Sulfur",
+   "category": "electronics / structure",
+   "density_kg_m3": 2070,
+   "state": "solid alpha-sulfur, room temperature"
+  },
+  {
+   "code": "mat-phosphorus",
+   "name": "Phosphorus",
+   "category": "electronics / structure",
+   "density_kg_m3": 1823,
+   "state": "white phosphorus, solid"
+  },
+  {
+   "code": "mat-neodymium",
+   "name": "Neodymium (rare earth)",
+   "category": "rare earth",
+   "density_kg_m3": 7010,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-dysprosium",
+   "name": "Dysprosium (rare earth)",
+   "category": "rare earth",
+   "density_kg_m3": 8550,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-water-ice",
+   "name": "Water ice",
+   "category": "ice / volatile",
+   "density_kg_m3": 1000,
+   "state": "ice at 0 C = 917; liquid water ~1000"
+  },
+  {
+   "code": "mat-hydrogen",
+   "name": "Hydrogen",
+   "category": "ice / volatile",
+   "density_kg_m3": 70.8,
+   "state": "liquid H2 at ~20 K (-253 C), 1 atm"
+  },
+  {
+   "code": "mat-oxygen",
+   "name": "Oxygen",
+   "category": "ice / volatile",
+   "density_kg_m3": 1141,
+   "state": "liquid O2 at ~90 K (-183 C), 1 atm"
+  },
+  {
+   "code": "mat-nitrogen",
+   "name": "Nitrogen",
+   "category": "ice / volatile",
+   "density_kg_m3": 807,
+   "state": "liquid N2 at ~77 K (-196 C), 1 atm"
+  },
+  {
+   "code": "mat-methane",
+   "name": "Methane",
+   "category": "ice / volatile",
+   "density_kg_m3": 423,
+   "state": "liquid CH4 at 111 K (-162 C)"
+  },
+  {
+   "code": "mat-ammonia",
+   "name": "Ammonia",
+   "category": "ice / volatile",
+   "density_kg_m3": 682,
+   "state": "liquid NH3 at ~-33 C (boiling point)"
+  },
+  {
+   "code": "mat-carbon-dioxide",
+   "name": "Carbon dioxide",
+   "category": "ice / volatile",
+   "density_kg_m3": 1562,
+   "state": "solid CO2 (sublimes at -78.5 C at 1 atm)"
+  },
+  {
+   "code": "mat-helium-3",
+   "name": "Helium-3",
+   "category": "ice / volatile",
+   "density_kg_m3": 59,
+   "state": "liquid 3He at its 3.19 K boiling point, 1 atm"
+  },
+  {
+   "code": "mat-sand",
+   "name": "Sand (silica sand, bulk)",
+   "category": "habitat building",
+   "density_kg_m3": 2650,
+   "state": "bulk dry sand ~1,500-1,800; solid quartz grains 2,650"
+  },
+  {
+   "code": "mat-clay",
+   "name": "Clay",
+   "category": "habitat building",
+   "density_kg_m3": 2610,
+   "state": "compacted clay dry density ~1,500 (one lab study); kaolinite grains 2,610"
+  },
+  {
+   "code": "mat-limestone",
+   "name": "Limestone",
+   "category": "habitat building",
+   "density_kg_m3": 2720,
+   "state": "rock bulk ~2,500-2,600 (Rocscience tables); calcite crystal 2,720"
+  },
+  {
+   "code": "mat-basalt",
+   "name": "Basalt",
+   "category": "habitat building",
+   "density_kg_m3": 2900,
+   "state": "rock; can be melted and cast or spun into fibre"
+  },
+  {
+   "code": "mat-soil",
+   "name": "Soil (bulk)",
+   "category": "habitat building",
+   "density_kg_m3": 1350,
+   "state": "dry bulk density: silts ~1,100-1,600, sands ~1,300-1,700"
+  },
+  {
+   "code": "mat-timber-softwood",
+   "name": "Timber - softwood (Douglas-fir)",
+   "category": "habitat building",
+   "density_kg_m3": 545,
+   "state": "air-dry (~12% moisture)"
+  },
+  {
+   "code": "mat-timber-hardwood",
+   "name": "Timber - hardwood (white oak)",
+   "category": "habitat building",
+   "density_kg_m3": 760,
+   "state": "air-dry (~12% moisture), approximate"
+  },
+  {
+   "code": "mat-uranium",
+   "name": "Uranium",
+   "category": "energy",
+   "density_kg_m3": 19100,
+   "state": "solid metal, room temperature"
+  },
+  {
+   "code": "mat-thorium",
+   "name": "Thorium",
+   "category": "energy",
+   "density_kg_m3": 11700,
+   "state": "solid metal, room temperature"
+  }
+ ]
+}

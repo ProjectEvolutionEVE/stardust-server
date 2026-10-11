@@ -25,7 +25,8 @@ game can be sold or licensed whole. Read `CLAUDE.md` first: it lists Eric's sett
   Private Quarters (a small furnished room for personal possessions) with a lockbox, the hangar, a ship's hold, or
   (later) a colony on the new Earth. Nothing is unlimited: every place has a size.
 - **Blueprint review:** players submit designs through the blueprint form; the game's team reviews, asks questions,
-  requests changes, and approves or turns them down (Eric 10-11). No review screens yet, and no routes for them.
+  requests changes, and approves or turns them down (Eric 10-11). Players use the form in the Library's drafting room;
+  the team uses `review.py` (`list`, `show ID`, `ask`, `changes`, `approve`, `reject`) with the game's `DATABASE_URL`.
 - **Blueprint structure only:** the game ships no blueprints (Eric 10-11). A player's design is an item type with its
   designer and stats, plus a recipe: what goes in, what comes out, how long it takes. The checks that a design obeys
   the world's rules (real materials, sizes, time) are still to be written.

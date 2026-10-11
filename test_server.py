@@ -252,14 +252,15 @@ async def main():
     async with cl.app["pool"].acquire() as c:
         p1 = await c.fetchval("SELECT player_id FROM accounts WHERE id=$1", a1)
         form = {"name": "Long-range scanner Mk II", "kind": "part", "problem": "Small fields are too hard to hear.",
-                "does": ["sense"], "fits": "small mining craft", "improves": {"stat": "scanner range", "pct": 30},
-                "parts": [{"name": "Circuit board", "role": "electronics", "materials": [{"item": "copper", "grams": 300}, {"item": "gold", "grams": 5}]},
-                          {"name": "Housing", "role": "housing", "materials": [{"item": "iron", "grams": 2000}]}]}
+                "does": "Pushes a stronger wave out and listens for the faint return from small fields.", "fits": "small mining craft",
+                "improves": "scanner range, by about 30%", "books": ["electronics", "prospecting"], "how": "Etch the board, wind the coil, seal the housing.",
+                "parts": [{"name": "Circuit board", "materials": [{"item": "mat-copper", "grams": 300}, {"item": "mat-gold", "grams": 5}]},
+                          {"name": "Housing", "materials": [{"item": "mat-iron", "grams": 2000}]}]}
         sid = await BP.save_draft(c, p1, form)
         try:
             await BP.submit(c, p1, sid); check("an incomplete form can't be submitted (no build time)", False)
         except ST.Refused as e:
-            check("an incomplete form can't be submitted (no build time)", "build_minutes" in str(e))
+            check("an incomplete form can't be submitted (no build time)", "how long it takes to build" in str(e))
         form["build_minutes"] = 90
         await BP.save_draft(c, p1, form, sid)
         check("submitted: version 1", await BP.submit(c, p1, sid) == 1)
@@ -270,8 +271,8 @@ async def main():
         await BP.ask(c, sid, "Eric", "What sends the wave out?")
         await BP.reply(c, p1, sid, "Good catch, it needs an emitter.")
         await BP.request_changes(c, sid, "Eric", "Add the emitter and the receiver as parts, with their materials.")
-        form["parts"] += [{"name": "Emitter", "role": "emitter", "materials": [{"item": "copper", "grams": 120}, {"item": "silver", "grams": 20}]},
-                          {"name": "Receiver", "role": "receiver", "materials": [{"item": "copper", "grams": 120}, {"item": "gold", "grams": 3}]}]
+        form["parts"] += [{"name": "Emitter", "materials": [{"item": "mat-copper", "grams": 120}, {"item": "mat-silver", "grams": 20}]},
+                          {"name": "Receiver", "materials": [{"item": "mat-copper", "grams": 120}, {"item": "mat-gold", "grams": 3}]}]
         await BP.save_draft(c, p1, form, sid)
         check("resubmitted after changes: version 2", await BP.submit(c, p1, sid) == 2)
         try:
@@ -281,12 +282,61 @@ async def main():
         code = await BP.approve(c, sid, "Eric", "Approved. Nice work.")
         ins = {r["item_code"]: r["qty"] for r in await c.fetch(
             "SELECT i.item_code, i.qty FROM recipe_inputs i JOIN recipes r ON r.id=i.recipe_id WHERE r.blueprint_code=$1", code)}
-        check("approved: its recipe adds up every part's materials", ins == {"copper": 540, "gold": 8, "silver": 20, "iron": 2000})
+        check("approved: its recipe adds up every part's materials", ins == {"mat-copper": 540, "mat-gold": 8, "mat-silver": 20, "mat-iron": 2000})
         check("the design is credited to its designer", await c.fetchval("SELECT designer_id FROM item_types WHERE code=$1", code) == p1)
         th = await BP.thread(c, sid)
         check("the whole conversation is kept, version by version",
               [m["kind"] for m in th] == ["question", "reply", "change_request", "decision"] and th[2]["version"] == 1 and th[3]["version"] == 2)
         check("both submitted versions are kept", await c.fetchval("SELECT count(*) FROM blueprint_versions WHERE submission_id=$1", sid) == 2)
+    # ---- the blueprint form through the web (rule 23) ----
+    HB = {"X-Dev-Player": "tester-designer"}
+    r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
+    check("form options: kinds, library books, 46 materials with densities",
+          r.status == 200 and len(o["materials"]) == 46 and any(b["code"] == "metallurgy" for g in o["books"] for b in g["books"])
+          and all(m["density_kg_m3"] > 0 for m in o["materials"]))
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"form": {"name": "Clay furnace", "kind": "tool"}}); d = await r.json()
+    check("a half-filled draft saves, and lists what's still missing", r.status == 200 and d["status"] == "draft" and d["editable"]
+          and any("problem it solves" in x for x in d["missing"]) and any("library books" in x for x in d["missing"]))
+    bid = d["id"]
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": bid, "form": {"name": "x", "parts": [{"name": "Body", "materials": [{"item": "unobtainium", "grams": 5}]}]}})
+    check("a material that isn't on the list is refused", r.status == 422)
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": bid, "form": {"name": "x", "books": ["wizardry"]}})
+    check("a book that isn't in the library is refused", r.status == 422)
+    furnace = {"name": "Clay furnace", "kind": "tool", "problem": "Ore has to become metal, and there's no furnace aboard.",
+               "does": "A stone-and-clay shaft furnace: charcoal and ore go in the top, air is blown in at the base, metal collects below.",
+               "fits": "stands alone", "improves": "turns ore into metal; none of this exists yet", "books": ["metallurgy", "ceramics"],
+               "how": "Lay a stone base, build up the clay walls around a form, dry it slowly, then fire it.", "build_minutes": 2880,
+               "parts": [{"name": "Shaft", "materials": [{"item": "mat-clay", "grams": 400000}]},
+                         {"name": "Base", "materials": [{"item": "mat-basalt", "grams": 290000}]}],
+               "mass_kg": 1, "volume_m3": 999}
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": bid, "form": furnace}); d = await r.json()
+    check("weight and size come from real densities, never typed in (690 kg; 0.153 + 0.1 m³)",
+          d["totals"]["mass_kg"] == 690 and abs(d["totals"]["volume_m3"] - (400 / 2610 + 290 / 2900)) < 1e-5 and "mass_kg" not in d["form"])
+    check("a complete form has nothing missing", d["missing"] == [])
+    r = await cl.get("/api/dfg/blueprints/" + str(bid), headers={"X-Dev-Player": "tester-snoop"})
+    check("another player can't read your design", r.status == 422)
+    r = await cl.post("/api/dfg/blueprints/submit", headers=HB, json={"id": bid}); d = await r.json()
+    check("submitted to the review team: version 1, no longer editable", r.status == 200 and d["status"] == "submitted" and d["version"] == 1 and not d["editable"])
+    async with cl.app["pool"].acquire() as c:
+        await BP.request_changes(c, bid, "Eric", "How is the air blown in? Add the bellows as a part.")
+    r = await cl.get("/api/dfg/blueprints", headers=HB); j = await r.json()
+    check("my blueprints: changes requested, with a note from the review team",
+          j["blueprints"][0]["status"] == "changes_requested" and j["blueprints"][0]["unread"] == 1)
+    r = await cl.post("/api/dfg/blueprints/reply", headers=HB, json={"id": bid, "body": "Leather bellows, worked by hand. Adding them."})
+    d = await r.json(); check("the designer answers the reviewers", r.status == 200 and d["messages"][-1]["from"] == "You")
+    furnace["parts"].append({"name": "Bellows", "materials": [{"item": "mat-timber-hardwood", "grams": 15000}]})
+    r = await cl.post("/api/dfg/blueprints/submit", headers=HB, json={"id": bid, "form": furnace}); d = await r.json()
+    check("changes made and sent back: version 2", r.status == 200 and d["version"] == 2 and d["totals"]["mass_kg"] == 705)
+    r = await cl.get("/api/dfg/inventory", headers=HB); j = await r.json()
+    fc = next(p for p in j["places"] if p["kind"] == "filing_cabinet")
+    check("the design is listed in the filing cabinet", fc["designs"][0]["title"] == "Clay furnace")
+    async with cl.app["pool"].acquire() as c:
+        code = await BP.approve(c, bid, "Eric", "Approved.")
+        t = await c.fetchrow("SELECT kind, tradeable, density_kg_m3 FROM item_types WHERE code='mat-clay'")
+    check("approval makes the materials known items (clay, 2610 kg/m³, not on the market yet)",
+          code == f"bp-{bid}" and t["kind"] == "resource" and not t["tradeable"] and float(t["density_kg_m3"]) == 2610)
+    r = await cl.post("/api/dfg/blueprints/withdraw", headers=HB, json={"id": bid})
+    check("a decided blueprint can't be withdrawn", r.status == 422)
     # ---- ores and the near-flawless diamond (Eric 10-11, rules 25-27) ----
     async with cl.app["pool"].acquire() as c:
         names = dict(await c.fetch("SELECT code, name FROM item_types WHERE code IN ('copper','silver','diamond')"))

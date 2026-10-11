@@ -47,7 +47,19 @@ const css=document.createElement('style');css.textContent=`
 #sq table{width:100%;border-collapse:collapse;font-size:13px} #sq td{padding:6px 4px;border-top:1px solid #1d2740;vertical-align:top}
 #sq .soon{color:#9aa6bf;font-size:13px}
 #sq details.fold{border:1px solid #23304d;border-radius:10px;padding:10px 12px;margin:8px 0;background:rgba(20,28,48,.5)}
-#sq details.fold summary{cursor:pointer;font-size:14px;color:#e8edf5} #sq details.fold table{margin-top:8px}`;
+#sq details.fold summary{cursor:pointer;font-size:14px;color:#e8edf5} #sq details.fold table{margin-top:8px}
+#sq textarea{width:100%;min-height:84px;padding:10px 12px;border-radius:10px;border:1px solid #2c3a5c;background:#0b1224;color:#e8edf5;font-family:inherit;font-size:15px;line-height:1.45;resize:vertical}
+#sq .q{margin:18px 0 0} #sq .q>.n{font-size:12px;letter-spacing:.12em;color:#d9a441} #sq .q>.h{font-size:15px;color:#e8edf5;margin:2px 0 2px}
+#sq .q>.hint{font-size:13px;color:#9aa6bf;margin-bottom:6px}
+#sq .part{border:1px solid #23304d;border-radius:12px;padding:10px;margin:8px 0;background:rgba(20,28,48,.5)}
+#sq .mrow{display:flex;gap:6px;margin-top:6px;align-items:center} #sq .mrow select{flex:1 1 auto;min-width:0} #sq .mrow input{flex:0 0 110px;width:110px}
+#sq .x{flex:0 0 auto;padding:8px 11px;border-radius:9px;border:1px solid #2c3a5c;background:none;color:#ff8f8a;cursor:pointer}
+#sq .small{padding:8px 12px;border-radius:9px;border:1px solid #2c3a5c;background:none;color:#7fb0ff;font-size:13px;cursor:pointer;margin-top:8px}
+#sq .books label{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:14px;letter-spacing:0;color:#e8edf5}
+#sq .books input{width:auto} #sq .tot{margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid #2c3a5c;background:#0b1224;font-size:14px}
+#sq .note{padding:10px 12px;border-radius:10px;margin:8px 0;font-size:14px;border:1px solid #2c3a5c} #sq .note.team{border-color:rgba(127,176,255,.5)}
+#sq .btns{display:flex;gap:8px;flex-wrap:wrap} #sq .btns .go{flex:1 1 160px}
+#sq .go.alt{background:none;border:1px solid #d9a441;color:#d9a441}`;
 document.head.appendChild(css);
 const root=document.createElement('div');root.id='sq';document.body.appendChild(root);
 const helpEl=document.getElementById('help');if(helpEl)helpEl.hidden=true;   // the flight help waits until the player heads to their ship
@@ -179,9 +191,10 @@ async function tabBody(tab,me){
      <p class="soon" style="margin-top:0">Everything you own, in a folder for each place it's kept.</p>${inv?itemFolders(inv.places):'<p class="soon">—</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET</h3><p class="soon">Prices, the chart, instant buy and sell, your open orders and your trade history.</p>
      <button class="go" id="sqMarket">📈 Open the market terminal</button>`;}
-  if(tab==='cabinet'){let r=null;try{r=await call('/receipts');}catch(e){}
+  if(tab==='cabinet'){let r=null,bp=null;try{r=await call('/receipts');}catch(e){}try{bp=await call('/blueprints');}catch(e){}
     const list=r?r.receipts:[];
-    return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
+    return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">BLUEPRINTS</h3>${blueprintList(bp?bp.blueprints:[])}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">LOCKBOX</h3><p class="soon">Empty. A small, secure box for valuables.</p>`;}
   if(tab==='closet')return `<p class="soon">Your clothing and uniforms will hang here. Uniforms change as you rise through the ranks.</p>`;
   if(tab==='bookshelf')return `<p class="soon">Your own books for continued learning and study. Courses and certification tests are in the Starship library.</p>`;
@@ -197,6 +210,7 @@ async function showQuarters(me,tab){
   const ship=$('#sqShip');if(ship)ship.onclick=()=>showExit(me);
   $('#sqExit').onclick=()=>showExit(me);
   const mk=$('#sqMarket');if(mk)mk.onclick=()=>showMarket(me);
+  root.querySelectorAll('[data-bp]').forEach(b=>b.onclick=()=>showBlueprintForm(me,Number(b.dataset.bp),'cabinet'));
   const out=$('#sqOut');if(out)out.onclick=async()=>{try{await call('/auth/signout',{});}catch(e){}saveToken(null);
     root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sleep well</h2><div class="sub">You're in your bed. Your body rests while you're away, in real time.</div>
      <button class="go" id="sqAgain">Sign in again</button></div>`;$('#sqAgain').onclick=showSignIn;};}
@@ -215,8 +229,10 @@ function showExit(me){
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
 function showLibrary(me){
   place('STARSHIP LIBRARY',me,`<p>Shelves of books, and quiet desks for study.</p>
-   <p class="soon">The library opens soon. The starter books, the courses and tests that earn promotions, and the blueprint form will all be here.</p>
+   <p class="soon">The starter books, and the short tests that earn promotions, open soon.</p>
+   <button class="go" id="sqDraft">📐 Drafting room: design a blueprint</button>
    <button class="go" id="sqBay2">🚀 Go to the Docking Bay</button><button class="link" id="sqBack">Back to my quarters</button>`);
+  $('#sqDraft').onclick=()=>showBlueprints(me);
   $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
 function showMarket(me){   // the full board, over everything (rule 20: reached from the Desk only)
@@ -226,6 +242,104 @@ function showMarket(me){   // the full board, over everything (rule 20: reached 
   const close=e=>{if(e.origin!==location.origin||e.data!=='stardust:closeMarket')return;window.removeEventListener('message',close);
     f.remove();showQuarters(me,'desk');};
   window.addEventListener('message',close);}
+
+// ── THE BLUEPRINT FORM (rule 23, Eric 10-11): a series of questions, not a blank page. In the Library's drafting room;
+// the designs are kept in the filing cabinet. Weight and size are worked out from the real materials, never typed in.
+// The game's review team reads every submission and may ask questions or request changes before approving it.
+const BP_STATUS={draft:'Draft: only you can see it',submitted:'With the review team',changes_requested:'Changes requested: see the review team’s note',
+  approved:'Approved',rejected:'Not approved'};
+function blueprintList(list){
+  return (list.length?`<table>${list.map(b=>`<tr><td>📐 ${esc(b.title)}<div class="soon">${esc(BP_STATUS[b.status]||b.status)}${b.version?' · version '+b.version:''}${b.unread&&b.status==='changes_requested'?' · 1 new note':''}</div></td>
+     <td style="text-align:right"><button class="small" data-bp="${b.id}">Open</button></td></tr>`).join('')}</table>`
+    :'<p class="soon">No blueprints yet. Design one in the drafting room at the Starship Library.</p>');}
+async function showBlueprints(me){
+  let bp=null;try{bp=await call('/blueprints');}catch(e){}
+  place('DRAFTING ROOM · STARSHIP LIBRARY',me,`<h2 style="margin:0 0 4px">Blueprints</h2>
+   <p class="soon">You design it; the game's review team checks it. Only an approved blueprint can be built and sold. Your designs are kept in your filing cabinet.</p>
+   <button class="go" id="bpNew">📐 Design a new blueprint</button>
+   <h3 style="margin:16px 0 6px;font-size:14px;color:#d9a441">MY BLUEPRINTS</h3>${blueprintList(bp?bp.blueprints:[])}
+   <button class="link" id="sqBack">Back to the Library</button>`);
+  $('#bpNew').onclick=()=>showBlueprintForm(me,null,'library');
+  root.querySelectorAll('[data-bp]').forEach(b=>b.onclick=()=>showBlueprintForm(me,Number(b.dataset.bp),'library'));
+  $('#sqBack').onclick=()=>showLibrary(me);}
+let bpOpts=null;
+const UNITS=[['minutes',1],['hours',60],['days',1440]];
+function kgText(kg){return kg>=1000?(kg/1000).toLocaleString(undefined,{maximumFractionDigits:3})+' t':kg.toLocaleString(undefined,{maximumFractionDigits:3})+' kg';}
+function m3Text(m3){return m3<0.001&&m3>0?(m3*1e6).toLocaleString(undefined,{maximumFractionDigits:1})+' cm³':m3.toLocaleString(undefined,{maximumFractionDigits:3})+' m³';}
+async function showBlueprintForm(me,id,from){
+  try{if(!bpOpts)bpOpts=await call('/blueprints/options');}catch(e){return place('DRAFTING ROOM',me,`<p class="msg err">${esc(e.message)}</p>`);}
+  let d=null;if(id){try{d=await call('/blueprints/'+id);}catch(e){return place('DRAFTING ROOM',me,`<p class="msg err">${esc(e.message)}</p>`);}}
+  const f=d?d.form:{},edit=!d||d.editable,dis=edit?'':' disabled',L=bpOpts.limits.text;
+  const mats=bpOpts.materials,dens=Object.fromEntries(mats.map(m=>[m.code,m.density_kg_m3]));
+  const cats=[...new Set(mats.map(m=>m.category))];
+  const matSelect=sel=>`<select class="bpMat"${dis} aria-label="Material"><option value="">Choose a material…</option>${cats.map(c=>`<optgroup label="${esc(c)}">${mats.filter(m=>m.category===c).map(m=>
+    `<option value="${esc(m.code)}"${m.code===sel?' selected':''}>${esc(m.name)}</option>`).join('')}</optgroup>`).join('')}</select>`;
+  const matRow=m=>`<div class="mrow">${matSelect(m&&m.item)}<input class="bpKg" type="number" inputmode="decimal" min="0" step="any" placeholder="kg" aria-label="Amount in kg"${dis}
+    value="${m&&m.grams?m.grams/1000:''}">${edit?'<button class="x bpDelM" aria-label="Remove material">✕</button>':''}</div>`;
+  const partBox=p=>`<div class="part"><input class="bpPart" maxlength="60" placeholder="Part name, e.g. Housing"${dis} value="${esc(p&&p.name||'')}">
+    <div class="bpRows">${((p&&p.materials&&p.materials.length)?p.materials:[null]).map(matRow).join('')}</div>
+    ${edit?'<button class="small bpAddM">+ Add a material</button> <button class="small bpDelP" style="color:#ff8f8a">Remove this part</button>':''}</div>`;
+  const bm=f.build_minutes||0,unit=bm&&bm%1440===0?'days':bm&&bm%60===0?'hours':bm?'minutes':'hours';
+  const uval=bm?bm/Object.fromEntries(UNITS)[unit]:'';
+  const q=(n,h,hint,body)=>`<div class="q"><div class="n">${n}</div><div class="h">${h}</div>${hint?`<div class="hint">${hint}</div>`:''}${body}</div>`;
+  const ta=(k,ph)=>`<textarea id="bp_${k}" maxlength="${L[k]}" placeholder="${esc(ph)}"${dis}>${esc(f[k]||'')}</textarea>`;
+  const notes=(d&&d.messages||[]).map(m=>`<div class="note ${m.from==='You'?'':'team'}"><div class="soon">${esc(m.from)} · version ${m.version} · ${esc(new Date(m.at).toLocaleString())}</div>${esc(m.body)}</div>`).join('');
+  const canReply=d&&(d.status==='submitted'||d.status==='changes_requested');
+  place('DRAFTING ROOM · STARSHIP LIBRARY',me,`<h2 style="margin:0 0 4px">${d?esc(d.title):'New blueprint'}</h2>
+   <p class="soon" style="margin:0">${d?esc(BP_STATUS[d.status]||d.status)+(d.version?' · version '+d.version:''):'Answer each question. You can save a draft and come back any time.'}</p>
+   ${notes?`<h3 style="margin:14px 0 4px;font-size:14px;color:#d9a441">NOTES WITH THE REVIEW TEAM</h3>${notes}`:''}
+   ${canReply?`<textarea id="bpReply" maxlength="2000" placeholder="Answer the review team"></textarea><button class="small" id="bpSendReply">Send answer</button>`:''}
+   ${q('1','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">
+     <select id="bp_kind" style="margin-top:8px"${dis}><option value="">Choose the kind…</option>${bpOpts.kinds.map(k=>`<option value="${k.code}"${k.code===f.kind?' selected':''}>${esc(k.name)}</option>`).join('')}</select>`)}
+   ${q('2','What is it, and what problem does it solve?','Who needs it, and why?',ta('problem','e.g. Small debris fields are too faint for the starter scanner to hear.'))}
+   ${q('3','Everything it does, in detail.','Describe each thing it does and how. The review team reads this closely.',ta('does','e.g. It pushes a stronger wave out and listens for the faint return…'))}
+   ${q('4','What does it fit?','A ship, a machine, or “stands alone”.',ta('fits','e.g. Small mining craft'))}
+   ${q('5','What does it improve, and by how much?','',ta('improves','e.g. Scanner range, by about 30%'))}
+   ${q('6','Which library books does it require?','To build it, you pass the short test on each one.',`<div class="books">${bpOpts.books.map(g=>`<details class="fold"${g.books.some(b=>(f.books||[]).includes(b.code))?' open':''}><summary>${esc(g.group)}</summary>
+     ${g.books.map(b=>`<label><input type="checkbox" class="bpBook" value="${b.code}"${(f.books||[]).includes(b.code)?' checked':''}${dis}> ${esc(b.name)}</label>`).join('')}</details>`).join('')}</div>`)}
+   ${q('7','Its parts and materials','Each part, with the materials it’s made of and how much. Its weight and size are worked out from the real materials.',
+     `<div id="bpParts">${((f.parts&&f.parts.length)?f.parts:[null]).map(partBox).join('')}</div>${edit?'<button class="small" id="bpAddP">+ Add a part</button>':''}<div class="tot" id="bpTot"></div>`)}
+   ${q('8','How is it built?','The tools, the skills and the steps.',ta('how','e.g. Etch the circuit board, wind the coil, seal the housing.'))}
+   ${q('9','How long does it take to build?','Builds run in real time.',`<div class="mrow"><input id="bpTime" type="number" inputmode="decimal" min="0" step="any" style="flex:0 0 110px" value="${uval}"${dis}>
+     <select id="bpUnit"${dis}>${UNITS.map(([u])=>`<option${u===unit?' selected':''}>${u}</option>`).join('')}</select></div>`)}
+   <div class="msg" id="bpMsg"></div>
+   ${edit?`<div class="btns"><button class="go alt" id="bpSave">Save draft</button><button class="go" id="bpSubmit">Send to the review team</button></div>`:''}
+   ${d&&['draft','submitted','changes_requested'].includes(d.status)?'<button class="link" id="bpWithdraw" style="color:#ff8f8a">Withdraw this blueprint</button>':''}
+   <button class="link" id="bpBack">${from==='cabinet'?'Back to my filing cabinet':'Back to the drafting room'}</button>`);
+  const panel=root.querySelector('.panel');
+  function gather(){
+    const t=Number($('#bpTime').value),mult=Object.fromEntries(UNITS)[$('#bpUnit').value];
+    const form={name:$('#bp_name').value,kind:$('#bp_kind').value||undefined,problem:$('#bp_problem').value,does:$('#bp_does').value,
+      fits:$('#bp_fits').value,improves:$('#bp_improves').value,how:$('#bp_how').value,
+      books:[...panel.querySelectorAll('.bpBook:checked')].map(x=>x.value),
+      parts:[...panel.querySelectorAll('.part')].map(p=>({name:p.querySelector('.bpPart').value,
+        materials:[...p.querySelectorAll('.mrow')].map(r=>({item:r.querySelector('.bpMat').value,kg:r.querySelector('.bpKg').value}))
+          .filter(m=>m.item).map(m=>({item:m.item,grams:m.kg===''?null:Math.round(Number(m.kg)*1000)}))}))
+        .filter(p=>p.name.trim()||p.materials.length)};
+    if(t>0)form.build_minutes=Math.max(1,Math.round(t*mult));
+    return form;}
+  function total(){
+    let kg=0,m3=0;for(const p of gather().parts)for(const m of p.materials){if(m.grams>0&&dens[m.item]){kg+=m.grams/1000;m3+=m.grams/1000/dens[m.item];}}
+    $('#bpTot').innerHTML=`⚖️ Weight <b>${kgText(kg)}</b> · 📦 Material volume <b>${m3Text(m3)}</b><div class="soon">From the real density of each material.</div>`;}
+  function wire(){
+    panel.querySelectorAll('.bpAddM').forEach(b=>b.onclick=()=>{b.parentNode.querySelector('.bpRows').insertAdjacentHTML('beforeend',matRow(null));wire();total();});
+    panel.querySelectorAll('.bpDelM').forEach(b=>b.onclick=()=>{b.parentNode.remove();total();});
+    panel.querySelectorAll('.bpDelP').forEach(b=>b.onclick=()=>{b.parentNode.remove();total();});}
+  wire();total();
+  panel.addEventListener('input',total);panel.addEventListener('change',total);
+  const addP=$('#bpAddP');if(addP)addP.onclick=()=>{$('#bpParts').insertAdjacentHTML('beforeend',partBox(null));wire();};
+  const msg=(t,ok)=>{const m=$('#bpMsg');m.className='msg '+(ok?'ok':'err');m.textContent=t;};
+  const sv=$('#bpSave');if(sv)sv.onclick=async()=>{try{const r=await call('/blueprints/save',d?{id:d.id,form:gather()}:{form:gather()});
+      await showBlueprintForm(me,r.id,from);msg(r.missing.length?'Saved. Still to answer: '+r.missing.length+(r.missing.length>1?' questions.':' question.'):'Saved. Ready to send to the review team.',true);}
+    catch(e){msg(e.message);}};
+  const sb=$('#bpSubmit');if(sb)sb.onclick=async()=>{let bid=d&&d.id;const form=gather();
+    try{if(!bid)bid=(await call('/blueprints/save',{form})).id;
+      await call('/blueprints/submit',{id:bid,form});await showBlueprintForm(me,bid,from);msg('Sent. The review team will read it, and any questions or changes will appear here.',true);}
+    catch(e){if(bid&&!d){await showBlueprintForm(me,bid,from);}msg(e.message);}};
+  const rp=$('#bpSendReply');if(rp)rp.onclick=async()=>{try{await call('/blueprints/reply',{id:d.id,body:$('#bpReply').value});await showBlueprintForm(me,d.id,from);}catch(e){msg(e.message);}};
+  const wd=$('#bpWithdraw');if(wd)wd.onclick=async()=>{if(!confirm('Withdraw this blueprint? It will be removed from your filing cabinet.'))return;
+    try{await call('/blueprints/withdraw',{id:d.id});from==='cabinet'?showQuarters(me,'cabinet'):showBlueprints(me);}catch(e){msg(e.message);}};
+  $('#bpBack').onclick=()=>from==='cabinet'?showQuarters(me,'cabinet'):showBlueprints(me);}
 
 // a QUARTERS button while docked opens the real Private Quarters
 window.addEventListener('click',async e=>{if(e.target&&e.target.id==='quartersbtn'&&token){e.stopImmediatePropagation();

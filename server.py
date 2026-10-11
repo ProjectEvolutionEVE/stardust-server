@@ -18,6 +18,11 @@ Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   GET  /api/dfg/receipts  the player's transfer receipts, newest first
   GET  /api/dfg/receipt/{code}  check a receipt code (no sign-in needed): what was recorded, without who owns it
   GET  /api/dfg/health    no sign-in needed
+The blueprint form (rule 23; blueprints.py):
+  GET  /api/dfg/blueprints/options   kinds, library books, materials with densities, limits
+  GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
+  POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
+  POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
 import os, json, uuid, secrets
 from pathlib import Path
@@ -30,6 +35,7 @@ import body as BODY
 import names as NAMES
 import market as M
 import bank as BANK
+import blueprints as BP
 import asyncio
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
@@ -346,6 +352,72 @@ async def market_cancel(request):
         return _json(await M.cancel(conn, pid, oid))
 
 
+# ── THE BLUEPRINT FORM (rule 23): a designer writes a design, the game's team reviews it (blueprints.py) ──
+def _bp_id(b):
+    sid = b.get("id")
+    if not isinstance(sid, int) or isinstance(sid, bool):
+        raise ST.Refused("Which blueprint?")
+    return sid
+
+
+async def bp_options(request):
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+    return _json(BP.options())
+
+
+async def bp_mine(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json({"blueprints": await BP.mine(conn, pid)})
+
+
+async def bp_detail(request):
+    try:
+        sid = int(request.match_info["id"])
+    except ValueError:
+        raise ST.Refused("Which blueprint?")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await BP.detail(conn, pid, sid))
+
+
+async def bp_save(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        sid = await BP.save_draft(conn, pid, b.get("form"), _bp_id(b) if b.get("id") is not None else None)
+        return _json(await BP.detail(conn, pid, sid))
+
+
+async def bp_submit(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        sid = _bp_id(b)
+        if b.get("form") is not None:                  # save the latest answers first, then send them
+            await BP.save_draft(conn, pid, b["form"], sid)
+        await BP.submit(conn, pid, sid)
+        return _json(await BP.detail(conn, pid, sid))
+
+
+async def bp_reply(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        sid = _bp_id(b)
+        await BP.reply(conn, pid, sid, b.get("body"))
+        return _json(await BP.detail(conn, pid, sid))
+
+
+async def bp_withdraw(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        await BP.withdraw(conn, pid, _bp_id(b))
+        return _json({"ok": True})
+
+
 def make_app():
     app = web.Application(middlewares=[cors])
     app.router.add_post("/api/dfg/session", start_session)
@@ -362,6 +434,13 @@ def make_app():
     app.router.add_get("/api/dfg/market/item/{item}", market_item)
     app.router.add_post("/api/dfg/market/order", market_order)
     app.router.add_post("/api/dfg/market/cancel", market_cancel)
+    app.router.add_get("/api/dfg/blueprints/options", bp_options)
+    app.router.add_get("/api/dfg/blueprints", bp_mine)
+    app.router.add_get("/api/dfg/blueprints/{id}", bp_detail)
+    app.router.add_post("/api/dfg/blueprints/save", bp_save)
+    app.router.add_post("/api/dfg/blueprints/submit", bp_submit)
+    app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
+    app.router.add_post("/api/dfg/blueprints/withdraw", bp_withdraw)
     app.router.add_get("/api/dfg/signup-options", signup_options)
     app.router.add_post("/api/dfg/auth/start", auth_start)
     app.router.add_post("/api/dfg/auth/verify", auth_verify)
