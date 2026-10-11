@@ -332,6 +332,9 @@ async def main():
     check("the bank's desks trade with each other: real trades on the tape", n_trades >= 25)
     check("the bank keeps a standing bid 10% under the last price (never under the floor)",
           gold_bid == max(100, int(gold_last * 0.9)))
+    async with cl.app["pool"].acquire() as c:
+        gold_ask = await c.fetchval("SELECT min(price) FROM orders WHERE item_code='gold' AND side='sell' AND status='open'")
+    check("and a standing ask 10% over it, so a player can always buy", gold_ask == gold_last + max(1, round(gold_last * 0.1)))
     r = await cl.get("/api/dfg/market/item/gold?period=60", headers=H); j = await r.json()
     check("the book shows prices and sizes but no names; candles come from the trades",
           j["bids"] and set(j["bids"][0]) == {"price", "qty", "orders"} and len(j["candles"]) >= 1 and j["trades"])
@@ -353,8 +356,8 @@ async def main():
     check("cancelling gives the credits back", r.status == 200 and mine["credits_set_aside"] == 0 and mine["credits"] == cr0 + got)
     r = await cl.post("/api/dfg/market/cancel", headers=H2 if 'H2' in dir() else {"X-Dev-Player": "tester2"}, json={"order_id": oid})
     check("you can't cancel someone else's order (or one that's closed)", r.status == 422)
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "limit", "qty": 10, "price": 50}); a1 = (await r.json())["order"]["id"]
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 5, "price": 60}); j = await r.json()
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "limit", "qty": 10, "price": 2}); a1 = (await r.json())["order"]["id"]
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 5, "price": 2}); j = await r.json()
     async with cl.app["pool"].acquire() as c:
         st = await c.fetchval("SELECT status FROM orders WHERE id=$1", a1)
     check("never a trade with yourself: your older ask is cancelled instead", st == "cancelled" and not j["fills"])

@@ -3,6 +3,8 @@
 Two desks, each an internal account aboard the Starship (player_key 'system:bank-buy' and 'system:bank-sell'):
   · The buy desk keeps a STANDING BID for every item, a set percentage under the last price (setting
     bank_bid_gap_pct, 10) and never under the floor, so a player can always sell (the instant sale to the bank).
+  · The sell desk keeps a STANDING ASK the same way, a set percentage over the last price (bank_ask_gap_pct, 10), from its
+    stock, so a player can always buy (the instant purchase from the bank).
   · Every few seconds (bank_tick_s) the desks trade a small lot with each other near the last price, so the market has
     real trades, candles and volume before many players arrive. Each new price is the last one nudged at random
     (bank_vol_pct) and pulled back toward the item's reference price (bank_pull_pct), never under the floor.
@@ -79,6 +81,22 @@ async def standing_bid(conn, buy_pid, it, s):
     await M.place(conn, buy_pid, it["code"], "buy", "limit", qty, want)
 
 
+async def standing_ask(conn, sell_pid, buy_pid, it, s):
+    """Keep the sell desk's ask at the gap over the last price, from its stock."""
+    last = await M.last_price(conn, it["code"])
+    want = max(it["floor_price"], last + max(1, int(round(last * s["bank_ask_gap_pct"] / 100))))
+    acct = await conn.fetchval("SELECT id FROM accounts WHERE player_id=$1", sell_pid)
+    cur = await conn.fetch("SELECT id, price FROM orders WHERE account_id=$1 AND item_code=$2 AND side='sell' AND status='open'",
+                           acct, it["code"])
+    if len(cur) == 1 and cur[0]["price"] == want:
+        return
+    for o in cur:
+        await M.cancel(conn, sell_pid, o["id"])
+    qty = max(1, int(it["bank_lot_kg"]) * 5)
+    await _stock(conn, sell_pid, buy_pid, it["code"], it["trade_unit"], qty)
+    await M.place(conn, sell_pid, it["code"], "sell", "limit", qty, want)
+
+
 async def tick(conn, rng=random):
     """One round of bank activity on every listed item."""
     s = await ST.settings(conn)
@@ -97,7 +115,8 @@ async def tick(conn, rng=random):
             await M.place(conn, buy_pid, it["code"], "buy", "instant", lot)
             if await conn.fetchval("SELECT status FROM orders WHERE id=$1", r["order"]["id"]) == "open":
                 await M.cancel(conn, sell_pid, r["order"]["id"])   # whatever the buy desk didn't take is withdrawn
-            await standing_bid(conn, buy_pid, it, s)           # then the standing bid follows the new price
+            await standing_bid(conn, buy_pid, it, s)           # then the standing bid and ask follow the new price
+            await standing_ask(conn, sell_pid, buy_pid, it, s)
         except (M.Refused, ST.Refused) as e:
             print(f"bank tick {it['code']}: {e}", flush=True)
 

@@ -420,5 +420,6 @@ INSERT INTO settings(key, value, note) VALUES
   ('bank_tick_s',       20, 'about how often the bank desks trade, seconds (Eric 10-11: the bank keeps the market moving)'),
   ('bank_vol_pct',     1.5, 'how far each bank trade nudges the price at random, percent'),
   ('bank_pull_pct',     10, 'how strongly prices lean back toward the reference price, percent per trade'),
-  ('bank_bid_qty_kg', 2000, 'size of the bank''s standing bid (the instant sale to the bank), kg')
+  ('bank_bid_qty_kg', 2000, 'size of the bank''s standing bid (the instant sale to the bank), kg'),
+  ('bank_ask_gap_pct',   10, 'the bank''s standing ask sits this many percent over the last price (the instant purchase from the bank)')
 ON CONFLICT (key) DO NOTHING;

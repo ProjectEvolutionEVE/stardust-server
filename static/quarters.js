@@ -219,12 +219,13 @@ function showLibrary(me){
    <button class="go" id="sqBay2">🚀 Go to the Docking Bay</button><button class="link" id="sqBack">Back to my quarters</button>`);
   $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
-function showMarket(me){
-  place('MARKET TERMINAL',me,`<p>The live market: the price chart, the best bid and ask, instant <b>Buy now</b> and <b>Sell now</b>, your open orders and your trade history.</p>
-   <p class="soon">The terminal is being connected to the Starship's market. It arrives in the next update.</p>
-   <p class="soon">The Starship bank trades on this market too.</p>
-   <button class="link" id="sqBack">Back to my desk</button>`);
-  $('#sqBack').onclick=()=>showQuarters(me,'desk');}
+function showMarket(me){   // the full board, over everything (rule 20: reached from the Desk only)
+  const f=document.createElement('iframe');f.src='market.html';f.id='sqMarketFrame';f.title='Starship market';
+  f.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;z-index:60;background:#060912';
+  document.body.appendChild(f);
+  const close=e=>{if(e.origin!==location.origin||e.data!=='stardust:closeMarket')return;window.removeEventListener('message',close);
+    f.remove();showQuarters(me,'desk');};
+  window.addEventListener('message',close);}
 
 // a QUARTERS button while docked opens the real Private Quarters
 window.addEventListener('click',async e=>{if(e.target&&e.target.id==='quartersbtn'&&token){e.stopImmediatePropagation();
