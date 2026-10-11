@@ -1,7 +1,14 @@
 """Debris-field game server: its own process, its own database (Eric 2026-10-10).
 
-Run:  DATABASE_URL=postgres://… DFG_PASS_KEY=… python3 server.py      (PORT defaults to 8090)
-Routes (all JSON, all need a signed-in player):
+Run:  DATABASE_URL=postgres://… python3 server.py      (PORT defaults to 8090; TWILIO_* for text-message sign-in)
+Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
+  GET  /api/dfg/signup-options  languages, the first and last names to pick from, and the ranks
+  POST /api/dfg/auth/start      {channel:'sms'|'email', address} → a 6-digit code is sent
+  POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
+  POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
+  GET  /api/dfg/me              rank and name, language, location (Private Quarters), body bars and warning
+  POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends
+Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   POST /api/dfg/session   start a session → {session_id, seed, ship, cargo}
   GET  /api/dfg/ship      the ship and what's in its hold
   POST /api/dfg/collect   {session_id, material, dims:[a,b,c], volume_m3} → the piece comes aboard, or a refusal
@@ -18,9 +25,16 @@ import asyncpg
 from aiohttp import web
 import game as G
 import store as ST
-import auth_link as AUTH
+import auth as AUTH
+import body as BODY
+import names as NAMES
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
+LANGUAGES = json.loads((Path(__file__).parent / "languages.json").read_text())["languages"]
+LANG_CODES = {l["code"] for l in LANGUAGES}
+# The civilian ladder (approved by Eric 10-11), lowest first. A military track is added later (Eric 10-11).
+RANKS = {"civilian": ["Trainee", "Crew Member", "Senior Crew Member", "Specialist", "Senior Specialist", "Junior Officer",
+                      "Officer", "Senior Officer", "Chief", "First Officer", "Captain"]}
 ALLOWED_ORIGINS = {o.strip() for o in os.environ.get("DFG_ORIGINS", "https://quavara.com").split(",") if o.strip()}
 
 
@@ -38,7 +52,7 @@ async def cors(request, handler):
             resp = await handler(request)
         except AUTH.NotSignedIn as e:
             resp = _json({"error": str(e)}, 401)
-        except (G.Refused, ST.Refused) as e:
+        except (G.Refused, ST.Refused, AUTH.Refused) as e:
             resp = _json({"error": str(e)}, 422)
     if origin in ALLOWED_ORIGINS:
         resp.headers["Access-Control-Allow-Origin"] = origin
@@ -49,8 +63,97 @@ async def cors(request, handler):
 
 
 async def _player(conn, request):
-    qcid, name = AUTH.player_from(request.headers)
-    return await ST.ensure_player(conn, qcid, name or None)
+    kind, who = await AUTH.player_from(conn, request.headers)
+    return who if kind == "id" else await ST.ensure_player(conn, "dev:" + who, who)
+
+
+def _ip(request):
+    fwd = request.headers.get("X-Forwarded-For", "")
+    return (fwd.split(",")[0].strip() if fwd else request.remote) or ""
+
+
+async def _me(conn, pid):
+    """Who the player is and where: rank and name, language, the body's bars and any warning."""
+    p = await conn.fetchrow("""SELECT first_name, last_name, language, track, rank_step, stamina, energy, focus, body_at, asleep
+                               FROM players WHERE id=$1""", pid)
+    bars = BODY.current(p)
+    rank = RANKS[p["track"]][p["rank_step"] - 1]
+    named = bool(p["first_name"] and p["last_name"])
+    return {"rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
+            "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
+            "needs_setup": not (named and p["language"]),
+            "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
+            "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars)}
+
+
+async def signup_options(request):
+    """What a new player chooses from: their language, and a first and last name from the game's own lists."""
+    return _json({"languages": LANGUAGES, "first_names": NAMES.FIRST, "last_names": NAMES.LAST,
+                  "ranks": RANKS, "start_rank": RANKS["civilian"][0]})
+
+
+async def auth_start(request):
+    body = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        return _json(await AUTH.start(conn, body.get("channel"), body.get("address"), _ip(request)))
+
+
+async def auth_verify(request):
+    """A correct code signs the player in. A new phone or email becomes a new player, who starts in bed in their quarters.
+    Signing in is waking up (Eric 10-11)."""
+    body = await request.json()
+    channel = body.get("channel")
+    async with request.app["pool"].acquire() as conn:
+        if not await AUTH.check(conn, channel, body.get("address"), body.get("code")):
+            raise AUTH.Refused("That code isn't right, or it has expired. Ask for a new one.")
+        addr = AUTH.normalize(channel, body.get("address"))
+        pid = await conn.fetchval("SELECT player_id FROM logins WHERE channel=$1 AND address=$2", channel, addr)
+        new = pid is None
+        if new:
+            pid = await ST.ensure_player(conn, "p:" + secrets.token_hex(12))
+            await conn.execute("""INSERT INTO logins(player_id, channel, address) VALUES($1,$2,$3)
+                                  ON CONFLICT (channel, address) DO NOTHING""", pid, channel, addr)
+            pid = await conn.fetchval("SELECT player_id FROM logins WHERE channel=$1 AND address=$2", channel, addr)
+        async with conn.transaction():
+            await BODY.set_state(conn, pid, asleep=False)            # wake up
+        token = await AUTH.issue_token(conn, pid)
+        return _json({"token": token, "new_player": new, "me": await _me(conn, pid)})
+
+
+async def me(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await _me(conn, pid))
+
+
+async def me_setup(request):
+    """A new player's one-time choices: a first and last name from the game's lists, and their language. No free text,
+    no age, no real names (Eric 10-11). The rank is not chosen: everyone starts as a Trainee."""
+    body = await request.json()
+    first, last, lang = body.get("first_name"), body.get("last_name"), body.get("language")
+    if first not in NAMES.FIRST or last not in NAMES.LAST:
+        raise ST.Refused("Choose your first and last name from the lists.")
+    if lang not in LANG_CODES:
+        raise ST.Refused("Choose your language from the list.")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        done = await conn.fetchval("""UPDATE players SET first_name=$2, last_name=$3, language=$4
+                                      WHERE id=$1 AND first_name IS NULL RETURNING id""", pid, first, last, lang)
+        if not done:
+            raise ST.Refused("Your name is already set.")
+        return _json(await _me(conn, pid))
+
+
+async def auth_signout(request):
+    """Signing out happens from the bed: the character goes to sleep and the sign-in on this device ends (Eric 10-11)."""
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        async with conn.transaction():
+            await BODY.set_state(conn, pid, asleep=True)
+        token = AUTH.bearer(request.headers)
+        if token:
+            await AUTH.revoke(conn, token)
+        return _json({"signed_out": True, "asleep": True})
 
 
 async def _state(conn, pid):
@@ -186,6 +289,12 @@ def make_app():
     app.router.add_get("/api/dfg/receipts", receipts)
     app.router.add_get("/api/dfg/receipt/{code}", verify_receipt)
     app.router.add_get("/api/dfg/health", health)
+    app.router.add_get("/api/dfg/signup-options", signup_options)
+    app.router.add_post("/api/dfg/auth/start", auth_start)
+    app.router.add_post("/api/dfg/auth/verify", auth_verify)
+    app.router.add_post("/api/dfg/auth/signout", auth_signout)
+    app.router.add_get("/api/dfg/me", me)
+    app.router.add_post("/api/dfg/me/setup", me_setup)
     app.router.add_route("OPTIONS", "/{tail:.*}", lambda r: web.Response(status=204))
     app.on_startup.append(_startup)
     app.on_cleanup.append(_cleanup)

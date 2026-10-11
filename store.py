@@ -89,14 +89,14 @@ async def transfer(conn, frm, to, amount, reason, ref=None):
                        frm, to, amount, reason, json.dumps(ref or {}))
 
 
-async def ensure_player(conn, qcid, name):
+async def ensure_player(conn, key, name=None):
     """The player's id. A new player gets their account, storage aboard the Starship, a hangar, the starter ship with
     its hold, and starting credits from the mint, all at once."""
     async with conn.transaction():
         pid = await conn.fetchval(
-            "INSERT INTO players(qcid, display_name) VALUES($1,$2) ON CONFLICT (qcid) DO NOTHING RETURNING id", qcid, name)
+            "INSERT INTO players(player_key, display_name) VALUES($1,$2) ON CONFLICT (player_key) DO NOTHING RETURNING id", key, name)
         if pid is None:
-            pid = await conn.fetchval("SELECT id FROM players WHERE qcid=$1", qcid)
+            pid = await conn.fetchval("SELECT id FROM players WHERE player_key=$1", key)
             if name:
                 await conn.execute("UPDATE players SET display_name=$2 WHERE id=$1 AND display_name IS DISTINCT FROM $2",
                                    pid, name)

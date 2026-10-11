@@ -2,8 +2,7 @@
 Usage: DATABASE_URL=postgres://postgres:pw@localhost/dfgtest python3 test_server.py"""
 import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
-os.environ.setdefault("DFG_PASS_KEY", "test-key-not-real")
-import jwt
+os.environ["DFG_SHOW_CODES"] = "1"
 from aiohttp.test_utils import TestServer, TestClient
 import asyncpg
 import server as S
@@ -59,11 +58,79 @@ async def main():
     r = await cl.post("/api/dfg/collect", headers={"X-Dev-Player": "tester2"}, json=gold)
     check("can't collect into someone else's session", r.status == 422)
     S.AUTH.DEV = False
-    tok = jwt.encode({"sub": "QC-123", "name": "Eric", "exp": int(time.time()) + 300}, "test-key-not-real", algorithm="HS256")
-    S.AUTH.PASS_KEY = "test-key-not-real"
-    r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer " + tok}); check("signed game pass accepted", r.status == 200)
-    bad = jwt.encode({"sub": "QC-123", "exp": int(time.time()) + 300}, "wrong-key", algorithm="HS256")
-    r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer " + bad}); check("forged pass refused", r.status == 401)
+    # ── sign-up and sign-in: the game's own accounts (Eric 10-11) ──
+    r = await cl.get("/api/dfg/signup-options"); o = await r.json()
+    check("sign-up options: 189 languages, ~200 first and last names, start rank Trainee",
+          len(o["languages"]) == 189 and len(o["first_names"]) >= 200 and len(o["last_names"]) >= 200 and o["start_rank"] == "Trainee")
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": "574 555 0123"})
+    check("a phone number without country code is refused", r.status == 422)
+    PH = "+1 574-555-0123"
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH}); j = await r.json()
+    check("a code is sent to a phone (shown here only because DFG_SHOW_CODES is on in tests)", r.status == 200 and len(j["dev_code"]) == 6)
+    code = j["dev_code"]
+    wrong = "000000" if code != "000000" else "111111"
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": wrong})
+    check("a wrong code is refused", r.status == 422)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": code}); j = await r.json()
+    check("the right code signs a NEW player in", r.status == 200 and j["new_player"] and len(j["token"]) > 30)
+    me0 = j["me"]
+    check("a new player is a Trainee in their Private Quarters, awake, who still has to choose a name",
+          me0["rank"] == "Trainee" and me0["location"] == "Private Quarters" and not me0["asleep"] and me0["needs_setup"])
+    check("a new player starts fully rested (100% on every bar)", all(v == 100 for v in me0["bars"].values()))
+    T = {"Authorization": "Bearer " + j["token"]}
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": code})
+    check("a code works only once", r.status == 422)
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Bob", "last_name": "Zhang", "language": "en"})
+    check("a name not on the list is refused (no free text)", r.status == 422)
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "xx"})
+    check("a language not on the list is refused", r.status == 422)
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "en"}); j = await r.json()
+    check("setup done: 'Trainee Dan McCollough', English", j["title"] == "Trainee Dan McCollough" and j["language"] == "en" and not j["needs_setup"])
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Lu", "last_name": "Chong", "language": "en"})
+    check("the name can't be changed again by setup", r.status == 422)
+    S.AUTH.DEV = False
+    r = await cl.get("/api/dfg/ship", headers=T); check("the token works for the game (the new player has a ship)", r.status == 200)
+    r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer not-a-real-token"}); check("a made-up token is refused", r.status == 401)
+    async with cl.app["pool"].acquire() as c:
+        row = await c.fetchrow("SELECT p.* FROM players p JOIN logins l ON l.player_id=p.id WHERE l.address='+15745550123'")
+        keep = [k for k in ("first_name", "last_name", "language") if row[k]]
+        n_tok = await c.fetchval("SELECT count(*) FROM auth_tokens WHERE token_hash=$1", j and S.AUTH._h(T["Authorization"][7:]))
+        raw = await c.fetchval("SELECT count(*) FROM auth_tokens WHERE token_hash=$1", T["Authorization"][7:])
+        codes_plain = await c.fetchval("SELECT count(*) FROM login_codes WHERE code_hash=$1", code)
+    check("the phone is stored in international form, and the only personal fields are the login itself", row is not None and keep == ["first_name", "last_name", "language"])
+    check("only a hash of the sign-in token is stored", n_tok == 1 and raw == 0)
+    check("only a hash of the code is stored", codes_plain == 0)
+    # sleeping and waking: the bars refill 35 per 6 hours asleep and drain 2.2 an hour awake
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET stamina=65, energy=65, focus=65, body_at=now() - interval '6 hours', asleep=false WHERE id=$1", row["id"])
+    r = await cl.get("/api/dfg/me", headers=T); j = await r.json()
+    check("awake 6 h from 65%: about 51.8% (2.2 an hour) and a warning to rest", abs(j["bars"]["stamina"] - 51.8) < 0.1 and j["warning"])
+    check("ability is severely reduced between 50% and 65%", 0.6 <= j["ability"] < 0.9)
+    r = await cl.post("/api/dfg/auth/signout", headers=T); j = await r.json()
+    check("signing out puts the character to bed", j["asleep"])
+    r = await cl.get("/api/dfg/me", headers=T); check("after signing out, that token no longer works", r.status == 401)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET stamina=50, energy=50, focus=50, body_at=now() - interval '6 hours' WHERE id=$1", row["id"])
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH}); code2 = (await r.json())["dev_code"]
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": code2}); j = await r.json()
+    check("signing in again is the SAME player, waking up", not j["new_player"] and j["me"]["title"] == "Trainee Dan McCollough" and not j["me"]["asleep"])
+    check("6 hours asleep from 50% wakes at 85%", abs(j["me"]["bars"]["focus"] - 85) < 0.1)
+    for _ in range(3):
+        await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH})
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH})
+    check("more than 5 codes an hour for one number is refused", r.status == 422)
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "pilot@example.com"}); j = await r.json()
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "PILOT@example.com", "code": j["dev_code"]}); j2 = await r.json()
+    check("email sign-in works too (case doesn't matter) and is a different player", r.status == 200 and j2["new_player"])
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "pilot@example.com"}); c3 = (await r.json())["dev_code"]
+    for _ in range(5):
+        await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "pilot@example.com", "code": "999999" if c3 != "999999" else "888888"})
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "pilot@example.com", "code": c3})
+    check("5 wrong tries end a code (even the right one then fails)", r.status == 422)
+    S.AUTH.SHOW_CODES = False
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "new@example.com"})
+    check("without the game's own email address, email sign-in is closed on the hosted server", r.status == 422)
+    S.AUTH.SHOW_CODES = True
     async with cl.app["pool"].acquire() as c:
         n = await c.fetchval("SELECT count(*) FROM ledger WHERE kind='collect'")
     check("every collect recorded in the ledger (4)", n == 4)
@@ -120,13 +187,13 @@ async def main():
         if i: await asyncio.sleep(2.05)
         await cl.post("/api/dfg/collect", headers=H3, json=dict(gold, session_id=sid3))
     async with cl.app["pool"].acquire() as c:
-        p3 = await c.fetchval("SELECT id FROM players WHERE qcid='dev:tester3'") or await c.fetchval("SELECT id FROM players WHERE qcid LIKE '%tester3'")
+        p3 = await c.fetchval("SELECT id FROM players WHERE player_key='dev:tester3'") or await c.fetchval("SELECT id FROM players WHERE qcid LIKE '%tester3'")
         await c.execute("UPDATE locations SET capacity_m3=0.003 WHERE player_id=$1 AND kind='starship_cargo'", p3)
     r = await cl.post("/api/dfg/unload", headers=H3, json={"docked": True}); j = await r.json()
     check("storage full: 2 pieces fit, 1 stays aboard", j["unloaded_pieces"] == 2 and j["left_aboard"] == 1 and j["storage_full"])
 
     async with cl.app["pool"].acquire() as c:
-        a1 = await c.fetchval("SELECT a.id FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.qcid LIKE '%tester1'")
+        a1 = await c.fetchval("SELECT a.id FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.player_key LIKE '%tester1'")
         a3 = await c.fetchval("SELECT id FROM accounts WHERE player_id=$1", p3)
         async with c.transaction():
             await ST.transfer(c, a1, a3, 1200, "trade", {"test": True})
@@ -147,8 +214,8 @@ async def main():
     # two of the same request at once can't double anything
     async with cl.app["pool"].acquire() as c1, cl.app["pool"].acquire() as c2:
         await asyncio.gather(ST.ensure_player(c1, "racer", None), ST.ensure_player(c2, "racer", None), return_exceptions=True)
-        n_acct = await c1.fetchval("SELECT count(*) FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.qcid='racer'")
-        start = await c1.fetchval("SELECT credits FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.qcid='racer'")
+        n_acct = await c1.fetchval("SELECT count(*) FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.player_key='racer'")
+        start = await c1.fetchval("SELECT credits FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.player_key='racer'")
     check("a new player created twice at once gets one account and one set of starting credits", n_acct == 1 and start == 5000)
     # blueprint review (Eric 10-11): the player designs, the team reviews
     async with cl.app["pool"].acquire() as c:

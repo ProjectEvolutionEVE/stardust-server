@@ -23,11 +23,72 @@ INSERT INTO settings(key, value, note) VALUES
   ('bank_bid_gap_pct',     10, 'the bank''s standing bid sits this many percent under the last price')
 ON CONFLICT (key) DO NOTHING;
 
+-- v3 (10-11): the game's OWN accounts, no link to Quavara (Eric). `player_key` was `qcid` (the old Quavara id): renamed
+-- in place on databases that have it. It is now an internal id; how a player signs in lives in `logins`.
+DO $$ BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='players' AND column_name='qcid') THEN
+    ALTER TABLE players RENAME COLUMN qcid TO player_key;
+  END IF;
+END $$;
 CREATE TABLE IF NOT EXISTS players (
   id           BIGSERIAL PRIMARY KEY,
-  qcid         TEXT UNIQUE NOT NULL,             -- the Quavara account id; a buyer would swap this for their own login
+  player_key   TEXT UNIQUE NOT NULL,             -- internal id ('p:<random>'; 'dev:<name>' in local tests)
   display_name TEXT,
   created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+-- Who the player is in the game (Eric 10-11): no real names. Rank + a first and last name picked from names.py.
+-- Everyone starts at the bottom of the civilian ladder (track 'civilian', step 1 = Trainee); a military track comes later.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS first_name TEXT;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS last_name  TEXT;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS language   TEXT;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS track      TEXT NOT NULL DEFAULT 'civilian';
+ALTER TABLE players ADD COLUMN IF NOT EXISTS rank_step  INT  NOT NULL DEFAULT 1;
+-- The body (Eric 10-11): stamina, energy and focus, 0-100. Awake they drain 2.2 an hour; asleep they refill 35 per 6
+-- hours. Stored as the value at `body_at` plus whether the character is asleep; the current value is worked out on read.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS stamina NUMERIC(6,3) NOT NULL DEFAULT 100;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS energy  NUMERIC(6,3) NOT NULL DEFAULT 100;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS focus   NUMERIC(6,3) NOT NULL DEFAULT 100;
+ALTER TABLE players ADD COLUMN IF NOT EXISTS body_at TIMESTAMPTZ NOT NULL DEFAULT now();
+ALTER TABLE players ADD COLUMN IF NOT EXISTS asleep  BOOLEAN NOT NULL DEFAULT true;     -- a new player starts in bed
+
+-- How a player signs in: a phone number or an email address. The ONLY personal information the game keeps.
+CREATE TABLE IF NOT EXISTS logins (
+  id         BIGSERIAL PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  channel    TEXT NOT NULL CHECK (channel IN ('sms','email')),
+  address    TEXT NOT NULL,                       -- +<digits> or a lower-case email
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (channel, address)
+);
+-- Codes the server makes itself (email; and phone in local tests). Only a hash is kept.
+CREATE TABLE IF NOT EXISTS login_codes (
+  id         BIGSERIAL PRIMARY KEY,
+  channel    TEXT NOT NULL,
+  address    TEXT NOT NULL,
+  code_hash  TEXT NOT NULL,
+  tries      INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  used_at    TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS login_codes_addr ON login_codes(address, id DESC);
+-- Every code requested, for the per-hour limits.
+CREATE TABLE IF NOT EXISTS login_attempts (
+  id      BIGSERIAL PRIMARY KEY,
+  channel TEXT NOT NULL,
+  address TEXT NOT NULL,
+  ip      TEXT NOT NULL DEFAULT '',
+  at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS login_attempts_addr ON login_attempts(address, at);
+CREATE INDEX IF NOT EXISTS login_attempts_ip   ON login_attempts(ip, at);
+-- Signed-in devices. Only a hash of each token is kept.
+CREATE TABLE IF NOT EXISTS auth_tokens (
+  token_hash   TEXT PRIMARY KEY,
+  player_id    BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  last_seen_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  revoked_at   TIMESTAMPTZ
 );
 
 -- Every kind of thing in the game. A new kind of thing is a new row here, not a new table.

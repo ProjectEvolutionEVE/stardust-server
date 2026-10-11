@@ -21,7 +21,7 @@ The full record is in the `quavara-docs` repository:
    - its own accounts and its own sign-up.
 
    It never reads or writes Quavara's database, never uses a QCID, and never uses Quavara sign-in. This is so that the game can be sold or licensed whole.
-   - `auth_link.py` and `DFG_PASS_KEY` are left over from the earlier plan (Quavara sign-in) and are **to be replaced**.
+   - The old Quavara game-pass code (`auth_link.py`, `DFG_PASS_KEY`) was **removed on 10-11**. Sign-in is now the game's own, in `auth.py`.
 2. **Credits exist only inside the game (10-11).** They never come from real money. They never turn into money, and never into Quavara credits.
 
 ### Accounts and players
@@ -121,6 +121,6 @@ The full record is in the `quavara-docs` repository:
 
 ## This repository
 - **Deploys:** every push to `main` auto-deploys to Railway (project `stardust`, service `game-server`). Do your work on a branch. Merging to `main` is a deploy: tell Eric first.
-- **Never** set `DFG_DEV_AUTH=1` on Railway.
+- **Never** set `DFG_DEV_AUTH=1` or `DFG_SHOW_CODES=1` on Railway. Either one would let anyone sign in as anyone.
 - **Tests:** `DATABASE_URL=postgres://…/dfgtest python3 test_server.py`. The test refuses to run on any database whose name doesn't end in `test`.
 - **Health check:** `https://game-server-production-9863.up.railway.app/api/dfg/health`

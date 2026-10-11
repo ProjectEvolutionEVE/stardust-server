@@ -1,8 +1,7 @@
-# Debris-field game server (`dfg/`)
+# Stardust game server
 
-Its own process and its own database (Eric, 2026-10-10): kept separate from Quavara so the game can be sold or
-licensed later. The only link to Quavara is sign-in (`auth_link.py`): Quavara hands a signed-in member a short-lived
-signed game pass, and this server only checks the signature.
+Its own process, its own database and its own accounts (Eric, 2026-10-10/11): **no connection to Quavara at all**, so the
+game can be sold or licensed whole. Read `CLAUDE.md` first: it lists Eric's settled rulings.
 
 | File | What it is |
 |---|---|
@@ -10,11 +9,14 @@ signed game pass, and this server only checks the signature.
 | `store.py` | the only way goods and credits change hands: new-player setup, credit transfers, unloading into storage, inventory, history, and the audit |
 | `blueprints.py` | blueprint review: players submit the blueprint form, the team asks questions or requests changes, the designer resubmits, the team approves (the design becomes buildable and sellable) or turns it down; every version and message kept |
 | `game.py` | the rules the server enforces (real densities, shape fit, bulk, collecting speed); `python3 game.py` self-tests |
-| `server.py` | the web server (aiohttp): `/api/dfg/session`, `/ship`, `/collect`, `/unload`, `/inventory`, `/history`, `/health` |
-| `auth_link.py` | the one Quavara link: verifies the game pass (HS256, `DFG_PASS_KEY`) |
-| `test_server.py` | end-to-end test against a real local Postgres (45 checks); wipes the test database first and refuses any database not named `*test` |
+| `server.py` | the web server (aiohttp): sign-up/sign-in (`/auth/*`, `/me`), `/session`, `/ship`, `/collect`, `/unload`, `/inventory`, `/history`, `/receipts`, `/receipt/{code}`, `/health` |
+| `auth.py` | the game's own sign-in: a 6-digit code by text (Twilio Verify, `TWILIO_*`) or email (closed until the game has its own sending address); hashed tokens; per-hour limits. `DFG_SHOW_CODES` and `DFG_DEV_AUTH` are for local tests only |
+| `body.py` | the character's body: stamina, energy, focus (drain 2.2/h awake, refill 35 per 6 h asleep, ability curve, warnings) |
+| `names.py` | the first and last names players pick from (draft for Eric's review) |
+| `languages.json` | the 189 languages (a copy of Quavara's list, not a link) |
+| `test_server.py` | end-to-end test against a real local Postgres (79 checks); wipes the test database first and refuses any database not named `*test` |
 
-**Status (2026-10-11):** built and tested locally only. NOT hosted anywhere. Not wired to the game page yet.
+**Status (2026-10-11):** hosted on Railway (project `stardust`); every push to `main` deploys. Not wired to the game page yet.
 
 **What the database keeps (v2, Eric 10-11):**
 - **Everything a player owns:** resources as exact amounts (grams), blueprint copies as counts, and ships, parts and tools
