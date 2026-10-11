@@ -68,8 +68,8 @@ async def print_price(conn, blueprint_code, qty):
 
 
 async def print_run(conn, pid, blueprint_code, qty):
-    """Print a run of copies of the player's own approved design into their filing cabinet, paid in credits (they leave
-    the economy: a credit sink), with a receipt."""
+    """Print a run of copies of the player's own approved design into their filing cabinet, paid in credits to the WSC's
+    own account (Eric 10-11), with a receipt."""
     s = await ST.settings(conn)
     if not isinstance(qty, int) or isinstance(qty, bool) or qty < 1 or qty > int(s["print_run_max"]):
         raise ST.Refused(f"A run is 1 to {int(s['print_run_max'])} copies.")
@@ -84,7 +84,7 @@ async def print_run(conn, pid, blueprint_code, qty):
         if await conn.fetchval("SELECT credits FROM accounts WHERE id=$1", acct) < price["total"]:
             raise ST.Refused(f"Printing {qty} copies costs {price['total']:,} credits, and you don't have enough.")
         out = await _issue(conn, blueprint_code, "print", pid, qty, loc)
-        await ST.transfer(conn, acct, await ST.system_account(conn, "sink"), price["total"], "blueprint_print",
+        await ST.transfer(conn, acct, await ST.wsc_account(conn), price["total"], "blueprint_print",
                           {"blueprint": blueprint_code, "run": out["run"], "copies": qty})
         name = await conn.fetchval("SELECT name FROM item_types WHERE code=$1", blueprint_code)
         lid = await conn.fetchval("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'print',$2) RETURNING id", pid,

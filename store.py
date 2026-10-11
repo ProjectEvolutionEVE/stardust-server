@@ -72,6 +72,15 @@ async def system_account(conn, kind):
     return await conn.fetchval("SELECT id FROM accounts WHERE kind=$1", kind)
 
 
+WSC_KEY = "system:wsc"     # the WSC's own account aboard the Starship (Eric 10-11): fees for its services are paid here,
+                           # and it can buy and sell what the ship needs on the market, like any account
+
+
+async def wsc_account(conn):
+    """The WSC's account id (created on first use, set up like any account aboard)."""
+    return await account_of(conn, await ensure_player(conn, WSC_KEY, "WSC Alexander von Humboldt"))
+
+
 async def account_of(conn, pid):
     return await conn.fetchval("SELECT id FROM accounts WHERE player_id=$1", pid)
 
