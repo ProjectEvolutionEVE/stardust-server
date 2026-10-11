@@ -90,6 +90,7 @@ The full record is in the `quavara-docs` repository:
       - A **preset toggle** lets the character finish the whole job automatically: complete the task, return to the Starship, unload (with its receipt), go to its quarters and rest.
       - When the player comes back, the task is done and the character is **already in bed**, with health bars reflecting the rest it actually got.
       - The server runs these offline tasks itself, in real time.
+      - **The toggle means "finish the job before coming back" (10-11).** The character does not stop early when its bars run low. It keeps working, even below 50%, with the declining abilities slowing it down, until the job is done. Then it returns, unloads and rests.
   - **Desk:** read the COMMS; review the item list and the wallet; check active market orders and edit or adjust them right there.
   - **Closet:** clothing and uniforms.
   - **Bookshelf:** continued learning and study.
