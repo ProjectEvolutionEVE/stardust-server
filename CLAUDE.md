@@ -65,7 +65,12 @@ The full record is in the `quavara-docs` repository:
 - After signing up, a new player **begins in their Private Quarters**.
 - The 3D room is not built yet. For now the top of the screen names the location: **"Private Quarters"**.
 - The room has **tabs, one for each piece of furniture**:
-  - **Bed:** rest.
+  - **Bed:** where every session begins and ends (10-11).
+    - Signing in, the player **wakes up in their bed**.
+    - Signing out happens **from the bed**.
+    - The game always runs in **real time**. Rest never speeds anything up: a 2-minute nap does not finish a build that takes weeks.
+    - A **fatigue meter** slowly drains **stamina, energy and mental focus**, just like the real world. **Rest refills them.**
+    - The **best rest is in the player's own bed** in their Private Quarters.
   - **Desk:** read the COMMS; review the item list and the wallet; check active market orders and edit or adjust them right there.
   - **Closet:** clothing and uniforms.
   - **Bookshelf:** continued learning and study.
