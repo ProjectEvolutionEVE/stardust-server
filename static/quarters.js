@@ -194,7 +194,7 @@ async function tabBody(tab,me){
   if(tab==='cabinet'){let r=null,bp=null;try{r=await call('/receipts');}catch(e){}try{bp=await call('/blueprints');}catch(e){}
     const list=r?r.receipts:[];
     return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">BLUEPRINTS</h3>${blueprintList(bp?bp.blueprints:[])}
-     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${receiptLine(x)}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">LOCKBOX</h3><p class="soon">Empty. A small, secure box for valuables.</p>`;}
   if(tab==='closet')return `<p class="soon">Your clothing and uniforms will hang here. Uniforms change as you rise through the ranks.</p>`;
   if(tab==='bookshelf')return `<p class="soon">Your own books for continued learning and study. Courses and certification tests are in the Starship library.</p>`;
@@ -246,6 +246,12 @@ function showMarket(me){   // the full board, over everything (rule 20: reached 
 // ── THE BLUEPRINT FORM (rule 23, Eric 10-11): a series of questions, not a blank page. In the Library's drafting room;
 // the designs are kept in the filing cabinet. Weight and size are worked out from the real materials, never typed in.
 // The game's review team reads every submission and may ask questions or request changes before approving it.
+// One line per receipt in the filing cabinet's log, whatever kind it is.
+function receiptLine(x){
+  if(x.kind==='trade')return `Market: ${esc(x.trade)} ${esc(x.lots)} lot${x.lots>1?'s':''} of ${esc(x.item)} for ${esc(Number(x.credits).toLocaleString())} credits`;
+  if(x.kind==='print')return `Printed ${esc(x.copies)} cop${x.copies>1?'ies':'y'} of ${esc(x.item)}, run ${esc(x.run)} (${esc(x.first)} to ${esc(x.last)}) for ${esc(Number(x.credits).toLocaleString())} credits`;
+  if(x.kg)return `${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}`;
+  return esc(x.kind);}
 const BP_STATUS={draft:'Draft: only you can see it',submitted:'With the review team',changes_requested:'Changes requested: see the review team’s note',
   approved:'Approved',rejected:'Not approved'};
 function blueprintList(list){
@@ -288,7 +294,12 @@ async function showBlueprintForm(me,id,from){
   place('DRAFTING ROOM · STARSHIP LIBRARY',me,`<h2 style="margin:0 0 4px">${d?esc(d.title):'New blueprint'}</h2>
    <p class="soon" style="margin:0">${d?esc(BP_STATUS[d.status]||d.status)+(d.version?' · version '+d.version:''):'Answer each question. You can save a draft and come back any time.'}</p>
    ${d&&d.model?`<div class="note team"><b>Model ${esc(d.model)}</b><div class="soon">Every copy of this design carries its own serial, so anyone can check it is genuine.</div>
-     ${d.serials.map(x=>`<div style="font-family:ui-monospace,Menlo,monospace">${esc(x)}</div>`).join('')}</div>`:''}
+     <details class="fold"><summary>Your serials (${d.serials.length})</summary>${d.serials.map(x=>`<div style="font-family:ui-monospace,Menlo,monospace">${esc(x)}</div>`).join('')}</details>
+     <h3 style="margin:12px 0 4px;font-size:14px;color:#d9a441">PRINT COPIES TO SELL</h3>
+     <div class="soon">A one-time setup fee on your first run, then a price for each copy. Copies are filed in your filing cabinet. A buyer can build from a copy but can never resell it.</div>
+     <div class="mrow"><input id="bpCopies" type="number" inputmode="numeric" min="1" step="1" value="25" style="flex:0 0 110px" aria-label="Copies"><span class="soon">copies</span></div>
+     <div id="bpQuote" class="soon" style="margin-top:6px"></div>
+     <button class="go" id="bpPrint">Print copies</button></div>`:''}
    ${notes?`<h3 style="margin:14px 0 4px;font-size:14px;color:#d9a441">NOTES WITH THE REVIEW TEAM</h3>${notes}`:''}
    ${canReply?`<textarea id="bpReply" maxlength="2000" placeholder="Answer the review team"></textarea><button class="small" id="bpSendReply">Send answer</button>`:''}
    ${q('','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">
@@ -344,6 +355,18 @@ async function showBlueprintForm(me,id,from){
     try{if(!bid)bid=(await call('/blueprints/save',{form})).id;
       await call('/blueprints/submit',{id:bid,form});await showBlueprintForm(me,bid,from);msg('Sent. The review team will read it, and any questions or changes will appear here.',true);}
     catch(e){if(bid&&!d){await showBlueprintForm(me,bid,from);}msg(e.message);}};
+  const cp=$('#bpCopies');
+  if(cp){const quote=async()=>{const n=Math.floor(Number(cp.value));const b=$('#bpPrint');
+      if(!(n>0)){$('#bpQuote').textContent='';b.disabled=true;return;}
+      try{const q=await call('/blueprints/print',{id:d.id,copies:n,quote:true});b.disabled=false;
+        b.textContent=`Print ${n.toLocaleString()} cop${n>1?'ies':'y'} for ${q.total.toLocaleString()} credits`;
+        $('#bpQuote').textContent=(q.setup_fee?`Setup fee ${q.setup_fee} (first run only) + `:'')+`${n} × ${q.per_copy} = ${q.total.toLocaleString()} credits. That's ${(q.total/n).toLocaleString(undefined,{maximumFractionDigits:2})} credits a copy, so price your copies above that.`;}
+      catch(e){$('#bpQuote').textContent=e.message;}};
+    cp.addEventListener('input',quote);quote();
+    $('#bpPrint').onclick=async()=>{const n=Math.floor(Number(cp.value));
+      try{const r=await call('/blueprints/print',{id:d.id,copies:n});await showBlueprintForm(me,d.id,from);
+        msg(`Printed run ${r.run}: ${r.serials[0]} to ${r.serials[r.serials.length-1]}. Paid ${r.price.total.toLocaleString()} credits. Your receipt is ${r.receipt.code}.`,true);}
+      catch(e){msg(e.message);}};}
   const rp=$('#bpSendReply');if(rp)rp.onclick=async()=>{try{await call('/blueprints/reply',{id:d.id,body:$('#bpReply').value});await showBlueprintForm(me,d.id,from);}catch(e){msg(e.message);}};
   const wd=$('#bpWithdraw');if(wd)wd.onclick=async()=>{if(!confirm('Withdraw this blueprint? It will be removed from your filing cabinet.'))return;
     try{await call('/blueprints/withdraw',{id:d.id});from==='cabinet'?showQuarters(me,'cabinet'):showBlueprints(me);}catch(e){msg(e.message);}};

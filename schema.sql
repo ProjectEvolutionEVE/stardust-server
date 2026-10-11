@@ -484,3 +484,9 @@ INSERT INTO settings(key, value, note) VALUES
   ('blueprint_copy_m3', 0.0005, 'SAMPLE: space one blueprint copy takes in a filing cabinet (a folded drawing set), cubic metres'),
   ('print_run_max', 500, 'SAMPLE: most copies in one print run')
 ON CONFLICT (key) DO NOTHING;
+-- v10 (10-11): printing prices (Eric). A premium for registering, serial-tagging and protecting a design: a one-time
+-- setup fee with a design's first print run, plus a price per copy. 25 copies on the first run = 100 + 250 = 350.
+INSERT INTO settings(key, value, note) VALUES
+  ('blueprint_setup_fee', 100, 'Eric 10-11: one-time setup fee for a new design, paid with its first print run, credits'),
+  ('blueprint_copy_cost',  10, 'Eric 10-11: price of each printed blueprint copy, credits')
+ON CONFLICT (key) DO NOTHING;

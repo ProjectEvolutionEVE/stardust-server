@@ -24,6 +24,7 @@ The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
+  POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
 import os, json, uuid, secrets
 from pathlib import Path
@@ -420,6 +421,22 @@ async def bp_reply(request):
         return _json(await BP.detail(conn, pid, sid))
 
 
+async def bp_print(request):
+    """Print a run of copies of an approved design (POST {id, copies}); {id, copies, quote:true} only prices it."""
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        sid = _bp_id(b)
+        code = await conn.fetchval("SELECT item_code FROM blueprint_submissions WHERE id=$1 AND designer_id=$2 AND status='approved'", sid, pid)
+        if not code:
+            raise ST.Refused("Only your own approved designs can be printed.")
+        qty = b.get("copies")
+        if b.get("quote"):
+            return _json(await SER.print_price(conn, code, qty if isinstance(qty, int) and qty > 0 else 1))
+        out = await SER.print_run(conn, pid, code, qty)
+        return _json({**out, "design": await BP.detail(conn, pid, sid)})
+
+
 async def bp_withdraw(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
@@ -452,6 +469,7 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/submit", bp_submit)
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
     app.router.add_post("/api/dfg/blueprints/withdraw", bp_withdraw)
+    app.router.add_post("/api/dfg/blueprints/print", bp_print)
     app.router.add_get("/api/dfg/signup-options", signup_options)
     app.router.add_post("/api/dfg/auth/start", auth_start)
     app.router.add_post("/api/dfg/auth/verify", auth_verify)

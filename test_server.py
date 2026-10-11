@@ -343,8 +343,12 @@ async def main():
     async with cl.app["pool"].acquire() as c:
         model = await c.fetchval("SELECT model_code FROM item_types WHERE code=$1", code)
         pdes = await c.fetchval("SELECT designer_id FROM blueprint_submissions WHERE id=$1", bid)
+        bal0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
         r1 = await SER.print_run(c, pdes, code, 25)
+        bal1 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
         r2 = await SER.print_run(c, pdes, code, 25)
+        bal2 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
+        rcpt = await ST.verify_receipt(c, r1["receipt"]["code"])
         allc = await c.fetchval("SELECT count(*) FROM serials x JOIN production_runs r ON r.id=x.run_id WHERE r.blueprint_code=$1", code)
         try:
             await SER.print_run(c, p1, code, 5); check("only the original's holder can print copies", False)
@@ -364,6 +368,20 @@ async def main():
     check("a buyer can never resell a bought copy (Eric 10-11)", not buyer_ok and not stranger_ok)
     async with cl.app["pool"].acquire() as c:
         await c.execute("UPDATE items SET owner_id=$2 WHERE id=$1", copy_id, pdes)
+    check("first run of 25 costs 350 credits: setup fee 100 + 25 x 10 (Eric 10-11)", bal0 - bal1 == 350 and r1["price"]["setup_fee"] == 100)
+    check("second run costs only 10 a copy: 250", bal1 - bal2 == 250 and r2["price"]["setup_fee"] == 0)
+    check("each print run gives a receipt anyone can check", rcpt and rcpt["kind"] == "print" and rcpt["copies"] == 25 and rcpt["credits"] == 350)
+    r = await cl.post("/api/dfg/blueprints/print", headers=HB, json={"id": bid, "copies": 10, "quote": True}); q = await r.json()
+    check("the print screen's price quote (later runs: no setup fee)", r.status == 200 and q == {"setup_fee": 0, "per_copy": 10, "copies": 10, "total": 100})
+    async with cl.app["pool"].acquire() as c:
+        keep = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
+        await c.execute("UPDATE accounts SET credits=50 WHERE player_id=$1", pdes)
+        await c.execute("UPDATE accounts SET credits=credits+$1 WHERE kind='mint'", keep - 50)   # keep the books balanced
+    r = await cl.post("/api/dfg/blueprints/print", headers=HB, json={"id": bid, "copies": 10}); j = await r.json()
+    check("not enough credits: the run is refused and nothing is printed", r.status == 422 and "enough" in j["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE accounts SET credits=$2 WHERE player_id=$1", pdes, keep)
+        await c.execute("UPDATE accounts SET credits=credits-$1 WHERE kind='mint'", keep - 50)
     check("approval gives the design a model code (BP-XXXXX)", model and model.startswith("BP-") and len(model) == 8)
     check("run 1: 25 copies, serials 0001 to 0025", r1["run"] == 1 and r1["serials"][0] == f"{model}-R1-0001" and r1["serials"][-1] == f"{model}-R1-0025")
     check("run 2 never repeats a run-1 code", r2["run"] == 2 and not set(r1["serials"]) & set(r2["serials"]) and allc == 51)

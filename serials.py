@@ -8,7 +8,7 @@ Every one carries its own SERIAL:
 Run numbers only go up (one run at a time per design, under a row lock), and the database refuses a duplicate serial.
 Anyone can check a serial: what it is, which run, which copy, and when it was made. Never who owns it.
 A bought copy can't be resold (Eric 10-11): only the designer sells copies (may_sell)."""
-import secrets
+import json, secrets
 import store as ST
 
 ORIGINAL = "ORIGINAL"
@@ -58,9 +58,18 @@ async def issue_original(conn, pid, blueprint_code):
     return await _issue(conn, blueprint_code, "original", pid, 1, await _cabinet(conn, pid))
 
 
+async def print_price(conn, blueprint_code, qty):
+    """What a run costs (Eric 10-11): the one-time setup fee on a design's first run, plus the price of each copy."""
+    s = await ST.settings(conn)
+    first = not await conn.fetchval("SELECT 1 FROM production_runs WHERE blueprint_code=$1 AND kind='print'", blueprint_code)
+    setup = int(s["blueprint_setup_fee"]) if first else 0
+    return {"setup_fee": setup, "per_copy": int(s["blueprint_copy_cost"]), "copies": qty,
+            "total": setup + int(s["blueprint_copy_cost"]) * qty}
+
+
 async def print_run(conn, pid, blueprint_code, qty):
-    """Print a run of copies of the player's own approved design into their filing cabinet.
-    Not yet offered on screen: the record says the designer pays credits per copy, and that price is still Eric's."""
+    """Print a run of copies of the player's own approved design into their filing cabinet, paid in credits (they leave
+    the economy: a credit sink), with a receipt."""
     s = await ST.settings(conn)
     if not isinstance(qty, int) or isinstance(qty, bool) or qty < 1 or qty > int(s["print_run_max"]):
         raise ST.Refused(f"A run is 1 to {int(s['print_run_max'])} copies.")
@@ -68,8 +77,24 @@ async def print_run(conn, pid, blueprint_code, qty):
         if not await conn.fetchval("""SELECT 1 FROM items i JOIN serials x ON x.item_id=i.id JOIN production_runs r ON r.id=x.run_id
                                       WHERE i.owner_id=$1 AND i.item_code=$2 AND r.kind='original'""", pid, blueprint_code):
             raise ST.Refused("Only the holder of a design's original can print copies of it.")
+        await conn.fetchval("SELECT model_code FROM item_types WHERE code=$1 FOR UPDATE", blueprint_code)  # one run at a time
         loc = await _cabinet(conn, pid, qty * float(s["blueprint_copy_m3"]))
-        return await _issue(conn, blueprint_code, "print", pid, qty, loc)
+        price = await print_price(conn, blueprint_code, qty)
+        acct = await ST.account_of(conn, pid)
+        if await conn.fetchval("SELECT credits FROM accounts WHERE id=$1", acct) < price["total"]:
+            raise ST.Refused(f"Printing {qty} copies costs {price['total']:,} credits, and you don't have enough.")
+        out = await _issue(conn, blueprint_code, "print", pid, qty, loc)
+        await ST.transfer(conn, acct, await ST.system_account(conn, "sink"), price["total"], "blueprint_print",
+                          {"blueprint": blueprint_code, "run": out["run"], "copies": qty})
+        name = await conn.fetchval("SELECT name FROM item_types WHERE code=$1", blueprint_code)
+        lid = await conn.fetchval("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'print',$2) RETURNING id", pid,
+                                  json.dumps({"blueprint": blueprint_code, "run": out["run"], "copies": qty, "price": price}))
+        out["price"] = price
+        out["receipt"] = await ST.issue_receipt(conn, pid, "print", lid, {
+            "issued_by": "WSC Alexander von Humboldt, records office", "item": name, "model": out["model"],
+            "run": out["run"], "copies": qty, "first": out["serials"][0], "last": out["serials"][-1],
+            "setup_fee": price["setup_fee"], "per_copy": price["per_copy"], "credits": price["total"]})
+        return out
 
 
 async def verify(conn, code):
