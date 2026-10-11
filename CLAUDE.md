@@ -35,6 +35,8 @@ The full record is in the `quavara-docs` repository:
    - a first and last name **picked from the game's own list**, for example "Lieutenant Dan McCollough" or "First Science Officer Lu Chong".
 
    Players never type a free-text name.
+
+   **Everyone starts at the lowest rank (10-11).** A new player begins as a **trainee** (the record's "trainee prospector", ledger v3.3). They work up the chain of command to captain only by passing the library's tests and earning experience (rule 16). Nobody chooses a rank, and nobody starts above the bottom. The examples "Lieutenant Dan McCollough" and "First Science Officer Lu Chong" show how a name reads *after* promotion.
 7. **Language:** the player picks it at sign-up, and it is stored on their game account. The list is copied from Quavara's list of 189 languages. It is a copy, not a link.
 8. **NO communication between players. Ever (10-11).**
    - No chat, and no written or spoken messages, now or in any multiplayer version.
