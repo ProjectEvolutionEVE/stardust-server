@@ -83,7 +83,7 @@ The full record is in the `quavara-docs` repository:
         - **Extremely** below 50%.
         - Studying and guiding the ship become harder.
         - **On-screen warnings** remind the player that they are pushing their character's body past good, healthy habits and proper rest.
-      - **Drain while awake: 2.2 points an hour.** Proposed with the math on 10-11, pending Eric's yes. A 16-hour day takes 100% to 65%; 6 hours of sleep restores it, and a standard 8 hours restores it with margin (8 hours fixes anything from 53%).
+      - **Drain while awake: 2.2 points an hour (confirmed by Eric, 10-11).** A 16-hour day takes 100% to 65%; 6 hours of sleep restores it, and a standard 8 hours restores it with margin (8 hours fixes anything from 53%).
     - **Tasks continue while the player is offline (Eric, 10-11):**
       - A player may log off while their character keeps working, for example a long mining run with a big ship and a big hold.
       - The character's health bars **keep draining** while it works offline.
