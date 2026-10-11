@@ -62,7 +62,7 @@ The full record is in the `quavara-docs` repository:
 1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
 2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
 3. **The rules for a player's first blueprint.** Must it sell before they may fly, or is listing it enough? The blueprint form and the review process are already settled: see the spec, §7a.
-4. **Which service sends sign-in codes by text message.** Resend sends email only. This is a sign-up and a cost on Eric's side.
+4. **Which service sends sign-in codes by text message.** Quavara already texts sign-in codes: Eric's screenshots of 2026-10-11 show them coming from the short code 22395. The provider is set up in `quavara-core`, which hasn't been checked yet. The plan is to use the same provider, under a separate sender or account for the game, so the game stays separable. Resend itself sends email only. **Correction:** an earlier note said Quavara had never used a texting service. That was wrong.
 5. **Which address the sign-in emails come from.** Using Quavara's Resend account and quavara.com would tie the game to Quavara. The plan is the game's own sending domain once it has a name.
 
 ## This repository
