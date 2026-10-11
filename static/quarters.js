@@ -281,7 +281,7 @@ async function showBlueprintForm(me,id,from){
     ${edit?'<button class="small bpAddM">+ Add a material</button> <button class="small bpDelP" style="color:#ff8f8a">Remove this part</button>':''}</div>`;
   const bm=f.build_minutes||0,unit=bm&&bm%1440===0?'days':bm&&bm%60===0?'hours':bm?'minutes':'hours';
   const uval=bm?bm/Object.fromEntries(UNITS)[unit]:'';
-  const q=(n,h,hint,body)=>`<div class="q"><div class="n">${n}</div><div class="h">${h}</div>${hint?`<div class="hint">${hint}</div>`:''}${body}</div>`;
+  let qn=0;const q=(n,h,hint,body)=>`<div class="q"><div class="n">${++qn}</div><div class="h">${h}</div>${hint?`<div class="hint">${hint}</div>`:''}${body}</div>`;
   const ta=(k,ph)=>`<textarea id="bp_${k}" maxlength="${L[k]}" placeholder="${esc(ph)}"${dis}>${esc(f[k]||'')}</textarea>`;
   const notes=(d&&d.messages||[]).map(m=>`<div class="note ${m.from==='You'?'':'team'}"><div class="soon">${esc(m.from)} · version ${m.version} · ${esc(new Date(m.at).toLocaleString())}</div>${esc(m.body)}</div>`).join('');
   const canReply=d&&(d.status==='submitted'||d.status==='changes_requested');
@@ -289,18 +289,23 @@ async function showBlueprintForm(me,id,from){
    <p class="soon" style="margin:0">${d?esc(BP_STATUS[d.status]||d.status)+(d.version?' · version '+d.version:''):'Answer each question. You can save a draft and come back any time.'}</p>
    ${notes?`<h3 style="margin:14px 0 4px;font-size:14px;color:#d9a441">NOTES WITH THE REVIEW TEAM</h3>${notes}`:''}
    ${canReply?`<textarea id="bpReply" maxlength="2000" placeholder="Answer the review team"></textarea><button class="small" id="bpSendReply">Send answer</button>`:''}
-   ${q('1','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">
+   ${q('','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">
      <select id="bp_kind" style="margin-top:8px"${dis}><option value="">Choose the kind…</option>${bpOpts.kinds.map(k=>`<option value="${k.code}"${k.code===f.kind?' selected':''}>${esc(k.name)}</option>`).join('')}</select>`)}
-   ${q('2','What is it, and what problem does it solve?','Who needs it, and why?',ta('problem','e.g. Small debris fields are too faint for the starter scanner to hear.'))}
-   ${q('3','Everything it does, in detail.','Describe each thing it does and how. The review team reads this closely.',ta('does','e.g. It pushes a stronger wave out and listens for the faint return…'))}
-   ${q('4','What does it fit?','A ship, a machine, or “stands alone”.',ta('fits','e.g. Small mining craft'))}
-   ${q('5','What does it improve, and by how much?','',ta('improves','e.g. Scanner range, by about 30%'))}
-   ${q('6','Which library books does it require?','To build it, you pass the short test on each one.',`<div class="books">${bpOpts.books.map(g=>`<details class="fold"${g.books.some(b=>(f.books||[]).includes(b.code))?' open':''}><summary>${esc(g.group)}</summary>
+   ${q('','Is it brand new, an upgrade, or a newer version or model?','',`<select id="bp_origin"${dis}><option value="">Choose one…</option>${bpOpts.origins.map(o=>`<option value="${o.code}"${o.code===f.origin?' selected':''}>${esc(o.name)}</option>`).join('')}</select>
+     <div id="bpBase"${f.origin==='upgrade'||f.origin==='version'?'':' hidden'}>
+      <label for="bp_based_on">What does it build on?</label><select id="bp_based_on"${dis}><option value="">Choose…</option>${['Starship standard',"a player's approved design"].map(g=>{const b=bpOpts.bases.filter(x=>x.from===g);
+        return b.length?`<optgroup label="${g==='Starship standard'?'Starship standard equipment':'Approved player designs'}">${b.map(x=>`<option value="${esc(x.code)}"${x.code===f.based_on?' selected':''}>${esc(x.name)}</option>`).join('')}</optgroup>`:'';}).join('')}</select>
+      <label for="bp_changes">What's different from it?</label>${ta('changes','e.g. Twice the range, half the weight; the old housing is replaced with titanium.')}</div>`)}
+   ${q('','What is it, and what problem does it solve?','Who needs it, and why?',ta('problem','e.g. Small debris fields are too faint for the starter scanner to hear.'))}
+   ${q('','Everything it does, in detail.','Describe each thing it does and how. The review team reads this closely.',ta('does','e.g. It pushes a stronger wave out and listens for the faint return…'))}
+   ${q('','What does it fit?','A ship, a machine, or “stands alone”.',ta('fits','e.g. Small mining craft'))}
+   ${q('','What does it improve, and by how much?','',ta('improves','e.g. Scanner range, by about 30%'))}
+   ${q('','Which library books does it require?','To build it, you pass the short test on each one.',`<div class="books">${bpOpts.books.map(g=>`<details class="fold"${g.books.some(b=>(f.books||[]).includes(b.code))?' open':''}><summary>${esc(g.group)}</summary>
      ${g.books.map(b=>`<label><input type="checkbox" class="bpBook" value="${b.code}"${(f.books||[]).includes(b.code)?' checked':''}${dis}> ${esc(b.name)}</label>`).join('')}</details>`).join('')}</div>`)}
-   ${q('7','Its parts and materials','Each part, with the materials it’s made of and how much. Its weight and size are worked out from the real materials.',
+   ${q('','Its parts and materials','Each part, with the materials it’s made of and how much. Its weight and size are worked out from the real materials.',
      `<div id="bpParts">${((f.parts&&f.parts.length)?f.parts:[null]).map(partBox).join('')}</div>${edit?'<button class="small" id="bpAddP">+ Add a part</button>':''}<div class="tot" id="bpTot"></div>`)}
-   ${q('8','How is it built?','The tools, the skills and the steps.',ta('how','e.g. Etch the circuit board, wind the coil, seal the housing.'))}
-   ${q('9','How long does it take to build?','Builds run in real time.',`<div class="mrow"><input id="bpTime" type="number" inputmode="decimal" min="0" step="any" style="flex:0 0 110px" value="${uval}"${dis}>
+   ${q('','How is it built?','The tools, the skills and the steps.',ta('how','e.g. Etch the circuit board, wind the coil, seal the housing.'))}
+   ${q('','How long does it take to build?','Builds run in real time.',`<div class="mrow"><input id="bpTime" type="number" inputmode="decimal" min="0" step="any" style="flex:0 0 110px" value="${uval}"${dis}>
      <select id="bpUnit"${dis}>${UNITS.map(([u])=>`<option${u===unit?' selected':''}>${u}</option>`).join('')}</select></div>`)}
    <div class="msg" id="bpMsg"></div>
    ${edit?`<div class="btns"><button class="go alt" id="bpSave">Save draft</button><button class="go" id="bpSubmit">Send to the review team</button></div>`:''}
@@ -309,7 +314,7 @@ async function showBlueprintForm(me,id,from){
   const panel=root.querySelector('.panel');
   function gather(){
     const t=Number($('#bpTime').value),mult=Object.fromEntries(UNITS)[$('#bpUnit').value];
-    const form={name:$('#bp_name').value,kind:$('#bp_kind').value||undefined,problem:$('#bp_problem').value,does:$('#bp_does').value,
+    const form={name:$('#bp_name').value,kind:$('#bp_kind').value||undefined,origin:$('#bp_origin').value||undefined,based_on:$('#bp_based_on').value||undefined,changes:$('#bp_changes').value,problem:$('#bp_problem').value,does:$('#bp_does').value,
       fits:$('#bp_fits').value,improves:$('#bp_improves').value,how:$('#bp_how').value,
       books:[...panel.querySelectorAll('.bpBook:checked')].map(x=>x.value),
       parts:[...panel.querySelectorAll('.part')].map(p=>({name:p.querySelector('.bpPart').value,
@@ -326,6 +331,7 @@ async function showBlueprintForm(me,id,from){
     panel.querySelectorAll('.bpDelM').forEach(b=>b.onclick=()=>{b.parentNode.remove();total();});
     panel.querySelectorAll('.bpDelP').forEach(b=>b.onclick=()=>{b.parentNode.remove();total();});}
   wire();total();
+  $('#bp_origin').addEventListener('change',e=>{$('#bpBase').hidden=!(e.target.value==='upgrade'||e.target.value==='version');});
   panel.addEventListener('input',total);panel.addEventListener('change',total);
   const addP=$('#bpAddP');if(addP)addP.onclick=()=>{$('#bpParts').insertAdjacentHTML('beforeend',partBox(null));wire();};
   const msg=(t,ok)=>{const m=$('#bpMsg');m.className='msg '+(ok?'ok':'err');m.textContent=t;};

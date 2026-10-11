@@ -45,6 +45,11 @@ async def main(args):
                         print(f"  {p['name']}: " + ", ".join(f"{BP.MATERIALS[m['item']]['name']} {(m['grams'] or 0) / 1000:g} kg" for m in p["materials"]))
                 elif k == "books":
                     print(f"\n{q.upper()}: " + ", ".join(BP.BOOK_NAMES[b] for b in form.get("books") or []))
+                elif k == "origin":
+                    print(f"\n{q.upper()}: {BP.ORIGINS.get(form.get('origin'), form.get('origin'))}")
+                    if form.get("based_on"):
+                        name = await conn.fetchval("SELECT name FROM item_types WHERE code=$1", form["based_on"])
+                        print(f"  BUILDS ON: {name} ({form['based_on']})\n  WHAT'S DIFFERENT: {form.get('changes')}")
                 elif k == "build_minutes":
                     print(f"\n{q.upper()}: {form.get('build_minutes')} minutes")
                 else:

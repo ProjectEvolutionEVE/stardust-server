@@ -251,7 +251,8 @@ async def main():
     # blueprint review (Eric 10-11): the player designs, the team reviews
     async with cl.app["pool"].acquire() as c:
         p1 = await c.fetchval("SELECT player_id FROM accounts WHERE id=$1", a1)
-        form = {"name": "Long-range scanner Mk II", "kind": "part", "problem": "Small fields are too hard to hear.",
+        form = {"name": "Long-range scanner Mk II", "kind": "part", "origin": "upgrade", "based_on": "ship-starter",
+                "changes": "The starter craft's scanner hears about 30% further.", "problem": "Small fields are too hard to hear.",
                 "does": "Pushes a stronger wave out and listens for the faint return from small fields.", "fits": "small mining craft",
                 "improves": "scanner range, by about 30%", "books": ["electronics", "prospecting"], "how": "Etch the board, wind the coil, seal the housing.",
                 "parts": [{"name": "Circuit board", "materials": [{"item": "mat-copper", "grams": 300}, {"item": "mat-gold", "grams": 5}]},
@@ -302,7 +303,7 @@ async def main():
     check("a material that isn't on the list is refused", r.status == 422)
     r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": bid, "form": {"name": "x", "books": ["wizardry"]}})
     check("a book that isn't in the library is refused", r.status == 422)
-    furnace = {"name": "Clay furnace", "kind": "tool", "problem": "Ore has to become metal, and there's no furnace aboard.",
+    furnace = {"name": "Clay furnace", "kind": "tool", "origin": "new", "problem": "Ore has to become metal, and there's no furnace aboard.",
                "does": "A stone-and-clay shaft furnace: charcoal and ore go in the top, air is blown in at the base, metal collects below.",
                "fits": "stands alone", "improves": "turns ore into metal; none of this exists yet", "books": ["metallurgy", "ceramics"],
                "how": "Lay a stone base, build up the clay walls around a form, dry it slowly, then fire it.", "build_minutes": 2880,
@@ -337,6 +338,23 @@ async def main():
           code == f"bp-{bid}" and t["kind"] == "resource" and not t["tradeable"] and float(t["density_kg_m3"]) == 2610)
     r = await cl.post("/api/dfg/blueprints/withdraw", headers=HB, json={"id": bid})
     check("a decided blueprint can't be withdrawn", r.status == 422)
+    # brand new, an upgrade, or a newer version or model (Eric 10-11)
+    r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
+    codes = {b["code"]: b for b in o["bases"]}
+    check("it can build on Starship equipment or an approved design (no designer names)",
+          codes["ship-starter"]["from"] == "Starship standard" and codes[f"design-{bid}"]["from"] == "a player's approved design"
+          and all("designer" not in b for b in o["bases"]) and len(o["origins"]) == 3)
+    mk2 = dict(furnace, name="Clay furnace Mk II", origin="version")
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"form": mk2}); d = await r.json()
+    check("a newer version must say what it builds on and what's different",
+          "what it builds on" in d["missing"] and "what's different from it" in d["missing"])
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": d["id"], "form": dict(mk2, based_on="design-999999")})
+    check("it can only build on something that exists", r.status == 422)
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": d["id"], "form": dict(mk2, based_on=f"design-{bid}",
+                      changes="A taller shaft and a second set of bellows: about twice as much ore per firing.")}); d = await r.json()
+    check("a newer version of an approved design is complete", r.status == 200 and d["missing"] == [] and d["form"]["based_on"] == f"design-{bid}")
+    r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"id": d["id"], "form": dict(mk2, origin="new", based_on=f"design-{bid}", changes="x")})
+    d = await r.json(); check("brand new keeps no 'builds on' answer", "based_on" not in d["form"] and "changes" not in d["form"])
     # ---- ores and the near-flawless diamond (Eric 10-11, rules 25-27) ----
     async with cl.app["pool"].acquire() as c:
         names = dict(await c.fetch("SELECT code, name FROM item_types WHERE code IN ('copper','silver','diamond')"))

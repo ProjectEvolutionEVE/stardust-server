@@ -34,19 +34,35 @@ BOOKS = [
 ]
 BOOK_NAMES = {code: name for _, books in BOOKS for code, name in books}
 KINDS = {"part": "A part (fits onto a ship or machine)", "tool": "A tool or machine", "ship": "A ship", "other": "Something else"}
-TEXT = {"name": 60, "problem": 2000, "does": 6000, "fits": 1000, "improves": 1000, "how": 4000}
+# Is it brand new, or does it build on something that already exists (Eric 10-11)? An upgrade improves an existing
+# thing; a newer version or model replaces it. Either one names what it builds on and what's different.
+ORIGINS = {"new": "Brand new", "upgrade": "An upgrade to something", "version": "A newer version or model"}
+TEXT = {"name": 60, "problem": 2000, "changes": 2000, "does": 6000, "fits": 1000, "improves": 1000, "how": 4000}
 MAX_PARTS, MAX_MATERIALS, MAX_GRAMS = 30, 20, 10**12          # 10**12 g = one million tonnes per material line
 MAX_MINUTES = 365 * 24 * 60
 # the questions, in the form's order; the words a designer sees when one is missing
-QUESTIONS = [("name", "its name"), ("kind", "what kind of thing it is"), ("problem", "what it is and the problem it solves"),
+QUESTIONS = [("name", "its name"), ("kind", "what kind of thing it is"),
+             ("origin", "whether it's brand new, an upgrade, or a newer version or model"), ("problem", "what it is and the problem it solves"),
              ("does", "everything it does, in detail"), ("fits", "what it fits"), ("improves", "what it improves, and by how much"),
              ("books", "the library books it requires"), ("parts", "its parts and materials"), ("how", "how it's built"),
              ("build_minutes", "how long it takes to build")]
 
 
-def options():
-    """Everything the form offers: kinds, library books, materials with their densities, and the limits."""
+LABEL = {**dict(QUESTIONS), "changes": "what's different from it"}
+
+
+async def bases(conn):
+    """What a design can build on: the Starship's standard equipment, and every approved player design (no names)."""
+    return [{"code": r["code"], "name": r["name"], "kind": r["kind"],
+             "from": "a player's approved design" if r["designer_id"] else "Starship standard"} for r in await conn.fetch(
+        """SELECT code, name, kind, designer_id FROM item_types WHERE kind IN ('ship','part','tool','other')
+           AND (designer_id IS NULL OR code LIKE 'design-%') ORDER BY designer_id IS NOT NULL, kind, name""")]
+
+
+async def options(conn):
+    """Everything the form offers: kinds, what a design can build on, library books, materials with densities, limits."""
     return {"kinds": [{"code": k, "name": v} for k, v in KINDS.items()],
+            "origins": [{"code": k, "name": v} for k, v in ORIGINS.items()], "bases": await bases(conn),
             "books": [{"group": g, "books": [{"code": c, "name": n} for c, n in b]} for g, b in BOOKS],
             "materials": [{k: m[k] for k in ("code", "name", "category", "density_kg_m3", "state")} for m in MATERIALS.values()],
             "limits": {"text": TEXT, "parts": MAX_PARTS, "materials_per_part": MAX_MATERIALS, "max_minutes": MAX_MINUTES}}
@@ -79,16 +95,27 @@ def clean(form):
         if v is None:
             continue
         if not isinstance(v, str):
-            raise ST.Refused(f"Please write {dict(QUESTIONS)[k]} as text.")
+            raise ST.Refused(f"Please write {LABEL[k]} as text.")
         v = v.strip()
         if len(v) > cap:
-            raise ST.Refused(f"Please keep {dict(QUESTIONS)[k]} under {cap:,} characters.")
+            raise ST.Refused(f"Please keep {LABEL[k]} under {cap:,} characters.")
         if v:
             out[k] = v
     if form.get("kind") is not None:
         if form["kind"] not in KINDS:
             raise ST.Refused("Pick what kind of thing it is from the list.")
         out["kind"] = form["kind"]
+    if form.get("origin") is not None:
+        if form["origin"] not in ORIGINS:
+            raise ST.Refused("Pick whether it's brand new, an upgrade, or a newer version.")
+        out["origin"] = form["origin"]
+    if form.get("based_on") not in (None, ""):
+        if not isinstance(form["based_on"], str) or len(form["based_on"]) > 80:
+            raise ST.Refused("Pick what it builds on from the list.")
+        if out.get("origin") in ("upgrade", "version"):
+            out["based_on"] = form["based_on"]
+    if out.get("origin") == "new":
+        out.pop("changes", None)
     books = form.get("books") or []
     if not isinstance(books, list) or any(b not in BOOK_NAMES for b in books):
         raise ST.Refused("Pick the required books from the library's list.")
@@ -128,7 +155,15 @@ def clean(form):
 
 def check_form(form):
     """Missing answers, in plain words (empty list = ready to submit). It only helps the designer; the reviewers decide."""
-    out = [q for k, q in QUESTIONS if not form.get(k)]
+    out = []
+    for k, q in QUESTIONS:
+        if not form.get(k):
+            out.append(q)
+        if k == "origin" and form.get("origin") in ("upgrade", "version"):
+            if not form.get("based_on"):
+                out.append("what it builds on")
+            if not form.get("changes"):
+                out.append("what's different from it")
     for i, part in enumerate(form.get("parts") or []):
         if not part.get("name") or not part.get("materials"):
             out.append(f"part {i + 1}: its name and at least one material")
@@ -151,6 +186,8 @@ MAX_OPEN = 50                     # designs a player can have open at once (draf
 
 async def save_draft(conn, pid, form, sid=None):
     form = clean(form)
+    if form.get("based_on") and form["based_on"] not in {b["code"] for b in await bases(conn)}:
+        raise ST.Refused("Pick what it builds on from the list.")
     async with conn.transaction():
         if sid is None:
             n = await conn.fetchval("""SELECT count(*) FROM blueprint_submissions WHERE designer_id=$1
@@ -231,7 +268,8 @@ async def approve(conn, sid, reviewer, note="Approved."):
         form = json.loads(s["form"])
         product, design = f"design-{sid}", f"bp-{sid}"
         t = totals(form)
-        stats = {"problem": form["problem"], "does": form["does"], "fits": form.get("fits"), "improves": form.get("improves"),
+        stats = {"origin": form.get("origin"), "based_on": form.get("based_on"), "changes": form.get("changes"),
+                 "problem": form["problem"], "does": form["does"], "fits": form.get("fits"), "improves": form.get("improves"),
                  "books": form.get("books", []), "how": form.get("how"), "mass_kg": t["mass_kg"], "volume_m3": t["volume_m3"]}
         await conn.execute("""INSERT INTO item_types(code, kind, name, base_unit, unique_items, designer_id, stats)
                               VALUES($1,$2,$3,'each',true,$4,$5)""", product, form["kind"], form["name"], s["designer_id"], json.dumps(stats))

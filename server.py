@@ -363,7 +363,7 @@ def _bp_id(b):
 async def bp_options(request):
     async with request.app["pool"].acquire() as conn:
         await _player(conn, request)
-    return _json(BP.options())
+        return _json(await BP.options(conn))
 
 
 async def bp_mine(request):
