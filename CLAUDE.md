@@ -39,12 +39,37 @@ The full record is in the `quavara-docs` repository:
    **Everyone starts at the lowest rank (10-11).** A new player begins as a **trainee** (the record's "trainee prospector", ledger v3.3). They work up the chain of command to captain only by passing the library's tests and earning experience (rule 16). Nobody chooses a rank, and nobody starts above the bottom. The examples "Lieutenant Dan McCollough" and "First Science Officer Lu Chong" show how a name reads *after* promotion.
 
    **Civilian ranks first, military later (10-11).** The WSC is a civilian space agency, so the ladder starts out **civilian**. When hostile territory, weapons, and fights over resource-rich contested space arrive in the game, **military ranks are added** alongside it. Build the rank system so a second (military) track can be added later without reworking the first.
+
+   **The civilian ladder (approved by Eric, 10-11), lowest to highest:**
+   1. Trainee
+   2. Crew Member
+   3. Senior Crew Member
+   4. Specialist
+   5. Senior Specialist
+   6. Junior Officer
+   7. Officer
+   8. Senior Officer
+   9. Chief (of a department)
+   10. First Officer
+   11. Captain
+
+   A department title combines with the rank, for example "Chief Engineer" or "First Science Officer".
 7. **Language:** the player picks it at sign-up, and it is stored on their game account. The list is copied from Quavara's list of 189 languages. It is a copy, not a link.
 8. **NO communication between players. Ever (10-11).**
    - No chat, and no written or spoken messages, now or in any multiplayer version.
    - At most, a fixed set of emoji symbols.
    - Combat and dogfights are the only interaction between players, and they are only the fighting itself.
    - The market's order book never shows who is on the other side of a trade.
+
+### Private Quarters (Eric, 10-11)
+- After signing up, a new player **begins in their Private Quarters**.
+- The 3D room is not built yet. For now the top of the screen names the location: **"Private Quarters"**.
+- The room has **tabs, one for each piece of furniture**:
+  - **Bed:** rest.
+  - **Desk:** read the COMMS; review the item list and the wallet; check active market orders and edit or adjust them right there.
+  - **Closet:** clothing and uniforms.
+  - **Bookshelf:** continued learning and study.
+  - **Filing cabinet:** important documents. The receipts log lives here. The lockbox for valuables is inside it.
 
 ### Game world and economy
 9. **The Starship is the truth; the words match the ship.** The Starship is the WSC Alexander von Humboldt, already built and approved. Change descriptions to fit the model; never change the model to fit the words.
