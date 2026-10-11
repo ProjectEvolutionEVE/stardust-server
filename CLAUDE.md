@@ -71,6 +71,12 @@ The full record is in the `quavara-docs` repository:
     - The game always runs in **real time**. Rest never speeds anything up: a 2-minute nap does not finish a build that takes weeks.
     - A **fatigue meter** slowly drains **stamina, energy and mental focus**, just like the real world. **Rest refills them.**
     - The **best rest is in the player's own bed** in their Private Quarters.
+    - **Thresholds and recovery (10-11):**
+      - Below **50%** on any health-related bar, the player can no longer perform their duties to an acceptable level: abilities are impaired.
+      - **65%** is the lowest recommended level.
+      - Sleep restores **35 points per 6 hours** (about 5.8 points an hour, in real time):
+        - from 65%, 6 hours of sleep reaches 100%;
+        - from 50%, 6 hours reaches only 85%, so a player who let it fall that low needs about 8½ hours to be fully rested.
   - **Desk:** read the COMMS; review the item list and the wallet; check active market orders and edit or adjust them right there.
   - **Closet:** clothing and uniforms.
   - **Bookshelf:** continued learning and study.
