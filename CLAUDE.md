@@ -77,6 +77,13 @@ The full record is in the `quavara-docs` repository:
       - Sleep restores **35 points per 6 hours** (about 5.8 points an hour, in real time):
         - from 65%, 6 hours of sleep reaches 100%;
         - from 50%, 6 hours reaches only 85%, so a player who let it fall that low needs about 8½ hours to be fully rested.
+      - **How abilities decline (10-11):**
+        - **Slightly** near the top.
+        - **Severely** once the bar is below 65%.
+        - **Extremely** below 50%.
+        - Studying and guiding the ship become harder.
+        - **On-screen warnings** remind the player that they are pushing their character's body past good, healthy habits and proper rest.
+      - **Drain while awake (working assumption, not yet confirmed by Eric):** about 16 hours of activity takes a rested player from 100% to 65%, roughly 2.2 points an hour.
   - **Desk:** read the COMMS; review the item list and the wallet; check active market orders and edit or adjust them right there.
   - **Closet:** clothing and uniforms.
   - **Bookshelf:** continued learning and study.
