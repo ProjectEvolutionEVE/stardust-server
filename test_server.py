@@ -354,6 +354,16 @@ async def main():
             await SER.print_run(c, pdes, code, 400); check("a run can't overflow the filing cabinet", False)
         except ST.Refused as e:
             check("a run can't overflow the filing cabinet", "room" in str(e))
+        copy_id = await c.fetchval("SELECT item_id FROM serials WHERE code=$1", r1["serials"][0])
+        orig_id = await c.fetchval("SELECT item_id FROM serials WHERE code=$1", f"{model}-ORIGINAL")
+        seller_ok = await SER.may_sell(c, pdes, copy_id)
+        await c.execute("UPDATE items SET owner_id=$2 WHERE id=$1", copy_id, p1)       # as if p1 had bought this copy
+        buyer_ok = await SER.may_sell(c, p1, copy_id)
+        stranger_ok = await SER.may_sell(c, pdes, copy_id)
+    check("the designer may sell copies of their design", seller_ok)
+    check("a buyer can never resell a bought copy (Eric 10-11)", not buyer_ok and not stranger_ok)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE items SET owner_id=$2 WHERE id=$1", copy_id, pdes)
     check("approval gives the design a model code (BP-XXXXX)", model and model.startswith("BP-") and len(model) == 8)
     check("run 1: 25 copies, serials 0001 to 0025", r1["run"] == 1 and r1["serials"][0] == f"{model}-R1-0001" and r1["serials"][-1] == f"{model}-R1-0025")
     check("run 2 never repeats a run-1 code", r2["run"] == 2 and not set(r1["serials"]) & set(r2["serials"]) and allc == 51)

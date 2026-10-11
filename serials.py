@@ -6,7 +6,8 @@ Every one carries its own SERIAL:
     BP-K7Q3X-R1-0001 … 0025  run 1, copies 1 to 25
     BP-K7Q3X-R2-0001 …       run 2: a new run number, so no code from run 1 can ever repeat
 Run numbers only go up (one run at a time per design, under a row lock), and the database refuses a duplicate serial.
-Anyone can check a serial: what it is, which run, which copy, and when it was made. Never who owns it."""
+Anyone can check a serial: what it is, which run, which copy, and when it was made. Never who owns it.
+A bought copy can't be resold (Eric 10-11): only the designer sells copies (may_sell)."""
 import secrets
 import store as ST
 
@@ -80,3 +81,13 @@ async def verify(conn, code):
         return None
     return {"serial": r["code"], "model": r["model_code"], "name": r["name"], "kind": r["kind"],
             "run": r["run_no"], "copy": r["copy_no"], "of": r["qty"], "made_at": r["at"].isoformat()}
+
+
+async def may_sell(conn, pid, item_id):
+    """Who may sell a blueprint copy (Eric 10-11): only its designer. Once a copy is sold, the buyer keeps it and builds
+    from it, but can never resell it. Every future sale of blueprints must pass this check first."""
+    r = await conn.fetchrow("""SELECT i.owner_id, t.designer_id, t.kind FROM items i JOIN item_types t ON t.code=i.item_code
+                               WHERE i.id=$1""", item_id)
+    if not r or r["kind"] != "blueprint" or r["owner_id"] != pid:
+        return False
+    return r["designer_id"] == pid
