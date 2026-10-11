@@ -244,6 +244,20 @@ CREATE TABLE IF NOT EXISTS ledger (
 );
 CREATE INDEX IF NOT EXISTS ledger_player ON ledger(player_id, at DESC);
 
+-- Receipts (Eric 10-11): what a player owns sits in the Starship's hands, so every transfer gives them a receipt with a
+-- code, like a warehouse receipt. The code is random and unguessable, and only this database can say it is real: anyone
+-- can check a code against the server, so a made-up code or an edited receipt doesn't match. Never edited or deleted.
+CREATE TABLE IF NOT EXISTS receipts (
+  id        BIGSERIAL PRIMARY KEY,
+  code      TEXT NOT NULL UNIQUE,                 -- e.g. WSC-7K3F-92QD
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind      TEXT NOT NULL,                        -- 'unload' (later: sale, move to quarters, ...)
+  ledger_id BIGINT REFERENCES ledger(id),         -- the history row this receipt is the player's copy of
+  detail    JSONB NOT NULL,
+  at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS receipts_player ON receipts(player_id, at DESC);
+
 -- Blueprint review (Eric 10-11). Players design; the game's team reviews. A designer fills in the blueprint form and
 -- submits it. Reviewers can ask questions or request changes; the designer answers or changes it and resubmits; the
 -- team approves or turns it down. Every submitted version is kept. Only approval turns a design into something that

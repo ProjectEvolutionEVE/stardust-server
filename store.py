@@ -11,11 +11,49 @@ Rules kept here:
     the Starship's cargo hold, until that space is full; whatever doesn't fit stays aboard. Resources wait there until
     they sell (Eric 10-11).
   · Every player has Private Quarters: a small furnished room for personal possessions, with a lockbox.
-  · Credits only move between accounts inside the game: never from real money, never out to it."""
-import json
+  · Credits only move between accounts inside the game: never from real money, never out to it.
+  · Every transfer of goods gives the player a receipt with a code anyone can check against this server (Eric 10-11)."""
+import json, secrets
 
 G_PER_KG = 1000
 FURNISHINGS = ["furn-bed", "furn-mirror", "furn-closet", "furn-desk", "furn-lamp", "furn-chair", "furn-filing-drawer", "furn-lockbox"]
+
+
+CODE_CHARS = "23456789ABCDEFGHJKMNPQRSTVWXYZ"     # no 0/O, 1/I/L or U: easy to read out and type
+
+
+def receipt_code():
+    """WSC-XXXX-XXXX: 30^8 (about 650 billion) possibilities, drawn from a secure random source, so a code can't be guessed."""
+    c = "".join(secrets.choice(CODE_CHARS) for _ in range(8))
+    return f"WSC-{c[:4]}-{c[4:]}"
+
+
+async def issue_receipt(conn, pid, kind, ledger_id, detail):
+    """Write a receipt and return it. Call inside the same transaction as the transfer it records."""
+    for _ in range(5):                                 # a repeat is astronomically unlikely; retry rather than fail
+        code = receipt_code()
+        row = await conn.fetchrow("""INSERT INTO receipts(code, player_id, kind, ledger_id, detail) VALUES($1,$2,$3,$4,$5)
+                                     ON CONFLICT (code) DO NOTHING RETURNING code, at""",
+                                  code, pid, kind, ledger_id, json.dumps(detail))
+        if row:
+            return {"code": row["code"], "issued_at": row["at"].isoformat(), "kind": kind, **detail}
+    raise RuntimeError("could not issue a unique receipt code")
+
+
+def _receipt_out(r):
+    return {"code": r["code"], "issued_at": r["at"].isoformat(), "kind": r["kind"], **json.loads(r["detail"])}
+
+
+async def receipts(conn, pid, limit=50):
+    """The player's receipts, newest first."""
+    rows = await conn.fetch("SELECT code, kind, detail, at FROM receipts WHERE player_id=$1 ORDER BY id DESC LIMIT $2", pid, limit)
+    return [_receipt_out(r) for r in rows]
+
+
+async def verify_receipt(conn, code):
+    """Check a receipt code. Returns the receipt as the server recorded it (without who owns it), or None if it isn't real."""
+    r = await conn.fetchrow("SELECT code, kind, detail, at FROM receipts WHERE code=$1", (code or "").strip().upper())
+    return _receipt_out(r) if r else None
 
 
 class Refused(Exception):
@@ -138,12 +176,20 @@ async def unload(conn, pid):
                                store["id"], p["material"], g)
             await conn.execute("UPDATE cargo SET unloaded_at=now() WHERE id=$1", p["id"])
             moved.append(p["id"]); grams_by[p["material"]] = grams_by.get(p["material"], 0) + g
+        receipt = None
         if moved:
-            await conn.execute("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'unload',$2)", pid,
-                               json.dumps({"pieces": moved, "grams": grams_by, "ship": ship["id"]}))
+            lid = await conn.fetchval("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'unload',$2) RETURNING id", pid,
+                                      json.dumps({"pieces": moved, "grams": grams_by, "ship": ship["id"]}))
+            receipt = await issue_receipt(conn, pid, "unload", lid, {
+                "issued_by": "WSC Alexander von Humboldt, cargo office",
+                "from": f"your ship's hold (ship {ship['id']}, {ship['hull']} hull)",
+                "to": "your space in the Starship's cargo hold",
+                "pieces": len(moved), "left_aboard": len(pieces) - len(moved),
+                "kg": {k: v / G_PER_KG for k, v in sorted(grams_by.items())},
+                "space_used_m3": round(used, 4), "space_total_m3": round(cap, 4)})
         return {"unloaded_pieces": len(moved), "left_aboard": len(pieces) - len(moved),
                 "unloaded_kg": {k: v / G_PER_KG for k, v in grams_by.items()},
-                "storage_full": len(moved) < len(pieces)}
+                "storage_full": len(moved) < len(pieces), "receipt": receipt}
 
 
 async def inventory(conn, pid):

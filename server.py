@@ -8,6 +8,8 @@ Routes (all JSON, all need a signed-in player):
   POST /api/dfg/unload    {docked:true} → the hold empties into storage aboard the Starship, as far as there's room
   GET  /api/dfg/inventory everything the player owns, where it is, and their credits
   GET  /api/dfg/history   the player's credit history, newest first, with the balance after each
+  GET  /api/dfg/receipts  the player's transfer receipts, newest first
+  GET  /api/dfg/receipt/{code}  check a receipt code (no sign-in needed): what was recorded, without who owns it
   GET  /api/dfg/health    no sign-in needed
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
 import os, json, uuid, secrets
@@ -143,6 +145,20 @@ async def history(request):
         return _json({"history": await ST.history(conn, pid)})
 
 
+async def receipts(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json({"receipts": await ST.receipts(conn, pid)})
+
+
+async def verify_receipt(request):
+    async with request.app["pool"].acquire() as conn:
+        r = await ST.verify_receipt(conn, request.match_info["code"])
+    if not r:
+        return _json({"valid": False, "error": "No receipt has this code."}, 404)
+    return _json({"valid": True, "receipt": r})
+
+
 async def health(request):
     async with request.app["pool"].acquire() as conn:
         await conn.fetchval("SELECT 1")
@@ -167,6 +183,8 @@ def make_app():
     app.router.add_post("/api/dfg/unload", unload)
     app.router.add_get("/api/dfg/inventory", inventory)
     app.router.add_get("/api/dfg/history", history)
+    app.router.add_get("/api/dfg/receipts", receipts)
+    app.router.add_get("/api/dfg/receipt/{code}", verify_receipt)
     app.router.add_get("/api/dfg/health", health)
     app.router.add_route("OPTIONS", "/{tail:.*}", lambda r: web.Response(status=204))
     app.on_startup.append(_startup)

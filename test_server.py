@@ -1,6 +1,6 @@
 """End-to-end test of the game server against a real (local, throwaway) Postgres.
 Usage: DATABASE_URL=postgres://postgres:pw@localhost/dfgtest python3 test_server.py"""
-import os, asyncio, time
+import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
 os.environ.setdefault("DFG_PASS_KEY", "test-key-not-real")
 import jwt
@@ -88,6 +88,22 @@ async def main():
     check("unloading away from the Starship refused", r.status == 422)
     r = await cl.post("/api/dfg/unload", headers=H, json={"docked": True}); j = await r.json()
     check("docked: all 4 pieces unload", r.status == 200 and j["unloaded_pieces"] == 4 and j["left_aboard"] == 0)
+    rc = j["receipt"]
+    import re
+    check("unloading gives a receipt with a WSC-XXXX-XXXX code", bool(rc) and re.fullmatch(r"WSC-[2-9A-HJKMNP-TV-Z]{4}-[2-9A-HJKMNP-TV-Z]{4}", rc["code"]))
+    check("the receipt lists what moved: 4 pieces, gold 54.04 kg", rc["pieces"] == 4 and abs(rc["kg"]["gold"] - 54.04) < 0.001)
+    check("the receipt shows the space used after", abs(rc["space_used_m3"] - (4738/5150 + 54.04/19300)) < 0.001 and rc["space_total_m3"] == 12)
+    r = await cl.get("/api/dfg/receipt/" + rc["code"].lower()); v = await r.json()
+    check("anyone can verify the code (no sign-in, any case)", r.status == 200 and v["valid"] and v["receipt"]["kg"] == rc["kg"])
+    check("verifying doesn't reveal who owns it", "player_id" not in v["receipt"] and "qcid" not in json.dumps(v))
+    r = await cl.get("/api/dfg/receipt/WSC-2222-2222")
+    check("a made-up code is not valid", r.status == 404 and (await r.json())["valid"] is False)
+    r = await cl.get("/api/dfg/receipts", headers=H); lst = (await r.json())["receipts"]
+    check("the player's receipt list has it", len(lst) == 1 and lst[0]["code"] == rc["code"])
+    r = await cl.get("/api/dfg/receipts", headers={"X-Dev-Player": "someone-else"})
+    check("another player can't list my receipts", (await r.json())["receipts"] == [])
+    r = await cl.post("/api/dfg/unload", headers=H, json={"docked": True}); j2 = await r.json()
+    check("unloading an empty hold gives no receipt", j2["unloaded_pieces"] == 0 and j2["receipt"] is None)
     places = {p["kind"]: p for p in j["inventory"]["places"]}
     goods = {g["item"]: g for g in places["starship_cargo"]["goods"]}
     check("pieces became kilograms: gold 54.04 kg", abs(goods["gold"]["kg"] - 54.04) < 0.001)
