@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS item_types (
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 INSERT INTO item_types(code, kind, name, base_unit, trade_unit, density_kg_m3) VALUES
-  ('iron',    'resource', 'Iron ore', 'g', 1000,  5150),
+  ('iron',    'resource', 'Iron ore', 'g', 1000,  5300),
   ('copper',  'resource', 'Copper',   'g', 1000,  8960),
   ('silver',  'resource', 'Silver',   'g', 1000, 10490),
   ('gold',    'resource', 'Gold',     'g', 1000, 19300),
@@ -379,3 +379,6 @@ INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
 UPDATE locations l SET parent_id=f.id, name='Lockbox'
   FROM locations f WHERE l.kind='lockbox' AND f.kind='filing_cabinet' AND f.player_id=l.player_id
   AND l.parent_id IS DISTINCT FROM f.id;
+
+-- v5 (10-11): iron ore is hematite, 5,300 kg/m³ (webmineral; the raw-materials catalogue). It was 5,150 by mistake.
+UPDATE item_types SET density_kg_m3 = 5300 WHERE code = 'iron' AND density_kg_m3 = 5150;

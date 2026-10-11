@@ -310,7 +310,7 @@ LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140
 //    fail to fit together; they must be cut smaller first (mining laser, later).
 //  • Collecting takes time per piece (bigger pieces longer). Nothing is instant.
 const MATERIALS={ // kg per cubic metre (real densities)
- iron:   {name:'Iron ore', density:5150},   // hematite
+ iron:   {name:'Iron ore', density:5300},   // hematite (5,300 kg/m³; was 5,150 until 10-11)
  copper: {name:'Copper',   density:8960},
  silver: {name:'Silver',   density:10490},
  gold:   {name:'Gold',     density:19300},

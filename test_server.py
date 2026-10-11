@@ -185,7 +185,7 @@ async def main():
     import re
     check("unloading gives a receipt with a WSC-XXXX-XXXX code", bool(rc) and re.fullmatch(r"WSC-[2-9A-HJKMNP-TV-Z]{4}-[2-9A-HJKMNP-TV-Z]{4}", rc["code"]))
     check("the receipt lists what moved: 4 pieces, gold 54.04 kg", rc["pieces"] == 4 and abs(rc["kg"]["gold"] - 54.04) < 0.001)
-    check("the receipt shows the space used after", abs(rc["space_used_m3"] - (4738/5150 + 54.04/19300)) < 0.001 and rc["space_total_m3"] == 12)
+    check("the receipt shows the space used after", abs(rc["space_used_m3"] - (4876/5300 + 54.04/19300)) < 0.001 and rc["space_total_m3"] == 12)
     r = await cl.get("/api/dfg/receipt/" + rc["code"].lower()); v = await r.json()
     check("anyone can verify the code (no sign-in, any case)", r.status == 200 and v["valid"] and v["receipt"]["kg"] == rc["kg"])
     check("verifying doesn't reveal who owns it", "player_id" not in v["receipt"] and "qcid" not in json.dumps(v))
@@ -200,8 +200,8 @@ async def main():
     places = {p["kind"]: p for p in j["inventory"]["places"]}
     goods = {g["item"]: g for g in places["starship_cargo"]["goods"]}
     check("pieces became kilograms: gold 54.04 kg", abs(goods["gold"]["kg"] - 54.04) < 0.001)
-    check("iron 2 × 0.46 m³ × 5150 = 4738 kg", abs(goods["iron"]["kg"] - 4738.0) < 0.001)
-    check("storage counts the space they take (≈0.923 m³)", abs(places["starship_cargo"]["used_m3"] - (4738/5150 + 54.04/19300)) < 0.001)
+    check("iron 2 × 0.46 m³ × 5300 = 4876 kg", abs(goods["iron"]["kg"] - 4876.0) < 0.001)
+    check("storage counts the space they take (≈0.923 m³)", abs(places["starship_cargo"]["used_m3"] - (4876/5300 + 54.04/19300)) < 0.001)
     check("the hold is empty again", places["ship_hold"]["pieces_aboard"] == 0)
     r = await cl.get("/api/dfg/ship", headers=H); sh = await r.json()
     check("after unloading, the ship's state shows the storage by material and no pieces aboard",

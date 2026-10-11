@@ -5,7 +5,7 @@ The server recomputes mass from real density, re-checks that the piece's shape f
 the room left, and refuses collects faster than collecting physically takes."""
 
 DENSITY = {  # kg per cubic metre, real values
-    "iron": 5150,      # hematite iron ore
+    "iron": 5300,      # hematite iron ore (webmineral 5.3; corrected from 5150 on 10-11, Eric)
     "copper": 8960,
     "silver": 10490,
     "gold": 19300,
