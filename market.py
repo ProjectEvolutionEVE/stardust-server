@@ -11,7 +11,8 @@ The rules, the same as the 10-11 mock-up's engine (games-holdback/games/debris-m
   · Floors (Eric 10-11): every item has a floor price and nothing trades below it.
   · Nothing is unlimited (rule 10): a purchase fills only as far as the buyer's space in the cargo hold has room.
   · The order book never shows who is on either side (rule 8).
-Prices are whole credits per trade unit (1 kg for ores). One market lock serialises every order, so two orders can
+Prices are whole credits per LOT (Eric 10-11: a minimum order): iron and copper ore 100 kg, silver ore 10 kg, gold and
+diamond 1 kg (item_types.trade_unit). One lot is the smallest order. Quantities are counted in lots. One market lock serialises every order, so two orders can
 never interleave (the market is small; correctness first)."""
 import json
 import store as ST
@@ -48,7 +49,8 @@ async def room_units(conn, pid, it):
 
 
 async def last_price(conn, item):
-    p = await conn.fetchval("SELECT price FROM trades WHERE item_code=$1 ORDER BY id DESC LIMIT 1", item)
+    p = await conn.fetchval("""SELECT t.price FROM trades t JOIN item_prices p ON p.item_code=t.item_code
+                               WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.id DESC LIMIT 1""", item)
     if p is None:
         p = await conn.fetchval("SELECT start_price FROM item_prices WHERE item_code=$1", item)
     return p
@@ -216,28 +218,28 @@ async def _trade_receipt(conn, pid, it, side, fills, order_id):
                               json.dumps({"order": order_id, "item": it["code"], "side": side, "fills": fills}))
     return await ST.issue_receipt(conn, pid, "trade", lid, {
         "issued_by": "WSC Alexander von Humboldt, market office",
-        "trade": "bought" if side == "buy" else "sold", "item": it["name"], "qty": qty, "unit": "kg",
-        "credits": total, "average_price": round(total / qty, 2), "order": order_id})
+        "trade": "bought" if side == "buy" else "sold", "item": it["name"], "lots": qty, "lot_kg": it["trade_unit"] / ST.G_PER_KG,
+        "credits": total, "average_price_per_lot": round(total / qty, 2), "order": order_id})
 
 
 # ── reading the market ──
 async def board(conn):
     """Every listed item: best bid and ask, last price, 24-hour change and volume, floor. No names (rule 8)."""
     rows = await conn.fetch("""
-      SELECT t.code, t.name, p.floor_price, p.start_price,
+      SELECT t.code, t.name, t.trade_unit, p.floor_price, p.start_price,
         (SELECT max(price) FROM orders WHERE item_code=t.code AND side='buy' AND status='open') AS bid,
         (SELECT min(price) FROM orders WHERE item_code=t.code AND side='sell' AND status='open') AS ask,
-        (SELECT price FROM trades WHERE item_code=t.code ORDER BY id DESC LIMIT 1) AS last,
-        (SELECT price FROM trades WHERE item_code=t.code AND at <= now() - interval '24 hours' ORDER BY id DESC LIMIT 1) AS day_ago,
-        (SELECT price FROM trades WHERE item_code=t.code AND at > now() - interval '24 hours' ORDER BY id ASC LIMIT 1) AS first_today,
-        (SELECT coalesce(sum(qty),0)::bigint FROM trades WHERE item_code=t.code AND at > now() - interval '24 hours') AS volume_24h,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since ORDER BY id DESC LIMIT 1) AS last,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at <= now() - interval '24 hours' ORDER BY id DESC LIMIT 1) AS day_ago,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at > now() - interval '24 hours' ORDER BY id ASC LIMIT 1) AS first_today,
+        (SELECT coalesce(sum(qty),0)::bigint FROM trades WHERE item_code=t.code AND at >= p.since AND at > now() - interval '24 hours') AS volume_24h,
         (SELECT coalesce(sum(remaining),0)::bigint FROM orders WHERE item_code=t.code AND side='sell' AND status='open') AS available
       FROM item_types t JOIN item_prices p ON p.item_code=t.code WHERE p.listed ORDER BY p.sort, t.name""")
     out = []
     for r in rows:
         last = r["last"] or r["start_price"]
         base = r["day_ago"] or r["first_today"]
-        out.append({"item": r["code"], "name": r["name"], "unit": "kg", "bid": r["bid"], "ask": r["ask"], "last": last,
+        out.append({"item": r["code"], "name": r["name"], "lot_kg": r["trade_unit"] / ST.G_PER_KG, "bid": r["bid"], "ask": r["ask"], "last": last,
                     "change_24h_pct": round(100.0 * (last - base) / base, 2) if base else 0.0,
                     "volume_24h": r["volume_24h"], "available": r["available"], "floor": r["floor_price"]})
     return out
@@ -250,7 +252,8 @@ async def book(conn, item, levels=12):
             f"""SELECT price, sum(remaining)::bigint qty, count(*) n FROM orders WHERE item_code=$1 AND side=$2 AND status='open'
                 GROUP BY price ORDER BY price {order} LIMIT $3""", item, s, levels)]
     trades = [{"price": r["price"], "qty": r["qty"], "side": r["aggressor"], "at": r["at"].isoformat()} for r in await conn.fetch(
-        "SELECT price, qty, aggressor, at FROM trades WHERE item_code=$1 ORDER BY id DESC LIMIT 30", item)]
+        """SELECT t.price, t.qty, t.aggressor, t.at FROM trades t JOIN item_prices p ON p.item_code=t.item_code
+           WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.id DESC LIMIT 30""", item)]
     return {"item": item, "bids": await side("buy", "DESC"), "asks": await side("sell", "ASC"), "trades": trades}
 
 
@@ -261,7 +264,8 @@ async def candles(conn, item, period_s=300, count=200):
       SELECT (floor(extract(epoch FROM at) / $2::int)::bigint * $2::int)::bigint AS t,
              (array_agg(price ORDER BY id ASC))[1] AS open, max(price) AS high, min(price) AS low,
              (array_agg(price ORDER BY id DESC))[1] AS close, sum(qty)::bigint AS volume
-      FROM trades WHERE item_code=$1 AND at > now() - make_interval(secs => ($2::int * $3::int)::double precision)
+      FROM trades WHERE item_code=$1 AND at >= (SELECT since FROM item_prices WHERE item_code=$1)
+        AND at > now() - make_interval(secs => ($2::int * $3::int)::double precision)
       GROUP BY 1 ORDER BY 1""", item, period_s, count)
     return [{"time": r["t"], "open": r["open"], "high": r["high"], "low": r["low"], "close": r["close"], "volume": r["volume"]}
             for r in rows]
@@ -277,7 +281,7 @@ async def mine(conn, pid):
                "qty": r["qty"], "at": r["at"].isoformat()} for r in await conn.fetch(
         "SELECT * FROM trades WHERE buyer=$1 OR seller=$1 ORDER BY id DESC LIMIT 50", acct["id"])]
     st = await _store(conn, pid)
-    holdings = {r["item_code"]: r["qty"] // r["trade_unit"] for r in await conn.fetch(
+    holdings = {r["item_code"]: {"lots": r["qty"] // r["trade_unit"], "kg": r["qty"] / ST.G_PER_KG} for r in await conn.fetch(
         """SELECT s.item_code, s.qty, t.trade_unit FROM stacks s JOIN item_types t ON t.code=s.item_code
            JOIN item_prices p ON p.item_code=s.item_code AND p.listed WHERE s.location_id=$1""", st["id"])}
     return {"credits": acct["credits"], "credits_set_aside": acct["held_credits"], "orders": orders, "trades": trades,

@@ -320,7 +320,8 @@ async def main():
     board = {i["item"]: i for i in j["items"]}
     check("the board lists the five ores with floors, and says the bank trades too",
           set(board) == {"iron", "copper", "silver", "gold", "diamond"} and board["gold"]["floor"] == 100
-          and board["iron"]["last"] == 2 and "bank trades" in j["note"])
+          and board["iron"]["last"] == 200 and board["iron"]["lot_kg"] == 100 and board["silver"]["lot_kg"] == 10
+          and board["gold"]["lot_kg"] == 1 and "bank trades" in j["note"])
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "sell", "type": "limit", "qty": 1, "price": 99})
     check("an ask under the floor is refused", r.status == 422 and "floor" in (await r.json())["error"])
     async with cl.app["pool"].acquire() as c:
@@ -339,13 +340,13 @@ async def main():
     check("the book shows prices and sizes but no names; candles come from the trades",
           j["bids"] and set(j["bids"][0]) == {"price", "qty", "orders"} and len(j["candles"]) >= 1 and j["trades"])
     r = await cl.get("/api/dfg/market/mine", headers=H); mine = await r.json()
-    iron_have, cr0 = mine["holdings"]["iron"], mine["credits"]
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "instant", "qty": 100}); j = await r.json()
+    iron_have, cr0 = mine["holdings"]["iron"]["lots"], mine["credits"]
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "instant", "qty": 1}); j = await r.json()
     got = sum(f["qty"] * f["price"] for f in j["fills"])
-    check("Sell now: 100 kg of iron ore sells to the best bid, with a receipt",
-          r.status == 200 and sum(f["qty"] for f in j["fills"]) == 100 and j["receipt"]["trade"] == "sold" and got > 0)
+    check("Sell now: one lot (100 kg) of iron ore sells to the best bid, with a receipt",
+          r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == 100 and j["receipt"]["trade"] == "sold" and got > 0)
     r = await cl.get("/api/dfg/market/mine", headers=H); mine = await r.json()
-    check("the credits arrived and the iron left the cargo hold", mine["credits"] == cr0 + got and mine["holdings"]["iron"] == iron_have - 100)
+    check("the credits arrived and the iron left the cargo hold", mine["credits"] == cr0 + got and mine["holdings"]["iron"]["lots"] == iron_have - 1)
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "buy", "type": "limit", "qty": 2, "price": 101}); j = await r.json()
     oid = j["order"]["id"]
     r = await cl.get("/api/dfg/market/mine", headers=H); mine = await r.json()
@@ -356,13 +357,15 @@ async def main():
     check("cancelling gives the credits back", r.status == 200 and mine["credits_set_aside"] == 0 and mine["credits"] == cr0 + got)
     r = await cl.post("/api/dfg/market/cancel", headers=H2 if 'H2' in dir() else {"X-Dev-Player": "tester2"}, json={"order_id": oid})
     check("you can't cancel someone else's order (or one that's closed)", r.status == 422)
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "limit", "qty": 10, "price": 2}); a1 = (await r.json())["order"]["id"]
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 5, "price": 2}); j = await r.json()
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "limit", "qty": 2, "price": 205}); a1 = (await r.json())["order"]["id"]
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 1, "price": 205}); j = await r.json()
     async with cl.app["pool"].acquire() as c:
         st = await c.fetchval("SELECT status FROM orders WHERE id=$1", a1)
     check("never a trade with yourself: your older ask is cancelled instead", st == "cancelled" and not j["fills"])
     await cl.post("/api/dfg/market/cancel", headers=H, json={"order_id": j["order"]["id"]})
-    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 99999999, "price": 1})
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "sell", "type": "limit", "qty": 1, "price": 1})
+    check("minimum orders: prices are per lot, so an ask of 1 credit per 100 kg is under the floor", r.status == 422)
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 99999999, "price": 300})
     check("nothing is unlimited: a buy bigger than your space in the cargo hold is refused", r.status == 422 and "room" in (await r.json())["error"])
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)

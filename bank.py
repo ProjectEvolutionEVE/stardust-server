@@ -76,7 +76,7 @@ async def standing_bid(conn, buy_pid, it, s):
         return
     for o in cur:
         await M.cancel(conn, buy_pid, o["id"])
-    qty = int(s["bank_bid_qty_kg"])
+    qty = max(1, int(it["bank_lot"]) * 20)            # the standing bid: twenty of the bank's lots
     await _credit_line(conn, buy_pid, want * qty)
     await M.place(conn, buy_pid, it["code"], "buy", "limit", qty, want)
 
@@ -92,7 +92,7 @@ async def standing_ask(conn, sell_pid, buy_pid, it, s):
         return
     for o in cur:
         await M.cancel(conn, sell_pid, o["id"])
-    qty = max(1, int(it["bank_lot_kg"]) * 5)
+    qty = max(1, int(it["bank_lot"]) * 5)
     await _stock(conn, sell_pid, buy_pid, it["code"], it["trade_unit"], qty)
     await M.place(conn, sell_pid, it["code"], "sell", "limit", qty, want)
 
@@ -101,14 +101,14 @@ async def tick(conn, rng=random):
     """One round of bank activity on every listed item."""
     s = await ST.settings(conn)
     buy_pid, sell_pid = await desks(conn)
-    for it in await conn.fetch("""SELECT t.code, t.name, t.trade_unit, p.floor_price, p.ref_price, p.bank_lot_kg FROM item_types t
-                                  JOIN item_prices p ON p.item_code=t.code WHERE p.listed AND p.bank_lot_kg > 0"""):
+    for it in await conn.fetch("""SELECT t.code, t.name, t.trade_unit, p.floor_price, p.ref_price, p.bank_lot FROM item_types t
+                                  JOIN item_prices p ON p.item_code=t.code WHERE p.listed AND p.bank_lot > 0"""):
         try:
             last = await M.last_price(conn, it["code"])
             ref = it["ref_price"]
             drift = rng.gauss(0, s["bank_vol_pct"] / 100) + (s["bank_pull_pct"] / 100) * (ref - last) / max(1, last)
             price = max(it["floor_price"], int(round(last * (1 + drift))))
-            lot = max(1, int(it["bank_lot_kg"] * rng.uniform(0.3, 1.0)))
+            lot = max(1, int(round(it["bank_lot"] * rng.uniform(0.3, 1.0))))
             await _stock(conn, sell_pid, buy_pid, it["code"], it["trade_unit"], lot)
             r = await M.place(conn, sell_pid, it["code"], "sell", "limit", lot, price)
             await _credit_line(conn, buy_pid, price * lot * 2)

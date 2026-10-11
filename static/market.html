@@ -72,8 +72,8 @@
  <section id="trade"><h2>Trade</h2>
   <div class="seg" id="sideSeg"><button data-v="buy" class="on buy">BUY</button><button data-v="sell" class="sell">SELL</button></div>
   <div class="seg" id="typeSeg"><button data-v="instant" class="on t">BUY / SELL NOW</button><button data-v="limit" class="t">SET MY PRICE</button></div>
-  <div class="row"><label>PRICE (credits per kg)<input id="price" type="number" min="1" step="1" inputmode="numeric"></label>
-   <label>QUANTITY (kg)<input id="qty" type="number" min="1" step="1" value="10" inputmode="numeric"></label></div>
+  <div class="row"><label><span id="priceLbl">PRICE (credits per kg)</span><input id="price" type="number" min="1" step="1" inputmode="numeric"></label>
+   <label><span id="qtyLbl">QUANTITY</span><input id="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></label></div>
   <div id="explain"></div>
   <button id="go">BUY</button><div id="msg"></div></section>
  <section id="bookbox"><h2>Order book</h2><table class="book"><tbody id="book"></tbody></table>
@@ -82,7 +82,7 @@
  <section id="tapebox"><h2>Your trade history</h2><table class="tape"><tbody id="hist"></tbody></table>
   <h2 style="margin-top:12px">Recent trades</h2><table class="tape"><tbody id="tape"></tbody></table></section>
 </main>
-<footer>Prices are credits per kg. Every item has a floor price; nothing trades below it. Every trade gives you a receipt
+<footer>Ores trade in lots (iron and copper ore 100 kg, silver ore 10 kg, gold and diamond 1 kg); one lot is the smallest order, and prices are per lot. Every item has a floor price; nothing trades below it. Every trade gives you a receipt
  (filing cabinet, in your quarters). · Charts: TradingView Lightweight Charts™ Copyright (c) TradingView, Inc.
  <a href="https://www.tradingview.com/" target="_blank" rel="noopener">tradingview.com</a> (Apache 2.0 licence).</footer>
 <script src="market-terminal.js"></script>

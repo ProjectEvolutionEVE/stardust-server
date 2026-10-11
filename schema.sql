@@ -423,3 +423,36 @@ INSERT INTO settings(key, value, note) VALUES
   ('bank_bid_qty_kg', 2000, 'size of the bank''s standing bid (the instant sale to the bank), kg'),
   ('bank_ask_gap_pct',   10, 'the bank''s standing ask sits this many percent over the last price (the instant purchase from the bank)')
 ON CONFLICT (key) DO NOTHING;
+
+-- v8 (10-11): minimum orders (Eric: "a set minimum order for things with wide price swings, so there are no really small
+-- orders"). Each item trades in LOTS, and its price is per lot: iron and copper ore in 100 kg lots, silver ore in 10 kg,
+-- gold and diamond in 1 kg. One lot is the smallest order. Per-kg prices stay the same (iron 200 per 100 kg = 2 per kg);
+-- a one-credit step is now 0.5% on iron instead of 50%. The market's history restarts at the switch (`since`): older
+-- trades stay in the table but no longer set prices or draw candles. Open orders in the old units are given back first.
+ALTER TABLE item_prices ADD COLUMN IF NOT EXISTS since    TIMESTAMPTZ NOT NULL DEFAULT now();
+ALTER TABLE item_prices ADD COLUMN IF NOT EXISTS bank_lot BIGINT NOT NULL DEFAULT 0;   -- the bank's trade size, in lots
+DO $$ BEGIN
+  IF (SELECT trade_unit FROM item_types WHERE code='iron') = 1000 THEN
+    UPDATE accounts a SET held_credits = a.held_credits - x.amt, credits = a.credits + x.amt
+      FROM (SELECT account_id, sum(price * remaining) amt FROM orders
+            WHERE status='open' AND side='buy' AND item_code IN ('iron','copper','silver','gold','diamond') GROUP BY account_id) x
+      WHERE a.id = x.account_id;
+    UPDATE stacks s SET held = s.held - x.g, qty = s.qty + x.g
+      FROM (SELECT l.id AS loc, o.item_code, sum(o.remaining * t.trade_unit) AS g FROM orders o
+            JOIN accounts a ON a.id = o.account_id
+            JOIN locations l ON l.player_id = a.player_id AND l.kind = 'starship_cargo'
+            JOIN item_types t ON t.code = o.item_code
+            WHERE o.status='open' AND o.side='sell' AND o.item_code IN ('iron','copper','silver','gold','diamond')
+            GROUP BY 1, 2) x
+      WHERE s.location_id = x.loc AND s.item_code = x.item_code;
+    UPDATE orders SET status='cancelled', closed_at=now()
+      WHERE status='open' AND item_code IN ('iron','copper','silver','gold','diamond');
+    UPDATE item_types SET trade_unit = 100000 WHERE code IN ('iron','copper');   -- 100 kg lots
+    UPDATE item_types SET trade_unit = 10000  WHERE code = 'silver';             -- 10 kg lots
+    UPDATE item_prices SET start_price=200, floor_price=100, ref_price=200, bank_lot=4, since=now() WHERE item_code='iron';
+    UPDATE item_prices SET start_price=600, floor_price=300, ref_price=600, bank_lot=2, since=now() WHERE item_code='copper';
+    UPDATE item_prices SET start_price=300, floor_price=150, ref_price=300, bank_lot=2, since=now() WHERE item_code='silver';
+    UPDATE item_prices SET bank_lot=3, since=now() WHERE item_code='gold';
+    UPDATE item_prices SET bank_lot=5, since=now() WHERE item_code='diamond';
+  END IF;
+END $$;
