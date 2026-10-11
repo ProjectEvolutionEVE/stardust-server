@@ -4,6 +4,10 @@ The game's working title is "Stardust - Rebuilding Home"; the final name is pend
 
 This file auto-loads for every Claude session in this repository. Eric asked for it on 2026-10-11, so that he is never asked these same questions again.
 
+## 🎮 FIRST PRINCIPLE: it's a fun game. Keep it simple (Eric, 10-11)
+Eric: *"We were beginning to over complicate a really fun game with issues that over complicated everything."*
+Real science grounds the game (real densities, real chemistry), but **when realism would add complication, choose the simple, fun version.** Don't bring Eric extra layers of realism to decide; propose the simplest thing that stays true and is fun to play.
+
 ## ⛔ SETTLED: do not re-ask, re-open or "double-check" these
 
 Everything below is **ruled by Eric**. Build to it. Do not ask Eric about it again.
@@ -121,8 +125,9 @@ The full record is in the `quavara-docs` repository:
 
 26. **Diamonds (10-11):** industrial grade, with **one near-flawless diamond in every 100,000**. The rare one must **get noticed** (its own alert when found) and is **never mixed in** with industrial diamond: it is its own one-of-a-kind item, kept as a valuable (lockbox, rule 22), traded as its own item, and used for research and technology that needs a near-flawless crystal. The server makes the 1-in-100,000 roll, never the browser. **It is noticed when the miner collects it** (Eric 10-11: keep the excitement with the miner).
 
+27. **Smelting yields follow real chemistry, kept simple (10-11):** every ore piece is **pure ore mineral**, so it yields its element's share by weight (from its formula), and the rest is slag. Example: 100 kg of chalcopyrite gives 34.6 kg of copper and 65.4 kg of slag. No mine-grade dilution.
+
 ### Still open: these ARE Eric's to answer
-0a. **Smelting yields (10-11):** follow real chemistry (each ore gives its element's share by weight, e.g. chalcopyrite 34.6% copper)? The raw-materials catalogue draft is `stardust-raw-materials-catalogue.md` in quavara-docs.
 0. **Floor and starting prices (10-11):** the market sets prices above a floor (rule 21). What is each item's floor, and the price it starts at before its first trade? Real-world ratios or a compressed game scale? (Iron ore is now hematite at 5,300 kg/m³, corrected 10-11.)
 1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
 2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
