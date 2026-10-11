@@ -456,3 +456,31 @@ DO $$ BEGIN
     UPDATE item_prices SET bank_lot=5, since=now() WHERE item_code='diamond';
   END IF;
 END $$;
+
+-- v9 (10-11): serial numbers (Eric). Every approved design gets a MODEL code. The designer's original and every copy
+-- printed from it carry their own SERIAL: the model, the run, and the copy's number in that run, e.g. BP-K7Q3X-R2-0025.
+-- Run numbers only go up and every serial is unique, so no run ever repeats a code from an earlier one. Anyone can check
+-- a serial (GET /api/dfg/serial/{code}), as with receipts. Built things will use the same tables (kind 'build').
+ALTER TABLE item_types ADD COLUMN IF NOT EXISTS model_code TEXT UNIQUE;
+CREATE TABLE IF NOT EXISTS production_runs (
+  id             BIGSERIAL PRIMARY KEY,
+  blueprint_code TEXT NOT NULL REFERENCES item_types(code),
+  kind           TEXT NOT NULL CHECK (kind IN ('original','print','build')),
+  run_no         INT NOT NULL CHECK (run_no >= 0),
+  qty            INT NOT NULL CHECK (qty > 0),
+  player_id      BIGINT REFERENCES players(id) ON DELETE SET NULL,
+  at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (blueprint_code, kind, run_no)
+);
+CREATE TABLE IF NOT EXISTS serials (
+  code     TEXT PRIMARY KEY,
+  item_id  BIGINT UNIQUE REFERENCES items(id) ON DELETE SET NULL,
+  run_id   BIGINT NOT NULL REFERENCES production_runs(id),
+  copy_no  INT NOT NULL CHECK (copy_no > 0),
+  at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (run_id, copy_no)
+);
+INSERT INTO settings(key, value, note) VALUES
+  ('blueprint_copy_m3', 0.0005, 'SAMPLE: space one blueprint copy takes in a filing cabinet (a folded drawing set), cubic metres'),
+  ('print_run_max', 500, 'SAMPLE: most copies in one print run')
+ON CONFLICT (key) DO NOTHING;

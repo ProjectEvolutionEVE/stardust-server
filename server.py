@@ -17,6 +17,7 @@ Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   GET  /api/dfg/history   the player's credit history, newest first, with the balance after each
   GET  /api/dfg/receipts  the player's transfer receipts, newest first
   GET  /api/dfg/receipt/{code}  check a receipt code (no sign-in needed): what was recorded, without who owns it
+  GET  /api/dfg/serial/{code}   check a blueprint serial (no sign-in needed): model, run, copy, when; never who owns it
   GET  /api/dfg/health    no sign-in needed
 The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints/options   kinds, library books, materials with densities, limits
@@ -36,6 +37,7 @@ import names as NAMES
 import market as M
 import bank as BANK
 import blueprints as BP
+import serials as SER
 import asyncio
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
@@ -290,6 +292,14 @@ async def verify_receipt(request):
     return _json({"valid": True, "receipt": r})
 
 
+async def verify_serial(request):
+    async with request.app["pool"].acquire() as conn:
+        r = await SER.verify(conn, request.match_info["code"])
+    if not r:
+        return _json({"valid": False, "error": "No blueprint has this serial."}, 404)
+    return _json({"valid": True, "serial": r})
+
+
 async def health(request):
     async with request.app["pool"].acquire() as conn:
         await conn.fetchval("SELECT 1")
@@ -428,6 +438,7 @@ def make_app():
     app.router.add_get("/api/dfg/history", history)
     app.router.add_get("/api/dfg/receipts", receipts)
     app.router.add_get("/api/dfg/receipt/{code}", verify_receipt)
+    app.router.add_get("/api/dfg/serial/{code}", verify_serial)
     app.router.add_get("/api/dfg/health", health)
     app.router.add_get("/api/dfg/market", market_board)
     app.router.add_get("/api/dfg/market/mine", market_mine)

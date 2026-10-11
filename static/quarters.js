@@ -171,7 +171,7 @@ function folder(p,all){
   const space=p.capacity_m3!=null?`${m3} of ${Number(p.capacity_m3).toLocaleString(undefined,{maximumFractionDigits:2})} m³ used`
     :p.capacity_slots!=null?`${p.used_slots} of ${p.capacity_slots} bays used`:'';
   const rows=goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(amount(g))}</td></tr>`).join('')
-    +items.map(i=>`<tr><td>${esc(i.name)}</td><td style="text-align:right" class="soon">${i.set_aside?'set aside':'1'}</td></tr>`).join('')
+    +items.map(i=>`<tr><td>${esc(i.name)}${i.details&&i.details.serial?`<div class="soon" style="font-family:ui-monospace,Menlo,monospace">Serial ${esc(i.details.serial)}</div>`:''}</td><td style="text-align:right" class="soon">${i.set_aside?'set aside':'1'}</td></tr>`).join('')
     +designs.map(d=>`<tr><td>${esc(d.title)} <span class="soon">(your design)</span></td><td style="text-align:right" class="soon">${esc(DESIGN_STATUS[d.status]||d.status)}</td></tr>`).join('');
   return `<details class="fold"${p.kind==='starship_cargo'?' open':''}><summary>${PLACE_ICON[p.kind]||'📁'} ${esc(PLACE_NAME[p.kind]||p.name)}
     <span class="soon"> · ${n?n+' item'+(n>1?'s':''):'empty'}${space?' · '+esc(space):''}</span></summary>
@@ -287,6 +287,8 @@ async function showBlueprintForm(me,id,from){
   const canReply=d&&(d.status==='submitted'||d.status==='changes_requested');
   place('DRAFTING ROOM · STARSHIP LIBRARY',me,`<h2 style="margin:0 0 4px">${d?esc(d.title):'New blueprint'}</h2>
    <p class="soon" style="margin:0">${d?esc(BP_STATUS[d.status]||d.status)+(d.version?' · version '+d.version:''):'Answer each question. You can save a draft and come back any time.'}</p>
+   ${d&&d.model?`<div class="note team"><b>Model ${esc(d.model)}</b><div class="soon">Every copy of this design carries its own serial, so anyone can check it is genuine.</div>
+     ${d.serials.map(x=>`<div style="font-family:ui-monospace,Menlo,monospace">${esc(x)}</div>`).join('')}</div>`:''}
    ${notes?`<h3 style="margin:14px 0 4px;font-size:14px;color:#d9a441">NOTES WITH THE REVIEW TEAM</h3>${notes}`:''}
    ${canReply?`<textarea id="bpReply" maxlength="2000" placeholder="Answer the review team"></textarea><button class="small" id="bpSendReply">Send answer</button>`:''}
    ${q('','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">

@@ -65,7 +65,9 @@ async def main(args):
         elif cmd == "changes":
             await BP.request_changes(conn, sid, who, text)
         elif cmd == "approve":
-            print("Design:", await BP.approve(conn, sid, who, text or "Approved."))
+            code = await BP.approve(conn, sid, who, text or "Approved.")
+            model = await conn.fetchval("SELECT model_code FROM item_types WHERE code=$1", code)
+            print(f"Design: {code} · model {model} · the designer's original: {model}-ORIGINAL")
         elif cmd == "reject":
             await BP.reject(conn, sid, who, text)
         print("Done.")

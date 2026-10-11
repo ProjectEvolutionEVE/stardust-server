@@ -14,6 +14,7 @@ how long it takes. Weight and size come from the real densities in materials.jso
 import json
 from pathlib import Path
 import store as ST
+import serials as SER
 
 # Materials a design is made of: the refined or working form of each raw material, with its real density (a copy of the
 # raw-materials catalogue in quavara-docs). Weight and size are worked out from these, never typed in (rule 23).
@@ -27,8 +28,9 @@ BOOKS = [
                        ("power", "Power Systems")]),
     ("Business and trading", [("trading", "Trading & Markets"), ("commodities", "Commodities"), ("logistics", "Logistics & Hauling"),
                               ("contracts", "Contracts & Services"), ("bookkeeping", "Bookkeeping"), ("appraisal", "Appraisal")]),
-    ("Ship and survival", [("piloting", "Piloting & Navigation"), ("maintenance", "Ship Maintenance & Repair"),
+    ("Ship and survival", [("piloting", "Pilot Basic Training Handbook"), ("maintenance", "Ship Maintenance & Repair"),
                            ("life-support", "Life Support"), ("health", "Health & Fitness"), ("botany", "Botany & Hydroponics")]),
+    ("Combat (arrives with the military track)", [("combat", "Advanced Aerial Combat Strategies")]),
     ("Earth habitats", [("farming", "Farming & Soils"), ("water", "Water Management"), ("forestry", "Forestry"),
                         ("construction", "Construction")]),
 ]
@@ -291,6 +293,8 @@ async def approve(conn, sid, reviewer, note="Approved."):
         await conn.execute("INSERT INTO blueprint_messages(submission_id, from_reviewer, kind, body, version) VALUES($1,$2,'decision',$3,$4)",
                            sid, reviewer, note, s["version"])
         await conn.execute("UPDATE blueprint_submissions SET status='approved', item_code=$2, updated_at=now() WHERE id=$1", sid, design)
+        await SER.assign_model(conn, design, product)          # its model code, and the designer's original with its serial
+        await SER.issue_original(conn, s["designer_id"], design)
         return design
 
 
@@ -338,6 +342,10 @@ async def detail(conn, pid, sid):
     msgs = [{"from": "The review team" if r["from_reviewer"] else "You", "kind": r["kind"], "body": r["body"],
              "version": r["version"], "at": r["at"].isoformat()} for r in await conn.fetch(
         "SELECT from_reviewer, kind, body, version, at FROM blueprint_messages WHERE submission_id=$1 ORDER BY id", sid)]
+    model = await conn.fetchval("SELECT model_code FROM item_types WHERE code=$1", s["item_code"]) if s["item_code"] else None
     return {"id": s["id"], "title": s["title"], "status": s["status"], "version": s["version"], "form": form,
+            "model": model, "serials": [r["code"] for r in await conn.fetch(
+                """SELECT x.code FROM serials x JOIN items i ON i.id=x.item_id WHERE i.owner_id=$1 AND i.item_code=$2
+                   ORDER BY x.code""", pid, s["item_code"])] if s["item_code"] else [],
             "totals": totals(form), "missing": check_form(form), "editable": s["status"] in ("draft", "changes_requested"),
             "messages": msgs}

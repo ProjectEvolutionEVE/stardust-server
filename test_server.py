@@ -9,6 +9,7 @@ import asyncpg
 import server as S
 import store as ST
 import blueprints as BP
+import serials as SER
 import game as G
 
 async def reset_test_db():
@@ -338,6 +339,38 @@ async def main():
           code == f"bp-{bid}" and t["kind"] == "resource" and not t["tradeable"] and float(t["density_kg_m3"]) == 2610)
     r = await cl.post("/api/dfg/blueprints/withdraw", headers=HB, json={"id": bid})
     check("a decided blueprint can't be withdrawn", r.status == 422)
+    # serial numbers (Eric 10-11): a model code per design; the original and every printed copy carry a unique serial
+    async with cl.app["pool"].acquire() as c:
+        model = await c.fetchval("SELECT model_code FROM item_types WHERE code=$1", code)
+        pdes = await c.fetchval("SELECT designer_id FROM blueprint_submissions WHERE id=$1", bid)
+        r1 = await SER.print_run(c, pdes, code, 25)
+        r2 = await SER.print_run(c, pdes, code, 25)
+        allc = await c.fetchval("SELECT count(*) FROM serials x JOIN production_runs r ON r.id=x.run_id WHERE r.blueprint_code=$1", code)
+        try:
+            await SER.print_run(c, p1, code, 5); check("only the original's holder can print copies", False)
+        except ST.Refused:
+            check("only the original's holder can print copies", True)
+        try:
+            await SER.print_run(c, pdes, code, 400); check("a run can't overflow the filing cabinet", False)
+        except ST.Refused as e:
+            check("a run can't overflow the filing cabinet", "room" in str(e))
+    check("approval gives the design a model code (BP-XXXXX)", model and model.startswith("BP-") and len(model) == 8)
+    check("run 1: 25 copies, serials 0001 to 0025", r1["run"] == 1 and r1["serials"][0] == f"{model}-R1-0001" and r1["serials"][-1] == f"{model}-R1-0025")
+    check("run 2 never repeats a run-1 code", r2["run"] == 2 and not set(r1["serials"]) & set(r2["serials"]) and allc == 51)
+    r = await cl.get(f"/api/dfg/serial/{model}-R2-0007"); j = await r.json()
+    check("anyone can check a serial: model, run, copy, of how many (no owner)",
+          r.status == 200 and j["serial"]["run"] == 2 and j["serial"]["copy"] == 7 and j["serial"]["of"] == 25
+          and j["serial"]["name"].endswith("Clay furnace") and "owner" not in json.dumps(j))
+    r = await cl.get(f"/api/dfg/serial/{model}-R3-0001")
+    check("a forged serial (a run that never happened) is not valid", r.status == 404)
+    r = await cl.get(f"/api/dfg/serial/{model.lower()}-original"); j = await r.json()
+    check("the designer's original has its own serial", r.status == 200 and j["serial"]["kind"] == "original")
+    r = await cl.get(f"/api/dfg/blueprints/{bid}", headers=HB); d = await r.json()
+    check("the design shows its model and the designer's serials", d["model"] == model and len(d["serials"]) == 51)
+    r = await cl.get("/api/dfg/inventory", headers=HB); j = await r.json()
+    fc = next(p for p in j["places"] if p["kind"] == "filing_cabinet")
+    check("the copies are filed in the filing cabinet, each with its serial",
+          sum(1 for i in fc["items"] if i["details"].get("serial", "").startswith(model)) == 51)
     # brand new, an upgrade, or a newer version or model (Eric 10-11)
     r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
     codes = {b["code"]: b for b in o["bases"]}
