@@ -111,8 +111,15 @@ The full record is in the `quavara-docs` repository:
     - A player earns a higher rank or a new career by **learning and passing achievement or skills tests through the Starship library**.
 17. **Platform (10-11): browser first, then a Godot phone app.**
 18. **Sign-in emails go through Resend (10-11),** the same service Quavara uses.
+19. **Leaving the quarters (10-11):** an **Exit Private Quarters** button leads to two places only: the **Starship Library** or the **Docking Bay** (the flight).
+20. **The market is reached from the Desk (10-11):** a **Market terminal** button at the Desk opens the full board (TradingView-style chart, best bid and ask, instant Buy now / Sell now, the player's open orders and trade history). There is no other path to it.
+21. **The bank makes the market (10-11):** it has an unlimited credit line and trades small lots all day (a buy desk and a sell desk, trading with each other and with players) so prices move before real volume arrives. Prices lean back toward a reference price for each item. **Everyone is told:** "The Starship bank trades on this market too" (on the market screen and in the FAQ).
+22. **Where things are kept, and listed at the Desk under My items (10-11):** raw materials in the Starship cargo hold; every blueprint in the **filing cabinet**; small personal effects and valuables in the **lockbox inside the filing cabinet**; library books checked out on the **bookshelf**.
+23. **The blueprint form (10-11)** asks for: what it is and the problem it solves; a detailed description of everything it does; what it fits and what it improves; **the library books it requires**; each raw material with its amount; how it's built. Weight and size come from real densities, never typed in.
+24. **Library tests are simple and fairly easy (10-11).** To show knowledge, a player passes the library's test on each required book. Keep the tests short and friendly: "these are people wanting to play a cool game, not earn a Master's Degree in Engineering." Ranks are earned through the same tests.
 
 ### Still open: these ARE Eric's to answer
+0. **Starting prices (10-11):** use real-world price ratios, or a compressed game scale? Is debris diamond gem-quality rough or industrial? (The mock-up's sample prices share one unit, credits per kg, but not real ratios.)
 1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
 2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
 3. **The rules for a player's first blueprint.** Must it sell before they may fly, or is listing it enough? The blueprint form and the review process are already settled: see the spec, §7a.
