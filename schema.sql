@@ -382,3 +382,17 @@ UPDATE locations l SET parent_id=f.id, name='Lockbox'
 
 -- v5 (10-11): iron ore is hematite, 5,300 kg/m³ (webmineral; the raw-materials catalogue). It was 5,150 by mistake.
 UPDATE item_types SET density_kg_m3 = 5300 WHERE code = 'iron' AND density_kg_m3 = 5150;
+
+-- v6 (10-11): debris fields hold ORES (Eric, rule 25). Item codes stay the same; they now name the ore as found.
+-- Every piece is pure ore mineral (rule 27). Smelted metals will get codes of their own (e.g. copper-metal).
+UPDATE item_types SET name='Iron ore (hematite)'                         WHERE code='iron';
+UPDATE item_types SET name='Copper ore (chalcopyrite)', density_kg_m3=4190 WHERE code='copper';
+UPDATE item_types SET name='Silver ore (acanthite)',    density_kg_m3=7300 WHERE code='silver';
+UPDATE item_types SET name='Native gold'                                 WHERE code='gold';
+UPDATE item_types SET name='Industrial diamond'                          WHERE code='diamond';
+-- The near-flawless diamond (Eric, rule 26): one in 100,000 diamond pieces, rolled by the server when collected.
+-- Each one is its own item, never mixed in with industrial diamond, kept as a valuable.
+INSERT INTO item_types(code, kind, name, base_unit, unique_items, tradeable) VALUES
+  ('diamond-flawless', 'resource', 'Near-flawless diamond', 'each', true, true)
+ON CONFLICT (code) DO NOTHING;
+ALTER TABLE cargo ADD COLUMN IF NOT EXISTS flawless BOOLEAN NOT NULL DEFAULT false;

@@ -8,6 +8,7 @@ import asyncpg
 import server as S
 import store as ST
 import blueprints as BP
+import game as G
 
 async def reset_test_db():
     """The test database is throwaway: wipe it so every run starts clean. Refuses any database not named *test."""
@@ -285,6 +286,33 @@ async def main():
         check("the whole conversation is kept, version by version",
               [m["kind"] for m in th] == ["question", "reply", "change_request", "decision"] and th[2]["version"] == 1 and th[3]["version"] == 2)
         check("both submitted versions are kept", await c.fetchval("SELECT count(*) FROM blueprint_versions WHERE submission_id=$1", sid) == 2)
+    # ---- ores and the near-flawless diamond (Eric 10-11, rules 25-27) ----
+    async with cl.app["pool"].acquire() as c:
+        names = dict(await c.fetch("SELECT code, name FROM item_types WHERE code IN ('copper','silver','diamond')"))
+        dens = dict(await c.fetch("SELECT code, density_kg_m3 FROM item_types WHERE code IN ('copper','silver','iron')"))
+    check("fields hold ores: copper is chalcopyrite (4190), silver is acanthite (7300), iron is hematite (5300)",
+          names["copper"] == "Copper ore (chalcopyrite)" and float(dens["copper"]) == 4190 and float(dens["silver"]) == 7300
+          and float(dens["iron"]) == 5300 and names["diamond"] == "Industrial diamond")
+    HD = {"X-Dev-Player": "tester-gems"}
+    r = await cl.post("/api/dfg/session", headers=HD); sidd = (await r.json())["session_id"]
+    dia = {"session_id": sidd, "material": "diamond", "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}
+    r = await cl.post("/api/dfg/collect", headers=HD, json=dia); j = await r.json()
+    check("an ordinary diamond is industrial", j["aboard"]["flawless"] is False)
+    G.FLAWLESS_ODDS = 1                                   # force the 1-in-100,000 roll for this one test
+    await asyncio.sleep(2.1)
+    r = await cl.post("/api/dfg/collect", headers=HD, json=dia); j = await r.json()
+    G.FLAWLESS_ODDS = 100000
+    check("the server's roll marks a near-flawless diamond, and says so", j["aboard"]["flawless"] is True
+          and [q["flawless"] for q in j["pieces"]] == [False, True])
+    r = await cl.post("/api/dfg/unload", headers=HD, json={"docked": True}); j = await r.json()
+    gems = j["near_flawless_diamonds"]
+    check("unloading keeps it apart: its own item, in the lockbox (it fits)", len(gems) == 1 and gems[0]["kept_in"] == "lockbox"
+          and j["receipt"]["near_flawless_diamonds"][0]["item_id"] == gems[0]["item_id"])
+    places = {q["kind"]: q for q in j["inventory"]["places"]}
+    check("the industrial diamond went to the cargo hold; the near-flawless one is in the lockbox, never mixed in",
+          [g["item"] for g in places["starship_cargo"]["goods"]] == ["diamond"]
+          and [i["item"] for i in places["lockbox"]["items"]] == ["diamond-flawless"]
+          and places["lockbox"]["used_m3"] > 0)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

@@ -158,7 +158,7 @@ async def used_m3(conn, location_id):
                                     ELSE (s.qty + s.held) * coalesce(t.volume_m3_each, 0) END), 0)
            FROM stacks s JOIN item_types t ON t.code = s.item_code WHERE s.location_id=$1""", location_id)
     unique = await conn.fetchval(
-        """SELECT coalesce(sum(coalesce(t.volume_m3_each, 0)), 0) FROM items i JOIN item_types t ON t.code=i.item_code
+        """SELECT coalesce(sum(coalesce((i.attrs->>'volume_m3')::numeric, t.volume_m3_each, 0)), 0) FROM items i JOIN item_types t ON t.code=i.item_code
            WHERE i.location_id=$1 AND i.ship_id IS NULL AND NOT coalesce((i.attrs->>'fixed')::boolean, false)""", location_id)
     # a ship's hold also carries loose pieces straight from the fields, each taking the box it needs
     loose = await conn.fetchval("""SELECT coalesce(sum(c.box_m3), 0) FROM cargo c JOIN locations l ON l.ship_id=c.ship_id
@@ -173,11 +173,31 @@ async def unload(conn, pid):
         ship = await active_ship(conn, pid, lock=True)
         store = await conn.fetchrow("SELECT id, capacity_m3 FROM locations WHERE player_id=$1 AND kind='starship_cargo' FOR UPDATE", pid)
         cap, used = float(store["capacity_m3"]), await used_m3(conn, store["id"])
-        pieces = await conn.fetch("""SELECT c.id, c.material, c.mass_kg, t.density_kg_m3 FROM cargo c
+        pieces = await conn.fetch("""SELECT c.id, c.material, c.mass_kg, c.volume_m3, c.dim_a, c.dim_b, c.dim_c, c.flawless,
+                                            t.density_kg_m3 FROM cargo c
                                      JOIN item_types t ON t.code=c.material
                                      WHERE c.ship_id=$1 AND c.unloaded_at IS NULL ORDER BY c.id""", ship["id"])
-        moved, grams_by = [], {}
+        moved, grams_by, gems = [], {}, []
+        lockbox = await conn.fetchrow("SELECT id, capacity_m3 FROM locations WHERE player_id=$1 AND kind='lockbox' FOR UPDATE", pid)
         for p in pieces:
+            if p["flawless"]:
+                # a near-flawless diamond (rule 26) is its own item, never mixed in with industrial diamond:
+                # kept as a valuable in the lockbox if it fits, otherwise in the Starship cargo hold
+                vol = float(p["volume_m3"])
+                into = lockbox if await used_m3(conn, lockbox["id"]) + vol <= float(lockbox["capacity_m3"]) + 1e-9 else None
+                if not into:
+                    if used + vol > cap + 1e-9:
+                        break
+                    used += vol
+                iid = await conn.fetchval("""INSERT INTO items(item_code, owner_id, location_id, attrs)
+                                             VALUES('diamond-flawless',$1,$2,$3) RETURNING id""",
+                                          pid, (into or store)["id"], json.dumps({
+                                              "kg": round(float(p["mass_kg"]), 3), "volume_m3": vol,
+                                              "dims_m": [float(p["dim_a"]), float(p["dim_b"]), float(p["dim_c"])]}))
+                await conn.execute("UPDATE cargo SET unloaded_at=now() WHERE id=$1", p["id"])
+                moved.append(p["id"]); gems.append({"item_id": iid, "kg": round(float(p["mass_kg"]), 3),
+                                                    "kept_in": "lockbox" if into else "starship_cargo"})
+                continue
             g = int(round(float(p["mass_kg"]) * G_PER_KG))
             need = g / G_PER_KG / float(p["density_kg_m3"])
             if used + need > cap + 1e-9:
@@ -198,10 +218,11 @@ async def unload(conn, pid):
                 "to": "your space in the Starship's cargo hold",
                 "pieces": len(moved), "left_aboard": len(pieces) - len(moved),
                 "kg": {k: v / G_PER_KG for k, v in sorted(grams_by.items())},
+                **({"near_flawless_diamonds": gems} if gems else {}),
                 "space_used_m3": round(used, 4), "space_total_m3": round(cap, 4)})
         return {"unloaded_pieces": len(moved), "left_aboard": len(pieces) - len(moved),
                 "unloaded_kg": {k: v / G_PER_KG for k, v in grams_by.items()},
-                "storage_full": len(moved) < len(pieces), "receipt": receipt}
+                "storage_full": len(moved) < len(pieces), "near_flawless_diamonds": gems, "receipt": receipt}
 
 
 async def inventory(conn, pid):

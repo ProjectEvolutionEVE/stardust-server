@@ -169,7 +169,7 @@ async def _state(conn, pid):
            WHERE ship_id=$1 AND unloaded_at IS NULL GROUP BY material ORDER BY material""", s["id"])
     used = sum(float(r["box"]) for r in rows)
     # each piece still aboard, oldest first, so the flight can rebuild its hold exactly as the server has it
-    pieces = await conn.fetch("""SELECT id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg FROM cargo
+    pieces = await conn.fetch("""SELECT id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless FROM cargo
                                  WHERE ship_id=$1 AND unloaded_at IS NULL ORDER BY id""", s["id"])
     store = await conn.fetchrow("SELECT id, capacity_m3 FROM locations WHERE player_id=$1 AND kind='starship_cargo'", pid)
     kept = await conn.fetch("""SELECT s.item_code, s.qty + s.held AS g FROM stacks s JOIN item_types t ON t.code=s.item_code
@@ -180,7 +180,8 @@ async def _state(conn, pid):
                        "m3": round(float(r["box"]), 4)} for r in rows],
             "pieces": [{"id": r["id"], "material": r["material"],
                         "dims_m": [float(r["dim_a"]), float(r["dim_b"]), float(r["dim_c"])],
-                        "volume_m3": float(r["volume_m3"]), "box_m3": float(r["box_m3"]), "kg": float(r["mass_kg"])}
+                        "volume_m3": float(r["volume_m3"]), "box_m3": float(r["box_m3"]), "kg": float(r["mass_kg"]),
+                        "flawless": r["flawless"]}
                        for r in pieces],
             "storage": {"capacity_m3": float(store["capacity_m3"]),
                         "kg": {r["item_code"]: r["g"] / ST.G_PER_KG for r in kept}}}
@@ -227,15 +228,17 @@ async def collect(request):
             if not G.room_for(p["box"], used, hold):
                 raise G.Refused("Your hold is full.")
             d = p["dims"]
+            # rule 26: one diamond in 100,000 is near-flawless. The server rolls it, never the browser.
+            flawless = body["material"] == "diamond" and secrets.randbelow(G.FLAWLESS_ODDS) == 0
             cid = await conn.fetchval(
-                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg)
-                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id""",
-                pid, s["id"], sid, body["material"], d[0], d[1], d[2], p["volume"], p["box"], p["mass"])
+                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless)
+                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id""",
+                pid, s["id"], sid, body["material"], d[0], d[1], d[2], p["volume"], p["box"], p["mass"], flawless)
             await conn.execute("UPDATE sessions SET last_collect_at=now() WHERE id=$1", sid)
             await conn.execute("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'collect',$2)", pid,
                                json.dumps({"cargo_id": cid, "material": body["material"], "kg": round(p["mass"], 3),
-                                           "dims": [round(x, 4) for x in d], "session": str(sid)}))
-        return _json({"aboard": {"material": body["material"], "kg": round(p["mass"], 3),
+                                           "dims": [round(x, 4) for x in d], "session": str(sid), "flawless": flawless}))
+        return _json({"aboard": {"material": body["material"], "kg": round(p["mass"], 3), "flawless": flawless,
                                  "dims_m": [round(x, 4) for x in d], "box_m3": round(p["box"], 5)},
                       **await _state(conn, pid)})
 

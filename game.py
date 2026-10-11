@@ -6,13 +6,15 @@ the room left, and refuses collects faster than collecting physically takes."""
 
 DENSITY = {  # kg per cubic metre, real values
     "iron": 5300,      # hematite iron ore (webmineral 5.3; corrected from 5150 on 10-11, Eric)
-    "copper": 8960,
-    "silver": 10490,
-    "gold": 19300,
-    "diamond": 3510,
+    "copper": 4190,    # copper ore: chalcopyrite CuFeS2 (fields hold ores, Eric 10-11)
+    "silver": 7300,    # silver ore: acanthite Ag2S
+    "gold": 19300,     # native gold (gold is found as metal)
+    "diamond": 3510,   # industrial diamond; 1 in 100,000 is near-flawless (rule 26)
 }
 ICO_VOL = 2.536          # volume of the icosahedron rocks are drawn from, per unit scale³
 MIN_COLLECT_S = 2.0      # the quickest a piece can come aboard (client: 2 s + more for bigger pieces)
+import os
+FLAWLESS_ODDS = int(os.environ.get("DFG_FLAWLESS_ODDS", "100000"))   # 1 in 100,000 (rule 26); tests may lower it
 MAX_PIECE_DIM = 9.0      # metres; nothing in the universe is bigger than a large chunk
 
 

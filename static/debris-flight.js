@@ -310,11 +310,12 @@ LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140
 //    fail to fit together; they must be cut smaller first (mining laser, later).
 //  • Collecting takes time per piece (bigger pieces longer). Nothing is instant.
 const MATERIALS={ // kg per cubic metre (real densities)
- iron:   {name:'Iron ore', density:5300},   // hematite (5,300 kg/m³; was 5,150 until 10-11)
- copper: {name:'Copper',   density:8960},
- silver: {name:'Silver',   density:10490},
- gold:   {name:'Gold',     density:19300},
- diamond:{name:'Diamond',  density:3510}};
+ // Fields hold ORES (Eric 10-11, rule 25); every piece is pure ore mineral (rule 27)
+ iron:   {name:'Iron ore',   density:5300},    // hematite Fe2O3 (5,300 kg/m³; was 5,150 until 10-11)
+ copper: {name:'Copper ore', density:4190},    // chalcopyrite CuFeS2
+ silver: {name:'Silver ore', density:7300},    // acanthite Ag2S
+ gold:   {name:'Native gold',density:19300},   // gold is found as metal
+ diamond:{name:'Industrial diamond',density:3510}};   // 1 in 100,000 is near-flawless: the server rolls it (rule 26)
 const MIX={ // share of pieces by material, per field type: common material everywhere; the rare finds are scarce, and
             // scarcest of all in the big easy fields (small and tiny fields hide them). Real ratios arrive with the catalogue.
  large: [['iron',.74],['copper',.22],['silver',.03],['gold',.01]],
@@ -364,10 +365,10 @@ function collectTick(dt){
  if(f.pieces.every(q=>q.taken)){lock=null;f.cleared=true;toast('FIELD CLEARED','Nothing left here. There\'s more debris all through the ring.');return;}
  startCollect();}                            // keep going until full or nothing else fits
 function renderHold(){const used=cargoBulk();holdEl.textContent='HOLD '+used.toFixed(2)+' / '+HOLD.cap.toFixed(2)+' m³';
- const rows={};cargo.forEach(p=>{const r=rows[p.mat]||(rows[p.mat]={n:0,kg:0,box:0});r.n++;r.kg+=p.mass;r.box+=p.box;});
+ const rows={};cargo.forEach(p=>{const k=p.flawless?'flawless':p.mat;const r=rows[k]||(rows[k]={n:0,kg:0,box:0});r.n++;r.kg+=p.mass;r.box+=p.box;});
  const tb=document.getElementById('manifest');tb.textContent='';
- Object.keys(MATERIALS).forEach(m=>{if(!rows[m])return;const tr=document.createElement('tr');
-  [MATERIALS[m].name,rows[m].n,fmtKg(rows[m].kg),rows[m].box.toFixed(3)+' m³'].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
+ [...Object.keys(MATERIALS),'flawless'].forEach(m=>{if(!rows[m])return;const tr=document.createElement('tr');   // the near-flawless diamond is never mixed in (rule 26)
+  [m==='flawless'?'💎 Near-flawless diamond':MATERIALS[m].name,rows[m].n,fmtKg(rows[m].kg),rows[m].box.toFixed(3)+' m³'].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
  document.getElementById('holdempty').hidden=cargo.length>0;
  document.getElementById('holdspec').textContent=HOLD.name+': '+HOLD.dims.map(d=>d.toFixed(1)).join(' × ')+' m inside ('+HOLD.cap.toFixed(2)+' m³). Used '+used.toFixed(2)+' m³ · '+fmtKg(cargo.reduce((a,p)=>a+p.mass,0))+' aboard.';
  const sb=document.getElementById('storemanifest');sb.textContent='';let any=false;
@@ -444,7 +445,9 @@ function startUnload(){if(!docked||!cargo.length||xfer)return;
    .catch(e=>{if(xfer!==x)return;x.wait=false;x.error=e.message;finishXfer(false);});
   return;}
  xferNow(cargo[0]);renderXfer();}
-function xferMove(){const p=cargo.shift();STORE.kg[p.mat]=(STORE.kg[p.mat]||0)+p.mass;xfer.moved[p.mat]=(xfer.moved[p.mat]||0)+p.mass;xfer.n++;
+function xferMove(){const p=cargo.shift();
+ if(p.flawless)xfer.gems=(xfer.gems||0)+1;   // kept apart: to the lockbox, not the cargo-hold storage
+ else{STORE.kg[p.mat]=(STORE.kg[p.mat]||0)+p.mass;xfer.moved[p.mat]=(xfer.moved[p.mat]||0)+p.mass;}xfer.n++;
  storeSave();renderHold();return p;}
 function xferNow(p){document.getElementById('xNow').textContent=p?'Moving '+fmtKg(p.mass)+' of '+MATERIALS[p.mat].name.toLowerCase()+'…':'';}
 function renderXfer(sub){const used=Math.max(0,cargoBulk()-(sub||0)),su=storeUsed();
@@ -482,6 +485,7 @@ function finishXfer(stopped){const x=xfer;x.done=true;renderXfer();xferNow(null)
  const tb=document.getElementById('xSumB');tb.textContent='';
  Object.keys(MATERIALS).forEach(m=>{if(!x.moved[m])return;const tr=document.createElement('tr');
   [MATERIALS[m].name,'+ '+fmtKg(x.moved[m])].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
+ if(x.gems){const tr=document.createElement('tr');['💎 Near-flawless diamond','+ '+x.gems+' to your lockbox'].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);}
  const rb=document.getElementById('xRcpt');rb.hidden=!x.n;
  if(x.server)netApplyInventory(x.server.inventory);   // the server's figures are the truth
  const sr=x.server&&x.server.receipt;
@@ -508,7 +512,7 @@ async function netCall(path,body){
  return j;}
 function netApplyShip(j){   // rebuild the hold and storage exactly as the server has them
  if(j.ship&&j.ship.hold_dims_m){HOLD.dims=j.ship.hold_dims_m.slice();HOLD.cap=HOLD.dims[0]*HOLD.dims[1]*HOLD.dims[2];HOLD.sorted=HOLD.dims.slice().sort((a,b)=>b-a);}
- if(j.pieces){cargo.length=0;j.pieces.forEach(p=>cargo.push({id:p.id,mat:p.material,dims:p.dims_m.slice().sort((a,b)=>b-a),vol:p.volume_m3,box:p.box_m3,mass:p.kg,taken:true}));}
+ if(j.pieces){cargo.length=0;j.pieces.forEach(p=>cargo.push({id:p.id,mat:p.material,dims:p.dims_m.slice().sort((a,b)=>b-a),vol:p.volume_m3,box:p.box_m3,mass:p.kg,taken:true,flawless:!!p.flawless}));}
  if(j.storage){STORE.cap=j.storage.capacity_m3;STORE.kg=Object.assign({},j.storage.kg);storeSave();}
  renderHold();}
 function netApplyInventory(inv){const st=inv&&inv.places&&inv.places.find(p=>p.kind==='starship_cargo');if(!st)return;
@@ -523,7 +527,10 @@ function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{}
 function netCollect(p){
  NET.queue=NET.queue.then(async()=>{
   const wait=NET.last+2200-Date.now();if(wait>0)await new Promise(r=>setTimeout(r,wait));NET.last=Date.now();
-  try{await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});}
+  try{const j=await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});
+   if(j.aboard&&j.aboard.flawless){p.flawless=true;renderHold();   // rule 26: keep the excitement with the miner
+    snd.chime();setTimeout(()=>snd.chime(),350);
+    toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}}
   catch(e){const i=cargo.indexOf(p);if(i>=0)cargo.splice(i,1);renderHold();
    toast('NOT COLLECTED',e.message);}});}
 async function netUnload(){await NET.queue;return netCall('/unload',{docked:true});}

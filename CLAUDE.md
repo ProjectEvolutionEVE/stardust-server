@@ -128,7 +128,7 @@ The full record is in the `quavara-docs` repository:
 27. **Smelting yields follow real chemistry, kept simple (10-11):** every ore piece is **pure ore mineral**, so it yields its element's share by weight (from its formula), and the rest is slag. Example: 100 kg of chalcopyrite gives 34.6 kg of copper and 65.4 kg of slag. No mine-grade dilution.
 
 ### Still open: these ARE Eric's to answer
-0. **Floor and starting prices (10-11):** the market sets prices above a floor (rule 21). What is each item's floor, and the price it starts at before its first trade? Real-world ratios or a compressed game scale? (Iron ore is now hematite at 5,300 kg/m³, corrected 10-11.)
+0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios) with each floor at half the starting price, approved once and then the market sets prices. Draft (credits per kg, whole credits): iron ore 2 (floor 1), copper ore 6 (3), silver ore 60... see the spec §7 for the current draft. Eric may change any number.
 1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
 2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
 3. **The rules for a player's first blueprint.** Must it sell before they may fly, or is listing it enough? The blueprint form and the review process are already settled: see the spec, §7a.
