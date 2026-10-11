@@ -300,5 +300,14 @@ async def audit(conn):
     for r in held:
         if r["held_credits"] != r["bids"]:
             problems.append(f"account {r['id']} has {r['held_credits']} set aside but its open bids need {r['bids']}")
+    goods = await conn.fetch(
+        """SELECT s.location_id, s.item_code, s.held,
+                  coalesce((SELECT sum(o.remaining * t.trade_unit) FROM orders o JOIN accounts a ON a.id=o.account_id
+                            WHERE a.player_id=l.player_id AND o.item_code=s.item_code AND o.side='sell' AND o.status='open'), 0) AS asks
+           FROM stacks s JOIN locations l ON l.id=s.location_id JOIN item_types t ON t.code=s.item_code
+           WHERE l.kind='starship_cargo'""")
+    for r in goods:
+        if r["held"] != r["asks"]:
+            problems.append(f"place {r['location_id']} has {r['held']} of {r['item_code']} set aside but its open asks need {r['asks']}")
     return problems
 

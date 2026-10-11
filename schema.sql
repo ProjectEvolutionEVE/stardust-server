@@ -396,3 +396,29 @@ INSERT INTO item_types(code, kind, name, base_unit, unique_items, tradeable) VAL
   ('diamond-flawless', 'resource', 'Near-flawless diamond', 'each', true, true)
 ON CONFLICT (code) DO NOTHING;
 ALTER TABLE cargo ADD COLUMN IF NOT EXISTS flawless BOOLEAN NOT NULL DEFAULT false;
+
+-- v7 (10-11): the market (Eric, rules 12, 20, 21). Each traded item's starting price (used until its first trade), its
+-- floor (nothing trades below it), the reference price the bank leans prices back toward, and the bank's lot size.
+-- Prices are whole credits per kg. Eric's draft list of 10-11; any number may change (he approves the list).
+CREATE TABLE IF NOT EXISTS item_prices (
+  item_code   TEXT PRIMARY KEY REFERENCES item_types(code),
+  start_price BIGINT NOT NULL CHECK (start_price > 0),
+  floor_price BIGINT NOT NULL CHECK (floor_price > 0),
+  ref_price   BIGINT NOT NULL CHECK (ref_price > 0),
+  bank_lot_kg BIGINT NOT NULL DEFAULT 0,          -- 0 = the bank doesn't trade it
+  listed      BOOLEAN NOT NULL DEFAULT true,
+  sort        INT NOT NULL DEFAULT 0
+);
+INSERT INTO item_prices(item_code, start_price, floor_price, ref_price, bank_lot_kg, sort) VALUES
+  ('iron',     2,   1,   2, 400, 1),
+  ('copper',   6,   3,   6, 150, 2),
+  ('silver',  30,  15,  30,  20, 3),
+  ('gold',   200, 100, 200,   3, 4),
+  ('diamond',100,  50, 100,   5, 5)
+ON CONFLICT (item_code) DO NOTHING;
+INSERT INTO settings(key, value, note) VALUES
+  ('bank_tick_s',       20, 'about how often the bank desks trade, seconds (Eric 10-11: the bank keeps the market moving)'),
+  ('bank_vol_pct',     1.5, 'how far each bank trade nudges the price at random, percent'),
+  ('bank_pull_pct',     10, 'how strongly prices lean back toward the reference price, percent per trade'),
+  ('bank_bid_qty_kg', 2000, 'size of the bank''s standing bid (the instant sale to the bank), kg')
+ON CONFLICT (key) DO NOTHING;

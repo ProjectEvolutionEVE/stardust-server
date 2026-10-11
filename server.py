@@ -28,6 +28,9 @@ import store as ST
 import auth as AUTH
 import body as BODY
 import names as NAMES
+import market as M
+import bank as BANK
+import asyncio
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
 LANGUAGES = json.loads((Path(__file__).parent / "languages.json").read_text())["languages"]
@@ -52,7 +55,7 @@ async def cors(request, handler):
             resp = await handler(request)
         except AUTH.NotSignedIn as e:
             resp = _json({"error": str(e)}, 401)
-        except (G.Refused, ST.Refused, AUTH.Refused) as e:
+        except (G.Refused, ST.Refused, AUTH.Refused, M.Refused) as e:
             resp = _json({"error": str(e)}, 422)
     if origin in ALLOWED_ORIGINS:
         resp.headers["Access-Control-Allow-Origin"] = origin
@@ -291,10 +294,56 @@ async def _startup(app):
     app["pool"] = await asyncpg.create_pool(os.environ["DATABASE_URL"], min_size=1, max_size=5)
     async with app["pool"].acquire() as conn:
         await conn.execute(SCHEMA)
+    app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
 
 
 async def _cleanup(app):
+    app["bank"].cancel()
+    try:
+        await app["bank"]
+    except (asyncio.CancelledError, Exception):
+        pass
     await app["pool"].close()
+
+
+# ── THE MARKET (rules 12, 20, 21): the Market terminal at the Desk reads and trades through these ──
+async def market_board(request):
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+        return _json({"items": await M.board(conn), "note": "The Starship bank trades on this market too."})
+
+
+async def market_item(request):
+    item = request.match_info["item"]
+    period = int(request.query.get("period", "300"))
+    if period not in (60, 300, 900, 3600, 14400, 86400):
+        period = 300
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+        return _json({**await M.book(conn, item), "candles": await M.candles(conn, item, period), "period": period})
+
+
+async def market_mine(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await M.mine(conn, pid))
+
+
+async def market_order(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await M.place(conn, pid, b.get("item"), b.get("side"), b.get("type"), b.get("qty"), b.get("price")))
+
+
+async def market_cancel(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        oid = b.get("order_id")
+        if not isinstance(oid, int):
+            raise M.Refused("Which order?")
+        return _json(await M.cancel(conn, pid, oid))
 
 
 def make_app():
@@ -308,6 +357,11 @@ def make_app():
     app.router.add_get("/api/dfg/receipts", receipts)
     app.router.add_get("/api/dfg/receipt/{code}", verify_receipt)
     app.router.add_get("/api/dfg/health", health)
+    app.router.add_get("/api/dfg/market", market_board)
+    app.router.add_get("/api/dfg/market/mine", market_mine)
+    app.router.add_get("/api/dfg/market/item/{item}", market_item)
+    app.router.add_post("/api/dfg/market/order", market_order)
+    app.router.add_post("/api/dfg/market/cancel", market_cancel)
     app.router.add_get("/api/dfg/signup-options", signup_options)
     app.router.add_post("/api/dfg/auth/start", auth_start)
     app.router.add_post("/api/dfg/auth/verify", auth_verify)
