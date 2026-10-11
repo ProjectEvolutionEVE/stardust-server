@@ -127,6 +127,8 @@ The full record is in the `quavara-docs` repository:
 
 27. **Smelting yields follow real chemistry, kept simple (10-11):** every ore piece is **pure ore mineral**, so it yields its element's share by weight (from its formula), and the rest is slag. Example: 100 kg of chalcopyrite gives 34.6 kg of copper and 65.4 kg of slag. No mine-grade dilution.
 
+28. **The Starship's greenhouse and water plant (Eric's canon, Story Bible 2026-09-25; confirmed 10-11 as the same ship).** The WSC Alexander von Humboldt is the starship of the Story Bible (`quavara-site/games-holdback/STORY-BIBLE.md`). It has a **large self-sustaining greenhouse** and a **water generation plant** that makes its own H₂O, so water is an endless supply aboard. So **Botany & Hydroponics** is a library subject and an early career aboard (Greenhouse Tech / Botanist), not only on the new Earth later.
+
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number.
 1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
