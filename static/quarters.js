@@ -137,25 +137,36 @@ const TABS=[['bed','🛏️ Bed'],['desk','🗄️ Desk'],['closet','👔 Closet
 function bars(me){const c=v=>v>=65?'#7fe0a8':v>=50?'#ffcf6b':'#ff8f8a';
   return Object.entries(me.bars).map(([k,v])=>`<div class="bar"><div class="l"><span>${k[0].toUpperCase()+k.slice(1)}</span><span>${v.toFixed(0)}%</span></div>
    <div class="t"><div class="f" style="width:${v}%;background:${c(v)}"></div></div></div>`).join('')+(me.warning?`<div class="warn">${esc(me.warning)}</div>`:'');}
-// The desk's list of everything the player owns (Eric 10-11): one folder per place, in the order you'd walk to them.
-const PLACE_ORDER=['starship_cargo','ship_hold','hangar','private_quarters','lockbox'];
-const PLACE_ICON={starship_cargo:'📦',ship_hold:'🚀',hangar:'🛰️',private_quarters:'🛏️',lockbox:'🔒'};
+// The desk's list of everything the player owns (Eric 10-11): a folder for each place it's kept. Raw materials wait in
+// the Starship's cargo hold; Private Quarters holds the filing cabinet (every blueprint, with the lockbox for small
+// personal effects and valuables inside it) and the bookshelf (library books checked out).
+const PLACE_ORDER=['starship_cargo','ship_hold','hangar','private_quarters','filing_cabinet','lockbox','bookshelf'];
+const PLACE_ICON={starship_cargo:'📦',ship_hold:'🚀',hangar:'🛰️',private_quarters:'🛏️',filing_cabinet:'🗂️',lockbox:'🔒',bookshelf:'📚'};
+const PLACE_NAME={starship_cargo:'Starship cargo hold'};
+const PLACE_EMPTY={starship_cargo:'No raw materials in storage.',ship_hold:'Nothing aboard.',filing_cabinet:'No blueprints yet.',
+  lockbox:'Empty. For small personal effects and valuables.',bookshelf:'No library books checked out.',private_quarters:'Nothing else here.'};
+const DESIGN_STATUS={draft:'your draft',submitted:'with the review team',changes_requested:'changes requested',approved:'approved',rejected:'not approved'};
 function amount(g){
   if(g.kg!=null){const kg=Number(g.kg);return (kg>=1000?(kg/1000).toLocaleString(undefined,{maximumFractionDigits:2})+' t':kg.toLocaleString(undefined,{maximumFractionDigits:1})+' kg')
     +(g.pieces?` · ${g.pieces} piece${g.pieces>1?'s':''}`:'')+(g.kg_set_aside?` · ${Number(g.kg_set_aside).toLocaleString()} kg set aside for an order`:'');}
   return (g.count||0)+(g.set_aside?` · ${g.set_aside} set aside`:'');}
+function folder(p,all){
+  const goods=p.goods||[],items=p.items||[],designs=p.designs||[];
+  const kids=all.filter(c=>c.inside===p.kind).sort((x,y)=>PLACE_ORDER.indexOf(x.kind)-PLACE_ORDER.indexOf(y.kind));
+  const n=goods.length+items.length+designs.length;
+  const u=Number(p.used_m3||0),m3=u>0&&u<0.01?'under 0.01':u.toLocaleString(undefined,{maximumFractionDigits:2});
+  const space=p.capacity_m3!=null?`${m3} of ${Number(p.capacity_m3).toLocaleString(undefined,{maximumFractionDigits:2})} m³ used`
+    :p.capacity_slots!=null?`${p.used_slots} of ${p.capacity_slots} bays used`:'';
+  const rows=goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(amount(g))}</td></tr>`).join('')
+    +items.map(i=>`<tr><td>${esc(i.name)}</td><td style="text-align:right" class="soon">${i.set_aside?'set aside':'1'}</td></tr>`).join('')
+    +designs.map(d=>`<tr><td>${esc(d.title)} <span class="soon">(your design)</span></td><td style="text-align:right" class="soon">${esc(DESIGN_STATUS[d.status]||d.status)}</td></tr>`).join('');
+  return `<details class="fold"${p.kind==='starship_cargo'?' open':''}><summary>${PLACE_ICON[p.kind]||'📁'} ${esc(PLACE_NAME[p.kind]||p.name)}
+    <span class="soon"> · ${n?n+' item'+(n>1?'s':''):'empty'}${space?' · '+esc(space):''}</span></summary>
+    ${n?`<table>${rows}</table>`:(kids.length?'':`<p class="soon" style="margin:6px 0 0">${esc(PLACE_EMPTY[p.kind]||'Empty.')}</p>`)}
+    ${kids.map(k=>folder(k,all)).join('')}</details>`;}
 function itemFolders(places){
-  const ps=[...(places||[])].sort((a,b)=>PLACE_ORDER.indexOf(a.kind)-PLACE_ORDER.indexOf(b.kind));
-  return ps.map(p=>{
-    const goods=p.goods||[],items=p.items||[],n=goods.length+items.length;
-    const u=Number(p.used_m3||0),m3=u>0&&u<0.01?'under 0.01':u.toLocaleString(undefined,{maximumFractionDigits:2});
-    const space=p.capacity_m3!=null?`${m3} of ${Number(p.capacity_m3).toLocaleString(undefined,{maximumFractionDigits:2})} m³ used`
-      :p.capacity_slots!=null?`${p.used_slots} of ${p.capacity_slots} bays used`:'';
-    const rows=goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(amount(g))}</td></tr>`).join('')
-      +items.map(i=>`<tr><td>${esc(i.name)}</td><td style="text-align:right" class="soon">${i.details&&i.details.fixed?'fixed in the room':i.set_aside?'set aside':'1'}</td></tr>`).join('');
-    return `<details class="fold"${p.kind==='starship_cargo'?' open':''}><summary>${PLACE_ICON[p.kind]||'📁'} ${esc(p.name)}
-      <span class="soon"> · ${n?n+' item'+(n>1?'s':''):'empty'}${space?' · '+esc(space):''}</span></summary>
-      ${n?`<table>${rows}</table>`:'<p class="soon" style="margin:6px 0 0">Empty.</p>'}</details>`;}).join('');}
+  const all=places||[];
+  return all.filter(p=>!p.inside).sort((a,b)=>PLACE_ORDER.indexOf(a.kind)-PLACE_ORDER.indexOf(b.kind)).map(p=>folder(p,all)).join('');}
 async function tabBody(tab,me){
   if(tab==='bed')return `<p>${me.asleep?'You are asleep.':'You\'re awake, in your bed.'} Every session starts and ends here.</p>${bars(me)}
    <button class="go" id="sqShip">Get up</button><button class="link" id="sqOut">Sign out (go to sleep)</button>`;

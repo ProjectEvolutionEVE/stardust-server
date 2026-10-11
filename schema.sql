@@ -20,6 +20,8 @@ INSERT INTO settings(key, value, note) VALUES
   ('quarters_m3',           4, 'SAMPLE: room for personal possessions in a player''s Private Quarters, cubic metres'),
   ('lockbox_m3',         0.05, 'SAMPLE: the lockbox in the filing drawer, cubic metres'),
   ('hangar_slots_start',    1, 'ships a new player can keep at the Starship'),
+  ('filing_cabinet_m3',  0.15, 'SAMPLE: the filing cabinet in Private Quarters (blueprints and documents), cubic metres'),
+  ('bookshelf_m3',        0.3, 'SAMPLE: the bookshelf in Private Quarters (library books checked out), cubic metres'),
   ('bank_bid_gap_pct',     10, 'the bank''s standing bid sits this many percent under the last price')
 ON CONFLICT (key) DO NOTHING;
 
@@ -355,3 +357,25 @@ CREATE TABLE IF NOT EXISTS blueprint_messages (
   at            TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS blueprint_messages_sub ON blueprint_messages(submission_id, at);
+
+-- v4 (10-11): where things are kept inside Private Quarters (Eric). The filing cabinet holds every blueprint and,
+-- inside it, the lockbox for small personal effects and valuables; the bookshelf holds library books checked out.
+-- Raw materials stay in the Starship's cargo hold. Existing players get the new places, and their lockbox moves
+-- into the filing cabinet.
+DO $$ BEGIN
+  ALTER TABLE locations DROP CONSTRAINT IF EXISTS locations_kind_check;
+  ALTER TABLE locations ADD CONSTRAINT locations_kind_check CHECK (kind IN ('starship_cargo','private_quarters','lockbox',
+    'hangar','ship_hold','colony_storage','filing_cabinet','bookshelf'));
+END $$;
+CREATE UNIQUE INDEX IF NOT EXISTS locations_one_in_quarters ON locations(player_id, kind) WHERE kind IN ('filing_cabinet','bookshelf');
+INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
+  SELECT q.player_id, 'filing_cabinet', 'Filing cabinet', (SELECT value FROM settings WHERE key='filing_cabinet_m3'), q.id
+  FROM locations q WHERE q.kind='private_quarters'
+  AND NOT EXISTS (SELECT 1 FROM locations f WHERE f.player_id=q.player_id AND f.kind='filing_cabinet');
+INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
+  SELECT q.player_id, 'bookshelf', 'Bookshelf', (SELECT value FROM settings WHERE key='bookshelf_m3'), q.id
+  FROM locations q WHERE q.kind='private_quarters'
+  AND NOT EXISTS (SELECT 1 FROM locations b WHERE b.player_id=q.player_id AND b.kind='bookshelf');
+UPDATE locations l SET parent_id=f.id, name='Lockbox'
+  FROM locations f WHERE l.kind='lockbox' AND f.kind='filing_cabinet' AND f.player_id=l.player_id
+  AND l.parent_id IS DISTINCT FROM f.id;

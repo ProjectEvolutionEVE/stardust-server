@@ -158,11 +158,19 @@ async def main():
           places["hangar"]["used_slots"] == 1 and places["hangar"]["items"][0]["kind"] == "ship")
     check("4 pieces aboard before unloading", places["ship_hold"]["pieces_aboard"] == 4)
     q = places["private_quarters"]
+    async with cl.app["pool"].acquire() as c:
+        furn = await c.fetch("""SELECT t.name FROM items i JOIN item_types t ON t.code=i.item_code JOIN locations l ON l.id=i.location_id
+                                JOIN players p ON p.id=l.player_id WHERE l.kind='private_quarters' AND p.player_key=$1""", "dev:tester1")
     check("Private Quarters: 4 m³, furnished with bed, mirror, closet, desk, lamp, chair, filing drawer, lockbox",
-          q["capacity_m3"] == 4 and sorted(i["name"] for i in q["items"]) ==
+          q["capacity_m3"] == 4 and sorted(r["name"] for r in furn) ==
           sorted(["Bed", "Mirror", "Closet", "Desk", "Lamp", "Chair", "Filing drawer", "Lockbox"]))
-    check("the furniture doesn't use up the room for possessions", q["used_m3"] == 0)
-    check("a lockbox to keep valuables in", places["lockbox"]["capacity_m3"] == 0.05)
+    check("the furniture isn't listed among the player's things, and doesn't use up the room", q["items"] == [] and q["used_m3"] == 0)
+    # Eric 10-11: blueprints in the filing cabinet, the lockbox inside it, library books on the bookshelf
+    check("a filing cabinet in the quarters, for blueprints", places["filing_cabinet"]["inside"] == "private_quarters"
+          and places["filing_cabinet"]["capacity_m3"] == 0.15 and places["filing_cabinet"]["designs"] == [])
+    check("the lockbox is inside the filing cabinet", places["lockbox"]["inside"] == "filing_cabinet"
+          and places["lockbox"]["capacity_m3"] == 0.05 and places["lockbox"]["name"] == "Lockbox")
+    check("a bookshelf in the quarters, for library books", places["bookshelf"]["inside"] == "private_quarters")
     r = await cl.post("/api/dfg/unload", headers=H, json={})
     check("unloading away from the Starship refused", r.status == 422)
     r = await cl.post("/api/dfg/unload", headers=H, json={"docked": True}); j = await r.json()

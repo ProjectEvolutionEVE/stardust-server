@@ -19,6 +19,10 @@ G_PER_KG = 1000
 FURNISHINGS = ["furn-bed", "furn-mirror", "furn-closet", "furn-desk", "furn-lamp", "furn-chair", "furn-filing-drawer", "furn-lockbox"]
 
 
+# Where each kind of thing is put away (Eric 10-11): raw materials in the Starship's cargo hold, every blueprint in the
+# filing cabinet, small personal effects and valuables in the lockbox inside it, library books on the bookshelf.
+HOME_OF = {"resource": "starship_cargo", "blueprint": "filing_cabinet", "valuable": "lockbox", "book": "bookshelf"}  # books and valuables arrive with the library and later items
+
 CODE_CHARS = "23456789ABCDEFGHJKMNPQRSTVWXYZ"     # no 0/O, 1/I/L or U: easy to read out and type
 
 
@@ -107,8 +111,13 @@ async def ensure_player(conn, key, name=None):
                               VALUES($1,'starship_cargo','Your space in the Starship''s cargo hold',$2)""", pid, s["cargo_m3_start"])
         quarters = await conn.fetchval("""INSERT INTO locations(player_id, kind, name, capacity_m3)
                                           VALUES($1,'private_quarters','Private Quarters',$2) RETURNING id""", pid, s["quarters_m3"])
+        cabinet = await conn.fetchval("""INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
+                                         VALUES($1,'filing_cabinet','Filing cabinet',$2,$3) RETURNING id""",
+                                      pid, s["filing_cabinet_m3"], quarters)
         await conn.execute("""INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
-                              VALUES($1,'lockbox','Lockbox (in the filing drawer)',$2,$3)""", pid, s["lockbox_m3"], quarters)
+                              VALUES($1,'lockbox','Lockbox',$2,$3)""", pid, s["lockbox_m3"], cabinet)
+        await conn.execute("""INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
+                              VALUES($1,'bookshelf','Bookshelf',$2,$3)""", pid, s["bookshelf_m3"], quarters)
         for f in FURNISHINGS:
             await conn.execute("INSERT INTO items(item_code, owner_id, location_id, attrs) VALUES($1,$2,$3,'{\"fixed\": true}')",
                                f, pid, quarters)
@@ -199,13 +208,16 @@ async def inventory(conn, pid):
     """Everything the player owns and where it is, plus their credits."""
     acct = await conn.fetchrow("SELECT credits, held_credits FROM accounts WHERE player_id=$1", pid)
     places = []
-    for loc in await conn.fetch("SELECT id, kind, name, capacity_m3, capacity_slots, ship_id FROM locations WHERE player_id=$1 ORDER BY id", pid):
+    locs = await conn.fetch("SELECT id, kind, name, capacity_m3, capacity_slots, ship_id, parent_id FROM locations WHERE player_id=$1 ORDER BY id", pid)
+    kind_of = {r["id"]: r["kind"] for r in locs}
+    for loc in locs:
         stacks = await conn.fetch("""SELECT s.item_code, t.name, t.kind, t.base_unit, s.qty, s.held FROM stacks s
                                      JOIN item_types t ON t.code=s.item_code WHERE s.location_id=$1 AND (s.qty>0 OR s.held>0)
                                      ORDER BY t.kind, t.name""", loc["id"])
         uniq = await conn.fetch("""SELECT i.id, i.item_code, t.name, t.kind, i.attrs, i.held, i.ship_id FROM items i
-                                   JOIN item_types t ON t.code=i.item_code WHERE i.location_id=$1 ORDER BY i.id""", loc["id"])
-        place = {"kind": loc["kind"], "name": loc["name"],
+                                   JOIN item_types t ON t.code=i.item_code WHERE i.location_id=$1
+                                   AND NOT coalesce((i.attrs->>'fixed')::boolean, false) ORDER BY i.id""", loc["id"])
+        place = {"kind": loc["kind"], "name": loc["name"], "inside": kind_of.get(loc["parent_id"]),
                  "goods": [{"item": r["item_code"], "name": r["name"], "kind": r["kind"],
                             **({"kg": r["qty"] / G_PER_KG, "kg_set_aside": r["held"] / G_PER_KG} if r["base_unit"] == "g"
                                else {"count": r["qty"], "set_aside": r["held"]})} for r in stacks],
@@ -223,6 +235,10 @@ async def inventory(conn, pid):
                                                            JOIN item_types t ON t.code=c.material
                                                            WHERE c.ship_id=$1 AND c.unloaded_at IS NULL
                                                            GROUP BY c.material, t.name ORDER BY t.name""", loc["ship_id"])]
+        if loc["kind"] == "filing_cabinet":
+            # the player's own blueprint designs live here too, whatever stage their review is at
+            place["designs"] = [{"title": r["title"], "status": r["status"], "version": r["version"]} for r in await conn.fetch(
+                "SELECT title, status, version FROM blueprint_submissions WHERE designer_id=$1 AND status <> 'withdrawn' ORDER BY updated_at DESC", pid)]
         places.append(place)
     return {"credits": acct["credits"], "credits_set_aside": acct["held_credits"], "places": places}
 
