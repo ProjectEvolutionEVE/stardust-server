@@ -295,7 +295,17 @@ def make_app():
     app.router.add_post("/api/dfg/auth/signout", auth_signout)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
-    app.router.add_route("OPTIONS", "/{tail:.*}", lambda r: web.Response(status=204))
+    # The game page itself (Eric 10-11): served by the game server, same address as the API, so sign-in just works.
+    static = Path(__file__).parent / "static"
+    async def play_redirect(request):
+        raise web.HTTPFound("/play/")
+
+    async def play_page(request):
+        return web.FileResponse(static / "play.html", headers={"Cache-Control": "no-cache"})
+    app.router.add_get("/play", play_redirect)
+    app.router.add_get("/play/", play_page)
+    app.router.add_static("/play/", static)
+    # (OPTIONS preflights are answered by the cors middleware; unknown addresses now get a plain 404.)
     app.on_startup.append(_startup)
     app.on_cleanup.append(_cleanup)
     return app
