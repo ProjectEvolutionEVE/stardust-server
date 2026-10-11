@@ -157,6 +157,12 @@ async def main():
     check("the starter ship is kept in the hangar (1 of 1 slots)",
           places["hangar"]["used_slots"] == 1 and places["hangar"]["items"][0]["kind"] == "ship")
     check("4 pieces aboard before unloading", places["ship_hold"]["pieces_aboard"] == 4)
+    r = await cl.get("/api/dfg/ship", headers=H); sh = await r.json()
+    check("the ship's state lists each piece aboard, oldest first, so the flight can rebuild its hold",
+          len(sh["pieces"]) == 4 and [q["id"] for q in sh["pieces"]] == sorted(q["id"] for q in sh["pieces"])
+          and all(len(q["dims_m"]) == 3 and q["kg"] > 0 and q["box_m3"] > 0 for q in sh["pieces"]))
+    check("and the storage aboard the Starship (12 m³, empty before unloading)",
+          sh["storage"]["capacity_m3"] == 12 and sh["storage"]["kg"] == {})
     q = places["private_quarters"]
     async with cl.app["pool"].acquire() as c:
         furn = await c.fetch("""SELECT t.name FROM items i JOIN item_types t ON t.code=i.item_code JOIN locations l ON l.id=i.location_id
@@ -197,6 +203,9 @@ async def main():
     check("iron 2 × 0.46 m³ × 5150 = 4738 kg", abs(goods["iron"]["kg"] - 4738.0) < 0.001)
     check("storage counts the space they take (≈0.923 m³)", abs(places["starship_cargo"]["used_m3"] - (4738/5150 + 54.04/19300)) < 0.001)
     check("the hold is empty again", places["ship_hold"]["pieces_aboard"] == 0)
+    r = await cl.get("/api/dfg/ship", headers=H); sh = await r.json()
+    check("after unloading, the ship's state shows the storage by material and no pieces aboard",
+          sh["pieces"] == [] and abs(sh["storage"]["kg"]["gold"] - 54.04) < 0.001)
     r = await cl.get("/api/dfg/ship", headers=H); j = await r.json()
     check("the ship view agrees: 0 m³ used", j["ship"]["used_m3"] == 0 and j["cargo"] == [])
 

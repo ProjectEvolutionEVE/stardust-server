@@ -8,7 +8,8 @@
 const API=window.STARDUST_API;if(!API)return;
 const $=s=>document.querySelector(s);
 let token=null;try{token=localStorage.getItem('stardust.token');}catch(e){}
-function saveToken(t){token=t;try{t?localStorage.setItem('stardust.token',t):localStorage.removeItem('stardust.token');}catch(e){}}
+function saveToken(t){token=t;try{t?localStorage.setItem('stardust.token',t):localStorage.removeItem('stardust.token');}catch(e){}
+  window.dispatchEvent(new Event(t?'stardust:signedin':'stardust:signedout'));}   // the flight connects to the server (or stops) at once
 async function call(path,body){
   const r=await fetch(API+path,{method:body?'POST':'GET',headers:Object.assign({'Content-Type':'application/json'},token?{Authorization:'Bearer '+token}:{}),
     body:body?JSON.stringify(body):undefined});

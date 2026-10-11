@@ -357,7 +357,7 @@ function collectTick(dt){
  f.mesh.setMatrixAt(c.i,new THREE.Matrix4().compose(tmpP,c.q,tmpS));f.mesh.instanceMatrix.needsUpdate=true;
  document.getElementById('cbar').style.width=(k*100).toFixed(0)+'%';
  if(k<1)return;
- const p=f.pieces[c.i];p.taken=true;cargo.push(p);f.mesh.setMatrixAt(c.i,ZERO);f.mesh.instanceMatrix.needsUpdate=true;
+ const p=f.pieces[c.i];p.taken=true;cargo.push(p);if(NET.on)netCollect(p);f.mesh.setMatrixAt(c.i,ZERO);f.mesh.instanceMatrix.needsUpdate=true;
  snd.ping(520);toast('+ '+fmtKg(p.mass)+' '+MATERIALS[p.mat].name.toUpperCase(),
   p.dims.map(d=>d.toFixed(2)).join(' × ')+' m · takes '+p.box.toFixed(3)+' m³ of hold space');
  collecting=null;renderHold();
@@ -415,10 +415,11 @@ function receiptText(rc){const L=['WORLD SPACE CONSORTIUM','WSC Alexander von Hu
   'Issued: '+new Date(rc.at).toString(),'Transfer: '+rc.pieces+(rc.pieces===1?' piece':' pieces')+" from your ship's hold to your space in the Starship's cargo hold"];
  if(rc.left)L.push('Left aboard your ship: '+rc.left+(rc.left===1?' piece':' pieces'));
  L.push('','Material                 Weight');
- Object.keys(rc.kg).forEach(m=>L.push((MATERIALS[m].name+'                         ').slice(0,25)+fmtKg(rc.kg[m])));
+ Object.keys(rc.kg).forEach(m=>L.push(((MATERIALS[m]?MATERIALS[m].name:m)+'                         ').slice(0,25)+fmtKg(rc.kg[m])));
  L.push('','Your space after: '+rc.used.toFixed(3)+' of '+rc.total.toFixed(2)+' m³ used','',
-  'PROTOTYPE RECEIPT: made in the flight test, so this code cannot be checked yet. Once the game is connected to its',
-  'server, the server issues each code and anyone can check it.','');return L.join('\n');}
+  ...(rc.server?['Issued by the game server. Anyone can check this code at:',location.origin+'/api/dfg/receipt/'+rc.code,'']
+   :['PROTOTYPE RECEIPT: made in the flight test, so this code cannot be checked yet. Once the game is connected to its',
+     'server, the server issues each code and anyone can check it.','']));return L.join('\n');}
 async function saveReceipt(rc){const name='stardust-receipt-'+rc.code+'.txt',text=receiptText(rc);
  try{
   if(dlNS){await dlNS.save({filename:name,data:text});return true;}
@@ -436,7 +437,15 @@ function startUnload(){if(!docked||!cargo.length||xfer)return;
  xfer={t:0,per:Math.max(0.6,Math.min(1.6,3.5/cargo.length)),moved:{},n:0,full:false,start:cargo.length};   // a few seconds in all
  document.getElementById('xTitle').textContent='TRANSFERRING TO THE STARSHIP';document.getElementById('xTitle').className='';
  document.getElementById('xSumB').textContent='';document.getElementById('xDone').hidden=true;xferEl.hidden=false;
+ if(NET.on){   // signed in: the cargo office (the server) does the transfer and issues the receipt; the bars then show it
+  const x=xfer;x.wait=true;document.getElementById('xNow').textContent='Contacting the cargo office…';renderXfer();
+  netUnload().then(r=>{if(xfer!==x){netRefresh();return;}x.server=r;x.wait=false;
+    if(!r.unloaded_pieces){x.full=r.storage_full;finishXfer(false);return;}xferNow(cargo[0]);})
+   .catch(e=>{if(xfer!==x)return;x.wait=false;x.error=e.message;finishXfer(false);});
+  return;}
  xferNow(cargo[0]);renderXfer();}
+function xferMove(){const p=cargo.shift();STORE.kg[p.mat]=(STORE.kg[p.mat]||0)+p.mass;xfer.moved[p.mat]=(xfer.moved[p.mat]||0)+p.mass;xfer.n++;
+ storeSave();renderHold();return p;}
 function xferNow(p){document.getElementById('xNow').textContent=p?'Moving '+fmtKg(p.mass)+' of '+MATERIALS[p.mat].name.toLowerCase()+'…':'';}
 function renderXfer(sub){const used=Math.max(0,cargoBulk()-(sub||0)),su=storeUsed();
  document.getElementById('xHoldT').textContent=used.toFixed(2)+' / '+HOLD.cap.toFixed(2)+' m³';
@@ -449,34 +458,78 @@ function unloadTick(dt){
  quartersBtn.hidden=!docked||!!xfer;if(!docked&&!quartersEl.hidden)quartersEl.hidden=true;   // quarters are aboard: launching leaves them
  if(!xfer)return;
  if(!docked){                                                   // launching leaves a clean view (Eric 10-11)
-  if(!xfer.done){finishXfer(true);const x=xfer;toast('TRANSFER STOPPED',x.n+' of '+x.start+' pieces moved before you launched; the rest are still in your hold.'+(x.n?' Your receipt is in your quarters.':''));}
+  if(!xfer.done&&xfer.server){   // the cargo office already moved them: finish at once
+   while(xfer.n<xfer.server.unloaded_pieces&&cargo.length)xferMove();xfer.full=xfer.server.left_aboard>0;finishXfer(false);
+   toast('TRANSFER COMPLETE',xfer.n+(xfer.n===1?' piece':' pieces')+' moved to the Starship. Your receipt is in your quarters.');}
+  else if(!xfer.done&&!xfer.wait){finishXfer(true);const x=xfer;toast('TRANSFER STOPPED',x.n+' of '+x.start+' pieces moved before you launched; the rest are still in your hold.'+(x.n?' Your receipt is in your quarters.':''));}
   closeXfer();return;}
- if(xfer.done)return;
+ if(xfer.done||xfer.wait)return;
  xfer.t+=dt;const p=cargo[0];
  renderXfer(p?p.box*Math.min(1,xfer.t/xfer.per):0);             // the piece leaving drains the hold smoothly
  if(xfer.t<xfer.per)return;
  xfer.t=0;
- if(storeUsed()+p.mass/MATERIALS[p.mat].density>STORE.cap+1e-9){xfer.full=true;finishXfer(false);return;}
- cargo.shift();STORE.kg[p.mat]=(STORE.kg[p.mat]||0)+p.mass;xfer.moved[p.mat]=(xfer.moved[p.mat]||0)+p.mass;xfer.n++;
- storeSave();snd.ping(440);renderHold();
- if(!cargo.length){finishXfer(false);return;}
+ if(xfer.server){if(xfer.n>=xfer.server.unloaded_pieces){xfer.full=xfer.server.left_aboard>0;finishXfer(false);return;}}
+ else if(storeUsed()+p.mass/MATERIALS[p.mat].density>STORE.cap+1e-9){xfer.full=true;finishXfer(false);return;}
+ xferMove();snd.ping(440);
+ if(!cargo.length||(xfer.server&&xfer.n>=xfer.server.unloaded_pieces)){xfer.full=!!(xfer.server&&xfer.server.left_aboard>0);finishXfer(false);return;}
  xferNow(cargo[0]);}
 function finishXfer(stopped){const x=xfer;x.done=true;renderXfer();xferNow(null);
  const t=document.getElementById('xTitle'),now=document.getElementById('xNow');
- if(stopped){t.textContent='TRANSFER STOPPED';now.textContent='You launched. '+x.n+' of '+x.start+' pieces moved; the rest are still in your hold.';}
+ if(x.error){t.textContent='TRANSFER NOT MADE';now.textContent=x.error+' Your cargo is still in your hold.';}
+ else if(stopped){t.textContent='TRANSFER STOPPED';now.textContent='You launched. '+x.n+' of '+x.start+' pieces moved; the rest are still in your hold.';}
  else if(x.full){t.textContent='STARSHIP SPACE FULL';now.textContent=x.n+' of '+x.start+' pieces moved. Your space aboard is full, so '+cargo.length+(cargo.length===1?' piece stays':' pieces stay')+' in your hold.';}
  else{t.textContent='TRANSFER COMPLETE';t.className='done';now.textContent='All '+x.n+(x.n===1?' piece is':' pieces are')+' aboard the Starship. Your hold is empty.';snd.chime();}
  const tb=document.getElementById('xSumB');tb.textContent='';
  Object.keys(MATERIALS).forEach(m=>{if(!x.moved[m])return;const tr=document.createElement('tr');
   [MATERIALS[m].name,'+ '+fmtKg(x.moved[m])].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
  const rb=document.getElementById('xRcpt');rb.hidden=!x.n;
- if(x.n){const rc={code:receiptCode(),at:Date.now(),pieces:x.n,left:cargo.length,kg:x.moved,used:storeUsed(),total:STORE.cap};
+ if(x.server)netApplyInventory(x.server.inventory);   // the server's figures are the truth
+ const sr=x.server&&x.server.receipt;
+ if(x.n){const rc=sr?{code:sr.code,at:Date.parse(sr.issued_at),pieces:sr.pieces,left:sr.left_aboard,kg:sr.kg,used:sr.space_used_m3,total:sr.space_total_m3,server:true}
+  :{code:receiptCode(),at:Date.now(),pieces:x.n,left:cargo.length,kg:x.moved,used:storeUsed(),total:STORE.cap};
   RECEIPTS.unshift(rc);saveReceipts();x.receipt=rc;
+  if(rc.server)document.getElementById('xRProto').textContent='Issued by the Starship\'s cargo office (the game server). Anyone can check this code. A copy is in your quarters, in the filing cabinet.';
   document.getElementById('xRCode').textContent=rc.code;document.getElementById('xRAt').textContent=fmtWhen(rc.at);
   document.getElementById('xRBody').textContent=rc.pieces+(rc.pieces===1?' piece':' pieces')+' from your ship\'s hold to your space in the Starship\'s cargo hold'+
    (rc.left?' ('+rc.left+' left aboard)':'')+'. Your space after: '+rc.used.toFixed(3)+' of '+rc.total.toFixed(2)+' m³ used.';}
  const done=document.getElementById('xDone');done.hidden=false;done.textContent=x.n?'SAVE RECEIPT':'DONE';
  document.getElementById('xClose').hidden=!x.n;if(stopped&&!x.n)setTimeout(closeXfer,4000);}
+// ── THE GAME SERVER (step 2, Eric 10-11): signed in, the server is the judge of what you own. It checks every piece
+//    you collect (real density, the shape fits, room left, collecting takes time), keeps what's in your hold between
+//    sessions, does each unload and issues the receipt anyone can check. Without a sign-in (the private preview), the
+//    flight keeps everything in this browser as before.
+const NET={api:window.STARDUST_API||null,token:null,session:null,on:false,last:0,queue:Promise.resolve()};
+async function netCall(path,body){
+ const r=await fetch(NET.api+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NET.token},
+   body:body?JSON.stringify(body):undefined});
+ const j=await r.json().catch(()=>({}));
+ if(r.status===401){NET.on=false;toast('SIGNED OUT','Sign in again so what you collect is kept.');}
+ if(!r.ok)throw new Error(j.error||'The Starship didn\'t answer. Try again in a moment.');
+ return j;}
+function netApplyShip(j){   // rebuild the hold and storage exactly as the server has them
+ if(j.ship&&j.ship.hold_dims_m){HOLD.dims=j.ship.hold_dims_m.slice();HOLD.cap=HOLD.dims[0]*HOLD.dims[1]*HOLD.dims[2];HOLD.sorted=HOLD.dims.slice().sort((a,b)=>b-a);}
+ if(j.pieces){cargo.length=0;j.pieces.forEach(p=>cargo.push({id:p.id,mat:p.material,dims:p.dims_m.slice().sort((a,b)=>b-a),vol:p.volume_m3,box:p.box_m3,mass:p.kg,taken:true}));}
+ if(j.storage){STORE.cap=j.storage.capacity_m3;STORE.kg=Object.assign({},j.storage.kg);storeSave();}
+ renderHold();}
+function netApplyInventory(inv){const st=inv&&inv.places&&inv.places.find(p=>p.kind==='starship_cargo');if(!st)return;
+ STORE.cap=st.capacity_m3;STORE.kg={};(st.goods||[]).forEach(g=>{if(g.kg!=null)STORE.kg[g.item]=g.kg+(g.kg_set_aside||0);});storeSave();renderHold();}
+async function netStart(){
+ try{NET.token=localStorage.getItem('stardust.token');}catch(e){NET.token=null;}
+ if(!NET.api||!NET.token){NET.on=false;return false;}
+ try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;netApplyShip(j);return true;}
+ catch(e){NET.on=false;return false;}}
+function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
+// One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
+function netCollect(p){
+ NET.queue=NET.queue.then(async()=>{
+  const wait=NET.last+2200-Date.now();if(wait>0)await new Promise(r=>setTimeout(r,wait));NET.last=Date.now();
+  try{await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});}
+  catch(e){const i=cargo.indexOf(p);if(i>=0)cargo.splice(i,1);renderHold();
+   toast('NOT COLLECTED',e.message);}});}
+async function netUnload(){await NET.queue;return netCall('/unload',{docked:true});}
+window.addEventListener('stardust:signedin',()=>{netStart();});
+window.addEventListener('stardust:signedout',()=>{NET.on=false;NET.token=null;NET.session=null;});
+
 // PRIVATE QUARTERS (Eric 10-11): the receipts log is viewed in your own quarters while docked aboard the Starship.
 const quartersBtn=document.getElementById('quartersbtn'),quartersEl=document.getElementById('quarters');
 function renderQuarters(){
@@ -892,6 +945,6 @@ function frame(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
  if(now>sightT){if(!warp){updateCells();updateSight();}sightT=now+200;}
  sky();pulseGuides(now/1000);
  hud();lockHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
-updateCells();updateSight();requestAnimationFrame(frame);
+updateCells();updateSight();requestAnimationFrame(frame);netStart();
 window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},SEED,cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
  get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;}}; // for testing
