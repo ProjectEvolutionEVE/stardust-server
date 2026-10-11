@@ -51,8 +51,21 @@ const helpEl=document.getElementById('help');if(helpEl)helpEl.hidden=true;   // 
 
 let opts=null;
 async function options(){if(!opts)opts=await call('/signup-options');return opts;}
-const state={channel:'sms',address:'',lang:null};
-try{const l=localStorage.getItem('stardust.lang');if(l)state.lang=l;}catch(e){}
+const state={channel:'sms',address:'',lang:null,region:null,shown:''};
+try{const l=localStorage.getItem('stardust.lang');if(l)state.lang=l;const r=localStorage.getItem('stardust.region');if(r)state.region=r;}catch(e){}
+
+// The country for phone numbers (Eric 10-11: "fool proof"). Preset from the browser, so most people never touch it;
+// the number itself can then be typed any way (with or without the 1, spaces, dashes, brackets).
+function guessRegion(list){
+  const have=new Set(list.map(c=>c.iso));
+  for(const l of (navigator.languages||[navigator.language||''])){const m=/[-_]([A-Za-z]{2})$/.exec(l||'');if(m&&have.has(m[1].toUpperCase()))return m[1].toUpperCase();}
+  try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';if(tz.startsWith('America/'))return 'US';if(tz==='Europe/London')return 'GB';}catch(e){}
+  return have.has('US')?'US':list[0].iso;}
+function flag(iso){return iso.length===2?String.fromCodePoint(...[...iso].map(c=>0x1F1A5+c.charCodeAt(0))):'';}
+function countryOptions(list,lang,sel){
+  let dn=null;try{dn=new Intl.DisplayNames([lang||'en','en'],{type:'region'});}catch(e){}
+  const named=list.map(c=>{let n=c.iso;try{n=dn?dn.of(c.iso)||c.iso:c.iso;}catch(e){}return {...c,name:n};}).sort((a,b)=>a.name.localeCompare(b.name));
+  return named.map(c=>`<option value="${esc(c.iso)}"${c.iso===sel?' selected':''}>${flag(c.iso)} ${esc(c.name)} +${c.dial}</option>`).join('');}
 
 // ── SIGN IN ──
 async function showSignIn(){
@@ -63,30 +76,42 @@ async function showSignIn(){
    <div class="sub">No passwords. A 6-digit code to your phone or email.</div>
    <label for="sqLang">Your language</label><select id="sqLang">${langs.map(l=>`<option value="${esc(l.code)}"${l.code===guess?' selected':''}>${esc(l.flag)} ${esc(l.native)}${l.native!==l.name?' · '+esc(l.name):''}</option>`).join('')}</select>
    <div class="seg"><button data-c="sms" class="${state.channel==='sms'?'on':''}">📱 Phone</button><button data-c="email" class="${state.channel==='email'?'on':''}">✉️ Email</button></div>
-   <label for="sqAddr" id="sqAddrL"></label><input id="sqAddr" autocomplete="tel">
+   <label for="sqAddr" id="sqAddrL"></label>
+   <select id="sqCountry" aria-label="Country" style="margin-bottom:8px"></select>
+   <input id="sqAddr" autocomplete="tel"><div class="sub" id="sqHint" style="margin-top:6px;text-align:left;font-size:13px"></div>
    <button class="go" id="sqSend"></button><div class="msg" id="sqMsg"></div></div>`;
-  const addr=$('#sqAddr'),lab=$('#sqAddrL'),send=$('#sqSend');
-  function mode(){const ph=state.channel==='sms';lab.textContent=ph?'Mobile number, with country code':'Email address';
-    addr.type=ph?'tel':'email';addr.placeholder=ph?'+1 574 555 0123':'you@example.com';addr.autocomplete=ph?'tel':'email';
+  const addr=$('#sqAddr'),lab=$('#sqAddrL'),send=$('#sqSend'),ctry=$('#sqCountry'),hint=$('#sqHint');
+  const countries=(o&&o.countries)||[{iso:'US',dial:1}];
+  if(!state.region)state.region=guessRegion(countries);
+  function fillCountries(){ctry.innerHTML=countryOptions(countries,state.lang,state.region);}
+  fillCountries();
+  ctry.onchange=()=>{state.region=ctry.value;try{localStorage.setItem('stardust.region',state.region);}catch(e){}mode();};
+  function mode(){const ph=state.channel==='sms';lab.textContent=ph?'Mobile number':'Email address';
+    ctry.hidden=!ph;hint.hidden=!ph;
+    const dial=(countries.find(c=>c.iso===state.region)||{dial:1}).dial;
+    hint.textContent=`Type it the way it\u2019s saved in your phone. Spaces, dashes or a leading ${dial===1?'1':'0'} are all fine.`;
+    addr.type=ph?'tel':'email';addr.placeholder=ph?'5745550123':'you@example.com';addr.autocomplete=ph?'tel-national':'email';
+    addr.inputMode=ph?'tel':'email';
     send.textContent=ph?'Text me a code':'Email me a code';}
   mode();addr.value=state.address;
   root.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{state.channel=b.dataset.c;root.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));mode();});
-  $('#sqLang').onchange=e=>{state.lang=e.target.value;try{localStorage.setItem('stardust.lang',state.lang);}catch(err){}};
-  state.lang=$('#sqLang').value;
+  $('#sqLang').onchange=e=>{state.lang=e.target.value;try{localStorage.setItem('stardust.lang',state.lang);}catch(err){}fillCountries();};
+  state.lang=$('#sqLang').value;fillCountries();
   send.onclick=async()=>{state.address=addr.value.trim();const m=$('#sqMsg');m.className='msg';m.textContent='Sending…';send.disabled=true;
-    try{const j=await call('/auth/start',{channel:state.channel,address:state.address});showCode(j.dev_code);}
+    try{const j=await call('/auth/start',{channel:state.channel,address:state.address,region:state.region});
+      state.shown=j.to||state.address;showCode(j.dev_code);}
     catch(e){m.className='msg err';m.textContent=e.message;send.disabled=false;}};}
 
 function showCode(devCode){
   root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Enter your code</h2>
-   <div class="sub">We sent a 6-digit code to ${esc(state.address)}.</div>
+   <div class="sub">We sent a 6-digit code to ${esc(state.shown||state.address)}.</div>
    <label for="sqCode">6-digit code</label><input id="sqCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456">
    <button class="go" id="sqVerify">Wake up</button><button class="link" id="sqBack">Use a different number or email</button>
    <div class="msg" id="sqMsg">${devCode?'Test code: '+esc(devCode):''}</div></div>`;
   const c=$('#sqCode');c.focus();
   $('#sqBack').onclick=showSignIn;
   $('#sqVerify').onclick=async()=>{const m=$('#sqMsg');m.className='msg';m.textContent='Checking…';
-    try{const j=await call('/auth/verify',{channel:state.channel,address:state.address,code:c.value});saveToken(j.token);
+    try{const j=await call('/auth/verify',{channel:state.channel,address:state.address,region:state.region,code:c.value});saveToken(j.token);
       if(j.me.needs_setup)showSetup();else showQuarters(j.me,'bed');}
     catch(e){m.className='msg err';m.textContent=e.message;}};}
 

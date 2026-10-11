@@ -16,6 +16,7 @@ How it works:
 DFG_DEV_AUTH=1 (local tests only) also accepts an 'X-Dev-Player: <id>' header. Never set it on a hosted service."""
 import os, re, json, hashlib, secrets
 import aiohttp
+import phonenumbers as PN
 
 DEV = os.environ.get("DFG_DEV_AUTH") == "1"
 SHOW_CODES = os.environ.get("DFG_SHOW_CODES") == "1"
@@ -42,20 +43,55 @@ def _h(s):
     return hashlib.sha256(s.encode()).hexdigest()
 
 
-def normalize(channel, address):
-    """A phone number as +<digits> (international form), or an email in lower case. Refuses anything else."""
+def countries():
+    """Every country we can text: its two-letter code and its calling code. The page names them in the player's language."""
+    return sorted(({"iso": r, "dial": PN.country_code_for_region(r)} for r in PN.SUPPORTED_REGIONS), key=lambda c: c["iso"])
+
+
+_REASON = {PN.ValidationResult.TOO_SHORT: "That number looks too short. Include the area code.",
+           PN.ValidationResult.TOO_LONG: "That number looks too long. Check the digits.",
+           PN.ValidationResult.INVALID_COUNTRY_CODE: "Pick your country, then type your number."}
+
+
+def normalize(channel, address, region=None):
+    """A phone number in international form (+15745550123), or an email in lower case. Refuses anything else.
+
+    Phone numbers are accepted the way people save them (Eric 10-11: "fool proof"): 5745550123, 15745550123,
+    1-574-555-0123, (574) 555-0123, +1 574 555 0123, 07700 900123 or 0044 7700 900123. The country picked on the
+    page (`region`, e.g. 'US') fills in the country code; a number typed with + or 00 brings its own."""
     a = (address or "").strip()
     if channel == "sms":
-        digits = re.sub(r"[\s\-().]", "", a)
-        if not re.fullmatch(r"\+[1-9]\d{7,14}", digits):
-            raise Refused("Enter your mobile number with its country code, for example +1 574 555 0123.")
-        return digits
+        if a.startswith("00"):
+            a = "+" + a[2:]
+        reg = (region or "").upper()
+        reg = reg if reg in PN.SUPPORTED_REGIONS else None
+        try:
+            n = PN.parse(a, reg)
+        except PN.NumberParseException:
+            raise Refused("Pick your country, then type your number." if not reg and not a.startswith("+")
+                          else "That doesn't look like a phone number. Check the digits.")
+        why = PN.is_possible_number_with_reason(n)
+        if why not in (PN.ValidationResult.IS_POSSIBLE, PN.ValidationResult.IS_POSSIBLE_LOCAL_ONLY):
+            raise Refused(_REASON.get(why, "That doesn't look like a phone number. Check the digits."))
+        if why == PN.ValidationResult.IS_POSSIBLE_LOCAL_ONLY:
+            raise Refused("That number looks too short. Include the area code.")
+        return PN.format_number(n, PN.PhoneNumberFormat.E164)
     if channel == "email":
         a = a.lower()
         if len(a) > 254 or not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", a):
             raise Refused("That doesn't look like an email address.")
         return a
     raise Refused("Choose phone or email.")
+
+
+def display(channel, addr):
+    """How the address is shown back to the player: '+1 574-555-0123'."""
+    if channel == "sms":
+        try:
+            return PN.format_number(PN.parse(addr), PN.PhoneNumberFormat.INTERNATIONAL)
+        except PN.NumberParseException:
+            pass
+    return addr
 
 
 def _twilio_ready():
@@ -74,9 +110,9 @@ async def _twilio(path, form):
         return 599, {}
 
 
-async def start(conn, channel, address, ip, language=None):
+async def start(conn, channel, address, ip, region=None):
     """Send a sign-in code. Returns {'sent': True} (plus 'dev_code' when DFG_SHOW_CODES=1)."""
-    addr = normalize(channel, address)
+    addr = normalize(channel, address, region)
     n_addr = await conn.fetchval("SELECT count(*) FROM login_attempts WHERE address=$1 AND at > now() - interval '1 hour'", addr)
     n_ip = await conn.fetchval("SELECT count(*) FROM login_attempts WHERE ip=$1 AND at > now() - interval '1 hour'", ip or "")
     if n_addr >= PER_ADDRESS_HOUR or n_ip >= PER_IP_HOUR:
@@ -91,19 +127,19 @@ async def start(conn, channel, address, ip, language=None):
         if status >= 300:
             print(f"twilio send refused: status {status} code {body.get('code')}", flush=True)
             raise Refused("We couldn't text that number. Check it and try again.")
-        return {"sent": True}
+        return {"sent": True, "to": display(channel, addr)}
     if channel == "email" and not SHOW_CODES:
         raise Refused("Email sign-in opens soon. Please use your phone for now.")
     code = f"{secrets.randbelow(10**6):06d}"
     await conn.execute("UPDATE login_codes SET used_at=now() WHERE address=$1 AND used_at IS NULL", addr)  # one live code
     await conn.execute("""INSERT INTO login_codes(channel, address, code_hash, expires_at)
                           VALUES($1,$2,$3, now() + make_interval(mins => $4))""", channel, addr, _h(addr + ":" + code), CODE_MINUTES)
-    return {"sent": True, "dev_code": code}
+    return {"sent": True, "to": display(channel, addr), "dev_code": code}
 
 
-async def check(conn, channel, address, code):
+async def check(conn, channel, address, code, region=None):
     """True if the code is right. Wrong or expired codes return False; too many wrong tries end the code."""
-    addr = normalize(channel, address)
+    addr = normalize(channel, address, region)
     code = re.sub(r"\D", "", code or "")
     if len(code) != 6:
         return False

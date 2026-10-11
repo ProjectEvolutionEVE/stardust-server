@@ -63,7 +63,19 @@ async def main():
     check("sign-up options: 189 languages, ~200 first and last names, start rank Trainee",
           len(o["languages"]) == 189 and len(o["first_names"]) >= 200 and len(o["last_names"]) >= 200 and o["start_rank"] == "Trainee")
     r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": "574 555 0123"})
-    check("a phone number without country code is refused", r.status == 422)
+    check("a phone number with no country picked is refused", r.status == 422)
+    # Eric 10-11: numbers are typed the way phones save them. Every one of these is the same US number.
+    for typed in ["5745550123", "15745550123", "1-574-555-0123", "(574) 555-0123", "+1 574 555 0123", "001 574 555 0123"]:
+        check(f"'{typed}' with the US picked reads as +15745550123", S.AUTH.normalize("sms", typed, "US") == "+15745550123")
+    check("a + number ignores the picked country", S.AUTH.normalize("sms", "+44 7911 123456", "US") == "+447911123456")
+    check("a UK number with its leading 0 works", S.AUTH.normalize("sms", "07911 123456", "GB") == "+447911123456")
+    for bad in ["555 0123", "1234", "hello"]:
+        try:
+            S.AUTH.normalize("sms", bad, "US"); check(f"'{bad}' is refused", False)
+        except S.AUTH.Refused:
+            check(f"'{bad}' is refused", True)
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": "(574) 555-0199", "region": "US"})
+    check("start answers with the number shown back", (await r.json()).get("to") == "+1 574-555-0199")
     PH = "+1 574-555-0123"
     r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH}); j = await r.json()
     check("a code is sent to a phone (shown here only because DFG_SHOW_CODES is on in tests)", r.status == 200 and len(j["dev_code"]) == 6)

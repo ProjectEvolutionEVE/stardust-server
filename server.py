@@ -3,7 +3,7 @@
 Run:  DATABASE_URL=postgres://… python3 server.py      (PORT defaults to 8090; TWILIO_* for text-message sign-in)
 Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
   GET  /api/dfg/signup-options  languages, the first and last names to pick from, and the ranks
-  POST /api/dfg/auth/start      {channel:'sms'|'email', address} → a 6-digit code is sent
+  POST /api/dfg/auth/start      {channel:'sms'|'email', address, region} → a 6-digit code is sent
   POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
   POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
   GET  /api/dfg/me              rank and name, language, location (Private Quarters), body bars and warning
@@ -89,13 +89,14 @@ async def _me(conn, pid):
 async def signup_options(request):
     """What a new player chooses from: their language, and a first and last name from the game's own lists."""
     return _json({"languages": LANGUAGES, "first_names": NAMES.FIRST, "last_names": NAMES.LAST,
-                  "ranks": RANKS, "start_rank": RANKS["civilian"][0]})
+                  "ranks": RANKS, "start_rank": RANKS["civilian"][0], "countries": AUTH.countries()})
 
 
 async def auth_start(request):
     body = await request.json()
     async with request.app["pool"].acquire() as conn:
-        return _json(await AUTH.start(conn, body.get("channel"), body.get("address"), _ip(request)))
+        return _json(await AUTH.start(conn, body.get("channel"), body.get("address"), _ip(request),
+                                         body.get("region")))
 
 
 async def auth_verify(request):
@@ -104,9 +105,9 @@ async def auth_verify(request):
     body = await request.json()
     channel = body.get("channel")
     async with request.app["pool"].acquire() as conn:
-        if not await AUTH.check(conn, channel, body.get("address"), body.get("code")):
+        if not await AUTH.check(conn, channel, body.get("address"), body.get("code"), body.get("region")):
             raise AUTH.Refused("That code isn't right, or it has expired. Ask for a new one.")
-        addr = AUTH.normalize(channel, body.get("address"))
+        addr = AUTH.normalize(channel, body.get("address"), body.get("region"))
         pid = await conn.fetchval("SELECT player_id FROM logins WHERE channel=$1 AND address=$2", channel, addr)
         new = pid is None
         if new:
