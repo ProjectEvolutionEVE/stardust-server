@@ -49,14 +49,21 @@ The full record is in the `quavara-docs` repository:
 12. **The market** is a live order book, open 24/7, with limit orders and instant trades. The bank trades on the order book. The old supply-pressure formula is retired.
 13. **Every transfer of goods gives the player a receipt** with a code anyone can check (`/api/dfg/receipt/{code}`). The player reads their receipts in a log in their Private Quarters while docked, and can save a copy to their own device.
 14. **ElevenLabs (company-wide rule):** never use live ElevenLabs speech for players. Live voices come from Google Chirp 3 (or Sarvam). Pre-recorded ElevenLabs audio files are allowed.
+15. **Inara's voice (10-11):** her prepared lines are **pre-recorded ElevenLabs audio files**, in the languages ElevenLabs speaks best. Never live ElevenLabs.
+16. **Careers (10-11):**
+    - The Starship posts **job openings** aboard the ship. Like the real world, some need higher qualifications: education, a test with certification, and experience.
+    - Postings arrive in the **incoming COMMS** list in each player's Private Quarters, alongside news from the game: upcoming updates, and messages from Starship Central Command.
+    - **COMMS come only from the game, never from another player** (see rule 8).
+    - A player earns a higher rank or a new career by **learning and passing achievement or skills tests through the Starship library**.
+17. **Platform (10-11): browser first, then a Godot phone app.**
+18. **Sign-in emails go through Resend (10-11),** the same service Quavara uses.
 
 ### Still open: these ARE Eric's to answer
-1. The game's final name. "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
-2. Inara's voice: recorded audio files, or live Chirp 3.
-3. Which career directions a player can choose, and in what order they open.
-4. The rules for a player's first blueprint.
-5. Where the game will be played: in the browser (the current three.js prototype), or as a Godot phone app (the 09-15 ruling for games, not yet reconciled for this game).
-6. Which texting and email services send the sign-in codes. Each is a sign-up, and possibly a cost, on Eric's side.
+1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
+2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
+3. **The rules for a player's first blueprint.** Must it sell before they may fly, or is listing it enough? The blueprint form and the review process are already settled: see the spec, §7a.
+4. **Which service sends sign-in codes by text message.** Resend sends email only. This is a sign-up and a cost on Eric's side.
+5. **Which address the sign-in emails come from.** Using Quavara's Resend account and quavara.com would tie the game to Quavara. The plan is the game's own sending domain once it has a name.
 
 ## This repository
 - **Deploys:** every push to `main` auto-deploys to Railway (project `stardust`, service `game-server`). Do your work on a branch. Merging to `main` is a deploy: tell Eric first.
