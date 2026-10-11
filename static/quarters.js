@@ -44,7 +44,9 @@ const css=document.createElement('style');css.textContent=`
 #sq .bar .t{height:10px;border-radius:5px;background:#141c30;overflow:hidden;margin-top:3px} #sq .bar .f{height:100%;border-radius:5px}
 #sq .warn{margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,207,107,.45);color:#ffcf6b;font-size:13px}
 #sq table{width:100%;border-collapse:collapse;font-size:13px} #sq td{padding:6px 4px;border-top:1px solid #1d2740;vertical-align:top}
-#sq .soon{color:#9aa6bf;font-size:13px}`;
+#sq .soon{color:#9aa6bf;font-size:13px}
+#sq details.fold{border:1px solid #23304d;border-radius:10px;padding:10px 12px;margin:8px 0;background:rgba(20,28,48,.5)}
+#sq details.fold summary{cursor:pointer;font-size:14px;color:#e8edf5} #sq details.fold table{margin-top:8px}`;
 document.head.appendChild(css);
 const root=document.createElement('div');root.id='sq';document.body.appendChild(root);
 const helpEl=document.getElementById('help');if(helpEl)helpEl.hidden=true;   // the flight help waits until the player heads to their ship
@@ -135,15 +137,34 @@ const TABS=[['bed','🛏️ Bed'],['desk','🗄️ Desk'],['closet','👔 Closet
 function bars(me){const c=v=>v>=65?'#7fe0a8':v>=50?'#ffcf6b':'#ff8f8a';
   return Object.entries(me.bars).map(([k,v])=>`<div class="bar"><div class="l"><span>${k[0].toUpperCase()+k.slice(1)}</span><span>${v.toFixed(0)}%</span></div>
    <div class="t"><div class="f" style="width:${v}%;background:${c(v)}"></div></div></div>`).join('')+(me.warning?`<div class="warn">${esc(me.warning)}</div>`:'');}
+// The desk's list of everything the player owns (Eric 10-11): one folder per place, in the order you'd walk to them.
+const PLACE_ORDER=['starship_cargo','ship_hold','hangar','private_quarters','lockbox'];
+const PLACE_ICON={starship_cargo:'📦',ship_hold:'🚀',hangar:'🛰️',private_quarters:'🛏️',lockbox:'🔒'};
+function amount(g){
+  if(g.kg!=null){const kg=Number(g.kg);return (kg>=1000?(kg/1000).toLocaleString(undefined,{maximumFractionDigits:2})+' t':kg.toLocaleString(undefined,{maximumFractionDigits:1})+' kg')
+    +(g.pieces?` · ${g.pieces} piece${g.pieces>1?'s':''}`:'')+(g.kg_set_aside?` · ${Number(g.kg_set_aside).toLocaleString()} kg set aside for an order`:'');}
+  return (g.count||0)+(g.set_aside?` · ${g.set_aside} set aside`:'');}
+function itemFolders(places){
+  const ps=[...(places||[])].sort((a,b)=>PLACE_ORDER.indexOf(a.kind)-PLACE_ORDER.indexOf(b.kind));
+  return ps.map(p=>{
+    const goods=p.goods||[],items=p.items||[],n=goods.length+items.length;
+    const u=Number(p.used_m3||0),m3=u>0&&u<0.01?'under 0.01':u.toLocaleString(undefined,{maximumFractionDigits:2});
+    const space=p.capacity_m3!=null?`${m3} of ${Number(p.capacity_m3).toLocaleString(undefined,{maximumFractionDigits:2})} m³ used`
+      :p.capacity_slots!=null?`${p.used_slots} of ${p.capacity_slots} bays used`:'';
+    const rows=goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(amount(g))}</td></tr>`).join('')
+      +items.map(i=>`<tr><td>${esc(i.name)}</td><td style="text-align:right" class="soon">${i.details&&i.details.fixed?'fixed in the room':i.set_aside?'set aside':'1'}</td></tr>`).join('');
+    return `<details class="fold"${p.kind==='starship_cargo'?' open':''}><summary>${PLACE_ICON[p.kind]||'📁'} ${esc(p.name)}
+      <span class="soon"> · ${n?n+' item'+(n>1?'s':''):'empty'}${space?' · '+esc(space):''}</span></summary>
+      ${n?`<table>${rows}</table>`:'<p class="soon" style="margin:6px 0 0">Empty.</p>'}</details>`;}).join('');}
 async function tabBody(tab,me){
   if(tab==='bed')return `<p>${me.asleep?'You are asleep.':'You\'re awake, in your bed.'} Every session starts and ends here.</p>${bars(me)}
    <button class="go" id="sqShip">Get up</button><button class="link" id="sqOut">Sign out (go to sleep)</button>`;
   if(tab==='desk'){let inv=null;try{inv=await call('/inventory');}catch(e){}
-    const store=inv&&inv.places?inv.places.find(p=>p.kind==='starship_cargo'):null;
+
     return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">COMMS</h3><p class="soon">No messages yet. News from Starship Central Command and job postings will arrive here.</p>
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">WALLET</h3><p>${inv?esc(inv.credits)+' credits':'—'}</p>
-     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">YOUR SPACE IN THE STARSHIP'S CARGO HOLD</h3>
-     ${store&&store.goods&&store.goods.length?`<table>${store.goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(g.kg)} kg</td></tr>`).join('')}</table>`:'<p class="soon">Empty.</p>'}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MY ITEMS</h3>
+     <p class="soon" style="margin-top:0">Everything you own, in a folder for each place it's kept.</p>${inv?itemFolders(inv.places):'<p class="soon">—</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET</h3><p class="soon">Prices, the chart, instant buy and sell, your open orders and your trade history.</p>
      <button class="go" id="sqMarket">📈 Open the market terminal</button>`;}
   if(tab==='cabinet'){let r=null;try{r=await call('/receipts');}catch(e){}

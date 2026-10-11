@@ -59,6 +59,9 @@ async def cors(request, handler):
         resp.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
         resp.headers["Access-Control-Allow-Methods"] = "GET, POST"
         resp.headers["Vary"] = "Origin"
+    if request.path.startswith("/play/"):
+        # the game's own files: browsers must check for a newer copy every time, or players keep yesterday's game
+        resp.headers["Cache-Control"] = "no-cache"
     return resp
 
 

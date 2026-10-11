@@ -151,7 +151,10 @@ async def used_m3(conn, location_id):
     unique = await conn.fetchval(
         """SELECT coalesce(sum(coalesce(t.volume_m3_each, 0)), 0) FROM items i JOIN item_types t ON t.code=i.item_code
            WHERE i.location_id=$1 AND i.ship_id IS NULL AND NOT coalesce((i.attrs->>'fixed')::boolean, false)""", location_id)
-    return float(stacked) + float(unique)
+    # a ship's hold also carries loose pieces straight from the fields, each taking the box it needs
+    loose = await conn.fetchval("""SELECT coalesce(sum(c.box_m3), 0) FROM cargo c JOIN locations l ON l.ship_id=c.ship_id
+                                   WHERE l.id=$1 AND l.kind='ship_hold' AND c.unloaded_at IS NULL""", location_id)
+    return float(stacked) + float(unique) + float(loose)
 
 
 async def unload(conn, pid):
@@ -214,6 +217,12 @@ async def inventory(conn, pid):
             place.update(capacity_slots=loc["capacity_slots"], used_slots=len(uniq))
         if loc["kind"] == "ship_hold":
             place["pieces_aboard"] = await conn.fetchval("SELECT count(*) FROM cargo WHERE ship_id=$1 AND unloaded_at IS NULL", loc["ship_id"])
+            # the pieces still in the hold, by material, so the desk can list them like everything else
+            place["goods"] = [{"item": r["material"], "name": r["name"], "kind": "resource", "kg": float(r["kg"]), "pieces": r["n"]}
+                              for r in await conn.fetch("""SELECT c.material, t.name, sum(c.mass_kg) AS kg, count(*) AS n FROM cargo c
+                                                           JOIN item_types t ON t.code=c.material
+                                                           WHERE c.ship_id=$1 AND c.unloaded_at IS NULL
+                                                           GROUP BY c.material, t.name ORDER BY t.name""", loc["ship_id"])]
         places.append(place)
     return {"credits": acct["credits"], "credits_set_aside": acct["held_credits"], "places": places}
 
