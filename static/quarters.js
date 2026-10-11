@@ -137,14 +137,15 @@ function bars(me){const c=v=>v>=65?'#7fe0a8':v>=50?'#ffcf6b':'#ff8f8a';
    <div class="t"><div class="f" style="width:${v}%;background:${c(v)}"></div></div></div>`).join('')+(me.warning?`<div class="warn">${esc(me.warning)}</div>`:'');}
 async function tabBody(tab,me){
   if(tab==='bed')return `<p>${me.asleep?'You are asleep.':'You\'re awake, in your bed.'} Every session starts and ends here.</p>${bars(me)}
-   <button class="go" id="sqShip">Get up and head to your ship</button><button class="link" id="sqOut">Sign out (go to sleep)</button>`;
+   <button class="go" id="sqShip">Get up</button><button class="link" id="sqOut">Sign out (go to sleep)</button>`;
   if(tab==='desk'){let inv=null;try{inv=await call('/inventory');}catch(e){}
     const store=inv&&inv.places?inv.places.find(p=>p.kind==='starship_cargo'):null;
     return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">COMMS</h3><p class="soon">No messages yet. News from Starship Central Command and job postings will arrive here.</p>
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">WALLET</h3><p>${inv?esc(inv.credits)+' credits':'—'}</p>
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">YOUR SPACE IN THE STARSHIP'S CARGO HOLD</h3>
      ${store&&store.goods&&store.goods.length?`<table>${store.goods.map(g=>`<tr><td>${esc(g.name||g.item)}</td><td style="text-align:right">${esc(g.kg)} kg</td></tr>`).join('')}</table>`:'<p class="soon">Empty.</p>'}
-     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET ORDERS</h3><p class="soon">None open. You'll check and adjust your orders from here.</p>`;}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET</h3><p class="soon">Prices, the chart, instant buy and sell, your open orders and your trade history.</p>
+     <button class="go" id="sqMarket">📈 Open the market terminal</button>`;}
   if(tab==='cabinet'){let r=null;try{r=await call('/receipts');}catch(e){}
     const list=r?r.receipts:[];
     return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
@@ -155,15 +156,42 @@ async function tabBody(tab,me){
 async function showQuarters(me,tab){
   root.hidden=false;
   root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div></div>
-   <div class="soon">WSC Alexander von Humboldt</div></div>
+   <div style="text-align:right"><div class="soon">WSC Alexander von Humboldt</div><button id="sqExit" style="margin-top:6px;padding:8px 14px;border-radius:20px;border:1px solid #d9a441;background:rgba(217,164,65,.1);color:#d9a441;font-size:14px;cursor:pointer">🚪 Exit Private Quarters</button></div></div>
    <div class="tabs">${TABS.map(([k,n])=>`<button data-t="${k}" class="${k===tab?'on':''}">${n}</button>`).join('')}</div>
    <div class="panel" id="sqPanel">…</div></div>`;
   root.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showQuarters(me,b.dataset.t));
   $('#sqPanel').innerHTML=await tabBody(tab,me);
-  const ship=$('#sqShip');if(ship)ship.onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
+  const ship=$('#sqShip');if(ship)ship.onclick=()=>showExit(me);
+  $('#sqExit').onclick=()=>showExit(me);
+  const mk=$('#sqMarket');if(mk)mk.onclick=()=>showMarket(me);
   const out=$('#sqOut');if(out)out.onclick=async()=>{try{await call('/auth/signout',{});}catch(e){}saveToken(null);
     root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sleep well</h2><div class="sub">You're in your bed. Your body rests while you're away, in real time.</div>
      <button class="go" id="sqAgain">Sign in again</button></div>`;$('#sqAgain').onclick=showSignIn;};}
+
+// ── LEAVING THE QUARTERS (Eric 10-11): two ways out, the Library or the Docking Bay. The market is reached from the Desk.
+function place(title,me,body){
+  root.hidden=false;
+  root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">${esc(title)}</div><div class="who">${esc(me.title)}</div></div>
+   <div class="soon">WSC Alexander von Humboldt</div></div><div class="panel">${body}</div></div>`;}
+function showExit(me){
+  place('CORRIDOR',me,`<h2 style="margin:0 0 4px">Where to?</h2><p class="soon">You step out of your quarters.</p>
+   <button class="go" id="sqLib">📚 Starship Library</button><button class="go" id="sqBay">🚀 Docking Bay</button>
+   <button class="link" id="sqBack">Back to my quarters</button>`);
+  $('#sqLib').onclick=()=>showLibrary(me);
+  $('#sqBay').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
+  $('#sqBack').onclick=()=>showQuarters(me,'bed');}
+function showLibrary(me){
+  place('STARSHIP LIBRARY',me,`<p>Shelves of books, and quiet desks for study.</p>
+   <p class="soon">The library opens soon. The starter books, the courses and tests that earn promotions, and the blueprint form will all be here.</p>
+   <button class="go" id="sqBay2">🚀 Go to the Docking Bay</button><button class="link" id="sqBack">Back to my quarters</button>`);
+  $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
+  $('#sqBack').onclick=()=>showQuarters(me,'bed');}
+function showMarket(me){
+  place('MARKET TERMINAL',me,`<p>The live market: the price chart, the best bid and ask, instant <b>Buy now</b> and <b>Sell now</b>, your open orders and your trade history.</p>
+   <p class="soon">The terminal is being connected to the Starship's market. It arrives in the next update.</p>
+   <p class="soon">The Starship bank trades on this market too.</p>
+   <button class="link" id="sqBack">Back to my desk</button>`);
+  $('#sqBack').onclick=()=>showQuarters(me,'desk');}
 
 // a QUARTERS button while docked opens the real Private Quarters
 window.addEventListener('click',async e=>{if(e.target&&e.target.id==='quartersbtn'&&token){e.stopImmediatePropagation();
