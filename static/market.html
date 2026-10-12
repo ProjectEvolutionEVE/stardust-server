@@ -50,6 +50,21 @@
   color:var(--dim);border-radius:6px;padding:2px 8px;cursor:pointer}
  .tape td{padding:2px 4px;font-family:var(--mono);font-size:12px}
  footer{padding:0 16px 20px;color:var(--dim);font-size:11.5px} footer a{color:var(--blue)}
+ #views{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+ #views button{padding:7px 12px;background:none;border:0;color:var(--dim);font:600 13px/1 inherit;cursor:pointer}
+ #views button.on{background:rgba(217,164,65,.16);color:var(--gold)}
+ #auView{padding:10px 16px 16px;display:grid;gap:10px;grid-template-columns:minmax(0,1fr) 320px}
+ @media (max-width:1000px){#auView{grid-template-columns:minmax(0,1fr)}}
+ .au{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+ .au h3{font-size:16px;margin-bottom:2px} .au .meta{color:var(--dim);font-size:12px}
+ .au .live{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;margin:10px 0}
+ .au .live b{font-family:var(--mono);font-size:22px;color:var(--gold)} .au .clock{font-family:var(--mono);font-size:18px}
+ .au .clock.soon{color:var(--down)} .au .lead{color:var(--up);font-weight:600}
+ .au .bidrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap} .au .bidrow input{width:120px;padding:8px;border-radius:7px;border:1px solid var(--line);
+  background:#070b16;color:var(--text);font:14px var(--mono)}
+ .au .bidrow button{padding:9px 16px;border:0;border-radius:8px;background:var(--up);color:#06120c;font:700 14px/1 inherit;cursor:pointer}
+ .au .bidrow button:disabled{opacity:.5} .au details{margin-top:8px;font-size:13px} .au details summary{cursor:pointer;color:var(--blue)}
+ .au details p{margin:6px 0} .aumsg{font-size:12.5px;margin-top:6px;min-height:16px}
  #back{background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 12px;cursor:pointer;font:600 13px/1 inherit}
  .note{font-size:12px;color:#ffcf6b;border:1px solid rgba(255,207,107,.35);border-radius:8px;padding:6px 10px;margin:10px 16px 0}
  .per button{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:11px}
@@ -60,11 +75,18 @@
 <header>
  <button id="back">← Back to my desk</button>
  <div><h1>STARSHIP MARKET</h1><div class="ship">WSC ALEXANDER VON HUMBOLDT · MARKET TERMINAL</div></div>
+ <div id="views"><button data-v="ore" class="on">Ore market</button><button data-v="auctions">Blueprint auctions</button></div>
  <span id="status" class="open">● OPEN 24/7</span>
  <div id="wallet">Credits <b id="wCredits">…</b> <span class="dim" id="wHeld"></span></div>
 </header>
-<div class="note">The Starship bank trades on this market too. It always has a bid, so you can sell even when no other player is buying.</div>
-<main>
+<div id="auView" hidden>
+ <div><div class="note" style="margin:0 0 10px">Blueprint copies are sold one at a time. Each copy sells 5 minutes after its last top bid. A winning bid pays the Starship a 2.5% fee on top. Bidders are never named, and a bought copy can't be resold.</div>
+  <div id="auList"></div></div>
+ <div><section><h2>Your bids</h2><table class="tape"><tbody id="auMine"></tbody></table></section>
+  <section style="margin-top:10px"><h2>Recently sold</h2><table class="tape"><tbody id="auRecent"></tbody></table></section></div>
+</div>
+<div class="note" id="oreNote">The Starship bank trades on this market too. It always has a bid, so you can sell even when no other player is buying.</div>
+<main id="oreView">
  <section id="watch"><h2>Market board</h2><table class="wl"><tbody id="wl"></tbody></table></section>
  <section id="chartbox"><div id="chartHead"></div><div id="chart"></div>
   <div class="per" id="per" style="margin-top:6px"><span class="dim" style="font-size:11px">Candles:</span>
@@ -82,8 +104,9 @@
  <section id="tapebox"><h2>Your trade history</h2><table class="tape"><tbody id="hist"></tbody></table>
   <h2 style="margin-top:12px">Recent trades</h2><table class="tape"><tbody id="tape"></tbody></table></section>
 </main>
-<footer>Ores trade in lots (iron and copper ore 100 kg, silver ore 10 kg, gold and diamond 1 kg); one lot is the smallest order, and prices are per lot. Every item has a floor price; nothing trades below it. Every trade gives you a receipt
+<footer id="oreFoot">Ores trade in lots (iron and copper ore 100 kg, silver ore 10 kg, gold and diamond 1 kg); one lot is the smallest order, and prices are per lot. Every item has a floor price; nothing trades below it. Every trade gives you a receipt
  (filing cabinet, in your quarters). · Charts: TradingView Lightweight Charts™ Copyright (c) TradingView, Inc.
  <a href="https://www.tradingview.com/" target="_blank" rel="noopener">tradingview.com</a> (Apache 2.0 licence).</footer>
 <script src="market-terminal.js"></script>
+<script src="auction-terminal.js"></script>
 </body></html>

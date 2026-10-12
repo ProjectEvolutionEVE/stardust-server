@@ -43,7 +43,7 @@ async def _issue(conn, blueprint_code, kind, pid, qty, location_id):
                                   blueprint_code, pid, location_id, code, float(s["blueprint_copy_m3"]))
         await conn.execute("INSERT INTO serials(code, item_id, run_id, copy_no) VALUES($1,$2,$3,$4)", code, iid, run_id, n)
         out.append(code)
-    return {"model": t["model_code"], "run": run_no, "serials": out}
+    return {"model": t["model_code"], "run": run_no, "run_id": run_id, "serials": out}
 
 
 async def _cabinet(conn, pid, room_for=0.0):
@@ -84,6 +84,7 @@ async def print_run(conn, pid, blueprint_code, qty):
         if await conn.fetchval("SELECT credits FROM accounts WHERE id=$1", acct) < price["total"]:
             raise ST.Refused(f"Printing {qty} copies costs {price['total']:,} credits, and you don't have enough.")
         out = await _issue(conn, blueprint_code, "print", pid, qty, loc)
+        await conn.execute("UPDATE production_runs SET credits=$2 WHERE id=$1", out["run_id"], price["total"])
         await ST.transfer(conn, acct, await ST.wsc_account(conn), price["total"], "blueprint_print",
                           {"blueprint": blueprint_code, "run": out["run"], "copies": qty})
         name = await conn.fetchval("SELECT name FROM item_types WHERE code=$1", blueprint_code)

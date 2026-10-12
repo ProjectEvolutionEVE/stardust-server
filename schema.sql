@@ -490,3 +490,50 @@ INSERT INTO settings(key, value, note) VALUES
   ('blueprint_setup_fee', 100, 'Eric 10-11: one-time setup fee for a new design, paid with its first print run, credits'),
   ('blueprint_copy_cost',  10, 'Eric 10-11: price of each printed blueprint copy, credits')
 ON CONFLICT (key) DO NOTHING;
+
+-- v11 (10-12): blueprint auctions (Eric). Copies are sold by auction in the Market terminal. The designer picks a start
+-- date and time and a floor; copies go up one at a time; each closes 5 minutes after its last top bid (a copy also
+-- waits 5 minutes for its first bid); the top bid wins, plus a 2.5% Starship fee on top that goes to the WSC. No bid at
+-- or above the floor stops the auction and holds it. Bids set credits aside until outbid. Bidders are never named.
+ALTER TABLE production_runs ADD COLUMN IF NOT EXISTS credits BIGINT NOT NULL DEFAULT 0;   -- what the run cost its designer
+CREATE TABLE IF NOT EXISTS auctions (
+  id             BIGSERIAL PRIMARY KEY,
+  designer_id    BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  blueprint_code TEXT NOT NULL REFERENCES item_types(code),
+  floor          BIGINT NOT NULL CHECK (floor > 0),
+  start_at       TIMESTAMPTZ NOT NULL,
+  status         TEXT NOT NULL CHECK (status IN ('scheduled','running','held','done','cancelled')),
+  below_cost_ack BOOLEAN NOT NULL DEFAULT false,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  ended_at       TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS auctions_status ON auctions(status, start_at);
+CREATE TABLE IF NOT EXISTS auction_lots (
+  id          BIGSERIAL PRIMARY KEY,
+  auction_id  BIGINT NOT NULL REFERENCES auctions(id) ON DELETE CASCADE,
+  lot_no      INT NOT NULL,
+  item_id     BIGINT NOT NULL REFERENCES items(id),
+  status      TEXT NOT NULL CHECK (status IN ('waiting','open','sold','unsold')),
+  opened_at   TIMESTAMPTZ,
+  closes_at   TIMESTAMPTZ,
+  top_bid     BIGINT,
+  top_fee     BIGINT,
+  top_bidder  BIGINT REFERENCES players(id),
+  closed_at   TIMESTAMPTZ,
+  UNIQUE (auction_id, lot_no)
+);
+CREATE INDEX IF NOT EXISTS auction_lots_open ON auction_lots(status, closes_at);
+CREATE TABLE IF NOT EXISTS auction_bids (
+  id        BIGSERIAL PRIMARY KEY,
+  lot_id    BIGINT NOT NULL REFERENCES auction_lots(id) ON DELETE CASCADE,
+  bidder_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  amount    BIGINT NOT NULL CHECK (amount > 0),
+  fee       BIGINT NOT NULL CHECK (fee >= 0),
+  at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+INSERT INTO settings(key, value, note) VALUES
+  ('auction_window_s', 300, 'Eric 10-12: a copy closes this many seconds after its last top bid (and waits this long for a first bid)'),
+  ('auction_fee_pct',  2.5, 'Eric 10-12: the Starship''s fee on top of each winning bid, percent, paid to the WSC (rounded up to whole credits)'),
+  ('auction_raise',      1, 'Eric 10-12: the smallest raise over the current top bid, credits'),
+  ('auction_max_days',  30, 'SAMPLE: how far ahead an auction can be scheduled, days')
+ON CONFLICT (key) DO NOTHING;

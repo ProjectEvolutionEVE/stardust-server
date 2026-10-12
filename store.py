@@ -304,7 +304,9 @@ async def audit(conn):
         if r["have"] != r["trail"]:
             problems.append(f"account {r['id']} holds {r['have']} but its paper trail says {r['trail']}")
     held = await conn.fetch(
-        """SELECT a.id, a.held_credits, coalesce(sum(o.price * o.remaining) FILTER (WHERE o.side='buy' AND o.status='open'), 0) AS bids
+        """SELECT a.id, a.held_credits, coalesce(sum(o.price * o.remaining) FILTER (WHERE o.side='buy' AND o.status='open'), 0)
+                  + coalesce((SELECT sum(l.top_bid + l.top_fee)::bigint FROM auction_lots l
+                              WHERE l.status='open' AND l.top_bidder=a.player_id), 0) AS bids
            FROM accounts a LEFT JOIN orders o ON o.account_id=a.id GROUP BY a.id""")
     for r in held:
         if r["held_credits"] != r["bids"]:

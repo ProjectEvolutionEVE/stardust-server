@@ -191,9 +191,15 @@ async function tabBody(tab,me){
      <p class="soon" style="margin-top:0">Everything you own, in a folder for each place it's kept.</p>${inv?itemFolders(inv.places):'<p class="soon">—</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET</h3><p class="soon">Prices, the chart, instant buy and sell, your open orders and your trade history.</p>
      <button class="go" id="sqMarket">📈 Open the market terminal</button>`;}
-  if(tab==='cabinet'){let r=null,bp=null;try{r=await call('/receipts');}catch(e){}try{bp=await call('/blueprints');}catch(e){}
+  if(tab==='cabinet'){let r=null,bp=null,inv=null;try{r=await call('/receipts');}catch(e){}try{bp=await call('/blueprints');}catch(e){}try{inv=await call('/inventory');}catch(e){}
     const list=r?r.receipts:[];
-    return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">BLUEPRINTS</h3>${blueprintList(bp?bp.blueprints:[])}
+    // every blueprint copy filed here (bought at auction, or printed to sell), grouped by design, each with its serial
+    const fc=inv?(inv.places||[]).find(p=>p.kind==='filing_cabinet'):null,groups={};
+    ((fc&&fc.items)||[]).filter(i=>i.kind==='blueprint').forEach(i=>{(groups[i.name]=groups[i.name]||[]).push(i);});
+    const copies=Object.entries(groups).map(([n,is])=>`<details class="fold"><summary>📐 ${esc(n.replace('Blueprint · ',''))} <span class="soon">· ${is.length} cop${is.length>1?'ies':'y'}</span></summary>
+      ${is.map(i=>`<div style="font-family:ui-monospace,Menlo,monospace;font-size:13px">${esc(i.details.serial||'')}${i.set_aside?' <span class="soon">(in an auction)</span>':''}</div>`).join('')}</details>`).join('');
+    return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">MY DESIGNS</h3>${blueprintList(bp?bp.blueprints:[])}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">BLUEPRINT COPIES</h3>${copies||'<p class="soon">No blueprint copies yet. Win them at auction in the Market terminal, at your desk.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${receiptLine(x)}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">LOCKBOX</h3><p class="soon">Empty. A small, secure box for valuables.</p>`;}
   if(tab==='closet')return `<p class="soon">Your clothing and uniforms will hang here. Uniforms change as you rise through the ranks.</p>`;
@@ -249,6 +255,7 @@ function showMarket(me){   // the full board, over everything (rule 20: reached 
 // One line per receipt in the filing cabinet's log, whatever kind it is.
 function receiptLine(x){
   if(x.kind==='trade')return `Market: ${esc(x.trade)} ${esc(x.lots)} lot${x.lots>1?'s':''} of ${esc(x.item)} for ${esc(Number(x.credits).toLocaleString())} credits`;
+  if(x.kind==='auction')return `Auction: ${x.trade==='won'?'won':'sold'} ${esc(x.serial)} (${esc(x.item)}) for ${esc(Number(x.bid).toLocaleString())} credits${x.trade==='won'&&x.starship_fee?` + ${esc(x.starship_fee)} Starship fee`:''}`;
   if(x.kind==='print')return `Printed ${esc(x.copies)} cop${x.copies>1?'ies':'y'} of ${esc(x.item)}, run ${esc(x.run)} (${esc(x.first)} to ${esc(x.last)}) for ${esc(Number(x.credits).toLocaleString())} credits`;
   if(x.kg)return `${esc(x.pieces)} pieces: ${Object.entries(x.kg).map(([m,k])=>esc(m)+' '+esc(k)+' kg').join(', ')}`;
   return esc(x.kind);}
@@ -299,7 +306,17 @@ async function showBlueprintForm(me,id,from){
      <div class="soon">A one-time setup fee on your first run, then a price for each copy. Copies are filed in your filing cabinet. A buyer can build from a copy but can never resell it.</div>
      <div class="mrow"><input id="bpCopies" type="number" inputmode="numeric" min="1" step="1" value="25" style="flex:0 0 110px" aria-label="Copies"><span class="soon">copies</span></div>
      <div id="bpQuote" class="soon" style="margin-top:6px"></div>
-     <button class="go" id="bpPrint">Print copies</button></div>`:''}
+     <button class="go" id="bpPrint">Print copies</button>
+     <h3 style="margin:16px 0 4px;font-size:14px;color:#d9a441">AUCTION COPIES</h3>
+     <div class="soon">Copies go up one at a time. Each sells 5 minutes after its last top bid. If a copy gets no bid at your floor, the auction holds and your copies stay with you. Bidders are never named. ${d.copies_free} cop${d.copies_free===1?'y':'ies'} free to auction${d.cost_per_copy?`; each cost you ${Number(d.cost_per_copy).toLocaleString(undefined,{maximumFractionDigits:2})} credits`:''}.</div>
+     ${d.copies_free?`<div class="mrow"><input id="auCopies" type="number" inputmode="numeric" min="1" max="${d.copies_free}" step="1" value="${Math.min(d.copies_free,5)}" style="flex:0 0 90px" aria-label="Copies to auction"><span class="soon">copies</span>
+       <input id="auFloor" type="number" inputmode="numeric" min="1" step="1" value="${Math.max(1,Math.ceil((d.cost_per_copy||1)*1.5))}" style="flex:0 0 100px" aria-label="Floor price"><span class="soon">floor (credits)</span></div>
+     <label for="auStart">Starts</label><input id="auStart" type="datetime-local">
+     <label id="auWarn" style="display:none;margin-top:10px;letter-spacing:0;font-size:14px;color:#ffcf6b;align-items:flex-start;gap:8px"><input type="checkbox" id="auAck" style="width:auto;margin-top:3px"> I know this floor is below what each copy cost me, and I may sell at a loss.</label>
+     <button class="go" id="auGo">Schedule the auction</button>`:''}
+     ${(d.auctions||[]).length?`<table style="margin-top:10px">${d.auctions.map(a=>`<tr><td>${esc(new Date(a.start_at).toLocaleString())}<div class="soon">${a.copies} copies · floor ${a.floor}</div></td>
+       <td style="text-align:right">${esc({scheduled:'scheduled',running:'live now',held:'held (no bid at the floor)',done:'finished',cancelled:'cancelled'}[a.status]||a.status)}<div class="soon">${a.sold} sold${a.earned?' · '+Number(a.earned).toLocaleString()+' credits':''}</div>
+       ${a.status==='scheduled'?`<button class="small" data-aucancel="${a.auction_id}">Cancel</button>`:''}</td></tr>`).join('')}</table>`:''}</div>`:''}
    ${notes?`<h3 style="margin:14px 0 4px;font-size:14px;color:#d9a441">NOTES WITH THE REVIEW TEAM</h3>${notes}`:''}
    ${canReply?`<textarea id="bpReply" maxlength="2000" placeholder="Answer the review team"></textarea><button class="small" id="bpSendReply">Send answer</button>`:''}
    ${q('','What is it called, and what kind of thing is it?','',`<input id="bp_name" maxlength="${L.name}" placeholder="e.g. Long-range scanner"${dis} value="${esc(f.name||'')}">
@@ -367,6 +384,16 @@ async function showBlueprintForm(me,id,from){
       try{const r=await call('/blueprints/print',{id:d.id,copies:n});await showBlueprintForm(me,d.id,from);
         msg(`Printed run ${r.run}: ${r.serials[0]} to ${r.serials[r.serials.length-1]}. Paid ${r.price.total.toLocaleString()} credits. Your receipt is ${r.receipt.code}.`,true);}
       catch(e){msg(e.message);}};}
+  const ag=$('#auGo');
+  if(ag){const st=$('#auStart'),pad=n=>String(n).padStart(2,'0'),t=new Date(Date.now()+60000);
+    st.value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}T${pad(t.getHours())}:${pad(t.getMinutes())}`;
+    const warn=()=>{const below=Number($('#auFloor').value)<(d.cost_per_copy||0);$('#auWarn').style.display=below?'flex':'none';};
+    $('#auFloor').addEventListener('input',warn);warn();
+    ag.onclick=async()=>{try{const r=await call('/auctions/schedule',{id:d.id,copies:Math.floor(Number($('#auCopies').value)),floor:Math.floor(Number($('#auFloor').value)),
+        start_at:new Date(st.value).toISOString(),below_cost_ok:$('#auAck').checked});
+      await showBlueprintForm(me,d.id,from);msg(`Auction scheduled: ${r.copies} cop${r.copies>1?'ies':'y'} (${r.first} to ${r.last}) from ${new Date(r.start_at).toLocaleString()}, floor ${r.floor} credits. It shows in the Market terminal's Blueprint auctions tab.`,true);}
+    catch(e){msg(e.message);}};}
+  root.querySelectorAll('[data-aucancel]').forEach(b=>b.onclick=async()=>{try{await call('/auctions/cancel',{auction_id:Number(b.dataset.aucancel)});await showBlueprintForm(me,d.id,from);msg('Auction cancelled. The copies are free again.',true);}catch(e){msg(e.message);}});
   const rp=$('#bpSendReply');if(rp)rp.onclick=async()=>{try{await call('/blueprints/reply',{id:d.id,body:$('#bpReply').value});await showBlueprintForm(me,d.id,from);}catch(e){msg(e.message);}};
   const wd=$('#bpWithdraw');if(wd)wd.onclick=async()=>{if(!confirm('Withdraw this blueprint? It will be removed from your filing cabinet.'))return;
     try{await call('/blueprints/withdraw',{id:d.id});from==='cabinet'?showQuarters(me,'cabinet'):showBlueprints(me);}catch(e){msg(e.message);}};

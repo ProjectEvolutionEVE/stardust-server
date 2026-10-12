@@ -25,6 +25,9 @@ The blueprint form (rule 23; blueprints.py):
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
+Blueprint auctions (Eric 10-12; auctions.py):
+  GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
+  POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
 import os, json, uuid, secrets
 from pathlib import Path
@@ -39,6 +42,8 @@ import market as M
 import bank as BANK
 import blueprints as BP
 import serials as SER
+import auctions as AU
+from datetime import datetime
 import asyncio
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
@@ -312,14 +317,16 @@ async def _startup(app):
     async with app["pool"].acquire() as conn:
         await conn.execute(SCHEMA)
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
+    app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
 
 
 async def _cleanup(app):
-    app["bank"].cancel()
-    try:
-        await app["bank"]
-    except (asyncio.CancelledError, Exception):
-        pass
+    for k in ("bank", "auctions"):
+        app[k].cancel()
+        try:
+            await app[k]
+        except (asyncio.CancelledError, Exception):
+            pass
     await app["pool"].close()
 
 
@@ -445,6 +452,47 @@ async def bp_withdraw(request):
         return _json({"ok": True})
 
 
+# ── BLUEPRINT AUCTIONS (Eric 10-12; auctions.py): a second tab in the Market terminal ──
+async def auction_board(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await AU.board(conn, pid))
+
+
+async def auction_bid(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if not isinstance(b.get("lot_id"), int):
+            raise ST.Refused("Which copy?")
+        return _json(await AU.bid(conn, pid, b["lot_id"], b.get("amount")))
+
+
+async def auction_schedule(request):
+    b = await request.json()
+    try:
+        start = datetime.fromisoformat(str(b.get("start_at") or ""))
+    except ValueError:
+        raise ST.Refused("Pick a start date and time.")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        sid = _bp_id(b)
+        code = await conn.fetchval("SELECT item_code FROM blueprint_submissions WHERE id=$1 AND designer_id=$2 AND status='approved'", sid, pid)
+        if not code:
+            raise ST.Refused("Only your own approved designs can be auctioned.")
+        out = await AU.schedule(conn, pid, code, b.get("copies"), b.get("floor"), start, bool(b.get("below_cost_ok")))
+        return _json({**out, "design": await BP.detail(conn, pid, sid)})
+
+
+async def auction_cancel(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if not isinstance(b.get("auction_id"), int):
+            raise ST.Refused("Which auction?")
+        return _json(await AU.cancel(conn, pid, b["auction_id"]))
+
+
 def make_app():
     app = web.Application(middlewares=[cors])
     app.router.add_post("/api/dfg/session", start_session)
@@ -470,6 +518,10 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
     app.router.add_post("/api/dfg/blueprints/withdraw", bp_withdraw)
     app.router.add_post("/api/dfg/blueprints/print", bp_print)
+    app.router.add_get("/api/dfg/auctions", auction_board)
+    app.router.add_post("/api/dfg/auctions/bid", auction_bid)
+    app.router.add_post("/api/dfg/auctions/schedule", auction_schedule)
+    app.router.add_post("/api/dfg/auctions/cancel", auction_cancel)
     app.router.add_get("/api/dfg/signup-options", signup_options)
     app.router.add_post("/api/dfg/auth/start", auth_start)
     app.router.add_post("/api/dfg/auth/verify", auth_verify)

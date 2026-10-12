@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import store as ST
 import serials as SER
+import auctions as AU
 
 # Materials a design is made of: the refined or working form of each raw material, with its real density (a copy of the
 # raw-materials catalogue in quavara-docs). Weight and size are worked out from these, never typed in (rule 23).
@@ -343,7 +344,12 @@ async def detail(conn, pid, sid):
              "version": r["version"], "at": r["at"].isoformat()} for r in await conn.fetch(
         "SELECT from_reviewer, kind, body, version, at FROM blueprint_messages WHERE submission_id=$1 ORDER BY id", sid)]
     model = await conn.fetchval("SELECT model_code FROM item_types WHERE code=$1", s["item_code"]) if s["item_code"] else None
-    return {"id": s["id"], "title": s["title"], "status": s["status"], "version": s["version"], "form": form,
+    sale = {}
+    if s["item_code"]:
+        free = await AU.free_copies(conn, pid, s["item_code"])
+        sale = {"copies_free": len(free), "auctions": await AU.for_design(conn, pid, s["item_code"]),
+                "cost_per_copy": max([await AU.cost_per_copy(conn, c["id"]) for c in free] or [0])}
+    return {"id": s["id"], "title": s["title"], "status": s["status"], "version": s["version"], "form": form, **sale,
             "model": model, "serials": [r["code"] for r in await conn.fetch(
                 """SELECT x.code FROM serials x JOIN items i ON i.id=x.item_id WHERE i.owner_id=$1 AND i.item_code=$2
                    ORDER BY x.code""", pid, s["item_code"])] if s["item_code"] else [],

@@ -2,7 +2,8 @@
 Usage: DATABASE_URL=postgres://postgres:pw@localhost/dfgtest python3 test_server.py"""
 import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
-os.environ["DFG_BANK"] = "0"                     # the bank's background loop stays off; the tests run its ticks themselves
+os.environ["DFG_BANK"] = "0"
+os.environ["DFG_AUCTIONS"] = "0"                 # the auction loop too; the tests tick it                     # the bank's background loop stays off; the tests run its ticks themselves
 os.environ["DFG_SHOW_CODES"] = "1"
 from aiohttp.test_utils import TestServer, TestClient
 import asyncpg
@@ -10,6 +11,8 @@ import server as S
 import store as ST
 import blueprints as BP
 import serials as SER
+import auctions as AU
+from datetime import datetime, timezone, timedelta
 import game as G
 
 async def reset_test_db():
@@ -403,6 +406,85 @@ async def main():
     fc = next(p for p in j["places"] if p["kind"] == "filing_cabinet")
     check("the copies are filed in the filing cabinet, each with its serial",
           sum(1 for i in fc["items"] if i["details"].get("serial", "").startswith(model)) == 51)
+    # ---- blueprint auctions (Eric 10-12) ----
+    now_iso = datetime.now(timezone.utc).isoformat()
+    r = await cl.get(f"/api/dfg/blueprints/{bid}", headers=HB); d = await r.json()
+    free0 = d["copies_free"]
+    check("the design page shows the copies free to auction and what each cost", free0 == 50 and d["cost_per_copy"] == 14)
+    r = await cl.post("/api/dfg/auctions/schedule", headers=HB, json={"id": bid, "copies": 3, "floor": 5, "start_at": now_iso}); j = await r.json()
+    check("a floor below cost needs the warning box ticked", r.status == 422 and "below" in j["error"])
+    r = await cl.post("/api/dfg/auctions/schedule", headers=HB, json={"id": bid, "copies": 999, "floor": 20, "start_at": now_iso})
+    check("can't auction more copies than you have free", r.status == 422)
+    r = await cl.post("/api/dfg/auctions/schedule", headers=HB, json={"id": bid, "copies": 3, "floor": 20, "start_at": now_iso}); j = await r.json()
+    check("auction scheduled: 3 copies, floor 20, from now", r.status == 200 and j["copies"] == 3 and j["first"] == f"{model}-R1-0001")
+    aid = j["auction_id"]
+    later = (datetime.now(timezone.utc) + timedelta(days=2)).isoformat()
+    r = await cl.post("/api/dfg/auctions/schedule", headers=HB, json={"id": bid, "copies": 2, "floor": 5, "start_at": later, "below_cost_ok": True}); j = await r.json()
+    check("below cost is allowed once the box is ticked", r.status == 200)
+    r = await cl.post("/api/dfg/auctions/cancel", headers=HB, json={"auction_id": j["auction_id"]})
+    r2 = await cl.get(f"/api/dfg/blueprints/{bid}", headers=HB); d = await r2.json()
+    check("cancelling an auction that hasn't started frees its copies", r.status == 200 and d["copies_free"] == free0 - 3)
+    async with cl.app["pool"].acquire() as c:
+        await AU.tick(c)
+    B1, B2 = {"X-Dev-Player": "bidder-one"}, {"X-Dev-Player": "bidder-two"}
+    r = await cl.get("/api/dfg/auctions", headers=B1); j = await r.json()
+    a = next(x for x in j["auctions"] if x["auction_id"] == aid); lot = a["lot"]
+    check("the auction is running: copy 1 is up, the lowest bid is the floor",
+          a["status"] == "running" and lot["copy"] == 1 and lot["least"] == 20 and lot["least_fee"] == 1)
+    check("the auction board never names designers or bidders",
+          "designer_id" not in json.dumps(j) and "top_bidder" not in json.dumps(j) and "bidder-" not in json.dumps(j))
+    async def bid_(h, amount):
+        r = await cl.post("/api/dfg/auctions/bid", headers=h, json={"lot_id": lot["lot_id"], "amount": amount})
+        return r.status, await r.json()
+    async with cl.app["pool"].acquire() as c:
+        b1p = await ST.ensure_player(c, "dev:bidder-one", "bidder-one"); b2p = await ST.ensure_player(c, "dev:bidder-two", "bidder-two")
+        b1c0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", b1p)
+        b2c0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", b2p)
+        wsc0 = await c.fetchval("SELECT credits FROM accounts WHERE id=$1", await ST.wsc_account(c))
+        dc0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
+    st, j = await bid_(B1, 19); check("a bid under the floor is refused", st == 422)
+    st, j = await bid_(B1, 20); check("bid 20: the bidder sets aside 20 + a 1-credit Starship fee (2.5%, rounded up)", st == 200 and j["total"] == 21)
+    st, j = await bid_(B1, 25); check("you can't outbid yourself", st == 422)
+    st, j = await bid_(B2, 20); check("a new bid must beat the top bid by at least 1 credit", st == 422 and "21" in j["error"])
+    st, j = await bid_(B2, 21); check("21 beats 20 by the smallest raise", st == 200)
+    async with cl.app["pool"].acquire() as c:
+        b1 = await c.fetchrow("SELECT credits, held_credits FROM accounts WHERE player_id=$1", b1p)
+    check("the bid it beat is handed straight back", b1["credits"] == b1c0 and b1["held_credits"] == 0)
+    st, j = await bid_(HB, 40); check("the designer can't bid on their own design", st == 422)
+    st, j = await bid_(B1, 22)
+    async with cl.app["pool"].acquire() as c:
+        clos = await c.fetchval("SELECT closes_at - now() FROM auction_lots WHERE id=$1", lot["lot_id"])
+        check("every new top bid resets the 5-minute clock", timedelta(seconds=290) < clos <= timedelta(seconds=300))
+        await c.execute("UPDATE auction_lots SET closes_at=now() - interval '1 second' WHERE id=$1", lot["lot_id"])
+        res = await AU.tick(c)
+        item1 = await c.fetchrow("SELECT i.owner_id, l.kind FROM auction_lots al JOIN items i ON i.id=al.item_id JOIN locations l ON l.id=i.location_id WHERE al.id=$1", lot["lot_id"])
+        b1 = await c.fetchrow("SELECT credits, held_credits FROM accounts WHERE player_id=$1", b1p)
+        b2 = await c.fetchrow("SELECT credits, held_credits FROM accounts WHERE player_id=$1", b2p)
+        wsc1 = await c.fetchval("SELECT credits FROM accounts WHERE id=$1", await ST.wsc_account(c))
+        dc1 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
+        copy_id = await c.fetchval("SELECT item_id FROM auction_lots WHERE id=$1", lot["lot_id"])
+        resell = await SER.may_sell(c, b1p, copy_id)
+        rc = await c.fetch("SELECT player_id, detail FROM receipts WHERE kind='auction' ORDER BY id")
+    check("5 minutes after the last top bid the copy is sold", res == ["sold"])
+    check("the copy goes to the winner's filing cabinet", item1["owner_id"] == b1p and item1["kind"] == "filing_cabinet")
+    check("the winner pays 22 + 1 fee; the designer gets 22; the WSC gets the fee",
+          b1["credits"] == b1c0 - 23 and b1["held_credits"] == 0 and dc1 - dc0 == 22 and wsc1 - wsc0 == 1)
+    check("the outbid bidder has everything back", b2["credits"] == b2c0 and b2["held_credits"] == 0)
+    check("the winner and the designer both get a receipt", {x["player_id"] for x in rc} == {b1p, pdes})
+    check("the winner can't resell the copy they won", not resell)
+    r = await cl.get("/api/dfg/auctions", headers=B2); j = await r.json()
+    a = next(x for x in j["auctions"] if x["auction_id"] == aid)
+    check("then copy 2 goes up straight away, at the floor again", a["lot"]["copy"] == 2 and a["lot"]["least"] == 20 and a["sold"] == 1)
+    check("my bids show the copy I lost", any(x["status"] == "lost" for x in j["my_bids"]))
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE auction_lots SET closes_at=now() - interval '1 second' WHERE id=$1", a["lot"]["lot_id"])
+        res = await AU.tick(c)
+        status = await c.fetchval("SELECT status FROM auctions WHERE id=$1", aid)
+    r = await cl.get(f"/api/dfg/blueprints/{bid}", headers=HB); d = await r.json()
+    check("no bid on copy 2 within 5 minutes: the auction stops and holds", res == ["held"] and status == "held")
+    check("the unsold copies are free again in the designer's filing cabinet", d["copies_free"] == free0 - 1)
+    check("the design page lists the auction: 1 of 3 sold for 22", next(x for x in d["auctions"] if x["auction_id"] == aid)["sold"] == 1
+          and next(x for x in d["auctions"] if x["auction_id"] == aid)["earned"] == 22)
     # brand new, an upgrade, or a newer version or model (Eric 10-11)
     r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
     codes = {b["code"]: b for b in o["bases"]}
