@@ -192,6 +192,8 @@ async function tabBody(tab,me){
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">MARKET</h3><p class="soon">Prices, the chart, instant buy and sell, your open orders and your trade history.</p>
      <button class="go" id="sqMarket">📈 Open the market terminal</button>`;}
   if(tab==='cabinet'){let r=null,bp=null,inv=null;try{r=await call('/receipts');}catch(e){}try{bp=await call('/blueprints');}catch(e){}try{inv=await call('/inventory');}catch(e){}
+    let cr=null;try{cr=await call('/library/certificates');}catch(e){}
+    const certs=cr?cr.certificates:[];
     const list=r?r.receipts:[];
     // every blueprint copy filed here (bought at auction, or printed to sell), grouped by design, each with its serial
     const fc=inv?(inv.places||[]).find(p=>p.kind==='filing_cabinet'):null,groups={};
@@ -200,10 +202,14 @@ async function tabBody(tab,me){
       ${is.map(i=>`<div style="font-family:ui-monospace,Menlo,monospace;font-size:13px">${esc(i.details.serial||'')}${i.set_aside?' <span class="soon">(in an auction)</span>':''}</div>`).join('')}</details>`).join('');
     return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">MY DESIGNS</h3>${blueprintList(bp?bp.blueprints:[])}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">BLUEPRINT COPIES</h3>${copies||'<p class="soon">No blueprint copies yet. Win them at auction in the Market terminal, at your desk.</p>'}
+     <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">CERTIFICATES</h3>${certs.length?`<table>${certs.map(c=>`<tr><td>🎓 ${esc(c.title)}<div class="soon">Passed ${esc(new Date(c.passed_at).toLocaleDateString())}</div></td><td style="text-align:right">${esc(c.score)}</td></tr>`).join('')}</table>`:'<p class="soon">None yet. Pass a library book’s test to earn one.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">RECEIPTS LOG</h3>${list.length?`<table>${list.map(x=>`<tr><td style="font-family:ui-monospace,Menlo,monospace">${esc(x.code)}<div class="soon">${esc(new Date(x.issued_at).toLocaleString())}</div></td><td>${receiptLine(x)}</td></tr>`).join('')}</table>`:'<p class="soon">No receipts yet. Every unload at the Starship gives you one.</p>'}
      <h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">LOCKBOX</h3><p class="soon">Empty. A small, secure box for valuables.</p>`;}
   if(tab==='closet')return `<p class="soon">Your clothing and uniforms will hang here. Uniforms change as you rise through the ranks.</p>`;
-  if(tab==='bookshelf')return `<p class="soon">Your own books for continued learning and study. Courses and certification tests are in the Starship library.</p>`;
+  if(tab==='bookshelf'){let inv=null;try{inv=await call('/inventory');}catch(e){}
+    const sh=inv?(inv.places||[]).find(p=>p.kind==='bookshelf'):null,books=(sh&&sh.items)||[];
+    return `<h3 style="margin:0 0 6px;font-size:14px;color:#d9a441">BOOKSHELF</h3>${books.length?`<table>${books.map(b=>`<tr><td>📘 ${esc(b.name)}</td><td style="text-align:right"><button class="small" data-shelf="${esc(b.item.replace(/^book-/,''))}">Read</button></td></tr>`).join('')}</table>`
+      :'<p class="soon">No books checked out. The Starship Library lends them free: Exit Private Quarters, then the Library.</p>'}`;}
   return '';}
 async function showQuarters(me,tab){
   root.hidden=false;
@@ -217,6 +223,7 @@ async function showQuarters(me,tab){
   $('#sqExit').onclick=()=>showExit(me);
   const mk=$('#sqMarket');if(mk)mk.onclick=()=>showMarket(me);
   root.querySelectorAll('[data-bp]').forEach(b=>b.onclick=()=>showBlueprintForm(me,Number(b.dataset.bp),'cabinet'));
+  root.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>showBook(me,b.dataset.shelf,'shelf'));
   const out=$('#sqOut');if(out)out.onclick=async()=>{try{await call('/auth/signout',{});}catch(e){}saveToken(null);
     root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sleep well</h2><div class="sub">You're in your bed. Your body rests while you're away, in real time.</div>
      <button class="go" id="sqAgain">Sign in again</button></div>`;$('#sqAgain').onclick=showSignIn;};}
@@ -233,14 +240,52 @@ function showExit(me){
   $('#sqLib').onclick=()=>showLibrary(me);
   $('#sqBay').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
-function showLibrary(me){
-  place('STARSHIP LIBRARY',me,`<p>Shelves of books, and quiet desks for study.</p>
-   <p class="soon">The starter books, and the short tests that earn promotions, open soon.</p>
+// ── THE STARSHIP LIBRARY (rules 22, 24): free shelves, a reader, short friendly tests and certificates ──
+async function showLibrary(me){
+  let L=null;try{L=await call('/library');}catch(e){}
+  const shelf=g=>`<details class="fold"${g.books.some(b=>b.written)?' open':''}><summary>${esc(g.group)}</summary>
+    <table>${g.books.map(b=>`<tr><td>${b.written?'📘':'📕'} ${esc(b.title)}<div class="soon">${!b.written?'Being written':b.reference?'Reference: read any time':b.passed?'✅ Passed '+esc(b.score):'Test: 5 short questions'}${b.checked_out?' · on your bookshelf':''}</div></td>
+      <td style="text-align:right">${b.written?`<button class="small" data-read="${esc(b.code)}">Read</button>`:''}</td></tr>`).join('')}</table></details>`;
+  place('STARSHIP LIBRARY',me,`<p>Shelves of books, and quiet desks for study. The library is free: read here, or check a book out to your bookshelf.</p>
+   ${L?`<p class="soon">Each book has a short, friendly test: get ${L.pass_mark} of 5 right to pass, and try again any time. You've passed ${L.passed}.</p>${L.shelves.map(shelf).join('')}`:'<p class="soon">The library is closed for a moment. Try again shortly.</p>'}
    <button class="go" id="sqDraft">📐 Drafting room: design a blueprint</button>
    <button class="go" id="sqBay2">🚀 Go to the Docking Bay</button><button class="link" id="sqBack">Back to my quarters</button>`);
+  root.querySelectorAll('[data-read]').forEach(x=>x.onclick=()=>showBook(me,x.dataset.read,'library'));
   $('#sqDraft').onclick=()=>showBlueprints(me);
   $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
+const para=t=>esc(t).split('\n').map(l=>`<p style="margin:6px 0">${l}</p>`).join('');
+async function showBook(me,code,from){
+  let b=null,L=null;try{[b,L]=await Promise.all([call('/library/book/'+encodeURIComponent(code)),call('/library')]);}catch(e){}
+  if(!b)return place('STARSHIP LIBRARY',me,`<p class="msg err">That book is still being written.</p><button class="link" id="sqBack">Back</button>`)||($('#sqBack').onclick=()=>showLibrary(me));
+  const e=L?L.shelves.flatMap(g=>g.books).find(x=>x.code===code):null;
+  place(from==='shelf'?'PRIVATE QUARTERS · BOOKSHELF':'STARSHIP LIBRARY',me,`<h2 style="margin:0">${esc(b.title)}</h2><p class="soon" style="margin:2px 0 8px">${esc(b.subtitle)}</p>
+   ${b.chapters.map((c,i)=>`<details class="fold"${i===0?' open':''}><summary>${i+1}. ${esc(c.title)}</summary>${para(c.text)}</details>`).join('')}
+   <div class="btns" style="margin-top:12px">${b.reference?'':`<button class="go" id="bkTest">${e&&e.passed?'Take the test again':'Take the test'}</button>`}
+    ${e&&e.checked_out?'<button class="go alt" id="bkReturn">Return to the library</button>':'<button class="go alt" id="bkOut">Check out to my bookshelf</button>'}</div>
+   <div class="msg" id="bkMsg"></div><button class="link" id="sqBack">${from==='shelf'?'Back to my bookshelf':'Back to the shelves'}</button>`);
+  const m=(t,ok)=>{const x=$('#bkMsg');x.className='msg '+(ok?'ok':'err');x.textContent=t;};
+  const t=$('#bkTest');if(t)t.onclick=()=>showTest(me,code,from);
+  const o=$('#bkOut');if(o)o.onclick=async()=>{try{await call('/library/checkout',{book:code});await showBook(me,code,from);m('Checked out. It’s on the bookshelf in your quarters.',true);}catch(err){m(err.message);}};
+  const r=$('#bkReturn');if(r)r.onclick=async()=>{try{await call('/library/return',{book:code});await showBook(me,code,from);m('Returned to the library.',true);}catch(err){m(err.message);}};
+  $('#sqBack').onclick=()=>from==='shelf'?showQuarters(me,'bookshelf'):showLibrary(me);}
+async function showTest(me,code,from){
+  let t=null;try{t=await call('/library/test/'+encodeURIComponent(code));}catch(e){}
+  if(!t)return showBook(me,code,from);
+  place('STARSHIP LIBRARY · TEST',me,`<h2 style="margin:0">${esc(t.title)}</h2><p class="soon" style="margin:2px 0 8px">${t.questions.length} questions. Get ${t.pass_mark} right to pass. No time limit.</p>
+   ${t.questions.map((q,i)=>`<div class="q"><div class="n">${i+1}</div><div class="h">${esc(q.question)}</div>
+     <div class="books">${q.options.map(o=>`<label><input type="radio" name="q${q.id}" value="${esc(o.id)}"> ${esc(o.text)}</label>`).join('')}</div></div>`).join('')}
+   <button class="go" id="tsGo">Hand it in</button><div class="msg" id="tsMsg"></div><button class="link" id="sqBack">Back to the book</button>`);
+  $('#sqBack').onclick=()=>showBook(me,code,from);
+  $('#tsGo').onclick=async()=>{const answers={};t.questions.forEach(q=>{const x=root.querySelector(`input[name="q${q.id}"]:checked`);if(x)answers[q.id]=x.value;});
+    if(Object.keys(answers).length<t.questions.length){const m=$('#tsMsg');m.className='msg err';m.textContent='Answer every question first.';return;}
+    try{const r=await call('/library/test',{book:code,answers});
+      place('STARSHIP LIBRARY · TEST',me,`<h2 style="margin:0">${r.passed?'✅ Passed':'Not quite'}: ${r.score} of ${r.of}</h2>
+       <p class="soon">${r.passed?'Your certificate is in the filing cabinet in your quarters.':`You need ${r.pass_mark} right. Have another look at the book and try again any time.`}</p>
+       <table>${r.review.map(q=>`<tr><td>${q.right?'✅':'❌'} ${esc(q.question)}${q.right?'':`<div class="soon">The answer: ${esc(q.answer)}</div>`}</td></tr>`).join('')}</table>
+       <button class="go" id="tsBook">Back to the book</button><button class="link" id="tsLib">Back to the shelves</button>`);
+      $('#tsBook').onclick=()=>showBook(me,code,from);$('#tsLib').onclick=()=>showLibrary(me);}
+    catch(e){const m=$('#tsMsg');m.className='msg err';m.textContent=e.message;}};}
 function showMarket(me){   // the full board, over everything (rule 20: reached from the Desk only)
   const f=document.createElement('iframe');f.src='market.html';f.id='sqMarketFrame';f.title='Starship market';
   f.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;z-index:60;background:#060912';

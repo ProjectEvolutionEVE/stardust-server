@@ -537,3 +537,31 @@ INSERT INTO settings(key, value, note) VALUES
   ('auction_raise',      1, 'Eric 10-12: the smallest raise over the current top bid, credits'),
   ('auction_max_days',  30, 'SAMPLE: how far ahead an auction can be scheduled, days')
 ON CONFLICT (key) DO NOTHING;
+
+-- v12 (10-12): the Starship Library (rules 22, 24). Books are free to read and check out; a checked-out book sits on
+-- the player's bookshelf. Each book has one short, friendly test; passing it earns a certificate (kept in the filing
+-- cabinet's list of documents). Ranks and building will use these passes later; neither is wired up yet.
+DO $$ BEGIN
+  ALTER TABLE item_types DROP CONSTRAINT IF EXISTS item_types_kind_check;
+  ALTER TABLE item_types ADD CONSTRAINT item_types_kind_check
+    CHECK (kind IN ('resource','blueprint','ship','part','tool','other','book'));
+END $$;
+CREATE TABLE IF NOT EXISTS library_passes (
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  book_code TEXT NOT NULL,
+  score     INT NOT NULL,
+  of_total  INT NOT NULL,
+  passed_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (player_id, book_code)
+);
+CREATE TABLE IF NOT EXISTS library_attempts (
+  id        BIGSERIAL PRIMARY KEY,
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  book_code TEXT NOT NULL,
+  score     INT NOT NULL,
+  of_total  INT NOT NULL,
+  at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+INSERT INTO settings(key, value, note) VALUES
+  ('book_m3', 0.002, 'SAMPLE: space one library book takes on a bookshelf, cubic metres')
+ON CONFLICT (key) DO NOTHING;

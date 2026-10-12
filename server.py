@@ -25,6 +25,9 @@ The blueprint form (rule 23; blueprints.py):
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
+The Starship Library (rules 22, 24; library.py):
+  GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
+  GET  /api/dfg/library/test/{code} the questions (no answers) · POST /library/test {book, answers} · GET /library/certificates
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
@@ -43,6 +46,7 @@ import bank as BANK
 import blueprints as BP
 import serials as SER
 import auctions as AU
+import library as LIB
 from datetime import datetime
 import asyncio
 
@@ -316,6 +320,7 @@ async def _startup(app):
     app["pool"] = await asyncpg.create_pool(os.environ["DATABASE_URL"], min_size=1, max_size=5)
     async with app["pool"].acquire() as conn:
         await conn.execute(SCHEMA)
+        await LIB.ensure_book_types(conn)                  # each written library book is an item type
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
 
@@ -493,6 +498,55 @@ async def auction_cancel(request):
         return _json(await AU.cancel(conn, pid, b["auction_id"]))
 
 
+# ── THE STARSHIP LIBRARY (rules 22, 24; library.py) ──
+async def lib_shelves(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await LIB.shelves(conn, pid))
+
+
+async def lib_book(request):
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+    b = LIB.book(request.match_info["code"])
+    if not b:
+        return _json({"error": "That book is still being written."}, 404)
+    return _json(b)
+
+
+async def lib_checkout(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await LIB.checkout(conn, pid, b.get("book")))
+
+
+async def lib_return(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await LIB.give_back(conn, pid, b.get("book")))
+
+
+async def lib_test(request):
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+    return _json(LIB.questions(request.match_info["code"]))
+
+
+async def lib_mark(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await LIB.mark(conn, pid, b.get("book"), b.get("answers")))
+
+
+async def lib_certificates(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json({"certificates": await LIB.certificates(conn, pid)})
+
+
 def make_app():
     app = web.Application(middlewares=[cors])
     app.router.add_post("/api/dfg/session", start_session)
@@ -518,6 +572,13 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
     app.router.add_post("/api/dfg/blueprints/withdraw", bp_withdraw)
     app.router.add_post("/api/dfg/blueprints/print", bp_print)
+    app.router.add_get("/api/dfg/library", lib_shelves)
+    app.router.add_get("/api/dfg/library/book/{code}", lib_book)
+    app.router.add_post("/api/dfg/library/checkout", lib_checkout)
+    app.router.add_post("/api/dfg/library/return", lib_return)
+    app.router.add_get("/api/dfg/library/test/{code}", lib_test)
+    app.router.add_post("/api/dfg/library/test", lib_mark)
+    app.router.add_get("/api/dfg/library/certificates", lib_certificates)
     app.router.add_get("/api/dfg/auctions", auction_board)
     app.router.add_post("/api/dfg/auctions/bid", auction_bid)
     app.router.add_post("/api/dfg/auctions/schedule", auction_schedule)

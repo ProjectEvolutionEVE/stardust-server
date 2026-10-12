@@ -12,6 +12,7 @@ import store as ST
 import blueprints as BP
 import serials as SER
 import auctions as AU
+import library_books as LB
 from datetime import datetime, timezone, timedelta
 import game as G
 
@@ -485,6 +486,47 @@ async def main():
     check("the unsold copies are free again in the designer's filing cabinet", d["copies_free"] == free0 - 1)
     check("the design page lists the auction: 1 of 3 sold for 22", next(x for x in d["auctions"] if x["auction_id"] == aid)["sold"] == 1
           and next(x for x in d["auctions"] if x["auction_id"] == aid)["earned"] == 22)
+    # ---- the Starship Library (rules 22, 24) ----
+    HL = {"X-Dev-Player": "tester-reader"}
+    r = await cl.get("/api/dfg/library", headers=HL); j = await r.json()
+    allb = {b["code"]: b for g in j["shelves"] for b in g["books"]}
+    check("the library shelves every subject; the first books are written",
+          r.status == 200 and allb["prospecting"]["written"] and allb["trading"]["written"] and allb["piloting"]["written"]
+          and allb["catalogue"]["reference"] and not allb["metallurgy"]["written"])
+    r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
+    check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
+    r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
+    check("the Raw Materials Catalogue lists every material with its density", r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46)
+    r = await cl.get("/api/dfg/library/book/metallurgy", headers=HL)
+    check("a book still being written can't be opened", r.status == 404)
+    r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
+    check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
+          and all("right" not in q for q in j["questions"]))
+    right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS["prospecting"]["test"])}
+    wrong3 = dict(right); wrong3["0"] = "d"; wrong3["1"] = "d"
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": wrong3}); j = await r.json()
+    check("3 of 5 doesn't pass; the review shows which were wrong", r.status == 200 and j["score"] == 3 and not j["passed"]
+          and [q["right"] for q in j["review"]][:2] == [False, False])
+    one_wrong = dict(right); one_wrong["4"] = "a"
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": one_wrong}); j = await r.json()
+    check("4 of 5 passes: simple and fairly easy (rule 24)", j["score"] == 4 and j["passed"])
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": right}); j = await r.json()
+    r = await cl.get("/api/dfg/library/certificates", headers=HL); c = await r.json()
+    check("a pass earns a certificate, which keeps the best score", len(c["certificates"]) == 1 and c["certificates"][0]["score"] == "5/5")
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "catalogue", "answers": {}})
+    check("the reference catalogue has no test", r.status == 422)
+    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "trading"})
+    r2 = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "trading"})
+    r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()
+    shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
+    check("a checked-out book sits on the bookshelf (once)", r.status == 200 and r2.status == 422
+          and [i["name"] for i in shelf["items"]] == ["Trading & Markets"] and shelf["used_m3"] > 0)
+    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "metallurgy"})
+    check("a book still being written can't be checked out", r.status == 422)
+    r = await cl.post("/api/dfg/library/return", headers=HL, json={"book": "trading"})
+    r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()
+    shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
+    check("returning a book takes it off the bookshelf", r.status == 200 and shelf["items"] == [])
     # brand new, an upgrade, or a newer version or model (Eric 10-11)
     r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
     codes = {b["code"]: b for b in o["bases"]}
