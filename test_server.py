@@ -492,12 +492,12 @@ async def main():
     allb = {b["code"]: b for g in j["shelves"] for b in g["books"]}
     check("the library shelves every subject; the first books are written",
           r.status == 200 and allb["prospecting"]["written"] and allb["trading"]["written"] and allb["piloting"]["written"]
-          and allb["catalogue"]["reference"] and not allb["metallurgy"]["written"])
+          and allb["catalogue"]["reference"] and allb["metallurgy"]["written"] and not allb["mining"]["written"])
     r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
     check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
     check("the Raw Materials Catalogue lists every material with its density", r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46)
-    r = await cl.get("/api/dfg/library/book/metallurgy", headers=HL)
+    r = await cl.get("/api/dfg/library/book/mining", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
     check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
@@ -511,6 +511,9 @@ async def main():
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": one_wrong}); j = await r.json()
     check("4 of 5 passes: simple and fairly easy (rule 24)", j["score"] == 4 and j["passed"])
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": right}); j = await r.json()
+    for code, b in LB.BOOKS.items():          # every written test: the stored answer is one of its own options
+        for q, opts, ans in b["test"]:
+            assert ans in dict(opts), (code, q)
     r = await cl.get("/api/dfg/library/certificates", headers=HL); c = await r.json()
     check("a pass earns a certificate, which keeps the best score", len(c["certificates"]) == 1 and c["certificates"][0]["score"] == "5/5")
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "catalogue", "answers": {}})
@@ -521,7 +524,7 @@ async def main():
     shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
     check("a checked-out book sits on the bookshelf (once)", r.status == 200 and r2.status == 422
           and [i["name"] for i in shelf["items"]] == ["Trading & Markets"] and shelf["used_m3"] > 0)
-    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "metallurgy"})
+    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "mining"})
     check("a book still being written can't be checked out", r.status == 422)
     r = await cl.post("/api/dfg/library/return", headers=HL, json={"book": "trading"})
     r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()

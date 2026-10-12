@@ -144,6 +144,48 @@ BOOKS = {
              [("a", "Straight to the market"), ("b", "Your own space in the Starship's cargo hold"), ("c", "Overboard"), ("d", "Your bed")], "b"),
         ],
     },
+    "metallurgy": {
+        "title": "Metallurgy",
+        "subtitle": "Turning ore into metal: smelting, yields and furnaces",
+        "chapters": [
+            ("Ore is not metal",
+             "Debris fields hold ores: rock as it was found. To build with metal, the ore has to be smelted: heated until "
+             "the metal separates from the rest of the rock. That skill is Metallurgy."),
+            ("How much metal is in the ore",
+             "In our fields every ore piece is pure ore mineral, so it gives its metal's share by weight, worked out from "
+             "its chemical formula. The rest is slag.\n"
+             "• Hematite (Fe₂O₃): 69.94% iron. 100 kg gives 69.94 kg of iron.\n"
+             "• Chalcopyrite (CuFeS₂): 34.63% copper. 100 kg gives 34.6 kg of copper and 65.4 kg of slag.\n"
+             "• Acanthite (Ag₂S): 87.06% silver. 100 kg gives 87.06 kg of silver.\n"
+             "• Native gold is already metal."),
+            ("Furnaces",
+             "The Starship has no smelting bay. A smelter designs their own furnace as a blueprint. In space, the "
+             "Starship's advanced technology can help; on the planet, the roots begin with stone and clay furnaces, and "
+             "build up from there."),
+            ("Hiring a smelter",
+             "If you haven't learned the skill, you can pay a skilled smelter instead. Players never talk to each other, "
+             "so the Starship bank is the go-between. The smelter lists the service: which ores, the fee, and how long it "
+             "takes. You fill a cart with the ore and drop it off. The bank holds your whole fee and tells the smelter it "
+             "is there in full, and smelting begins. When the metal comes back and you confirm you're satisfied, the bank "
+             "pays the smelter."),
+            ("Fair for both sides",
+             "If you don't confirm within 48 hours and the metal matches the expected yield (the server knows it from the "
+             "chemistry), the bank pays the smelter anyway. If the smelter misses the time they promised, you can cancel "
+             "and get your ore and your whole fee back. Both sides get receipts."),
+        ],
+        "test": [
+            ("What is turning ore into metal called?",
+             [("a", "Mining"), ("b", "Smelting"), ("c", "Assaying"), ("d", "Drafting")], "b"),
+            ("How much copper does 100 kg of chalcopyrite give?",
+             [("a", "100 kg"), ("b", "About 70 kg"), ("c", "About 34.6 kg"), ("d", "1 kg")], "c"),
+            ("What is left over after smelting?",
+             [("a", "Slag"), ("b", "Diamonds"), ("c", "Nothing at all"), ("d", "Water")], "a"),
+            ("On the planet, where do furnaces begin?",
+             [("a", "With stone and clay furnaces"), ("b", "With the Starship's smelting bay"), ("c", "With fusion reactors"), ("d", "They don't need furnaces")], "a"),
+            ("When you hire a smelter, who holds your fee?",
+             [("a", "The smelter, up front"), ("b", "Nobody: you pay afterwards"), ("c", "The Starship bank, until you confirm"), ("d", "Inara")], "c"),
+        ],
+    },
     "catalogue": {
         "title": "The Raw Materials Catalogue",
         "subtitle": "Every raw material, with its real density (reference)",
