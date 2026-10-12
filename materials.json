@@ -1,5 +1,5 @@
 {
- "_note": "Blueprint materials (10-11): a COPY of quavara-docs stardust-raw-materials-catalogue.json v0.2, the refined or working form of each raw material, with its real density. Weight and size on the blueprint form are worked out from these, never typed in.",
+ "_note": "Blueprint materials (10-11): a COPY of quavara-docs stardust-raw-materials-catalogue.json v0.3, the refined or working form of each raw material, with its real density. Weight and size on the blueprint form are worked out from these, never typed in.",
  "materials": [
   {
    "code": "mat-iron",
@@ -278,7 +278,7 @@
    "code": "mat-limestone",
    "name": "Limestone",
    "category": "habitat building",
-   "density_kg_m3": 2720,
+   "density_kg_m3": 2710,
    "state": "rock bulk ~2,500-2,600 (Rocscience tables); calcite crystal 2,720"
   },
   {

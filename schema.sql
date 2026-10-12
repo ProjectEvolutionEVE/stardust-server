@@ -565,3 +565,6 @@ CREATE TABLE IF NOT EXISTS library_attempts (
 INSERT INTO settings(key, value, note) VALUES
   ('book_m3', 0.002, 'SAMPLE: space one library book takes on a bookshelf, cubic metres')
 ON CONFLICT (key) DO NOTHING;
+
+-- v13 (10-12): the catalogue's second check corrected calcite (limestone) to 2,710 kg/m³ (was 2,720).
+UPDATE item_types SET density_kg_m3 = 2710 WHERE code = 'mat-limestone' AND density_kg_m3 = 2720;
