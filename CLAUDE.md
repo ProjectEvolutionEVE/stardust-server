@@ -1,6 +1,6 @@
-# Stardust - Rebuilding Home: read this first
+# Stardust - Terra Deleta: read this first
 
-The game's working title is "Stardust - Rebuilding Home"; the final name is pending.
+The game's name is **"Stardust - Terra Deleta"** (Eric, 2026-10-13; it replaces the working title "Rebuilding Home"). A planned land-based companion game on the rebuilt New Earth will be **"Stardust - Terra Nova"**. Both are working titles until an attorney clears the trademarks: the old TERRA NOVA video-game marks are cancelled, but "Stardust" is crowded in games (see ledger v4.2).
 
 This file auto-loads for every Claude session in this repository. Eric asked for it on 2026-10-11, so that he is never asked these same questions again.
 
@@ -131,7 +131,7 @@ The full record is in the `quavara-docs` repository:
 
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
-1. **The game's final name.** "Earth2.0" conflicts with an existing "EARTH 2" trademark filing.
+1. **The game's name: CHOSEN (Eric 10-13): "Stardust - Terra Deleta"** (and "Stardust - Terra Nova" for the land game). Still to do: attorney trademark clearance before launch. ("Earth2.0" was dropped: it conflicts with an existing "EARTH 2" filing.)
 2. **Which ElevenLabs voice speaks as Inara.** Lily is reserved for Eric's own personal Inara, under the company ElevenLabs rule. Also: what players in languages ElevenLabs doesn't speak well get.
 3. **The rules for a player's first blueprint.** Must it sell before they may fly, or is listing it enough? The blueprint form and the review process are already settled: see the spec, §7a.
 4. **Text-message provider: ANSWERED (checked in code, 2026-10-13): Twilio.** Quavara's `core/auth.py` sends text codes through Twilio (Twilio Verify, plus Twilio Lookup to block internet/VoIP numbers); Resend sends only its emails. This game's `auth.py` is already written for **Twilio Verify on its own sub-account, "Stardust game"** (env `TWILIO_ACCOUNT_SID`, `TWILIO_API_KEY_SID`, `TWILIO_API_KEY_SECRET`, `TWILIO_VERIFY_SID`), so the game stays separable from Quavara. **Still to confirm (not checked 10-13):** that the sub-account and its Verify service exist and the four variables are set on Railway. Creating the sub-account is Eric's to do (it is an account with a bill). Eric's screenshots of 10-11 show Quavara's codes arriving from short code 22395; which Twilio sender that is has not been checked.
