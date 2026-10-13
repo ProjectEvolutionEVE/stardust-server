@@ -703,7 +703,7 @@ function fly(dt){
  }
  if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';warn('Cleared to dock. Bring it in under the bow.');}
  else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock=null;settleDocked();   // settle facing out past the bow, the view from the bay
-  toast('DOCKED','Welcome home. Your hold is safe aboard. The market opens in the next update.');}
+  toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
  const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
