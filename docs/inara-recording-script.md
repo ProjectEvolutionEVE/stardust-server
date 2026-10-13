@@ -1,6 +1,6 @@
 # Inara: recording script for Stardust - Terra Deleta
 
-**Version 1.0 · 2026-10-13** · Compiled from the sources listed below. Every line is either copied word for word
+**Version 1.1 · 2026-10-13** (v1.1: the six FAQ answers on hold were fixed in FAQ v1.9 and are now ready; the DOCKED message was corrected in the code) · Compiled from the sources listed below. Every line is either copied word for word
 from a source (**SOURCE**) or written to fill a moment the sources say Inara must speak (**[DRAFT, needs Eric's
 approval]**). Nothing here adds lore or facts beyond those sources.
 
@@ -11,8 +11,8 @@ clears it. No line below says the game's name, so a name change means no re-reco
 
 **Status key**
 - **SOURCE**: the exact text exists in the code or a design document. Record as written.
-- **SOURCE, HOLD**: the text exists, but it disagrees with the game as built or with a later ruling. Fix the source
-  first (the FAQ's own accuracy rule), then record the fixed text. Do not record the HOLD text as it stands.
+- **SOURCE, HOLD**: the text exists, but it can't be played yet (it names something not built). Record it only when
+  the note says so.
 - **[DRAFT, needs Eric's approval]**: the sources say Inara speaks at this moment but give no words, or give only
   on-screen text. The draft uses only facts from the sources.
 
@@ -185,12 +185,12 @@ moment, the draft keeps the toast's words.
 
 *Delivery:* Warm, steady, the voice of someone watching you come home.
 
-**INARA-TOWER-007** · [DRAFT, needs Eric's approval] · Moment: docked · spec §9 ("docking"); toast `static/debris-flight.js:706`
-> Welcome home. Your hold is safe aboard.
+**INARA-TOWER-007** · [DRAFT, needs Eric's approval] · Moment: docked · spec §9 ("docking"); toast `static/debris-flight.js:706` (words kept as written)
+> Welcome home. Your Market terminal is at the Desk in your quarters.
 
 *Delivery:* Warm.
-*Note:* the toast goes on to say "The market opens in the next update." That sentence is out of date (the market is
-built, rule 20) and is left out of the draft.
+*Note:* the toast used to end "The market opens in the next update", which was out of date. It was corrected on 10-13
+to match rule 20 (the market is reached from the Market terminal at the Desk).
 
 **INARA-HINT-001** · SOURCE, HOLD (Eric's wording) · Moment: delayed hint, only for a player who seems stuck, never right away · spec §6; FAQ:210
 > Do you have enough credits to purchase the mining laser or tractor beam? Both will allow you to handle these larger
@@ -238,208 +238,210 @@ INARA-FAQ-043.
 
 ## 7. Inara's answers through COMMS (her FAQ)
 
-Source: `quavara-docs/debris-field-game-faq.md` v1.8 (2026-10-11), "Inara's prepared answers ... written in her voice,
+Source: `quavara-docs/debris-field-game-faq.md` v1.9 (2026-10-13), "Inara's prepared answers ... written in her voice,
 short enough to read aloud". Spec §9: she answers "word for word", and fixed answers can be recorded once as permanent
 audio files. The answers are copied below exactly (formatting marks removed). Section headings follow the FAQ.
 
-**Before recording:** the FAQ says that every answer must match the game as built. Six answers are marked **HOLD**
-because they no longer do (Appendix C). Fix them in the FAQ first. Re-record any answer whenever the FAQ changes.
+**Before recording:** the FAQ says that every answer must match the game as built. FAQ v1.9 (10-13) fixed the eight
+answers that no longer did (Appendix C, items 1-7); all 45 answers below are ready. Re-record any answer whenever the
+FAQ changes.
 
 *Default delivery for every answer, unless the note says otherwise:* calm, clear, helpful, like a crewmate explaining
 rather than a manual being read. The question is not recorded; only the answer is.
 
 ### Flying
 
-**INARA-FAQ-001** · SOURCE (verbatim) · Q: *How do I fly?* · `quavara-docs/debris-field-game-faq.md:39`
+**INARA-FAQ-001** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I fly?* · `quavara-docs/debris-field-game-faq.md:39`
 
 > Press and hold anywhere on the screen. Holding moves you forward, and the spot you pressed becomes the center of your
 > joystick. Pull back to raise the nose, push up to dip it, and slide right or left to bank. Let go and you'll drift to a
 > stop. On a computer, holding the left mouse button works the same way.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-002** · SOURCE (verbatim) · Q: *I keep spinning. How do I steady the ship?* · `quavara-docs/debris-field-game-faq.md:44`
+**INARA-FAQ-002** · SOURCE (verbatim, FAQ v1.9) · Q: *I keep spinning. How do I steady the ship?* · `quavara-docs/debris-field-game-faq.md:44`
 
 > Let go. Turning eases out in about a second and your speed drifts down over a few seconds. Small drags from the center
 > make small turns; it takes a little practice.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-003** · SOURCE (verbatim) · Q: *My finger covers the screen. How do I look around?* · `quavara-docs/debris-field-game-faq.md:48`
+**INARA-FAQ-003** · SOURCE (verbatim, FAQ v1.9) · Q: *My finger covers the screen. How do I look around?* · `quavara-docs/debris-field-game-faq.md:48`
 
 > Let go and coast. When you stop, you can see everything in front of you. Listen to the scanner while you fly; when the
 > tone rises, that's your cue to let go and take a closer look.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-004** · SOURCE (verbatim) · Q: *What do the markers at the edge of the screen mean?* · `quavara-docs/debris-field-game-faq.md:52`
+**INARA-FAQ-004** · SOURCE (verbatim, FAQ v1.9) · Q: *What do the markers at the edge of the screen mean?* · `quavara-docs/debris-field-game-faq.md:52`
 
 > They point to the Starship and the gas giants when they're off screen, with the distance to each. Follow one to find your
 > way back.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ### Seeing in the dark
 
-**INARA-FAQ-005** · SOURCE (verbatim) · Q: *Why is it so dark? Where is all the debris?* · `quavara-docs/debris-field-game-faq.md:58`
+**INARA-FAQ-005** · SOURCE (verbatim, FAQ v1.9) · Q: *Why is it so dark? Where is all the debris?* · `quavara-docs/debris-field-game-faq.md:58`
 
 > The Sun is the only light out here. Debris is lit on the side facing the Sun and dark behind. Far-off debris fades into
 > the black, and the farther you are from the Sun, the dimmer everything gets.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-006** · SOURCE (verbatim) · Q: *Why can't I see a field the scanner is picking up?* · `quavara-docs/debris-field-game-faq.md:62`
+**INARA-FAQ-006** · SOURCE (verbatim, FAQ v1.9) · Q: *Why can't I see a field the scanner is picking up?* · `quavara-docs/debris-field-game-faq.md:62`
 
 > Small fields are too small to see from a distance. You'll only see them when you're nearly on top of them, so you find
 > them by sound, not by sight. Large fields can catch the sunlight from much farther away.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-007** · SOURCE (verbatim) · Q: *Is the layout the same every time I play?* · `quavara-docs/debris-field-game-faq.md:66`
+**INARA-FAQ-007** · SOURCE (verbatim, FAQ v1.9) · Q: *Is the layout the same every time I play?* · `quavara-docs/debris-field-game-faq.md:66`
 
 > No. The debris fields are scattered in a new pattern every time you launch, so there's nothing to memorize. The Sun,
 > Jupiter, Saturn and the Starship always stay where they are.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-008** · SOURCE (verbatim) · Q: *Why are the fields moving?* · `quavara-docs/debris-field-game-faq.md:70`
+**INARA-FAQ-008** · SOURCE (verbatim, FAQ v1.9) · Q: *Why are the fields moving?* · `quavara-docs/debris-field-game-faq.md:70`
 
 > Everything out here drifts. The four rings of debris slowly orbit the Sun, the inner rings faster than the outer ones.
 > If you've locked a field, your autopilot follows it.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-009** · SOURCE (verbatim) · Q: *What are the four rings?* · `quavara-docs/debris-field-game-faq.md:74`
+**INARA-FAQ-009** · SOURCE (verbatim, FAQ v1.9) · Q: *What are the four rings?* · `quavara-docs/debris-field-game-faq.md:74`
 
 > They're what's left of the four inner planets: Mercury, Venus, Earth and Mars. The debris fields are their remains.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ### The scanner
 
-**INARA-FAQ-010** · SOURCE (verbatim) · Q: *How does the scanner work?* · `quavara-docs/debris-field-game-faq.md:79`
+**INARA-FAQ-010** · SOURCE (verbatim, FAQ v1.9) · Q: *How does the scanner work?* · `quavara-docs/debris-field-game-faq.md:79`
 
 > It sweeps the space in front of your ship. A soft hiss means nothing is there. When you point toward a debris field, a
 > tone rises out of the hiss. It gets higher and clearer the closer you aim and the nearer you get. Dead on target, the
 > hiss falls away.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-011** · SOURCE (verbatim) · Q: *Why is the signal so weak or flickery?* · `quavara-docs/debris-field-game-faq.md:84`
+**INARA-FAQ-011** · SOURCE (verbatim, FAQ v1.9) · Q: *Why is the signal so weak or flickery?* · `quavara-docs/debris-field-game-faq.md:84`
 
 > Faraway fields give a weak return, and small fields are faint even up close. Static rides on top of everything, so a
 > faint return flickers in and out. Fly closer and it steadies.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-012** · SOURCE (verbatim) · Q: *I can't find a field anywhere. Which way should I go?* · `quavara-docs/debris-field-game-faq.md:88`
+**INARA-FAQ-012** · SOURCE (verbatim, FAQ v1.9) · Q: *I can't find a field anywhere. Which way should I go?* · `quavara-docs/debris-field-game-faq.md:88`
 
 > Press and hold to fly, and look at the rim of your flight stick. A faint gold glow shows which way the nearest field
 > lies, even before you can see or hear it. Turn until the whole rim glows: the field is dead ahead. Then sweep it with
 > the scanner as usual.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-013** · SOURCE (verbatim), HOLD · Q: *How far can my scanner hear?* · `quavara-docs/debris-field-game-faq.md:93`
+**INARA-FAQ-013** · SOURCE (verbatim, FAQ v1.9) · Q: *How far can my scanner hear?* · `quavara-docs/debris-field-game-faq.md:93`
 
-> Your starter scanner hears large fields from about 1,500 meters, medium ones from about 650, and small ones only from
-> about 190. Small fields are the hardest to find.
+> Your starter scanner hears large fields from about 1,800 meters, medium ones from about 900, small ones from about 300,
+> and tiny ones only from about 200. Tiny fields are the hardest to find.
 
-*Delivery / notes:* **STALE: fix the FAQ before recording.** The code's scanner ranges are large 1,800 m, medium 900 m, small 300 m, tiny 200 m (`static/debris-flight.js:742`), not 1,500 / 650 / 190, and the tiny field type is not mentioned.
+*Delivery / notes:* Fixed in FAQ v1.9 (ranges now match `static/debris-flight.js:742`). Numbers: say "eighteen hundred", "nine hundred", "three hundred", "two hundred".
 
-**INARA-FAQ-014** · SOURCE (verbatim) · Q: *What is a bearing?* · `quavara-docs/debris-field-game-faq.md:97`
+**INARA-FAQ-014** · SOURCE (verbatim, FAQ v1.9) · Q: *What is a bearing?* · `quavara-docs/debris-field-game-faq.md:97`
 
 > One sweep only tells you which direction a field is in, not where it is. When you point straight at a return, the
 > scanner takes a bearing (you'll hear a soft ping). Move off to one side and sweep it again. Where the two bearings
 > cross, the scanner fixes the field's position.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-015** · SOURCE (verbatim) · Q: *What does "locked" mean?* · `quavara-docs/debris-field-game-faq.md:102`
+**INARA-FAQ-015** · SOURCE (verbatim, FAQ v1.9) · Q: *What does "locked" mean?* · `quavara-docs/debris-field-game-faq.md:102`
 
 > When two bearings cross, the scanner locks the field, plays a two-note chime, and goes quiet. You don't need the hunting
 > tones anymore because you know where it is. A field that's very close and strong can lock from a single bearing.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-016** · SOURCE (verbatim) · Q: *I took a bearing and then the scanner switched to a different field.* · `quavara-docs/debris-field-game-faq.md:106`
+**INARA-FAQ-016** · SOURCE (verbatim, FAQ v1.9) · Q: *I took a bearing and then the scanner switched to a different field.* · `quavara-docs/debris-field-game-faq.md:106`
 
 > That's fine. The scanner remembers each field's first bearing, so sweeping past a neighbor doesn't erase the one you
 > were working on. Come back to it and sweep again from a new spot.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ### Autopilot and parking
 
-**INARA-FAQ-017** · SOURCE (verbatim) · Q: *How do I get to a locked field?* · `quavara-docs/debris-field-game-faq.md:112`
+**INARA-FAQ-017** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I get to a locked field?* · `quavara-docs/debris-field-game-faq.md:112`
 
 > Double-tap anywhere. The autopilot turns you toward the field, speeds up, and slows down as you arrive. You can also
 > double-tap any field or landmark you can see to fly to it.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-018** · SOURCE (verbatim) · Q: *How do I take the controls back from the autopilot?* · `quavara-docs/debris-field-game-faq.md:116`
+**INARA-FAQ-018** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I take the controls back from the autopilot?* · `quavara-docs/debris-field-game-faq.md:116`
 
 > Press and hold. The lock stays, and you can double-tap again to resume.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-019** · SOURCE (verbatim) · Q: *Why did my ship stop in front of the field instead of flying into it?* · `quavara-docs/debris-field-game-faq.md:119`
+**INARA-FAQ-019** · SOURCE (verbatim, FAQ v1.9) · Q: *Why did my ship stop in front of the field instead of flying into it?* · `quavara-docs/debris-field-game-faq.md:119`
 
 > The autopilot parks you just outside the field with your nose pointed at it, so you can see the whole field while you
 > work it. It holds that position even as the field drifts.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ### Coming home
 
-**INARA-FAQ-020** · SOURCE (verbatim) · Q: *How do I get back to the Starship?* · `quavara-docs/debris-field-game-faq.md:125`
+**INARA-FAQ-020** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I get back to the Starship?* · `quavara-docs/debris-field-game-faq.md:125`
 
 > Double-tap the Starship. Your autopilot lines you up in front of the bow, then flies you in underneath it, past the
 > lit command deck, into the bay. You'll see the guide lights pulse toward the ship to show you the way in.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-021** · SOURCE (verbatim) · Q: *What are the lit windows under the bow?* · `quavara-docs/debris-field-game-faq.md:129`
+**INARA-FAQ-021** · SOURCE (verbatim, FAQ v1.9) · Q: *What are the lit windows under the bow?* · `quavara-docs/debris-field-game-faq.md:129`
 
 > That's the command deck. It looks down over everything below the ship: the planets, and every vessel coming and going.
 > That's where I am when I'm talking you in.
 
 *Delivery / notes:* First person: Inara describing her own post. Warm.
 
-**INARA-FAQ-022** · SOURCE (verbatim), HOLD · Q: *I'm docked. How do I leave?* · `quavara-docs/debris-field-game-faq.md:133`
+**INARA-FAQ-022** · SOURCE (verbatim, FAQ v1.9) · Q: *I'm docked. How do I leave?* · `quavara-docs/debris-field-game-faq.md:133`
 
-> Press and hold, just like flying. You'll launch out from under the bow. Every session starts here too, docked in the
-> bay under the bow, ready to launch.
+> Press and hold, just like flying. You'll launch out from under the bow. Every session starts in your bed, in your
+> Private Quarters. When you go to the Docking Bay, your ship is waiting here, docked in the bay under the bow, ready to
+> launch.
 
-*Delivery / notes:* **CONFLICT: Eric must rule before recording.** "Every session starts here too, docked in the bay" disagrees with the Bed rule in `CLAUDE.md` (every session begins waking in bed, in Private Quarters) and with the code (sign-in opens the Bed tab, `static/quarters.js`).
+*Delivery / notes:* Fixed in FAQ v1.9 (sessions start in bed, per the Bed rule in `CLAUDE.md`).
 
-**INARA-FAQ-023** · SOURCE (verbatim) · Q: *Why can't I see my own ship?* · `quavara-docs/debris-field-game-faq.md:137`
+**INARA-FAQ-023** · SOURCE (verbatim, FAQ v1.9) · Q: *Why can't I see my own ship?* · `quavara-docs/debris-field-game-faq.md:138`
 
 > You're looking out from its cockpit. Other players' ships will appear once we can all fly together.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-024** · SOURCE (verbatim) · Q: *How do I unload my cargo?* · `quavara-docs/debris-field-game-faq.md:140`
+**INARA-FAQ-024** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I unload my cargo?* · `quavara-docs/debris-field-game-faq.md:141`
 
 > Once you're docked, tap UNLOAD. Your pieces move across one at a time. Watch the bars: your hold empties as your space
 > aboard the Starship fills. When it's done you'll see TRANSFER COMPLETE and a list of what came aboard.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-025** · SOURCE (verbatim) · Q: *How much can I keep aboard the Starship?* · `quavara-docs/debris-field-game-faq.md:144`
+**INARA-FAQ-025** · SOURCE (verbatim, FAQ v1.9) · Q: *How much can I keep aboard the Starship?* · `quavara-docs/debris-field-game-faq.md:145`
 
 > Everyone has their own space in the Starship's cargo hold, and it has a limit. Tap HOLD to see how much you've used.
 > If your space fills up, whatever doesn't fit stays in your ship's hold. The same panel shows how full the whole cargo
 > hold is.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-026** · SOURCE (verbatim) · Q: *What's the receipt for?* · `quavara-docs/debris-field-game-faq.md:149`
+**INARA-FAQ-026** · SOURCE (verbatim, FAQ v1.9) · Q: *What's the receipt for?* · `quavara-docs/debris-field-game-faq.md:150`
 
 > What you own is in the Starship's keeping, so every unload gives you a receipt with a code, like WSC-7K3F-92QD. It
 > lists what moved and when. Keep the code: if anything ever looks wrong, the code lets us check exactly what was
@@ -451,130 +453,131 @@ rather than a manual being read. The question is not recorded; only the answer i
 
 ### Collecting
 
-**INARA-FAQ-027** · SOURCE (verbatim) · Q: *How do I collect?* · `quavara-docs/debris-field-game-faq.md:157`
+**INARA-FAQ-027** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I collect?* · `quavara-docs/debris-field-game-faq.md:158`
 
 > Once you're parked in front of a field, tap COLLECT. Pieces drift aboard one at a time, and your ship keeps going until
 > your hold is full or nothing else will fit. Flying off stops collecting.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-028** · SOURCE (verbatim) · Q: *Why does collecting take so long?* · `quavara-docs/debris-field-game-faq.md:161`
+**INARA-FAQ-028** · SOURCE (verbatim, FAQ v1.9) · Q: *Why does collecting take so long?* · `quavara-docs/debris-field-game-faq.md:162`
 
 > Nothing out here is instant. Each piece has to be drawn in and stowed, and bigger pieces take longer.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-029** · SOURCE (verbatim) · Q: *How do I know what I picked up?* · `quavara-docs/debris-field-game-faq.md:164`
+**INARA-FAQ-029** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I know what I picked up?* · `quavara-docs/debris-field-game-faq.md:165`
 
 > Each piece shows what it is, its weight, and its size as it comes aboard. Tap HOLD at the top left to see everything you
 > carry.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-030** · SOURCE (verbatim) · Q: *What happened to the field? It disappeared.* · `quavara-docs/debris-field-game-faq.md:168`
+**INARA-FAQ-030** · SOURCE (verbatim, FAQ v1.9) · Q: *What happened to the field? It disappeared.* · `quavara-docs/debris-field-game-faq.md:169`
 
 > You emptied it. Debris keeps gathering, though: a new field of the same size forms somewhere else in that ring, out of
 > sight. The space never runs dry.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ### Your hold, sizes and shapes
 
-**INARA-FAQ-031** · SOURCE (verbatim) · Q: *How big is my hold?* · `quavara-docs/debris-field-game-faq.md:174`
+**INARA-FAQ-031** · SOURCE (verbatim, FAQ v1.9) · Q: *How big is my hold?* · `quavara-docs/debris-field-game-faq.md:175`
 
 > Your starter hold is 1.6 meters long, 1.2 meters wide and 1.0 meter high inside. That's 1.92 cubic meters, roughly the
 > trunk of a small car.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-032** · SOURCE (verbatim) · Q: *Why does my hold measure space and not weight?* · `quavara-docs/debris-field-game-faq.md:178`
+**INARA-FAQ-032** · SOURCE (verbatim, FAQ v1.9) · Q: *Why does my hold measure space and not weight?* · `quavara-docs/debris-field-game-faq.md:179`
 
 > Your hold fills up by how much room things take, so it's measured in cubic meters. Each material also has a real
 > weight, which is how you can tell what a piece is worth carrying.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-033** · SOURCE (verbatim), HOLD · Q: *Why is a tiny piece of gold so heavy?* · `quavara-docs/debris-field-game-faq.md:182`
+**INARA-FAQ-033** · SOURCE (verbatim, FAQ v1.9) · Q: *Why is a tiny piece of gold so heavy?* · `quavara-docs/debris-field-game-faq.md:183`
 
 > Gold is one of the densest materials there is: a cubic meter of it weighs about 19.3 tonnes. Here's how the materials
 > compare, per cubic meter:
 >
 > | Material | Weight per cubic meter |
 > |---|---|
-> | Diamond | about 3.5 tonnes |
-> | Iron ore | about 5.2 tonnes |
-> | Copper | about 9.0 tonnes |
-> | Silver | about 10.5 tonnes |
-> | Gold | about 19.3 tonnes |
+> | Industrial diamond | about 3.5 tonnes |
+> | Copper ore (chalcopyrite) | about 4.2 tonnes |
+> | Iron ore (hematite) | about 5.3 tonnes |
+> | Silver ore (acanthite) | about 7.3 tonnes |
+> | Native gold | about 19.3 tonnes |
 
-*Delivery / notes:* **STALE: fix the FAQ before recording.** The table gives metal densities, but the fields hold ores (rule 25): the code uses iron ore (hematite) 5,300 kg/m³, copper ore (chalcopyrite) 4,190, silver ore (acanthite) 7,300, native gold 19,300, industrial diamond 3,510 (`static/debris-flight.js:314-318`). Iron ore 5.2 t is also out of date (changed to 5,300 on 10-11). A table cannot be read aloud as written: a spoken version is needed (for example "Diamond, about three and a half tonnes. Iron ore, about five point three tonnes..."), **[DRAFT, needs Eric's approval]** once the numbers are fixed.
+*Delivery / notes:* Fixed in FAQ v1.9 (ore densities from `static/debris-flight.js:314-318`). A table can't be read aloud as printed, so record this spoken reading of the same rows, word for word from the table: *"Gold is one of the densest materials there is: a cubic meter of it weighs about 19.3 tonnes. Here's how the materials compare, per cubic meter. Industrial diamond, about 3.5 tonnes. Copper ore, about 4.2 tonnes. Iron ore, about 5.3 tonnes. Silver ore, about 7.3 tonnes. Native gold, about 19.3 tonnes."* The mineral names in brackets (chalcopyrite, hematite, acanthite) stay on screen only.
 
-**INARA-FAQ-034** · SOURCE (verbatim) · Q: *Why won't this piece fit in my hold?* · `quavara-docs/debris-field-game-faq.md:194`
+**INARA-FAQ-034** · SOURCE (verbatim, FAQ v1.9) · Q: *Why won't this piece fit in my hold?* · `quavara-docs/debris-field-game-faq.md:195`
 
 > Every piece has a real size and shape. It has to fit inside your hold, turned whichever way works best. A piece that's
 > longer, wider or taller than your hold can't go in at all.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-035** · SOURCE (verbatim) · Q: *My hold says there's room left, but the piece still won't fit. Why?* · `quavara-docs/debris-field-game-faq.md:198`
+**INARA-FAQ-035** · SOURCE (verbatim, FAQ v1.9) · Q: *My hold says there's room left, but the piece still won't fit. Why?* · `quavara-docs/debris-field-game-faq.md:199`
 
 > Rocks aren't neat boxes. Each piece takes up the space of the box it would sit in, not just its own volume, because the
 > gaps around an odd shape can't be used. So two pieces whose volumes would fit can still fail to fit together. That room
 > is lost to their shapes.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-036** · SOURCE (verbatim), HOLD · Q: *What can I collect with my starter ship?* · `quavara-docs/debris-field-game-faq.md:203`
+**INARA-FAQ-036** · SOURCE (verbatim, FAQ v1.9) · Q: *What can I collect with my starter ship?* · `quavara-docs/debris-field-game-faq.md:204`
 
-> Only pieces small enough to fit in your hold. That means fields of small debris. Pieces in medium fields are mostly too
-> big, and large fields are made of chunks far too big to take aboard.
+> Only pieces small enough to fit in your hold. Every field is a mix of sizes, mostly small fragments with bigger chunks
+> among them, so even a large field has pieces your hold can take. The big chunks stay where they are.
 
-*Delivery / notes:* **CONFLICT: fix before recording.** Says large fields are "made of chunks far too big to take aboard", but the FAQ's own answer INARA-FAQ-041 says every field holds a mix, the code gives large fields "every size, from pebbles to big chunks" (`static/debris-flight.js:43`), and the spec (§3, Beginners) says a beginner can take the small pieces from a large field.
+*Delivery / notes:* Fixed in FAQ v1.9 (every field is a mix of sizes, `static/debris-flight.js:38-46`).
 
-**INARA-FAQ-037** · SOURCE (verbatim) · Q: *I found a field, but the pieces are too big. What now?* · `quavara-docs/debris-field-game-faq.md:207`
+**INARA-FAQ-037** · SOURCE (verbatim, FAQ v1.9) · Q: *I found a field, but the pieces are too big. What now?* · `quavara-docs/debris-field-game-faq.md:208`
 
 > Keep searching for a field of smaller debris. Small fields are harder to find, but they often hide the rarer materials.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-038** · Q: *How do I handle the bigger debris fields?* · `debris-field-game-faq.md:210`  
+**INARA-FAQ-038** · Q: *How do I handle the bigger debris fields?* · `debris-field-game-faq.md:211`  
 Recorded once as INARA-HINT-001 (see section 4); not repeated here.
 
 
 ### Materials
 
-**INARA-FAQ-039** · SOURCE (verbatim), HOLD · Q: *What materials can I find?* · `quavara-docs/debris-field-game-faq.md:218`
+**INARA-FAQ-039** · SOURCE (verbatim, FAQ v1.9) · Q: *What materials can I find?* · `quavara-docs/debris-field-game-faq.md:219`
 
-> Iron ore, copper, silver, gold and diamonds. Iron ore is the most common and diamonds are the rarest.
+> Iron ore, copper ore, silver ore, native gold and industrial diamond. Iron ore is the most common and diamonds are the rarest.
 
-*Delivery / notes:* **STALE wording:** says "copper, silver, gold"; the fields hold ores (rule 25), as INARA-FAQ-044 says. Suggest "Iron ore, copper ore, silver ore, native gold and industrial diamond." **[DRAFT, needs Eric's approval]**
+*Delivery / notes:* Fixed in FAQ v1.9 (ores, rule 25).
 
-**INARA-FAQ-040** · SOURCE (verbatim) · Q: *Where do I find the rare materials?* · `quavara-docs/debris-field-game-faq.md:221`
+**INARA-FAQ-040** · SOURCE (verbatim, FAQ v1.9) · Q: *Where do I find the rare materials?* · `quavara-docs/debris-field-game-faq.md:222`
 
-> Small debris fields hold more of the rare finds (silver, gold and diamonds) than the large ones. That's what makes them
+> Small debris fields hold more of the rare finds (silver ore, native gold and industrial diamond) than the large ones. That's what makes them
 > worth the hunt. The smallest, tiny fields are the faintest of all on the scanner.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Ore names updated in FAQ v1.9.
 
-**INARA-FAQ-041** · SOURCE (verbatim) · Q: *Why are the pieces in one field all different sizes?* · `quavara-docs/debris-field-game-faq.md:225`
+**INARA-FAQ-041** · SOURCE (verbatim, FAQ v1.9) · Q: *Why are the pieces in one field all different sizes?* · `quavara-docs/debris-field-game-faq.md:226`
 
 > Fields are wreckage, so every field holds a mix: mostly small fragments, with bigger chunks among them. Your hold
-> takes the pieces that fit. The big chunks need a mining laser to cut them down.
+> takes the pieces that fit. The big chunks stay out of reach for now: tools to handle them come later.
 
-*Delivery / notes:* Says "The big chunks need a mining laser to cut them down." The mining laser is not in the game yet (the FAQ marks it (coming) in the hint, INARA-FAQ-038); by the FAQ's own accuracy rule this sentence should say so. Check before recording.
+*Delivery / notes:* Fixed in FAQ v1.9: no longer describes the mining laser as if it exists.
 
 
 ### Coming
 
-**INARA-FAQ-042** · SOURCE (verbatim), HOLD · Q: *How do I leave my quarters?* · `quavara-docs/debris-field-game-faq.md:231`
+**INARA-FAQ-042** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I leave my quarters?* · `quavara-docs/debris-field-game-faq.md:232`
 
 > Tap Exit Private Quarters at the top. You can go to the Starship Library or to the Docking Bay, where your ship
-> waits. The library opens soon: its books, courses and tests, and the blueprint form, will be there.
+> waits. The library is open: read its books there or check them out to your bookshelf, take each book's short test (4
+> of 5 right to pass, and you can try again any time), and design blueprints in its drafting room.
 
-*Delivery / notes:* **STALE: fix before recording.** "The library opens soon": the Starship Library was built on 10-12 (rule 24, `library.py`, `library_books.py`). The blueprint form is in the library's drafting room (rule 23).
+*Delivery / notes:* Fixed in FAQ v1.9 (the Starship Library was built on 10-12, rule 24; pass mark 4 of 5, `library_books.py:11`).
 
-**INARA-FAQ-043** · SOURCE (verbatim) · Q: *How do I sell what I've collected?* · `quavara-docs/debris-field-game-faq.md:235`
+**INARA-FAQ-043** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I sell what I've collected?* · `quavara-docs/debris-field-game-faq.md:237`
 
 > From the Market terminal at the desk in your Private Quarters. Pick the ore, choose SELL, and either Sell now (it goes
 > to the best bid straight away) or Set my price (your ask waits in the queue until a buyer meets it). Buying works the
@@ -583,9 +586,9 @@ Recorded once as INARA-HINT-001 (see section 4); not repeated here.
 > trades on this market too: it always has a bid and an ask, so you can always sell and always buy. Every trade gives
 > you a receipt, kept in your filing cabinet.
 
-*Delivery / notes:* Long answer. The lot sizes sentence was the newest change (FAQ v1.8).
+*Delivery / notes:* Long answer, calm and even.
 
-**INARA-FAQ-044** · SOURCE (verbatim) · Q: *What am I collecting, exactly?* · `quavara-docs/debris-field-game-faq.md:243`
+**INARA-FAQ-044** · SOURCE (verbatim, FAQ v1.9) · Q: *What am I collecting, exactly?* · `quavara-docs/debris-field-game-faq.md:245`
 
 > Ore, the rock as it's found: iron ore (hematite), copper ore (chalcopyrite), silver ore (acanthite), native gold and
 > industrial diamond. Turning ore into metal is smelting, a skill called Metallurgy that you learn in the library, or you
@@ -594,20 +597,20 @@ Recorded once as INARA-HINT-001 (see section 4); not repeated here.
 
 *Delivery / notes:* The last sentence carries a little excitement (the near-flawless diamond).
 
-**INARA-FAQ-045** · SOURCE (verbatim) · Q: *Will my cargo still be here next time?* · `quavara-docs/debris-field-game-faq.md:249`
+**INARA-FAQ-045** · SOURCE (verbatim, FAQ v1.9) · Q: *Will my cargo still be here next time?* · `quavara-docs/debris-field-game-faq.md:251`
 
 > Yes. Every piece you collect is recorded aboard the Starship the moment it's in your hold, so it's still there when
 > you come back, even on another device. What you unload stays in your space in the Starship's cargo hold.
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
-**INARA-FAQ-046** · SOURCE (verbatim) · Q: *Where can I see everything I own?* · `quavara-docs/debris-field-game-faq.md:253`
+**INARA-FAQ-046** · SOURCE (verbatim, FAQ v1.9) · Q: *Where can I see everything I own?* · `quavara-docs/debris-field-game-faq.md:255`
 
 > At the desk in your Private Quarters, under My items. There's a folder for each place: the Starship's cargo hold
 > (your raw materials), your ship's hold, the hangar, and your quarters, with the filing cabinet (your blueprints, and
 > the lockbox inside it for valuables) and the bookshelf (library books you've checked out).
 
-*Delivery / notes:* Calm, clear, helpful: a crewmate explaining, not a manual.
+*Delivery / notes:* Default.
 
 
 ---
@@ -639,55 +642,58 @@ borrowed (spec §9).
 
 ## Appendix C. Contradictions found between the sources
 
-1. **Where a session starts.** FAQ:133 (INARA-FAQ-022) says "Every session starts here too, docked in the bay under
+**Items 1-9 were fixed on 10-13** (the code and `CLAUDE.md` rulings are the truth): items 1-7 and 9 in
+`debris-field-game-faq.md` v1.9 (quavara-docs commit f633330), item 8 in `static/debris-flight.js:706`. **Items 10-13
+are still Eric's to decide**; their text is unchanged.
+
+1. ✅ **FIXED.** **Where a session starts.** FAQ:133 (INARA-FAQ-022) says "Every session starts here too, docked in the bay under
    the bow". `CLAUDE.md` (Bed rule, 10-11) says every session begins with the player waking in bed in Private Quarters,
    and the code opens the Bed tab after sign-in (`static/quarters.js`). Eric's later rule wins; the FAQ needs fixing.
-2. **The library.** FAQ:231 (INARA-FAQ-042) says "The library opens soon". The library was built on 10-12 (rule 24;
+2. ✅ **FIXED.** **The library.** FAQ:231 (INARA-FAQ-042) says "The library opens soon". The library was built on 10-12 (rule 24;
    `library.py`, `library_books.py`). Spec §12 also still lists "the full starship library" as stage 2.
-3. **Scanner ranges.** FAQ:93 (INARA-FAQ-013) says 1,500 / 650 / 190 m; the code says large 1,800, medium 900, small
+3. ✅ **FIXED.** **Scanner ranges.** FAQ:93 (INARA-FAQ-013) says 1,500 / 650 / 190 m; the code says large 1,800, medium 900, small
    300, tiny 200 m (`static/debris-flight.js:742`).
-4. **Densities.** FAQ:182 (INARA-FAQ-033) lists metal densities (copper 9.0 t, silver 10.5 t) and iron ore 5.2 t. The
+4. ✅ **FIXED.** **Densities.** FAQ:182 (INARA-FAQ-033) lists metal densities (copper 9.0 t, silver 10.5 t) and iron ore 5.2 t. The
    fields hold ores (rule 25), and the code uses copper ore 4,190, silver ore 7,300 and iron ore 5,300 kg/m³
    (`static/debris-flight.js:314-316`).
-5. **What a starter ship can take.** FAQ:203 (INARA-FAQ-036) says large fields are "made of chunks far too big to take
+5. ✅ **FIXED.** **What a starter ship can take.** FAQ:203 (INARA-FAQ-036) says large fields are "made of chunks far too big to take
    aboard". FAQ:225 (INARA-FAQ-041), the code (`static/debris-flight.js:43`: "every size, from pebbles to big
    chunks") and spec §3 ("a beginner can take the small pieces from a large field") say every field is a mix.
-6. **Material names.** FAQ:218 (INARA-FAQ-039) says "copper, silver, gold and diamonds"; FAQ:243 (INARA-FAQ-044), rule
+6. ✅ **FIXED** (also the rare-finds answer, FAQ-040). **Material names.** FAQ:218 (INARA-FAQ-039) says "copper, silver, gold and diamonds"; FAQ:243 (INARA-FAQ-044), rule
    25 and the code say the fields hold ores (copper ore, silver ore, native gold, industrial diamond).
-7. **The mining laser.** FAQ:225 (INARA-FAQ-041) mentions the mining laser as if it exists; the FAQ's own hint marks
+7. ✅ **FIXED.** **The mining laser.** FAQ:225 (INARA-FAQ-041) mentions the mining laser as if it exists; the FAQ's own hint marks
    it "coming", and it isn't in the code.
-8. **"The market opens in the next update."** The DOCKED toast (`static/debris-flight.js:706`) still says this, but the
+8. ✅ **FIXED** (now "Welcome home. Your Market terminal is at the Desk in your quarters."). **"The market opens in the next update."** The DOCKED toast (`static/debris-flight.js:706`) still says this, but the
    market is built (rule 20; `market.py`, `static/market-terminal.js`). Not an Inara line, but it's the text her
    docking line was drafted from.
-9. **How her answers reach the game.** The FAQ header says the answers will be loaded into Quavara's FAQ system
+9. ✅ **FIXED** (now: the game's own FAQ, inside the game server). **How her answers reach the game.** The FAQ header says the answers will be loaded into Quavara's FAQ system
    (`core/faq.py`). Rule 1 (10-11) says the game has no connection to Quavara at all. The answers would need the game's
    own store.
-10. **One-way or two-way.** Signal's line bank says Inara "never chats and never answers back". The Stardust spec (§8,
+10. **OPEN, for Eric.** **One-way or two-way.** Signal's line bank says Inara "never chats and never answers back". The Stardust spec (§8,
     §9) has her answering players' questions through COMMS (from the fixed FAQ, so still prerecorded). Different
     games, but the same Inara and the same ship (rule 28), so worth one sentence from Eric.
-11. **Two meanings of "COMMS".** Spec §8: a COMMS button, on screen at all times, reaches Inara. Rule 16 and the Desk:
+11. **OPEN, for Eric.** **Two meanings of "COMMS".** Spec §8: a COMMS button, on screen at all times, reaches Inara. Rule 16 and the Desk:
     COMMS is the inbox of messages from the game and Starship Central Command. Neither the button nor the badge is in
     the code yet; only the inbox exists (`static/quarters.js:188`).
-12. **The game's name.** `CLAUDE.md`, the spec (v7.4) and the FAQ (v1.8) say "Stardust - Rebuilding Home, final name
+12. **OPEN, for Eric.** **The game's name.** `CLAUDE.md`, the spec (v7.4) and the FAQ (v1.9) say "Stardust - Rebuilding Home, final name
     pending". Ledger v4.2 (10-13) names it **Stardust - Terra Deleta** (working title until an attorney clears it).
     No recorded line uses the name.
-13. **Lily.** Signal's lines are recorded in Lily (`INARA-TOWER-LINES.md`); Stardust reserves Lily for Eric's own
+13. **OPEN, for Eric.** **Lily.** Signal's lines are recorded in Lily (`INARA-TOWER-LINES.md`); Stardust reserves Lily for Eric's own
     Inara (`CLAUDE.md` open question 2; spec §13 question 6). The Signal recordings can't be reused.
 
 ## Appendix D. Totals
 
 | | Unique texts | Recordings (per language) |
 |---|---|---|
-| SOURCE, ready to record | 39 FAQ answers + 3 ring lines + 1 price line = **43** | 39 + 8 (RING-001 to 008) + 1 = **48** (RING-009 to 012 are not recorded: the drafts RING-013 to 016 replace them for voice) |
-| SOURCE, HOLD (fix the source first, or wait for the feature) | 6 FAQ answers + the stuck-player hint = **7** | **7** |
+| SOURCE, ready to record | 45 FAQ answers + 3 ring lines + 1 price line = **49** | 45 + 8 (RING-001 to 008) + 1 = **54** (RING-009 to 012 are not recorded: the drafts RING-013 to 016 replace them for voice) |
+| SOURCE, HOLD (names tools that don't exist yet) | the stuck-player hint, INARA-HINT-001 = **1** | **1** |
 | [DRAFT, needs Eric's approval] | 3 welcome + 1 direction + 1 distance-free drift line + 7 Tower moments + 4 price lines = **16** | 3 + 1 + 4 + 7 + 4 = **19** |
-| Suggested replacement wording inside a HOLD note (draft) | FAQ-033 spoken table, FAQ-039 = **2** | 2 |
 
-FAQ answers: 46 entries in the FAQ, 45 recorded here (the hint is recorded once, as INARA-HINT-001). INARA-FAQ-041 is
-ready but flagged to check (mining laser, Appendix C item 7).
+FAQ answers: 46 entries in the FAQ, 45 recorded here (the hint is recorded once, as INARA-HINT-001). INARA-FAQ-033 is
+recorded as a spoken reading of its table (the same rows, word for word).
 
 **Sources:** `stardust-server` (every file searched for "inara"; read: `static/debris-flight.js`, `static/quarters.js`,
 `static/play.html`, `body.py`, `names.py`, `library_books.py`, `CLAUDE.md`); `quavara-docs/quavara-debris-field-game-stage1-spec.md` (v7.4); `quavara-docs/quavara-decision-ledger.md`
-(v4.2: v3.0-v3.9, v4.1, v4.2 and the debris-field game row); `quavara-docs/debris-field-game-faq.md` (v1.8, named by
+(v4.2: v3.0-v3.9, v4.1, v4.2 and the debris-field game row); `quavara-docs/debris-field-game-faq.md` (v1.9, named by
 spec §9 as her answers); `quavara-site/games-holdback/STORY-BIBLE.md`, `INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT.txt`,
 `games/debris-flight.js` and `games/CLAUDE.md` (the holdback copy of the flight game has the same three Inara lines).
