@@ -290,7 +290,7 @@ Take this after INARA-WELCOME-001/002 (recording script).
 | ID | Status | Text |
 |---|---|---|
 | INARA-STORY-001 | [DRAFT, needs Eric's approval] | You're aboard an exploratory science and research starship, Trainee. Everyone here starts at the bottom. |
-| INARA-STORY-002 | [NEW LORE, needs Eric's approval] | I did too, once. |
+| INARA-STORY-002 | APPROVED by Eric 10-19 | I did too, once. |
 
 **Beat 2 · First visit to the Starship Library** (trigger: first `GET /api/dfg/library`)
 
