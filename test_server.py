@@ -1,5 +1,6 @@
 """End-to-end test of the game server against a real (local, throwaway) Postgres.
 Usage: DATABASE_URL=postgres://postgres:pw@localhost/dfgtest python3 test_server.py"""
+import re as REX
 import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
 os.environ["DFG_BANK"] = "0"
@@ -133,6 +134,13 @@ async def main():
     r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH}); code2 = (await r.json())["dev_code"]
     r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": code2}); j = await r.json()
     check("signing in again is the SAME player, waking up", not j["new_player"] and j["me"]["title"] == "Trainee Dan McCollough" and not j["me"]["asleep"])
+    check("the player keeps the same account number (SD-XXXX-XXXX-XXXX)",
+          REX.fullmatch(r"SD-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}", j["me"]["account_no"] or "") and j["me"]["account_no"] == me0["account_no"])
+    async with cl.app["pool"].acquire() as c:
+        kinds = [r["kind"] for r in await c.fetch("""SELECT e.kind FROM player_events e JOIN players p ON p.id=e.player_id
+                                                    WHERE p.account_no=$1 ORDER BY e.id""", me0["account_no"])]
+    check("the play record keeps sign-up, name setup and sign-in under the account number",
+          kinds[:1] == ["signup"] and "setup" in kinds and kinds[-1] == "signin")
     check("6 hours asleep from 50% wakes at 85%", abs(j["me"]["bars"]["focus"] - 85) < 0.1)
     for _ in range(3):
         await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH})

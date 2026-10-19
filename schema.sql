@@ -568,3 +568,21 @@ ON CONFLICT (key) DO NOTHING;
 
 -- v13 (10-12): the catalogue's second check corrected calcite (limestone) to 2,710 kg/m³ (was 2,720).
 UPDATE item_types SET density_kg_m3 = 2710 WHERE code = 'mat-limestone' AND density_kg_m3 = 2720;
+
+-- v14 (Eric 10-19): every player has an ACCOUNT NUMBER, the same idea as Quavara's QCID but the game's own (no link
+-- to Quavara, rule 1). Everything a player owns or does is stored against their player row, and the account number is
+-- the name it goes by: shown to the player, used by the team when looking anything up. 'SD-' + 12 hex digits.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS account_no TEXT UNIQUE
+  DEFAULT ('SD-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 4)) || '-'
+                 || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 4)) || '-'
+                 || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 4)));
+-- Real play data (Eric 10-19: "store and track real players' game play data"): one row per thing a player does that
+-- isn't already its own record (receipts, trades, flights, library passes are). Never personal information.
+CREATE TABLE IF NOT EXISTS player_events (
+  id        BIGSERIAL PRIMARY KEY,
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind      TEXT NOT NULL,                       -- 'signup', 'signin', 'setup', 'signout', ...
+  data      JSONB NOT NULL DEFAULT '{}',
+  at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS player_events_player ON player_events(player_id, at DESC);

@@ -213,7 +213,7 @@ async function tabBody(tab,me){
   return '';}
 async function showQuarters(me,tab){
   root.hidden=false;
-  root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div></div>
+  root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div>${me.account_no?`<div class="soon" style="font-size:11px">Account ${esc(me.account_no)}</div>`:""}</div>
    <div style="text-align:right"><div class="soon">WSC Alexander von Humboldt</div><button id="sqExit" style="margin-top:6px;padding:8px 14px;border-radius:20px;border:1px solid #d9a441;background:rgba(217,164,65,.1);color:#d9a441;font-size:14px;cursor:pointer">🚪 Exit Private Quarters</button></div></div>
    <div class="tabs">${TABS.map(([k,n])=>`<button data-t="${k}" class="${k===tab?'on':''}">${n}</button>`).join('')}</div>
    <div class="panel" id="sqPanel">…</div></div>`;

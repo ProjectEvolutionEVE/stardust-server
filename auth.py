@@ -3,8 +3,9 @@
 How it works:
   · The player gives a phone number OR an email address and gets a 6-digit code (no passwords).
       - Phone: Twilio Verify sends and checks the code (subaccount "Stardust game", env TWILIO_*). Twilio holds the code.
-      - Email: the server makes the code itself and keeps only a hash of it. Sending it needs the game's own Resend
-        address, which doesn't exist yet, so email sign-in is closed on the hosted server until then.
+      - Email: the server makes the code itself, keeps only a hash of it, and sends it through Resend (rule 18) from
+        the game's own address: env RESEND_API_KEY and DFG_EMAIL_FROM (e.g. "Stardust <signin@<game domain>>"). Until
+        both are set, email sign-in stays closed on the hosted server. The sending domain is Eric's open question 5.
       - DFG_SHOW_CODES=1 (local tests only) makes the server keep phone codes itself too and hand every code back in the
         reply instead of sending it. NEVER set it on Railway: anyone could then sign in as anyone.
   · The only personal information kept is the phone number or email address (`logins`). No age, no real name.
@@ -24,6 +25,8 @@ TW_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TW_KEY = os.environ.get("TWILIO_API_KEY_SID", "")
 TW_SECRET = os.environ.get("TWILIO_API_KEY_SECRET", "")
 TW_VERIFY = os.environ.get("TWILIO_VERIFY_SID", "")
+RESEND_KEY = os.environ.get("RESEND_API_KEY", "")
+EMAIL_FROM = os.environ.get("DFG_EMAIL_FROM", "")
 CODE_MINUTES = 10
 MAX_TRIES = 5
 PER_ADDRESS_HOUR = 5
@@ -128,13 +131,30 @@ async def start(conn, channel, address, ip, region=None):
             print(f"twilio send refused: status {status} code {body.get('code')}", flush=True)
             raise Refused("We couldn't text that number. Check it and try again.")
         return {"sent": True, "to": display(channel, addr)}
-    if channel == "email" and not SHOW_CODES:
+    if channel == "email" and not SHOW_CODES and not (RESEND_KEY and EMAIL_FROM):
         raise Refused("Email sign-in opens soon. Please use your phone for now.")
     code = f"{secrets.randbelow(10**6):06d}"
     await conn.execute("UPDATE login_codes SET used_at=now() WHERE address=$1 AND used_at IS NULL", addr)  # one live code
     await conn.execute("""INSERT INTO login_codes(channel, address, code_hash, expires_at)
                           VALUES($1,$2,$3, now() + make_interval(mins => $4))""", channel, addr, _h(addr + ":" + code), CODE_MINUTES)
-    return {"sent": True, "to": display(channel, addr), "dev_code": code}
+    if SHOW_CODES:
+        return {"sent": True, "to": display(channel, addr), "dev_code": code}
+    if not await _send_email(addr, code):
+        raise Refused("We couldn't email that address. Check it and try again.")
+    return {"sent": True, "to": display(channel, addr)}
+
+
+async def _send_email(to, code):
+    """The sign-in code by email, through Resend. Only the code; nothing else about the player."""
+    msg = {"from": EMAIL_FROM, "to": [to], "subject": f"Your sign-in code: {code}",
+           "text": f"Your sign-in code is {code}\n\nIt works for {CODE_MINUTES} minutes. If you didn't ask for it, ignore this email."}
+    async with aiohttp.ClientSession() as s:
+        async with s.post("https://api.resend.com/emails", json=msg, timeout=aiohttp.ClientTimeout(total=15),
+                          headers={"Authorization": f"Bearer {RESEND_KEY}"}) as r:
+            if r.status >= 300:
+                print(f"resend send refused: status {r.status}", flush=True)
+                return False
+            return True
 
 
 async def check(conn, channel, address, code, region=None):

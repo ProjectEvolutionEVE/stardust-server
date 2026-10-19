@@ -96,14 +96,19 @@ def _ip(request):
     return (fwd.split(",")[0].strip() if fwd else request.remote) or ""
 
 
+async def log_event(conn, pid, kind, **data):
+    """One line of the player's play record (player_events)."""
+    await conn.execute("INSERT INTO player_events(player_id, kind, data) VALUES($1,$2,$3)", pid, kind, json.dumps(data))
+
+
 async def _me(conn, pid):
     """Who the player is and where: rank and name, language, the body's bars and any warning."""
-    p = await conn.fetchrow("""SELECT first_name, last_name, language, track, rank_step, stamina, energy, focus, body_at, asleep
-                               FROM players WHERE id=$1""", pid)
+    p = await conn.fetchrow("""SELECT account_no, first_name, last_name, language, track, rank_step, stamina, energy, focus,
+                                      body_at, asleep FROM players WHERE id=$1""", pid)
     bars = BODY.current(p)
     rank = RANKS[p["track"]][p["rank_step"] - 1]
     named = bool(p["first_name"] and p["last_name"])
-    return {"rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
+    return {"account_no": p["account_no"], "rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
             "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
             "needs_setup": not (named and p["language"]),
             "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
@@ -142,6 +147,7 @@ async def auth_verify(request):
         async with conn.transaction():
             await BODY.set_state(conn, pid, asleep=False)            # wake up
         token = await AUTH.issue_token(conn, pid)
+        await log_event(conn, pid, "signup" if new else "signin", channel=channel)
         return _json({"token": token, "new_player": new, "me": await _me(conn, pid)})
 
 
@@ -166,6 +172,7 @@ async def me_setup(request):
                                       WHERE id=$1 AND first_name IS NULL RETURNING id""", pid, first, last, lang)
         if not done:
             raise ST.Refused("Your name is already set.")
+        await log_event(conn, pid, "setup", language=lang)
         return _json(await _me(conn, pid))
 
 
@@ -175,6 +182,7 @@ async def auth_signout(request):
         pid = await _player(conn, request)
         async with conn.transaction():
             await BODY.set_state(conn, pid, asleep=True)
+        await log_event(conn, pid, "signout")
         token = AUTH.bearer(request.headers)
         if token:
             await AUTH.revoke(conn, token)
