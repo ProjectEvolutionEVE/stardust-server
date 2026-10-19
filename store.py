@@ -87,7 +87,7 @@ AUCTION_KEY = "system:auction-house"   # the Auction House (Eric 10-19), under t
 
 
 async def bank_account(conn):
-    return await account_of(conn, await ensure_player(conn, BANK_KEY, "Starship Bank"))
+    return await account_of(conn, await ensure_player(conn, BANK_KEY, "Starship Bank treasury"))
 
 
 async def auction_house_account(conn):
