@@ -11,7 +11,9 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
 Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   POST /api/dfg/session   start a session → {session_id, seed, ship, cargo}
   GET  /api/dfg/ship      the ship and what's in its hold
-  POST /api/dfg/collect   {session_id, material, dims:[a,b,c], volume_m3} → the piece comes aboard, or a refusal
+  POST /api/dfg/collect   {session_id, field, index, dims:[a,b,c], volume_m3} → the piece comes aboard, or a refusal.
+                          WHAT the piece is comes from the server's roll (session seed, field, index); any
+                          'material' the client sends is ignored.
   POST /api/dfg/unload    {docked:true} → the hold empties into storage aboard the Starship, as far as there's room
   GET  /api/dfg/inventory everything the player owns, where it is, and their credits
   GET  /api/dfg/history   the player's credit history, newest first, with the balance after each
@@ -232,7 +234,6 @@ async def ship(request):
 
 async def collect(request):
     body = await request.json()
-    p = G.piece(body.get("material"), body.get("dims") or [], body.get("volume_m3"))
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
         async with conn.transaction():
@@ -244,10 +245,17 @@ async def collect(request):
             except ValueError:
                 raise G.Refused("No active session.")
             sess = await conn.fetchrow(
-                "SELECT id, last_collect_at, now() - last_collect_at AS gap FROM sessions WHERE id=$1 AND player_id=$2",
+                "SELECT id, seed, last_collect_at, now() - last_collect_at AS gap FROM sessions WHERE id=$1 AND player_id=$2",
                 sid, pid)
             if not sess:
                 raise G.Refused("No active session.")
+            # What the piece IS comes from the server's own roll on the seed it issued; the client's claim is ignored.
+            field, index = body.get("field"), body.get("index")
+            material, _size = G.what_it_is(int(sess["seed"]), field, index)
+            p = G.piece(material, body.get("dims") or [], body.get("volume_m3"))
+            if await conn.fetchval("SELECT 1 FROM cargo WHERE session_id=$1 AND field_id=$2 AND piece_index=$3",
+                                   sid, field, index):
+                raise G.Refused("That piece is already aboard.")
             if sess["gap"] is not None and sess["gap"].total_seconds() < G.MIN_COLLECT_S:
                 raise G.Refused("Collecting takes time. Wait for the piece to come aboard.")
             if not G.shape_fits(p["dims"], hold):
@@ -258,17 +266,19 @@ async def collect(request):
                 raise G.Refused("Your hold is full.")
             d = p["dims"]
             # rule 26: one diamond in 100,000 is near-flawless. The server rolls it, never the browser.
-            flawless = body["material"] == "diamond" and secrets.randbelow(G.FLAWLESS_ODDS) == 0
+            flawless = material == "diamond" and secrets.randbelow(G.FLAWLESS_ODDS) == 0
             cid = await conn.fetchval(
-                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless)
-                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id""",
-                pid, s["id"], sid, body["material"], d[0], d[1], d[2], p["volume"], p["box"], p["mass"], flawless)
+                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless,
+                                    field_id, piece_index)
+                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id""",
+                pid, s["id"], sid, material, d[0], d[1], d[2], p["volume"], p["box"], p["mass"], flawless, field, index)
             await conn.execute("UPDATE sessions SET last_collect_at=now() WHERE id=$1", sid)
             await conn.execute("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'collect',$2)", pid,
-                               json.dumps({"cargo_id": cid, "material": body["material"], "kg": round(p["mass"], 3),
+                               json.dumps({"cargo_id": cid, "material": material, "field": field, "index": index,
+                                           "claimed": body.get("material"), "kg": round(p["mass"], 3),
                                            "dims": [round(x, 4) for x in d], "session": str(sid), "flawless": flawless}))
-        return _json({"aboard": {"material": body["material"], "kg": round(p["mass"], 3), "flawless": flawless,
-                                 "noticed": body["material"] in G.NOTICED,
+        return _json({"aboard": {"material": material, "kg": round(p["mass"], 3), "flawless": flawless,
+                                 "noticed": material in G.NOTICED,
                                  "dims_m": [round(x, 4) for x in d], "box_m3": round(p["box"], 5)},
                       **await _state(conn, pid)})
 

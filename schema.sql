@@ -396,6 +396,11 @@ INSERT INTO item_types(code, kind, name, base_unit, unique_items, tradeable) VAL
   ('diamond-flawless', 'resource', 'Near-flawless diamond', 'each', true, true)
 ON CONFLICT (code) DO NOTHING;
 ALTER TABLE cargo ADD COLUMN IF NOT EXISTS flawless BOOLEAN NOT NULL DEFAULT false;
+-- 10-19 (security): the server decides what each piece IS from (session seed, field id, piece index), minerals.py.
+-- Each piece of a session's universe can come aboard once. Older rows (before this) have no field/index.
+ALTER TABLE cargo ADD COLUMN IF NOT EXISTS field_id TEXT;
+ALTER TABLE cargo ADD COLUMN IF NOT EXISTS piece_index INT;
+CREATE UNIQUE INDEX IF NOT EXISTS cargo_one_piece ON cargo(session_id, field_id, piece_index) WHERE field_id IS NOT NULL;
 
 -- v7 (10-11): the market (Eric, rules 12, 20, 21). Each traded item's starting price (used until its first trade), its
 -- floor (nothing trades below it), the reference price the bank leans prices back toward, and the bank's lot size.

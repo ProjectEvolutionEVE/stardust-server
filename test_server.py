@@ -18,6 +18,19 @@ from datetime import datetime, timezone, timedelta
 import game as G
 import minerals as MN
 
+def find_piece(seed, material, used, sizes=None):
+    """A (field, index) in this seed's universe whose piece the SERVER rolls as `material` (as a real flight would reach)."""
+    for n in range(2_000_000):
+        fid = f"{n % 997},{n // 997},0#{n % 2}"
+        size, count = MN.field_facts(seed, fid)
+        if sizes and size not in sizes:
+            continue
+        for i in range(count):
+            if (fid, i) not in used and MN.piece_mineral(seed, fid, i, size) == material:
+                used.add((fid, i)); return fid, i, size
+    raise AssertionError("no " + material)
+
+
 async def reset_test_db():
     """The test database is throwaway: wipe it so every run starts clean. Refuses any database not named *test."""
     url = os.environ["DATABASE_URL"]
@@ -33,6 +46,20 @@ async def main():
     def check(name, cond):
         nonlocal ok; print(("PASS " if cond else "FAIL ") + name); ok &= bool(cond)
     cl = TestClient(TestServer(S.make_app())); await cl.start_server()
+    # The server decides what each piece is (seed, field, index). The older tests below name the material they want;
+    # this shim aims each such collect at a real piece of that material in the session's universe, as a flight would.
+    SEEDS, USED, _post = {}, {}, cl.post
+    async def post(path, **kw):
+        body = kw.get("json")
+        if path == "/api/dfg/collect" and isinstance(body, dict) and "field" not in body and body.get("session_id") in SEEDS:
+            sd = SEEDS[body["session_id"]]
+            fid, idx, _ = find_piece(sd, body.get("material"), USED.setdefault(sd, set()))
+            kw["json"] = dict(body, field=fid, index=idx)
+        r = await _post(path, **kw)
+        if path == "/api/dfg/session" and r.status == 200:
+            j = await r.json(); SEEDS[j["session_id"]] = j["seed"]
+        return r
+    cl.post = post
     H = {"X-Dev-Player": "tester1"}
     r = await cl.get("/api/dfg/ship"); check("no sign-in → 401", r.status == 401)
     r = await cl.post("/api/dfg/session", headers=H); j = await r.json()
@@ -698,26 +725,68 @@ async def main():
     tiny_rate = float(REX.search(r"tiny:.*brownleeite:([\d.]+)", mixsrc).group(1))
     lons_rate = float(REX.search(r"tiny:.*lonsdaleite:([\d.]+)", mixsrc).group(1))
     check("brownleeite rolls only in tiny fields, far rarer than lonsdaleite", tiny_only and tiny_rate * 10 <= lons_rate)
-    # Eric 10-19: brownleeite and the shock minerals are in ALL FOUR rings; the roll never depends on the ring.
+    # Eric 10-19: brownleeite and the shock minerals are in ALL FOUR rings; the roll never depends on the ring: it is a
+    # function of (seed, field id, piece index) only. Security fix 10-19: the SERVER rolls it (minerals.py); the flight's
+    # copy only predicts. Check the flight's copy gives exactly the server's answer.
     import subprocess, shutil
-    a, b = js.index("const MATERIALS={"), js.index("function makePiece")
-    b = js.index("\n", js.index("return{mat", b)) + 1
-    node_src = js[a:b] + r"""
-const fs=[pickMat.toString(),makePiece.toString()].join(' ');
-if(/ring/i.test(fs)||pickMat.length!==2)throw new Error('the roll depends on more than size and the seed');
-const out={};
-for(const [k,ring] of ['Mercury','Venus','Earth','Mars'].entries()){
- let s=1234567+k*7919;const r=()=>{s=(s*16807)%2147483647;return s/2147483647;};
- const seen=new Set();for(let i=0;i<400000;i++){seen.add(makePiece('tiny',0.1,0.1,0.1,r).mat);}
- out[ring]={brownleeite:seen.has('brownleeite'),shock:['shocked-quartz','impact-glass','maskelynite','coesite','stishovite','ringwoodite','lonsdaleite'].every(m=>seen.has(m))};
- if(['large','medium','small'].some(sz=>{for(let i=0;i<200000;i++)if(makePiece(sz,0.1,0.1,0.1,r).mat==='brownleeite')return true;return false;}))out[ring].elsewhere=true;}
+    a, b = js.index("const SIZES={"), js.index("const SIZE_BIAS")
+    c0, c1 = js.index("const MATERIALS={"), js.index("const ICO_VOL")
+    d0, d1 = js.index("function fnv1a"), js.index("function makePiece")
+    samples = [(s_, f"{i_},{j_},{k_}#{f_}") for s_ in (0, 1, 4294967295, 123456789) for i_, j_, k_, f_ in
+               ((0, 0, 0, 0), (-5, 2, 7, 1), (49871, -3, 12, 0), (3, 3, 3, 1))]
+    node_src = js[js.index("function rng"):js.index("const R=rng")] + js[a:b] + js[c0:c1] + js[d0:d1] + r"""
+const S=""" + json.dumps(samples) + r""";const out=[];
+for(const [sd,id] of S){const [size,n]=fieldFacts(sd,id);const ms=[];for(let i=0;i<n;i++)ms.push(pieceMineral(sd,id,i,size));out.push([size,n,ms]);}
 console.log(JSON.stringify(out));"""
+    want = []
+    for sd, fid in samples:
+        size, n = MN.field_facts(sd, fid)
+        want.append([size, n, [MN.piece_mineral(sd, fid, i, size) for i in range(n)]])
     if shutil.which("node"):
-        res = json.loads(subprocess.run(["node", "-e", node_src], capture_output=True, text=True, check=True).stdout)
-        check("brownleeite and every shock mineral roll in tiny fields of all four rings; brownleeite never outside tiny " + json.dumps(res),
-              set(res) == {"Mercury", "Venus", "Earth", "Mars"} and all(v["brownleeite"] and v["shock"] and not v.get("elsewhere") for v in res.values()))
+        got = json.loads(subprocess.run(["node", "-e", node_src], capture_output=True, text=True, check=True).stdout)
+        check(f"the flight predicts exactly the server's roll ({sum(len(w[2]) for w in want)} pieces in {len(want)} fields)", got == want)
     else:
-        check("node is needed to check the flight's rolls in all four rings", False)
+        check("node is needed to check the flight's copy of the roll", False)
+    big = {"large": 0, "medium": 0, "small": 0}; tiny_b = 0
+    for n in range(60000):
+        fid = f"{n},7,0#0"; size, cnt = MN.field_facts(424242, fid)
+        for i in range(cnt if size != "large" else 50):
+            m = MN.piece_mineral(424242, fid, i, size)
+            if m == "brownleeite":
+                if size == "tiny": tiny_b += 1
+                else: big[size] += 1
+    check(f"server roll: brownleeite in tiny fields ({tiny_b}) and never elsewhere {big}", tiny_b > 0 and not any(big.values()))
+    # ---- forged collects: an edited browser can't choose what a piece is (security fix 10-19) ----
+    HF = {"X-Dev-Player": "tester-forger"}
+    r = await cl.post("/api/dfg/session", headers=HF); jf = await r.json(); sidf, seedf = jf["session_id"], jf["seed"]
+    fid, idx, size = find_piece(seedf, "basalt", set(), sizes={"large", "medium"})
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid, "index": idx, "material": "brownleeite",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check(f"forged: claims brownleeite for a basalt piece in a {size} field → recorded as basalt, not noticed, basalt's mass",
+          r.status == 200 and j["aboard"]["material"] == "basalt" and j["aboard"]["noticed"] is False
+          and abs(j["aboard"]["kg"] - 0.0015 * 2900) < 0.001 and [q["material"] for q in j["pieces"]] == ["basalt"])
+    async with cl.app["pool"].acquire() as c:
+        led = json.loads(await c.fetchval("SELECT detail FROM ledger WHERE kind='collect' ORDER BY id DESC LIMIT 1"))
+    check("the ledger records the server's mineral (and the claim, for review)", led["material"] == "basalt" and led["claimed"] == "brownleeite")
+    await asyncio.sleep(2.1)
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid, "index": idx, "material": "basalt",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015})
+    check("the same piece can't come aboard twice", r.status == 422)
+    fid2, idx2, size2 = find_piece(seedf, "olivine", set(), sizes={"small"})
+    await asyncio.sleep(2.1)
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid2, "index": idx2, "material": "lonsdaleite",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check("forged: claims lonsdaleite for an olivine piece → recorded as olivine", r.status == 200 and j["aboard"]["material"] == "olivine"
+          and j["aboard"]["noticed"] is False)
+    for bad, why in (({"field": "1,2,3#0"}, "no index"), ({"field": "1,2,3#5", "index": 0}, "field #5 never exists"),
+                     ({"field": "x;drop", "index": 0}, "junk field id"), ({"field": fid2, "index": 99999}, "index past the field's pieces"),
+                     ({"material": "brownleeite"}, "no field at all")):
+        await asyncio.sleep(2.1)
+        r = await _post("/api/dfg/collect", headers=HF, json=dict({"session_id": sidf, "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}, **bad))
+        check("refused: " + why, r.status == 422)
+    r = await cl.get("/api/dfg/ship", headers=HF); j = await r.json()
+    check("the forger's hold holds only what the server rolled", sorted(q["material"] for q in j["pieces"]) == ["basalt", "olivine"])
+    await cl.post("/api/dfg/unload", headers=HF, json={"docked": True})
     await asyncio.sleep(2.1)
     r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "brownleeite",
                                                             "dims": [0.1, 0.1, 0.1], "volume_m3": 0.0005}); j = await r.json()

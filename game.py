@@ -38,6 +38,24 @@ def piece(material, dims, volume_m3):
     return {"dims": d, "box": box, "volume": vol, "mass": vol * DENSITY[material]}
 
 
+import re
+_FIELD_ID = re.compile(r"^-?\d{1,12},-?\d{1,12},-?\d{1,12}#\d$")
+
+
+def what_it_is(seed, field_id, index):
+    """The server decides what a piece IS (never the browser): from the session seed, the field and the piece index.
+    Returns (material, field size). Refuses a field or piece that the seed never made."""
+    if not isinstance(field_id, str) or not _FIELD_ID.match(field_id) \
+            or int(field_id.rsplit("#", 1)[1]) >= MN.MAX_FIELDS_PER_CELL:
+        raise Refused("Unknown debris field.")
+    if isinstance(index, bool) or not isinstance(index, int):
+        raise Refused("Unknown piece.")
+    size, count = MN.field_facts(seed, field_id)
+    if not (0 <= index < count):
+        raise Refused("Unknown piece.")
+    return MN.piece_mineral(seed, field_id, index, size), size
+
+
 def shape_fits(dims_sorted, hold_dims):
     h = sorted(hold_dims, reverse=True)
     return all(a <= b + 1e-9 for a, b in zip(dims_sorted, h))

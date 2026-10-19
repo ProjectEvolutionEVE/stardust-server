@@ -14,7 +14,7 @@
 //    drift out of the ring you're working.
 //  • The Starship parks by the wormhole on the far side of Jupiter (STORY-BIBLE), far from every debris field.
 'use strict';
-const SEED=(function(){try{return crypto.getRandomValues(new Uint32Array(1))[0];}catch(e){return (Math.random()*4294967296)>>>0;}})();
+let SEED=(function(){try{return crypto.getRandomValues(new Uint32Array(1))[0];}catch(e){return (Math.random()*4294967296)>>>0;}})();
 function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);
  t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
 const R=rng(SEED);
@@ -366,9 +366,17 @@ const HOLD={name:'Starter hold',dims:[1.6,1.2,1.0]};   // interior, metres → 1
 HOLD.cap=HOLD.dims[0]*HOLD.dims[1]*HOLD.dims[2];HOLD.sorted=HOLD.dims.slice().sort((a,b)=>b-a);
 const cargo=[];                                // pieces aboard
 function cargoBulk(){return cargo.reduce((a,p)=>a+p.box,0);}
-function pickMat(size,r){let u=r(),acc=0,band='common';for(const b in MIX[size]){acc+=MIX[size][b];if(u<acc){band=b;break;}}
+// WHAT EACH PIECE IS (security fix 10-19): the SERVER decides, from its session seed, the field id and the piece index
+// (minerals.py: field_facts, piece_mineral). This is the same roll, only to SHOW the prediction; when signed in, what is
+// recorded, alerted and stored is the server's answer, and the hold shows that.
+function fnv1a(t){let h=0x811C9DC5;for(let i=0;i<t.length;i++){h=Math.imul(h^t.charCodeAt(i),0x01000193)>>>0;}return h>>>0;}
+function fieldFacts(seed,id){const r=rng(fnv1a(seed+'|'+id+'|size'));let v=r(),size='tiny';
+ for(const k in SIZES){if(v<SIZES[k].share){size=k;break;}v-=SIZES[k].share;}
+ const S=SIZES[size];return [size,S.n[0]+Math.floor(r()*(S.n[1]-S.n[0]+1))];}
+function pieceMineral(seed,id,i,size){const r=rng(fnv1a(seed+'|'+id+'|'+i));let u=r(),acc=0,band='common';
+ for(const b in MIX[size]){acc+=MIX[size][b];if(u<acc){band=b;break;}}
  const ms=BAND_MATS[band];return ms[Math.floor(r()*ms.length)];}   // a band, then one of its minerals alike
-function makePiece(size,sx,sy,sz,r){const dims=[sx,sy,sz].map(v=>2*ICO_HALF*v).sort((a,b)=>b-a);const mat=pickMat(size,r);
+function makePiece(mat,sx,sy,sz){const dims=[sx,sy,sz].map(v=>2*ICO_HALF*v).sort((a,b)=>b-a);
  const vol=ICO_VOL*sx*sy*sz;return{mat,dims,vol,box:dims[0]*dims[1]*dims[2],mass:vol*MATERIALS[mat].density,taken:false};}
 function shapeFits(p){return p.dims.every((d,i)=>d<=HOLD.sorted[i]);}
 function roomFor(p){return cargoBulk()+p.box<=HOLD.cap+1e-9;}
@@ -560,14 +568,18 @@ function netApplyInventory(inv){const st=inv&&inv.places&&inv.places.find(p=>p.k
 async function netStart(){
  try{NET.token=localStorage.getItem('stardust.token');}catch(e){NET.token=null;}
  if(!NET.api||!NET.token){NET.on=false;return false;}
- try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;netApplyShip(j);return true;}
+ try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
+  // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
+  SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
+  netApplyShip(j);return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
 function netCollect(p){
  NET.queue=NET.queue.then(async()=>{
   const wait=NET.last+2200-Date.now();if(wait>0)await new Promise(r=>setTimeout(r,wait));NET.last=Date.now();
-  try{const j=await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});
+  try{const j=await netCall('/collect',{session_id:NET.session,field:p.fid,index:p.idx,dims:p.dims,volume_m3:p.vol});
+   if(j.aboard&&j.aboard.material&&j.aboard.material!==p.mat){p.mat=j.aboard.material;p.mass=j.aboard.kg;renderHold();}   // the server's word
    if(j.aboard&&j.aboard.flawless){p.flawless=true;renderHold();   // rule 26: keep the excitement with the miner
     snd.chime();setTimeout(()=>snd.chime(),350);
     toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}
@@ -617,8 +629,8 @@ const dustMat=new THREE.PointsMaterial({size:1.4,sizeAttenuation:false,map:dot,c
 function ringOf(p){const rxy=Math.hypot(p.x,p.z);for(const rg of RINGS)if(Math.abs(rxy-rg.r)<BAND.half&&Math.abs(p.y)<BAND.thick)return rg;return null;}
 function outside(p,rg){return Math.max(Math.abs(Math.hypot(p.x,p.z)-rg.r)-BAND.half,Math.abs(p.y)-BAND.thick,0);}   // metres outside a ring's band
 function cellSeed(i,j,k){return (SEED^Math.imul(i|0,73856093)^Math.imul(j|0,19349663)^Math.imul(k|0,83492791))>>>0;}
-function makeField(id,ring,center,size,r){
- const S=SIZES[size],n=S.n[0]+Math.floor(r()*(S.n[1]-S.n[0]+1)),rad=fieldRad(n,S.sc),mem=fieldMemory.get(id);
+function makeField(id,ring,center,size,n,r){
+ const S=SIZES[size],rad=fieldRad(n,S.sc),mem=fieldMemory.get(id);
  const im=new THREE.InstancedMesh(rockGeo,rockMat,n);
  im.position.copy(center);im.frustumCulled=false;im.visible=false;
  const fld={id,ring,size,center,rad,sight:S.sight,mesh:im,count:n,mats:[],pieces:[],shown:false,known:!!(mem&&mem.known),cleared:!!(mem&&mem.cleared)};
@@ -628,7 +640,7 @@ function makeField(id,ring,center,size,r){
   const s=S.sc[0]*Math.pow(S.sc[1]/S.sc[0],Math.pow(r(),SIZE_BIAS));   // log-spread sizes, weighted toward small fragments
   tmpS.set(s*(0.7+r()*0.6),s*(0.7+r()*0.6),s*(0.7+r()*0.6));
   const m=new THREE.Matrix4().compose(v,tmpQ,tmpS);fld.mats.push(m);
-  const p=makePiece(size,tmpS.x,tmpS.y,tmpS.z,r);if(mem&&mem.taken[i])p.taken=true;fld.pieces.push(p);
+  const p=makePiece(pieceMineral(SEED,id,i,size),tmpS.x,tmpS.y,tmpS.z);p.fid=id;p.idx=i;if(mem&&mem.taken[i])p.taken=true;fld.pieces.push(p);
   im.setMatrixAt(i,p.taken?ZERO:m);tmpC.setHex(ROCK_TONES[(r()*ROCK_TONES.length)|0]);im.setColorAt(i,tmpC);}
  scene.add(im);return fld;}
 function loadCell(i,j,k){
@@ -640,11 +652,11 @@ function loadCell(i,j,k){
  // beginners first (Eric 10-11): plenty of large, easy-to-hear fields of common material
  const u=r(),n=u<0.3?0:u<0.8?1:2;
  for(let f=0;f<n;f++){
-  let v=r(),size='tiny';for(const k in SIZES){if(v<SIZES[k].share){size=k;break;}v-=SIZES[k].share;}
+  r();const [size,nPieces]=fieldFacts(SEED,key+'#'+f);           // size and piece count: the server's roll
   const S=SIZES[size],m=fieldRad(S.n[1],S.sc);                         // room for the biggest it could be
   const c=o.clone().add(new THREE.Vector3(m+r()*(CELL-2*m),m+r()*(CELL-2*m),m+r()*(CELL-2*m)));
   if(!ringOf(c)||cell.fields.some(g=>g.center.distanceTo(c)<g.rad+m+FIELD_GAP))continue;
-  const fld=makeField(key+'#'+f,ring,c,size,r);cell.fields.push(fld);FIELDS.push(fld);}
+  const fld=makeField(key+'#'+f,ring,c,size,nPieces,r);cell.fields.push(fld);FIELDS.push(fld);}
  // a thin haze of dust, so the band reads as a place even between fields (fogged like the rocks)
  const nd=140,P=new Float32Array(nd*3);for(let d=0;d<nd*3;d++)P[d]=r()*CELL;
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(P,3));
@@ -1019,5 +1031,5 @@ function frame(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
  sky();pulseGuides(now/1000);
  hud();lockHud();approachHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
 updateCells();updateSight();requestAnimationFrame(frame);netStart();
-window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},SEED,cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
+window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},get SEED(){return SEED;},cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
  get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;},get throttle(){return throttle;}}; // for testing

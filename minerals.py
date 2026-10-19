@@ -159,6 +159,74 @@ def lot_kg(m):
     return m["lot_g"] // 1000
 
 
+# -- WHAT EACH PIECE IS: the server's roll (security fix, 10-19). The browser used to choose every piece's mineral and
+#    the server took its word, so an edited browser could claim brownleeite every time. Now a piece's mineral, and its
+#    field's size and piece count, come only from (the session seed the server issued, the field id, the piece index).
+#    static/debris-flight.js runs the very same roll (FNV-1a hash, then mulberry32) only to SHOW its prediction; what is
+#    recorded, alerted and stored is what the server rolls here. test_server.py checks the two agree.
+# Field sizes, in this order: piece-count range and how often each occurs (the flight's SIZES).
+FIELD_SIZES = {"large": ((400, 1200), .25), "medium": ((60, 250), .35), "small": ((10, 20), .25), "tiny": ((8, 20), .15)}
+# Each band's share of pieces per field size (the flight's MIX). Brownleeite: tiny fields only (Eric 10-19).
+MIX = {
+    "large":  {"common": .5515, "plentiful": .25, "ore": .14, "scarce": .03, "rare": .002, "shock": .02, "shock-rare": .006, "lonsdaleite": .0005},
+    "medium": {"common": .4815, "plentiful": .24, "ore": .18, "scarce": .06, "rare": .005, "shock": .025, "shock-rare": .008, "lonsdaleite": .0005},
+    "small":  {"common": .402, "plentiful": .22, "ore": .22, "scarce": .11, "rare": .01, "shock": .028, "shock-rare": .009, "lonsdaleite": .001},
+    "tiny":   {"common": .3624, "plentiful": .22, "ore": .22, "scarce": .14, "rare": .016, "shock": .03, "shock-rare": .01, "lonsdaleite": .0015, "brownleeite": .0001}}
+BAND_MATS = {}
+for _c, _m in MINERALS.items():
+    BAND_MATS.setdefault(_m["band"], []).append(_c)
+MAX_FIELDS_PER_CELL = 2          # the flight lays out 0, 1 or 2 fields per 3 km cell: ids 'i,j,k#0' and 'i,j,k#1'
+
+
+def _fnv1a(text):
+    h = 0x811C9DC5
+    for ch in text.encode():
+        h = ((h ^ ch) * 0x01000193) & 0xFFFFFFFF
+    return h
+
+
+def _imul(a, b):
+    return (a * b) & 0xFFFFFFFF
+
+
+def _rng(seed):
+    """mulberry32, the same as the flight's rng(): floats in [0, 1)."""
+    a = seed & 0xFFFFFFFF
+    def r():
+        nonlocal a
+        a = (a + 0x6D2B79F5) & 0xFFFFFFFF
+        t = _imul(a ^ (a >> 15), a | 1)
+        t ^= (t + _imul(t ^ (t >> 7), t | 61)) & 0xFFFFFFFF
+        return ((t ^ (t >> 14)) & 0xFFFFFFFF) / 4294967296
+    return r
+
+
+def field_facts(seed, field_id):
+    """(size, piece count) of a field. field_id is the flight's 'i,j,k#f'."""
+    r = _rng(_fnv1a(f"{seed}|{field_id}|size"))
+    v, size = r(), "tiny"
+    for k, (_, share) in FIELD_SIZES.items():
+        if v < share:
+            size = k
+            break
+        v -= share
+    lo, hi = FIELD_SIZES[size][0]
+    return size, lo + int(r() * (hi - lo + 1))
+
+
+def piece_mineral(seed, field_id, index, size):
+    """What piece `index` of a field IS. Only the server's answer counts."""
+    r = _rng(_fnv1a(f"{seed}|{field_id}|{index}"))
+    u, acc, band = r(), 0.0, "common"
+    for b, share in MIX[size].items():
+        acc += share
+        if u < acc:
+            band = b
+            break
+    ms = BAND_MATS[band]
+    return ms[int(r() * len(ms))]
+
+
 if __name__ == "__main__":
     for m in MINERALS.values():
         print(f"{m['tier']} {m['band']:<11} {m['code']:<15} {m['density']:>6} {m['formula']:<28} {lot_kg(m):>4} kg "
