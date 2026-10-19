@@ -20,8 +20,8 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - Every line is a **pre-recorded audio file**, recorded once. Never live speech, never live ElevenLabs
   (`stardust-server/CLAUDE.md` rules 14 and 15; spec §9).
 - Her prepared lines are recorded with ElevenLabs in the languages ElevenLabs speaks best (rule 15; ledger v3.9).
-- **Still open (Eric's to answer):** which ElevenLabs voice speaks as Inara. **Lily is reserved for Eric's own
-  personal Inara** and must not be used here. Also open: what players in languages ElevenLabs doesn't speak well get
+- **Voice: Lily (Eric, 10-19).** Recorded files only; never a live ElevenLabs call for players until a different
+  ElevenLabs contract is in place. Still open: what players in languages ElevenLabs doesn't speak well get
   (`CLAUDE.md` open question 2; spec §13 question 6).
 - The spec (§9) says the Tower lines are "recorded the same way as Signal's". Signal in the Noise's method
   (`games-holdback/INARA-TOWER-LINES.md`) is: one voice per language, never changed; a radio filter on everything
@@ -637,7 +637,7 @@ Listed so Eric can decide whether Inara should say any of these. Until he does, 
 (`INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT*.txt`, `INARA-SOURCE-SCRIPT.txt`, about 185 lines, with
 translations and recordings under `voice/`). **Those are for Signal in the Noise** (coins, fragments, naming places,
 placing pins on the New Earth), not for Stardust, and none of them is copied here. Stardust must stay separate from
-Quavara (rule 1), and those recordings use Lily, which is reserved for Eric's own Inara. Only the recording method is
+Quavara (rule 1). (They are in Lily too, the voice Eric chose for Stardust on 10-19, but they belong to the other game.) Only the recording method is
 borrowed (spec §9).
 
 ## Appendix C. Contradictions found between the sources
@@ -678,8 +678,8 @@ are still Eric's to decide**; their text is unchanged.
 12. **OPEN, for Eric.** **The game's name.** `CLAUDE.md`, the spec (v7.4) and the FAQ (v1.9) say "Stardust - Rebuilding Home, final name
     pending". Ledger v4.2 (10-13) names it **Stardust - Terra Deleta** (working title until an attorney clears it).
     No recorded line uses the name.
-13. **OPEN, for Eric.** **Lily.** Signal's lines are recorded in Lily (`INARA-TOWER-LINES.md`); Stardust reserves Lily for Eric's own
-    Inara (`CLAUDE.md` open question 2; spec §13 question 6). The Signal recordings can't be reused.
+13. **ANSWERED (Eric 10-19): Lily** for Stardust's recorded lines. Signal's recordings still aren't reused: they
+    are the other game's lines (rule 1); Stardust records its own.
 
 ## Appendix D. Totals
 
