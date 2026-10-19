@@ -23,7 +23,7 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - **Voices by language (Eric, 10-19).** One Inara, voiced per language by the voice that speaks it best:
   - **Lily - Velvety Actress:** English, Mandarin Chinese (serves Simplified and Traditional), German, Polish.
   - **Kate 1 - Warm, Close and Natural:** Spanish (Latin American), French, Korean, Turkish at her natural settings;
-    Brazilian Portuguese with faster, steadier settings (Eric: her natural Portuguese was too slow and intimate for a Tower).
+    Brazilian Portuguese too, also at her natural settings (Eric 10-19: tried faster takes, kept the original).
   - **Julia (Russian), voice ID `MOgsVr0EwwxqQs5cNDhu`:** Russian.
   - **Sumiko Ito - Crisp, voice ID `0yh9saSHWVy78QG1HfNs`:** Japanese (Eric 10-19; recorded without a sample, on his call).
   Line texts per language: `docs/inara-lines/<lang>.json`; record with `tools/inara-record.py --lang <lang> --voice <name or ID>`.
