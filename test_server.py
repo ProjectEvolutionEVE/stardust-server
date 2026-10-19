@@ -524,6 +524,17 @@ async def main():
             assert ans in dict(opts), (code, q)
     r = await cl.get("/api/dfg/library/certificates", headers=HL); c = await r.json()
     check("a pass earns a certificate, which keeps the best score", len(c["certificates"]) == 1 and c["certificates"][0]["score"] == "5/5")
+    # the Blueprint Designer's Handbook: on the Making things shelf, readable, and its test grades like the others
+    r = await cl.get("/api/dfg/library/book/blueprint-handbook", headers=HL); j = await r.json()
+    hb = next((b for g in (await (await cl.get("/api/dfg/library", headers=HL)).json())["shelves"] if g["group"] == "Making things"
+               for b in g["books"] if b["code"] == "blueprint-handbook"), None)
+    check("the Blueprint Designer's Handbook is on the shelf and can be read", r.status == 200 and hb and hb["written"]
+          and len(j["chapters"]) >= 10 and j["questions"] == 5)
+    right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS["blueprint-handbook"]["test"])}
+    two_wrong = dict(right); two_wrong["0"] = "a"; two_wrong["2"] = "a"
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": two_wrong}); j = await r.json()
+    r2 = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": right}); j2 = await r2.json()
+    check("the handbook's test: 3 of 5 fails, 5 of 5 passes", j["score"] == 3 and not j["passed"] and j2["score"] == 5 and j2["passed"])
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "catalogue", "answers": {}})
     check("the reference catalogue has no test", r.status == 422)
     r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "trading"})
