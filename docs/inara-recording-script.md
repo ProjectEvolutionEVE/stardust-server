@@ -34,12 +34,12 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - Inara is stationed in **the Tower**, the lit command deck in a pod under the bow of the Starship, the **WSC
   Alexander von Humboldt**. She watches every craft leave and come home (spec §10; `static/debris-flight.js:209`).
 - She works in the ship's command and control centre and guides and coordinates the smaller vessels: their missions,
-  departures and returns. The player flies one of them (`STORY-BIBLE.md`; Stardust rule 28 says it is the same ship).
+  departures and returns. The player flies one of them (`docs/STORY-BIBLE.md`; Stardust rule 28 says it is the same ship).
 - Every player reaches her through a **comms badge** worn on the shirt, aboard the Starship or out in their craft.
   A COMMS button reaches her to ask a question; she answers from her prepared FAQ, word for word (spec §8, §9).
 - **Coaching rule (Eric, 10-10):** she explains how things work when asked, and does not tell players what to upgrade.
   The one exception is the delayed hint for a player who seems stuck (spec §6; FAQ header).
-- Canon limits on what she may say (`STORY-BIBLE.md`): she never knows more than the crew and never announces what
+- Canon limits on what she may say (`docs/STORY-BIBLE.md`): she never knows more than the crew and never announces what
   destroyed the four planets; she never says everyone on Earth died ("never say never").
 - Personal touches for the actor's sense of her (Story Bible canon; none of them appear in a line below): she likes
   fireflies, has a secret love of chocolate (the cigar was retired 09-30), and keeps an old tattered shirt that smells
@@ -695,5 +695,5 @@ recorded as a spoken reading of its table (the same rows, word for word).
 **Sources:** `stardust-server` (every file searched for "inara"; read: `static/debris-flight.js`, `static/quarters.js`,
 `static/play.html`, `body.py`, `names.py`, `library_books.py`, `CLAUDE.md`); `quavara-docs/quavara-debris-field-game-stage1-spec.md` (v7.4); `quavara-docs/quavara-decision-ledger.md`
 (v4.2: v3.0-v3.9, v4.1, v4.2 and the debris-field game row); `quavara-docs/debris-field-game-faq.md` (v1.9, named by
-spec §9 as her answers); `quavara-site/games-holdback/STORY-BIBLE.md`, `INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT.txt`,
+spec §9 as her answers); `docs/STORY-BIBLE.md` (copied from `quavara-site/games-holdback/STORY-BIBLE.md`); `quavara-site/games-holdback/INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT.txt`,
 `games/debris-flight.js` and `games/CLAUDE.md` (the holdback copy of the flight game has the same three Inara lines).

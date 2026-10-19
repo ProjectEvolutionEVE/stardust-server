@@ -1,9 +1,18 @@
 # Inara: Control Tower dialog and story beats for Stardust - Terra Deleta
 
-**Version 0.1 · 2026-10-19** · A companion to `docs/inara-recording-script.md` (v1.1), which stays the master for the
+**Version 0.2 · 2026-10-19** · A companion to `docs/inara-recording-script.md` (v1.1), which stays the master for the
 lines already written there (welcome, rings, the seven Tower moments, market, FAQ). This document adds what that
 script does not have: more takes for repeated Tower moments, the moments it has no lines for, and a story arc that
 reveals the backstory one beat at a time as the player's character advances. Nothing here changes code.
+
+**Change log**
+- **v0.2 (2026-10-19)**: every line checked against the Story Bible (Canon v1, now copied into this repo as
+  `docs/STORY-BIBLE.md`). Fixed TWR-004 (implied the rings were empty; canon has scavengers in the fields), STORY-010
+  (canon: most of the planets' moons were destroyed too), STORY-011 (canon: the cause is unknown and everyone has a
+  theory), STORY-018 (canon wording for the greenhouse and water plant), STORY-032 (now canon: the debris goes to the
+  New Earth, Earth's twin with no humans), STORY-034 (canon: the 12-month mission and the return). NEW LORE
+  STORY-032 resolved by canon; STORY-002 and STORY-038 still need Eric. Sources list now cites the Bible by section.
+- v0.1 (2026-10-19): first draft, written without access to the Story Bible.
 
 **Sources actually read and used**
 - `stardust-server/CLAUDE.md` (settled rulings: rank ladder rule 6, the Bed rule and its 65% / 50% thresholds,
@@ -19,13 +28,18 @@ reveals the backstory one beat at a time as the player's character advances. Not
 - `quavara-docs/quavara-decision-ledger.md`: the debris-field game row; change log v2.0-v2.2 (ship history, WSC
   name, Humboldt lineage), v1.3 (too-big fields, hint only for a stuck player), v3.6-v3.9, v4.2 (Terra Deleta /
   Terra Nova; Terra Nova is supplied with raw materials from the space game).
-- **The Story Bible itself (`quavara-site/games-holdback/STORY-BIBLE.md`) was NOT found on this machine** (no
-  `quavara-site` checkout under `/home/user`). Its facts are used here only where the spec or the existing recording
-  script quotes them: the four inner planets were destroyed and the Sun and gas giants survived; the wormhole opened
-  near the far side of Jupiter; the greenhouse and water plant; Inara works in command and control, guiding the small
-  vessels; she never knows more than the crew, never announces what destroyed the four planets, and never says
-  everyone on Earth died; the scavenger civilisation exists but is not placed (spec §13 question 4). Before any STORY
-  line is recorded, check it against the Story Bible itself.
+- **The Story Bible, `docs/STORY-BIBLE.md`** (Canon v1, Eric; copied 2026-10-19 from
+  `quavara-site/games-holdback/STORY-BIBLE.md` at commit b8792af; it wins over every other source). Sections used:
+  "Canon, as facts" (The ship: a large exploratory science and research starship, Inara in command and control,
+  guiding the smaller vessels, the player flies one; The wormhole: near the far side of Jupiter, a parallel universe,
+  a volunteer team first, then High Space Command's permission; The New Earth: Earth's twin, no humans and no sign any
+  ever existed, the 12-month survey; The return: a devastated solar system, the Sun and larger gas giants remain,
+  cause unknown, everyone has a theory; The scavengers); "Earth's people" (never say everyone died); "The four
+  planets" (Mercury, Venus, Earth, Mars and most of their moons); "How the game fits the canon" (the Tower never
+  knows more than the crew); "Where the debris goes" (recovered debris goes to the New Earth; the crew are Earth's
+  people too); "What the scavengers value" (the greenhouse and water plant). **Not used as canon:** the two sections
+  marked PROPOSAL (scavenger encounter protocol; trade-before-contact mechanics, and the race-stakes proposal) and the
+  "Open questions" list.
 
 ## Status key (from `inara-recording-script.md`)
 - **SOURCE**: the exact text exists in the code or a design document. Record as written.
@@ -47,8 +61,11 @@ reveals the backstory one beat at a time as the player's character advances. Not
    name. "Other pilots" may be mentioned only as traffic in general, never as a message.
 6. **Coaching rule:** she explains how things work; she never tells a player what to upgrade, buy or build. The one
    exception stays INARA-HINT-001 (recording script), on hold.
-7. **Canon limits:** she never knows more than the crew; she never says what destroyed the four planets; she never
-   says everyone on Earth died. She speaks of the rings as "what's left of" the planets (FAQ-009 wording).
+7. **Canon limits** (Story Bible: "How the game fits the canon", "Earth's people", "Where the debris goes"): she
+   never knows more than the crew; she never says what destroyed the four planets (nobody knows; she may pass on a
+   rumour, never a cause); she never says everyone on Earth died, and the question is always "did anyone on the planet
+   survive?", since the crew are Earth's people too. She speaks of the rings as "what's left of" the planets (FAQ-009
+   wording).
 8. **Takes:** 2-4 takes for every moment that repeats; the game picks one at random and never plays the same take
    twice in a row.
 
@@ -76,7 +93,7 @@ Take 1 is **INARA-TOWER-001** ("You're clear of the bay. Good hunting.").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-004 | [DRAFT, needs Eric's approval] | Clear of the bow. The rings are yours. |
+| INARA-TWR-004 | [DRAFT, needs Eric's approval] | Clear of the bow. Good luck out in the rings. |
 | INARA-TWR-005 | [DRAFT, needs Eric's approval] | You're out. I'll be watching from the Tower. |
 | INARA-TWR-006 | [DRAFT, needs Eric's approval] | Clear of the Starship. Use WARP to reach a ring quickly. |
 
@@ -272,7 +289,7 @@ Take this after INARA-WELCOME-001/002 (recording script).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-001 | [DRAFT, needs Eric's approval] | You're aboard a science and research starship, Trainee. Everyone here starts at the bottom. |
+| INARA-STORY-001 | [DRAFT, needs Eric's approval] | You're aboard an exploratory science and research starship, Trainee. Everyone here starts at the bottom. |
 | INARA-STORY-002 | [NEW LORE, needs Eric's approval] | I did too, once. |
 
 **Beat 2 · First visit to the Starship Library** (trigger: first `GET /api/dfg/library`)
@@ -309,20 +326,19 @@ Basis: rule 11 / 23 (blueprints designed by players); spec §10 (designs, approv
 | INARA-STORY-008 | [DRAFT, needs Eric's approval] | Look back once you're clear. That's the Humboldt, and the lit windows under her bow are my Tower. |
 | INARA-STORY-009 | [DRAFT, needs Eric's approval] | She's parked near the wormhole, past Jupiter, well away from every debris field. |
 
-Basis: FAQ-021; spec §3 ("The Starship parks near the wormhole, which opened near the far side of Jupiter ... well
-away from every debris field").
+Basis: FAQ-021; Story Bible "The wormhole" (it opened near the far side of Jupiter); spec §3 ("The Starship parks
+near the wormhole ... well away from every debris field").
 
 **Beat 6 · First time entering any ring** (trigger: `watchRing` sets `workRing` for the first time ever)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-010 | [DRAFT, needs Eric's approval] | These rings are what's left of the four inner planets: Mercury, Venus, Earth and Mars. |
-| INARA-STORY-011 | [DRAFT, needs Eric's approval] | The Sun survived, and so did the giants. Nobody aboard can tell you yet what happened to the rest. |
+| INARA-STORY-010 | [DRAFT, needs Eric's approval] | These rings are what's left of Mercury, Venus, Earth and Mars, and most of their moons. |
+| INARA-STORY-011 | [DRAFT, needs Eric's approval] | The Sun's still there, and the big gas giants. What destroyed the rest, nobody knows. Everyone aboard has a theory. |
 
-Basis: FAQ-009; spec §3 ("the Sun and the gas giants survived; the four inner planets were destroyed"). STORY-011
-keeps the canon limit: she does not say what destroyed them, and she knows no more than the crew. Eric should confirm
-"nobody aboard can tell you yet" fits the Story Bible (it implies the crew doesn't know; if the Story Bible says the
-crew does know but won't say, change it to "That's not mine to tell.").
+Basis: Story Bible "The four planets" (Mercury, Venus, Earth, Mars "and most all of the moons orbiting them") and
+"The return" ("The Sun and the larger gas giants remain"; "What destroyed them is unknown. The crew is full of
+speculation and rumour, and everyone has a theory"). Checked v0.2: the crew does not know, so no "not mine to tell".
 
 **Beat 7 · First piece collected** (trigger: first successful `POST /api/dfg/collect`)
 
@@ -371,9 +387,10 @@ HOLD until the book exists)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-018 | [DRAFT, needs Eric's approval] · HOLD | The greenhouse feeds us, and the water plant makes its own water. Out here, that's what keeps a crew alive. |
+| INARA-STORY-018 | [DRAFT, needs Eric's approval] · HOLD | Our greenhouse sustains itself, and the water plant makes its own water. We never run dry out here. |
 
-Basis: rule 28.
+Basis: rule 28; Story Bible "What the scavengers value" ("a large self sustaining greenhouse"; the water plant makes
+its own H2O, "an endless supply").
 
 ### B2. Rank promotions (HOLD until promotions are wired)
 One beat per promotion on the civilian ladder (rule 6). Each opens with the new rank in full.
@@ -440,22 +457,24 @@ vague on purpose.
 | ID | Status | Text |
 |---|---|---|
 | INARA-STORY-031 | [DRAFT, needs Eric's approval] · HOLD | Senior Officer. You've hauled a lot of ore. Here's where it's going. |
-| INARA-STORY-032 | [NEW LORE, needs Eric's approval] · HOLD | There's a new Earth to build. Homes first, then villages, then towns. What you bring in helps build them. |
+| INARA-STORY-032 | [DRAFT, needs Eric's approval] · HOLD | Through the wormhole is Earth's twin. Air, water, forests, animals, and no people at all. What we recover goes there. |
 
-Basis and new lore: ledger v4.2 says Terra Nova (the land game: homesteads → villages → towns → cities on a New
-Earth) is supplied with raw materials from the space game, and spec §7 says the new Earth becomes another place to
-unload. **Saying in-story that the crew's ore is for the new Earth's settlements is a story statement no source makes
-in-world** (the source is a product plan), so it is marked new lore. It also names nothing about where the new Earth
-is.
+Basis (v0.2, no longer new lore): Story Bible "The New Earth" (Earth's twin, with oxygen, water, plants, trees and
+animals; "No humans, and no sign that any ever existed") and "Where the debris goes" ("the collected debris is taken
+back to the newly discovered Earth"); ledger v4.2 (Terra Nova is supplied with raw materials from the space game).
+The v0.1 "homes, villages, towns" wording was dropped: it came from the product plan, not canon. The Bible's "set at
+the same coordinates" step is the place-pinning mechanic of the other game, so this line does not say it.
 
 **Beat 20 · Chief (of a department)**
 
 | ID | Status | Text |
 |---|---|---|
 | INARA-STORY-033 | [DRAFT, needs Eric's approval] · HOLD | Chief. A whole department looks to you now. |
-| INARA-STORY-034 | [DRAFT, needs Eric's approval] · HOLD | The research teams never stop studying the wormhole, and the universe on the other side. |
+| INARA-STORY-034 | [DRAFT, needs Eric's approval] · HOLD | We spent twelve months on the far side of that wormhole. We came home to this. The research hasn't stopped since. |
 
-Basis: spec §3 ("Its research teams keep studying the wormhole and the universe on the other side").
+Basis: Story Bible "The New Earth" ("A 12-month survey") and "The return" (the ship came back through the wormhole
+to a devastated solar system); spec §3 ("Its research teams keep studying the wormhole and the universe on the other
+side"). "Twelve months" is a fixed canon figure, not a live number.
 
 **Beat 21 · First Officer**
 
@@ -465,7 +484,8 @@ Basis: spec §3 ("Its research teams keep studying the wormhole and the universe
 | INARA-STORY-036 | [DRAFT, needs Eric's approval] · HOLD | The rings, the asteroid belt, the moons, and one day the far side of the wormhole. There's a lot of ground ahead. |
 
 Basis: spec §3 ("Later mining sites: the asteroid belt, the moons, and the whole universe on the other side of the
-wormhole"). **Note:** this hints at future content; Eric may want it held until those sites are planned.
+wormhole"). Checked v0.2: no conflict with the Story Bible (the other side is the New Earth's universe). **Note:**
+this hints at future content; Eric may want it held until those sites are planned.
 
 **Beat 22 · Captain**
 
@@ -475,14 +495,19 @@ wormhole"). **Note:** this hints at future content; Eric may want it held until 
 | INARA-STORY-038 | [NEW LORE, needs Eric's approval] · HOLD | I've talked a lot of pilots home from the Tower. It's good to say that word to one of them. |
 | INARA-STORY-039 | [DRAFT, needs Eric's approval] · HOLD | Whatever comes through that wormhole next, the ship's in good hands. |
 
-STORY-038 is new lore only in that it gives Inara a personal reflection about her years in the Tower (no source says how
-long she has served). STORY-039 basis: spec §3 (wormhole). "Whatever comes through" must not imply a threat the crew
-knows of; if Eric thinks it does, replace it with "Welcome to the top, Captain."
+STORY-038 is new lore only in that it gives Inara a personal reflection about her years in the Tower: the Story Bible
+("The ship") makes guiding departures and returns her job, but says nothing about how long she has served. STORY-039 basis: spec §3 (wormhole). "Whatever comes through" must not imply a threat the crew
+knows of; if Eric thinks it does, replace it with "Welcome to the top, Captain." Checked v0.2: the Story Bible names
+no threat through the wormhole; the cause of the destruction is unknown, so the line must stay this vague.
 
 ### B3. Left out on purpose
-- **The scavenger civilisation** (Story Bible, spec §12-13 q4): not placed in the game yet, so no beat mentions it.
+- **The scavenger civilisation**: canon (Story Bible "The scavengers", "The scavengers as rivals": an NPC rival, no
+  weapons, no interest in talking) but not placed in this game yet (spec §13 q4), and how they behave in a field is
+  still a PROPOSAL awaiting Eric (Bible: encounter protocol; trade before contact). No beat mentions them.
 - **What destroyed the four planets**: never (canon limit).
-- **Whether anyone on Earth survived**: no line says either way ("never say never").
+- **Whether anyone on Earth survived**: no line says either way (Story Bible "Earth's people": "never say never").
+- **Inara's personal canon** (fireflies, chocolate, the cedar shirt): not used; whose shirt it was is an open question
+  (Bible open question 6).
 - **The military track**: added later (rule 6); no beats until it exists.
 - **Department titles** ("Chief Engineer"): the beat says the rank only; the department is on screen.
 
@@ -538,24 +563,23 @@ replayed), so each plays once. This is a design note, not a change made here.
 
 ## New lore to approve (Eric)
 
-Everything else in this document is either SOURCE or a draft built only from source facts. These three items are new:
+Everything else in this document is either SOURCE or a draft built only from source facts. v0.1 listed three items;
+after the v0.2 Story Bible check, two remain:
 
 1. **STORY-002** ("I did too, once."): implies Inara herself started at the bottom of the
    ladder. No source says how Inara came to the Tower.
-2. **STORY-032**: in-story, the crew's ore is for building the new Earth (homes, villages, towns). The sources say
-   this as a product plan (ledger v4.2: Terra Nova is supplied by the space game; spec §7: the new Earth becomes a
-   place to unload), not as a fact a character states.
+2. ~~STORY-032~~ **RESOLVED by canon** (Story Bible "The New Earth", "Where the debris goes"); rewritten in canon's
+   terms and re-marked DRAFT.
 3. **STORY-038**: Inara has talked "a lot of pilots home" over time, a personal reflection on her service; no source
    gives her history in the Tower.
 
-Also flagged for a check against the Story Bible itself (not new lore, but wording that depends on it):
-STORY-011 ("Nobody aboard can tell you yet what happened"), STORY-036 (hints at future mining sites), STORY-039
-("Whatever comes through that wormhole next").
+The v0.1 checks against the Story Bible are done (v0.2): STORY-011 rewritten to canon; STORY-036 and STORY-039 have
+no conflict.
 
 ## Totals
 
 | Section | Lines (new IDs) | Status |
 |---|---|---|
 | Part A, Tower dialog | 53 (INARA-TWR-001 to 053) | 2 SOURCE (TWR-036, 039, voice use to approve); 51 DRAFT, of which 3 HOLD (TWR-046-048) |
-| Part B, story beats | 39 IDs (INARA-STORY-001 to 039) in 22 beats | 36 DRAFT + 3 NEW LORE (STORY-002, 032, 038); 23 of the 39 are HOLD (STORY-017 to 039) |
+| Part B, story beats | 39 IDs (INARA-STORY-001 to 039) in 22 beats | 37 DRAFT + 2 NEW LORE (STORY-002, 038); 23 of the 39 are HOLD (STORY-017 to 039) |
 | Referenced, not repeated | INARA-TOWER-001 to 007, RING-001 to 016, WELCOME, DIRECTION-001 | in `inara-recording-script.md` |
