@@ -20,7 +20,7 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - Every line is a **pre-recorded audio file**, recorded once. Never live speech, never live ElevenLabs
   (`stardust-server/CLAUDE.md` rules 14 and 15; spec §9).
 - Her prepared lines are recorded with ElevenLabs in the languages ElevenLabs speaks best (rule 15; ledger v3.9).
-- **Voice: Lily (Eric, 10-19).** Recorded files only; never a live ElevenLabs call for players until a different
+- **Voice: Lily (Eric, 10-19).** Exact voice: "Lily - Velvety Actress" on Eric's ElevenLabs account, model `eleven_multilingual_v2`; Eric heard the test sample (`tools/inara-voice-sample.py`, TWR-004 + STORY-001/002) on 10-19: "The voice matches and sounds perfect." Recorded files only; never a live ElevenLabs call for players until a different
   ElevenLabs contract is in place. Still open: what players in languages ElevenLabs doesn't speak well get
   (`CLAUDE.md` open question 2; spec §13 question 6).
 - The spec (§9) says the Tower lines are "recorded the same way as Signal's". Signal in the Noise's method
