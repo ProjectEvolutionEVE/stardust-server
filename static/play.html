@@ -42,6 +42,13 @@
   touch-action:none}
  #bBoost{bottom:max(28px,env(safe-area-inset-bottom))}
  body.touch .tbtn{display:flex}
+ #thr{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+ #thr span{font-size:12px;letter-spacing:.06em;color:#d9a441;text-shadow:0 1px 3px #000;white-space:nowrap}
+ .pbtn{width:64px;height:64px;border-radius:50%;border:1.5px solid rgba(217,164,65,.55);background:rgba(217,164,65,.14);
+  color:#d9a441;font-size:22px;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+ #piv{position:fixed;left:16px;bottom:max(120px,calc(env(safe-area-inset-bottom) + 106px));display:flex;gap:12px}
+ #appr{position:fixed;left:50%;top:max(54px,calc(env(safe-area-inset-top) + 44px));transform:translateX(-50%);pointer-events:none;
+  font-size:clamp(40px,11vw,72px);font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.02em;white-space:nowrap}
  #lock{position:fixed;transform:translate(-50%,-50%);pointer-events:none;color:#7fe0a8;font-size:11px;letter-spacing:.06em;
   text-align:center;text-shadow:0 1px 3px #000;white-space:nowrap}
  #lock i{display:block;width:34px;height:34px;margin:0 auto 4px;border:1.5px solid #7fe0a8;border-radius:4px}
@@ -123,6 +130,9 @@
 <div id="stick" hidden><div id="cue"><i></i></div><div id="knob"></div></div>
 <div id="lock" hidden><i></i><span></span></div>
 <div class="tbtn" id="bBoost">BOOST</div>
+<div id="thr"><button class="pbtn" id="thrUp" aria-label="Throttle up">▲</button><span id="thrtxt">Throttle 0%</span><button class="pbtn" id="thrDn" aria-label="Throttle down">▼</button></div>
+<div id="piv"><button class="pbtn" id="pivL" aria-label="Pivot left">◀</button><button class="pbtn" id="pivR" aria-label="Pivot right">▶</button></div>
+<div id="appr" hidden></div>
 <div id="scan"><span id="scantxt">SWEEPING</span><div class="bar"><div id="scanbar"></div></div></div>
 <div id="toast" hidden><b></b><span></span></div>
 <button id="collect" hidden>COLLECT</button>
@@ -166,9 +176,11 @@
  <p class="dim" style="margin-top:-4px;font-size:12px;letter-spacing:.06em;color:#7d8aa5">FLIGHT PROTOTYPE · WORKING TITLE</p>
  <p>Four rings of debris circle the Sun, where the inner planets used to be. The Sun is the only light. Distant
   debris stays dark until you're close enough to see it, and small fields only show up when you're nearly on top of them.</p>
- <p><b>Fly:</b> press and hold anywhere (finger, or the left mouse button). Holding flies you forward, and the screen
-  works like a joystick from where you pressed: <b>pull back</b> to raise the nose, <b>push up</b> to dip it, <b>right</b>
-  or <b>left</b> to bank. Let go and you drift to a stop.</p>
+ <p><b>Fly:</b> press and hold anywhere (finger, or the left mouse button). The screen works like a joystick
+  from where you pressed: <b>pull back</b> to raise the nose, <b>push up</b> to dip it, <b>right</b> or <b>left</b> to bank.
+  <b>Throttle</b> (right side): tap ▲ / ▼ to set your speed, 10% a step; 0% stops you. Throttle down by hand as you
+  close in. <b>Side thrusters</b> (bottom left): hold ◀ / ▶ to pivot in place and line up on a target. The big faint
+  number at the top is the distance to the target the scanner is tracking.</p>
  <p><b>Scanner:</b> listen. A soft hiss means nothing ahead. A tone rises out of it as you point at a debris field, higher and
   clearer the closer you aim and the nearer you get. Let go to coast and look. Point dead at a return to take a
   <b>bearing</b>, move off to one side, and sweep it again: where the two cross, the field <b>locks</b> and the scanner goes quiet.</p>
@@ -181,14 +193,14 @@
   the four debris rings (Mercury, Venus, Earth, Mars), the Starship, the wormhole, Jupiter or Saturn. Inara tells you if
   you drift out of the ring you're working.</p>
  <p><b>Home:</b> warp to the Starship, by the wormhole beyond Jupiter, then double-tap it. The autopilot lines you up in front of the bow, then flies you in underneath it,
-  past the lit command deck, into the bay. Press and hold to launch again.</p>
+  past the lit command deck, into the bay. Throttle up to launch again.</p>
  <p><b>Unload:</b> once docked, tap <b>UNLOAD</b>. Your pieces move one at a time from your ship's hold into your own space
   aboard the Starship; watch both bars. Your space there is limited: when it's full, the rest stays in your hold.
   Launching stops the transfer, and what has already moved stays moved. Each unload gives you a <b>receipt</b> with a
   code. Tap <b>SAVE RECEIPT</b> to keep a copy on your device. While docked, tap <b>QUARTERS</b> to open your Private
   Quarters, where the <b>receipts log</b> lists every transfer.</p>
  <p><b>Double-tap</b> to fly to the locked field on autopilot, or double-tap any field or landmark you can see. Press and hold to take the controls back.</p>
- <p class="desk-only">Keyboard too: <kbd>W</kbd><kbd>S</kbd> forward / back · <kbd>A</kbd><kbd>D</kbd> slide · <kbd>R</kbd><kbd>F</kbd> up / down ·
+ <p class="desk-only">Keyboard too: <kbd>W</kbd><kbd>S</kbd> or <kbd>PgUp</kbd><kbd>PgDn</kbd> throttle · <kbd>←</kbd><kbd>→</kbd> pivot · <kbd>A</kbd><kbd>D</kbd> slide · <kbd>R</kbd><kbd>F</kbd> up / down ·
   <kbd>Q</kbd><kbd>E</kbd> roll · <kbd>Shift</kbd> boost · <kbd>Space</kbd> brake · <kbd>H</kbd> this help</p>
  <p class="touch-only">BOOST (bottom right) speeds you up while you hold it.</p>
  <p>The markers point to the Starship, the wormhole, the Sun and the gas giants when they're off screen.</p>
