@@ -620,13 +620,16 @@ function updateSight(){ // per-field visibility by its size class; fog then fade
   if(show)f.mesh.instanceMatrix.needsUpdate=true;}}
 
 // ── FLIGHT (Eric 2026-10-10): the WHOLE SCREEN is a joystick, the same on a phone and with a mouse.
-//  • Press and hold (finger, or left mouse button) anywhere: that point becomes the stick's centre, and holding = flying forward.
+//  • Press and hold (finger, or left mouse button) anywhere: that point becomes the stick's centre; it steers.
+//  • THROTTLE (Eric 10-17), right side: ▲/▼ step it 10% at a time, 0% (stopped) to 100%. Speed follows the throttle.
+//    No automatic slow-down: the player throttles down by hand on approach. The autopilot still flies itself.
+//  • SIDE THRUSTERS (Eric 10-17), bottom left: ◀/▶ pivot left/right in place, to line up on a target without drifting.
 //  • Drag DOWN (pull back) = nose up · drag UP (push forward) = nose down · drag RIGHT/LEFT = bank right/left (roll + turn).
 //  • Let go: turning and speed slowly drift to a stop.
 //  • Double-tap: if the scanner has LOCKED a field, the autopilot flies you to it. Otherwise it locks the field or
 //    landmark you can see nearest the tap and flies you there. Holding the stick again takes the controls back
 //    (the lock stays; double-tap again to resume).
-//  Keyboard still works on desktop: W/S A/D R/F Q/E, Shift boost, Space brake.
+//  Keyboard still works on desktop: W/S or PageUp/PageDown throttle, ←/→ pivot, A/D R/F Q/E, Shift boost, Space brake.
 const vel=new THREE.Vector3(),rot=new THREE.Vector3();   // rot = pitch, yaw, roll rates (rad/s) in the ship's own frame
 const keys={};
 const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long trips and slows as it arrives (WARP crosses the system)
@@ -634,7 +637,13 @@ const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long t
 // you launch from, including at the very start of a session.
 function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;
  cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
-addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyH')toggleHelp();});
+let throttle=0;                           // 0..10 steps of 10%
+const thrEl=document.getElementById('thrtxt');
+function setThrottle(n){if(lock){if(lock.parked)lock=null;else lock.auto=false;}   // like the stick: touching the throttle takes the controls back
+ throttle=Math.max(0,Math.min(10,n));thrEl.textContent='Throttle '+throttle*10+'%';}
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyH')toggleHelp();
+ if(running&&(e.code==='KeyW'||e.code==='PageUp')){setThrottle(throttle+1);e.preventDefault();}
+ if(running&&(e.code==='KeyS'||e.code==='PageDown')){setThrottle(throttle-1);e.preventDefault();}});
 addEventListener('keyup',e=>{keys[e.code]=false;});
 
 const STICK_R=90;                          // px of drag for full deflection
@@ -656,6 +665,12 @@ function endStick(e){if(stk&&stk.id===e.pointerId){stk=null;stickRing.hidden=tru
 cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const hold={boost:false};
+const pivot={l:false,r:false};
+document.getElementById('thrUp').addEventListener('click',()=>setThrottle(throttle+1));
+document.getElementById('thrDn').addEventListener('click',()=>setThrottle(throttle-1));
+[['pivL','l'],['pivR','r']].forEach(([id,k])=>{const b=document.getElementById(id);   // held: keeps pivoting
+ b.addEventListener('pointerdown',e=>{pivot[k]=true;b.setPointerCapture(e.pointerId);});
+ ['pointerup','pointercancel'].forEach(t=>b.addEventListener(t,()=>pivot[k]=false));});
 (function(){const b=document.getElementById('bBoost');
  b.addEventListener('pointerdown',e=>{hold.boost=true;b.setPointerCapture(e.pointerId);});
  ['pointerup','pointercancel'].forEach(t=>b.addEventListener(t,()=>hold.boost=false));})();
@@ -691,12 +706,13 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if(holding)docked=false;   // taking the stick back stops the autopilot (the lock stays)
+ if(holding||throttle)docked=false;   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
  if(holding){tp=sy*1.1;tr=-sx*1.5;ty=-sx*0.55;}   // pull back (down) = nose up; right = roll right + turn right
  tp+=((keys.ArrowDown?1:0)-(keys.ArrowUp?1:0))*1.0;tr+=((keys.KeyQ?1:0)-(keys.KeyE?1:0))*1.4;
+ ty+=((keys.ArrowLeft||pivot.l?1:0)-(keys.ArrowRight||pivot.r?1:0))*0.8;   // side thrusters: pivot in place
  if(lock&&(lock.auto||lock.parked)){         // autopilot (and parked): keep the nose on the target
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
@@ -706,28 +722,35 @@ function fly(dt){
   toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
- const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
+ const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||ty||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
  rot.x+=(tp-rot.x)*k;rot.y+=(ty-rot.y)*k;rot.z+=(tr-rot.z)*k;
  q.setFromAxisAngle(axis.set(1,0,0),rot.x*dt);cam.quaternion.multiply(q);
  q.setFromAxisAngle(axis.set(0,1,0),rot.y*dt);cam.quaternion.multiply(q);
  q.setFromAxisAngle(axis.set(0,0,1),rot.z*dt);cam.quaternion.multiply(q);cam.quaternion.normalize();
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);
- // thrust: holding the stick (or W) flies forward
+ // thrust: the throttle sets the speed (0% = stopped)
  const boost=keys.ShiftLeft||keys.ShiftRight||hold.boost;
- let tf=(holding?1:0)+(keys.KeyW?1:0)-(keys.KeyS?1:0);tf=Math.max(-1,Math.min(1,tf));
+ let tf=throttle&&!(lock&&lock.parked)?1:0;
  const ts=(keys.KeyD?1:0)-(keys.KeyA?1:0),tu=(keys.KeyR?1:0)-(keys.KeyF?1:0);
- let cap=boost?BOOSTV:MAXV;
+ let cap=(boost?BOOSTV:MAXV)*throttle/10+(ts||tu?MAXV*0.3:0);
  if(lock&&lock.auto){const dist=Math.max(0,cam.position.distanceTo(lock.pos)-lock.stopAt);const aligned=Math.max(0,want.dot(fwd));
   cap=Math.min(AUTOV,Math.max(6,dist*0.6))*aligned;tf=1;}
+ if(vel.length()>cap)tf=0;   // throttled down: coast down to the new speed
  const a=ACC*(boost||(lock&&lock.auto)?3.2:1);
  vel.addScaledVector(fwd,tf*a*dt).addScaledVector(right,ts*a*0.6*dt).addScaledVector(up,tu*a*0.6*dt);
  const idle=!tf&&!ts&&!tu;
- vel.multiplyScalar(Math.exp(-(keys.Space||(lock&&lock.parked)?2.6:idle?0.35:0.12)*dt));   // parked = station-keeping brake   // released: drifts to a stop over a few seconds
+ vel.multiplyScalar(Math.exp(-(keys.Space||(lock&&lock.parked)?2.6:idle?(throttle?0.35:1.2):0.12)*dt));   // parked = station-keeping brake   // released: drifts to a stop over a few seconds
  if(vel.length()>cap)vel.setLength(Math.max(cap,vel.length()*Math.exp(-1.5*dt)));
+ if(!(lock&&lock.auto)&&tf){const sp=vel.length();vel.lerp(want.copy(fwd).multiplyScalar(sp),1-Math.exp(-3*dt));}   // under power the ship flies where it points
  cam.position.addScaledVector(vel,dt);
  if(lock&&lock.parked){if(lock.last)cam.position.add(tgtV.copy(lock.pos).sub(lock.last));lock.last=(lock.last||new THREE.Vector3()).copy(lock.pos);}   // station-keeping: ride along as the field drifts
  if(cam.position.length()<SUN_R*30){cam.position.setLength(SUN_R*30);vel.multiplyScalar(0.2);if(lock)lock.auto=false;warn('Too close to the Sun. Hull temperature critical.');}
 }
+// Approach distance (Eric 10-17): big, faint numbers top centre, to whatever the scanner is tracking.
+const apprEl=document.getElementById('appr');
+function approachHud(){
+ const p=docked?null:lock?(lock.aim||lock.pos):scanBest&&scanStrength>0.25?scanBest.center:null;
+ apprEl.hidden=!p;if(p)apprEl.textContent=fmtDist(cam.position.distanceTo(p));}
 function lockHud(){
  if(!lock){lockEl.hidden=true;return;}
  pv.copy(lock.aim||lock.pos).project(cam);const on=pv.z<1&&Math.abs(pv.x)<1&&Math.abs(pv.y)<1;
@@ -786,7 +809,7 @@ function scan(dt){
     if(moved>Math.max(35,dist*0.12)&&a1.angleTo(a2)>2.5*Math.PI/180)fixField(best);}
   }}
  scanEl.style.width=(scanStrength*100).toFixed(0)+'%';
- scanTxt.textContent=docked?'DOCKED · press and hold to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
+ scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
  snd.scanner(lock&&(lock.field||lock.dock)||docked?-1:scanStrength);
 }
 function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();
@@ -951,7 +974,7 @@ function frame(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
  if(toastT&&now>toastT){document.getElementById('toast').hidden=true;toastT=0;}
  if(now>sightT){if(!warp){updateCells();updateSight();}sightT=now+200;}
  sky();pulseGuides(now/1000);
- hud();lockHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
+ hud();lockHud();approachHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
 updateCells();updateSight();requestAnimationFrame(frame);netStart();
 window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},SEED,cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
- get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;}}; // for testing
+ get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;},get throttle(){return throttle;}}; // for testing
