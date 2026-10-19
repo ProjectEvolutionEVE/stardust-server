@@ -56,6 +56,8 @@ async def shelves(conn, pid):
             items.append(_entry(code, name, out_ids, passed))
         if g.startswith("Raw materials"):
             items.insert(1, _entry("catalogue", LB.BOOKS["catalogue"]["title"], out_ids, passed))
+        if g == "Making things":         # the handbook sits beside Engineering & Drafting; a design can't require it
+            items.insert(1, _entry("blueprint-handbook", LB.BOOKS["blueprint-handbook"]["title"], out_ids, passed))
         groups.append({"group": g, "books": items})
     return {"shelves": groups, "pass_mark": LB.PASS_MARK,
             "passed": len(passed), "note": "The library is free. Read here, or check a book out to your bookshelf."}
