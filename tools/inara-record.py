@@ -74,7 +74,8 @@ def main():
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
     key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
     voices = json.loads(call("https://api.elevenlabs.io/v1/voices", key))["voices"]
-    lily = [v for v in voices if v["name"].lower().startswith(a.voice.lower())]
+    lily = [v for v in voices if v["name"].lower().startswith(a.voice.lower()) or v["voice_id"] == a.voice] \
+        or ([{"voice_id": a.voice, "name": a.voice}] if re.fullmatch(r"[A-Za-z0-9]{20}", a.voice) else [])   # a voice ID
     if not lily: sys.exit(f"No voice starting '{a.voice}' in My Voices.")
     print(f"Voice: {lily[0]['name']}")
     vset = {k: v for k, v in (("speed", a.speed), ("stability", a.stability)) if v is not None}

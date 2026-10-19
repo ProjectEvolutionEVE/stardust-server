@@ -7,7 +7,7 @@ Saves ~/Desktop/inara-language-samples/<code>.mp3
 
     python3 tools/inara-language-samples.py
 """
-import argparse, getpass, json, os, sys, urllib.request
+import argparse, getpass, re, json, os, sys, urllib.request
 
 SAMPLES = {
     "zh-CN": "离开舰首了。祝你在星环里好运。你现在身处一艘探索型科学研究星舰上，见习生。这里的每个人都是从最底层做起的。我也一样。",
@@ -38,7 +38,8 @@ ap.add_argument("--langs", default=",".join(SAMPLES), help="comma-separated, e.g
 a = ap.parse_args()
 key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
 vs = json.loads(call("https://api.elevenlabs.io/v1/voices", key))["voices"]
-lily = [v for v in vs if v["name"].lower().startswith(a.voice.lower())]
+lily = [v for v in vs if v["name"].lower().startswith(a.voice.lower()) or v["voice_id"] == a.voice] \
+    or ([{"voice_id": a.voice, "name": a.voice}] if re.fullmatch(r"[A-Za-z0-9]{20}", a.voice) else [])   # a voice ID
 if not lily: sys.exit(f"No voice starting '{a.voice}' in My Voices. Add it from the Voice Library first (the + button). Found: "
                       + ", ".join(v["name"] for v in vs))
 print(f"Voice: {lily[0]['name']}")
