@@ -25,7 +25,7 @@ clears it. No line below says the game's name, so a name change means no re-reco
   - **Kate 1 - Warm, Close and Natural:** Spanish (Latin American), French, Korean, Turkish at her natural settings;
     Brazilian Portuguese with faster, steadier settings (Eric: her natural Portuguese was too slow and intimate for a Tower).
   - **Julia (Russian), voice ID `MOgsVr0EwwxqQs5cNDhu`:** Russian.
-  - **Japanese:** no voice chosen yet.
+  - **Sumiko Ito - Crisp, voice ID `0yh9saSHWVy78QG1HfNs`:** Japanese (Eric 10-19; recorded without a sample, on his call).
   Line texts per language: `docs/inara-lines/<lang>.json`; record with `tools/inara-record.py --lang <lang> --voice <name or ID>`.
 - **Voice: Lily (Eric, 10-19).** Exact voice: "Lily - Velvety Actress" on Eric's ElevenLabs account, model `eleven_multilingual_v2`; Eric heard the test sample (`tools/inara-voice-sample.py`, TWR-004 + STORY-001/002) on 10-19: "The voice matches and sounds perfect." Recorded files only; never a live ElevenLabs call for players until a different
   ElevenLabs contract is in place. Still open: what players in languages ElevenLabs doesn't speak well get
