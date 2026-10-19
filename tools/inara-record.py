@@ -11,6 +11,7 @@ The API key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printe
 
     python3 tools/inara-record.py --list            # count the lines and characters, record nothing
     python3 tools/inara-record.py                   # record everything into ~/Desktop/inara-en
+    python3 tools/inara-record.py --lang de         # German, from docs/inara-lines/de.json, into ~/Desktop/inara-de
 """
 import argparse, getpass, json, os, re, shutil, subprocess, sys, urllib.request
 
@@ -55,9 +56,11 @@ def call(url, key, body=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--list", action="store_true")
-    ap.add_argument("--out", default=os.path.expanduser("~/Desktop/inara-en"))
+    ap.add_argument("--lang", default="en", help="en, or a translation in docs/inara-lines/<lang>.json")
+    ap.add_argument("--out")
     a = ap.parse_args()
-    L = lines()
+    a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
+    L = lines() if a.lang == "en" else json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
     todo = {k: v for k, v in L.items() if not os.path.exists(os.path.join(a.out, "raw", k + ".mp3"))}
     print(f"{len(L)} lines, {sum(map(len, L.values())):,} characters in all; {len(todo)} still to record "
           f"({sum(map(len, todo.values())):,} characters).")
