@@ -58,6 +58,9 @@ def main():
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--lang", default="en", help="en, or a translation in docs/inara-lines/<lang>.json")
     ap.add_argument("--out")
+    ap.add_argument("--voice", default="lily", help="the start of the voice's name in My Voices, e.g. 'kate 1'")
+    ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2")
+    ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
     a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
     L = lines() if a.lang == "en" else json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
@@ -71,14 +74,16 @@ def main():
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
     key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
     voices = json.loads(call("https://api.elevenlabs.io/v1/voices", key))["voices"]
-    lily = [v for v in voices if v["name"].lower().startswith("lily")]
-    if not lily: sys.exit("No voice named Lily on this account.")
+    lily = [v for v in voices if v["name"].lower().startswith(a.voice.lower())]
+    if not lily: sys.exit(f"No voice starting '{a.voice}' in My Voices.")
+    print(f"Voice: {lily[0]['name']}")
+    vset = {k: v for k, v in (("speed", a.speed), ("stability", a.stability)) if v is not None}
     vid = lily[0]["voice_id"]
     os.makedirs(os.path.join(a.out, "raw"), exist_ok=True); os.makedirs(os.path.join(a.out, "radio"), exist_ok=True)
     for n, (k, text) in enumerate(todo.items(), 1):
         raw = os.path.join(a.out, "raw", k + ".mp3")
         try:
-            audio = call(f"https://api.elevenlabs.io/v1/text-to-speech/{vid}", key, {"text": text, "model_id": MODEL})
+            audio = call(f"https://api.elevenlabs.io/v1/text-to-speech/{vid}", key, {"text": text, "model_id": MODEL, **({"voice_settings": vset} if vset else {})})
         except urllib.error.HTTPError as e:
             sys.exit(f"Stopped at {k}: ElevenLabs said {e.code} {e.reason}. Everything before it is saved; run again to continue.")
         open(raw, "wb").write(audio)

@@ -32,6 +32,8 @@ def call(url, key, body=None):
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--voice", default="lily", help="the start of the voice's name in My Voices, e.g. 'kate 1'")
+ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2 (1.0 = the voice's own pace)")
+ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier, more even delivery")
 ap.add_argument("--langs", default=",".join(SAMPLES), help="comma-separated, e.g. es,pt-BR,ko,fr,tr")
 a = ap.parse_args()
 key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
@@ -41,12 +43,14 @@ if not lily: sys.exit(f"No voice starting '{a.voice}' in My Voices. Add it from 
                       + ", ".join(v["name"] for v in vs))
 print(f"Voice: {lily[0]['name']}")
 SAMPLES = {k: v for k, v in SAMPLES.items() if k in a.langs.split(",")}
-out = os.path.expanduser(f"~/Desktop/inara-language-samples/{a.voice.replace(' ', '-')}"); os.makedirs(out, exist_ok=True)
+vset = {k: v for k, v in (("speed", a.speed), ("stability", a.stability)) if v is not None}
+tag = "".join(f"-{k}{v}" for k, v in vset.items())
+out = os.path.expanduser(f"~/Desktop/inara-language-samples/{a.voice.replace(' ', '-')}{tag}"); os.makedirs(out, exist_ok=True)
 print(f"{len(SAMPLES)} samples, {sum(map(len, SAMPLES.values())):,} characters.")
 for code, text in SAMPLES.items():
     p = os.path.join(out, code + ".mp3")
     if os.path.exists(p): continue
     open(p, "wb").write(call(f"https://api.elevenlabs.io/v1/text-to-speech/{lily[0]['voice_id']}", key,
-                             {"text": text, "model_id": "eleven_multilingual_v2"}))
+                             {"text": text, "model_id": "eleven_multilingual_v2", **({"voice_settings": vset} if vset else {})}))
     print(f"  {code}", flush=True)
 print(f"Done. Listen in {out}")
