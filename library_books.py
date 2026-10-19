@@ -249,7 +249,7 @@ BOOKS = {
              "• Later runs are 10 credits a copy only.\n"
              "• A run is 1 to 500 copies, and your filing cabinet needs room for them.\n"
              "Example: 25 copies on the first run cost 100 + 250 = 350 credits, so 14 credits a copy. Price your copies "
-             "above that. The credits go to the WSC's own account, and every run gives you a receipt."),
+             "above that. The credits go to the Starship Bank's own account, and every run gives you a receipt."),
             ("Selling copies: no resale",
              "Only the designer sells copies. A player who buys a copy keeps it and builds from it, but can never sell it "
              "on."),
@@ -326,7 +326,7 @@ BOOKS = {
              "Q: Can I take a design back?\nA: Yes, you can withdraw it until it has been decided.\n\n"
              "Q: Where does my approved design go?\nA: Your original, with its serial, goes to your filing cabinet.\n\n"
              "Q: What does printing cost?\nA: 100 credits once, on the first run, plus 10 credits a copy.\n\n"
-             "Q: Where do the printing credits go?\nA: To the WSC's own account.\n\n"
+             "Q: Where do the printing credits go?\nA: To the Starship Bank's own account. (The 2.5% auction fee is different: that goes to the WSC.)\n\n"
              "Q: Can someone who bought my copy sell it?\nA: No. Only the designer sells copies.\n\n"
              "Q: How long does an auction copy stay open?\nA: Until 5 minutes pass with no new top bid.\n\n"
              "Q: Who pays the 2.5% fee?\nA: The winner, on top of their bid. The designer gets the full bid.\n\n"

@@ -72,13 +72,26 @@ async def system_account(conn, kind):
     return await conn.fetchval("SELECT id FROM accounts WHERE kind=$1", kind)
 
 
-WSC_KEY = "system:wsc"     # the WSC's own account aboard the Starship (Eric 10-11): fees for its services are paid here,
+WSC_KEY = "system:wsc"     # the WSC's own account (Eric 10-11): the governing body; it collects the 2.5% auction fee (its tax, 10-19),
                            # and it can buy and sell what the ship needs on the market, like any account
 
 
 async def wsc_account(conn):
     """The WSC's account id (created on first use, set up like any account aboard)."""
     return await account_of(conn, await ensure_player(conn, WSC_KEY, "WSC Alexander von Humboldt"))
+
+
+BANK_KEY = "system:bank"           # the Starship Bank's own account (Eric 10-19): run by the WSC, it collects the blueprint
+                                   # printing fees and builds its ledger toward loans later. Separate from its two market desks.
+AUCTION_KEY = "system:auction-house"   # the Auction House (Eric 10-19), under the Bank's authority: its own account, no fees yet
+
+
+async def bank_account(conn):
+    return await account_of(conn, await ensure_player(conn, BANK_KEY, "Starship Bank"))
+
+
+async def auction_house_account(conn):
+    return await account_of(conn, await ensure_player(conn, AUCTION_KEY, "Starship Auction House"))
 
 
 async def account_of(conn, pid):

@@ -355,7 +355,7 @@ async def main():
     async with cl.app["pool"].acquire() as c:
         model = await c.fetchval("SELECT model_code FROM item_types WHERE code=$1", code)
         pdes = await c.fetchval("SELECT designer_id FROM blueprint_submissions WHERE id=$1", bid)
-        wsc = await ST.wsc_account(c)
+        wsc = await ST.bank_account(c)
         wsc0 = await c.fetchval("SELECT credits FROM accounts WHERE id=$1", wsc)
         bal0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
         r1 = await SER.print_run(c, pdes, code, 25)
@@ -385,7 +385,7 @@ async def main():
         await c.execute("UPDATE items SET owner_id=$2 WHERE id=$1", copy_id, pdes)
     check("first run of 25 costs 350 credits: setup fee 100 + 25 x 10 (Eric 10-11)", bal0 - bal1 == 350 and r1["price"]["setup_fee"] == 100)
     check("second run costs only 10 a copy: 250", bal1 - bal2 == 250 and r2["price"]["setup_fee"] == 0)
-    check("printing fees are paid to the WSC's own account (Eric 10-11)", wsc2 - wsc0 == 600)
+    check("printing fees are paid to the Starship Bank's own account (Eric 10-19)", wsc2 - wsc0 == 600)
     check("each print run gives a receipt anyone can check", rcpt and rcpt["kind"] == "print" and rcpt["copies"] == 25 and rcpt["credits"] == 350)
     r = await cl.post("/api/dfg/blueprints/print", headers=HB, json={"id": bid, "copies": 10, "quote": True}); q = await r.json()
     check("the print screen's price quote (later runs: no setup fee)", r.status == 200 and q == {"setup_fee": 0, "per_copy": 10, "copies": 10, "total": 100})
@@ -478,6 +478,10 @@ async def main():
     check("the copy goes to the winner's filing cabinet", item1["owner_id"] == b1p and item1["kind"] == "filing_cabinet")
     check("the winner pays 22 + 1 fee; the designer gets 22; the WSC gets the fee",
           b1["credits"] == b1c0 - 23 and b1["held_credits"] == 0 and dc1 - dc0 == 22 and wsc1 - wsc0 == 1)
+    async with cl.app["pool"].acquire() as c:
+        accts = [await ST.wsc_account(c), await ST.bank_account(c), await ST.auction_house_account(c)]
+    check("the WSC, the Starship Bank and the Auction House each have their own account (Eric 10-19)",
+          all(accts) and len(set(accts)) == 3)
     check("the outbid bidder has everything back", b2["credits"] == b2c0 and b2["held_credits"] == 0)
     check("the winner and the designer both get a receipt", {x["player_id"] for x in rc} == {b1p, pdes})
     check("the winner can't resell the copy they won", not resell)
