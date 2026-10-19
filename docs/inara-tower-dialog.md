@@ -44,7 +44,7 @@ reveals the backstory one beat at a time as the player's character advances. Not
 ## Status key (from `inara-recording-script.md`)
 - **SOURCE**: the exact text exists in the code or a design document. Record as written.
 - **SOURCE, HOLD**: the text exists, but it can't be played yet (it names something not built).
-- **[DRAFT, needs Eric's approval]**: the sources say Inara speaks at this moment (or the moment exists in the game)
+- **APPROVED by Eric 10-19**: the sources say Inara speaks at this moment (or the moment exists in the game)
   but give no words. The draft uses only facts from the sources.
 - **[NEW LORE, needs Eric's approval]** (new in this document): the line states a story fact that is in **no** source.
   Every one is also listed in the "New lore to approve" section at the end. Do not record these until Eric approves.
@@ -82,9 +82,9 @@ Moment: the player enters the Docking Bay from the corridor (rule 19) and the cr
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-001 | [DRAFT, needs Eric's approval] | Tower here. Your craft's in the bay and ready. Press and hold when you want to launch. |
-| INARA-TWR-002 | [DRAFT, needs Eric's approval] | You're cleared to launch whenever you're ready. Press and hold to go. |
-| INARA-TWR-003 | [DRAFT, needs Eric's approval] | Bay's clear, pilot. Take her out when you're ready. |
+| INARA-TWR-001 | APPROVED by Eric 10-19 | Tower here. Your craft's in the bay and ready. Throttle up when you want to launch. |
+| INARA-TWR-002 | APPROVED by Eric 10-19 | You're cleared to launch whenever you're ready. Throttle up to go. |
+| INARA-TWR-003 | APPROVED by Eric 10-19 | Bay's clear, pilot. Take her out when you're ready. |
 
 *Draft basis:* FAQ-022 ("Press and hold, just like flying. You'll launch out from under the bow").
 
@@ -93,9 +93,9 @@ Take 1 is **INARA-TOWER-001** ("You're clear of the bay. Good hunting.").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-004 | [DRAFT, needs Eric's approval] | Clear of the bow. Good luck out in the rings. |
-| INARA-TWR-005 | [DRAFT, needs Eric's approval] | You're out. I'll be watching from the Tower. |
-| INARA-TWR-006 | [DRAFT, needs Eric's approval] | Clear of the Starship. Use WARP to reach a ring quickly. |
+| INARA-TWR-004 | APPROVED by Eric 10-19 | Clear of the bow. Good luck out in the rings. |
+| INARA-TWR-005 | APPROVED by Eric 10-19 | You're out. I'll be watching from the Tower. |
+| INARA-TWR-006 | APPROVED by Eric 10-19 | Clear of the Starship. Use WARP to reach a ring quickly. |
 
 *Draft basis:* spec §10 (she watches every craft leave and come home); spec §3 (WARP button).
 
@@ -106,10 +106,10 @@ not hear the same line every time (once per ring):
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-007 | [DRAFT, needs Eric's approval] | Mercury ring. Closest to the Sun, so everything's brightly lit. Start sweeping. |
-| INARA-TWR-008 | [DRAFT, needs Eric's approval] | Venus ring. Plenty of debris out here. Start sweeping. |
-| INARA-TWR-009 | [DRAFT, needs Eric's approval] | Earth ring. Take your time in this one. Start sweeping. |
-| INARA-TWR-010 | [DRAFT, needs Eric's approval] | Mars ring. Farthest from the Sun, so it's dimmer out here. Start sweeping. |
+| INARA-TWR-007 | APPROVED by Eric 10-19 | Mercury ring. Closest to the Sun, so everything's brightly lit. Start sweeping. |
+| INARA-TWR-008 | APPROVED by Eric 10-19 | Venus ring. Plenty of debris out here. Start sweeping. |
+| INARA-TWR-009 | APPROVED by Eric 10-19 | Earth ring. Take your time in this one. Start sweeping. |
+| INARA-TWR-010 | APPROVED by Eric 10-19 | Mars ring. Farthest from the Sun, so it's dimmer out here. Start sweeping. |
 
 *Draft basis:* spec §3 ring distances (0.39 / 0.72 / 1.00 / 1.52 AU); FAQ-005 ("the farther you are from the Sun, the
 dimmer everything gets"). TWR-009 is deliberately quiet: no claim about Earth's fate (canon limit 7).
@@ -122,8 +122,8 @@ return of a session only, per spec §9.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-011 | [DRAFT, needs Eric's approval] | I hear it too. Something's out there. |
-| INARA-TWR-012 | [DRAFT, needs Eric's approval] | That's a return. Point at it and take a bearing. |
+| INARA-TWR-011 | APPROVED by Eric 10-19 | I hear it too. Something's out there. |
+| INARA-TWR-012 | APPROVED by Eric 10-19 | That's a return. Point at it and take a bearing. |
 
 *Draft basis:* FAQ-010, FAQ-014.
 
@@ -133,17 +133,17 @@ most on the first bearing of a session, so it doesn't cover the scanner.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-013 | [DRAFT, needs Eric's approval] | Bearing's in. Move off to one side and sweep it again. |
-| INARA-TWR-014 | [DRAFT, needs Eric's approval] | One bearing. Shift over and give me a second one. |
+| INARA-TWR-013 | APPROVED by Eric 10-19 | Bearing's in. Move off to one side and sweep it again. |
+| INARA-TWR-014 | APPROVED by Eric 10-19 | One bearing. Shift over and give me a second one. |
 
 ### A6. Lock-on (field fixed)
 Take 1 is **INARA-TOWER-003** ("Field locked. Double-tap to fly there.").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-015 | [DRAFT, needs Eric's approval] | Bearings cross. You've got it. Double-tap and the autopilot takes you in. |
-| INARA-TWR-016 | [DRAFT, needs Eric's approval] | Locked. Nice work. Double-tap when you're ready. |
-| INARA-TWR-017 | [DRAFT, needs Eric's approval] | That's a fix. Scanner goes quiet now; you know where it is. |
+| INARA-TWR-015 | APPROVED by Eric 10-19 | Bearings cross. You've got it. Double-tap and the autopilot takes you in. |
+| INARA-TWR-016 | APPROVED by Eric 10-19 | Locked. Nice work. Double-tap when you're ready. |
+| INARA-TWR-017 | APPROVED by Eric 10-19 | That's a fix. Scanner goes quiet now; you know where it is. |
 
 *Draft basis:* FAQ-015, FAQ-017.
 
@@ -152,16 +152,16 @@ Moment: the autopilot arrives and parks outside the field (`lock.parked`, `debri
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-018 | [DRAFT, needs Eric's approval] | You're parked off the field. Tap COLLECT when you're ready. |
-| INARA-TWR-019 | [DRAFT, needs Eric's approval] | Holding position. The autopilot keeps you here while it drifts. |
-| INARA-TWR-020 | [DRAFT, needs Eric's approval] | In position. Have a look before you start collecting. |
+| INARA-TWR-018 | APPROVED by Eric 10-19 | You're parked off the field. Tap COLLECT when you're ready. |
+| INARA-TWR-019 | APPROVED by Eric 10-19 | Holding position. The autopilot keeps you here while it drifts. |
+| INARA-TWR-020 | APPROVED by Eric 10-19 | In position. Have a look before you start collecting. |
 
 ### A8. Too big to take
 Take 1 is **INARA-TOWER-004**. One extra take; must **not** mention any upgrade (spec §6, ledger v1.3).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-021 | [DRAFT, needs Eric's approval] | Nothing here fits your hold. There are other fields; keep searching. |
+| INARA-TWR-021 | APPROVED by Eric 10-19 | Nothing here fits your hold. There are other fields; keep searching. |
 
 ### A9. Collection
 Moments: the first piece aboard in a session, and the field cleared. Per-piece lines would play too often; the piece's
@@ -169,10 +169,10 @@ name and weight stay on the toast (`debris-flight.js:362`).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-022 | [DRAFT, needs Eric's approval] | First piece is aboard. Keep going. |
-| INARA-TWR-023 | [DRAFT, needs Eric's approval] | That's coming in nicely. |
-| INARA-TWR-024 | [DRAFT, needs Eric's approval] | Field's empty. There's more debris all through the ring. |
-| INARA-TWR-025 | [DRAFT, needs Eric's approval] | You've cleared it. Another one will form somewhere in this ring. |
+| INARA-TWR-022 | APPROVED by Eric 10-19 | First piece is aboard. Keep going. |
+| INARA-TWR-023 | APPROVED by Eric 10-19 | That's coming in nicely. |
+| INARA-TWR-024 | APPROVED by Eric 10-19 | Field's empty. There's more debris all through the ring. |
+| INARA-TWR-025 | APPROVED by Eric 10-19 | You've cleared it. Another one will form somewhere in this ring. |
 
 *Draft basis:* FIELD CLEARED toast (`debris-flight.js:365`); FAQ-030.
 
@@ -180,8 +180,8 @@ name and weight stay on the toast (`debris-flight.js:362`).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-026 | [DRAFT, needs Eric's approval] | Wait. Check that piece. That's a near-flawless diamond. One in a hundred thousand. |
-| INARA-TWR-027 | [DRAFT, needs Eric's approval] | Well, look at that. A near-flawless diamond. It goes to your lockbox when you unload. |
+| INARA-TWR-026 | APPROVED by Eric 10-19 | Wait. Check that piece. That's a near-flawless diamond. One in a hundred thousand. |
+| INARA-TWR-027 | APPROVED by Eric 10-19 | Well, look at that. A near-flawless diamond. It goes to your lockbox when you unload. |
 
 ("One in a hundred thousand" is a fixed rule, not a live number.)
 
@@ -190,15 +190,15 @@ Take 1 is **INARA-TOWER-005**.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-028 | [DRAFT, needs Eric's approval] | You're full. Time to bring it home. |
-| INARA-TWR-029 | [DRAFT, needs Eric's approval] | Hold's packed. Double-tap the Starship and I'll talk you in. |
+| INARA-TWR-028 | APPROVED by Eric 10-19 | You're full. Time to bring it home. |
+| INARA-TWR-029 | APPROVED by Eric 10-19 | Hold's packed. Double-tap the Starship and I'll talk you in. |
 
 ### A11. Return and approach to the Starship
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-030 | [DRAFT, needs Eric's approval] | Heading home. Follow the guide lights in under the bow. |
-| INARA-TWR-031 | [DRAFT, needs Eric's approval] | I have you on approach. Nice and steady. |
-| INARA-TWR-032 | [DRAFT, needs Eric's approval] | Out of warp, Starship ahead. Double-tap her to come aboard. |
+| INARA-TWR-030 | APPROVED by Eric 10-19 | Heading home. Follow the guide lights in under the bow. |
+| INARA-TWR-031 | APPROVED by Eric 10-19 | I have you on approach. Nice and steady. |
+| INARA-TWR-032 | APPROVED by Eric 10-19 | Out of warp, Starship ahead. Double-tap her to come aboard. |
 
 Take 1 for the final approach is **INARA-TOWER-006** ("I see you. Bringing you in under the bow..."). TWR-032 matches
 the ARRIVED toast (`debris-flight.js:915`).
@@ -208,9 +208,9 @@ Take 1 is **INARA-TOWER-007** ("Welcome home...").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-033 | [DRAFT, needs Eric's approval] | You're in. Tap UNLOAD and your pieces move across. |
-| INARA-TWR-034 | [DRAFT, needs Eric's approval] | Docked and secure. Welcome back. |
-| INARA-TWR-035 | [DRAFT, needs Eric's approval] | Transfer complete. Your receipt's in the filing cabinet in your quarters. |
+| INARA-TWR-033 | APPROVED by Eric 10-19 | You're in. Tap UNLOAD and your pieces move across. |
+| INARA-TWR-034 | APPROVED by Eric 10-19 | Docked and secure. Welcome back. |
+| INARA-TWR-035 | APPROVED by Eric 10-19 | Transfer complete. Your receipt's in the filing cabinet in your quarters. |
 
 TWR-035 plays on TRANSFER COMPLETE (`debris-flight.js:466`); the piece count stays on screen.
 
@@ -222,21 +222,21 @@ Appendix A). Recorded so Eric can choose to use them. Play once when a bar cross
 | ID | Status | Text |
 |---|---|---|
 | INARA-TWR-036 | SOURCE (`body.py`, `warning()`), voice use needs Eric's approval | You're pushing past healthy limits. Rest soon: 65% is the lowest recommended level. |
-| INARA-TWR-037 | [DRAFT, needs Eric's approval] | You're getting tired. Below sixty-five, everything gets harder. Plan some rest. |
-| INARA-TWR-038 | [DRAFT, needs Eric's approval] | Your focus is slipping. Finish up and get some sleep soon. |
+| INARA-TWR-037 | APPROVED by Eric 10-19 | You're getting tired. Below sixty-five, everything gets harder. Plan some rest. |
+| INARA-TWR-038 | APPROVED by Eric 10-19 | Your focus is slipping. Finish up and get some sleep soon. |
 | INARA-TWR-039 | SOURCE (`body.py`, `warning()`), voice use needs Eric's approval | You're running on empty. Below 50% you can't do your duties properly. Get to your bed and rest. |
-| INARA-TWR-040 | [DRAFT, needs Eric's approval] | You're below fifty. That's not safe flying. Come home and rest. |
-| INARA-TWR-041 | [DRAFT, needs Eric's approval] | Your body's done for today. Your own bed is the best rest there is. |
+| INARA-TWR-040 | APPROVED by Eric 10-19 | You're below fifty. That's not safe flying. Come home and rest. |
+| INARA-TWR-041 | APPROVED by Eric 10-19 | Your body's done for today. Your own bed is the best rest there is. |
 
 Takes: 036-038 below 65; 039-041 below 50. TWR-041 basis: "the best rest is in the player's own bed" (Bed rule).
 
 ### A14. Waking and signing out (in bed)
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-042 | [DRAFT, needs Eric's approval] | Morning. Your bars are on the Bed tab. The Starship's been busy. |
-| INARA-TWR-043 | [DRAFT, needs Eric's approval] | You're awake. Check the COMMS at your desk when you're ready. |
-| INARA-TWR-044 | [DRAFT, needs Eric's approval] | Rest well. The ship keeps running while you sleep. |
-| INARA-TWR-045 | [DRAFT, needs Eric's approval] | Good night. I'll be in the Tower. |
+| INARA-TWR-042 | APPROVED by Eric 10-19 | Morning. Your bars are on the Bed tab. The Starship's been busy. |
+| INARA-TWR-043 | APPROVED by Eric 10-19 | You're awake. Check the COMMS at your desk when you're ready. |
+| INARA-TWR-044 | APPROVED by Eric 10-19 | Rest well. The ship keeps running while you sleep. |
+| INARA-TWR-045 | APPROVED by Eric 10-19 | Good night. I'll be in the Tower. |
 
 TWR-044 basis: "The game always runs in real time" (Bed rule). Note: "Morning" fits any time of day only loosely; Eric
 may prefer TWR-043 alone.
@@ -247,9 +247,9 @@ when the player signs in and the job finished while they were away.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-046 | [DRAFT, needs Eric's approval] · HOLD | Welcome back. The job's done, the cargo's unloaded, and you're in your bed. Your receipt's in the filing cabinet. |
-| INARA-TWR-047 | [DRAFT, needs Eric's approval] · HOLD | You finished the run while you were away. Check your bars: you only got the rest you got. |
-| INARA-TWR-048 | [DRAFT, needs Eric's approval] · HOLD | Job's finished and unloaded. You worked tired out there; it took a little longer. |
+| INARA-TWR-046 | APPROVED by Eric 10-19 · HOLD | Welcome back. The job's done, the cargo's unloaded, and you're in your bed. Your receipt's in the filing cabinet. |
+| INARA-TWR-047 | APPROVED by Eric 10-19 · HOLD | You finished the run while you were away. Check your bars: you only got the rest you got. |
+| INARA-TWR-048 | APPROVED by Eric 10-19 · HOLD | Job's finished and unloaded. You worked tired out there; it took a little longer. |
 
 TWR-048 plays only if a bar went below 50% during the job (the toggle keeps working, slowed, rule: "finish the job
 before coming back").
@@ -257,11 +257,11 @@ before coming back").
 ### A16. Library, market and blueprint moments (one-time coaching, no pushing)
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-049 | [DRAFT, needs Eric's approval] | Test passed. Your certificate is in your filing cabinet. |
-| INARA-TWR-050 | [DRAFT, needs Eric's approval] | Not this time. You can take the test again whenever you like. |
-| INARA-TWR-051 | [DRAFT, needs Eric's approval] | Your order's in. You'll get a receipt when it trades. |
-| INARA-TWR-052 | [DRAFT, needs Eric's approval] | Sold. The receipt's in your filing cabinet. |
-| INARA-TWR-053 | [DRAFT, needs Eric's approval] | Your design's gone to the review team. Answers come back to your filing cabinet. |
+| INARA-TWR-049 | APPROVED by Eric 10-19 | Test passed. Your certificate is in your filing cabinet. |
+| INARA-TWR-050 | APPROVED by Eric 10-19 | Not this time. You can take the test again whenever you like. |
+| INARA-TWR-051 | APPROVED by Eric 10-19 | Your order's in. You'll get a receipt when it trades. |
+| INARA-TWR-052 | APPROVED by Eric 10-19 | Sold. The receipt's in your filing cabinet. |
+| INARA-TWR-053 | APPROVED by Eric 10-19 | Your design's gone to the review team. Answers come back to your filing cabinet. |
 
 Basis: rule 24 (4 of 5, retakes any time, certificate in filing cabinet), rule 13 (receipts), rule 23 (review).
 
@@ -289,15 +289,15 @@ Take this after INARA-WELCOME-001/002 (recording script).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-001 | [DRAFT, needs Eric's approval] | You're aboard an exploratory science and research starship, Trainee. Everyone here starts at the bottom. |
+| INARA-STORY-001 | APPROVED by Eric 10-19 | You're aboard an exploratory science and research starship, Trainee. Everyone here starts at the bottom. |
 | INARA-STORY-002 | APPROVED by Eric 10-19 | I did too, once. |
 
 **Beat 2 · First visit to the Starship Library** (trigger: first `GET /api/dfg/library`)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-003 | [DRAFT, needs Eric's approval] | She's named for Alexander von Humboldt, an explorer who spent his life learning how nature fits together. |
-| INARA-STORY-004 | [DRAFT, needs Eric's approval] | Fitting that the library's where you start. Learning is how you move up aboard this ship. |
+| INARA-STORY-003 | APPROVED by Eric 10-19 | She's named for Alexander von Humboldt, an explorer who spent his life learning how nature fits together. |
+| INARA-STORY-004 | APPROVED by Eric 10-19 | Fitting that the library's where you start. Learning is how you move up aboard this ship. |
 
 Basis: spec §10 History (named for the Prussian naturalist, 1769-1859, "integrated science ... interconnectedness of
 nature"); rule 6 / rule 24.
@@ -306,8 +306,8 @@ nature"); rule 6 / rule 24.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-005 | [DRAFT, needs Eric's approval] | The WSC is the World Space Consortium, the space agency for the whole planet. This ship is theirs. |
-| INARA-STORY-006 | [DRAFT, needs Eric's approval] | It's a civilian agency. That's why our ranks are civilian ones. |
+| INARA-STORY-005 | APPROVED by Eric 10-19 | The WSC is the World Space Consortium, the space agency for the whole planet. This ship is theirs. |
+| INARA-STORY-006 | APPROVED by Eric 10-19 | It's a civilian agency. That's why our ranks are civilian ones. |
 
 Basis: ledger v2.1; rule 6 ("The WSC is a civilian space agency, so the ladder starts out civilian").
 
@@ -315,7 +315,7 @@ Basis: ledger v2.1; rule 6 ("The WSC is a civilian space agency, so the ladder s
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-007 | [DRAFT, needs Eric's approval] | The people who built this ship started with drawings too. Every design aboard began as someone's idea. |
+| INARA-STORY-007 | APPROVED by Eric 10-19 | The people who built this ship started with drawings too. Every design aboard began as someone's idea. |
 
 Basis: rule 11 / 23 (blueprints designed by players); spec §10 (designs, approval). Kept general on purpose.
 
@@ -323,8 +323,8 @@ Basis: rule 11 / 23 (blueprints designed by players); spec §10 (designs, approv
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-008 | [DRAFT, needs Eric's approval] | Look back once you're clear. That's the Humboldt, and the lit windows under her bow are my Tower. |
-| INARA-STORY-009 | [DRAFT, needs Eric's approval] | She's parked near the wormhole, past Jupiter, well away from every debris field. |
+| INARA-STORY-008 | APPROVED by Eric 10-19 | Look back once you're clear. That's the Humboldt, and the lit windows under her bow are my Tower. |
+| INARA-STORY-009 | APPROVED by Eric 10-19 | She's parked near the wormhole, past Jupiter, well away from every debris field. |
 
 Basis: FAQ-021; Story Bible "The wormhole" (it opened near the far side of Jupiter); spec §3 ("The Starship parks
 near the wormhole ... well away from every debris field").
@@ -333,8 +333,8 @@ near the wormhole ... well away from every debris field").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-010 | [DRAFT, needs Eric's approval] | These rings are what's left of Mercury, Venus, Earth and Mars, and most of their moons. |
-| INARA-STORY-011 | [DRAFT, needs Eric's approval] | The Sun's still there, and the big gas giants. What destroyed the rest, nobody knows. Everyone aboard has a theory. |
+| INARA-STORY-010 | APPROVED by Eric 10-19 | These rings are what's left of Mercury, Venus, Earth and Mars, and most of their moons. |
+| INARA-STORY-011 | APPROVED by Eric 10-19 | The Sun's still there, and the big gas giants. What destroyed the rest, nobody knows. Everyone aboard has a theory. |
 
 Basis: Story Bible "The four planets" (Mercury, Venus, Earth, Mars "and most all of the moons orbiting them") and
 "The return" ("The Sun and the larger gas giants remain"; "What destroyed them is unknown. The crew is full of
@@ -344,13 +344,13 @@ speculation and rumour, and everyone has a theory"). Checked v0.2: the crew does
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-012 | [DRAFT, needs Eric's approval] | Your first piece. Every bit of ore out here was part of a world once. Treat it well. |
+| INARA-STORY-012 | APPROVED by Eric 10-19 | Your first piece. Every bit of ore out here was part of a world once. Treat it well. |
 
 **Beat 8 · First unload, first receipt** (trigger: first `POST /api/dfg/unload`)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-013 | [DRAFT, needs Eric's approval] | That's your first receipt from the Starship's cargo office. Everything you own aboard is in her keeping. |
+| INARA-STORY-013 | APPROVED by Eric 10-19 | That's your first receipt from the Starship's cargo office. Everything you own aboard is in her keeping. |
 
 Basis: FAQ-026 ("What you own is in the Starship's keeping").
 
@@ -359,8 +359,8 @@ seller; completes the prospector's loop, spec §8)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-014 | [DRAFT, needs Eric's approval] | That's the prospector's loop done: find, collect, bring it home, sell. Everyone aboard learns it first. |
-| INARA-STORY-015 | [DRAFT, needs Eric's approval] | Job openings arrive in the COMMS at your desk. Read them when you're ready. |
+| INARA-STORY-014 | APPROVED by Eric 10-19 | That's the prospector's loop done: find, collect, bring it home, sell. Everyone aboard learns it first. |
+| INARA-STORY-015 | APPROVED by Eric 10-19 | Job openings arrive in the COMMS at your desk. Read them when you're ready. |
 
 STORY-015 overlaps INARA-DIRECTION-001 (recording script); play one or the other, not both.
 
@@ -368,7 +368,7 @@ STORY-015 overlaps INARA-DIRECTION-001 (recording script); play one or the other
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-016 | [DRAFT, needs Eric's approval] | The research labs aboard need crystals like that one. Twenty-six labs, and never enough near-flawless stones. |
+| INARA-STORY-016 | APPROVED by Eric 10-19 | The research labs aboard need crystals like that one. Twenty-six labs, and never enough near-flawless stones. |
 
 Basis: rule 26 ("used for research and technology that needs a near-flawless crystal"); spec §10 (26 science labs; a
 fixed spec number, not a live one). "Never enough" is a mild flourish; cut it if Eric prefers.
@@ -377,7 +377,7 @@ fixed spec number, not a live one). "Never enough" is a mild flourish; cut it if
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-017 | [DRAFT, needs Eric's approval] · HOLD | Ore into metal. On the new Earth they'll start with stone and clay furnaces. Up here, we have help. |
+| INARA-STORY-017 | APPROVED by Eric 10-19 · HOLD | Ore into metal. On the new Earth they'll start with stone and clay furnaces. Up here, we have help. |
 
 Basis: rule 25 ("in space, the Starship can help with advanced technology; on the planet, the roots begin with stone
 and clay furnaces").
@@ -387,7 +387,7 @@ HOLD until the book exists)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-018 | [DRAFT, needs Eric's approval] · HOLD | Our greenhouse sustains itself, and the water plant makes its own water. We never run dry out here. |
+| INARA-STORY-018 | APPROVED by Eric 10-19 · HOLD | Our greenhouse sustains itself, and the water plant makes its own water. We never run dry out here. |
 
 Basis: rule 28; Story Bible "What the scavengers value" ("a large self sustaining greenhouse"; the water plant makes
 its own H2O, "an endless supply").
@@ -399,8 +399,8 @@ One beat per promotion on the civilian ladder (rule 6). Each opens with the new 
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-019 | [DRAFT, needs Eric's approval] · HOLD | Crew Member. Welcome to the crew properly. |
-| INARA-STORY-020 | [DRAFT, needs Eric's approval] · HOLD | Ninety to a hundred and twenty of us run this ship. Now you're one of them. |
+| INARA-STORY-019 | APPROVED by Eric 10-19 · HOLD | Crew Member. Welcome to the crew properly. |
+| INARA-STORY-020 | APPROVED by Eric 10-19 · HOLD | Ninety to a hundred and twenty of us run this ship. Now you're one of them. |
 
 Basis: spec §10 (crew 90-120, a fixed spec figure).
 
@@ -408,8 +408,8 @@ Basis: spec §10 (crew 90-120, a fixed spec figure).
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-021 | [DRAFT, needs Eric's approval] · HOLD | Senior Crew Member. Here's some history for you. The contract to build her was announced on the nineteenth of August, twenty forty. |
-| INARA-STORY-022 | [DRAFT, needs Eric's approval] · HOLD | Then eighteen years in an orbital yard. She was too big to launch from the ground. |
+| INARA-STORY-021 | APPROVED by Eric 10-19 · HOLD | Senior Crew Member. Here's some history for you. The contract to build her was announced on the nineteenth of August, twenty forty. |
+| INARA-STORY-022 | APPROVED by Eric 10-19 · HOLD | Then eighteen years in an orbital yard. She was too big to launch from the ground. |
 
 Basis: ledger v2.0; spec §10 Timeline and Builder. (Fixed historical figures, not live numbers. STORY-021 is about 9
 seconds; it is a story beat, not a Tower call.)
@@ -418,8 +418,8 @@ seconds; it is a story beat, not a Tower call.)
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-023 | [DRAFT, needs Eric's approval] · HOLD | Specialist. You know your trade now. So did the people who built her: Space Engineering Technologies. SET. |
-| INARA-STORY-024 | [DRAFT, needs Eric's approval] · HOLD | Some say SET won the contract with influence, not just engineering. That's a rumour, not a fact. |
+| INARA-STORY-023 | APPROVED by Eric 10-19 · HOLD | Specialist. You know your trade now. So did the people who built her: Space Engineering Technologies. SET. |
+| INARA-STORY-024 | APPROVED by Eric 10-19 · HOLD | Some say SET won the contract with influence, not just engineering. That's a rumour, not a fact. |
 
 Basis: spec §10 ("Rumours persist that SET's influence and political pressure won it the contract").
 
@@ -427,8 +427,8 @@ Basis: spec §10 ("Rumours persist that SET's influence and political pressure w
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-025 | [DRAFT, needs Eric's approval] · HOLD | Senior Specialist. Did you know who christened her? Geoffrey Humboldt, the head of the WSC. |
-| INARA-STORY-026 | [DRAFT, needs Eric's approval] · HOLD | He pushed for the name. The explorer was his great-great-great-grandfather. |
+| INARA-STORY-025 | APPROVED by Eric 10-19 · HOLD | Senior Specialist. Did you know who christened her? Geoffrey Humboldt, the head of the WSC. |
+| INARA-STORY-026 | APPROVED by Eric 10-19 · HOLD | He pushed for the name. The explorer was his great-great-great-grandfather. |
 
 Basis: spec §10 ("Christened by Geoffrey Humboldt, CEO of the WSC, who is widely believed to have pushed for the
 name"). "Head of the WSC" is plain speech for CEO.
@@ -437,8 +437,8 @@ name"). "Head of the WSC" is plain speech for CEO.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-027 | [DRAFT, needs Eric's approval] · HOLD | Junior Officer. Your first officer's rank. Here's a story the officers like. |
-| INARA-STORY-028 | [DRAFT, needs Eric's approval] · HOLD | History says Alexander von Humboldt had no children. DNA testing found a son. His mother never told him. |
+| INARA-STORY-027 | APPROVED by Eric 10-19 · HOLD | Junior Officer. Your first officer's rank. Here's a story the officers like. |
+| INARA-STORY-028 | APPROVED by Eric 10-19 · HOLD | History says Alexander von Humboldt had no children. DNA testing found a son. His mother never told him. |
 
 Basis: ledger v2.2; spec §10 Lineage ("it belongs in the books").
 
@@ -446,8 +446,8 @@ Basis: ledger v2.2; spec §10 Lineage ("it belongs in the books").
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-029 | [DRAFT, needs Eric's approval] · HOLD | Officer. You've seen what she can do. Antimatter drive, built to go further and faster than anything before her. |
-| INARA-STORY-030 | [DRAFT, needs Eric's approval] · HOLD | She was built for ten to thirty years without resupply. She was built for a journey like this one. |
+| INARA-STORY-029 | APPROVED by Eric 10-19 · HOLD | Officer. You've seen what she can do. Antimatter drive, built to go further and faster than anything before her. |
+| INARA-STORY-030 | APPROVED by Eric 10-19 · HOLD | She was built for ten to thirty years without resupply. She was built for a journey like this one. |
 
 Basis: spec §10 Specification (antimatter beam-core drive; endurance 10-30+ years). "A journey like this one" stays
 vague on purpose.
@@ -456,8 +456,8 @@ vague on purpose.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-031 | [DRAFT, needs Eric's approval] · HOLD | Senior Officer. You've hauled a lot of ore. Here's where it's going. |
-| INARA-STORY-032 | [DRAFT, needs Eric's approval] · HOLD | Through the wormhole is Earth's twin. Air, water, forests, animals, and no people at all. What we recover goes there. |
+| INARA-STORY-031 | APPROVED by Eric 10-19 · HOLD | Senior Officer. You've hauled a lot of ore. Here's where it's going. |
+| INARA-STORY-032 | APPROVED by Eric 10-19 · HOLD | Through the wormhole is Earth's twin. Air, water, forests, animals, and no people at all. What we recover goes there. |
 
 Basis (v0.2, no longer new lore): Story Bible "The New Earth" (Earth's twin, with oxygen, water, plants, trees and
 animals; "No humans, and no sign that any ever existed") and "Where the debris goes" ("the collected debris is taken
@@ -469,8 +469,8 @@ the same coordinates" step is the place-pinning mechanic of the other game, so t
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-033 | [DRAFT, needs Eric's approval] · HOLD | Chief. A whole department looks to you now. |
-| INARA-STORY-034 | [DRAFT, needs Eric's approval] · HOLD | We spent twelve months on the far side of that wormhole. We came home to this. The research hasn't stopped since. |
+| INARA-STORY-033 | APPROVED by Eric 10-19 · HOLD | Chief. A whole department looks to you now. |
+| INARA-STORY-034 | APPROVED by Eric 10-19 · HOLD | We spent twelve months on the far side of that wormhole. We came home to this. The research hasn't stopped since. |
 
 Basis: Story Bible "The New Earth" ("A 12-month survey") and "The return" (the ship came back through the wormhole
 to a devastated solar system); spec §3 ("Its research teams keep studying the wormhole and the universe on the other
@@ -480,8 +480,8 @@ side"). "Twelve months" is a fixed canon figure, not a live number.
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-035 | [DRAFT, needs Eric's approval] · HOLD | First Officer. One step from the top. |
-| INARA-STORY-036 | [DRAFT, needs Eric's approval] · HOLD | The rings, the asteroid belt, the moons, and one day the far side of the wormhole. There's a lot of ground ahead. |
+| INARA-STORY-035 | APPROVED by Eric 10-19 · HOLD | First Officer. One step from the top. |
+| INARA-STORY-036 | APPROVED by Eric 10-19 · HOLD | The rings, the asteroid belt, the moons, and one day the far side of the wormhole. There's a lot of ground ahead. |
 
 Basis: spec §3 ("Later mining sites: the asteroid belt, the moons, and the whole universe on the other side of the
 wormhole"). Checked v0.2: no conflict with the Story Bible (the other side is the New Earth's universe). **Note:**
@@ -491,9 +491,9 @@ this hints at future content; Eric may want it held until those sites are planne
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-STORY-037 | [DRAFT, needs Eric's approval] · HOLD | Captain. You started as a Trainee, same as everyone. You earned every step. |
+| INARA-STORY-037 | APPROVED by Eric 10-19 · HOLD | Captain. You started as a Trainee, same as everyone. You earned every step. |
 | INARA-STORY-038 | APPROVED by Eric 10-19 · HOLD | I've guided a lot of pilots home from this Tower. It's an honour to call you Captain. |
-| INARA-STORY-039 | [DRAFT, needs Eric's approval] · HOLD | Whatever comes through that wormhole next, the ship's in good hands. |
+| INARA-STORY-039 | APPROVED by Eric 10-19 · HOLD | Whatever comes through that wormhole next, the ship's in good hands. |
 
 STORY-038 (approved by Eric 10-19, reworded so players hear plainly that it is about the promotion). Saved for later, not in use: Eric's own line about the safe return of pilots, for when danger enters the game: "I've welcomed back home a lot of pilots from this Tower. It's good to say those words to each and every one of them." Original note: STORY-038 was new lore only in that it gives Inara a personal reflection about her years in the Tower: the Story Bible
 ("The ship") makes guiding departures and returns her job, but says nothing about how long she has served. STORY-039 basis: spec §3 (wormhole). "Whatever comes through" must not imply a threat the crew
