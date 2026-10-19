@@ -309,25 +309,65 @@ LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140
 //    occupies, not just its own volume. Irregular rocks waste space, so two pieces whose volumes would fit can still
 //    fail to fit together; they must be cut smaller first (mining laser, later).
 //  • Collecting takes time per piece (bigger pieces longer). Nothing is instant.
-const MATERIALS={ // kg per cubic metre (real densities)
- // Fields hold ORES (Eric 10-11, rule 25); every piece is pure ore mineral (rule 27)
- iron:   {name:'Iron ore',   density:5300},    // hematite Fe2O3 (5,300 kg/m³; was 5,150 until 10-11)
- copper: {name:'Copper ore', density:4190},    // chalcopyrite CuFeS2
- silver: {name:'Silver ore', density:7300},    // acanthite Ag2S
- gold:   {name:'Native gold',density:19300},   // gold is found as metal
- diamond:{name:'Industrial diamond',density:3510}};   // 1 in 100,000 is near-flawless: the server rolls it (rule 26)
-const MIX={ // share of pieces by material, per field type: common material everywhere; the rare finds are scarce, and
-            // scarcest of all in the big easy fields (small and tiny fields hide them). Real ratios arrive with the catalogue.
- large: [['iron',.74],['copper',.22],['silver',.03],['gold',.01]],
- medium:[['iron',.64],['copper',.27],['silver',.06],['gold',.025],['diamond',.005]],
- small: [['iron',.52],['copper',.30],['silver',.11],['gold',.05],['diamond',.02]],
- tiny:  [['iron',.48],['copper',.30],['silver',.13],['gold',.06],['diamond',.03]]};
+const MATERIALS={ // kg per cubic metre (real densities). Fields hold ORES and minerals as found (Eric 10-11, rule 25);
+ // every piece is pure mineral (rule 27). The ONE list is minerals.py on the server (Eric 10-19: about thirty real
+ // minerals in three tiers); test_server.py checks this copy against it. 1 diamond in 100,000 is near-flawless: the
+ // server rolls it (rule 26). Lonsdaleite gets its own alert when collected.
+ "basalt"         :{name:"Basalt",density:2900,band:'common'},
+ "iron-nickel"    :{name:"Iron-nickel metal",density:7900,band:'common'},
+ "water-ice"      :{name:"Water ice",density:917,band:'common'},
+ "iron"           :{name:"Iron ore (hematite)",density:5300,band:'plentiful'},
+ "magnetite"      :{name:"Iron ore (magnetite)",density:5150,band:'plentiful'},
+ "bauxite"        :{name:"Aluminium ore (bauxite)",density:2400,band:'plentiful'},
+ "olivine"        :{name:"Magnesium ore (olivine)",density:3270,band:'plentiful'},
+ "quartz"         :{name:"Quartz",density:2650,band:'plentiful'},
+ "copper"         :{name:"Copper ore (chalcopyrite)",density:4190,band:'ore'},
+ "ilmenite"       :{name:"Titanium ore (ilmenite)",density:4720,band:'ore'},
+ "pentlandite"    :{name:"Nickel ore (pentlandite)",density:4800,band:'ore'},
+ "sphalerite"     :{name:"Zinc ore (sphalerite)",density:4050,band:'ore'},
+ "galena"         :{name:"Lead ore (galena)",density:7600,band:'ore'},
+ "chromite"       :{name:"Chromium ore (chromite)",density:4790,band:'ore'},
+ "pyrolusite"     :{name:"Manganese ore (pyrolusite)",density:5060,band:'ore'},
+ "apatite"        :{name:"Phosphate (apatite)",density:3190,band:'ore'},
+ "graphite"       :{name:"Graphite",density:2250,band:'ore'},
+ "sulfur"         :{name:"Native sulfur",density:2070,band:'ore'},
+ "spodumene"      :{name:"Lithium ore (spodumene)",density:3150,band:'ore'},
+ "silver"         :{name:"Silver ore (acanthite)",density:7300,band:'scarce'},
+ "cobaltite"      :{name:"Cobalt ore (cobaltite)",density:6300,band:'scarce'},
+ "cassiterite"    :{name:"Tin ore (cassiterite)",density:6990,band:'scarce'},
+ "wolframite"     :{name:"Tungsten ore (wolframite)",density:7300,band:'scarce'},
+ "molybdenite"    :{name:"Molybdenum ore (molybdenite)",density:4730,band:'scarce'},
+ "monazite"       :{name:"Rare-earth ore (monazite)",density:5150,band:'scarce'},
+ "uraninite"      :{name:"Uranium ore (uraninite)",density:10950,band:'scarce'},
+ "gold"           :{name:"Native gold",density:19300,band:'scarce'},
+ "diamond"        :{name:"Industrial diamond",density:3510,band:'scarce'},
+ "platinum"       :{name:"Native platinum",density:21450,band:'rare'},
+ "palladium"      :{name:"Native palladium",density:12020,band:'rare'},
+ "iridium"        :{name:"Native iridium",density:22560,band:'rare'},
+ "shocked-quartz" :{name:"Shocked quartz",density:2650,band:'shock'},
+ "impact-glass"   :{name:"Impact glass",density:2200,band:'shock'},
+ "maskelynite"    :{name:"Maskelynite",density:2550,band:'shock'},
+ "coesite"        :{name:"Coesite",density:2920,band:'shock'},
+ "stishovite"     :{name:"Stishovite",density:4290,band:'shock-rare'},
+ "ringwoodite"    :{name:"Ringwoodite",density:3900,band:'shock-rare'},
+ "lonsdaleite"    :{name:"Lonsdaleite",density:3520,band:'lonsdaleite'},
+ "brownleeite"    :{name:"Brownleeite",density:5820,band:'brownleeite'}};
+// Rarity bands (roughly real abundance, kept simple), and each band's share of pieces per field type: common rock,
+// metal and ice everywhere; the rare finds are scarce, and scarcest of all in the big easy fields (small and tiny
+// fields hide them). The shock minerals are spread through all four rings alike.
+const MIX={
+ large: {common:.5515, plentiful:.25, ore:.14, scarce:.03, rare:.002, shock:.02,  'shock-rare':.006, lonsdaleite:.0005},
+ medium:{common:.4815, plentiful:.24, ore:.18, scarce:.06, rare:.005, shock:.025, 'shock-rare':.008, lonsdaleite:.0005},
+ small: {common:.402, plentiful:.22, ore:.22, scarce:.11, rare:.01,  shock:.028, 'shock-rare':.009, lonsdaleite:.001},
+ tiny:  {common:.3624, plentiful:.22, ore:.22, scarce:.14, rare:.016, shock:.03,  'shock-rare':.01,  lonsdaleite:.0015, brownleeite:.0001}};   // brownleeite: tiny fields only (Eric 10-19)
+const BAND_MATS={};for(const m in MATERIALS)(BAND_MATS[MATERIALS[m].band]=BAND_MATS[MATERIALS[m].band]||[]).push(m);
 const ICO_VOL=2.536,ICO_HALF=0.851;          // IcosahedronGeometry(1): volume, and half-extent of its box per axis
 const HOLD={name:'Starter hold',dims:[1.6,1.2,1.0]};   // interior, metres → 1.92 m³
 HOLD.cap=HOLD.dims[0]*HOLD.dims[1]*HOLD.dims[2];HOLD.sorted=HOLD.dims.slice().sort((a,b)=>b-a);
 const cargo=[];                                // pieces aboard
 function cargoBulk(){return cargo.reduce((a,p)=>a+p.box,0);}
-function pickMat(size,r){let u=r(),acc=0;for(const [m,w] of MIX[size]){acc+=w;if(u<acc)return m;}return MIX[size][0][0];}
+function pickMat(size,r){let u=r(),acc=0,band='common';for(const b in MIX[size]){acc+=MIX[size][b];if(u<acc){band=b;break;}}
+ const ms=BAND_MATS[band];return ms[Math.floor(r()*ms.length)];}   // a band, then one of its minerals alike
 function makePiece(size,sx,sy,sz,r){const dims=[sx,sy,sz].map(v=>2*ICO_HALF*v).sort((a,b)=>b-a);const mat=pickMat(size,r);
  const vol=ICO_VOL*sx*sy*sz;return{mat,dims,vol,box:dims[0]*dims[1]*dims[2],mass:vol*MATERIALS[mat].density,taken:false};}
 function shapeFits(p){return p.dims.every((d,i)=>d<=HOLD.sorted[i]);}
@@ -530,7 +570,10 @@ function netCollect(p){
   try{const j=await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});
    if(j.aboard&&j.aboard.flawless){p.flawless=true;renderHold();   // rule 26: keep the excitement with the miner
     snd.chime();setTimeout(()=>snd.chime(),350);
-    toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}}
+    toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}
+   else if(j.aboard&&j.aboard.noticed){snd.chime();   // lonsdaleite: noticed when collected (it is not the near-flawless diamond)
+    if(p.mat==='brownleeite'){setTimeout(()=>snd.chime(),350);toast('✦ BROWNLEEITE','Manganese silicide, known from comet dust and never found naturally on Earth. Ultra rare. Read about it in the Starship Library.');}
+    else toast('✦ LONSDALEITE','Hexagonal diamond: very rare. It is not ordinary diamond. Read about it in the Starship Library.');}}
   catch(e){const i=cargo.indexOf(p);if(i>=0)cargo.splice(i,1);renderHold();
    toast('NOT COLLECTED',e.message);}});}
 async function netUnload(){await NET.queue;return netCall('/unload',{docked:true});}

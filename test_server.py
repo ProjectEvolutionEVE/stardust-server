@@ -16,6 +16,7 @@ import auctions as AU
 import library_books as LB
 from datetime import datetime, timezone, timedelta
 import game as G
+import minerals as MN
 
 async def reset_test_db():
     """The test database is throwaway: wipe it so every run starts clean. Refuses any database not named *test."""
@@ -508,7 +509,8 @@ async def main():
     r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
     check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
-    check("the Raw Materials Catalogue lists every material with its density", r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46)
+    check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
+          r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
     r = await cl.get("/api/dfg/library/book/mining", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
@@ -601,8 +603,8 @@ async def main():
     import market as M, bank as BANKM, random as _r
     r = await cl.get("/api/dfg/market", headers=H); j = await r.json()
     board = {i["item"]: i for i in j["items"]}
-    check("the board lists the five ores with floors, and says the bank trades too",
-          set(board) == {"iron", "copper", "silver", "gold", "diamond"} and board["gold"]["floor"] == 100
+    check("the board lists every debris-field mineral with floors, and says the bank trades too",
+          set(board) == set(MN.MINERALS) and board["gold"]["floor"] == 100
           and board["iron"]["last"] == 200 and board["iron"]["lot_kg"] == 100 and board["silver"]["lot_kg"] == 10
           and board["gold"]["lot_kg"] == 1 and "bank trades" in j["note"])
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "sell", "type": "limit", "qty": 1, "price": 99})
@@ -650,6 +652,87 @@ async def main():
     check("minimum orders: prices are per lot, so an ask of 1 credit per 100 kg is under the floor", r.status == 422)
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 99999999, "price": 300})
     check("nothing is unlimited: a buy bigger than your space in the cargo hold is refused", r.status == 422 and "room" in (await r.json())["error"])
+    # ---- more minerals (Eric 10-19): three tiers, real densities, prices; shock minerals and lonsdaleite ----
+    async with cl.app["pool"].acquire() as c:
+        rows = {r["code"]: r for r in await c.fetch(
+            """SELECT t.code, t.name, t.density_kg_m3, t.trade_unit, p.start_price, p.floor_price, p.ref_price, p.listed
+               FROM item_types t JOIN item_prices p ON p.item_code=t.code""")}
+    check(f"all {len(MN.MINERALS)} minerals load with their real densities and lots (schema.sql v15 = minerals.py)",
+          all(c in rows and float(rows[c]["density_kg_m3"]) == m["density"] and rows[c]["trade_unit"] == m["lot_g"]
+              and rows[c]["listed"] for c, m in MN.MINERALS.items()))
+    check("prices: whole credits per lot, every floor half the start, and the original five unchanged",
+          all(rows[c]["start_price"] == m["price"] and rows[c]["floor_price"] == m["floor"] == m["price"] // 2
+              and rows[c]["ref_price"] == m["price"] for c, m in MN.MINERALS.items())
+          and [rows[c]["start_price"] for c in MN.ORIGINAL] == [200, 600, 300, 200, 100])
+    check("densities: iron-nickel 7,900, water ice 917, magnetite 5,150, stishovite 4,290, lonsdaleite 3,520",
+          [G.DENSITY[c] for c in ("iron-nickel", "water-ice", "magnetite", "stishovite", "lonsdaleite")] == [7900, 917, 5150, 4290, 3520])
+    check("smelting yields from the formula (rule 27): chalcopyrite 34.63% Cu, galena 86.60% Pb, ilmenite 31.55% Ti",
+          MN.MINERALS["copper"]["yields"]["Cu"] == 34.63 and MN.MINERALS["galena"]["yields"]["Pb"] == 86.6
+          and MN.MINERALS["ilmenite"]["yields"]["Ti"] == 31.55)
+    import pathlib
+    js = pathlib.Path(__file__).with_name("static").joinpath("debris-flight.js").read_text()
+    jsm = dict(REX.findall(r'^ "([a-z-]+)"\s*:\{name:"[^"]*",density:(\d+)', js, REX.M))
+    check("the flight's MATERIALS copy matches minerals.py (codes and densities)",
+          {k: int(v) for k, v in jsm.items()} == {c: m["density"] for c, m in MN.MINERALS.items()})
+    sym = {v: k for k, v in MN.ELEMENT_NAMES.items()}
+    mined = {e for m in MN.MINERALS.values() for e in m["yields"]}
+    unmined = [mm["name"] for mm in BP.MATERIALS.values() if mm["category"] in ("metal", "precious metal")
+               and mm["code"] != "mat-native-iron-nickel" and sym.get(mm["name"].split(" ")[0].lower()) not in mined]
+    check("every catalogue metal has a mineral that yields it " + str(unmined), unmined == [])
+    HS = {"X-Dev-Player": "tester-shock"}
+    r = await cl.post("/api/dfg/session", headers=HS); sids = (await r.json())["session_id"]
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "shocked-quartz",
+                                                            "dims": [0.4, 0.3, 0.3], "volume_m3": 0.02}); j = await r.json()
+    check("a shock mineral is collectable: shocked quartz, 0.02 m³ x 2,650 = 53 kg, not singled out",
+          r.status == 200 and abs(j["aboard"]["kg"] - 53) < 0.001 and j["aboard"]["noticed"] is False)
+    await asyncio.sleep(2.1)
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "lonsdaleite",
+                                                            "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check("lonsdaleite comes aboard and is noticed (5.28 kg), and it is never a near-flawless diamond",
+          r.status == 200 and j["aboard"]["noticed"] is True and j["aboard"]["flawless"] is False and abs(j["aboard"]["kg"] - 5.28) < 0.001)
+    r = await cl.post("/api/dfg/unload", headers=HS, json={"docked": True}); j = await r.json()
+    check("both unload to the cargo hold, kept as their own items",
+          r.status == 200 and j["unloaded_pieces"] == 2 and set(j["receipt"]["kg"]) == {"shocked-quartz", "lonsdaleite"})
+    mixsrc = REX.search(r"const MIX=(\{[\s\S]*?\}\});", js).group(1)
+    tiny_only = all(("brownleeite:" in line) == line.lstrip().startswith("tiny:") for line in mixsrc.splitlines() if ":{" in line or ": {" in line)
+    tiny_rate = float(REX.search(r"tiny:.*brownleeite:([\d.]+)", mixsrc).group(1))
+    lons_rate = float(REX.search(r"tiny:.*lonsdaleite:([\d.]+)", mixsrc).group(1))
+    check("brownleeite rolls only in tiny fields, far rarer than lonsdaleite", tiny_only and tiny_rate * 10 <= lons_rate)
+    # Eric 10-19: brownleeite and the shock minerals are in ALL FOUR rings; the roll never depends on the ring.
+    import subprocess, shutil
+    a, b = js.index("const MATERIALS={"), js.index("function makePiece")
+    b = js.index("\n", js.index("return{mat", b)) + 1
+    node_src = js[a:b] + r"""
+const fs=[pickMat.toString(),makePiece.toString()].join(' ');
+if(/ring/i.test(fs)||pickMat.length!==2)throw new Error('the roll depends on more than size and the seed');
+const out={};
+for(const [k,ring] of ['Mercury','Venus','Earth','Mars'].entries()){
+ let s=1234567+k*7919;const r=()=>{s=(s*16807)%2147483647;return s/2147483647;};
+ const seen=new Set();for(let i=0;i<400000;i++){seen.add(makePiece('tiny',0.1,0.1,0.1,r).mat);}
+ out[ring]={brownleeite:seen.has('brownleeite'),shock:['shocked-quartz','impact-glass','maskelynite','coesite','stishovite','ringwoodite','lonsdaleite'].every(m=>seen.has(m))};
+ if(['large','medium','small'].some(sz=>{for(let i=0;i<200000;i++)if(makePiece(sz,0.1,0.1,0.1,r).mat==='brownleeite')return true;return false;}))out[ring].elsewhere=true;}
+console.log(JSON.stringify(out));"""
+    if shutil.which("node"):
+        res = json.loads(subprocess.run(["node", "-e", node_src], capture_output=True, text=True, check=True).stdout)
+        check("brownleeite and every shock mineral roll in tiny fields of all four rings; brownleeite never outside tiny " + json.dumps(res),
+              set(res) == {"Mercury", "Venus", "Earth", "Mars"} and all(v["brownleeite"] and v["shock"] and not v.get("elsewhere") for v in res.values()))
+    else:
+        check("node is needed to check the flight's rolls in all four rings", False)
+    await asyncio.sleep(2.1)
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "brownleeite",
+                                                            "dims": [0.1, 0.1, 0.1], "volume_m3": 0.0005}); j = await r.json()
+    check("brownleeite comes aboard and is noticed (0.0005 m³ x 5,820 = 2.91 kg)",
+          r.status == 200 and j["aboard"]["noticed"] is True and abs(j["aboard"]["kg"] - 2.91) < 0.001)
+    await cl.post("/api/dfg/unload", headers=HS, json={"docked": True})
+    check("brownleeite is the highest-priced raw material (after the near-flawless diamond)",
+          max(MN.MINERALS.values(), key=lambda m: m["price"] / MN.lot_kg(m))["code"] == "brownleeite")
+    async with cl.app["pool"].acquire() as c:
+        await BANKM.tick(c, _r.Random(11))
+    for item, lot_kg in (("lonsdaleite", 1), ("shocked-quartz", 10)):
+        r = await cl.post("/api/dfg/market/order", headers=HS, json={"item": item, "side": "sell", "type": "instant", "qty": 1}); j = await r.json()
+        check(f"{item} is tradeable: Sell now sells one {lot_kg} kg lot to the bank's bid, at or above its floor",
+              r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == lot_kg
+              and all(f["price"] >= MN.MINERALS[item]["floor"] for f in j["fills"]))
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

@@ -268,6 +268,7 @@ async def collect(request):
                                json.dumps({"cargo_id": cid, "material": body["material"], "kg": round(p["mass"], 3),
                                            "dims": [round(x, 4) for x in d], "session": str(sid), "flawless": flawless}))
         return _json({"aboard": {"material": body["material"], "kg": round(p["mass"], 3), "flawless": flawless,
+                                 "noticed": body["material"] in G.NOTICED,
                                  "dims_m": [round(x, 4) for x in d], "box_m3": round(p["box"], 5)},
                       **await _state(conn, pid)})
 

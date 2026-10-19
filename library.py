@@ -10,6 +10,7 @@ import json, random
 import store as ST
 import blueprints as BP
 import library_books as LB
+import minerals as MN
 
 
 def _catalogue_chapters():
@@ -23,6 +24,13 @@ def _catalogue_chapters():
     for cat, ms in by.items():
         out.append((cat[:1].upper() + cat[1:], "\n".join(
             f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "") for m in ms)))
+    # the minerals as they are found in the debris fields (minerals.py, Eric 10-19), with what smelting yields (rule 27)
+    for tier, title in ((1, "In the debris fields: common rock, metal and ice"), (2, "In the debris fields: ores"),
+                        (3, "In the debris fields: shock and space minerals")):
+        out.append((title, "\n".join(
+            f"• {m['name']} ({m['formula']}): {m['density']:,} kg/m³" + (f"; yields {MN.yield_text(m)}" if m["yields"] else "")
+            + (f". Real facts: {m['note']} Game role: {MN.GAME_ROLE[m['code']]}" if m["code"] in MN.GAME_ROLE else "")
+            for m in MN.MINERALS.values() if m["tier"] == tier)))
     return out
 
 

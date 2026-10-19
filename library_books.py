@@ -10,28 +10,52 @@ English only for now; translations into the player's language come later."""
 
 PASS_MARK = 4          # out of 5
 
+import minerals as MN
+_RARITY = {"common": "very common", "plentiful": "common", "ore": "fairly common", "scarce": "uncommon",
+           "rare": "rare", "shock": "uncommon", "shock-rare": "rare", "lonsdaleite": "very rare",
+           "brownleeite": "ultra rare"}
+
+
+def _list(tier, exclude=(), only=None):
+    """One line per mineral of a tier, from minerals.py: name, formula, how common, what it is."""
+    return "\n".join(f"• {m['name']}" + (f" ({m['formula']})" if m['tier'] > 1 or m['code'] != 'basalt' else "")
+                     + f". {_RARITY[m['band']].capitalize()}. {m['note']}"
+                     for m in MN.MINERALS.values() if m["tier"] == tier and m["code"] not in exclude
+                     and (only is None or m["code"] in only))
+
+
+def _heavy():
+    ms = sorted(MN.MINERALS.values(), key=lambda m: -m["density"])
+    hi, lo = ms[0], ms[-1]
+    return ("Every piece has a real size and a real weight. Its weight is its size times its density, in kg per cubic "
+            "metre:\n" + "\n".join(f"• {m['name']} {m['density']:,}" for m in ms) + "\n"
+            f"So a piece the size of a shoebox (0.01 m³) weighs {hi['density'] / 100:.0f} kg in "
+            f"{hi['name'].lower()}, but only {lo['density'] / 100:.1f} kg in {lo['name'].lower()}.")
+
+
+def _yields():
+    return "\n".join(f"• {m['name']} ({m['formula']}): {MN.yield_text(m)}"
+                      + (" (already metal)" if m['code'] in ('gold', 'platinum', 'palladium', 'iridium', 'iron-nickel') else "")
+                      for m in MN.MINERALS.values() if m["yields"] and m["tier"] < 3)
+
 BOOKS = {
     "prospecting": {
         "title": "Prospecting & Geology",
-        "subtitle": "The ores in our debris fields, and how to find them",
+        "subtitle": "The minerals in our debris fields, and how to find them",
         "chapters": [
             ("Where the debris comes from",
              "The Sun and the gas giants survived. The four inner planets did not. Their remains now circle the Sun in "
              "four broad, ragged rings where Mercury, Venus, Earth and Mars used to orbit. Every debris field you find is "
              "a piece of an old world."),
-            ("The five ores",
-             "Debris fields hold ores: rock as it was found, not refined metal.\n"
-             "• Iron ore is hematite (Fe₂O₃). Very common. About 70% of its weight is iron.\n"
-             "• Copper ore is chalcopyrite (CuFeS₂). Common. 34.6% of its weight is copper.\n"
-             "• Silver ore is acanthite (Ag₂S). Uncommon. About 87% of its weight is silver.\n"
-             "• Native gold is gold as it is found in nature: already metal. Rare.\n"
-             "• Industrial diamond is pure carbon. Very rare."),
-            ("Heavy and light",
-             "Every piece has a real size and a real weight. Its weight is its size times its density:\n"
-             "• native gold 19,300 kg per cubic metre (the heaviest by far);\n"
-             "• acanthite 7,300; hematite 5,300; chalcopyrite 4,190;\n"
-             "• industrial diamond 3,510 (the lightest).\n"
-             "So a piece the size of a shoebox (0.01 m³) weighs 193 kg in native gold, but only 53 kg in hematite."),
+            ("What the fields hold",
+             "Debris fields hold minerals as they were found, not refined metal. They come in three kinds:\n"
+             "• common rock, metal and ice, which make up most of every field;\n"
+             "• ores, the minerals metals are smelted from: at least one for every metal in the Raw Materials Catalogue;\n"
+             "• shock minerals, which are rare (see the chapter Shock and space minerals).\n"
+             "Every piece is pure mineral, so its formula tells you what it is made of."),
+            ("Common rock, metal and ice", _list(1)),
+            ("The ores", _list(2)),
+            ("Heavy and light", _heavy()),
             ("Big fields and small fields",
              "Large fields hold about 400 to 1,200 pieces, mostly common ore, and are the easiest to find. Medium fields "
              "hold about 60 to 250. Small fields hold 10 to 20 small and medium pieces. Tiny fields hold 8 to 20 very "
@@ -45,6 +69,15 @@ BOOKS = {
              "One diamond in every 100,000 is near-flawless. You'll know the moment you collect it. It is never mixed in "
              "with industrial diamond: it is a valuable of its own, kept in the lockbox in your filing cabinet, and used "
              "for research and technology that needs a near-flawless crystal."),
+            ("Shock and space minerals", _list(3, exclude=("brownleeite",)) + "\n"
+             "These are real minerals. On Earth, each of them forms only under extreme pressures or temperatures.\n"
+             + _list(3, only=("brownleeite",)) + "\n"
+             "How it is used aboard (a game rule, not a real-world fact): " + MN.GAME_ROLE["brownleeite"]
+             + " It is ultra rare, found only in the smallest, faintest fields, and you'll know the moment you collect one."),
+            ("Lonsdaleite",
+             "Lonsdaleite is carbon in a hexagonal diamond crystal. It is very rare in the fields, and you'll know the "
+             "moment you collect one. It is NOT the near-flawless diamond and never counts as one: it is its own mineral, "
+             "traded as its own item."),
             ("From ore to metal",
              "Turning ore into metal is smelting, a skill of its own (Metallurgy). Every piece is pure ore mineral, so it "
              "gives its metal's share by weight and the rest is slag: 100 kg of chalcopyrite gives 34.6 kg of copper."),
@@ -54,12 +87,12 @@ BOOKS = {
              [("a", "Chalcopyrite"), ("b", "Hematite"), ("c", "Acanthite"), ("d", "Diamond")], "a"),
             ("Which is heaviest for its size?",
              [("a", "Hematite"), ("b", "Native gold"), ("c", "Industrial diamond"), ("d", "Chalcopyrite")], "b"),
-            ("Which fields are the faintest on the scanner?",
-             [("a", "Large fields"), ("b", "Medium fields"), ("c", "Tiny fields"), ("d", "They all sound the same")], "c"),
+            ("On Earth, where does coesite form?",
+             [("a", "In ordinary sand"), ("b", "Only under extreme pressure"), ("c", "In the Starship's greenhouse"), ("d", "In fresh water")], "b"),
             ("How rare is a near-flawless diamond?",
              [("a", "1 in 100"), ("b", "1 in 1,000"), ("c", "1 in 100,000"), ("d", "There aren't any")], "c"),
-            ("What do debris fields hold?",
-             [("a", "Refined metal, ready to use"), ("b", "Ores: rock as it was found"), ("c", "Only ice"), ("d", "Finished parts")], "b"),
+            ("What is lonsdaleite?",
+             [("a", "Ordinary industrial diamond"), ("b", "A copper ore"), ("c", "Carbon in a hexagonal diamond crystal"), ("d", "Water ice")], "c"),
         ],
     },
     "trading": {
@@ -154,10 +187,8 @@ BOOKS = {
             ("How much metal is in the ore",
              "In our fields every ore piece is pure ore mineral, so it gives its metal's share by weight, worked out from "
              "its chemical formula. The rest is slag.\n"
-             "• Hematite (Fe₂O₃): 69.94% iron. 100 kg gives 69.94 kg of iron.\n"
              "• Chalcopyrite (CuFeS₂): 34.63% copper. 100 kg gives 34.6 kg of copper and 65.4 kg of slag.\n"
-             "• Acanthite (Ag₂S): 87.06% silver. 100 kg gives 87.06 kg of silver.\n"
-             "• Native gold is already metal."),
+             "Every ore in our fields, by weight:\n" + _yields()),
             ("Furnaces",
              "The Starship has no smelting bay. A smelter designs their own furnace as a blueprint. In space, the "
              "Starship's advanced technology can help; on the planet, the roots begin with stone and clay furnaces, and "

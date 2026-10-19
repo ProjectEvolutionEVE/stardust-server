@@ -586,3 +586,94 @@ CREATE TABLE IF NOT EXISTS player_events (
   at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS player_events_player ON player_events(player_id, at DESC);
+
+-- v15 (Eric 10-19, "Go."): debris fields hold about thirty real minerals in three tiers (common, ores, shock
+-- minerals), so every catalogue metal can be mined. minerals.py is the one list; test_server.py checks these rows
+-- against it. Real densities; every piece is pure ore mineral (rule 27). Prices are whole credits per lot, set by
+-- Claude on Eric's word (10-19: "prices will self adjust"); every floor is half the start (docs/minerals-price-list.md).
+-- The original five keep their codes, names, lots and prices; only rows that don't exist yet are added.
+INSERT INTO item_types(code, kind, name, base_unit, trade_unit, density_kg_m3) VALUES
+  ('basalt', 'resource', 'Basalt', 'g', 100000, 2900),
+  ('iron-nickel', 'resource', 'Iron-nickel metal', 'g', 100000, 7900),
+  ('water-ice', 'resource', 'Water ice', 'g', 100000, 917),
+  ('magnetite', 'resource', 'Iron ore (magnetite)', 'g', 100000, 5150),
+  ('bauxite', 'resource', 'Aluminium ore (bauxite)', 'g', 100000, 2400),
+  ('olivine', 'resource', 'Magnesium ore (olivine)', 'g', 100000, 3270),
+  ('quartz', 'resource', 'Quartz', 'g', 100000, 2650),
+  ('ilmenite', 'resource', 'Titanium ore (ilmenite)', 'g', 100000, 4720),
+  ('pentlandite', 'resource', 'Nickel ore (pentlandite)', 'g', 100000, 4800),
+  ('sphalerite', 'resource', 'Zinc ore (sphalerite)', 'g', 100000, 4050),
+  ('galena', 'resource', 'Lead ore (galena)', 'g', 100000, 7600),
+  ('chromite', 'resource', 'Chromium ore (chromite)', 'g', 100000, 4790),
+  ('pyrolusite', 'resource', 'Manganese ore (pyrolusite)', 'g', 100000, 5060),
+  ('apatite', 'resource', 'Phosphate (apatite)', 'g', 100000, 3190),
+  ('graphite', 'resource', 'Graphite', 'g', 100000, 2250),
+  ('sulfur', 'resource', 'Native sulfur', 'g', 100000, 2070),
+  ('spodumene', 'resource', 'Lithium ore (spodumene)', 'g', 100000, 3150),
+  ('cobaltite', 'resource', 'Cobalt ore (cobaltite)', 'g', 10000, 6300),
+  ('cassiterite', 'resource', 'Tin ore (cassiterite)', 'g', 10000, 6990),
+  ('wolframite', 'resource', 'Tungsten ore (wolframite)', 'g', 10000, 7300),
+  ('molybdenite', 'resource', 'Molybdenum ore (molybdenite)', 'g', 10000, 4730),
+  ('monazite', 'resource', 'Rare-earth ore (monazite)', 'g', 10000, 5150),
+  ('uraninite', 'resource', 'Uranium ore (uraninite)', 'g', 10000, 10950),
+  ('platinum', 'resource', 'Native platinum', 'g', 1000, 21450),
+  ('palladium', 'resource', 'Native palladium', 'g', 1000, 12020),
+  ('iridium', 'resource', 'Native iridium', 'g', 1000, 22560),
+  ('shocked-quartz', 'resource', 'Shocked quartz', 'g', 10000, 2650),
+  ('impact-glass', 'resource', 'Impact glass', 'g', 10000, 2200),
+  ('maskelynite', 'resource', 'Maskelynite', 'g', 10000, 2550),
+  ('coesite', 'resource', 'Coesite', 'g', 10000, 2920),
+  ('stishovite', 'resource', 'Stishovite', 'g', 1000, 4290),
+  ('ringwoodite', 'resource', 'Ringwoodite', 'g', 1000, 3900),
+  ('lonsdaleite', 'resource', 'Lonsdaleite', 'g', 1000, 3520)
+ON CONFLICT (code) DO NOTHING;
+INSERT INTO item_prices(item_code, start_price, floor_price, ref_price, bank_lot_kg, bank_lot, sort) VALUES
+  ('basalt', 50, 25, 50, 0, 4, 1),
+  ('iron-nickel', 400, 200, 400, 0, 4, 2),
+  ('water-ice', 40, 20, 40, 0, 4, 3),
+  ('magnetite', 220, 110, 220, 0, 4, 5),
+  ('bauxite', 300, 150, 300, 0, 3, 6),
+  ('olivine', 150, 75, 150, 0, 3, 7),
+  ('quartz', 100, 50, 100, 0, 3, 8),
+  ('ilmenite', 500, 250, 500, 0, 2, 10),
+  ('pentlandite', 900, 450, 900, 0, 2, 11),
+  ('sphalerite', 400, 200, 400, 0, 2, 12),
+  ('galena', 400, 200, 400, 0, 2, 13),
+  ('chromite', 400, 200, 400, 0, 2, 14),
+  ('pyrolusite', 300, 150, 300, 0, 2, 15),
+  ('apatite', 300, 150, 300, 0, 2, 16),
+  ('graphite', 300, 150, 300, 0, 2, 17),
+  ('sulfur', 150, 75, 150, 0, 2, 18),
+  ('spodumene', 1000, 500, 1000, 0, 2, 19),
+  ('cobaltite', 200, 100, 200, 0, 2, 21),
+  ('cassiterite', 160, 80, 160, 0, 2, 22),
+  ('wolframite', 200, 100, 200, 0, 2, 23),
+  ('molybdenite', 240, 120, 240, 0, 2, 24),
+  ('monazite', 300, 150, 300, 0, 2, 25),
+  ('uraninite', 500, 250, 500, 0, 2, 26),
+  ('platinum', 300, 150, 300, 0, 3, 29),
+  ('palladium', 300, 150, 300, 0, 3, 30),
+  ('iridium', 400, 200, 400, 0, 3, 31),
+  ('shocked-quartz', 200, 100, 200, 0, 2, 32),
+  ('impact-glass', 200, 100, 200, 0, 2, 33),
+  ('maskelynite', 300, 150, 300, 0, 2, 34),
+  ('coesite', 400, 200, 400, 0, 2, 35),
+  ('stishovite', 100, 50, 100, 0, 3, 36),
+  ('ringwoodite', 100, 50, 100, 0, 3, 37),
+  ('lonsdaleite', 2000, 1000, 2000, 0, 3, 38)
+ON CONFLICT (item_code) DO NOTHING;
+-- the market board lists everything commonest first, so the original five take their places in that order
+UPDATE item_prices SET sort=4 WHERE item_code='iron' AND sort<>4;
+UPDATE item_prices SET sort=9 WHERE item_code='copper' AND sort<>9;
+UPDATE item_prices SET sort=20 WHERE item_code='silver' AND sort<>20;
+UPDATE item_prices SET sort=27 WHERE item_code='gold' AND sort<>27;
+UPDATE item_prices SET sort=28 WHERE item_code='diamond' AND sort<>28;
+
+-- v16 (Eric 10-19): brownleeite, MnSi, known from comet dust and never found naturally on Earth. Ultra rare, tiny fields
+-- only, noticed when collected; the highest-priced raw material after the near-flawless diamond (1 kg lot, 20,000).
+INSERT INTO item_types(code, kind, name, base_unit, trade_unit, density_kg_m3) VALUES
+  ('brownleeite', 'resource', 'Brownleeite', 'g', 1000, 5820)
+ON CONFLICT (code) DO NOTHING;
+INSERT INTO item_prices(item_code, start_price, floor_price, ref_price, bank_lot_kg, bank_lot, sort) VALUES
+  ('brownleeite', 20000, 10000, 20000, 0, 1, 39)
+ON CONFLICT (item_code) DO NOTHING;
