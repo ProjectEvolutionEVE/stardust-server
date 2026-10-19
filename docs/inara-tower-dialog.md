@@ -492,10 +492,10 @@ this hints at future content; Eric may want it held until those sites are planne
 | ID | Status | Text |
 |---|---|---|
 | INARA-STORY-037 | [DRAFT, needs Eric's approval] · HOLD | Captain. You started as a Trainee, same as everyone. You earned every step. |
-| INARA-STORY-038 | [NEW LORE, needs Eric's approval] · HOLD | I've talked a lot of pilots home from the Tower. It's good to say that word to one of them. |
+| INARA-STORY-038 | APPROVED by Eric 10-19 · HOLD | I've guided a lot of pilots home from this Tower. It's an honour to call you Captain. |
 | INARA-STORY-039 | [DRAFT, needs Eric's approval] · HOLD | Whatever comes through that wormhole next, the ship's in good hands. |
 
-STORY-038 is new lore only in that it gives Inara a personal reflection about her years in the Tower: the Story Bible
+STORY-038 (approved by Eric 10-19, reworded so players hear plainly that it is about the promotion). Saved for later, not in use: Eric's own line about the safe return of pilots, for when danger enters the game: "I've welcomed back home a lot of pilots from this Tower. It's good to say those words to each and every one of them." Original note: STORY-038 was new lore only in that it gives Inara a personal reflection about her years in the Tower: the Story Bible
 ("The ship") makes guiding departures and returns her job, but says nothing about how long she has served. STORY-039 basis: spec §3 (wormhole). "Whatever comes through" must not imply a threat the crew
 knows of; if Eric thinks it does, replace it with "Welcome to the top, Captain." Checked v0.2: the Story Bible names
 no threat through the wormhole; the cause of the destruction is unknown, so the line must stay this vague.
