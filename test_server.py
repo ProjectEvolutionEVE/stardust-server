@@ -532,13 +532,13 @@ async def main():
     allb = {b["code"]: b for g in j["shelves"] for b in g["books"]}
     check("the library shelves every subject; the first books are written",
           r.status == 200 and allb["prospecting"]["written"] and allb["trading"]["written"] and allb["piloting"]["written"]
-          and allb["catalogue"]["reference"] and allb["metallurgy"]["written"] and not allb["mining"]["written"])
+          and allb["catalogue"]["reference"] and allb["metallurgy"]["written"] and allb["mining"]["written"] and not allb["farming"]["written"])
     r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
     check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
     check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
           r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
-    r = await cl.get("/api/dfg/library/book/mining", headers=HL)
+    r = await cl.get("/api/dfg/library/book/farming", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
     check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
@@ -599,7 +599,7 @@ async def main():
     shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
     check("a checked-out book sits on the bookshelf (once)", r.status == 200 and r2.status == 422
           and [i["name"] for i in shelf["items"]] == ["Trading & Markets"] and shelf["used_m3"] > 0)
-    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "mining"})
+    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "farming"})
     check("a book still being written can't be checked out", r.status == 422)
     r = await cl.post("/api/dfg/library/return", headers=HL, json={"book": "trading"})
     r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()
