@@ -1,0 +1,54 @@
+{
+ "excluded": [
+  {
+   "id": 20040050622,
+   "title": "Apollo 13 - Press Kit",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20040050934,
+   "title": "Apollo 14 - Press Kit",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20090026541,
+   "title": "International Space Station Research and Facilities for Life Sciences",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20000102393,
+   "title": "The Role of Habitability Studies in Space Facility and Vehicle Design",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20060009022,
+   "title": "Crew Restraint Design for the International Space Station",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 19990116545,
+   "title": "Mars Pathfinder and Mars Global Surveyor Outreach Compilation",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 19990117115,
+   "title": "Galileo Probe: Spacecraft Mission to Jupiter Press Release",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20020039837,
+   "title": "Overview of the Galileo Probe Mission to Jupiter",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20210016250,
+   "title": "The Stardust Sample Return Mission",
+   "reason": "no usable full text"
+  },
+  {
+   "id": 20060022692,
+   "title": "Sample Return from the Stardust Mission",
+   "reason": "no usable full text"
+  }
+ ]
+}

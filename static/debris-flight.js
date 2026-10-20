@@ -14,7 +14,7 @@
 //    drift out of the ring you're working.
 //  • The Starship parks by the wormhole on the far side of Jupiter (STORY-BIBLE), far from every debris field.
 'use strict';
-const SEED=(function(){try{return crypto.getRandomValues(new Uint32Array(1))[0];}catch(e){return (Math.random()*4294967296)>>>0;}})();
+let SEED=(function(){try{return crypto.getRandomValues(new Uint32Array(1))[0];}catch(e){return (Math.random()*4294967296)>>>0;}})();
 function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);
  t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
 const R=rng(SEED);
@@ -309,26 +309,74 @@ LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140
 //    occupies, not just its own volume. Irregular rocks waste space, so two pieces whose volumes would fit can still
 //    fail to fit together; they must be cut smaller first (mining laser, later).
 //  • Collecting takes time per piece (bigger pieces longer). Nothing is instant.
-const MATERIALS={ // kg per cubic metre (real densities)
- // Fields hold ORES (Eric 10-11, rule 25); every piece is pure ore mineral (rule 27)
- iron:   {name:'Iron ore',   density:5300},    // hematite Fe2O3 (5,300 kg/m³; was 5,150 until 10-11)
- copper: {name:'Copper ore', density:4190},    // chalcopyrite CuFeS2
- silver: {name:'Silver ore', density:7300},    // acanthite Ag2S
- gold:   {name:'Native gold',density:19300},   // gold is found as metal
- diamond:{name:'Industrial diamond',density:3510}};   // 1 in 100,000 is near-flawless: the server rolls it (rule 26)
-const MIX={ // share of pieces by material, per field type: common material everywhere; the rare finds are scarce, and
-            // scarcest of all in the big easy fields (small and tiny fields hide them). Real ratios arrive with the catalogue.
- large: [['iron',.74],['copper',.22],['silver',.03],['gold',.01]],
- medium:[['iron',.64],['copper',.27],['silver',.06],['gold',.025],['diamond',.005]],
- small: [['iron',.52],['copper',.30],['silver',.11],['gold',.05],['diamond',.02]],
- tiny:  [['iron',.48],['copper',.30],['silver',.13],['gold',.06],['diamond',.03]]};
+const MATERIALS={ // kg per cubic metre (real densities). Fields hold ORES and minerals as found (Eric 10-11, rule 25);
+ // every piece is pure mineral (rule 27). The ONE list is minerals.py on the server (Eric 10-19: about thirty real
+ // minerals in three tiers); test_server.py checks this copy against it. 1 diamond in 100,000 is near-flawless: the
+ // server rolls it (rule 26). Lonsdaleite gets its own alert when collected.
+ "basalt"         :{name:"Basalt",density:2900,band:'common'},
+ "iron-nickel"    :{name:"Iron-nickel metal",density:7900,band:'common'},
+ "water-ice"      :{name:"Water ice",density:917,band:'common'},
+ "iron"           :{name:"Iron ore (hematite)",density:5300,band:'plentiful'},
+ "magnetite"      :{name:"Iron ore (magnetite)",density:5150,band:'plentiful'},
+ "bauxite"        :{name:"Aluminium ore (bauxite)",density:2400,band:'plentiful'},
+ "olivine"        :{name:"Magnesium ore (olivine)",density:3270,band:'plentiful'},
+ "quartz"         :{name:"Quartz",density:2650,band:'plentiful'},
+ "copper"         :{name:"Copper ore (chalcopyrite)",density:4190,band:'ore'},
+ "ilmenite"       :{name:"Titanium ore (ilmenite)",density:4720,band:'ore'},
+ "pentlandite"    :{name:"Nickel ore (pentlandite)",density:4800,band:'ore'},
+ "sphalerite"     :{name:"Zinc ore (sphalerite)",density:4050,band:'ore'},
+ "galena"         :{name:"Lead ore (galena)",density:7600,band:'ore'},
+ "chromite"       :{name:"Chromium ore (chromite)",density:4790,band:'ore'},
+ "pyrolusite"     :{name:"Manganese ore (pyrolusite)",density:5060,band:'ore'},
+ "apatite"        :{name:"Phosphate (apatite)",density:3190,band:'ore'},
+ "graphite"       :{name:"Graphite",density:2250,band:'ore'},
+ "sulfur"         :{name:"Native sulfur",density:2070,band:'ore'},
+ "spodumene"      :{name:"Lithium ore (spodumene)",density:3150,band:'ore'},
+ "silver"         :{name:"Silver ore (acanthite)",density:7300,band:'scarce'},
+ "cobaltite"      :{name:"Cobalt ore (cobaltite)",density:6300,band:'scarce'},
+ "cassiterite"    :{name:"Tin ore (cassiterite)",density:6990,band:'scarce'},
+ "wolframite"     :{name:"Tungsten ore (wolframite)",density:7300,band:'scarce'},
+ "molybdenite"    :{name:"Molybdenum ore (molybdenite)",density:4730,band:'scarce'},
+ "monazite"       :{name:"Rare-earth ore (monazite)",density:5150,band:'scarce'},
+ "uraninite"      :{name:"Uranium ore (uraninite)",density:10950,band:'scarce'},
+ "gold"           :{name:"Native gold",density:19300,band:'scarce'},
+ "diamond"        :{name:"Industrial diamond",density:3510,band:'scarce'},
+ "platinum"       :{name:"Native platinum",density:21450,band:'rare'},
+ "palladium"      :{name:"Native palladium",density:12020,band:'rare'},
+ "iridium"        :{name:"Native iridium",density:22560,band:'rare'},
+ "shocked-quartz" :{name:"Shocked quartz",density:2650,band:'shock'},
+ "impact-glass"   :{name:"Impact glass",density:2200,band:'shock'},
+ "maskelynite"    :{name:"Maskelynite",density:2550,band:'shock'},
+ "coesite"        :{name:"Coesite",density:2920,band:'shock'},
+ "stishovite"     :{name:"Stishovite",density:4290,band:'shock-rare'},
+ "ringwoodite"    :{name:"Ringwoodite",density:3900,band:'shock-rare'},
+ "lonsdaleite"    :{name:"Lonsdaleite",density:3520,band:'lonsdaleite'},
+ "brownleeite"    :{name:"Brownleeite",density:5820,band:'brownleeite'}};
+// Rarity bands (roughly real abundance, kept simple), and each band's share of pieces per field type: common rock,
+// metal and ice everywhere; the rare finds are scarce, and scarcest of all in the big easy fields (small and tiny
+// fields hide them). The shock minerals are spread through all four rings alike.
+const MIX={
+ large: {common:.5515, plentiful:.25, ore:.14, scarce:.03, rare:.002, shock:.02,  'shock-rare':.006, lonsdaleite:.0005},
+ medium:{common:.4815, plentiful:.24, ore:.18, scarce:.06, rare:.005, shock:.025, 'shock-rare':.008, lonsdaleite:.0005},
+ small: {common:.402, plentiful:.22, ore:.22, scarce:.11, rare:.01,  shock:.028, 'shock-rare':.009, lonsdaleite:.001},
+ tiny:  {common:.3624, plentiful:.22, ore:.22, scarce:.14, rare:.016, shock:.03,  'shock-rare':.01,  lonsdaleite:.0015, brownleeite:.0001}};   // brownleeite: tiny fields only (Eric 10-19)
+const BAND_MATS={};for(const m in MATERIALS)(BAND_MATS[MATERIALS[m].band]=BAND_MATS[MATERIALS[m].band]||[]).push(m);
 const ICO_VOL=2.536,ICO_HALF=0.851;          // IcosahedronGeometry(1): volume, and half-extent of its box per axis
 const HOLD={name:'Starter hold',dims:[1.6,1.2,1.0]};   // interior, metres → 1.92 m³
 HOLD.cap=HOLD.dims[0]*HOLD.dims[1]*HOLD.dims[2];HOLD.sorted=HOLD.dims.slice().sort((a,b)=>b-a);
 const cargo=[];                                // pieces aboard
 function cargoBulk(){return cargo.reduce((a,p)=>a+p.box,0);}
-function pickMat(size,r){let u=r(),acc=0;for(const [m,w] of MIX[size]){acc+=w;if(u<acc)return m;}return MIX[size][0][0];}
-function makePiece(size,sx,sy,sz,r){const dims=[sx,sy,sz].map(v=>2*ICO_HALF*v).sort((a,b)=>b-a);const mat=pickMat(size,r);
+// WHAT EACH PIECE IS (security fix 10-19): the SERVER decides, from its session seed, the field id and the piece index
+// (minerals.py: field_facts, piece_mineral). This is the same roll, only to SHOW the prediction; when signed in, what is
+// recorded, alerted and stored is the server's answer, and the hold shows that.
+function fnv1a(t){let h=0x811C9DC5;for(let i=0;i<t.length;i++){h=Math.imul(h^t.charCodeAt(i),0x01000193)>>>0;}return h>>>0;}
+function fieldFacts(seed,id){const r=rng(fnv1a(seed+'|'+id+'|size'));let v=r(),size='tiny';
+ for(const k in SIZES){if(v<SIZES[k].share){size=k;break;}v-=SIZES[k].share;}
+ const S=SIZES[size];return [size,S.n[0]+Math.floor(r()*(S.n[1]-S.n[0]+1))];}
+function pieceMineral(seed,id,i,size){const r=rng(fnv1a(seed+'|'+id+'|'+i));let u=r(),acc=0,band='common';
+ for(const b in MIX[size]){acc+=MIX[size][b];if(u<acc){band=b;break;}}
+ const ms=BAND_MATS[band];return ms[Math.floor(r()*ms.length)];}   // a band, then one of its minerals alike
+function makePiece(mat,sx,sy,sz){const dims=[sx,sy,sz].map(v=>2*ICO_HALF*v).sort((a,b)=>b-a);
  const vol=ICO_VOL*sx*sy*sz;return{mat,dims,vol,box:dims[0]*dims[1]*dims[2],mass:vol*MATERIALS[mat].density,taken:false};}
 function shapeFits(p){return p.dims.every((d,i)=>d<=HOLD.sorted[i]);}
 function roomFor(p){return cargoBulk()+p.box<=HOLD.cap+1e-9;}
@@ -520,17 +568,24 @@ function netApplyInventory(inv){const st=inv&&inv.places&&inv.places.find(p=>p.k
 async function netStart(){
  try{NET.token=localStorage.getItem('stardust.token');}catch(e){NET.token=null;}
  if(!NET.api||!NET.token){NET.on=false;return false;}
- try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;netApplyShip(j);return true;}
+ try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
+  // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
+  SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
+  netApplyShip(j);return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
 function netCollect(p){
  NET.queue=NET.queue.then(async()=>{
   const wait=NET.last+2200-Date.now();if(wait>0)await new Promise(r=>setTimeout(r,wait));NET.last=Date.now();
-  try{const j=await netCall('/collect',{session_id:NET.session,material:p.mat,dims:p.dims,volume_m3:p.vol});
+  try{const j=await netCall('/collect',{session_id:NET.session,field:p.fid,index:p.idx,dims:p.dims,volume_m3:p.vol});
+   if(j.aboard&&j.aboard.material&&j.aboard.material!==p.mat){p.mat=j.aboard.material;p.mass=j.aboard.kg;renderHold();}   // the server's word
    if(j.aboard&&j.aboard.flawless){p.flawless=true;renderHold();   // rule 26: keep the excitement with the miner
     snd.chime();setTimeout(()=>snd.chime(),350);
-    toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}}
+    toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}
+   else if(j.aboard&&j.aboard.noticed){snd.chime();   // lonsdaleite: noticed when collected (it is not the near-flawless diamond)
+    if(p.mat==='brownleeite'){setTimeout(()=>snd.chime(),350);toast('✦ BROWNLEEITE','Manganese silicide, known from comet dust and never found naturally on Earth. Ultra rare. Read about it in the Starship Library.');}
+    else toast('✦ LONSDALEITE','Hexagonal diamond: very rare. It is not ordinary diamond. Read about it in the Starship Library.');}}
   catch(e){const i=cargo.indexOf(p);if(i>=0)cargo.splice(i,1);renderHold();
    toast('NOT COLLECTED',e.message);}});}
 async function netUnload(){await NET.queue;return netCall('/unload',{docked:true});}
@@ -574,8 +629,8 @@ const dustMat=new THREE.PointsMaterial({size:1.4,sizeAttenuation:false,map:dot,c
 function ringOf(p){const rxy=Math.hypot(p.x,p.z);for(const rg of RINGS)if(Math.abs(rxy-rg.r)<BAND.half&&Math.abs(p.y)<BAND.thick)return rg;return null;}
 function outside(p,rg){return Math.max(Math.abs(Math.hypot(p.x,p.z)-rg.r)-BAND.half,Math.abs(p.y)-BAND.thick,0);}   // metres outside a ring's band
 function cellSeed(i,j,k){return (SEED^Math.imul(i|0,73856093)^Math.imul(j|0,19349663)^Math.imul(k|0,83492791))>>>0;}
-function makeField(id,ring,center,size,r){
- const S=SIZES[size],n=S.n[0]+Math.floor(r()*(S.n[1]-S.n[0]+1)),rad=fieldRad(n,S.sc),mem=fieldMemory.get(id);
+function makeField(id,ring,center,size,n,r){
+ const S=SIZES[size],rad=fieldRad(n,S.sc),mem=fieldMemory.get(id);
  const im=new THREE.InstancedMesh(rockGeo,rockMat,n);
  im.position.copy(center);im.frustumCulled=false;im.visible=false;
  const fld={id,ring,size,center,rad,sight:S.sight,mesh:im,count:n,mats:[],pieces:[],shown:false,known:!!(mem&&mem.known),cleared:!!(mem&&mem.cleared)};
@@ -585,7 +640,7 @@ function makeField(id,ring,center,size,r){
   const s=S.sc[0]*Math.pow(S.sc[1]/S.sc[0],Math.pow(r(),SIZE_BIAS));   // log-spread sizes, weighted toward small fragments
   tmpS.set(s*(0.7+r()*0.6),s*(0.7+r()*0.6),s*(0.7+r()*0.6));
   const m=new THREE.Matrix4().compose(v,tmpQ,tmpS);fld.mats.push(m);
-  const p=makePiece(size,tmpS.x,tmpS.y,tmpS.z,r);if(mem&&mem.taken[i])p.taken=true;fld.pieces.push(p);
+  const p=makePiece(pieceMineral(SEED,id,i,size),tmpS.x,tmpS.y,tmpS.z);p.fid=id;p.idx=i;if(mem&&mem.taken[i])p.taken=true;fld.pieces.push(p);
   im.setMatrixAt(i,p.taken?ZERO:m);tmpC.setHex(ROCK_TONES[(r()*ROCK_TONES.length)|0]);im.setColorAt(i,tmpC);}
  scene.add(im);return fld;}
 function loadCell(i,j,k){
@@ -597,11 +652,11 @@ function loadCell(i,j,k){
  // beginners first (Eric 10-11): plenty of large, easy-to-hear fields of common material
  const u=r(),n=u<0.3?0:u<0.8?1:2;
  for(let f=0;f<n;f++){
-  let v=r(),size='tiny';for(const k in SIZES){if(v<SIZES[k].share){size=k;break;}v-=SIZES[k].share;}
+  r();const [size,nPieces]=fieldFacts(SEED,key+'#'+f);           // size and piece count: the server's roll
   const S=SIZES[size],m=fieldRad(S.n[1],S.sc);                         // room for the biggest it could be
   const c=o.clone().add(new THREE.Vector3(m+r()*(CELL-2*m),m+r()*(CELL-2*m),m+r()*(CELL-2*m)));
   if(!ringOf(c)||cell.fields.some(g=>g.center.distanceTo(c)<g.rad+m+FIELD_GAP))continue;
-  const fld=makeField(key+'#'+f,ring,c,size,r);cell.fields.push(fld);FIELDS.push(fld);}
+  const fld=makeField(key+'#'+f,ring,c,size,nPieces,r);cell.fields.push(fld);FIELDS.push(fld);}
  // a thin haze of dust, so the band reads as a place even between fields (fogged like the rocks)
  const nd=140,P=new Float32Array(nd*3);for(let d=0;d<nd*3;d++)P[d]=r()*CELL;
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(P,3));
@@ -620,13 +675,16 @@ function updateSight(){ // per-field visibility by its size class; fog then fade
   if(show)f.mesh.instanceMatrix.needsUpdate=true;}}
 
 // ── FLIGHT (Eric 2026-10-10): the WHOLE SCREEN is a joystick, the same on a phone and with a mouse.
-//  • Press and hold (finger, or left mouse button) anywhere: that point becomes the stick's centre, and holding = flying forward.
+//  • Press and hold (finger, or left mouse button) anywhere: that point becomes the stick's centre; it steers.
+//  • THROTTLE (Eric 10-17), right side: ▲/▼ step it 10% at a time, 0% (stopped) to 100%. Speed follows the throttle.
+//    No automatic slow-down: the player throttles down by hand on approach. The autopilot still flies itself.
+//  • SIDE THRUSTERS (Eric 10-17), bottom left: ◀/▶ pivot left/right in place, to line up on a target without drifting.
 //  • Drag DOWN (pull back) = nose up · drag UP (push forward) = nose down · drag RIGHT/LEFT = bank right/left (roll + turn).
 //  • Let go: turning and speed slowly drift to a stop.
 //  • Double-tap: if the scanner has LOCKED a field, the autopilot flies you to it. Otherwise it locks the field or
 //    landmark you can see nearest the tap and flies you there. Holding the stick again takes the controls back
 //    (the lock stays; double-tap again to resume).
-//  Keyboard still works on desktop: W/S A/D R/F Q/E, Shift boost, Space brake.
+//  Keyboard still works on desktop: W/S or PageUp/PageDown throttle, ←/→ pivot, A/D R/F Q/E, Shift boost, Space brake.
 const vel=new THREE.Vector3(),rot=new THREE.Vector3();   // rot = pitch, yaw, roll rates (rad/s) in the ship's own frame
 const keys={};
 const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long trips and slows as it arrives (WARP crosses the system)
@@ -634,7 +692,13 @@ const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long t
 // you launch from, including at the very start of a session.
 function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;
  cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
-addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyH')toggleHelp();});
+let throttle=0;                           // 0..10 steps of 10%
+const thrEl=document.getElementById('thrtxt');
+function setThrottle(n){if(lock){if(lock.parked)lock=null;else lock.auto=false;}   // like the stick: touching the throttle takes the controls back
+ throttle=Math.max(0,Math.min(10,n));thrEl.textContent='Throttle '+throttle*10+'%';}
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyH')toggleHelp();
+ if(running&&(e.code==='KeyW'||e.code==='PageUp')){setThrottle(throttle+1);e.preventDefault();}
+ if(running&&(e.code==='KeyS'||e.code==='PageDown')){setThrottle(throttle-1);e.preventDefault();}});
 addEventListener('keyup',e=>{keys[e.code]=false;});
 
 const STICK_R=90;                          // px of drag for full deflection
@@ -656,6 +720,12 @@ function endStick(e){if(stk&&stk.id===e.pointerId){stk=null;stickRing.hidden=tru
 cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const hold={boost:false};
+const pivot={l:false,r:false};
+document.getElementById('thrUp').addEventListener('click',()=>setThrottle(throttle+1));
+document.getElementById('thrDn').addEventListener('click',()=>setThrottle(throttle-1));
+[['pivL','l'],['pivR','r']].forEach(([id,k])=>{const b=document.getElementById(id);   // held: keeps pivoting
+ b.addEventListener('pointerdown',e=>{pivot[k]=true;b.setPointerCapture(e.pointerId);});
+ ['pointerup','pointercancel'].forEach(t=>b.addEventListener(t,()=>pivot[k]=false));});
 (function(){const b=document.getElementById('bBoost');
  b.addEventListener('pointerdown',e=>{hold.boost=true;b.setPointerCapture(e.pointerId);});
  ['pointerup','pointercancel'].forEach(t=>b.addEventListener(t,()=>hold.boost=false));})();
@@ -691,12 +761,13 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if(holding)docked=false;   // taking the stick back stops the autopilot (the lock stays)
+ if(holding||throttle)docked=false;   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
  if(holding){tp=sy*1.1;tr=-sx*1.5;ty=-sx*0.55;}   // pull back (down) = nose up; right = roll right + turn right
  tp+=((keys.ArrowDown?1:0)-(keys.ArrowUp?1:0))*1.0;tr+=((keys.KeyQ?1:0)-(keys.KeyE?1:0))*1.4;
+ ty+=((keys.ArrowLeft||pivot.l?1:0)-(keys.ArrowRight||pivot.r?1:0))*0.8;   // side thrusters: pivot in place
  if(lock&&(lock.auto||lock.parked)){         // autopilot (and parked): keep the nose on the target
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
@@ -706,28 +777,35 @@ function fly(dt){
   toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
- const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
+ const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||ty||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
  rot.x+=(tp-rot.x)*k;rot.y+=(ty-rot.y)*k;rot.z+=(tr-rot.z)*k;
  q.setFromAxisAngle(axis.set(1,0,0),rot.x*dt);cam.quaternion.multiply(q);
  q.setFromAxisAngle(axis.set(0,1,0),rot.y*dt);cam.quaternion.multiply(q);
  q.setFromAxisAngle(axis.set(0,0,1),rot.z*dt);cam.quaternion.multiply(q);cam.quaternion.normalize();
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);
- // thrust: holding the stick (or W) flies forward
+ // thrust: the throttle sets the speed (0% = stopped)
  const boost=keys.ShiftLeft||keys.ShiftRight||hold.boost;
- let tf=(holding?1:0)+(keys.KeyW?1:0)-(keys.KeyS?1:0);tf=Math.max(-1,Math.min(1,tf));
+ let tf=throttle&&!(lock&&lock.parked)?1:0;
  const ts=(keys.KeyD?1:0)-(keys.KeyA?1:0),tu=(keys.KeyR?1:0)-(keys.KeyF?1:0);
- let cap=boost?BOOSTV:MAXV;
+ let cap=(boost?BOOSTV:MAXV)*throttle/10+(ts||tu?MAXV*0.3:0);
  if(lock&&lock.auto){const dist=Math.max(0,cam.position.distanceTo(lock.pos)-lock.stopAt);const aligned=Math.max(0,want.dot(fwd));
   cap=Math.min(AUTOV,Math.max(6,dist*0.6))*aligned;tf=1;}
+ if(vel.length()>cap)tf=0;   // throttled down: coast down to the new speed
  const a=ACC*(boost||(lock&&lock.auto)?3.2:1);
  vel.addScaledVector(fwd,tf*a*dt).addScaledVector(right,ts*a*0.6*dt).addScaledVector(up,tu*a*0.6*dt);
  const idle=!tf&&!ts&&!tu;
- vel.multiplyScalar(Math.exp(-(keys.Space||(lock&&lock.parked)?2.6:idle?0.35:0.12)*dt));   // parked = station-keeping brake   // released: drifts to a stop over a few seconds
+ vel.multiplyScalar(Math.exp(-(keys.Space||(lock&&lock.parked)?2.6:idle?(throttle?0.35:1.2):0.12)*dt));   // parked = station-keeping brake   // released: drifts to a stop over a few seconds
  if(vel.length()>cap)vel.setLength(Math.max(cap,vel.length()*Math.exp(-1.5*dt)));
+ if(!(lock&&lock.auto)&&tf){const sp=vel.length();vel.lerp(want.copy(fwd).multiplyScalar(sp),1-Math.exp(-3*dt));}   // under power the ship flies where it points
  cam.position.addScaledVector(vel,dt);
  if(lock&&lock.parked){if(lock.last)cam.position.add(tgtV.copy(lock.pos).sub(lock.last));lock.last=(lock.last||new THREE.Vector3()).copy(lock.pos);}   // station-keeping: ride along as the field drifts
  if(cam.position.length()<SUN_R*30){cam.position.setLength(SUN_R*30);vel.multiplyScalar(0.2);if(lock)lock.auto=false;warn('Too close to the Sun. Hull temperature critical.');}
 }
+// Approach distance (Eric 10-17): big, faint numbers top centre, to whatever the scanner is tracking.
+const apprEl=document.getElementById('appr');
+function approachHud(){
+ const p=docked?null:lock?(lock.aim||lock.pos):scanBest&&scanStrength>0.25?scanBest.center:null;
+ apprEl.hidden=!p;if(p)apprEl.textContent=fmtDist(cam.position.distanceTo(p));}
 function lockHud(){
  if(!lock){lockEl.hidden=true;return;}
  pv.copy(lock.aim||lock.pos).project(cam);const on=pv.z<1&&Math.abs(pv.x)<1&&Math.abs(pv.y)<1;
@@ -786,7 +864,7 @@ function scan(dt){
     if(moved>Math.max(35,dist*0.12)&&a1.angleTo(a2)>2.5*Math.PI/180)fixField(best);}
   }}
  scanEl.style.width=(scanStrength*100).toFixed(0)+'%';
- scanTxt.textContent=docked?'DOCKED · press and hold to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
+ scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
  snd.scanner(lock&&(lock.field||lock.dock)||docked?-1:scanStrength);
 }
 function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();
@@ -951,7 +1029,7 @@ function frame(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
  if(toastT&&now>toastT){document.getElementById('toast').hidden=true;toastT=0;}
  if(now>sightT){if(!warp){updateCells();updateSight();}sightT=now+200;}
  sky();pulseGuides(now/1000);
- hud();lockHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
+ hud();lockHud();approachHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
 updateCells();updateSight();requestAnimationFrame(frame);netStart();
-window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},SEED,cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
- get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;}}; // for testing
+window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},get SEED(){return SEED;},cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
+ get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;},get throttle(){return throttle;}}; // for testing

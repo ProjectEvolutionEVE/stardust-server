@@ -4,13 +4,11 @@ Why the server re-checks: the browser can be edited, so the client's word is nev
 The server recomputes mass from real density, re-checks that the piece's shape fits the hold and that its bulk fits
 the room left, and refuses collects faster than collecting physically takes."""
 
-DENSITY = {  # kg per cubic metre, real values
-    "iron": 5300,      # hematite iron ore (webmineral 5.3; corrected from 5150 on 10-11, Eric)
-    "copper": 4190,    # copper ore: chalcopyrite CuFeS2 (fields hold ores, Eric 10-11)
-    "silver": 7300,    # silver ore: acanthite Ag2S
-    "gold": 19300,     # native gold (gold is found as metal)
-    "diamond": 3510,   # industrial diamond; 1 in 100,000 is near-flawless (rule 26)
-}
+import minerals as MN
+# kg per cubic metre, real values: every mineral debris fields hold (minerals.py is the one list, Eric 10-19).
+# The first five codes keep their names: iron = hematite, copper = chalcopyrite, silver = acanthite, gold, diamond.
+DENSITY = {c: m["density"] for c, m in MN.MINERALS.items()}
+NOTICED = MN.NOTICED     # lonsdaleite: its own alert when collected (like the near-flawless diamond, but NOT that diamond)
 ICO_VOL = 2.536          # volume of the icosahedron rocks are drawn from, per unit scale³
 MIN_COLLECT_S = 2.0      # the quickest a piece can come aboard (client: 2 s + more for bigger pieces)
 import os
@@ -38,6 +36,24 @@ def piece(material, dims, volume_m3):
     if not (0.2 * box <= vol <= box):
         raise Refused("Bad piece volume.")
     return {"dims": d, "box": box, "volume": vol, "mass": vol * DENSITY[material]}
+
+
+import re
+_FIELD_ID = re.compile(r"^-?\d{1,12},-?\d{1,12},-?\d{1,12}#\d$")
+
+
+def what_it_is(seed, field_id, index):
+    """The server decides what a piece IS (never the browser): from the session seed, the field and the piece index.
+    Returns (material, field size). Refuses a field or piece that the seed never made."""
+    if not isinstance(field_id, str) or not _FIELD_ID.match(field_id) \
+            or int(field_id.rsplit("#", 1)[1]) >= MN.MAX_FIELDS_PER_CELL:
+        raise Refused("Unknown debris field.")
+    if isinstance(index, bool) or not isinstance(index, int):
+        raise Refused("Unknown piece.")
+    size, count = MN.field_facts(seed, field_id)
+    if not (0 <= index < count):
+        raise Refused("Unknown piece.")
+    return MN.piece_mineral(seed, field_id, index, size), size
 
 
 def shape_fits(dims_sorted, hold_dims):

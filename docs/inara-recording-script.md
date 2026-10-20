@@ -13,15 +13,22 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - **SOURCE**: the exact text exists in the code or a design document. Record as written.
 - **SOURCE, HOLD**: the text exists, but it can't be played yet (it names something not built). Record it only when
   the note says so.
-- **[DRAFT, needs Eric's approval]**: the sources say Inara speaks at this moment but give no words, or give only
+- **APPROVED by Eric 10-19**: the sources say Inara speaks at this moment but give no words, or give only
   on-screen text. The draft uses only facts from the sources.
 
 **Recording rules (settled)**
 - Every line is a **pre-recorded audio file**, recorded once. Never live speech, never live ElevenLabs
   (`stardust-server/CLAUDE.md` rules 14 and 15; spec §9).
 - Her prepared lines are recorded with ElevenLabs in the languages ElevenLabs speaks best (rule 15; ledger v3.9).
-- **Still open (Eric's to answer):** which ElevenLabs voice speaks as Inara. **Lily is reserved for Eric's own
-  personal Inara** and must not be used here. Also open: what players in languages ElevenLabs doesn't speak well get
+- **Voices by language (Eric, 10-19).** One Inara, voiced per language by the voice that speaks it best:
+  - **Lily - Velvety Actress:** English, Mandarin Chinese (serves Simplified and Traditional), German, Polish.
+  - **Kate 1 - Warm, Close and Natural:** Spanish (Latin American), French, Korean, Turkish at her natural settings;
+    Brazilian Portuguese too, also at her natural settings (Eric 10-19: tried faster takes, kept the original).
+  - **Julia (Russian), voice ID `MOgsVr0EwwxqQs5cNDhu`:** Russian.
+  - **Sumiko Ito - Crisp, voice ID `0yh9saSHWVy78QG1HfNs`:** Japanese (Eric 10-19; recorded without a sample, on his call).
+  Line texts per language: `docs/inara-lines/<lang>.json`; record with `tools/inara-record.py --lang <lang> --voice <name or ID>`.
+- **Voice: Lily (Eric, 10-19).** Exact voice: "Lily - Velvety Actress" on Eric's ElevenLabs account, model `eleven_multilingual_v2`; Eric heard the test sample (`tools/inara-voice-sample.py`, TWR-004 + STORY-001/002) on 10-19: "The voice matches and sounds perfect." Recorded files only; never a live ElevenLabs call for players until a different
+  ElevenLabs contract is in place. Still open: what players in languages ElevenLabs doesn't speak well get
   (`CLAUDE.md` open question 2; spec §13 question 6).
 - The spec (§9) says the Tower lines are "recorded the same way as Signal's". Signal in the Noise's method
   (`games-holdback/INARA-TOWER-LINES.md`) is: one voice per language, never changed; a radio filter on everything
@@ -34,12 +41,12 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - Inara is stationed in **the Tower**, the lit command deck in a pod under the bow of the Starship, the **WSC
   Alexander von Humboldt**. She watches every craft leave and come home (spec §10; `static/debris-flight.js:209`).
 - She works in the ship's command and control centre and guides and coordinates the smaller vessels: their missions,
-  departures and returns. The player flies one of them (`STORY-BIBLE.md`; Stardust rule 28 says it is the same ship).
+  departures and returns. The player flies one of them (`docs/STORY-BIBLE.md`; Stardust rule 28 says it is the same ship).
 - Every player reaches her through a **comms badge** worn on the shirt, aboard the Starship or out in their craft.
   A COMMS button reaches her to ask a question; she answers from her prepared FAQ, word for word (spec §8, §9).
 - **Coaching rule (Eric, 10-10):** she explains how things work when asked, and does not tell players what to upgrade.
   The one exception is the delayed hint for a player who seems stuck (spec §6; FAQ header).
-- Canon limits on what she may say (`STORY-BIBLE.md`): she never knows more than the crew and never announces what
+- Canon limits on what she may say (`docs/STORY-BIBLE.md`): she never knows more than the crew and never announces what
   destroyed the four planets; she never says everyone on Earth died ("never say never").
 - Personal touches for the actor's sense of her (Story Bible canon; none of them appear in a line below): she likes
   fireflies, has a secret love of chocolate (the cigar was retired 09-30), and keeps an old tattered shirt that smells
@@ -66,18 +73,18 @@ badge carries all of this: the Tower lines, the welcome, and the answers to play
 any source, and the badge and COMMS button are not built yet (`static/quarters.js` only has the COMMS inbox at the
 Desk). Every new player starts as a Trainee (rule 6; `static/quarters.js:136`).
 
-**INARA-WELCOME-001** · [DRAFT, needs Eric's approval] · Moment: the comms badge is first issued, before the first flight · spec §8
+**INARA-WELCOME-001** · APPROVED by Eric 10-19 · Moment: the comms badge is first issued, before the first flight · spec §8
 > Welcome aboard the WSC Alexander von Humboldt, Trainee. This is Inara, in the Tower. Your comms badge is live.
 > Wherever you are, aboard the Starship or out in your craft, I'm on the other end of it.
 
 *Delivery:* Warm, unhurried, a first hello. Pronunciation: "Alexander von HOOM-bolt".
 
-**INARA-WELCOME-002** · [DRAFT, needs Eric's approval] · Moment: right after WELCOME-001, explaining the COMMS button · spec §8
+**INARA-WELCOME-002** · APPROVED by Eric 10-19 · Moment: right after WELCOME-001, explaining the COMMS button · spec §8
 > Any time you have a question, tap COMMS and ask me. I'll explain how things work and what you can do next.
 
 *Delivery:* Friendly, plain. Not a sales pitch.
 
-**INARA-WELCOME-003** · [DRAFT, needs Eric's approval] · Moment: the first mission is explained · spec §8 ("Earning the right to fly")
+**INARA-WELCOME-003** · APPROVED by Eric 10-19 · Moment: the first mission is explained · spec §8 ("Earning the right to fly")
 > Your first mission is the prospector's loop. Find a debris field, collect what fits in your hold, come home, and sell
 > it on the open market.
 
@@ -85,7 +92,7 @@ Desk). Every new player starts as a Trainee (rule 6; `static/quarters.js:136`).
 *Note:* spec §8 also says every player goes to the library and drafts a first blueprint before the first flight.
 Whether that blueprint must sell first is **open question 3** (`CLAUDE.md`), so no line for that step is drafted.
 
-**INARA-DIRECTION-001** · [DRAFT, needs Eric's approval] · Moment: after the first mission, "Inara offers a choice of directions" · spec §8, rule 16
+**INARA-DIRECTION-001** · APPROVED by Eric 10-19 · Moment: after the first mission, "Inara offers a choice of directions" · spec §8, rule 16
 > You've finished your first mission. Job openings aboard the Starship arrive in the COMMS at your desk. Read them when
 > you're ready.
 
@@ -140,10 +147,10 @@ toast on screen. Because the warning repeats every 15 seconds, record 2 takes of
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-RING-013 | [DRAFT, needs Eric's approval] | You're drifting out of the Mercury ring. Turn back toward the debris. |
-| INARA-RING-014 | [DRAFT, needs Eric's approval] | You're drifting out of the Venus ring. Turn back toward the debris. |
-| INARA-RING-015 | [DRAFT, needs Eric's approval] | You're drifting out of the Earth ring. Turn back toward the debris. |
-| INARA-RING-016 | [DRAFT, needs Eric's approval] | You're drifting out of the Mars ring. Turn back toward the debris. |
+| INARA-RING-013 | APPROVED by Eric 10-19 | You're drifting out of the Mercury ring. Turn back toward the debris. |
+| INARA-RING-014 | APPROVED by Eric 10-19 | You're drifting out of the Venus ring. Turn back toward the debris. |
+| INARA-RING-015 | APPROVED by Eric 10-19 | You're drifting out of the Earth ring. Turn back toward the debris. |
+| INARA-RING-016 | APPROVED by Eric 10-19 | You're drifting out of the Mars ring. Turn back toward the debris. |
 
 *Delivery:* Calm, watchful, a gentle nudge. Not an alarm.
 *Draft basis:* the SOURCE lines above with the distance removed. Nothing else changed.
@@ -155,37 +162,37 @@ searching'), a delayed hint for a stuck player, a full hold, prices moving ('Gol
 Only the hint and the price example have words in the sources. Where the game already shows an on-screen toast for the
 moment, the draft keeps the toast's words.
 
-**INARA-TOWER-001** · [DRAFT, needs Eric's approval] · Moment: launching from the bay · spec §9 ("launching")
+**INARA-TOWER-001** · APPROVED by Eric 10-19 · Moment: launching from the bay · spec §9 ("launching")
 > You're clear of the bay. Good hunting.
 
 *Delivery:* Light, upbeat, short.
 
-**INARA-TOWER-002** · [DRAFT, needs Eric's approval] · Moment: the first strong return of a session · spec §9 ("a first strong return")
+**INARA-TOWER-002** · APPROVED by Eric 10-19 · Moment: the first strong return of a session · spec §9 ("a first strong return")
 > Strong return on your scanner. There's a field out there.
 
 *Delivery:* Quietly pleased. Short, so it doesn't cover the scanner tone.
 
-**INARA-TOWER-003** · [DRAFT, needs Eric's approval] · Moment: a field is fixed (locked) · spec §9 ("a field fixed"); toast `static/debris-flight.js:793` ("FIELD LOCKED · Scanner quiet. Double-tap to fly there.")
+**INARA-TOWER-003** · APPROVED by Eric 10-19 · Moment: a field is fixed (locked) · spec §9 ("a field fixed"); toast `static/debris-flight.js:793` ("FIELD LOCKED · Scanner quiet. Double-tap to fly there.")
 > Field locked. Double-tap to fly there.
 
 *Delivery:* Crisp confirmation.
 
-**INARA-TOWER-004** · [DRAFT, needs Eric's approval] · Moment: the field's pieces are too big for the hold · spec §6, §9; toast `static/debris-flight.js:343` (words kept as written)
+**INARA-TOWER-004** · APPROVED by Eric 10-19 · Moment: the field's pieces are too big for the hold · spec §6, §9; toast `static/debris-flight.js:343` (words kept as written)
 > These pieces won't fit in your hold. Keep searching for a field of smaller debris.
 
 *Delivery:* Neutral, helpful. **Must not mention an upgrade** (spec §6: the player works out the upgrade themselves).
 
-**INARA-TOWER-005** · [DRAFT, needs Eric's approval] · Moment: the hold is full · spec §9 ("a full hold"); toast `static/debris-flight.js:344` (words kept as written)
+**INARA-TOWER-005** · APPROVED by Eric 10-19 · Moment: the hold is full · spec §9 ("a full hold"); toast `static/debris-flight.js:344` (words kept as written)
 > No room left for these pieces. Return to the Starship to unload.
 
 *Delivery:* Satisfied, a job done.
 
-**INARA-TOWER-006** · [DRAFT, needs Eric's approval] · Moment: the autopilot brings the craft in under the bow · spec §9 ("docking"); FAQ:129 ("That's where I am when I'm talking you in")
+**INARA-TOWER-006** · APPROVED by Eric 10-19 · Moment: the autopilot brings the craft in under the bow · spec §9 ("docking"); FAQ:129 ("That's where I am when I'm talking you in")
 > I see you. Bringing you in under the bow, past the command deck, into the bay.
 
 *Delivery:* Warm, steady, the voice of someone watching you come home.
 
-**INARA-TOWER-007** · [DRAFT, needs Eric's approval] · Moment: docked · spec §9 ("docking"); toast `static/debris-flight.js:706` (words kept as written)
+**INARA-TOWER-007** · APPROVED by Eric 10-19 · Moment: docked · spec §9 ("docking"); toast `static/debris-flight.js:706` (words kept as written)
 > Welcome home. Your Market terminal is at the Desk in your quarters.
 
 *Delivery:* Warm.
@@ -213,10 +220,10 @@ near-flawless diamond is not traded yet, so it has none):
 
 | ID | Status | Text |
 |---|---|---|
-| INARA-MARKET-002 | [DRAFT, needs Eric's approval] | Iron ore's paying well today. |
-| INARA-MARKET-003 | [DRAFT, needs Eric's approval] | Copper ore's paying well today. |
-| INARA-MARKET-004 | [DRAFT, needs Eric's approval] | Silver ore's paying well today. |
-| INARA-MARKET-005 | [DRAFT, needs Eric's approval] | Industrial diamond's paying well today. |
+| INARA-MARKET-002 | APPROVED by Eric 10-19 | Iron ore's paying well today. |
+| INARA-MARKET-003 | APPROVED by Eric 10-19 | Copper ore's paying well today. |
+| INARA-MARKET-004 | APPROVED by Eric 10-19 | Silver ore's paying well today. |
+| INARA-MARKET-005 | APPROVED by Eric 10-19 | Industrial diamond's paying well today. |
 
 *Note:* what counts as "paying well" (how far above the reference price, and how often she may say it) is not defined
 anywhere yet. No lines for falling prices are drafted, because no source asks for them.
@@ -251,18 +258,19 @@ rather than a manual being read. The question is not recorded; only the answer i
 
 ### Flying
 
-**INARA-FAQ-001** · SOURCE (verbatim, FAQ v1.9) · Q: *How do I fly?* · `quavara-docs/debris-field-game-faq.md:39`
+**INARA-FAQ-001** · REVISED 10-19 for the new throttle and side thrusters (was FAQ v1.9) · Q: *How do I fly?* · `quavara-docs/debris-field-game-faq.md:39`
 
-> Press and hold anywhere on the screen. Holding moves you forward, and the spot you pressed becomes the center of your
-> joystick. Pull back to raise the nose, push up to dip it, and slide right or left to bank. Let go and you'll drift to a
-> stop. On a computer, holding the left mouse button works the same way.
+> Use the throttle on the right: tap the up arrow to go faster and the down arrow to slow down. At zero you stop. To
+> steer, press and hold anywhere on the screen; that spot becomes the center of your joystick. Pull back to raise the
+> nose, push up to dip it, and slide right or left to turn. The arrows at the bottom left turn you in place. On a
+> computer, W and S work the throttle, and the left and right arrow keys turn you in place.
 
 *Delivery / notes:* Default.
 
-**INARA-FAQ-002** · SOURCE (verbatim, FAQ v1.9) · Q: *I keep spinning. How do I steady the ship?* · `quavara-docs/debris-field-game-faq.md:44`
+**INARA-FAQ-002** · REVISED 10-19 for the new throttle and side thrusters (was FAQ v1.9) · Q: *I keep spinning. How do I steady the ship?* · `quavara-docs/debris-field-game-faq.md:44`
 
-> Let go. Turning eases out in about a second and your speed drifts down over a few seconds. Small drags from the center
-> make small turns; it takes a little practice.
+> Let go of the screen. Turning eases out in about a second. To slow down, tap the throttle down; at zero you coast to
+> a stop. Small drags from the center make small turns; it takes a little practice.
 
 *Delivery / notes:* Default.
 
@@ -335,9 +343,9 @@ rather than a manual being read. The question is not recorded; only the answer i
 
 *Delivery / notes:* Default.
 
-**INARA-FAQ-012** · SOURCE (verbatim, FAQ v1.9) · Q: *I can't find a field anywhere. Which way should I go?* · `quavara-docs/debris-field-game-faq.md:88`
+**INARA-FAQ-012** · REVISED 10-19 for the new throttle and side thrusters (was FAQ v1.9) · Q: *I can't find a field anywhere. Which way should I go?* · `quavara-docs/debris-field-game-faq.md:88`
 
-> Press and hold to fly, and look at the rim of your flight stick. A faint gold glow shows which way the nearest field
+> Throttle up, press and hold to steer, and look at the rim of your flight stick. A faint gold glow shows which way the nearest field
 > lies, even before you can see or hear it. Turn until the whole rim glows: the field is dead ahead. Then sweep it with
 > the scanner as usual.
 
@@ -412,9 +420,9 @@ rather than a manual being read. The question is not recorded; only the answer i
 
 *Delivery / notes:* First person: Inara describing her own post. Warm.
 
-**INARA-FAQ-022** · SOURCE (verbatim, FAQ v1.9) · Q: *I'm docked. How do I leave?* · `quavara-docs/debris-field-game-faq.md:133`
+**INARA-FAQ-022** · REVISED 10-19 for the new throttle and side thrusters (was FAQ v1.9) · Q: *I'm docked. How do I leave?* · `quavara-docs/debris-field-game-faq.md:133`
 
-> Press and hold, just like flying. You'll launch out from under the bow. Every session starts in your bed, in your
+> Tap the throttle up. You'll launch out from under the bow. Every session starts in your bed, in your
 > Private Quarters. When you go to the Docking Bay, your ship is waiting here, docked in the bay under the bow, ready to
 > launch.
 
@@ -637,7 +645,7 @@ Listed so Eric can decide whether Inara should say any of these. Until he does, 
 (`INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT*.txt`, `INARA-SOURCE-SCRIPT.txt`, about 185 lines, with
 translations and recordings under `voice/`). **Those are for Signal in the Noise** (coins, fragments, naming places,
 placing pins on the New Earth), not for Stardust, and none of them is copied here. Stardust must stay separate from
-Quavara (rule 1), and those recordings use Lily, which is reserved for Eric's own Inara. Only the recording method is
+Quavara (rule 1). (They are in Lily too, the voice Eric chose for Stardust on 10-19, but they belong to the other game.) Only the recording method is
 borrowed (spec §9).
 
 ## Appendix C. Contradictions found between the sources
@@ -678,8 +686,8 @@ are still Eric's to decide**; their text is unchanged.
 12. **OPEN, for Eric.** **The game's name.** `CLAUDE.md`, the spec (v7.4) and the FAQ (v1.9) say "Stardust - Rebuilding Home, final name
     pending". Ledger v4.2 (10-13) names it **Stardust - Terra Deleta** (working title until an attorney clears it).
     No recorded line uses the name.
-13. **OPEN, for Eric.** **Lily.** Signal's lines are recorded in Lily (`INARA-TOWER-LINES.md`); Stardust reserves Lily for Eric's own
-    Inara (`CLAUDE.md` open question 2; spec §13 question 6). The Signal recordings can't be reused.
+13. **ANSWERED (Eric 10-19): Lily** for Stardust's recorded lines. Signal's recordings still aren't reused: they
+    are the other game's lines (rule 1); Stardust records its own.
 
 ## Appendix D. Totals
 
@@ -687,7 +695,7 @@ are still Eric's to decide**; their text is unchanged.
 |---|---|---|
 | SOURCE, ready to record | 45 FAQ answers + 3 ring lines + 1 price line = **49** | 45 + 8 (RING-001 to 008) + 1 = **54** (RING-009 to 012 are not recorded: the drafts RING-013 to 016 replace them for voice) |
 | SOURCE, HOLD (names tools that don't exist yet) | the stuck-player hint, INARA-HINT-001 = **1** | **1** |
-| [DRAFT, needs Eric's approval] | 3 welcome + 1 direction + 1 distance-free drift line + 7 Tower moments + 4 price lines = **16** | 3 + 1 + 4 + 7 + 4 = **19** |
+| APPROVED by Eric 10-19 | 3 welcome + 1 direction + 1 distance-free drift line + 7 Tower moments + 4 price lines = **16** | 3 + 1 + 4 + 7 + 4 = **19** |
 
 FAQ answers: 46 entries in the FAQ, 45 recorded here (the hint is recorded once, as INARA-HINT-001). INARA-FAQ-033 is
 recorded as a spoken reading of its table (the same rows, word for word).
@@ -695,5 +703,5 @@ recorded as a spoken reading of its table (the same rows, word for word).
 **Sources:** `stardust-server` (every file searched for "inara"; read: `static/debris-flight.js`, `static/quarters.js`,
 `static/play.html`, `body.py`, `names.py`, `library_books.py`, `CLAUDE.md`); `quavara-docs/quavara-debris-field-game-stage1-spec.md` (v7.4); `quavara-docs/quavara-decision-ledger.md`
 (v4.2: v3.0-v3.9, v4.1, v4.2 and the debris-field game row); `quavara-docs/debris-field-game-faq.md` (v1.9, named by
-spec §9 as her answers); `quavara-site/games-holdback/STORY-BIBLE.md`, `INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT.txt`,
+spec §9 as her answers); `docs/STORY-BIBLE.md` (copied from `quavara-site/games-holdback/STORY-BIBLE.md`); `quavara-site/games-holdback/INARA-TOWER-LINES.md`, `INARA-RECORDING-SCRIPT.txt`,
 `games/debris-flight.js` and `games/CLAUDE.md` (the holdback copy of the flight game has the same three Inara lines).

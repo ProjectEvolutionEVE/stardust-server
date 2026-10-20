@@ -1,5 +1,6 @@
 """End-to-end test of the game server against a real (local, throwaway) Postgres.
 Usage: DATABASE_URL=postgres://postgres:pw@localhost/dfgtest python3 test_server.py"""
+import re as REX
 import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
 os.environ["DFG_BANK"] = "0"
@@ -15,6 +16,20 @@ import auctions as AU
 import library_books as LB
 from datetime import datetime, timezone, timedelta
 import game as G
+import minerals as MN
+
+def find_piece(seed, material, used, sizes=None):
+    """A (field, index) in this seed's universe whose piece the SERVER rolls as `material` (as a real flight would reach)."""
+    for n in range(2_000_000):
+        fid = f"{n % 997},{n // 997},0#{n % 2}"
+        size, count = MN.field_facts(seed, fid)
+        if sizes and size not in sizes:
+            continue
+        for i in range(count):
+            if (fid, i) not in used and MN.piece_mineral(seed, fid, i, size) == material:
+                used.add((fid, i)); return fid, i, size
+    raise AssertionError("no " + material)
+
 
 async def reset_test_db():
     """The test database is throwaway: wipe it so every run starts clean. Refuses any database not named *test."""
@@ -31,6 +46,20 @@ async def main():
     def check(name, cond):
         nonlocal ok; print(("PASS " if cond else "FAIL ") + name); ok &= bool(cond)
     cl = TestClient(TestServer(S.make_app())); await cl.start_server()
+    # The server decides what each piece is (seed, field, index). The older tests below name the material they want;
+    # this shim aims each such collect at a real piece of that material in the session's universe, as a flight would.
+    SEEDS, USED, _post = {}, {}, cl.post
+    async def post(path, **kw):
+        body = kw.get("json")
+        if path == "/api/dfg/collect" and isinstance(body, dict) and "field" not in body and body.get("session_id") in SEEDS:
+            sd = SEEDS[body["session_id"]]
+            fid, idx, _ = find_piece(sd, body.get("material"), USED.setdefault(sd, set()))
+            kw["json"] = dict(body, field=fid, index=idx)
+        r = await _post(path, **kw)
+        if path == "/api/dfg/session" and r.status == 200:
+            j = await r.json(); SEEDS[j["session_id"]] = j["seed"]
+        return r
+    cl.post = post
     H = {"X-Dev-Player": "tester1"}
     r = await cl.get("/api/dfg/ship"); check("no sign-in → 401", r.status == 401)
     r = await cl.post("/api/dfg/session", headers=H); j = await r.json()
@@ -133,6 +162,13 @@ async def main():
     r = await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH}); code2 = (await r.json())["dev_code"]
     r = await cl.post("/api/dfg/auth/verify", json={"channel": "sms", "address": PH, "code": code2}); j = await r.json()
     check("signing in again is the SAME player, waking up", not j["new_player"] and j["me"]["title"] == "Trainee Dan McCollough" and not j["me"]["asleep"])
+    check("the player keeps the same account number (SD-XXXX-XXXX-XXXX)",
+          REX.fullmatch(r"SD-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}", j["me"]["account_no"] or "") and j["me"]["account_no"] == me0["account_no"])
+    async with cl.app["pool"].acquire() as c:
+        kinds = [r["kind"] for r in await c.fetch("""SELECT e.kind FROM player_events e JOIN players p ON p.id=e.player_id
+                                                    WHERE p.account_no=$1 ORDER BY e.id""", me0["account_no"])]
+    check("the play record keeps sign-up, name setup and sign-in under the account number",
+          kinds[:1] == ["signup"] and "setup" in kinds and kinds[-1] == "signin")
     check("6 hours asleep from 50% wakes at 85%", abs(j["me"]["bars"]["focus"] - 85) < 0.1)
     for _ in range(3):
         await cl.post("/api/dfg/auth/start", json={"channel": "sms", "address": PH})
@@ -347,7 +383,7 @@ async def main():
     async with cl.app["pool"].acquire() as c:
         model = await c.fetchval("SELECT model_code FROM item_types WHERE code=$1", code)
         pdes = await c.fetchval("SELECT designer_id FROM blueprint_submissions WHERE id=$1", bid)
-        wsc = await ST.wsc_account(c)
+        wsc = await ST.bank_account(c)
         wsc0 = await c.fetchval("SELECT credits FROM accounts WHERE id=$1", wsc)
         bal0 = await c.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pdes)
         r1 = await SER.print_run(c, pdes, code, 25)
@@ -377,7 +413,7 @@ async def main():
         await c.execute("UPDATE items SET owner_id=$2 WHERE id=$1", copy_id, pdes)
     check("first run of 25 costs 350 credits: setup fee 100 + 25 x 10 (Eric 10-11)", bal0 - bal1 == 350 and r1["price"]["setup_fee"] == 100)
     check("second run costs only 10 a copy: 250", bal1 - bal2 == 250 and r2["price"]["setup_fee"] == 0)
-    check("printing fees are paid to the WSC's own account (Eric 10-11)", wsc2 - wsc0 == 600)
+    check("printing fees are paid to the Starship Bank's own account (Eric 10-19)", wsc2 - wsc0 == 600)
     check("each print run gives a receipt anyone can check", rcpt and rcpt["kind"] == "print" and rcpt["copies"] == 25 and rcpt["credits"] == 350)
     r = await cl.post("/api/dfg/blueprints/print", headers=HB, json={"id": bid, "copies": 10, "quote": True}); q = await r.json()
     check("the print screen's price quote (later runs: no setup fee)", r.status == 200 and q == {"setup_fee": 0, "per_copy": 10, "copies": 10, "total": 100})
@@ -470,6 +506,10 @@ async def main():
     check("the copy goes to the winner's filing cabinet", item1["owner_id"] == b1p and item1["kind"] == "filing_cabinet")
     check("the winner pays 22 + 1 fee; the designer gets 22; the WSC gets the fee",
           b1["credits"] == b1c0 - 23 and b1["held_credits"] == 0 and dc1 - dc0 == 22 and wsc1 - wsc0 == 1)
+    async with cl.app["pool"].acquire() as c:
+        accts = [await ST.wsc_account(c), await ST.bank_account(c), await ST.auction_house_account(c)]
+    check("the WSC, the Starship Bank and the Auction House each have their own account (Eric 10-19)",
+          all(accts) and len(set(accts)) == 3)
     check("the outbid bidder has everything back", b2["credits"] == b2c0 and b2["held_credits"] == 0)
     check("the winner and the designer both get a receipt", {x["player_id"] for x in rc} == {b1p, pdes})
     check("the winner can't resell the copy they won", not resell)
@@ -496,7 +536,8 @@ async def main():
     r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
     check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
-    check("the Raw Materials Catalogue lists every material with its density", r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46)
+    check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
+          r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
     r = await cl.get("/api/dfg/library/book/mining", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
@@ -516,6 +557,40 @@ async def main():
             assert ans in dict(opts), (code, q)
     r = await cl.get("/api/dfg/library/certificates", headers=HL); c = await r.json()
     check("a pass earns a certificate, which keeps the best score", len(c["certificates"]) == 1 and c["certificates"][0]["score"] == "5/5")
+    # the Blueprint Designer's Handbook: on the Making things shelf, readable, and its test grades like the others
+    r = await cl.get("/api/dfg/library/book/blueprint-handbook", headers=HL); j = await r.json()
+    hb = next((b for g in (await (await cl.get("/api/dfg/library", headers=HL)).json())["shelves"] if g["group"] == "Making things"
+               for b in g["books"] if b["code"] == "blueprint-handbook"), None)
+    check("the Blueprint Designer's Handbook is on the shelf and can be read", r.status == 200 and hb and hb["written"]
+          and len(j["chapters"]) >= 10 and j["questions"] == 5)
+    right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS["blueprint-handbook"]["test"])}
+    two_wrong = dict(right); two_wrong["0"] = "a"; two_wrong["2"] = "a"
+    r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": two_wrong}); j = await r.json()
+    r2 = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": right}); j2 = await r2.json()
+    check("the handbook's test: 3 of 5 fails, 5 of 5 passes", j["score"] == 3 and not j["passed"] and j2["score"] == 5 and j2["passed"])
+    # ---- Archives of Earth (Eric 10-19): NTRS records, legal fields checked, paged, read in the library only ----
+    import archives as AR
+    man = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives", "manifest.json")))["documents"]
+    check("the archive manifest holds only PUBLIC, GOV_PUBLIC_USE_PERMITTED, no-third-party documents, each with its file",
+          len(man) >= 30 and all(d["distribution"] == "PUBLIC" and d["determinationType"] == "GOV_PUBLIC_USE_PERMITTED"
+                                 and d["containsThirdPartyMaterial"] is False and d["source_url"].startswith("https://ntrs.nasa.gov/")
+                                 and os.path.exists(os.path.join(AR.DIR, f"{d['id']}.txt.gz")) for d in man))
+    r = await cl.get("/api/dfg/library", headers=HL); j = await r.json()
+    wing = j["archives"]; ab = [b for g in wing["shelves"] for b in g["books"]]
+    check("the Archives of Earth wing lists every manifest document, grouped by program, all reference books",
+          wing["wing"] == "Archives of Earth" and len(ab) == len(man) and all(b["reference"] and b["archive"] for b in ab)
+          and [g["group"] for g in wing["shelves"]][0] == "Mercury")
+    big = max(man, key=lambda d: d["chars"]); code = f"ntrs-{big['id']}"
+    r = await cl.get(f"/api/dfg/library/archive/{code}", headers=HL); p1 = await r.json()
+    r = await cl.get(f"/api/dfg/library/archive/{code}?page=2", headers=HL); p2 = await r.json()
+    r3 = await cl.get(f"/api/dfg/library/archive/{code}?page=99999", headers=HL); pl = await r3.json()
+    check("an archive book opens a page at a time, with its source and legal line",
+          r.status == 200 and p1["pages"] > 2 and p1["page"] == 1 and p2["page"] == 2 and p1["text"] != p2["text"]
+          and len(p1["text"]) <= AR.PAGE_CHARS and pl["page"] == p1["pages"]
+          and "ntrs.nasa.gov" in p1["source"] and p1["legal"] == "U.S. Government work, public use permitted (NTRS).")
+    r = await cl.get("/api/dfg/library/archive/ntrs-1", headers=HL)
+    r2 = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": code})
+    check("an unknown record is 404; archive books are read in the library, never checked out", r.status == 404 and r2.status == 422)
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "catalogue", "answers": {}})
     check("the reference catalogue has no test", r.status == 422)
     r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "trading"})
@@ -578,8 +653,8 @@ async def main():
     import market as M, bank as BANKM, random as _r
     r = await cl.get("/api/dfg/market", headers=H); j = await r.json()
     board = {i["item"]: i for i in j["items"]}
-    check("the board lists the five ores with floors, and says the bank trades too",
-          set(board) == {"iron", "copper", "silver", "gold", "diamond"} and board["gold"]["floor"] == 100
+    check("the board lists every debris-field mineral with floors, and says the bank trades too",
+          set(board) == set(MN.MINERALS) and board["gold"]["floor"] == 100
           and board["iron"]["last"] == 200 and board["iron"]["lot_kg"] == 100 and board["silver"]["lot_kg"] == 10
           and board["gold"]["lot_kg"] == 1 and "bank trades" in j["note"])
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "sell", "type": "limit", "qty": 1, "price": 99})
@@ -627,6 +702,129 @@ async def main():
     check("minimum orders: prices are per lot, so an ask of 1 credit per 100 kg is under the floor", r.status == 422)
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "iron", "side": "buy", "type": "limit", "qty": 99999999, "price": 300})
     check("nothing is unlimited: a buy bigger than your space in the cargo hold is refused", r.status == 422 and "room" in (await r.json())["error"])
+    # ---- more minerals (Eric 10-19): three tiers, real densities, prices; shock minerals and lonsdaleite ----
+    async with cl.app["pool"].acquire() as c:
+        rows = {r["code"]: r for r in await c.fetch(
+            """SELECT t.code, t.name, t.density_kg_m3, t.trade_unit, p.start_price, p.floor_price, p.ref_price, p.listed
+               FROM item_types t JOIN item_prices p ON p.item_code=t.code""")}
+    check(f"all {len(MN.MINERALS)} minerals load with their real densities and lots (schema.sql v15 = minerals.py)",
+          all(c in rows and float(rows[c]["density_kg_m3"]) == m["density"] and rows[c]["trade_unit"] == m["lot_g"]
+              and rows[c]["listed"] for c, m in MN.MINERALS.items()))
+    check("prices: whole credits per lot, every floor half the start, and the original five unchanged",
+          all(rows[c]["start_price"] == m["price"] and rows[c]["floor_price"] == m["floor"] == m["price"] // 2
+              and rows[c]["ref_price"] == m["price"] for c, m in MN.MINERALS.items())
+          and [rows[c]["start_price"] for c in MN.ORIGINAL] == [200, 600, 300, 200, 100])
+    check("densities: iron-nickel 7,900, water ice 917, magnetite 5,150, stishovite 4,290, lonsdaleite 3,520",
+          [G.DENSITY[c] for c in ("iron-nickel", "water-ice", "magnetite", "stishovite", "lonsdaleite")] == [7900, 917, 5150, 4290, 3520])
+    check("smelting yields from the formula (rule 27): chalcopyrite 34.63% Cu, galena 86.60% Pb, ilmenite 31.55% Ti",
+          MN.MINERALS["copper"]["yields"]["Cu"] == 34.63 and MN.MINERALS["galena"]["yields"]["Pb"] == 86.6
+          and MN.MINERALS["ilmenite"]["yields"]["Ti"] == 31.55)
+    import pathlib
+    js = pathlib.Path(__file__).with_name("static").joinpath("debris-flight.js").read_text()
+    jsm = dict(REX.findall(r'^ "([a-z-]+)"\s*:\{name:"[^"]*",density:(\d+)', js, REX.M))
+    check("the flight's MATERIALS copy matches minerals.py (codes and densities)",
+          {k: int(v) for k, v in jsm.items()} == {c: m["density"] for c, m in MN.MINERALS.items()})
+    sym = {v: k for k, v in MN.ELEMENT_NAMES.items()}
+    mined = {e for m in MN.MINERALS.values() for e in m["yields"]}
+    unmined = [mm["name"] for mm in BP.MATERIALS.values() if mm["category"] in ("metal", "precious metal")
+               and mm["code"] != "mat-native-iron-nickel" and sym.get(mm["name"].split(" ")[0].lower()) not in mined]
+    check("every catalogue metal has a mineral that yields it " + str(unmined), unmined == [])
+    HS = {"X-Dev-Player": "tester-shock"}
+    r = await cl.post("/api/dfg/session", headers=HS); sids = (await r.json())["session_id"]
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "shocked-quartz",
+                                                            "dims": [0.4, 0.3, 0.3], "volume_m3": 0.02}); j = await r.json()
+    check("a shock mineral is collectable: shocked quartz, 0.02 m³ x 2,650 = 53 kg, not singled out",
+          r.status == 200 and abs(j["aboard"]["kg"] - 53) < 0.001 and j["aboard"]["noticed"] is False)
+    await asyncio.sleep(2.1)
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "lonsdaleite",
+                                                            "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check("lonsdaleite comes aboard and is noticed (5.28 kg), and it is never a near-flawless diamond",
+          r.status == 200 and j["aboard"]["noticed"] is True and j["aboard"]["flawless"] is False and abs(j["aboard"]["kg"] - 5.28) < 0.001)
+    r = await cl.post("/api/dfg/unload", headers=HS, json={"docked": True}); j = await r.json()
+    check("both unload to the cargo hold, kept as their own items",
+          r.status == 200 and j["unloaded_pieces"] == 2 and set(j["receipt"]["kg"]) == {"shocked-quartz", "lonsdaleite"})
+    mixsrc = REX.search(r"const MIX=(\{[\s\S]*?\}\});", js).group(1)
+    tiny_only = all(("brownleeite:" in line) == line.lstrip().startswith("tiny:") for line in mixsrc.splitlines() if ":{" in line or ": {" in line)
+    tiny_rate = float(REX.search(r"tiny:.*brownleeite:([\d.]+)", mixsrc).group(1))
+    lons_rate = float(REX.search(r"tiny:.*lonsdaleite:([\d.]+)", mixsrc).group(1))
+    check("brownleeite rolls only in tiny fields, far rarer than lonsdaleite", tiny_only and tiny_rate * 10 <= lons_rate)
+    # Eric 10-19: brownleeite and the shock minerals are in ALL FOUR rings; the roll never depends on the ring: it is a
+    # function of (seed, field id, piece index) only. Security fix 10-19: the SERVER rolls it (minerals.py); the flight's
+    # copy only predicts. Check the flight's copy gives exactly the server's answer.
+    import subprocess, shutil
+    a, b = js.index("const SIZES={"), js.index("const SIZE_BIAS")
+    c0, c1 = js.index("const MATERIALS={"), js.index("const ICO_VOL")
+    d0, d1 = js.index("function fnv1a"), js.index("function makePiece")
+    samples = [(s_, f"{i_},{j_},{k_}#{f_}") for s_ in (0, 1, 4294967295, 123456789) for i_, j_, k_, f_ in
+               ((0, 0, 0, 0), (-5, 2, 7, 1), (49871, -3, 12, 0), (3, 3, 3, 1))]
+    node_src = js[js.index("function rng"):js.index("const R=rng")] + js[a:b] + js[c0:c1] + js[d0:d1] + r"""
+const S=""" + json.dumps(samples) + r""";const out=[];
+for(const [sd,id] of S){const [size,n]=fieldFacts(sd,id);const ms=[];for(let i=0;i<n;i++)ms.push(pieceMineral(sd,id,i,size));out.push([size,n,ms]);}
+console.log(JSON.stringify(out));"""
+    want = []
+    for sd, fid in samples:
+        size, n = MN.field_facts(sd, fid)
+        want.append([size, n, [MN.piece_mineral(sd, fid, i, size) for i in range(n)]])
+    if shutil.which("node"):
+        got = json.loads(subprocess.run(["node", "-e", node_src], capture_output=True, text=True, check=True).stdout)
+        check(f"the flight predicts exactly the server's roll ({sum(len(w[2]) for w in want)} pieces in {len(want)} fields)", got == want)
+    else:
+        check("node is needed to check the flight's copy of the roll", False)
+    big = {"large": 0, "medium": 0, "small": 0}; tiny_b = 0
+    for n in range(60000):
+        fid = f"{n},7,0#0"; size, cnt = MN.field_facts(424242, fid)
+        for i in range(cnt if size != "large" else 50):
+            m = MN.piece_mineral(424242, fid, i, size)
+            if m == "brownleeite":
+                if size == "tiny": tiny_b += 1
+                else: big[size] += 1
+    check(f"server roll: brownleeite in tiny fields ({tiny_b}) and never elsewhere {big}", tiny_b > 0 and not any(big.values()))
+    # ---- forged collects: an edited browser can't choose what a piece is (security fix 10-19) ----
+    HF = {"X-Dev-Player": "tester-forger"}
+    r = await cl.post("/api/dfg/session", headers=HF); jf = await r.json(); sidf, seedf = jf["session_id"], jf["seed"]
+    fid, idx, size = find_piece(seedf, "basalt", set(), sizes={"large", "medium"})
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid, "index": idx, "material": "brownleeite",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check(f"forged: claims brownleeite for a basalt piece in a {size} field → recorded as basalt, not noticed, basalt's mass",
+          r.status == 200 and j["aboard"]["material"] == "basalt" and j["aboard"]["noticed"] is False
+          and abs(j["aboard"]["kg"] - 0.0015 * 2900) < 0.001 and [q["material"] for q in j["pieces"]] == ["basalt"])
+    async with cl.app["pool"].acquire() as c:
+        led = json.loads(await c.fetchval("SELECT detail FROM ledger WHERE kind='collect' ORDER BY id DESC LIMIT 1"))
+    check("the ledger records the server's mineral (and the claim, for review)", led["material"] == "basalt" and led["claimed"] == "brownleeite")
+    await asyncio.sleep(2.1)
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid, "index": idx, "material": "basalt",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015})
+    check("the same piece can't come aboard twice", r.status == 422)
+    fid2, idx2, size2 = find_piece(seedf, "olivine", set(), sizes={"small"})
+    await asyncio.sleep(2.1)
+    r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid2, "index": idx2, "material": "lonsdaleite",
+                                                          "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}); j = await r.json()
+    check("forged: claims lonsdaleite for an olivine piece → recorded as olivine", r.status == 200 and j["aboard"]["material"] == "olivine"
+          and j["aboard"]["noticed"] is False)
+    for bad, why in (({"field": "1,2,3#0"}, "no index"), ({"field": "1,2,3#5", "index": 0}, "field #5 never exists"),
+                     ({"field": "x;drop", "index": 0}, "junk field id"), ({"field": fid2, "index": 99999}, "index past the field's pieces"),
+                     ({"material": "brownleeite"}, "no field at all")):
+        await asyncio.sleep(2.1)
+        r = await _post("/api/dfg/collect", headers=HF, json=dict({"session_id": sidf, "dims": [0.2, 0.15, 0.1], "volume_m3": 0.0015}, **bad))
+        check("refused: " + why, r.status == 422)
+    r = await cl.get("/api/dfg/ship", headers=HF); j = await r.json()
+    check("the forger's hold holds only what the server rolled", sorted(q["material"] for q in j["pieces"]) == ["basalt", "olivine"])
+    await cl.post("/api/dfg/unload", headers=HF, json={"docked": True})
+    await asyncio.sleep(2.1)
+    r = await cl.post("/api/dfg/collect", headers=HS, json={"session_id": sids, "material": "brownleeite",
+                                                            "dims": [0.1, 0.1, 0.1], "volume_m3": 0.0005}); j = await r.json()
+    check("brownleeite comes aboard and is noticed (0.0005 m³ x 5,820 = 2.91 kg)",
+          r.status == 200 and j["aboard"]["noticed"] is True and abs(j["aboard"]["kg"] - 2.91) < 0.001)
+    await cl.post("/api/dfg/unload", headers=HS, json={"docked": True})
+    check("brownleeite is the highest-priced raw material (after the near-flawless diamond)",
+          max(MN.MINERALS.values(), key=lambda m: m["price"] / MN.lot_kg(m))["code"] == "brownleeite")
+    async with cl.app["pool"].acquire() as c:
+        await BANKM.tick(c, _r.Random(11))
+    for item, lot_kg in (("lonsdaleite", 1), ("shocked-quartz", 10)):
+        r = await cl.post("/api/dfg/market/order", headers=HS, json={"item": item, "side": "sell", "type": "instant", "qty": 1}); j = await r.json()
+        check(f"{item} is tradeable: Sell now sells one {lot_kg} kg lot to the bank's bid, at or above its floor",
+              r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == lot_kg
+              and all(f["price"] >= MN.MINERALS[item]["floor"] for f in j["fills"]))
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

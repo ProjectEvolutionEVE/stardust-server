@@ -213,7 +213,7 @@ async function tabBody(tab,me){
   return '';}
 async function showQuarters(me,tab){
   root.hidden=false;
-  root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div></div>
+  root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div>${me.account_no?`<div class="soon" style="font-size:11px">Account ${esc(me.account_no)}</div>`:""}</div>
    <div style="text-align:right"><div class="soon">WSC Alexander von Humboldt</div><button id="sqExit" style="margin-top:6px;padding:8px 14px;border-radius:20px;border:1px solid #d9a441;background:rgba(217,164,65,.1);color:#d9a441;font-size:14px;cursor:pointer">🚪 Exit Private Quarters</button></div></div>
    <div class="tabs">${TABS.map(([k,n])=>`<button data-t="${k}" class="${k===tab?'on':''}">${n}</button>`).join('')}</div>
    <div class="panel" id="sqPanel">…</div></div>`;
@@ -248,13 +248,29 @@ async function showLibrary(me){
       <td style="text-align:right">${b.written?`<button class="small" data-read="${esc(b.code)}">Read</button>`:''}</td></tr>`).join('')}</table></details>`;
   place('STARSHIP LIBRARY',me,`<p>Shelves of books, and quiet desks for study. The library is free: read here, or check a book out to your bookshelf.</p>
    ${L?`<p class="soon">Each book has a short, friendly test: get ${L.pass_mark} of 5 right to pass, and try again any time. You've passed ${L.passed}.</p>${L.shelves.map(shelf).join('')}`:'<p class="soon">The library is closed for a moment. Try again shortly.</p>'}
+   ${L&&L.archives&&L.archives.shelves.length?`<h3 style="margin:14px 0 6px;font-size:14px;color:#d9a441">${esc(L.archives.wing.toUpperCase())}</h3><p class="soon">Records of how people first went to space, kept aboard as reference: read them here in the library.</p>${L.archives.shelves.map(g=>`<details class="fold"><summary>${esc(g.group)} (${g.books.length})</summary>
+    <table>${g.books.map(b=>`<tr><td>📜 ${esc(b.title)}<div class="soon">${esc(b.date?b.date.slice(0,4):'Undated')} · Reference: read in the library</div></td>
+      <td style="text-align:right"><button class="small" data-arch="${esc(b.code)}">Read</button></td></tr>`).join('')}</table></details>`).join('')}`:''}
    <button class="go" id="sqDraft">📐 Drafting room: design a blueprint</button>
    <button class="go" id="sqBay2">🚀 Go to the Docking Bay</button><button class="link" id="sqBack">Back to my quarters</button>`);
   root.querySelectorAll('[data-read]').forEach(x=>x.onclick=()=>showBook(me,x.dataset.read,'library'));
+  root.querySelectorAll('[data-arch]').forEach(x=>x.onclick=()=>showArchive(me,x.dataset.arch,1));
   $('#sqDraft').onclick=()=>showBlueprints(me);
   $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
 const para=t=>esc(t).split('\n').map(l=>`<p style="margin:6px 0">${l}</p>`).join('');
+// Archives of Earth (Eric 10-19): real records from the NASA Technical Reports Server, one page at a time
+async function showArchive(me,code,n){
+  let b=null;try{b=await call('/library/archive/'+encodeURIComponent(code)+'?page='+n);}catch(e){}
+  if(!b)return place('STARSHIP LIBRARY · ARCHIVES OF EARTH',me,`<p class="msg err">That record isn't in the archives.</p><button class="link" id="sqBack">Back</button>`)||($('#sqBack').onclick=()=>showLibrary(me));
+  const nav=`<div class="btns" style="margin:8px 0">${b.page>1?'<button class="small" data-pg="'+(b.page-1)+'">‹ Previous page</button>':''}<span class="soon"> Page ${b.page} of ${b.pages} </span>${b.page<b.pages?'<button class="small" data-pg="'+(b.page+1)+'">Next page ›</button>':''}</div>`;
+  place('STARSHIP LIBRARY · ARCHIVES OF EARTH',me,`<h2 style="margin:0">${esc(b.title)}</h2>
+   <p class="soon" style="margin:2px 0 4px">${esc(b.program)} · ${esc(b.date?b.date.slice(0,4):'Undated')}</p>
+   <p class="soon" style="margin:0">Source: ${esc(b.source)}</p><p class="soon" style="margin:0 0 6px">${esc(b.legal)}</p>
+   ${nav}<pre style="white-space:pre-wrap;font:13px/1.45 Georgia,serif;margin:0">${esc(b.text)}</pre>${nav}
+   <button class="link" id="sqBack">Back to the shelves</button>`);
+  root.querySelectorAll('[data-pg]').forEach(x=>x.onclick=()=>{showArchive(me,code,Number(x.dataset.pg));root.scrollTop=0;});
+  $('#sqBack').onclick=()=>showLibrary(me);}
 async function showBook(me,code,from){
   let b=null,L=null;try{[b,L]=await Promise.all([call('/library/book/'+encodeURIComponent(code)),call('/library')]);}catch(e){}
   if(!b)return place('STARSHIP LIBRARY',me,`<p class="msg err">That book is still being written.</p><button class="link" id="sqBack">Back</button>`)||($('#sqBack').onclick=()=>showLibrary(me));

@@ -11,7 +11,9 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
 Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   POST /api/dfg/session   start a session → {session_id, seed, ship, cargo}
   GET  /api/dfg/ship      the ship and what's in its hold
-  POST /api/dfg/collect   {session_id, material, dims:[a,b,c], volume_m3} → the piece comes aboard, or a refusal
+  POST /api/dfg/collect   {session_id, field, index, dims:[a,b,c], volume_m3} → the piece comes aboard, or a refusal.
+                          WHAT the piece is comes from the server's roll (session seed, field, index); any
+                          'material' the client sends is ignored.
   POST /api/dfg/unload    {docked:true} → the hold empties into storage aboard the Starship, as far as there's room
   GET  /api/dfg/inventory everything the player owns, where it is, and their credits
   GET  /api/dfg/history   the player's credit history, newest first, with the balance after each
@@ -27,6 +29,7 @@ The blueprint form (rule 23; blueprints.py):
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
 The Starship Library (rules 22, 24; library.py):
   GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
+  GET  /api/dfg/library/archive/{code}?page=N  an Archives of Earth book, paged (archives.py)
   GET  /api/dfg/library/test/{code} the questions (no answers) · POST /library/test {book, answers} · GET /library/certificates
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
@@ -47,6 +50,7 @@ import blueprints as BP
 import serials as SER
 import auctions as AU
 import library as LIB
+import archives as AR
 from datetime import datetime
 import asyncio
 
@@ -96,14 +100,19 @@ def _ip(request):
     return (fwd.split(",")[0].strip() if fwd else request.remote) or ""
 
 
+async def log_event(conn, pid, kind, **data):
+    """One line of the player's play record (player_events)."""
+    await conn.execute("INSERT INTO player_events(player_id, kind, data) VALUES($1,$2,$3)", pid, kind, json.dumps(data))
+
+
 async def _me(conn, pid):
     """Who the player is and where: rank and name, language, the body's bars and any warning."""
-    p = await conn.fetchrow("""SELECT first_name, last_name, language, track, rank_step, stamina, energy, focus, body_at, asleep
-                               FROM players WHERE id=$1""", pid)
+    p = await conn.fetchrow("""SELECT account_no, first_name, last_name, language, track, rank_step, stamina, energy, focus,
+                                      body_at, asleep FROM players WHERE id=$1""", pid)
     bars = BODY.current(p)
     rank = RANKS[p["track"]][p["rank_step"] - 1]
     named = bool(p["first_name"] and p["last_name"])
-    return {"rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
+    return {"account_no": p["account_no"], "rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
             "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
             "needs_setup": not (named and p["language"]),
             "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
@@ -142,6 +151,7 @@ async def auth_verify(request):
         async with conn.transaction():
             await BODY.set_state(conn, pid, asleep=False)            # wake up
         token = await AUTH.issue_token(conn, pid)
+        await log_event(conn, pid, "signup" if new else "signin", channel=channel)
         return _json({"token": token, "new_player": new, "me": await _me(conn, pid)})
 
 
@@ -166,6 +176,7 @@ async def me_setup(request):
                                       WHERE id=$1 AND first_name IS NULL RETURNING id""", pid, first, last, lang)
         if not done:
             raise ST.Refused("Your name is already set.")
+        await log_event(conn, pid, "setup", language=lang)
         return _json(await _me(conn, pid))
 
 
@@ -175,6 +186,7 @@ async def auth_signout(request):
         pid = await _player(conn, request)
         async with conn.transaction():
             await BODY.set_state(conn, pid, asleep=True)
+        await log_event(conn, pid, "signout")
         token = AUTH.bearer(request.headers)
         if token:
             await AUTH.revoke(conn, token)
@@ -224,7 +236,6 @@ async def ship(request):
 
 async def collect(request):
     body = await request.json()
-    p = G.piece(body.get("material"), body.get("dims") or [], body.get("volume_m3"))
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
         async with conn.transaction():
@@ -236,10 +247,17 @@ async def collect(request):
             except ValueError:
                 raise G.Refused("No active session.")
             sess = await conn.fetchrow(
-                "SELECT id, last_collect_at, now() - last_collect_at AS gap FROM sessions WHERE id=$1 AND player_id=$2",
+                "SELECT id, seed, last_collect_at, now() - last_collect_at AS gap FROM sessions WHERE id=$1 AND player_id=$2",
                 sid, pid)
             if not sess:
                 raise G.Refused("No active session.")
+            # What the piece IS comes from the server's own roll on the seed it issued; the client's claim is ignored.
+            field, index = body.get("field"), body.get("index")
+            material, _size = G.what_it_is(int(sess["seed"]), field, index)
+            p = G.piece(material, body.get("dims") or [], body.get("volume_m3"))
+            if await conn.fetchval("SELECT 1 FROM cargo WHERE session_id=$1 AND field_id=$2 AND piece_index=$3",
+                                   sid, field, index):
+                raise G.Refused("That piece is already aboard.")
             if sess["gap"] is not None and sess["gap"].total_seconds() < G.MIN_COLLECT_S:
                 raise G.Refused("Collecting takes time. Wait for the piece to come aboard.")
             if not G.shape_fits(p["dims"], hold):
@@ -250,16 +268,19 @@ async def collect(request):
                 raise G.Refused("Your hold is full.")
             d = p["dims"]
             # rule 26: one diamond in 100,000 is near-flawless. The server rolls it, never the browser.
-            flawless = body["material"] == "diamond" and secrets.randbelow(G.FLAWLESS_ODDS) == 0
+            flawless = material == "diamond" and secrets.randbelow(G.FLAWLESS_ODDS) == 0
             cid = await conn.fetchval(
-                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless)
-                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id""",
-                pid, s["id"], sid, body["material"], d[0], d[1], d[2], p["volume"], p["box"], p["mass"], flawless)
+                """INSERT INTO cargo(player_id, ship_id, session_id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless,
+                                    field_id, piece_index)
+                   VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id""",
+                pid, s["id"], sid, material, d[0], d[1], d[2], p["volume"], p["box"], p["mass"], flawless, field, index)
             await conn.execute("UPDATE sessions SET last_collect_at=now() WHERE id=$1", sid)
             await conn.execute("INSERT INTO ledger(player_id, kind, detail) VALUES($1,'collect',$2)", pid,
-                               json.dumps({"cargo_id": cid, "material": body["material"], "kg": round(p["mass"], 3),
+                               json.dumps({"cargo_id": cid, "material": material, "field": field, "index": index,
+                                           "claimed": body.get("material"), "kg": round(p["mass"], 3),
                                            "dims": [round(x, 4) for x in d], "session": str(sid), "flawless": flawless}))
-        return _json({"aboard": {"material": body["material"], "kg": round(p["mass"], 3), "flawless": flawless,
+        return _json({"aboard": {"material": material, "kg": round(p["mass"], 3), "flawless": flawless,
+                                 "noticed": material in G.NOTICED,
                                  "dims_m": [round(x, 4) for x in d], "box_m3": round(p["box"], 5)},
                       **await _state(conn, pid)})
 
@@ -514,6 +535,20 @@ async def lib_book(request):
     return _json(b)
 
 
+async def lib_archive(request):
+    """An Archives of Earth book, one page at a time (?page=N)."""
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+    try:
+        n = int(request.query.get("page", "1"))
+    except ValueError:
+        n = 1
+    b = AR.page(request.match_info["code"], n)
+    if not b:
+        return _json({"error": "That record isn't in the archives."}, 404)
+    return _json(b)
+
+
 async def lib_checkout(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
@@ -574,6 +609,7 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/print", bp_print)
     app.router.add_get("/api/dfg/library", lib_shelves)
     app.router.add_get("/api/dfg/library/book/{code}", lib_book)
+    app.router.add_get("/api/dfg/library/archive/{code}", lib_archive)
     app.router.add_post("/api/dfg/library/checkout", lib_checkout)
     app.router.add_post("/api/dfg/library/return", lib_return)
     app.router.add_get("/api/dfg/library/test/{code}", lib_test)

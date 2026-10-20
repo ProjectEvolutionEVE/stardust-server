@@ -10,6 +10,8 @@ import json, random
 import store as ST
 import blueprints as BP
 import library_books as LB
+import minerals as MN
+import archives as AR
 
 
 def _catalogue_chapters():
@@ -23,6 +25,13 @@ def _catalogue_chapters():
     for cat, ms in by.items():
         out.append((cat[:1].upper() + cat[1:], "\n".join(
             f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "") for m in ms)))
+    # the minerals as they are found in the debris fields (minerals.py, Eric 10-19), with what smelting yields (rule 27)
+    for tier, title in ((1, "In the debris fields: common rock, metal and ice"), (2, "In the debris fields: ores"),
+                        (3, "In the debris fields: shock and space minerals")):
+        out.append((title, "\n".join(
+            f"• {m['name']} ({m['formula']}): {m['density']:,} kg/m³" + (f"; yields {MN.yield_text(m)}" if m["yields"] else "")
+            + (f". Real facts: {m['note']} Game role: {MN.GAME_ROLE[m['code']]}" if m["code"] in MN.GAME_ROLE else "")
+            for m in MN.MINERALS.values() if m["tier"] == tier)))
     return out
 
 
@@ -56,8 +65,10 @@ async def shelves(conn, pid):
             items.append(_entry(code, name, out_ids, passed))
         if g.startswith("Raw materials"):
             items.insert(1, _entry("catalogue", LB.BOOKS["catalogue"]["title"], out_ids, passed))
+        if g == "Making things":         # the handbook sits beside Engineering & Drafting; a design can't require it
+            items.insert(1, _entry("blueprint-handbook", LB.BOOKS["blueprint-handbook"]["title"], out_ids, passed))
         groups.append({"group": g, "books": items})
-    return {"shelves": groups, "pass_mark": LB.PASS_MARK,
+    return {"shelves": groups, "archives": {"wing": "Archives of Earth", "shelves": AR.shelves()}, "pass_mark": LB.PASS_MARK,
             "passed": len(passed), "note": "The library is free. Read here, or check a book out to your bookshelf."}
 
 
@@ -70,6 +81,8 @@ def _entry(code, name, out_ids, passed):
 
 
 async def checkout(conn, pid, code):
+    if isinstance(code, str) and code.startswith("ntrs-"):
+        raise ST.Refused("The Archives of Earth are read in the library. They can't be checked out.")
     if code not in LB.BOOKS:
         raise ST.Refused("That book is still being written.")
     await ensure_book_types(conn)
