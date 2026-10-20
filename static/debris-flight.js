@@ -965,7 +965,8 @@ const VOICE=(function(){
    const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;
    g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(0.18,t+d+0.01);g.gain.exponentialRampToValueAtTime(0.0005,t+d+0.6);
    o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+0.65);});return 800;}
- const aboard=id=>!/^INARA-(TWR|RING|TOWER)-/.test(id);
+ const ABOARD=['042','043','044','045','049','050','051','053'].map(n=>'INARA-TWR-'+n);   // Tower lines heard aboard: chime, no radio
+ const aboard=id=>ABOARD.includes(id)||!/^INARA-(TWR|RING|TOWER)-/.test(id);
  function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];chimed=false;if(after){const f=after;after=null;f();}return;}
   if(!chimed&&aboard(queue[0])){chimed=true;const w=chime();if(w){cur={pause(){}};const mark=cur;setTimeout(()=>{if(cur===mark)next();},w);return;}}
   const id=queue.shift(),a=new Audio(base+'/voice/'+encodeURIComponent(set)+'/'+id+'.mp3');a.volume=0.85;cur=a;
