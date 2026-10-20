@@ -124,7 +124,7 @@ const wormhole=new THREE.Group();
   g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();}
  g.globalAlpha=1;g.restore();
  const tex=new THREE.CanvasTexture(c);
- const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(2,2,1);
+ const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(1.44,1.44,1);   // stays inside the ring (its bright band sits at radius 0.8);
  wormhole.add(core);
  const ringTex=glowTex([[0,'rgba(0,0,0,0)'],[.44,'rgba(0,0,0,0)'],[.475,'rgba(120,90,255,.35)'],[.5,'rgba(190,220,255,1)'],[.525,'rgba(120,90,255,.35)'],[.7,'rgba(80,50,200,.15)'],[1,'rgba(40,20,120,0)']]);
  [[3.2,0.9]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
