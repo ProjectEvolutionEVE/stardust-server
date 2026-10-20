@@ -233,7 +233,7 @@ Takes: 036-038 below 65; 039-041 below 50. TWR-041 basis: "the best rest is in t
 ### A14. Waking and signing out (in bed)
 | ID | Status | Text |
 |---|---|---|
-| INARA-TWR-042 | APPROVED by Eric 10-19 | Morning. Your bars are on the Bed tab. The Starship's been busy. |
+| INARA-TWR-042 | APPROVED by Eric 10-20 (reworded: "bars" read as uniform rank bars) | Morning. Your stamina, energy and focus are on the Bed tab. The Starship's been busy. |
 | INARA-TWR-043 | APPROVED by Eric 10-19 | You're awake. Check the COMMS at your desk when you're ready. |
 | INARA-TWR-044 | APPROVED by Eric 10-19 | Rest well. The ship keeps running while you sleep. |
 | INARA-TWR-045 | APPROVED by Eric 10-19 | Good night. I'll be in the Tower. |
