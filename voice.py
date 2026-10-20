@@ -5,7 +5,9 @@ voice set: /data/voice/<set>/<ID>.mp3. Eric's Mac uploads them with tools/upload
   GET /voice/<set>/<ID>.mp3                    the file (no sign-in; long cache)
   PUT /api/dfg/admin/voice/<set>/<ID>.mp3      upload one file      (header X-Upload-Key = env DFG_UPLOAD_KEY)
   GET /api/dfg/admin/voice/manifest            which files exist    (same key)
-  POST /api/dfg/voice/heard {beat}             a story beat: {play: true} the first time only (each beat plays once)
+  POST /api/dfg/voice/heard {beat}             a story beat: {play: true} while not yet heard (marks nothing)
+  POST /api/dfg/voice/heard {beat, accepted}   the player tapped Go ahead: marks it heard ({play: true} the first time)
+                                               (Eric 10-20: Inara asks first; Not now leaves the beat to offer again)
 The upload key is never logged or echoed. With DFG_UPLOAD_KEY unset, uploads are refused outright."""
 import os, re, json, hmac
 from pathlib import Path
@@ -93,9 +95,12 @@ async def manifest(request):
     return web.json_response({"sets": out})
 
 
-async def heard(conn, pid, beat):
-    """True the first time this player reaches this story beat; False ever after."""
+async def heard(conn, pid, beat, accepted=False):
+    """Without accepted: True while this player hasn't heard this beat (nothing is marked, so a Not now can be offered
+    again). With accepted: marks it heard; True the first time only, so it plays once."""
     if beat not in BEATS:
         return False
+    if not accepted:
+        return not await conn.fetchval("SELECT 1 FROM voice_beats WHERE player_id=$1 AND beat=$2", pid, beat)
     return bool(await conn.fetchval("""INSERT INTO voice_beats(player_id, beat) VALUES($1,$2)
                                        ON CONFLICT DO NOTHING RETURNING 1""", pid, beat))

@@ -34,7 +34,7 @@ The Starship Library (rules 22, 24; library.py):
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
-Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST /api/dfg/voice/heard {beat} → {play}
+Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST /api/dfg/voice/heard {beat[, accepted]} → {play}
   (each story beat once per player) · PUT /api/dfg/admin/voice/<set>/<ID>.mp3 and GET /api/dfg/admin/voice/manifest
   (header X-Upload-Key = env DFG_UPLOAD_KEY). Files live in VOICE_DIR (default /data/voice, a Railway volume).
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
@@ -191,11 +191,11 @@ async def me_setup(request):
 
 
 async def voice_heard(request):
-    """A story beat (docs/inara-tower-dialog.md, Part B): {play: true} only the first time this player reaches it."""
+    """A story beat (docs/inara-tower-dialog.md, Part B): {play: true} while unheard; {accepted: true} marks it heard."""
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
-        return _json({"play": await VO.heard(conn, pid, b.get("beat"))})
+        return _json({"play": await VO.heard(conn, pid, b.get("beat"), b.get("accepted") is True)})
 
 
 async def auth_signout(request):

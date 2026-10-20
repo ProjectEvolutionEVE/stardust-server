@@ -572,7 +572,7 @@ async function netStart(){
  try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
   // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
   SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
-  netApplyShip(j);netCall('/me').then(m=>VOICE.set(m.voice_set)).catch(()=>{});return true;}
+  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);}).catch(()=>{});return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
@@ -966,21 +966,50 @@ const VOICE=(function(){
    g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(0.18,t+d+0.01);g.gain.exponentialRampToValueAtTime(0.0005,t+d+0.6);
    o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+0.65);});return 800;}
  const aboard=id=>!/^INARA-(TWR|RING|TOWER)-/.test(id);
- function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];chimed=false;return;}
+ function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];chimed=false;if(after){const f=after;after=null;f();}return;}
   if(!chimed&&aboard(queue[0])){chimed=true;const w=chime();if(w){cur={pause(){}};const mark=cur;setTimeout(()=>{if(cur===mark)next();},w);return;}}
   const id=queue.shift(),a=new Audio(base+'/voice/'+encodeURIComponent(set)+'/'+id+'.mp3');a.volume=0.85;cur=a;
-  a.onended=a.onerror=()=>{if(cur===a){if(!queue.length)chimed=false;next();}};
+  a.onended=a.onerror=()=>{if(cur===a){if(!queue.length&&!after)chimed=false;next();}};
   const p=a.play();if(p&&p.catch)p.catch(()=>{if(cur===a)next();});}   // blocked or missing: carry on silently
  function ready(){return set&&!snd.muted;}
+ // Polite openers (Eric 10-20): aboard the ship Inara never just starts talking. Chime, one opener ("Is this a good
+ // moment?"; the Captain set only for a Captain), then Go ahead / Not now. Go ahead plays the beat and only then marks it
+ // heard; Not now (or no answer in 20 s, silently) leaves it unheard, offered again at the next beat or in 10 minutes.
+ // Flight radio lines (TWR, RING, TOWER) never get an opener.
+ const C=n=>'INARA-CALL-'+String(n).padStart(3,'0');
+ const OPEN=[1,2,3,4,5].map(C),OPEN_CPT=[6,7,8,9,10].map(C),LATER=[C(11),C(12)];
+ let rank=null,after=null,asking=false,retryT=null;const later=new Set();
+ const any=a=>a[Math.floor(Math.random()*a.length)];
+ function tok(){try{return localStorage.getItem('stardust.token');}catch(e){return null;}}
+ async function post(beat,accepted){const t=tok();if(!t||!window.STARDUST_API)return false;
+  try{const r=await fetch(window.STARDUST_API+'/voice/heard',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},
+   body:JSON.stringify(accepted?{beat,accepted:true}:{beat})});return !!(await r.json()).play;}catch(e){return false;}}
+ function ask(done){const b=document.createElement('div');
+  b.style.cssText='position:fixed;left:50%;top:24%;transform:translateX(-50%);z-index:60;display:flex;gap:8px;align-items:center;padding:8px 12px;'+
+   'border-radius:10px;background:rgba(8,14,24,.92);border:1px solid #2c4a66;color:#cfe3f5;font:13px system-ui,sans-serif';
+  const lab=document.createElement('b');lab.textContent='INARA';lab.style.cssText='color:#7fe0a8;font-size:11px;letter-spacing:.1em';b.appendChild(lab);
+  let over=false;const end=v=>{if(over)return;over=true;clearTimeout(t);b.remove();done(v);};
+  [['Go ahead','yes'],['Not now','no']].forEach(([txt,v])=>{const x=document.createElement('button');x.textContent=txt;
+   x.style.cssText='font:inherit;font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid #2c4a66;cursor:pointer;'+
+    (v==='yes'?'background:#1f6f4a;color:#fff':'background:transparent;color:#cfe3f5');x.addEventListener('click',e=>{e.stopPropagation();end(v);});b.appendChild(x);});
+  const t=setTimeout(()=>end('quiet'),20000);document.body.appendChild(b);}
+ function retryLater(){clearTimeout(retryT);retryT=setTimeout(()=>{retryT=null;offerNext();},10*60*1000);}
+ function offerNext(){if(asking||!later.size||!ready())return;const beat=later.values().next().value;later.delete(beat);offer(beat);}
+ async function offer(beat){if(asking){later.add(beat);return;}if(!ready())return;asking=true;
+  if(!await post(beat,false)||!ready()){asking=false;offerNext();return;}
+  after=()=>ask(async v=>{
+   if(v==='yes'&&ready()&&await post(beat,true)){chimed=true;after=()=>{asking=false;chimed=false;offerNext();};queue.push(...BEATS[beat]);if(!cur)next();return;}
+   if(v!=='yes')later.add(beat);
+   if(v==='no'&&ready()){chimed=true;after=()=>{asking=false;chimed=false;retryLater();};queue.push(any(LATER));if(!cur)next();return;}
+   asking=false;chimed=false;retryLater();});
+  queue.push(any(rank==='Captain'?OPEN_CPT:OPEN));if(!cur)next();}   // waits for the line before it, then the chime
  return {
   set(s){set=s||null;},
-  say(m){if(!ready()||cur||queue.length)return;const id=pick(m);if(id){queue.push(id);next();}},   // busy: skip
-  async story(beat){const ids=BEATS[beat];if(!ids||!ready())return;let tok=null;try{tok=localStorage.getItem('stardust.token');}catch(e){}
-   if(!tok||!window.STARDUST_API)return;
-   try{const r=await fetch(window.STARDUST_API+'/voice/heard',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},
-     body:JSON.stringify({beat})});const j=await r.json();if(!j.play)return;}catch(e){return;}
-   queue.push(...ids);if(!cur)next();},   // a story beat waits for the line before it
-  stop(){queue=[];chimed=false;if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
+  rank(r){rank=r||null;},
+  say(m){if(!ready()||cur||queue.length||asking)return;const id=pick(m);if(id){queue.push(id);next();}},   // busy: skip
+  story(beat){if(!BEATS[beat]||!ready()||!tok()||!window.STARDUST_API)return;later.delete(beat);
+   if(asking){later.add(beat);return;}offer(beat);},
+  stop(){queue=[];chimed=false;after=null;asking=false;if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
   get busy(){return !!cur;},MOMENTS,BEATS};})();
 window.STARDUST_VOICE=VOICE;
 const voiced={};   // this session's once-only moments (first strong return, first bearing, first piece)

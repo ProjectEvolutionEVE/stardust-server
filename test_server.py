@@ -868,10 +868,15 @@ console.log(JSON.stringify(out));"""
     check("voice sets: zh-TW → zh, de → de, an unvoiced language → none",
           VO.voice_set("zh-TW") == "zh" and VO.voice_set("de") == "de" and VO.voice_set("sw") is None)
     hv = {"X-Dev-Player": "voice1"}
-    r1 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "library"})).json()
-    r2 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "library"})).json()
-    r3 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "no-such-beat"})).json()
-    check("a story beat plays once per player (first yes, then no; unknown beats never)", r1["play"] is True and r2["play"] is False and r3["play"] is False)
+    H = lambda j: cl.post("/api/dfg/voice/heard", headers=hv, json=j)
+    p1 = await (await H({"beat": "library"})).json(); p2 = await (await H({"beat": "library"})).json()
+    check("asking about a beat marks nothing: Not now leaves it to offer again", p1["play"] is True and p2["play"] is True)
+    r1 = await (await H({"beat": "library", "accepted": True})).json()
+    r2 = await (await H({"beat": "library", "accepted": True})).json()
+    p3 = await (await H({"beat": "library"})).json()
+    r3 = await (await H({"beat": "no-such-beat", "accepted": True})).json()
+    check("a story beat plays once per player once accepted (first yes, then no; unknown beats never)",
+          r1["play"] is True and r2["play"] is False and p3["play"] is False and r3["play"] is False)
     del os.environ["DFG_UPLOAD_KEY"]
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
