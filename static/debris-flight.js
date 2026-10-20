@@ -119,12 +119,12 @@ const wormhole=new THREE.Group();
  g.fillStyle='#030308';g.fillRect(0,0,512,512);   // no shading: the packed stars alone show it's another universe
  let r=12345;const rnd=()=>((r=(r*16807)%2147483647)/2147483647);
  const tints=['#ffd9a0','#a0fff0','#ffb3e6','#d8c8ff','#ffffff'];
- for(let i=0;i<900;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*256,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d,
+ for(let i=0;i<450;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*256,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d,
   k=1-d/256*0.7,s=rnd()<0.06?2.2:rnd()<0.3?1.3:0.8;g.globalAlpha=0.55+0.45*k;g.fillStyle=tints[i%tints.length];
   g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();}
  g.globalAlpha=1;g.restore();
  const tex=new THREE.CanvasTexture(c);
- const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(1.44,1.44,1);   // stays inside the ring (its bright band sits at radius 0.8);
+ const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(1.54,1.54,1);   // fills right up to the ring (its bright band sits at radius 0.8);
  wormhole.add(core);
  const ringTex=glowTex([[0,'rgba(0,0,0,0)'],[.44,'rgba(0,0,0,0)'],[.475,'rgba(120,90,255,.35)'],[.5,'rgba(190,220,255,1)'],[.525,'rgba(120,90,255,.35)'],[.7,'rgba(80,50,200,.15)'],[1,'rgba(40,20,120,0)']]);
  [[3.2,0.9]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
