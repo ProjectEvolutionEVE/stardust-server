@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
 <meta name="robots" content="noindex">
-<title>Stardust - Rebuilding Home — flight prototype</title>
+<title>Stardust - Terra Deleta</title>
 <!-- STAGE 1 PROTOTYPE (2026-10-10; true scale and warp 2026-10-11). Spec: quavara-docs/quavara-debris-field-game-stage1-spec.md §3–4, §14.1.
      Flight, scanner, collecting, and unloading at the Starship (kept in this browser only). Not connected to the game
      server or the market yet. Not deployed. -->
@@ -121,8 +121,25 @@
  #streaks{position:fixed;inset:0;pointer-events:none;opacity:0}
  #helpBtn{position:fixed;right:12px;top:max(10px,env(safe-area-inset-top));width:34px;height:34px;border-radius:50%;
   border:1px solid #3a4a6b;background:rgba(11,16,32,.7);color:#c9d1d9;font-size:16px;cursor:pointer}
+ /* TITLE SCREEN (Eric 10-20). The name is plain text (working title until attorney clearance): change it here. */
+ body.title #hud,body.title #marks,body.title #thr,body.title #piv,body.title #scan,body.title #mute,body.title #helpBtn,
+ body.title #warpbtn,body.title #help,body.title .tbtn,body.title #warn,body.title #lock,body.title #appr{display:none!important}
+ #title{position:fixed;inset:0;z-index:30;pointer-events:none}
+ #title .name{position:absolute;left:0;right:0;top:max(5vh,calc(env(safe-area-inset-top) + 18px));text-align:center;
+  font-family:Georgia,"Times New Roman",serif;color:#eef1f5;text-shadow:0 2px 18px rgba(0,0,0,.9)}
+ #title h1{font-size:clamp(44px,9vw,120px);font-weight:600;letter-spacing:.22em;margin-right:-.22em;line-height:1}
+ #title h2{font-size:clamp(15px,2.4vw,30px);font-weight:400;letter-spacing:.55em;margin-right:-.55em;margin-top:.7em;color:#cdbfff}
+ #tLaunch{position:absolute;left:50%;bottom:max(9vh,calc(env(safe-area-inset-bottom) + 28px));transform:translateX(-50%);pointer-events:auto;
+  min-width:220px;padding:18px 44px;border-radius:40px;border:1.5px solid #d9a441;background:rgba(217,164,65,.18);color:#f0c46a;
+  font:700 20px/1 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.3em;cursor:pointer;backdrop-filter:blur(2px)}
+ #tLaunch:hover{background:rgba(217,164,65,.3)}
+ #tSave{display:none;position:absolute;right:12px;bottom:12px;pointer-events:auto;padding:8px 14px;border-radius:8px;border:1px solid #3a4a6b;
+  background:rgba(11,16,32,.8);color:#c9d1d9;font:13px -apple-system,Segoe UI,Roboto,Arial,sans-serif;cursor:pointer}
+ body.still #tLaunch{display:none} body.still #tSave{display:block}
 </style></head><body>
 <canvas id="c"></canvas>
+<div id="title" hidden><div class="name"><h1>STARDUST</h1><h2>TERRA DELETA</h2></div>
+ <button id="tLaunch">LAUNCH</button><button id="tSave" title="Saves a PNG at the window size (or press P)">Save image</button></div>
 <div id="hud"><div><b>SPEED</b> <span id="spd">0</span></div><div><b>FROM SUN</b> <span id="dsun">0</span></div>
  <div><b>TO STARSHIP</b> <span id="dhome">0</span></div><div id="zone"></div><button id="holdbtn">HOLD</button></div>
 <div id="warn"></div>
@@ -206,7 +223,7 @@
  <p>The markers point to the Starship, the wormhole, the Sun and the gas giants when they're off screen.</p>
  <button id="go">Launch</button>
 </div></div>
-<script>window.STARDUST_API="/api/dfg";</script>
+<script>window.STARDUST_API="/api/dfg";document.getElementById("title").hidden=false;</script>
 <script src="three.min.js"></script>
 <script src="debris-flight.js"></script>
 <script src="quarters.js"></script>
