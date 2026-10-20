@@ -116,17 +116,13 @@ const wormhole=new THREE.Group();
  // colour, denser and brighter than ours, over a faint violet-teal sky, darkening toward the rim where light bends.
  const c=document.createElement('canvas');c.width=c.height=512;const g=c.getContext('2d');
  g.save();g.beginPath();g.arc(256,256,256,0,Math.PI*2);g.clip();
- const sky=g.createRadialGradient(256,256,0,256,256,256);sky.addColorStop(0,'#0e0a26');sky.addColorStop(.55,'#0a0d22');sky.addColorStop(1,'#020208');
- g.fillStyle=sky;g.fillRect(0,0,512,512);
+ g.fillStyle='#030308';g.fillRect(0,0,512,512);   // no shading: the packed stars alone show it's another universe
  let r=12345;const rnd=()=>((r=(r*16807)%2147483647)/2147483647);
- for(let i=0;i<5;i++){const x=80+rnd()*352,y=80+rnd()*352,neb=g.createRadialGradient(x,y,0,x,y,90+rnd()*80);
-  neb.addColorStop(0,i%2?'rgba(80,220,200,.10)':'rgba(255,120,200,.08)');neb.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=neb;g.fillRect(0,0,512,512);}
  const tints=['#ffd9a0','#a0fff0','#ffb3e6','#d8c8ff','#ffffff'];
  for(let i=0;i<900;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*256,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d,
-  k=1-d/256*0.7,s=rnd()<0.06?2.2:rnd()<0.3?1.3:0.8;g.globalAlpha=(0.5+0.5*k)*0.6;g.fillStyle=tints[i%tints.length];
+  k=1-d/256*0.7,s=rnd()<0.06?2.2:rnd()<0.3?1.3:0.8;g.globalAlpha=0.55+0.45*k;g.fillStyle=tints[i%tints.length];
   g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();}
- g.globalAlpha=1;const rim=g.createRadialGradient(256,256,170,256,256,256);rim.addColorStop(0,'rgba(0,0,0,0)');rim.addColorStop(1,'rgba(0,0,0,.85)');
- g.fillStyle=rim;g.fillRect(0,0,512,512);g.restore();
+ g.globalAlpha=1;g.restore();
  const tex=new THREE.CanvasTexture(c);
  const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(2,2,1);
  wormhole.add(core);
