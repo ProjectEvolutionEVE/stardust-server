@@ -568,6 +568,29 @@ async def main():
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": two_wrong}); j = await r.json()
     r2 = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "blueprint-handbook", "answers": right}); j2 = await r2.json()
     check("the handbook's test: 3 of 5 fails, 5 of 5 passes", j["score"] == 3 and not j["passed"] and j2["score"] == 5 and j2["passed"])
+    # ---- Archives of Earth (Eric 10-19): NTRS records, legal fields checked, paged, read in the library only ----
+    import archives as AR
+    man = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives", "manifest.json")))["documents"]
+    check("the archive manifest holds only PUBLIC, GOV_PUBLIC_USE_PERMITTED, no-third-party documents, each with its file",
+          len(man) >= 30 and all(d["distribution"] == "PUBLIC" and d["determinationType"] == "GOV_PUBLIC_USE_PERMITTED"
+                                 and d["containsThirdPartyMaterial"] is False and d["source_url"].startswith("https://ntrs.nasa.gov/")
+                                 and os.path.exists(os.path.join(AR.DIR, f"{d['id']}.txt.gz")) for d in man))
+    r = await cl.get("/api/dfg/library", headers=HL); j = await r.json()
+    wing = j["archives"]; ab = [b for g in wing["shelves"] for b in g["books"]]
+    check("the Archives of Earth wing lists every manifest document, grouped by program, all reference books",
+          wing["wing"] == "Archives of Earth" and len(ab) == len(man) and all(b["reference"] and b["archive"] for b in ab)
+          and [g["group"] for g in wing["shelves"]][0] == "Mercury")
+    big = max(man, key=lambda d: d["chars"]); code = f"ntrs-{big['id']}"
+    r = await cl.get(f"/api/dfg/library/archive/{code}", headers=HL); p1 = await r.json()
+    r = await cl.get(f"/api/dfg/library/archive/{code}?page=2", headers=HL); p2 = await r.json()
+    r3 = await cl.get(f"/api/dfg/library/archive/{code}?page=99999", headers=HL); pl = await r3.json()
+    check("an archive book opens a page at a time, with its source and legal line",
+          r.status == 200 and p1["pages"] > 2 and p1["page"] == 1 and p2["page"] == 2 and p1["text"] != p2["text"]
+          and len(p1["text"]) <= AR.PAGE_CHARS and pl["page"] == p1["pages"]
+          and "ntrs.nasa.gov" in p1["source"] and p1["legal"] == "U.S. Government work, public use permitted (NTRS).")
+    r = await cl.get("/api/dfg/library/archive/ntrs-1", headers=HL)
+    r2 = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": code})
+    check("an unknown record is 404; archive books are read in the library, never checked out", r.status == 404 and r2.status == 422)
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "catalogue", "answers": {}})
     check("the reference catalogue has no test", r.status == 422)
     r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "trading"})

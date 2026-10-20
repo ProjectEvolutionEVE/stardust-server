@@ -29,6 +29,7 @@ The blueprint form (rule 23; blueprints.py):
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
 The Starship Library (rules 22, 24; library.py):
   GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
+  GET  /api/dfg/library/archive/{code}?page=N  an Archives of Earth book, paged (archives.py)
   GET  /api/dfg/library/test/{code} the questions (no answers) · POST /library/test {book, answers} · GET /library/certificates
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
@@ -49,6 +50,7 @@ import blueprints as BP
 import serials as SER
 import auctions as AU
 import library as LIB
+import archives as AR
 from datetime import datetime
 import asyncio
 
@@ -533,6 +535,20 @@ async def lib_book(request):
     return _json(b)
 
 
+async def lib_archive(request):
+    """An Archives of Earth book, one page at a time (?page=N)."""
+    async with request.app["pool"].acquire() as conn:
+        await _player(conn, request)
+    try:
+        n = int(request.query.get("page", "1"))
+    except ValueError:
+        n = 1
+    b = AR.page(request.match_info["code"], n)
+    if not b:
+        return _json({"error": "That record isn't in the archives."}, 404)
+    return _json(b)
+
+
 async def lib_checkout(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
@@ -593,6 +609,7 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/print", bp_print)
     app.router.add_get("/api/dfg/library", lib_shelves)
     app.router.add_get("/api/dfg/library/book/{code}", lib_book)
+    app.router.add_get("/api/dfg/library/archive/{code}", lib_archive)
     app.router.add_post("/api/dfg/library/checkout", lib_checkout)
     app.router.add_post("/api/dfg/library/return", lib_return)
     app.router.add_get("/api/dfg/library/test/{code}", lib_test)

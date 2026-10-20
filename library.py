@@ -11,6 +11,7 @@ import store as ST
 import blueprints as BP
 import library_books as LB
 import minerals as MN
+import archives as AR
 
 
 def _catalogue_chapters():
@@ -67,7 +68,7 @@ async def shelves(conn, pid):
         if g == "Making things":         # the handbook sits beside Engineering & Drafting; a design can't require it
             items.insert(1, _entry("blueprint-handbook", LB.BOOKS["blueprint-handbook"]["title"], out_ids, passed))
         groups.append({"group": g, "books": items})
-    return {"shelves": groups, "pass_mark": LB.PASS_MARK,
+    return {"shelves": groups, "archives": {"wing": "Archives of Earth", "shelves": AR.shelves()}, "pass_mark": LB.PASS_MARK,
             "passed": len(passed), "note": "The library is free. Read here, or check a book out to your bookshelf."}
 
 
@@ -80,6 +81,8 @@ def _entry(code, name, out_ids, passed):
 
 
 async def checkout(conn, pid, code):
+    if isinstance(code, str) and code.startswith("ntrs-"):
+        raise ST.Refused("The Archives of Earth are read in the library. They can't be checked out.")
     if code not in LB.BOOKS:
         raise ST.Refused("That book is still being written.")
     await ensure_book_types(conn)

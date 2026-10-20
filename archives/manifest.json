@@ -1,0 +1,718 @@
+{
+ "source": "NASA Technical Reports Server (ntrs.nasa.gov)",
+ "rule": "kept only if distribution PUBLIC, determinationType GOV_PUBLIC_USE_PERMITTED, containsThirdPartyMaterial false",
+ "documents": [
+  {
+   "id": 19620007576,
+   "title": "Summary Results of the First United States Manned Orbital Space Flight",
+   "date": "1962-05-03",
+   "program": "Mercury",
+   "order": 0,
+   "report_numbers": [],
+   "chars": 43133,
+   "bytes_gz": 17990,
+   "source_url": "https://ntrs.nasa.gov/citations/19620007576",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19640056774,
+   "title": "Results of the Second U.S. Manned Suborbital Space Flight, July 21, 1961",
+   "date": "1961-01-01",
+   "program": "Mercury",
+   "order": 1,
+   "report_numbers": [],
+   "chars": 154692,
+   "bytes_gz": 56347,
+   "source_url": "https://ntrs.nasa.gov/citations/19640056774",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19630012071,
+   "title": "MERCURY PROJECT SUMMARY INCLUDING RESULTS OF THE FOURTH MANNED ORBITAL FLIGHT, MAY 15 AND 16, 1963",
+   "date": "1963-10-01",
+   "program": "Mercury",
+   "order": 2,
+   "report_numbers": [
+    "NASA-SP-45"
+   ],
+   "chars": 1367692,
+   "bytes_gz": 482734,
+   "source_url": "https://ntrs.nasa.gov/citations/19630012071",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19670095753,
+   "title": "Gemini Program Mission Report for Gemini-Titan 1 (GT-1)",
+   "date": "1964-05-01",
+   "program": "Gemini",
+   "order": 3,
+   "report_numbers": [
+    "MSC-R-G-64-1",
+    "JSC-CN-39814"
+   ],
+   "chars": 369614,
+   "bytes_gz": 112534,
+   "source_url": "https://ntrs.nasa.gov/citations/19670095753",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19670095754,
+   "title": "Gemini Program Mission Report: Gemini IV",
+   "date": "1965-06-01",
+   "program": "Gemini",
+   "order": 4,
+   "report_numbers": [
+    "JSC-CN-39811",
+    "NASA-TM-X-60404",
+    "MSC-G-R-65-3"
+   ],
+   "chars": 617063,
+   "bytes_gz": 210253,
+   "source_url": "https://ntrs.nasa.gov/citations/19670095754",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19750067644,
+   "title": "Gemini Program Mission Report, Gemini 10",
+   "date": "1966-08-01",
+   "program": "Gemini",
+   "order": 5,
+   "report_numbers": [
+    "JSC-CN-30928",
+    "MSC-G-R-66-7",
+    "NASA-TM-X-60402"
+   ],
+   "chars": 699086,
+   "bytes_gz": 242763,
+   "source_url": "https://ntrs.nasa.gov/citations/19750067644",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19680005473,
+   "title": "Summary of rendezvous operations",
+   "date": "1967-02-01",
+   "program": "Gemini",
+   "order": 6,
+   "report_numbers": [],
+   "chars": 33532,
+   "bytes_gz": 11335,
+   "source_url": "https://ntrs.nasa.gov/citations/19680005473",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19680005481,
+   "title": "Medical Aspects of Gemini Extravehicular Activities",
+   "date": "1967-02-01",
+   "program": "Gemini",
+   "order": 7,
+   "report_numbers": [
+    "NASA-SP-138"
+   ],
+   "chars": 17497,
+   "bytes_gz": 7183,
+   "source_url": "https://ntrs.nasa.gov/citations/19680005481",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19680005493,
+   "title": "Gemini results as related to the Apollo program",
+   "date": "1967-02-01",
+   "program": "Gemini",
+   "order": 8,
+   "report_numbers": [],
+   "chars": 23313,
+   "bytes_gz": 8322,
+   "source_url": "https://ntrs.nasa.gov/citations/19680005493",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19680020624,
+   "title": "Project Gemini Final Report - Summary",
+   "date": "1968-01-01",
+   "program": "Gemini",
+   "order": 9,
+   "report_numbers": [
+    "NASA-CR-92180"
+   ],
+   "chars": 107617,
+   "bytes_gz": 32038,
+   "source_url": "https://ntrs.nasa.gov/citations/19680020624",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19700033031,
+   "title": "Apollo 8 Mission Report",
+   "date": "1969-02-01",
+   "program": "Apollo",
+   "order": 10,
+   "report_numbers": [
+    "MSC-PA-R-69-1",
+    "NASA-TM-X-66369"
+   ],
+   "chars": 324200,
+   "bytes_gz": 117547,
+   "source_url": "https://ntrs.nasa.gov/citations/19700033031",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19690022248,
+   "title": "Apollo 11 lunar landing mission - Press kit",
+   "date": "1969-07-06",
+   "program": "Apollo",
+   "order": 11,
+   "report_numbers": [
+    "NASA-NEWS-RELEASE-69-83K"
+   ],
+   "chars": 317758,
+   "bytes_gz": 109339,
+   "source_url": "https://ntrs.nasa.gov/citations/19690022248",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19710015566,
+   "title": "Apollo 11 mission report",
+   "date": "1970-01-01",
+   "program": "Apollo",
+   "order": 12,
+   "report_numbers": [
+    "NASA-SP-238"
+   ],
+   "chars": 462701,
+   "bytes_gz": 164167,
+   "source_url": "https://ntrs.nasa.gov/citations/19710015566",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19710003598,
+   "title": "Apollo 13 Mission Report",
+   "date": "1970-09-01",
+   "program": "Apollo",
+   "order": 14,
+   "report_numbers": [
+    "NASA-TM-X-66449",
+    "MSC-02680"
+   ],
+   "chars": 259567,
+   "bytes_gz": 93920,
+   "source_url": "https://ntrs.nasa.gov/citations/19710003598",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19700021741,
+   "title": "Apollo 13 - Houston, we've got a problem",
+   "date": "1970-01-01",
+   "program": "Apollo",
+   "order": 15,
+   "report_numbers": [
+    "NASA-EP-76"
+   ],
+   "chars": 39011,
+   "bytes_gz": 16712,
+   "source_url": "https://ntrs.nasa.gov/citations/19700021741",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19730015117,
+   "title": "Apollo 17 Mission Report",
+   "date": "1973-03-01",
+   "program": "Apollo",
+   "order": 17,
+   "report_numbers": [
+    "NASA-TM-X-69292",
+    "JSC-07904"
+   ],
+   "chars": 540631,
+   "bytes_gz": 178513,
+   "source_url": "https://ntrs.nasa.gov/citations/19730015117",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19740010315,
+   "title": "Apollo 17 Preliminary Science Report",
+   "date": "1973-01-01",
+   "program": "Apollo",
+   "order": 18,
+   "report_numbers": [
+    "LC-73-600152",
+    "NASA-SP-330",
+    "JSC-S-381"
+   ],
+   "chars": 1878450,
+   "bytes_gz": 667923,
+   "source_url": "https://ntrs.nasa.gov/citations/19740010315",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19750015551,
+   "title": "Apollo Soyuz test project press kit: USA-USSR",
+   "date": "1975-06-10",
+   "program": "Apollo-Soyuz",
+   "order": 19,
+   "report_numbers": [
+    "NASA-NEWS-RELEASE-75-118"
+   ],
+   "chars": 152479,
+   "bytes_gz": 58749,
+   "source_url": "https://ntrs.nasa.gov/citations/19750015551",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19760015986,
+   "title": "Apollo-Soyuz Test Project: Preliminary Science Report",
+   "date": "1976-02-01",
+   "program": "Apollo-Soyuz",
+   "order": 20,
+   "report_numbers": [
+    "NASA-TM-X-58173",
+    "N76-23074",
+    "JSC-10632"
+   ],
+   "chars": 854867,
+   "bytes_gz": 299735,
+   "source_url": "https://ntrs.nasa.gov/citations/19760015986",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19740011377,
+   "title": "Skylab mission report, second visit",
+   "date": "1974-01-01",
+   "program": "Skylab",
+   "order": 21,
+   "report_numbers": [
+    "JSC-08662",
+    "NASA-TM-X-69996"
+   ],
+   "chars": 471888,
+   "bytes_gz": 174565,
+   "source_url": "https://ntrs.nasa.gov/citations/19740011377",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19740027126,
+   "title": "Skylab mission report, third visit",
+   "date": "1974-07-01",
+   "program": "Skylab",
+   "order": 22,
+   "report_numbers": [
+    "JSC-08963",
+    "NASA-TM-X-70385"
+   ],
+   "chars": 597166,
+   "bytes_gz": 189996,
+   "source_url": "https://ntrs.nasa.gov/citations/19740027126",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19760004100,
+   "title": "Lessons Learned on the Skylab Program",
+   "date": "1974-07-18",
+   "program": "Skylab",
+   "order": 23,
+   "report_numbers": [
+    "JSC-09096",
+    "NASA-TM-X-72920"
+   ],
+   "chars": 206628,
+   "bytes_gz": 74653,
+   "source_url": "https://ntrs.nasa.gov/citations/19760004100",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19770026836,
+   "title": "Biomedical Results from Skylab",
+   "date": "1977-01-01",
+   "program": "Skylab",
+   "order": 24,
+   "report_numbers": [
+    "LC-76-54287"
+   ],
+   "chars": 1324255,
+   "bytes_gz": 462547,
+   "source_url": "https://ntrs.nasa.gov/citations/19770026836",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19800012907,
+   "title": "Skylab reactivation mission report",
+   "date": "1980-03-01",
+   "program": "Skylab",
+   "order": 25,
+   "report_numbers": [
+    "NASA-TM-78267"
+   ],
+   "chars": 478166,
+   "bytes_gz": 186018,
+   "source_url": "https://ntrs.nasa.gov/citations/19800012907",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19810005642,
+   "title": "STS-1 mission contamination evaluation approach",
+   "date": "1980-01-01",
+   "program": "Space Shuttle",
+   "order": 26,
+   "report_numbers": [],
+   "chars": 29363,
+   "bytes_gz": 11796,
+   "source_url": "https://ntrs.nasa.gov/citations/19810005642",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19840004146,
+   "title": "STS-9 Spacelab 1 Press Kit",
+   "date": "1983-11-01",
+   "program": "Space Shuttle",
+   "order": 27,
+   "report_numbers": [
+    "P83-10209"
+   ],
+   "chars": 134575,
+   "bytes_gz": 51645,
+   "source_url": "https://ntrs.nasa.gov/citations/19840004146",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19940015719,
+   "title": "Space Shuttle Mission STS-61: Hubble Space Telescope servicing mission-01",
+   "date": "1993-12-01",
+   "program": "Space Shuttle",
+   "order": 28,
+   "report_numbers": [
+    "NASA-TM-109344",
+    "NAS 1.15:109344"
+   ],
+   "chars": 82683,
+   "bytes_gz": 32038,
+   "source_url": "https://ntrs.nasa.gov/citations/19940015719",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20030011376,
+   "title": "STS 107 Shuttle Press Kit: Providing 24/7 Space Science Research",
+   "date": "2002-12-16",
+   "program": "Space Shuttle",
+   "order": 29,
+   "report_numbers": [],
+   "chars": 355598,
+   "bytes_gz": 120292,
+   "source_url": "https://ntrs.nasa.gov/citations/20030011376",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19960001128,
+   "title": "Shuttle flight data and in-flight anomaly list. STS-1 through STS-50, and STS-52 through STS-56. Revision T",
+   "date": "1993-10-01",
+   "program": "Space Shuttle",
+   "order": 30,
+   "report_numbers": [
+    "JSC-19413-REV-T",
+    "NAS 1.26:197667",
+    "NASA-CR-197667"
+   ],
+   "chars": 475337,
+   "bytes_gz": 172239,
+   "source_url": "https://ntrs.nasa.gov/citations/19960001128",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20110004034,
+   "title": "Habitability and Human Factors Contributions to Human Space Flight",
+   "date": "2011-01-01",
+   "program": "Space stations",
+   "order": 33,
+   "report_numbers": [
+    "JSC-CN-22718"
+   ],
+   "chars": 29803,
+   "bytes_gz": 11258,
+   "source_url": "https://ntrs.nasa.gov/citations/20110004034",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20100031059,
+   "title": "Design/Development of Spacecraft and Module Crew Compartments",
+   "date": "2010-01-01",
+   "program": "Space stations",
+   "order": 34,
+   "report_numbers": [
+    "JSC-CN-21506"
+   ],
+   "chars": 11536,
+   "bytes_gz": 5003,
+   "source_url": "https://ntrs.nasa.gov/citations/20100031059",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20205009882,
+   "title": "Plants in Space, Veggie, and Space Crop Production",
+   "date": null,
+   "program": "Space stations",
+   "order": 36,
+   "report_numbers": [],
+   "chars": 6755,
+   "bytes_gz": 2836,
+   "source_url": "https://ntrs.nasa.gov/citations/20205009882",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20190027326,
+   "title": "Further Characterization of Aerosols Sampled on the International Space Station",
+   "date": "2019-07-08",
+   "program": "Space stations",
+   "order": 37,
+   "report_numbers": [
+    "GRC-E-DAA-TN67302",
+    "ICES-2019-246"
+   ],
+   "chars": 33005,
+   "bytes_gz": 12160,
+   "source_url": "https://ntrs.nasa.gov/citations/20190027326",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19670023005,
+   "title": "Lunar Orbiter I - Photography",
+   "date": "1967-08-01",
+   "program": "Robotic missions",
+   "order": 38,
+   "report_numbers": [
+    "NASA-CR-847",
+    "D2-100727-2"
+   ],
+   "chars": 272491,
+   "bytes_gz": 102437,
+   "source_url": "https://ntrs.nasa.gov/citations/19670023005",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19710026703,
+   "title": "Guide to Lunar Orbiter Photographs",
+   "date": "1970-01-01",
+   "program": "Robotic missions",
+   "order": 39,
+   "report_numbers": [
+    "NASA-SP-242"
+   ],
+   "chars": 89927,
+   "bytes_gz": 34112,
+   "source_url": "https://ntrs.nasa.gov/citations/19710026703",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19680012850,
+   "title": "An analysis of the Mariner 4 photography of Mars",
+   "date": "1968-02-14",
+   "program": "Robotic missions",
+   "order": 40,
+   "report_numbers": [
+    "SAO-SR-268",
+    "NASA-CR-94358"
+   ],
+   "chars": 124183,
+   "bytes_gz": 41972,
+   "source_url": "https://ntrs.nasa.gov/citations/19680012850",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19770022101,
+   "title": "Viking 75 project: Viking lander system primary mission performance report",
+   "date": "1977-04-01",
+   "program": "Robotic missions",
+   "order": 41,
+   "report_numbers": [
+    "NASA-CR-145148",
+    "FR-3770219"
+   ],
+   "chars": 294493,
+   "bytes_gz": 105764,
+   "source_url": "https://ntrs.nasa.gov/citations/19770022101",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19840027185,
+   "title": "Viking Lander: Building a Complex Spacecraft",
+   "date": "1984-01-01",
+   "program": "Robotic missions",
+   "order": 42,
+   "report_numbers": [
+    "NASA-SP-4212"
+   ],
+   "chars": 82897,
+   "bytes_gz": 30520,
+   "source_url": "https://ntrs.nasa.gov/citations/19840027185",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19770022102,
+   "title": "Voyager to Jupiter and Saturn",
+   "date": "1977-01-01",
+   "program": "Robotic missions",
+   "order": 43,
+   "report_numbers": [
+    "NASA-SP-420"
+   ],
+   "chars": 102403,
+   "bytes_gz": 34655,
+   "source_url": "https://ntrs.nasa.gov/citations/19770022102",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19800008743,
+   "title": "Voyager 1: Encounter with Jupiter",
+   "date": "1979-03-01",
+   "program": "Robotic missions",
+   "order": 44,
+   "report_numbers": [
+    "NASA-CR-162721",
+    "JPL-400-11"
+   ],
+   "chars": 31254,
+   "bytes_gz": 11280,
+   "source_url": "https://ntrs.nasa.gov/citations/19800008743",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19830009166,
+   "title": "The Voyager flights to Jupiter and Saturn",
+   "date": "1982-07-01",
+   "program": "Robotic missions",
+   "order": 45,
+   "report_numbers": [
+    "NASA-EP-191",
+    "NAS 1.19:191",
+    "JPL-400-148"
+   ],
+   "chars": 68789,
+   "bytes_gz": 26796,
+   "source_url": "https://ntrs.nasa.gov/citations/19830009166",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20050179383,
+   "title": "Results From Mars Show Electrostatic Charging of the Mars Pathfinder Sojourner Rover",
+   "date": "1998-04-01",
+   "program": "Robotic missions",
+   "order": 47,
+   "report_numbers": [],
+   "chars": 5469,
+   "bytes_gz": 2427,
+   "source_url": "https://ntrs.nasa.gov/citations/20050179383",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 20100015446,
+   "title": "Cometary Glycine Detected in Stardust-Returned Samples",
+   "date": "2010-01-01",
+   "program": "Robotic missions",
+   "order": 50,
+   "report_numbers": [],
+   "chars": 8487,
+   "bytes_gz": 4283,
+   "source_url": "https://ntrs.nasa.gov/citations/20100015446",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  },
+  {
+   "id": 19960017679,
+   "title": "Pioneer Venus Data Analysis",
+   "date": "1996-03-01",
+   "program": "Robotic missions",
+   "order": 51,
+   "report_numbers": [
+    "NAS 1.26:200746",
+    "NASA-CR-200746"
+   ],
+   "chars": 106088,
+   "bytes_gz": 39134,
+   "source_url": "https://ntrs.nasa.gov/citations/19960017679",
+   "distribution": "PUBLIC",
+   "determinationType": "GOV_PUBLIC_USE_PERMITTED",
+   "containsThirdPartyMaterial": false
+  }
+ ]
+}
