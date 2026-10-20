@@ -957,9 +957,19 @@ const VOICE=(function(){
  let set=null,cur=null,queue=[];const last={};
  function pick(m){const ids=MOMENTS[m];if(!ids)return null;const c=ids.length>1?ids.filter(i=>i!==last[m]):ids;
   const id=c[Math.floor(Math.random()*c.length)];last[m]=id;return id;}
- function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];return;}
+ // Shipboard call chime (Eric 10-20): our own three-note rising bell, made here in the browser, so no one else's sound
+ // is used. It plays once before Inara speaks aboard the ship; flight lines come over the radio and get no chime.
+ let ac=null,chimed=false;
+ function chime(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();}catch(e){return 0;}
+  const t=ac.currentTime+0.02;[[659.25,0],[987.77,0.14],[1318.5,0.28]].forEach(([f,d])=>{
+   const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;
+   g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(0.18,t+d+0.01);g.gain.exponentialRampToValueAtTime(0.0005,t+d+0.6);
+   o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+0.65);});return 800;}
+ const aboard=id=>!/^INARA-(TWR|RING|TOWER)-/.test(id);
+ function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];chimed=false;return;}
+  if(!chimed&&aboard(queue[0])){chimed=true;const w=chime();if(w){cur={pause(){}};const mark=cur;setTimeout(()=>{if(cur===mark)next();},w);return;}}
   const id=queue.shift(),a=new Audio(base+'/voice/'+encodeURIComponent(set)+'/'+id+'.mp3');a.volume=0.85;cur=a;
-  a.onended=a.onerror=()=>{if(cur===a)next();};
+  a.onended=a.onerror=()=>{if(cur===a){if(!queue.length)chimed=false;next();}};
   const p=a.play();if(p&&p.catch)p.catch(()=>{if(cur===a)next();});}   // blocked or missing: carry on silently
  function ready(){return set&&!snd.muted;}
  return {
@@ -970,7 +980,7 @@ const VOICE=(function(){
    try{const r=await fetch(window.STARDUST_API+'/voice/heard',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},
      body:JSON.stringify({beat})});const j=await r.json();if(!j.play)return;}catch(e){return;}
    queue.push(...ids);if(!cur)next();},   // a story beat waits for the line before it
-  stop(){queue=[];if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
+  stop(){queue=[];chimed=false;if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
   get busy(){return !!cur;},MOMENTS,BEATS};})();
 window.STARDUST_VOICE=VOICE;
 const voiced={};   // this session's once-only moments (first strong return, first bearing, first piece)
