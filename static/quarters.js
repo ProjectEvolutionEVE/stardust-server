@@ -86,10 +86,11 @@ function countryOptions(list,lang,sel){
 async function showSignIn(){
   const o=await options().catch(()=>null);
   const langs=o?o.languages:[{code:'en',name:'English',native:'English',flag:'🇬🇧'}];
-  const guess=state.lang||((navigator.language||'en').split('-')[0]);
+  const ok=new Set(langs.filter(l=>l.supported!==false).map(l=>l.code));   // the rest are "coming soon" (Eric 10-19)
+  let guess=state.lang||((navigator.language||'en').split('-')[0]);if(!ok.has(guess))guess='en';
   root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sign in</h2>
    <div class="sub">No passwords. A 6-digit code to your phone or email.</div>
-   <label for="sqLang">Your language</label><select id="sqLang">${langs.map(l=>`<option value="${esc(l.code)}"${l.code===guess?' selected':''}>${esc(l.flag)} ${esc(l.native)}${l.native!==l.name?' · '+esc(l.name):''}</option>`).join('')}</select>
+   <label for="sqLang">Your language</label><select id="sqLang">${langs.map(l=>`<option value="${esc(l.code)}"${l.code===guess?' selected':''}${ok.has(l.code)?'':' disabled'}>${esc(l.flag)} ${esc(l.native)}${l.native!==l.name?' · '+esc(l.name):''}${ok.has(l.code)?'':' · coming soon'}</option>`).join('')}</select>
    <div class="seg"><button data-c="sms" class="${state.channel==='sms'?'on':''}">📱 Phone</button><button data-c="email" class="${state.channel==='email'?'on':''}">✉️ Email</button></div>
    <label for="sqAddr" id="sqAddrL"></label>
    <select id="sqCountry" aria-label="Country" style="margin-bottom:8px"></select>

@@ -56,7 +56,13 @@ import asyncio
 
 SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
 LANGUAGES = json.loads((Path(__file__).parent / "languages.json").read_text())["languages"]
-LANG_CODES = {l["code"] for l in LANGUAGES}
+# Languages Inara speaks today (Eric 10-19: all 12 recorded). The rest of the list shows as "coming soon" and can't be
+# chosen yet. Value = the recorded voice set the language uses (Traditional Chinese hears the Mandarin recording).
+VOICED = {"en": "en", "zh": "zh", "zh-TW": "zh", "de": "de", "pl": "pl", "es": "es", "fr": "fr", "ko": "ko",
+          "tr": "tr", "pt": "pt-BR", "ru": "ru", "ja": "ja"}
+for l in LANGUAGES:
+    l["supported"] = l["code"] in VOICED
+LANG_CODES = {l["code"] for l in LANGUAGES if l["supported"]}
 # The civilian ladder (approved by Eric 10-11), lowest first. A military track is added later (Eric 10-11).
 RANKS = {"civilian": ["Trainee", "Crew Member", "Senior Crew Member", "Specialist", "Senior Specialist", "Junior Officer",
                       "Officer", "Senior Officer", "Chief", "First Officer", "Captain"]}
@@ -169,7 +175,7 @@ async def me_setup(request):
     if first not in NAMES.FIRST or last not in NAMES.LAST:
         raise ST.Refused("Choose your first and last name from the lists.")
     if lang not in LANG_CODES:
-        raise ST.Refused("Choose your language from the list.")
+        raise ST.Refused("Choose your language from the list. Languages marked coming soon can't be chosen yet.")
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
         done = await conn.fetchval("""UPDATE players SET first_name=$2, last_name=$3, language=$4
