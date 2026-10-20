@@ -109,12 +109,27 @@ GIANTS.forEach(g=>{
  scene.add(m);LANDMARKS.push({name:g.name,pos:g.pos,draw:m,rad:g.rad,far:true});});
 LANDMARKS.push({name:'Sun',pos:SUN_POS,draw:sun,rad:SUN_R,far:true});
 
-// ── THE WORMHOLE (STORY-BIBLE): a dark throat ringed with light, slowly turning. Its research is why the Starship is here.
+// ── THE WORMHOLE (STORY-BIBLE): a throat onto another universe, ringed with light, slowly turning. Its research is why the Starship is here.
 const wormhole=new THREE.Group();
-(function(){const core=new THREE.Mesh(new THREE.SphereGeometry(1,48,32),new THREE.MeshBasicMaterial({color:0x000000,fog:false}));
+(function(){
+ // Through the throat you see ANOTHER universe (Eric 10-20: black reads as a black hole). Its stars are a different
+ // colour, denser and brighter than ours, over a faint violet-teal sky, darkening toward the rim where light bends.
+ const c=document.createElement('canvas');c.width=c.height=512;const g=c.getContext('2d');
+ g.save();g.beginPath();g.arc(256,256,256,0,Math.PI*2);g.clip();
+ g.fillStyle='#030308';g.fillRect(0,0,512,512);   // no shading: the packed stars alone show it's another universe
+ let r=12345;const rnd=()=>((r=(r*16807)%2147483647)/2147483647);
+ const tints=['#ffd9a0','#a0fff0','#ffb3e6','#d8c8ff','#ffffff'];
+ for(let i=0;i<450;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*256,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d,
+  k=1-d/256*0.7,s=rnd()<0.06?2.2:rnd()<0.3?1.3:0.8;g.globalAlpha=0.55+0.45*k;g.fillStyle=tints[i%tints.length];
+  g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();}
+ g.globalAlpha=1;for(let i=0;i<33;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*240,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d;   // 33 brighter stars (Eric 10-20): same size, more intense
+  g.fillStyle='#ffffff';g.beginPath();g.arc(x,y,1.3,0,Math.PI*2);g.fill();}
+ g.restore();
+ const tex=new THREE.CanvasTexture(c);
+ const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(1.54,1.54,1);   // fills right up to the ring (its bright band sits at radius 0.8);
  wormhole.add(core);
- const ringTex=glowTex([[0,'rgba(0,0,0,0)'],[.42,'rgba(0,0,0,0)'],[.5,'rgba(150,200,255,.95)'],[.6,'rgba(120,90,255,.45)'],[1,'rgba(40,20,120,0)']]);
- [[3.2,0.9],[4.6,0.45]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
+ const ringTex=glowTex([[0,'rgba(0,0,0,0)'],[.44,'rgba(0,0,0,0)'],[.475,'rgba(120,90,255,.35)'],[.5,'rgba(190,220,255,1)'],[.525,'rgba(120,90,255,.35)'],[.7,'rgba(80,50,200,.15)'],[1,'rgba(40,20,120,0)']]);
+ [[3.2,0.9]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
   blending:THREE.AdditiveBlending,transparent:true,opacity:o}));sp.scale.set(s,s,1);sp.userData.spin=i?-0.05:0.08;wormhole.add(sp);});})();
 wormhole.position.copy(WORMHOLE_POS);wormhole.scale.setScalar(WORMHOLE_R);scene.add(wormhole);
 LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
