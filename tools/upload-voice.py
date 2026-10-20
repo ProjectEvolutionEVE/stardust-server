@@ -17,10 +17,14 @@ import argparse, glob, json, os, sys, urllib.request, urllib.error
 SERVER = "https://game-server-production-9863.up.railway.app"
 SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja"}
 RADIO = ("INARA-TWR-", "INARA-RING-", "INARA-TOWER-")
+# Tower lines spoken aboard the ship (waking, bedtime, library tests, market order, blueprint sent): plain, with the chime
+ABOARD = {"INARA-TWR-%03d" % n for n in (42, 43, 44, 45, 49, 50, 51, 53)}
 PLAIN = ("INARA-STORY-", "INARA-CALL-", "INARA-WELCOME-", "INARA-FAQ-", "INARA-MARKET-", "INARA-HINT-", "INARA-DIRECTION-")
 
 
 def which(line_id):
+    if line_id in ABOARD:
+        return "raw"
     if line_id.startswith(RADIO):
         return "radio"
     if line_id.startswith(PLAIN):
@@ -39,7 +43,7 @@ def main():
     ap.add_argument("--server", default=SERVER)
     ap.add_argument("--only", help="one voice set, e.g. de")
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--redo", help="send lines whose ID starts with this again, replacing the server's copy (e.g. INARA-CALL-)")
+    ap.add_argument("--redo", help="send lines again, replacing the server's copy: an ID prefix (e.g. INARA-CALL-) or 'aboard'")
     ap.add_argument("--key-file", default=os.path.expanduser("~/.stardust-upload-key"))
     a = ap.parse_args()
     try:
@@ -66,7 +70,7 @@ def main():
             v = which(i)
             if not v:
                 unknown.append(i); continue
-            if i in already and not (a.redo and i.startswith(a.redo)):
+            if i in already and not (a.redo and (i.startswith(a.redo) or (a.redo == "aboard" and i in ABOARD))):
                 continue
             f = os.path.join(folder, v, i + ".mp3")
             (todo.append((i, f)) if os.path.isfile(f) else missing.append(f"{i} (no {v} version)"))
