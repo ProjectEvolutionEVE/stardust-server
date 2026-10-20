@@ -34,6 +34,9 @@ The Starship Library (rules 22, 24; library.py):
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
+Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST /api/dfg/voice/heard {beat} → {play}
+  (each story beat once per player) · PUT /api/dfg/admin/voice/<set>/<ID>.mp3 and GET /api/dfg/admin/voice/manifest
+  (header X-Upload-Key = env DFG_UPLOAD_KEY). Files live in VOICE_DIR (default /data/voice, a Railway volume).
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
 import os, json, uuid, secrets
 from pathlib import Path
@@ -51,6 +54,7 @@ import serials as SER
 import auctions as AU
 import library as LIB
 import archives as AR
+import voice as VO
 from datetime import datetime
 import asyncio
 
@@ -58,8 +62,7 @@ SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
 LANGUAGES = json.loads((Path(__file__).parent / "languages.json").read_text())["languages"]
 # Languages Inara speaks today (Eric 10-19: all 12 recorded). The rest of the list shows as "coming soon" and can't be
 # chosen yet. Value = the recorded voice set the language uses (Traditional Chinese hears the Mandarin recording).
-VOICED = {"en": "en", "zh": "zh", "zh-TW": "zh", "de": "de", "pl": "pl", "es": "es", "fr": "fr", "ko": "ko",
-          "tr": "tr", "pt": "pt-BR", "ru": "ru", "ja": "ja"}
+VOICED = VO.VOICED          # one list, kept in voice.py
 for l in LANGUAGES:
     l["supported"] = l["code"] in VOICED
 LANG_CODES = {l["code"] for l in LANGUAGES if l["supported"]}
@@ -119,6 +122,7 @@ async def _me(conn, pid):
     rank = RANKS[p["track"]][p["rank_step"] - 1]
     named = bool(p["first_name"] and p["last_name"])
     return {"account_no": p["account_no"], "rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
+            "voice_set": VO.voice_set(p["language"]),
             "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
             "needs_setup": not (named and p["language"]),
             "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
@@ -184,6 +188,14 @@ async def me_setup(request):
             raise ST.Refused("Your name is already set.")
         await log_event(conn, pid, "setup", language=lang)
         return _json(await _me(conn, pid))
+
+
+async def voice_heard(request):
+    """A story beat (docs/inara-tower-dialog.md, Part B): {play: true} only the first time this player reaches it."""
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json({"play": await VO.heard(conn, pid, b.get("beat"))})
 
 
 async def auth_signout(request):
@@ -631,6 +643,10 @@ def make_app():
     app.router.add_post("/api/dfg/auth/signout", auth_signout)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
+    app.router.add_post("/api/dfg/voice/heard", voice_heard)
+    app.router.add_get(r"/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.serve)
+    app.router.add_put(r"/api/dfg/admin/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.upload)
+    app.router.add_get("/api/dfg/admin/voice/manifest", VO.manifest)
     # The game page itself (Eric 10-11): served by the game server, same address as the API, so sign-in just works.
     static = Path(__file__).parent / "static"
     async def play_redirect(request):
