@@ -471,6 +471,9 @@ async function showBlueprintForm(me,id,from){
 window.addEventListener('click',async e=>{if(e.target&&e.target.id==='quartersbtn'&&token){e.stopImmediatePropagation();
   try{showQuarters(await call('/me'),'desk');}catch(err){showSignIn();}}},true);
 
-(async()=>{if(token){try{const me=await call('/me');if(me.needs_setup)return showSetup();return showQuarters(me,'bed');}catch(e){}}
-  showSignIn();})();
+// The title screen (Eric 10-20) comes first: sign-in waits for its LAUNCH button.
+const titleEl=document.getElementById('title');root.hidden=!!(titleEl&&!titleEl.hidden);
+function start(){root.hidden=false;(async()=>{if(token){try{const me=await call('/me');if(me.needs_setup)return showSetup();return showQuarters(me,'bed');}catch(e){}}
+  showSignIn();})();}
+if(root.hidden)window.addEventListener('stardust:launch',start,{once:true});else start();
 })();

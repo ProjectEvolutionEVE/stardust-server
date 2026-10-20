@@ -1111,13 +1111,43 @@ function sky(){const d=cam.position.length();sunLight.intensity=1.6*Math.pow(AU/
  LANDMARKS.forEach(l=>{if(l.far&&l.name!=='Sun')placeFar(l.draw,l.pos,l.rad);});
  stars.position.copy(cam.position);
  wormhole.children.forEach(c=>{if(c.userData.spin)c.material.rotation+=c.userData.spin*0.016;});}
+// ── TITLE SCREEN (Eric 10-20): the real Starship (this same ship, never redrawn), the wormhole and the stars, seen from
+//    behind and above the starboard rear quarter, with the camera drifting very slowly. ?still=1 is the marketing still.
+//    Ship-local axes: bow +Z, up +Y. TITLE_VIEW holds the pose (wide screen and portrait phone; wh turns the view toward the
+//    wormhole). The wormhole lies off the ship's -X side and aft, so the camera sits on the +X side to have it in frame.
+const TITLE_VIEW={wide:{eye:[115,75,105],aim:[-30,28,-40],wh:0,fov:55},tall:{eye:[250,165,215],aim:[-60,40,-60],wh:0.3,fov:75}};
+const title={on:!!document.getElementById('title'),t0:performance.now()};
+const tEye=new THREE.Vector3(),tAim=new THREE.Vector3(),tWh=new THREE.Vector3();
+function titlePose(now){const v=innerWidth/innerHeight<0.9?TITLE_VIEW.tall:TITLE_VIEW.wide,t=(now-title.t0)/1000,still=document.body.classList.contains('still');
+ const sx=still?0:Math.sin(t*0.05)*8,sy=still?0:Math.sin(t*0.037)*4;     // a very slow drift that keeps the framing
+ tEye.set(v.eye[0]+sx,v.eye[1]+sy,v.eye[2]+sx*0.6);ship.localToWorld(tEye);tAim.set(v.aim[0],v.aim[1],v.aim[2]);ship.localToWorld(tAim);
+ if(v.wh){tWh.copy(WORMHOLE_POS).sub(tAim).setLength(tAim.distanceTo(tEye));tAim.lerp(tWh.add(tAim),v.wh);}
+ if(cam.fov!==v.fov){cam.fov=v.fov;cam.updateProjectionMatrix();}
+ cam.position.copy(tEye);cam.up.set(0,1,0).transformDirection(ship.matrixWorld);cam.lookAt(tAim);}
+function endTitle(){if(!title.on)return;title.on=false;cam.fov=62;cam.updateProjectionMatrix();settleDocked();
+ document.body.classList.remove('title');const el=$('title');if(el)el.hidden=true;window.dispatchEvent(new Event('stardust:launch'));}
+function saveStill(){renderer.render(scene,cam);   // the scene plus the title text, drawn as the page shows it
+ const W=innerWidth,H=innerHeight,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(cv,0,0,W,H);
+ for(const el of document.querySelectorAll('#title h1,#title h2')){const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+  g.font=cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily;g.fillStyle=cs.color;g.textAlign='center';g.textBaseline='middle';
+  if('letterSpacing' in g)g.letterSpacing=cs.letterSpacing;g.shadowColor='rgba(0,0,0,.9)';g.shadowBlur=18;
+  g.fillText(el.textContent,r.left+r.width/2+parseFloat(cs.letterSpacing||0)/2,r.top+r.height/2);}
+ c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
+ a.download='stardust-title-'+innerWidth+'x'+innerHeight+'.png';document.body.appendChild(a);a.click();a.remove();},'image/png');}
+if(title.on){document.body.classList.add('title');
+ if(/[?&]still=1/.test(location.search))document.body.classList.add('still');
+ renderer.setPixelRatio(document.body.classList.contains('still')?1:Math.min(devicePixelRatio,2));resize();   // the still is a PNG at the window size
+ $('tLaunch').addEventListener('click',()=>{snd.resume();endTitle();});
+ $('tSave').addEventListener('click',saveStill);
+ addEventListener('keydown',e=>{if(title.on&&e.code==='KeyP')saveStill();});}
 let last=performance.now(),sightT=0;
 function frame(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
- if(running){if(warp)warpTick(dt);else{fly(dt);scan(dt);collectTick(dt);unloadTick(dt);}watchRing(now);}
+ if(title.on)titlePose(now);
+ else if(running){if(warp)warpTick(dt);else{fly(dt);scan(dt);collectTick(dt);unloadTick(dt);}watchRing(now);}
  if(toastT&&now>toastT){document.getElementById('toast').hidden=true;toastT=0;}
  if(now>sightT){if(!warp){updateCells();updateSight();}sightT=now+200;}
  sky();pulseGuides(now/1000);
- hud();lockHud();approachHud();renderer.render(scene,cam);requestAnimationFrame(frame);}
+ if(!title.on){hud();lockHud();approachHud();}renderer.render(scene,cam);requestAnimationFrame(frame);}
 updateCells();updateSight();requestAnimationFrame(frame);netStart();
-window.__debris={receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},get SEED(){return SEED;},cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
+window.__debris={title,endTitle,saveStill,TITLE_VIEW,receiptText,saveReceipt,RECEIPTS,STORE,SHIP_HOLD,startUnload,get xfer(){return xfer;},ship,DOCK_W,get docked(){return docked;},get SEED(){return SEED;},cargo,HOLD,startCollect,get collecting(){return collecting;},FIELDS,RINGS,cam,vel,lockAt,AU,startWarp,DEST,get warp(){return warp;},get workRing(){return workRing;},WORMHOLE_POS,
  get scan(){return{d:lock?Math.round(cam.position.distanceTo(lock.pos)):null,s:+scanStrength.toFixed(2),bearings:bearings.size,bestIs:scanBest,best:scanBest&&scanBest.size};},get lock(){return lock;},get throttle(){return throttle;}}; // for testing
