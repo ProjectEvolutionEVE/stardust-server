@@ -388,8 +388,8 @@ function nextPiece(f){let best=-1,bd=1e9;for(let i=0;i<f.pieces.length;i++){cons
   f.mats[i].decompose(tmpP,tmpQ,tmpS);tmpP.add(f.center);const d=tmpP.distanceTo(cam.position);if(d<bd){bd=d;best=i;}}return best;}
 function startCollect(){const f=lock&&lock.parked&&lock.field;if(!f)return;
  const left=f.pieces.filter(p=>!p.taken);
- if(!left.some(shapeFits)){toast('TOO BIG TO TAKE','These pieces won\'t fit in your hold. Keep searching for a field of smaller debris.');return;}
- const i=nextPiece(f);if(i<0){toast('HOLD FULL','No room left for these pieces. Return to the Starship to unload.');return;}
+ if(!left.some(shapeFits)){VOICE.say('toobig');toast('TOO BIG TO TAKE','These pieces won\'t fit in your hold. Keep searching for a field of smaller debris.');return;}
+ const i=nextPiece(f);if(i<0){VOICE.say('full');toast('HOLD FULL','No room left for these pieces. Return to the Starship to unload.');return;}
  const p=f.pieces[i];f.mats[i].decompose(tmpP,tmpQ,tmpS);
  collecting={f,i,t:0,dur:2+Math.min(10,p.box*12),from:tmpP.clone(),q:tmpQ.clone(),s:tmpS.clone()};}
 function collectTick(dt){
@@ -407,10 +407,11 @@ function collectTick(dt){
  document.getElementById('cbar').style.width=(k*100).toFixed(0)+'%';
  if(k<1)return;
  const p=f.pieces[c.i];p.taken=true;cargo.push(p);if(NET.on)netCollect(p);f.mesh.setMatrixAt(c.i,ZERO);f.mesh.instanceMatrix.needsUpdate=true;
+ if(!voiced.piece){voiced.piece=1;VOICE.say('firstpiece');if(NET.on)VOICE.story('piece');}
  snd.ping(520);toast('+ '+fmtKg(p.mass)+' '+MATERIALS[p.mat].name.toUpperCase(),
   p.dims.map(d=>d.toFixed(2)).join(' × ')+' m · takes '+p.box.toFixed(3)+' m³ of hold space');
  collecting=null;renderHold();
- if(f.pieces.every(q=>q.taken)){lock=null;f.cleared=true;toast('FIELD CLEARED','Nothing left here. There\'s more debris all through the ring.');return;}
+ if(f.pieces.every(q=>q.taken)){lock=null;f.cleared=true;VOICE.say('cleared');toast('FIELD CLEARED','Nothing left here. There\'s more debris all through the ring.');return;}
  startCollect();}                            // keep going until full or nothing else fits
 function renderHold(){const used=cargoBulk();holdEl.textContent='HOLD '+used.toFixed(2)+' / '+HOLD.cap.toFixed(2)+' m³';
  const rows={};cargo.forEach(p=>{const k=p.flawless?'flawless':p.mat;const r=rows[k]||(rows[k]={n:0,kg:0,box:0});r.n++;r.kg+=p.mass;r.box+=p.box;});
@@ -529,7 +530,7 @@ function finishXfer(stopped){const x=xfer;x.done=true;renderXfer();xferNow(null)
  if(x.error){t.textContent='TRANSFER NOT MADE';now.textContent=x.error+' Your cargo is still in your hold.';}
  else if(stopped){t.textContent='TRANSFER STOPPED';now.textContent='You launched. '+x.n+' of '+x.start+' pieces moved; the rest are still in your hold.';}
  else if(x.full){t.textContent='STARSHIP SPACE FULL';now.textContent=x.n+' of '+x.start+' pieces moved. Your space aboard is full, so '+cargo.length+(cargo.length===1?' piece stays':' pieces stay')+' in your hold.';}
- else{t.textContent='TRANSFER COMPLETE';t.className='done';now.textContent='All '+x.n+(x.n===1?' piece is':' pieces are')+' aboard the Starship. Your hold is empty.';snd.chime();}
+ else{t.textContent='TRANSFER COMPLETE';t.className='done';VOICE.say('unloaded');if(x.server)VOICE.story('unload');now.textContent='All '+x.n+(x.n===1?' piece is':' pieces are')+' aboard the Starship. Your hold is empty.';snd.chime();}
  const tb=document.getElementById('xSumB');tb.textContent='';
  Object.keys(MATERIALS).forEach(m=>{if(!x.moved[m])return;const tr=document.createElement('tr');
   [MATERIALS[m].name,'+ '+fmtKg(x.moved[m])].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});tb.appendChild(tr);});
@@ -571,7 +572,7 @@ async function netStart(){
  try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
   // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
   SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
-  netApplyShip(j);return true;}
+  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);}).catch(()=>{});return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
@@ -581,7 +582,7 @@ function netCollect(p){
   try{const j=await netCall('/collect',{session_id:NET.session,field:p.fid,index:p.idx,dims:p.dims,volume_m3:p.vol});
    if(j.aboard&&j.aboard.material&&j.aboard.material!==p.mat){p.mat=j.aboard.material;p.mass=j.aboard.kg;renderHold();}   // the server's word
    if(j.aboard&&j.aboard.flawless){p.flawless=true;renderHold();   // rule 26: keep the excitement with the miner
-    snd.chime();setTimeout(()=>snd.chime(),350);
+    snd.chime();setTimeout(()=>snd.chime(),350);VOICE.say('diamond');VOICE.story('diamond');
     toast('💎 NEAR-FLAWLESS DIAMOND','One in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.');}
    else if(j.aboard&&j.aboard.noticed){snd.chime();   // lonsdaleite: noticed when collected (it is not the near-flawless diamond)
     if(p.mat==='brownleeite'){setTimeout(()=>snd.chime(),350);toast('✦ BROWNLEEITE','Manganese silicide, known from comet dust and never found naturally on Earth. Ultra rare. Read about it in the Starship Library.');}
@@ -690,7 +691,13 @@ const keys={};
 const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long trips and slows as it arrives (WARP crosses the system)
 // Docked in the bay under the bow, looking out past the bow (Eric 10-11): the view you get when you dock, and the view
 // you launch from, including at the very start of a session.
-function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;
+// Docking also lets go of the controls (Eric's dock-then-undock bug, 10-20): throttle to 0 and any stick touch that began
+// before the dock is dropped, so only a NEW throttle-up or a NEW stick press launches again.
+let dockedAt=0;
+function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
+ if(typeof throttle!=='undefined'){throttle=0;thrEl.textContent='Throttle 0%';}
+ if(typeof stk!=='undefined'&&stk){stk=null;stickRing.hidden=true;}
+ if(typeof pivot!=='undefined'){pivot.l=pivot.r=false;hold.boost=false;}
  cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
 let throttle=0;                           // 0..10 steps of 10%
 const thrEl=document.getElementById('thrtxt');
@@ -711,13 +718,13 @@ cv.addEventListener('pointerdown',e=>{
  if(now-lastTap.t<320&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40){lockAt(e.clientX,e.clientY);lastTap.t=0;return;}
  lastTap={t:now,x:e.clientX,y:e.clientY};
  if(stk)return;
- stk={id:e.pointerId,x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);
+ stk={id:e.pointerId,x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY,t:performance.now()};cv.setPointerCapture(e.pointerId);
  stickRing.style.left=(e.clientX-65)+'px';stickRing.style.top=(e.clientY-65)+'px';stickRing.hidden=false;knob.style.transform='';});
 cv.addEventListener('pointermove',e=>{if(!stk||stk.id!==e.pointerId)return;stk.x=e.clientX;stk.y=e.clientY;
  let dx=stk.x-stk.x0,dy=stk.y-stk.y0;const l=Math.hypot(dx,dy);if(l>STICK_R){dx*=STICK_R/l;dy*=STICK_R/l;}
  knob.style.transform=`translate(${dx*39/STICK_R}px,${dy*39/STICK_R}px)`;});
 function endStick(e){if(stk&&stk.id===e.pointerId){stk=null;stickRing.hidden=true;}}
-cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);
+cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);cv.addEventListener('lostpointercapture',endStick);
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const hold={boost:false};
 const pivot={l:false,r:false};
@@ -751,7 +758,7 @@ function lockAt(px,py){
   warn('Nothing to lock there. Double-tap a field or landmark you can see.');return;}
  if(cam.position.distanceTo(best.pos)>FAR_FLY){warn(best.name+' is too far to fly. Use WARP.');return;}
  if(lock&&lock.pos===best.pos){lock.auto=true;stk=null;stickRing.hidden=true;return;}   // tapped what's already locked: go
- lock=Object.assign({auto:true},best);stk=null;stickRing.hidden=true;}
+ lock=Object.assign({auto:true},best);stk=null;stickRing.hidden=true;if(best.dock)VOICE.say('home');}
 // Where the autopilot parks: in front of the field, outside it, so the whole field stays in view while you work it.
 function standOff(f){return f.rad*1.4+({tiny:5,small:6,medium:15,large:30})[f.size];}
 function FIELD_LABEL(f){return {large:'Large field',medium:'Field',small:'Small field',tiny:'Tiny field'}[f.size];}
@@ -761,7 +768,7 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if(holding||throttle)docked=false;   // taking the stick back stops the autopilot (the lock stays)
+ if(docked&&(throttle||(holding&&stk.t>dockedAt))){docked=false;VOICE.say('launch');VOICE.story('launch');}   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
@@ -772,10 +779,11 @@ function fly(dt){
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
  }
- if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';warn('Cleared to dock. Bring it in under the bow.');}
+ if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
+  if(throttle){throttle=0;thrEl.textContent='Throttle 0%';}warn('Tractor beam has control. Throttle set to zero.');}   // a throttle left up from before would launch you again the moment you dock
  else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock=null;settleDocked();   // settle facing out past the bow, the view from the bay
-  toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
- if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
+  VOICE.say('docked');toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
+ if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;if(lock.field)VOICE.say('parked');warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
  const k=1-Math.exp(-(holding||(lock&&lock.auto)||tp||ty||tr?5:2.6)*dt);  // quick to respond; on release the turn eases out in about a second (speed drifts longer)
  rot.x+=(tp-rot.x)*k;rot.y+=(ty-rot.y)*k;rot.z+=(tr-rot.z)*k;
@@ -853,11 +861,11 @@ function scan(dt){
  const raw=Math.max(0,Math.min(1,bv+staticV*0.18*(1-bv)));
  scanStrength+=(raw-scanStrength)*(1-Math.exp(-9*dt));scanBest=best;
  // bearings → fix → lock
- if(best&&bv>0.28){                          // strong enough to take a bearing on
+ if(best&&bv>0.28){if(!voiced.ret){voiced.ret=1;VOICE.say('ret');}                          // strong enough to take a bearing on
   sv.copy(best.center).sub(cam.position);const centred=sv.angleTo(fwd)<7*Math.PI/180,dist=sv.length();
   if(centred){
    if(dist<170&&bv>0.75){fixField(best);}
-   else if(!bearings.has(best)){bearings.set(best,cam.position.clone());snd.ping(660);
+   else if(!bearings.has(best)){bearings.set(best,cam.position.clone());snd.ping(660);if(!voiced.bearing){voiced.bearing=1;VOICE.say('bearing');}
     toast('BEARING TAKEN','Move off to one side, then sweep this return again to fix its position.');}
    else{const from=bearings.get(best),moved=cam.position.distanceTo(from);
     const a1=sv.copy(best.center).sub(from).normalize();const a2=tgtV.copy(best.center).sub(cam.position).normalize();
@@ -867,7 +875,7 @@ function scan(dt){
  scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
  snd.scanner(lock&&(lock.field||lock.dock)||docked?-1:scanStrength);
 }
-function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();
+function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();VOICE.say('locked');
  toast('FIELD LOCKED','Scanner quiet. Double-tap to fly there.');}
 
 // ── SOUND (spec §5): a soft hiss while nothing is in the sweep; a calm tone rises out of it, higher and clearer as you
@@ -899,7 +907,7 @@ const snd=(function(){let ac=null,master,hissG,toneG,o1,o2,muted=false;
    const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;
    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.07,t+1.2);g.gain.exponentialRampToValueAtTime(0.0001,t+5);
    o.connect(lp);lp.connect(g);g.connect(master);o.start(t);o.stop(t+5.1);},
-  toggle(){muted=!muted;return muted;}};})();
+  toggle(){muted=!muted;return muted;},get muted(){return muted;}};})();
 let toastT=0;
 function toast(k,w){const el=document.getElementById('toast');el.firstChild.textContent=k;el.lastChild.textContent=w;el.hidden=false;toastT=performance.now()+3200;}
 
@@ -933,14 +941,94 @@ function hud(){
 // ── INARA keeps an eye on you (Eric 10-11): she tells you when you drift out of the ring you're working.
 let workRing=null,inaraT=0;
 function inara(text){toast('INARA',text);}
+// ── INARA'S VOICE (Eric 10-20): her RECORDED lines, never live speech (rules 14, 15: no live ElevenLabs, ever).
+//    Files come from the game server's volume at /voice/<set>/<ID>.mp3, in the voice set for the player's language
+//    (voice_set from /api/dfg/me). A moment has several takes: one is picked at random, never the same as last time.
+//    One line at a time: a moment that comes while she's talking is skipped; story beats wait their turn. The sound
+//    toggle silences her too, and a missing file is simply not heard. Moments and IDs: docs/inara-tower-dialog.md, Part C.
+const VOICE=(function(){
+ const T=n=>'INARA-TWR-'+String(n).padStart(3,'0'),TW=(a,b)=>{const o=[];for(let n=a;n<=b;n++)o.push(T(n));return o;};
+ const MOMENTS={bay:TW(1,3),launch:['INARA-TOWER-001'].concat(TW(4,6)),
+  ring0:['INARA-RING-001',T(7)],ring1:['INARA-RING-002',T(8)],ring2:['INARA-RING-003',T(9)],ring3:['INARA-RING-004',T(10)],
+  warp0:['INARA-RING-005'],warp1:['INARA-RING-006'],warp2:['INARA-RING-007'],warp3:['INARA-RING-008'],
+  drift0:['INARA-RING-013'],drift1:['INARA-RING-014'],drift2:['INARA-RING-015'],drift3:['INARA-RING-016'],
+  ret:['INARA-TOWER-002',T(11),T(12)],bearing:TW(13,14),locked:['INARA-TOWER-003'].concat(TW(15,17)),parked:TW(18,20),
+  toobig:['INARA-TOWER-004',T(21)],firstpiece:TW(22,23),cleared:TW(24,25),diamond:TW(26,27),full:['INARA-TOWER-005'].concat(TW(28,29)),
+  home:TW(30,31),arrived:[T(32)],approach:['INARA-TOWER-006'],docked:['INARA-TOWER-007'].concat(TW(33,34)),unloaded:[T(35)],
+  // TWR-036 and 039 are SOURCE lines whose voice use Eric has not approved yet: left out of the takes
+  low65:TW(37,38),low50:TW(40,41),wake:TW(42,43),sleep:TW(44,45),pass:[T(49)],fail:[T(50)],order:[T(51)],submitted:[T(53)]};
+ const S=n=>'INARA-STORY-'+String(n).padStart(3,'0');
+ const BEATS={welcome:['INARA-WELCOME-001','INARA-WELCOME-002',S(1),S(2),'INARA-WELCOME-003'],library:[S(3),S(4)],test:[S(5),S(6)],
+  blueprint:[S(7)],launch:[S(8),S(9)],ring:[S(10),S(11)],piece:[S(12)],unload:[S(13)],diamond:[S(16)]};
+ const base=(window.STARDUST_API||'').replace(/\/api\/dfg\/?$/,'');
+ let set=null,cur=null,queue=[];const last={};
+ function pick(m){const ids=MOMENTS[m];if(!ids)return null;const c=ids.length>1?ids.filter(i=>i!==last[m]):ids;
+  const id=c[Math.floor(Math.random()*c.length)];last[m]=id;return id;}
+ // Shipboard call chime (Eric 10-20): our own three-note rising bell, made here in the browser, so no one else's sound
+ // is used. It plays once before Inara speaks aboard the ship; flight lines come over the radio and get no chime.
+ let ac=null,chimed=false;
+ function chime(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();}catch(e){return 0;}
+  const t=ac.currentTime+0.02;[[659.25,0],[987.77,0.14],[1318.5,0.28]].forEach(([f,d])=>{
+   const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;
+   g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(0.18,t+d+0.01);g.gain.exponentialRampToValueAtTime(0.0005,t+d+0.6);
+   o.connect(g).connect(ac.destination);o.start(t+d);o.stop(t+d+0.65);});return 800;}
+ const ABOARD=['042','043','044','045','049','050','051','053'].map(n=>'INARA-TWR-'+n);   // Tower lines heard aboard: chime, no radio
+ const aboard=id=>ABOARD.includes(id)||!/^INARA-(TWR|RING|TOWER)-/.test(id);
+ function next(){cur=null;if(!queue.length||snd.muted||!set){queue=[];chimed=false;if(after){const f=after;after=null;f();}return;}
+  if(!chimed&&aboard(queue[0])){chimed=true;const w=chime();if(w){cur={pause(){}};const mark=cur;setTimeout(()=>{if(cur===mark)next();},w);return;}}
+  const id=queue.shift(),a=new Audio(base+'/voice/'+encodeURIComponent(set)+'/'+id+'.mp3');a.volume=0.85;cur=a;
+  a.onended=a.onerror=()=>{if(cur===a){if(!queue.length&&!after)chimed=false;next();}};
+  const p=a.play();if(p&&p.catch)p.catch(()=>{if(cur===a)next();});}   // blocked or missing: carry on silently
+ function ready(){return set&&!snd.muted;}
+ // Polite openers (Eric 10-20): aboard the ship Inara never just starts talking. Chime, one opener ("Is this a good
+ // moment?"; the Captain set only for a Captain), then Go ahead / Not now. Go ahead plays the beat and only then marks it
+ // heard; Not now (or no answer in 20 s, silently) leaves it unheard, offered again at the next beat or in 10 minutes.
+ // Flight radio lines (TWR, RING, TOWER) never get an opener.
+ const C=n=>'INARA-CALL-'+String(n).padStart(3,'0');
+ const OPEN=[1,2,3,4,5].map(C),OPEN_CPT=[6,7,8,9,10].map(C),LATER=[C(11),C(12)];
+ let rank=null,after=null,asking=false,retryT=null;const later=new Set();
+ const any=a=>a[Math.floor(Math.random()*a.length)];
+ function tok(){try{return localStorage.getItem('stardust.token');}catch(e){return null;}}
+ async function post(beat,accepted){const t=tok();if(!t||!window.STARDUST_API)return false;
+  try{const r=await fetch(window.STARDUST_API+'/voice/heard',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},
+   body:JSON.stringify(accepted?{beat,accepted:true}:{beat})});return !!(await r.json()).play;}catch(e){return false;}}
+ function ask(done){const b=document.createElement('div');
+  b.style.cssText='position:fixed;left:50%;top:24%;transform:translateX(-50%);z-index:60;display:flex;gap:8px;align-items:center;padding:8px 12px;'+
+   'border-radius:10px;background:rgba(8,14,24,.92);border:1px solid #2c4a66;color:#cfe3f5;font:13px system-ui,sans-serif';
+  const lab=document.createElement('b');lab.textContent='INARA';lab.style.cssText='color:#7fe0a8;font-size:11px;letter-spacing:.1em';b.appendChild(lab);
+  let over=false;const end=v=>{if(over)return;over=true;clearTimeout(t);b.remove();done(v);};
+  [['Go ahead','yes'],['Not now','no']].forEach(([txt,v])=>{const x=document.createElement('button');x.textContent=txt;
+   x.style.cssText='font:inherit;font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid #2c4a66;cursor:pointer;'+
+    (v==='yes'?'background:#1f6f4a;color:#fff':'background:transparent;color:#cfe3f5');x.addEventListener('click',e=>{e.stopPropagation();end(v);});b.appendChild(x);});
+  const t=setTimeout(()=>end('quiet'),20000);document.body.appendChild(b);}
+ function retryLater(){clearTimeout(retryT);retryT=setTimeout(()=>{retryT=null;offerNext();},10*60*1000);}
+ function offerNext(){if(asking||!later.size||!ready())return;const beat=later.values().next().value;later.delete(beat);offer(beat);}
+ async function offer(beat){if(asking){later.add(beat);return;}if(!ready())return;asking=true;
+  if(!await post(beat,false)||!ready()){asking=false;offerNext();return;}
+  after=()=>ask(async v=>{
+   if(v==='yes'&&ready()&&await post(beat,true)){chimed=true;after=()=>{asking=false;chimed=false;offerNext();};queue.push(...BEATS[beat]);if(!cur)next();return;}
+   if(v!=='yes')later.add(beat);
+   if(v==='no'&&ready()){chimed=true;after=()=>{asking=false;chimed=false;retryLater();};queue.push(any(LATER));if(!cur)next();return;}
+   asking=false;chimed=false;retryLater();});
+  queue.push(any(rank==='Captain'?OPEN_CPT:OPEN));if(!cur)next();}   // waits for the line before it, then the chime
+ return {
+  set(s){set=s||null;},
+  rank(r){rank=r||null;},
+  say(m){if(!ready()||cur||queue.length||asking)return;const id=pick(m);if(id){queue.push(id);next();}},   // busy: skip
+  story(beat){if(!BEATS[beat]||!ready()||!tok()||!window.STARDUST_API)return;later.delete(beat);
+   if(asking){later.add(beat);return;}offer(beat);},
+  stop(){queue=[];chimed=false;after=null;asking=false;if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
+  get busy(){return !!cur;},MOMENTS,BEATS};})();
+window.STARDUST_VOICE=VOICE;
+const voiced={};   // this session's once-only moments (first strong return, first bearing, first piece)
 function watchRing(now){
  if(warp)return;
  const here=ringOf(cam.position);
- if(here){if(here!==workRing){workRing=here;inara('You\'re in the '+here.name+'. Debris all around you. Start sweeping.');}inaraT=0;return;}
+ if(here){if(here!==workRing){const first=!workRing;workRing=here;VOICE.say('ring'+RINGS.indexOf(here));if(first)VOICE.story('ring');inara('You\'re in the '+here.name+'. Debris all around you. Start sweeping.');}inaraT=0;return;}
  if(!workRing)return;
  const out=outside(cam.position,workRing);
  if(out>2e6){workRing=null;return;}                                      // well clear: you've left on purpose
- if(now>inaraT){inaraT=now+15000;inara('You\'re drifting out of the '+workRing.name+', '+fmtDist(out)+' outside it. Turn back toward the debris.');}}
+ if(now>inaraT){if(!inaraT)VOICE.say('drift'+RINGS.indexOf(workRing));inaraT=now+15000;inara('You\'re drifting out of the '+workRing.name+', '+fmtDist(out)+' outside it. Turn back toward the debris.');}}
 
 // ── WARP (Eric 10-11): pick a destination and you're there in seconds. Rings: you arrive on the ring's line at your
 //    current longitude. The route bends around the Sun if a straight line would pass too close.
@@ -988,9 +1076,9 @@ function warpTick(dt){
  streaks(w.t<w.spool?w.t/w.spool*0.35:k<0.85?1:Math.max(0,(1-k)/0.15));
  if(w.t<total)return;
  warp=null;streaks(0);
- if(w.d.ring){workRing=w.d.ring;inaraT=0;inara('Dropping out in the '+w.d.ring.name+'. Debris all around you. Start sweeping.');}
+ if(w.d.ring){const first=!workRing;workRing=w.d.ring;inaraT=0;VOICE.say('warp'+RINGS.indexOf(w.d.ring));if(first)VOICE.story('ring');inara('Dropping out in the '+w.d.ring.name+'. Debris all around you. Start sweeping.');}
  else if(w.d.key==='starship'){lock={name:'Starship',pos:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1,auto:false};
-  toast('ARRIVED','The Starship is ahead. Double-tap it to come aboard.');}
+  VOICE.say('arrived');toast('ARRIVED','The Starship is ahead. Double-tap it to come aboard.');}
  else toast('ARRIVED',w.label);}
 // streaking stars while in warp (a 2D overlay)
 const sc=$('streaks'),sx=sc.getContext('2d');let streakN=[];
@@ -1015,7 +1103,7 @@ $('holdclose').addEventListener('click',()=>{$('holdpanel').hidden=true;});
 $('warpbtn').addEventListener('click',()=>{snd.resume();if(warp)return;renderWarpMenu();$('warppanel').hidden=!$('warppanel').hidden;});
 $('warpclose').addEventListener('click',()=>{$('warppanel').hidden=true;});
 renderHold();
-$('mute').addEventListener('click',()=>{snd.resume();$('mute').textContent=snd.toggle()?'🔇':'🔊';});$('helpBtn').addEventListener('click',()=>toggleHelp(true));
+$('mute').addEventListener('click',()=>{snd.resume();if(snd.toggle()){$('mute').textContent='🔇';VOICE.stop();}else $('mute').textContent='🔊';});$('helpBtn').addEventListener('click',()=>toggleHelp(true));
 function sky(){const d=cam.position.length();sunLight.intensity=1.6*Math.pow(AU/Math.max(d,SUN_R*30),2);
  sunLight.target.position.copy(cam.position);sunLight.position.copy(cam.position).addScaledVector(tv.copy(cam.position).normalize(),-1000);
  const s=placeFar(sun,SUN_POS,SUN_R);glow.position.copy(sun.position);

@@ -682,3 +682,11 @@ ON CONFLICT (code) DO NOTHING;
 INSERT INTO item_prices(item_code, start_price, floor_price, ref_price, bank_lot_kg, bank_lot, sort) VALUES
   ('brownleeite', 20000, 10000, 20000, 0, 1, 39)
 ON CONFLICT (item_code) DO NOTHING;
+
+-- v16 (Eric 10-20): Inara's story beats play once per player (docs/inara-tower-dialog.md, Part B; voice.py).
+CREATE TABLE IF NOT EXISTS voice_beats (
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  beat      TEXT NOT NULL,
+  heard_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (player_id, beat)
+);

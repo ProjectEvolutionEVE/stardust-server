@@ -385,3 +385,9 @@ BOOKS = {
         "test": [],
     },
 }
+
+# More books (10-20): one file per book in books/, each defining CODE and BOOK in the same shape as above.
+import importlib as _il, pkgutil as _pk, books as _books
+for _m in _pk.iter_modules(_books.__path__):
+    _mod = _il.import_module(f"books.{_m.name}")
+    BOOKS[_mod.CODE] = _mod.BOOK

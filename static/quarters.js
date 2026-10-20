@@ -17,6 +17,11 @@ async function call(path,body){
   if(r.status===401){saveToken(null);}
   if(!r.ok)throw new Error(j.error||'Something went wrong. Please try again.');
   return j;}
+// Inara's recorded lines (debris-flight.js, VOICE): her voice set comes with /me; a line for a moment, or a story beat once.
+const V=window.STARDUST_VOICE||{set(){},rank(){},say(){},story(){}};
+let lowSaid=0;   // the lowest body level she has already warned about this visit (65, 50), so a warning plays once per crossing
+function voiceMe(me){if(!me)return;V.set(me.voice_set);V.rank(me.rank);const b=me.bars?Math.min(...Object.values(me.bars)):100;
+  const lvl=b<50?50:b<65?65:0;if(lvl&&(!lowSaid||lvl<lowSaid))V.say(lvl===50?'low50':'low65');lowSaid=lvl;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 const css=document.createElement('style');css.textContent=`
@@ -86,10 +91,11 @@ function countryOptions(list,lang,sel){
 async function showSignIn(){
   const o=await options().catch(()=>null);
   const langs=o?o.languages:[{code:'en',name:'English',native:'English',flag:'🇬🇧'}];
-  const guess=state.lang||((navigator.language||'en').split('-')[0]);
+  const ok=new Set(langs.filter(l=>l.supported!==false).map(l=>l.code));   // the rest are "coming soon" (Eric 10-19)
+  let guess=state.lang||((navigator.language||'en').split('-')[0]);if(!ok.has(guess))guess='en';
   root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sign in</h2>
    <div class="sub">No passwords. A 6-digit code to your phone or email.</div>
-   <label for="sqLang">Your language</label><select id="sqLang">${langs.map(l=>`<option value="${esc(l.code)}"${l.code===guess?' selected':''}>${esc(l.flag)} ${esc(l.native)}${l.native!==l.name?' · '+esc(l.name):''}</option>`).join('')}</select>
+   <label for="sqLang">Your language</label><select id="sqLang">${langs.map(l=>`<option value="${esc(l.code)}"${l.code===guess?' selected':''}${ok.has(l.code)?'':' disabled'}>${esc(l.flag)} ${esc(l.native)}${l.native!==l.name?' · '+esc(l.name):''}${ok.has(l.code)?'':' · coming soon'}</option>`).join('')}</select>
    <div class="seg"><button data-c="sms" class="${state.channel==='sms'?'on':''}">📱 Phone</button><button data-c="email" class="${state.channel==='email'?'on':''}">✉️ Email</button></div>
    <label for="sqAddr" id="sqAddrL"></label>
    <select id="sqCountry" aria-label="Country" style="margin-bottom:8px"></select>
@@ -126,8 +132,8 @@ function showCode(devCode){
   const c=$('#sqCode');c.focus();
   $('#sqBack').onclick=showSignIn;
   $('#sqVerify').onclick=async()=>{const m=$('#sqMsg');m.className='msg';m.textContent='Checking…';
-    try{const j=await call('/auth/verify',{channel:state.channel,address:state.address,region:state.region,code:c.value});saveToken(j.token);
-      if(j.me.needs_setup)showSetup();else showQuarters(j.me,'bed');}
+    try{const j=await call('/auth/verify',{channel:state.channel,address:state.address,region:state.region,code:c.value});saveToken(j.token);V.set(j.me.voice_set);V.rank(j.me.rank);
+      if(j.me.needs_setup)showSetup();else{showQuarters(j.me,'bed');V.say('wake');}}
     catch(e){m.className='msg err';m.textContent=e.message;}};}
 
 async function showSetup(){
@@ -142,7 +148,7 @@ async function showSetup(){
   f.selectedIndex=Math.floor(Math.random()*o.first_names.length);l.selectedIndex=Math.floor(Math.random()*o.last_names.length);
   const pv=()=>{$('#sqPreview').textContent='Trainee '+f.value+' '+l.value;};pv();f.onchange=pv;l.onchange=pv;
   $('#sqSet').onclick=async()=>{const m=$('#sqMsg');m.className='msg';m.textContent='Saving…';
-    try{const me=await call('/me/setup',{first_name:f.value,last_name:l.value,language:state.lang||'en'});showQuarters(me,'bed');}
+    try{const me=await call('/me/setup',{first_name:f.value,last_name:l.value,language:state.lang||'en'});showQuarters(me,'bed');V.story('welcome');}
     catch(e){m.className='msg err';m.textContent=e.message;}};}
 
 // ── PRIVATE QUARTERS ──
@@ -212,7 +218,7 @@ async function tabBody(tab,me){
       :'<p class="soon">No books checked out. The Starship Library lends them free: Exit Private Quarters, then the Library.</p>'}`;}
   return '';}
 async function showQuarters(me,tab){
-  root.hidden=false;
+  root.hidden=false;voiceMe(me);
   root.innerHTML=`<div class="wrap"><div class="top"><div><div class="loc">PRIVATE QUARTERS</div><div class="who">${esc(me.title)}</div>${me.account_no?`<div class="soon" style="font-size:11px">Account ${esc(me.account_no)}</div>`:""}</div>
    <div style="text-align:right"><div class="soon">WSC Alexander von Humboldt</div><button id="sqExit" style="margin-top:6px;padding:8px 14px;border-radius:20px;border:1px solid #d9a441;background:rgba(217,164,65,.1);color:#d9a441;font-size:14px;cursor:pointer">🚪 Exit Private Quarters</button></div></div>
    <div class="tabs">${TABS.map(([k,n])=>`<button data-t="${k}" class="${k===tab?'on':''}">${n}</button>`).join('')}</div>
@@ -224,7 +230,7 @@ async function showQuarters(me,tab){
   const mk=$('#sqMarket');if(mk)mk.onclick=()=>showMarket(me);
   root.querySelectorAll('[data-bp]').forEach(b=>b.onclick=()=>showBlueprintForm(me,Number(b.dataset.bp),'cabinet'));
   root.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>showBook(me,b.dataset.shelf,'shelf'));
-  const out=$('#sqOut');if(out)out.onclick=async()=>{try{await call('/auth/signout',{});}catch(e){}saveToken(null);
+  const out=$('#sqOut');if(out)out.onclick=async()=>{V.say('sleep');try{await call('/auth/signout',{});}catch(e){}saveToken(null);
     root.innerHTML=`<div class="card"><h1>STARDUST</h1><h2>Sleep well</h2><div class="sub">You're in your bed. Your body rests while you're away, in real time.</div>
      <button class="go" id="sqAgain">Sign in again</button></div>`;$('#sqAgain').onclick=showSignIn;};}
 
@@ -238,11 +244,12 @@ function showExit(me){
    <button class="go" id="sqLib">📚 Starship Library</button><button class="go" id="sqBay">🚀 Docking Bay</button>
    <button class="link" id="sqBack">Back to my quarters</button>`);
   $('#sqLib').onclick=()=>showLibrary(me);
-  $('#sqBay').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
+  $('#sqBay').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;V.say('bay');};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
 // ── THE STARSHIP LIBRARY (rules 22, 24): free shelves, a reader, short friendly tests and certificates ──
 async function showLibrary(me){
   let L=null;try{L=await call('/library');}catch(e){}
+  if(L)V.story('library');
   const shelf=g=>`<details class="fold"${g.books.some(b=>b.written)?' open':''}><summary>${esc(g.group)}</summary>
     <table>${g.books.map(b=>`<tr><td>${b.written?'📘':'📕'} ${esc(b.title)}<div class="soon">${!b.written?'Being written':b.reference?'Reference: read any time':b.passed?'✅ Passed '+esc(b.score):'Test: 5 short questions'}${b.checked_out?' · on your bookshelf':''}</div></td>
       <td style="text-align:right">${b.written?`<button class="small" data-read="${esc(b.code)}">Read</button>`:''}</td></tr>`).join('')}</table></details>`;
@@ -256,7 +263,7 @@ async function showLibrary(me){
   root.querySelectorAll('[data-read]').forEach(x=>x.onclick=()=>showBook(me,x.dataset.read,'library'));
   root.querySelectorAll('[data-arch]').forEach(x=>x.onclick=()=>showArchive(me,x.dataset.arch,1));
   $('#sqDraft').onclick=()=>showBlueprints(me);
-  $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;};
+  $('#sqBay2').onclick=()=>{root.hidden=true;if(helpEl)helpEl.hidden=false;V.say('bay');};
   $('#sqBack').onclick=()=>showQuarters(me,'bed');}
 const para=t=>esc(t).split('\n').map(l=>`<p style="margin:6px 0">${l}</p>`).join('');
 // Archives of Earth (Eric 10-19): real records from the NASA Technical Reports Server, one page at a time
@@ -295,7 +302,7 @@ async function showTest(me,code,from){
   $('#sqBack').onclick=()=>showBook(me,code,from);
   $('#tsGo').onclick=async()=>{const answers={};t.questions.forEach(q=>{const x=root.querySelector(`input[name="q${q.id}"]:checked`);if(x)answers[q.id]=x.value;});
     if(Object.keys(answers).length<t.questions.length){const m=$('#tsMsg');m.className='msg err';m.textContent='Answer every question first.';return;}
-    try{const r=await call('/library/test',{book:code,answers});
+    try{const r=await call('/library/test',{book:code,answers});V.say(r.passed?'pass':'fail');if(r.passed)V.story('test');
       place('STARSHIP LIBRARY · TEST',me,`<h2 style="margin:0">${r.passed?'✅ Passed':'Not quite'}: ${r.score} of ${r.of}</h2>
        <p class="soon">${r.passed?'Your certificate is in the filing cabinet in your quarters.':`You need ${r.pass_mark} right. Have another look at the book and try again any time.`}</p>
        <table>${r.review.map(q=>`<tr><td>${q.right?'✅':'❌'} ${esc(q.question)}${q.right?'':`<div class="soon">The answer: ${esc(q.answer)}</div>`}</td></tr>`).join('')}</table>
@@ -431,7 +438,7 @@ async function showBlueprintForm(me,id,from){
     catch(e){msg(e.message);}};
   const sb=$('#bpSubmit');if(sb)sb.onclick=async()=>{let bid=d&&d.id;const form=gather();
     try{if(!bid)bid=(await call('/blueprints/save',{form})).id;
-      await call('/blueprints/submit',{id:bid,form});await showBlueprintForm(me,bid,from);msg('Sent. The review team will read it, and any questions or changes will appear here.',true);}
+      await call('/blueprints/submit',{id:bid,form});V.say('submitted');V.story('blueprint');await showBlueprintForm(me,bid,from);msg('Sent. The review team will read it, and any questions or changes will appear here.',true);}
     catch(e){if(bid&&!d){await showBlueprintForm(me,bid,from);}msg(e.message);}};
   const cp=$('#bpCopies');
   if(cp){const quote=async()=>{const n=Math.floor(Number(cp.value));const b=$('#bpPrint');

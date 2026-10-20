@@ -8,8 +8,9 @@ Those fields are copied into archives/manifest.json for every kept document; rej
 archives/excluded.json with the reason. No NASA logo or insignia is used, and nothing implies endorsement.
 
 Re-runnable: documents already in archives/ are not downloaded again (pass --refresh to redo all).
-Usage: python3 tools/build-archives.py [--refresh]"""
-import gzip, json, os, re, subprocess, sys, tempfile, time, urllib.request
+Usage: python3 tools/build-archives.py [--refresh]
+       python3 tools/build-archives.py --respace     # re-run the spaced-letter repair on the stored texts only"""
+import gzip, json, math, os, re, subprocess, sys, tempfile, time, urllib.request
 
 API = "https://ntrs.nasa.gov/api/citations/"
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -106,7 +107,50 @@ def year(rec):
     return None
 
 
+SHORT = "a i to of in is it as at on by or an be we he no so do up if us me my go am".split()
+FIXES = {"OSce of Public M a i r s": "Office of Public Affairs"}   # scan errors seen by Eric (10-20), exact text only
+
+
+def respace(t, vocab):
+    """Old scans spread some words out letter by letter ("t o s e r v e a s"). A run of single letters is rebuilt into
+    words only when the whole run splits into words that already appear normally elsewhere in the archives (vocab,
+    with their counts); the split favours common words. Otherwise the run is left exactly as it was."""
+    for a, b in FIXES.items():
+        t = t.replace(a, b)
+    def split(m):
+        run = m.group(0); letters = run.replace(" ", ""); low = letters.lower(); n = len(low)
+        best = [None] * (n + 1); best[0] = (0.0, [])
+        for i in range(n):
+            if best[i] is None: continue
+            for j in range(i + 1, min(n, i + 20) + 1):
+                c = vocab.get(low[i:j])
+                if c:
+                    sc = best[i][0] + math.log(c) - 12.0         # fewer, longer, common words win
+                    if best[j] is None or sc > best[j][0]: best[j] = (sc, best[i][1] + [(i, j)])
+        if best[n] is None: return run
+        return " ".join(letters[i:j] for i, j in best[n][1])
+    return re.sub(r"\b(?:[A-Za-z] ){3,}[A-Za-z]\b", split, t)
+
+
+def respace_all():
+    files = sorted(f for f in os.listdir(OUT) if f.endswith(".txt.gz"))
+    texts = {f: gzip.open(os.path.join(OUT, f), "rt", encoding="utf-8").read() for f in files}
+    vocab = {}
+    for t in texts.values():
+        for w in re.findall(r"[A-Za-z]{3,}", t):
+            vocab[w.lower()] = vocab.get(w.lower(), 0) + 1
+    vocab = {w: c for w, c in vocab.items() if c >= 5}      # real words recur; scan fragments ("po", "rt") don't count
+    for w in SHORT: vocab[w] = 5000
+    for f, t in texts.items():
+        new = respace(t, vocab)
+        if new != t:
+            with gzip.open(os.path.join(OUT, f), "wt", encoding="utf-8") as fh: fh.write(new)
+            print(f"  {f}: {len(t) - len(new):,} spaces removed", flush=True)
+
+
 def main():
+    if "--respace" in sys.argv:
+        return respace_all()
     refresh = "--refresh" in sys.argv
     os.makedirs(OUT, exist_ok=True)
     mpath = os.path.join(OUT, "manifest.json")

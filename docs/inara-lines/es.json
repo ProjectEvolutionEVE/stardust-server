@@ -115,7 +115,7 @@
  "INARA-TWR-039": "Ya no te queda energía. Por debajo del cincuenta por ciento no puedes cumplir bien tus tareas. Ve a tu cama y descansa.",
  "INARA-TWR-040": "Estás por debajo de cincuenta. Así no es seguro volar. Vuelve a casa y descansa.",
  "INARA-TWR-041": "Tu cuerpo ya no da más por hoy. Tu propia cama es el mejor descanso que hay.",
- "INARA-TWR-042": "Buenos días. Tus barras están en la pestaña de la cama. La nave estelar no ha parado.",
+ "INARA-TWR-042": "Buenos días. Tu resistencia, energía y concentración están en la pestaña de la cama. La nave estelar no ha parado.",
  "INARA-TWR-043": "Ya despertaste. Revisa los COMMS de tu escritorio cuando quieras.",
  "INARA-TWR-044": "Descansa bien. La nave sigue funcionando mientras duermes.",
  "INARA-TWR-045": "Buenas noches. Estaré en la Torre.",
@@ -165,5 +165,17 @@
  "INARA-STORY-036": "Los anillos, el cinturón de asteroides, las lunas y, algún día, el otro lado del agujero de gusano. Queda mucho camino por delante.",
  "INARA-STORY-037": "Capitán. Empezaste como Aprendiz, igual que todos. Te ganaste cada paso.",
  "INARA-STORY-038": "He guiado a muchos pilotos de regreso a casa desde esta Torre. Es un honor llamarte Capitán.",
- "INARA-STORY-039": "Venga lo que venga por ese agujero de gusano, la nave está en buenas manos."
+ "INARA-STORY-039": "Venga lo que venga por ese agujero de gusano, la nave está en buenas manos.",
+ "INARA-CALL-001": "Aquí Inara. ¿Es un buen momento?",
+ "INARA-CALL-002": "Perdona la interrupción. ¿Tienes un minuto?",
+ "INARA-CALL-003": "No quiero molestar. ¿Puedo contarte algo?",
+ "INARA-CALL-004": "Siento molestarte. ¿Tienes un momento para mí?",
+ "INARA-CALL-005": "Cuando quieras, tengo algo que vale la pena escuchar.",
+ "INARA-CALL-006": "¿Capitán? Aquí Inara. ¿Es un buen momento?",
+ "INARA-CALL-007": "Perdona la interrupción, Capitán. ¿Tienes un minuto?",
+ "INARA-CALL-008": "Capitán, no quiero molestar. ¿Puedo contarte algo?",
+ "INARA-CALL-009": "Siento molestarte, Capitán. ¿Tienes un momento para mí?",
+ "INARA-CALL-010": "Capitán, cuando quieras, tengo algo que vale la pena escuchar.",
+ "INARA-CALL-011": "Claro. Hablamos luego.",
+ "INARA-CALL-012": "Ningún problema. En otro momento."
 }

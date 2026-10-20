@@ -132,6 +132,10 @@ async def main():
     check("a name not on the list is refused (no free text)", r.status == 422)
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "xx"})
     check("a language not on the list is refused", r.status == 422)
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "sw"})
+    check("a 'coming soon' language (Swahili) can't be chosen yet", r.status == 422)
+    check("12 languages are voiced and marked supported; the rest are coming soon",
+          sorted(l["code"] for l in o["languages"] if l["supported"]) == sorted(["en", "zh", "zh-TW", "de", "pl", "es", "fr", "ko", "tr", "pt", "ru", "ja"]))
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "en"}); j = await r.json()
     check("setup done: 'Trainee Dan McCollough', English", j["title"] == "Trainee Dan McCollough" and j["language"] == "en" and not j["needs_setup"])
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Lu", "last_name": "Chong", "language": "en"})
@@ -532,13 +536,13 @@ async def main():
     allb = {b["code"]: b for g in j["shelves"] for b in g["books"]}
     check("the library shelves every subject; the first books are written",
           r.status == 200 and allb["prospecting"]["written"] and allb["trading"]["written"] and allb["piloting"]["written"]
-          and allb["catalogue"]["reference"] and allb["metallurgy"]["written"] and not allb["mining"]["written"])
+          and allb["catalogue"]["reference"] and allb["metallurgy"]["written"] and allb["mining"]["written"] and not allb["farming"]["written"])
     r = await cl.get("/api/dfg/library/book/prospecting", headers=HL); j = await r.json()
     check("a book can be read: chapters and a 5-question test", r.status == 200 and len(j["chapters"]) >= 5 and j["questions"] == 5)
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
     check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
           r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
-    r = await cl.get("/api/dfg/library/book/mining", headers=HL)
+    r = await cl.get("/api/dfg/library/book/farming", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
     check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
@@ -599,7 +603,7 @@ async def main():
     shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
     check("a checked-out book sits on the bookshelf (once)", r.status == 200 and r2.status == 422
           and [i["name"] for i in shelf["items"]] == ["Trading & Markets"] and shelf["used_m3"] > 0)
-    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "mining"})
+    r = await cl.post("/api/dfg/library/checkout", headers=HL, json={"book": "farming"})
     check("a book still being written can't be checked out", r.status == 422)
     r = await cl.post("/api/dfg/library/return", headers=HL, json={"book": "trading"})
     r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()
@@ -825,6 +829,55 @@ console.log(JSON.stringify(out));"""
         check(f"{item} is tradeable: Sell now sells one {lot_kg} kg lot to the bank's bid, at or above its floor",
               r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == lot_kg
               and all(f["price"] >= MN.MINERALS[item]["floor"] for f in j["fills"]))
+    # ── Inara's recorded lines (Eric 10-20; voice.py) ──
+    import tempfile, voice as VO
+    vd = tempfile.mkdtemp(); os.environ["VOICE_DIR"] = vd
+    mp3 = b"ID3\x04\x00\x00\x00\x00\x00\x00" + b"\xff\xfb" * 200
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3)
+    check("voice upload refused while DFG_UPLOAD_KEY is unset", r.status == 403)
+    os.environ["DFG_UPLOAD_KEY"] = "test-key-123"
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3)
+    check("voice upload refused without a key", r.status == 403)
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3, headers={"X-Upload-Key": "wrong"})
+    check("voice upload refused with the wrong key", r.status == 403)
+    r = await cl.get("/api/dfg/admin/voice/manifest", headers={"X-Upload-Key": "wrong"})
+    check("voice manifest refused with the wrong key", r.status == 403)
+    K = {"X-Upload-Key": "test-key-123"}
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3, headers=K)
+    check("voice upload accepted with the right key", r.status == 200 and os.path.isfile(os.path.join(vd, "en", "INARA-TWR-004.mp3")))
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-005.mp3", data=b"<html>not audio</html>", headers=K)
+    check("voice upload refuses a file that isn't MP3", r.status == 415)
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-005.mp3", data=b"ID3" + b"\x00" * (2 * 1024 * 1024), headers=K)
+    check("voice upload refuses a file over 2 MB", r.status == 413)
+    r = await cl.put("/api/dfg/admin/voice/xx/INARA-TWR-004.mp3", data=mp3, headers=K)
+    r2 = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-999.mp3", data=mp3, headers=K)
+    check("voice upload refuses an unknown set or line ID", r.status == 404 and r2.status == 404)
+    r = await cl.get("/api/dfg/admin/voice/manifest", headers=K); j = await r.json()
+    check("voice manifest lists what exists", r.status == 200 and j["sets"]["en"] == ["INARA-TWR-004"] and j["sets"]["de"] == [])
+    r = await cl.get("/voice/en/INARA-TWR-004.mp3"); body = await r.read()
+    check("a voice file is served, as audio, with a long cache", r.status == 200 and body == mp3
+          and r.headers["Content-Type"] == "audio/mpeg" and "max-age" in r.headers.get("Cache-Control", ""))
+    r = await cl.get("/voice/en/INARA-TWR-005.mp3"); r2 = await cl.get("/voice/../INARA-TWR-004.mp3")
+    r3 = await cl.get("/voice/xx/INARA-TWR-004.mp3")
+    check("a missing file, a bad path or a bad set is a plain 404", r.status == 404 and r2.status == 404 and r3.status == 404)
+    r = await cl.get("/api/dfg/me", headers={"X-Dev-Player": "voice1"}); j = await r.json()
+    check("/me: no voice set before the player picks a language", r.status == 200 and j["voice_set"] is None)
+    r = await cl.post("/api/dfg/me/setup", headers={"X-Dev-Player": "voice1"}, json={"first_name": S.NAMES.FIRST[0], "last_name": S.NAMES.LAST[0], "language": "pt"})
+    j = await r.json()
+    check("/me: Portuguese speaks with the pt-BR voice set", r.status == 200 and j["voice_set"] == "pt-BR")
+    check("voice sets: zh-TW → zh, de → de, an unvoiced language → none",
+          VO.voice_set("zh-TW") == "zh" and VO.voice_set("de") == "de" and VO.voice_set("sw") is None)
+    hv = {"X-Dev-Player": "voice1"}
+    H = lambda j: cl.post("/api/dfg/voice/heard", headers=hv, json=j)
+    p1 = await (await H({"beat": "library"})).json(); p2 = await (await H({"beat": "library"})).json()
+    check("asking about a beat marks nothing: Not now leaves it to offer again", p1["play"] is True and p2["play"] is True)
+    r1 = await (await H({"beat": "library", "accepted": True})).json()
+    r2 = await (await H({"beat": "library", "accepted": True})).json()
+    p3 = await (await H({"beat": "library"})).json()
+    r3 = await (await H({"beat": "no-such-beat", "accepted": True})).json()
+    check("a story beat plays once per player once accepted (first yes, then no; unknown beats never)",
+          r1["play"] is True and r2["play"] is False and p3["play"] is False and r3["play"] is False)
+    del os.environ["DFG_UPLOAD_KEY"]
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

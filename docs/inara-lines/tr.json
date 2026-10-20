@@ -115,7 +115,7 @@
  "INARA-TWR-039": "Takatin kalmadı. Yüzde ellinin altında görevlerini düzgün yapamazsın. Yatağına git ve dinlen.",
  "INARA-TWR-040": "Ellinin altındasın. Bu halde uçmak güvenli değil. Eve gel ve dinlen.",
  "INARA-TWR-041": "Vücudun bugünlük pes etti. En iyi dinlenme kendi yatağında olur.",
- "INARA-TWR-042": "Günaydın. Çubukların Yatak sekmesinde. Yıldız Gemisi boş durmadı.",
+ "INARA-TWR-042": "Günaydın. Dayanıklılığın, enerjin ve odaklanman Yatak sekmesinde. Yıldız Gemisi boş durmadı.",
  "INARA-TWR-043": "Uyandın. Hazır olduğunda masandaki COMMS'a bak.",
  "INARA-TWR-044": "İyi dinlen. Sen uyurken gemi çalışmaya devam eder.",
  "INARA-TWR-045": "İyi geceler. Ben Kule'de olacağım.",
@@ -165,5 +165,17 @@
  "INARA-STORY-036": "Halkalar, asteroit kuşağı, uydular ve bir gün solucan deliğinin öbür yanı. Önümüzde daha çok yol var.",
  "INARA-STORY-037": "Kaptan. Herkes gibi Stajyer olarak başladın. Her basamağı hak ederek çıktın.",
  "INARA-STORY-038": "Bu Kule'den nice pilotu eve yönlendirdim. Sana Kaptan demek bir onur.",
- "INARA-STORY-039": "O solucan deliğinden bundan sonra ne gelirse gelsin, gemi emin ellerde."
+ "INARA-STORY-039": "O solucan deliğinden bundan sonra ne gelirse gelsin, gemi emin ellerde.",
+ "INARA-CALL-001": "Ben Inara. Şimdi uygun musun?",
+ "INARA-CALL-002": "Böldüğüm için kusura bakma. Bir dakikan var mı?",
+ "INARA-CALL-003": "Rahatsız etmek istemem. Seninle bir şey paylaşabilir miyim?",
+ "INARA-CALL-004": "Rahatsız ettiğim için özür dilerim. Bana bir dakika ayırabilir misin?",
+ "INARA-CALL-005": "Hazır olduğunda, dinlemeye değer bir şeyim var.",
+ "INARA-CALL-006": "Kaptan? Ben Inara. Şimdi uygun musun?",
+ "INARA-CALL-007": "Böldüğüm için kusura bakma, Kaptan. Bir dakikan var mı?",
+ "INARA-CALL-008": "Kaptan, rahatsız etmek istemem. Seninle bir şey paylaşabilir miyim?",
+ "INARA-CALL-009": "Rahatsız ettiğim için özür dilerim, Kaptan. Bana bir dakika ayırabilir misin?",
+ "INARA-CALL-010": "Kaptan, hazır olduğunda, dinlemeye değer bir şeyim var.",
+ "INARA-CALL-011": "Tabii. Sonra konuşuruz.",
+ "INARA-CALL-012": "Hiç sorun değil. Başka zaman."
 }
