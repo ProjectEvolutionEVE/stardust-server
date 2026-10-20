@@ -691,7 +691,13 @@ const keys={};
 const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long trips and slows as it arrives (WARP crosses the system)
 // Docked in the bay under the bow, looking out past the bow (Eric 10-11): the view you get when you dock, and the view
 // you launch from, including at the very start of a session.
-function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;
+// Docking also lets go of the controls (Eric's dock-then-undock bug, 10-20): throttle to 0 and any stick touch that began
+// before the dock is dropped, so only a NEW throttle-up or a NEW stick press launches again.
+let dockedAt=0;
+function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
+ if(typeof throttle!=='undefined'){throttle=0;thrEl.textContent='Throttle 0%';}
+ if(typeof stk!=='undefined'&&stk){stk=null;stickRing.hidden=true;}
+ if(typeof pivot!=='undefined'){pivot.l=pivot.r=false;hold.boost=false;}
  cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
 let throttle=0;                           // 0..10 steps of 10%
 const thrEl=document.getElementById('thrtxt');
@@ -712,13 +718,13 @@ cv.addEventListener('pointerdown',e=>{
  if(now-lastTap.t<320&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40){lockAt(e.clientX,e.clientY);lastTap.t=0;return;}
  lastTap={t:now,x:e.clientX,y:e.clientY};
  if(stk)return;
- stk={id:e.pointerId,x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);
+ stk={id:e.pointerId,x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY,t:performance.now()};cv.setPointerCapture(e.pointerId);
  stickRing.style.left=(e.clientX-65)+'px';stickRing.style.top=(e.clientY-65)+'px';stickRing.hidden=false;knob.style.transform='';});
 cv.addEventListener('pointermove',e=>{if(!stk||stk.id!==e.pointerId)return;stk.x=e.clientX;stk.y=e.clientY;
  let dx=stk.x-stk.x0,dy=stk.y-stk.y0;const l=Math.hypot(dx,dy);if(l>STICK_R){dx*=STICK_R/l;dy*=STICK_R/l;}
  knob.style.transform=`translate(${dx*39/STICK_R}px,${dy*39/STICK_R}px)`;});
 function endStick(e){if(stk&&stk.id===e.pointerId){stk=null;stickRing.hidden=true;}}
-cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);
+cv.addEventListener('pointerup',endStick);cv.addEventListener('pointercancel',endStick);cv.addEventListener('lostpointercapture',endStick);
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const hold={boost:false};
 const pivot={l:false,r:false};
@@ -762,7 +768,7 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if((holding||throttle)&&docked){docked=false;VOICE.say('launch');VOICE.story('launch');}   // taking the stick back stops the autopilot (the lock stays)
+ if(docked&&(throttle||(holding&&stk.t>dockedAt))){docked=false;VOICE.say('launch');VOICE.story('launch');}   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
@@ -773,7 +779,8 @@ function fly(dt){
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
  }
- if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');warn('Cleared to dock. Bring it in under the bow.');}
+ if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
+  if(throttle){throttle=0;thrEl.textContent='Throttle 0%';}warn('Tractor beam has control. Throttle set to zero.');}   // a throttle left up from before would launch you again the moment you dock
  else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock=null;settleDocked();   // settle facing out past the bow, the view from the bay
   VOICE.say('docked');toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;if(lock.field)VOICE.say('parked');warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
