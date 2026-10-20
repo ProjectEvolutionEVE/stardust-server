@@ -825,6 +825,50 @@ console.log(JSON.stringify(out));"""
         check(f"{item} is tradeable: Sell now sells one {lot_kg} kg lot to the bank's bid, at or above its floor",
               r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == lot_kg
               and all(f["price"] >= MN.MINERALS[item]["floor"] for f in j["fills"]))
+    # ── Inara's recorded lines (Eric 10-20; voice.py) ──
+    import tempfile, voice as VO
+    vd = tempfile.mkdtemp(); os.environ["VOICE_DIR"] = vd
+    mp3 = b"ID3\x04\x00\x00\x00\x00\x00\x00" + b"\xff\xfb" * 200
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3)
+    check("voice upload refused while DFG_UPLOAD_KEY is unset", r.status == 403)
+    os.environ["DFG_UPLOAD_KEY"] = "test-key-123"
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3)
+    check("voice upload refused without a key", r.status == 403)
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3, headers={"X-Upload-Key": "wrong"})
+    check("voice upload refused with the wrong key", r.status == 403)
+    r = await cl.get("/api/dfg/admin/voice/manifest", headers={"X-Upload-Key": "wrong"})
+    check("voice manifest refused with the wrong key", r.status == 403)
+    K = {"X-Upload-Key": "test-key-123"}
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-004.mp3", data=mp3, headers=K)
+    check("voice upload accepted with the right key", r.status == 200 and os.path.isfile(os.path.join(vd, "en", "INARA-TWR-004.mp3")))
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-005.mp3", data=b"<html>not audio</html>", headers=K)
+    check("voice upload refuses a file that isn't MP3", r.status == 415)
+    r = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-005.mp3", data=b"ID3" + b"\x00" * (2 * 1024 * 1024), headers=K)
+    check("voice upload refuses a file over 2 MB", r.status == 413)
+    r = await cl.put("/api/dfg/admin/voice/xx/INARA-TWR-004.mp3", data=mp3, headers=K)
+    r2 = await cl.put("/api/dfg/admin/voice/en/INARA-TWR-999.mp3", data=mp3, headers=K)
+    check("voice upload refuses an unknown set or line ID", r.status == 404 and r2.status == 404)
+    r = await cl.get("/api/dfg/admin/voice/manifest", headers=K); j = await r.json()
+    check("voice manifest lists what exists", r.status == 200 and j["sets"]["en"] == ["INARA-TWR-004"] and j["sets"]["de"] == [])
+    r = await cl.get("/voice/en/INARA-TWR-004.mp3"); body = await r.read()
+    check("a voice file is served, as audio, with a long cache", r.status == 200 and body == mp3
+          and r.headers["Content-Type"] == "audio/mpeg" and "max-age" in r.headers.get("Cache-Control", ""))
+    r = await cl.get("/voice/en/INARA-TWR-005.mp3"); r2 = await cl.get("/voice/../INARA-TWR-004.mp3")
+    r3 = await cl.get("/voice/xx/INARA-TWR-004.mp3")
+    check("a missing file, a bad path or a bad set is a plain 404", r.status == 404 and r2.status == 404 and r3.status == 404)
+    r = await cl.get("/api/dfg/me", headers={"X-Dev-Player": "voice1"}); j = await r.json()
+    check("/me: no voice set before the player picks a language", r.status == 200 and j["voice_set"] is None)
+    r = await cl.post("/api/dfg/me/setup", headers={"X-Dev-Player": "voice1"}, json={"first_name": S.NAMES.FIRST[0], "last_name": S.NAMES.LAST[0], "language": "pt"})
+    j = await r.json()
+    check("/me: Portuguese speaks with the pt-BR voice set", r.status == 200 and j["voice_set"] == "pt-BR")
+    check("voice sets: zh-TW → zh, de → de, an unvoiced language → none",
+          VO.voice_set("zh-TW") == "zh" and VO.voice_set("de") == "de" and VO.voice_set("sw") is None)
+    hv = {"X-Dev-Player": "voice1"}
+    r1 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "library"})).json()
+    r2 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "library"})).json()
+    r3 = await (await cl.post("/api/dfg/voice/heard", headers=hv, json={"beat": "no-such-beat"})).json()
+    check("a story beat plays once per player (first yes, then no; unknown beats never)", r1["play"] is True and r2["play"] is False and r3["play"] is False)
+    del os.environ["DFG_UPLOAD_KEY"]
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

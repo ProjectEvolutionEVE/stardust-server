@@ -155,6 +155,7 @@
     $('go').disabled = true;
     try {
       const r = await call('/market/order', { item: sel, side, type, qty, price: type === 'limit' ? price : undefined });
+      try { if (r.order.status === 'open') window.parent.STARDUST_VOICE.say('order'); } catch (e) {}   // Inara: "Your order's in" (only when it waits in the book)
       const got = r.fills.reduce((n, f) => n + f.qty, 0), total = r.fills.reduce((n, f) => n + f.qty * f.price, 0);
       let t = got ? `${side === 'buy' ? 'Bought' : 'Sold'} ${lots(got, it)} of ${esc(it.name.toLowerCase())} at an average of ${fmt(total / got)} each (${fmt(total)} credits).` : '';
       if (r.order.status === 'open') t += ` ${lots(r.order.remaining, it)} waiting in the queue at ${fmt(price)}.`;
