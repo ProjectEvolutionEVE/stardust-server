@@ -131,7 +131,7 @@ const wormhole=new THREE.Group();
  const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(2,2,1);
  wormhole.add(core);
  const ringTex=glowTex([[0,'rgba(0,0,0,0)'],[.42,'rgba(0,0,0,0)'],[.5,'rgba(150,200,255,.95)'],[.6,'rgba(120,90,255,.45)'],[1,'rgba(40,20,120,0)']]);
- [[3.2,0.9],[4.6,0.45]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
+ [[3.2,0.9]].forEach(([s,o],i)=>{const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,fog:false,depthWrite:false,
   blending:THREE.AdditiveBlending,transparent:true,opacity:o}));sp.scale.set(s,s,1);sp.userData.spin=i?-0.05:0.08;wormhole.add(sp);});})();
 wormhole.position.copy(WORMHOLE_POS);wormhole.scale.setScalar(WORMHOLE_R);scene.add(wormhole);
 LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
