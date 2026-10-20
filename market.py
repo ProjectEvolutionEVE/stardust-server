@@ -50,7 +50,7 @@ async def room_units(conn, pid, it):
 
 async def last_price(conn, item):
     p = await conn.fetchval("""SELECT t.price FROM trades t JOIN item_prices p ON p.item_code=t.item_code
-                               WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.id DESC LIMIT 1""", item)
+                               WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.at DESC, t.id DESC LIMIT 1""", item)
     if p is None:
         p = await conn.fetchval("SELECT start_price FROM item_prices WHERE item_code=$1", item)
     return p
@@ -229,9 +229,9 @@ async def board(conn):
       SELECT t.code, t.name, t.trade_unit, p.floor_price, p.start_price,
         (SELECT max(price) FROM orders WHERE item_code=t.code AND side='buy' AND status='open') AS bid,
         (SELECT min(price) FROM orders WHERE item_code=t.code AND side='sell' AND status='open') AS ask,
-        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since ORDER BY id DESC LIMIT 1) AS last,
-        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at <= now() - interval '24 hours' ORDER BY id DESC LIMIT 1) AS day_ago,
-        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at > now() - interval '24 hours' ORDER BY id ASC LIMIT 1) AS first_today,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since ORDER BY at DESC, id DESC LIMIT 1) AS last,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at <= now() - interval '24 hours' ORDER BY at DESC, id DESC LIMIT 1) AS day_ago,
+        (SELECT price FROM trades WHERE item_code=t.code AND at >= p.since AND at > now() - interval '24 hours' ORDER BY at ASC, id ASC LIMIT 1) AS first_today,
         (SELECT coalesce(sum(qty),0)::bigint FROM trades WHERE item_code=t.code AND at >= p.since AND at > now() - interval '24 hours') AS volume_24h,
         (SELECT coalesce(sum(remaining),0)::bigint FROM orders WHERE item_code=t.code AND side='sell' AND status='open') AS available
       FROM item_types t JOIN item_prices p ON p.item_code=t.code WHERE p.listed ORDER BY p.sort, t.name""")
@@ -253,7 +253,7 @@ async def book(conn, item, levels=12):
                 GROUP BY price ORDER BY price {order} LIMIT $3""", item, s, levels)]
     trades = [{"price": r["price"], "qty": r["qty"], "side": r["aggressor"], "at": r["at"].isoformat()} for r in await conn.fetch(
         """SELECT t.price, t.qty, t.aggressor, t.at FROM trades t JOIN item_prices p ON p.item_code=t.item_code
-           WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.id DESC LIMIT 30""", item)]
+           WHERE t.item_code=$1 AND t.at >= p.since ORDER BY t.at DESC, t.id DESC LIMIT 30""", item)]
     return {"item": item, "bids": await side("buy", "DESC"), "asks": await side("sell", "ASC"), "trades": trades}
 
 
@@ -262,8 +262,8 @@ async def candles(conn, item, period_s=300, count=200):
     await item_info(conn, item)
     rows = await conn.fetch("""
       SELECT (floor(extract(epoch FROM at) / $2::int)::bigint * $2::int)::bigint AS t,
-             (array_agg(price ORDER BY id ASC))[1] AS open, max(price) AS high, min(price) AS low,
-             (array_agg(price ORDER BY id DESC))[1] AS close, sum(qty)::bigint AS volume
+             (array_agg(price ORDER BY at ASC, id ASC))[1] AS open, max(price) AS high, min(price) AS low,
+             (array_agg(price ORDER BY at DESC, id DESC))[1] AS close, sum(qty)::bigint AS volume
       FROM trades WHERE item_code=$1 AND at >= (SELECT since FROM item_prices WHERE item_code=$1)
         AND at > now() - make_interval(secs => ($2::int * $3::int)::double precision)
       GROUP BY 1 ORDER BY 1""", item, period_s, count)

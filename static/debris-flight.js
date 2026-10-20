@@ -438,14 +438,14 @@ function renderHold(){const used=cargoBulk();holdEl.textContent='HOLD '+used.toF
 //    not yet on the game server, so the market can't see it.
 const STORE={cap:12,kg:{}};
 // The whole Starship cargo hold (Eric 10-11: show how full it is and what's left). ~34,000 m³ is the spec's estimate
-// (about a fifth of the hull's ~170,000 m³; an assumption, §7a). Everyone shares it. Until the game server is online
-// there are no other crews, so their cargo is a SAMPLE figure, labelled as such on screen.
+// (about a fifth of the hull's ~170,000 m³; an assumption, §7a). Everyone shares it. The server does not report the whole
+// hold yet, so other crews' cargo is a fixed ESTIMATE, labelled as such on screen.
 const SHIP_HOLD={cap:34000,othersSample:21480};
 function shipHoldUsed(){return SHIP_HOLD.othersSample+storeUsed();}
 function fmtM3(v){return Math.round(v).toLocaleString('en-US')+' m³';}
 function renderShipHold(fill,txt,note){const u=shipHoldUsed(),left=SHIP_HOLD.cap-u;
  document.getElementById(fill).style.width=(100*u/SHIP_HOLD.cap).toFixed(1)+'%';
- txt(u,left);document.getElementById(note).textContent='Total about '+fmtM3(SHIP_HOLD.cap)+' (an estimate from the ship\'s design). Other crews\' cargo is sample data until the game server is online.';}
+ txt(u,left);document.getElementById(note).textContent='Total about '+fmtM3(SHIP_HOLD.cap)+' (an estimate from the ship\'s design). Other crews\' cargo is an estimate for now: the game server does not report the whole hold yet.';}
 try{const s=JSON.parse(localStorage.getItem('stardust.storage')||'null');if(s&&s.kg)STORE.kg=s.kg;}catch(e){}
 function storeSave(){try{localStorage.setItem('stardust.storage',JSON.stringify({kg:STORE.kg}));}catch(e){}}
 // Receipts (Eric 10-11): what you own is in the Starship's hands, so every unload gives you a receipt with a code.
@@ -930,11 +930,16 @@ function hud(){
  LANDMARKS.forEach((l,i)=>{const el=MK[i];pv.copy(l.home?ship.position:l.draw.position).project(cam);
   const behind=pv.z>1;let x=pv.x,y=pv.y;const on=!behind&&Math.abs(x)<0.95&&Math.abs(y)<0.92;
   if(!on){if(behind){x=-x;y=-y;}const m=Math.max(Math.abs(x)/0.92,Math.abs(y)/0.86,1e-6);x/=m;y/=m;}
-  let px=(x+1)/2*innerWidth,py=(1-y)/2*innerHeight;
-  for(let n=0;n<6&&placed.some(q=>Math.abs(q[0]-px)<70&&Math.abs(q[1]-py)<15);n++)py+=15;   // things in the same direction stack instead of overlapping
-  placed.push([px,py]);
-  el.className='mk'+(on?'':' edge');el.style.left=px+'px';el.style.top=py+'px';
-  el.lastChild.textContent=l.name+' · '+fmtDist(cam.position.distanceTo(l.home?ship.position:l.pos));});
+  el.className='mk'+(on?'':' edge');el.lastChild.textContent=l.name+' · '+fmtDist(cam.position.distanceTo(l.home?ship.position:l.pos));
+  // labels never pile up (Eric 10-20): each one measures its own box and, if it would cover one already placed, steps
+  // down, up, down further... by its own height until it is clear, and always stays fully on screen
+  const w=el.offsetWidth||120,h=el.offsetHeight||26,cl=(v,a,b)=>Math.min(Math.max(v,a),b);
+  const bx=cl((x+1)/2*innerWidth,w/2+6,innerWidth-w/2-6),by=(1-y)/2*innerHeight;
+  const hits=(px,py)=>placed.some(q=>Math.abs(q.x-px)<(w+q.w)/2+8&&Math.abs(q.y-py)<(h+q.h)/2+3);
+  let px=bx,py=cl(by,h/2+6,innerHeight-h/2-6);
+  for(let n=1;n<=12&&hits(px,py);n++){const k=Math.ceil(n/2)*(n%2?1:-1);py=cl(by+k*(h+4),h/2+6,innerHeight-h/2-6);}
+  placed.push({x:px,y:py,w,h});
+  el.style.left=px+'px';el.style.top=py+'px';});
  if(warnT&&performance.now()>warnT){$('warn').style.opacity=0;warnT=0;}
 }
 

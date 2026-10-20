@@ -14,7 +14,7 @@ Two desks, each an internal account aboard the Starship (player_key 'system:bank
   · Stock: what the buy desk has bought moves to the sell desk; if the sell desk still runs low, the Starship's stores
     supply more (a small, steady amount).
 Every number is a live setting in the `settings` table, turned down as real volume arrives."""
-import asyncio, os, random
+import asyncio, datetime, os, random
 import store as ST
 import market as M
 
@@ -121,11 +121,71 @@ async def tick(conn, rng=random):
             print(f"bank tick {it['code']}: {e}", flush=True)
 
 
+BACKFILL_STEP_S = 100          # one back-filled desk trade every 100 s: three per 5-minute candle
+BACKFILL_MAX_DAYS = 14
+
+
+async def backfill(conn, rng=random, now=None):
+    """Give items listed later the same kind of history the first ones have (Eric 10-20: "not all the raw materials on
+    the market have any price action history like we did for the others").
+
+    The original five have had the desks trading them since the market opened (their `since`); items added later
+    (v15's minerals, brownleeite) only started when they were added, so their charts were nearly empty. For every listed
+    item the bank trades whose history starts later than the oldest item's, this writes the desk-to-desk trades the
+    bank's own loop would have made over the gap (same rule as tick(): the last price nudged at random and pulled back
+    toward the reference price, never under the floor), from the item's start price, then moves its `since` back.
+    Desk-to-desk trades only move credits between two bank pockets and the goods between two bank stores, so only the
+    trade rows are written. Runs once per item: after it, the item's history starts with the others'. No price changes."""
+    s = await ST.settings(conn)
+    start = await conn.fetchval("SELECT min(since) FROM item_prices WHERE listed AND bank_lot > 0")
+    now = now or await conn.fetchval("SELECT now()")
+    if start is None:
+        return 0
+    start = max(start, now - datetime.timedelta(days=BACKFILL_MAX_DAYS))
+    buy_pid, sell_pid = await desks(conn)
+    buy_acct = await conn.fetchval("SELECT id FROM accounts WHERE player_id=$1", buy_pid)
+    sell_acct = await conn.fetchval("SELECT id FROM accounts WHERE player_id=$1", sell_pid)
+    total = 0
+    for it in await conn.fetch("""SELECT item_code, since, start_price, floor_price, ref_price, bank_lot FROM item_prices
+                                  WHERE listed AND bank_lot > 0 AND since > $1::timestamptz + interval '1 hour' ORDER BY sort""", start):
+        end = await conn.fetchval("SELECT min(at) FROM trades WHERE item_code=$1 AND at >= $2", it["item_code"], it["since"]) or now
+        if end <= start:
+            continue
+        async with conn.transaction():
+            lot0 = int(it["bank_lot"])
+            bo = await conn.fetchval("""INSERT INTO orders(account_id, item_code, side, type, qty, remaining, status, created_at, closed_at)
+                                        VALUES($1,$2,'buy','instant',1,0,'filled',$3,$4) RETURNING id""", buy_acct, it["item_code"], start, end)
+            so = await conn.fetchval("""INSERT INTO orders(account_id, item_code, side, type, price, qty, remaining, status, created_at, closed_at)
+                                        VALUES($1,$2,'sell','limit',$3,1,0,'filled',$4,$5) RETURNING id""",
+                                     sell_acct, it["item_code"], it["start_price"], start, end)
+            rows, last, t, n = [], it["start_price"], start, 0
+            while t < end:
+                drift = rng.gauss(0, s["bank_vol_pct"] / 100) + (s["bank_pull_pct"] / 100) * (it["ref_price"] - last) / max(1, last)
+                last = max(it["floor_price"], int(round(last * (1 + drift))))
+                q = max(1, int(round(lot0 * rng.uniform(0.3, 1.0))))
+                rows.append((it["item_code"], last, q, bo, so, buy_acct, sell_acct, "buy", t))
+                n += q
+                t += datetime.timedelta(seconds=BACKFILL_STEP_S * rng.uniform(0.6, 1.4))
+            await conn.execute("UPDATE orders SET qty=$2 WHERE id = ANY($1::bigint[])", [bo, so], max(1, n))
+            await conn.copy_records_to_table("trades", records=rows, columns=[
+                "item_code", "price", "qty", "buy_order", "sell_order", "buyer", "seller", "aggressor", "at"])
+            await conn.execute("UPDATE item_prices SET since=$2 WHERE item_code=$1", it["item_code"], start)
+        total += len(rows)
+    return total
+
+
 async def run(app):
     """Background loop on the game server. DFG_BANK=0 turns it off (the tests call tick() themselves)."""
     if os.environ.get("DFG_BANK", "1") == "0":
         return
     await asyncio.sleep(5)
+    try:
+        async with app["pool"].acquire() as conn:
+            n = await backfill(conn)
+        if n:
+            print(f"bank: back-filled {n} desk trades for items listed later", flush=True)
+    except Exception as e:
+        print(f"bank backfill error: {type(e).__name__}: {e}", flush=True)
     while True:
         try:
             async with app["pool"].acquire() as conn:

@@ -878,6 +878,21 @@ console.log(JSON.stringify(out));"""
     check("a story beat plays once per player once accepted (first yes, then no; unknown beats never)",
           r1["play"] is True and r2["play"] is False and p3["play"] is False and r3["play"] is False)
     del os.environ["DFG_UPLOAD_KEY"]
+    # ---- items listed later get the same starting history as the first ones (Eric 10-20) ----
+    async with cl.app["pool"].acquire() as c:
+        import random as _r
+        await c.execute("UPDATE item_prices SET since = now() - interval '2 days' WHERE item_code='iron'")
+        last_before = await M.last_price(c, "basalt")
+        bp = await c.fetchrow("SELECT since, start_price, floor_price, ref_price FROM item_prices WHERE item_code='basalt'")
+        n1 = await BANKM.backfill(c, _r.Random(3))
+        n2 = await BANKM.backfill(c, _r.Random(3))
+        bp2 = await c.fetchrow("SELECT since, start_price, floor_price, ref_price FROM item_prices WHERE item_code='basalt'")
+        span = await c.fetchrow("SELECT min(at) lo, count(*) n, min(price) mn FROM trades WHERE item_code='basalt'")
+        cs = await M.candles(c, "basalt", 3600, 200)
+        check(f"backfill: later items get the desks' history back to the oldest item's start ({n1} trades), once only",
+              n1 > 1000 and n2 == 0 and bp2["since"] < bp["since"] and span["mn"] >= bp["floor_price"] and len(cs) >= 40
+              and (bp2["start_price"], bp2["floor_price"], bp2["ref_price"]) == (bp["start_price"], bp["floor_price"], bp["ref_price"]))
+        check("backfill: the last price is still the newest real trade", await M.last_price(c, "basalt") == last_before)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])
