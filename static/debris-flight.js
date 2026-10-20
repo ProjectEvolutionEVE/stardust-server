@@ -122,7 +122,9 @@ const wormhole=new THREE.Group();
  for(let i=0;i<450;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*256,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d,
   k=1-d/256*0.7,s=rnd()<0.06?2.2:rnd()<0.3?1.3:0.8;g.globalAlpha=0.55+0.45*k;g.fillStyle=tints[i%tints.length];
   g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();}
- g.globalAlpha=1;g.restore();
+ g.globalAlpha=1;for(let i=0;i<33;i++){const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*240,x=256+Math.cos(a)*d,y=256+Math.sin(a)*d;   // 33 brighter stars (Eric 10-20): same size, more intense
+  g.fillStyle='#ffffff';g.beginPath();g.arc(x,y,1.3,0,Math.PI*2);g.fill();}
+ g.restore();
  const tex=new THREE.CanvasTexture(c);
  const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,fog:false,depthWrite:false,transparent:true}));core.scale.set(1.54,1.54,1);   // fills right up to the ring (its bright band sits at radius 0.8);
  wormhole.add(core);
