@@ -62,8 +62,7 @@ SCHEMA = (Path(__file__).parent / "schema.sql").read_text()
 LANGUAGES = json.loads((Path(__file__).parent / "languages.json").read_text())["languages"]
 # Languages Inara speaks today (Eric 10-19: all 12 recorded). The rest of the list shows as "coming soon" and can't be
 # chosen yet. Value = the recorded voice set the language uses (Traditional Chinese hears the Mandarin recording).
-VOICED = {"en": "en", "zh": "zh", "zh-TW": "zh", "de": "de", "pl": "pl", "es": "es", "fr": "fr", "ko": "ko",
-          "tr": "tr", "pt": "pt-BR", "ru": "ru", "ja": "ja"}
+VOICED = VO.VOICED          # one list, kept in voice.py
 for l in LANGUAGES:
     l["supported"] = l["code"] in VOICED
 LANG_CODES = {l["code"] for l in LANGUAGES if l["supported"]}
