@@ -623,6 +623,39 @@ Recorded once as INARA-HINT-001 (see section 4); not repeated here.
 
 ---
 
+## 8. Shipboard openers: Inara asks before she shares (approved by Eric 10-20)
+
+Aboard the ship, after the call chime and before a story line, Inara asks politely first, so she never interrupts. The
+player answers with **Go ahead** or **Not now**. One opener is picked at random. Shipboard lines: recorded PLAIN (raw),
+no radio sound. Flight radio lines (TWR, RING, TOWER) never get an opener.
+
+**Every rank, no title:**
+
+| ID | Status | Text |
+|---|---|---|
+| INARA-CALL-001 | APPROVED by Eric 10-20 | Inara here. Is this a good moment? |
+| INARA-CALL-002 | APPROVED by Eric 10-20 | Pardon the interruption. Do you have a minute? |
+| INARA-CALL-003 | APPROVED by Eric 10-20 | I don't mean to intrude. May I share something with you? |
+| INARA-CALL-004 | APPROVED by Eric 10-20 | Sorry to disturb you. Have you got a moment for me? |
+| INARA-CALL-005 | APPROVED by Eric 10-20 | Whenever you're ready, I have something worth hearing. |
+
+**Captain rank only:**
+
+| ID | Status | Text |
+|---|---|---|
+| INARA-CALL-006 | APPROVED by Eric 10-20 | Captain? Inara here. Is this a good moment? |
+| INARA-CALL-007 | APPROVED by Eric 10-20 | Pardon the interruption, Captain. Do you have a minute? |
+| INARA-CALL-008 | APPROVED by Eric 10-20 | Captain, I don't mean to intrude. May I share something with you? |
+| INARA-CALL-009 | APPROVED by Eric 10-20 | Sorry to disturb you, Captain. Have you got a moment for me? |
+| INARA-CALL-010 | APPROVED by Eric 10-20 | Captain, whenever you're ready, I have something worth hearing. |
+
+**After the player taps Not now:**
+
+| ID | Status | Text |
+|---|---|---|
+| INARA-CALL-011 | APPROVED by Eric 10-20 | Of course. I'll catch you later. |
+| INARA-CALL-012 | APPROVED by Eric 10-20 | No trouble at all. Another time. |
+
 ## Appendix A. On-screen text that no source gives to Inara (not for recording unless Eric assigns it)
 
 Listed so Eric can decide whether Inara should say any of these. Until he does, they stay written text only.

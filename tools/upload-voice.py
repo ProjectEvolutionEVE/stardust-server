@@ -3,7 +3,7 @@
 
 Walks ~/Desktop/inara-<set>/ (made by tools/inara-record.py) and uploads ONE version of each line, per Eric's ruling:
   · RADIO version (radio/<ID>.mp3) for lines heard in flight: INARA-TWR-*, INARA-RING-*, INARA-TOWER-*
-  · PLAIN version (raw/<ID>.mp3) for lines aboard the ship: INARA-STORY-*, -WELCOME-*, -FAQ-*, -MARKET-*, -HINT-*, -DIRECTION-*
+  · PLAIN version (raw/<ID>.mp3) for lines aboard the ship: INARA-STORY-*, -CALL-*, -WELCOME-*, -FAQ-*, -MARKET-*, -HINT-*, -DIRECTION-*
 A line whose chosen version is missing is skipped and listed (never swapped for the other version).
 Only files the server doesn't have yet are sent, so it is safe to run again. The key is read from ~/.stardust-upload-key
 and is never printed.
@@ -17,7 +17,7 @@ import argparse, glob, json, os, sys, urllib.request, urllib.error
 SERVER = "https://game-server-production-9863.up.railway.app"
 SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja"}
 RADIO = ("INARA-TWR-", "INARA-RING-", "INARA-TOWER-")
-PLAIN = ("INARA-STORY-", "INARA-WELCOME-", "INARA-FAQ-", "INARA-MARKET-", "INARA-HINT-", "INARA-DIRECTION-")
+PLAIN = ("INARA-STORY-", "INARA-CALL-", "INARA-WELCOME-", "INARA-FAQ-", "INARA-MARKET-", "INARA-HINT-", "INARA-DIRECTION-")
 
 
 def which(line_id):
