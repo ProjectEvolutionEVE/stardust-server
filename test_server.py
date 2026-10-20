@@ -132,6 +132,10 @@ async def main():
     check("a name not on the list is refused (no free text)", r.status == 422)
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "xx"})
     check("a language not on the list is refused", r.status == 422)
+    r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "sw"})
+    check("a 'coming soon' language (Swahili) can't be chosen yet", r.status == 422)
+    check("12 languages are voiced and marked supported; the rest are coming soon",
+          sorted(l["code"] for l in o["languages"] if l["supported"]) == sorted(["en", "zh", "zh-TW", "de", "pl", "es", "fr", "ko", "tr", "pt", "ru", "ja"]))
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Dan", "last_name": "McCollough", "language": "en"}); j = await r.json()
     check("setup done: 'Trainee Dan McCollough', English", j["title"] == "Trainee Dan McCollough" and j["language"] == "en" and not j["needs_setup"])
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Lu", "last_name": "Chong", "language": "en"})
