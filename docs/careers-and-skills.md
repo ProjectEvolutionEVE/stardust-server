@@ -200,3 +200,8 @@ tools only, so nobody gets cheaper trades than anyone else.
     **COMMS "design requests"** to players qualified to design (for example, past the Blueprint Designer's Handbook
     test). COMMS come only from the game (rule 16), so this stays inside rule 8.
   - No reply path exists, no names are shown, and the suggester is never told who answered it.
+
+## Parked for later (Eric 10-20: "on the table for when we have more time")
+- **Blueprint suggestion box (Eric's ruling, 10-20):** allowed in the multiplayer version, anonymous, the player and account hidden from designers, every text screened for foul language, hidden messages and private, personal or offensive content before Central Command posts it.
+- **Inara-guided first build:** the same tutorial build for every player, so no one feels intimidated; a practice item that can't be printed or sold (rule 11).
+- **In-game coding (idea):** a small sandboxed ship language (Screeps / Space Engineers style) that only controls the player's own ship and tools; a possible late career, "Ship Systems Programmer". Never real, open code (security risk).
