@@ -39,6 +39,7 @@ def main():
     ap.add_argument("--server", default=SERVER)
     ap.add_argument("--only", help="one voice set, e.g. de")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--redo", help="send lines whose ID starts with this again, replacing the server's copy (e.g. INARA-CALL-)")
     ap.add_argument("--key-file", default=os.path.expanduser("~/.stardust-upload-key"))
     a = ap.parse_args()
     try:
@@ -65,7 +66,7 @@ def main():
             v = which(i)
             if not v:
                 unknown.append(i); continue
-            if i in already:
+            if i in already and not (a.redo and i.startswith(a.redo)):
                 continue
             f = os.path.join(folder, v, i + ".mp3")
             (todo.append((i, f)) if os.path.isfile(f) else missing.append(f"{i} (no {v} version)"))
