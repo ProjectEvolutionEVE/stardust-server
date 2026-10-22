@@ -59,10 +59,12 @@ The full record is in the `quavara-docs` repository:
 
    A department title combines with the rank, for example "Chief Engineer" or "First Science Officer".
 7. **Language:** the player picks it at sign-up, and it is stored on their game account. The list is copied from Quavara's list of 189 languages. It is a copy, not a link.
-8. **NO communication between players. Ever (10-11).**
-   - No chat, and no written or spoken messages, now or in any multiplayer version.
-   - At most, a fixed set of emoji symbols.
-   - Combat and dogfights are the only interaction between players, and they are only the fighting itself.
+8. **Players: single-player now; translated voices only in the future multiplayer universe (Eric, 10-22; replaces the 10-11 "no communication, ever").**
+   - **Now:** single player. No chat, no messages, no player-to-player contact. At most a fixed set of emoji.
+   - **Build the foundation for a massively multiplayer universe** (one solar system per server, linked by gates; the wormhole is the first gate). See `Browser_3D_Universe_MMO_Architecture` notes.
+   - **Future multiplayer:** players may see and talk to each other **only through translated voice models**, never a real human voice: a player speaks, everyone else hears a voice model in their own language, the way Quavara's chatrooms work. Text and voice are screened for abuse and personal information before anyone hears them.
+   - Conditions: **no link to Quavara** (the game gets its own copy or a licence, so it can be sold whole); live voices from **Google Chirp 3 or Sarvam, never live ElevenLabs** (rule 14); a lawyer checks voice comms before launch (no age question, general audience).
+   - Combat and dogfights stay the only physical interaction between players.
    - The market's order book never shows who is on the other side of a trade.
 
 ### Private Quarters (Eric, 10-11)
