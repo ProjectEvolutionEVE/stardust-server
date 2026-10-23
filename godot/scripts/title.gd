@@ -24,6 +24,7 @@ func _launch(go: Button) -> void:
 	var r := await Api.call_api("GET", "/api/dfg/me")
 	if r.ok:
 		Session.me = r.data
+		Session.call_on_enter = "wake"
 		get_tree().change_scene_to_file(Session.next_scene())
 	else:
 		Session.clear()

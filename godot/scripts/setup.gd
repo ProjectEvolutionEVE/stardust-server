@@ -50,4 +50,5 @@ func _save(go: Button) -> void:
 	var me := await Api.call_api("GET", "/api/dfg/me")
 	if me.ok:
 		Session.me = me.data
+	Session.call_on_enter = "welcome"
 	get_tree().change_scene_to_file("res://scenes/quarters.tscn")

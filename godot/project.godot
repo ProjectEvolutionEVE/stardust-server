@@ -10,6 +10,7 @@ config/features=PackedStringArray("4.2")
 Api="*res://scripts/api.gd"
 Session="*res://scripts/session.gd"
 Ui="*res://scripts/ui.gd"
+Voice="*res://scripts/voice.gd"
 
 [display]
 window/size/viewport_width=720

@@ -16,6 +16,12 @@ func _ready() -> void:
 		t.name = name
 		t.add_child(Ui.label("Coming to the app soon. Open it in the browser game for now.", 24, Ui.MUTED))
 		tabs.add_child(t)
+	var c := Session.call_on_enter
+	Session.call_on_enter = ""
+	if c == "welcome":
+		Voice.ring(self, Voice.WELCOME, "welcome")
+	elif c == "wake":
+		Voice.ring(self, Voice.moment("wake"))
 
 
 func _bed(me: Dictionary) -> VBoxContainer:

@@ -31,3 +31,15 @@ func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = 
 	if msg == "":
 		msg = "Your sign-in has expired. Please sign in again." if code == 401 else "Something went wrong (%d). Please try again." % code
 	return {"ok": false, "code": code, "data": data, "error": msg}
+
+
+## A file from the server (Inara's recordings). Empty if it isn't there.
+func get_bytes(path: String) -> PackedByteArray:
+	var req := HTTPRequest.new()
+	add_child(req)
+	if req.request(BASE_URL + path) != OK:
+		req.queue_free()
+		return PackedByteArray()
+	var res: Array = await req.request_completed
+	req.queue_free()
+	return res[3] if res[0] == HTTPRequest.RESULT_SUCCESS and res[1] == 200 else PackedByteArray()

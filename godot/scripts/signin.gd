@@ -79,4 +79,5 @@ func _verify() -> void:
 		Ui.error(self, r.error)
 		return
 	Session.signed_in(r.data.token, r.data.me)
+	Session.call_on_enter = "wake"
 	get_tree().change_scene_to_file(Session.next_scene())

@@ -38,3 +38,6 @@ func next_scene() -> String:
 func _key() -> String:
 	var id := OS.get_unique_id()
 	return "stardust:" + (id if id != "" else OS.get_name())
+
+## What Inara rings about when the quarters open: "wake" after signing in, "welcome" after first setup.
+var call_on_enter := ""
