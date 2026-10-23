@@ -22,7 +22,8 @@ func _ready() -> void:
 	box.add_child(go)
 	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false)
 	if not r.ok:
-		return Ui.error(self, r.error)
+		Ui.error(self, r.error)
+		return
 	for n in r.data.first_names:
 		first.add_item(n)
 	for n in r.data.last_names:
@@ -44,7 +45,8 @@ func _save(go: Button) -> void:
 		"last_name": last.get_item_text(last.selected), "language": langs[lang.selected].code})
 	go.disabled = false
 	if not r.ok:
-		return Ui.error(self, r.error)
+		Ui.error(self, r.error)
+		return
 	var me := await Api.call_api("GET", "/api/dfg/me")
 	if me.ok:
 		Session.me = me.data

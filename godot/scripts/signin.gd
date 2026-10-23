@@ -56,13 +56,15 @@ func _region() -> String:
 
 func _send() -> void:
 	if address.text.strip_edges() == "":
-		return Ui.error(self, "Enter your " + ("email address." if channel == "email" else "phone number."))
+		Ui.error(self, "Enter your " + ("email address." if channel == "email" else "phone number."))
+		return
 	send.disabled = true
 	var r := await Api.call_api("POST", "/api/dfg/auth/start",
 		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, false)
 	send.disabled = false
 	if not r.ok:
-		return Ui.error(self, r.error)
+		Ui.error(self, r.error)
+		return
 	code.visible = true
 	verify.visible = true
 	send.text = "Send a new code"
@@ -74,6 +76,7 @@ func _verify() -> void:
 		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, false)
 	verify.disabled = false
 	if not r.ok:
-		return Ui.error(self, r.error)
+		Ui.error(self, r.error)
+		return
 	Session.signed_in(r.data.token, r.data.me)
 	get_tree().change_scene_to_file(Session.next_scene())
