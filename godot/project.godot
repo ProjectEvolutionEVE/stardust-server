@@ -1,0 +1,21 @@
+; Stardust – Terra Deleta: the Godot client (phones, Steam, later Discord). Talks only to the game's own server.
+config_version=5
+
+[application]
+config/name="Stardust – Terra Deleta"
+run/main_scene="res://scenes/title.tscn"
+config/features=PackedStringArray("4.2")
+
+[autoload]
+Api="*res://scripts/api.gd"
+Session="*res://scripts/session.gd"
+Ui="*res://scripts/ui.gd"
+
+[display]
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/stretch/mode="canvas_items"
+window/handheld/orientation=1
+
+[rendering]
+renderer/rendering_method="mobile"
