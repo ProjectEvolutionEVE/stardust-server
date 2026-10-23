@@ -18,7 +18,7 @@ async function call(path,body){
   if(!r.ok)throw new Error(j.error||'Something went wrong. Please try again.');
   return j;}
 // Inara's recorded lines (debris-flight.js, VOICE): her voice set comes with /me; a line for a moment, or a story beat once.
-const V=window.STARDUST_VOICE||{set(){},rank(){},say(){},story(){}};
+const V=window.STARDUST_VOICE||{set(){},rank(){},say(){},story(){},ring(){}};
 let lowSaid=0;   // the lowest body level she has already warned about this visit (65, 50), so a warning plays once per crossing
 function voiceMe(me){if(!me)return;V.set(me.voice_set);V.rank(me.rank);const b=me.bars?Math.min(...Object.values(me.bars)):100;
   const lvl=b<50?50:b<65?65:0;if(lvl&&(!lowSaid||lvl<lowSaid))V.say(lvl===50?'low50':'low65');lowSaid=lvl;}
@@ -133,7 +133,7 @@ function showCode(devCode){
   $('#sqBack').onclick=showSignIn;
   $('#sqVerify').onclick=async()=>{const m=$('#sqMsg');m.className='msg';m.textContent='Checking…';
     try{const j=await call('/auth/verify',{channel:state.channel,address:state.address,region:state.region,code:c.value});saveToken(j.token);V.set(j.me.voice_set);V.rank(j.me.rank);
-      if(j.me.needs_setup)showSetup();else{showQuarters(j.me,'bed');V.say('wake');}}
+      if(j.me.needs_setup)showSetup();else{showQuarters(j.me,'bed');V.ring('wake');}}
     catch(e){m.className='msg err';m.textContent=e.message;}};}
 
 async function showSetup(){

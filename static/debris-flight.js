@@ -1031,12 +1031,20 @@ const VOICE=(function(){
    if(v==='no'&&ready()){chimed=true;after=()=>{asking=false;chimed=false;retryLater();};queue.push(any(LATER));if(!cur)next();return;}
    asking=false;chimed=false;retryLater();});
   queue.push(any(rank==='Captain'?OPEN_CPT:OPEN));if(!cur)next();}   // waits for the line before it, then the chime
+ // An incoming call (Eric 10-23): a moment line that rings first, the same chime, opener and Go ahead / Not now as a
+ // story beat, but nothing is marked heard. Used for waking in bed at sign-in; Not now or no answer just ends the call.
+ function ring(m){if(asking||!MOMENTS[m]||!ready())return;asking=true;
+  after=()=>ask(v=>{
+   if(v==='yes'&&ready()){chimed=true;after=()=>{asking=false;chimed=false;offerNext();};queue.push(pick(m));if(!cur)next();return;}
+   asking=false;chimed=false;offerNext();});
+  queue.push(any(rank==='Captain'?OPEN_CPT:OPEN));if(!cur)next();}
  return {
   set(s){set=s||null;},
   rank(r){rank=r||null;},
   say(m){if(!ready()||cur||queue.length||asking)return;const id=pick(m);if(id){queue.push(id);next();}},   // busy: skip
   story(beat){if(!BEATS[beat]||!ready()||!tok()||!window.STARDUST_API)return;later.delete(beat);
    if(asking){later.add(beat);return;}offer(beat);},
+  ring(m){ring(m);},
   stop(){queue=[];chimed=false;after=null;asking=false;if(cur){const a=cur;cur=null;try{a.pause();}catch(e){}}},
   get busy(){return !!cur;},MOMENTS,BEATS};})();
 window.STARDUST_VOICE=VOICE;
