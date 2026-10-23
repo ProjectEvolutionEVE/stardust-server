@@ -7,7 +7,7 @@ const BASE_URL := "https://game-server-production-9863.up.railway.app"
 
 func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = true) -> Dictionary:
 	var http := HTTPRequest.new()
-	http.timeout = 30.0
+	http.timeout = 15.0
 	add_child(http)
 	var headers := PackedStringArray(["Content-Type: application/json", "Accept: application/json"])
 	if auth and Session.token != "":
