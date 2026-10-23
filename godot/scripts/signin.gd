@@ -38,8 +38,12 @@ func _ready() -> void:
 	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false)
 	if r.ok:
 		countries = r.data.get("countries", [])
-		for c in countries:
-			region.add_item("%s +%s" % [c.iso, str(c.dial).trim_prefix("+")])
+		var here := OS.get_locale().get_slice("_", 1).to_upper()   # e.g. "en_US" -> "US"
+		for i in countries.size():
+			var c: Dictionary = countries[i]
+			region.add_item("%s +%d" % [c.iso, int(str(c.dial).trim_prefix("+"))])
+			if c.iso == here or (here == "" and c.iso == "US"):
+				region.select(i)
 
 
 func _on_channel(i: int) -> void:
