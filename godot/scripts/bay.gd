@@ -1,6 +1,6 @@
 extends Node3D
 ## The Docking Bay (rule 19), in 3D: you start docked inside the Starship's belly bay, looking out past the bow, the same
-## view as the browser game. Flight controls match the browser (Eric 10-17/10-24): the throttle arrows on the right set
+## view as the browser game. Flight controls match the browser (Eric 10-17/10-24): the throttle arrows in the bottom right corner, under WARP, for the right thumb (Eric 10-24), set
 ## speed (10% a tap, 0% stops); press and hold anywhere to steer like a joystick (pull back = nose up, push = nose down,
 ## left/right = bank); the side thrusters bottom left turn you in place. Launching needs the Pilot Basic Training
 ## Handbook pass (Eric 10-23); without it the craft stays docked and the bay points you to the library.
@@ -169,14 +169,14 @@ func _hud() -> void:
 	lib_btn.visible = false
 	lib_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	root.add_child(lib_btn)
-	var up := _hud_button("", Vector2(600, 760), Vector2(96, 96), 48, "up")
+	var up := _hud_button("", Vector2(600, 964), Vector2(96, 96), 48, "up")
 	up.pressed.connect(func(): _set_throttle(throttle + 1))
 	root.add_child(up)
 	thr_label = Ui.label("Throttle 0%", 22, HUD_RED)
 	thr_label.autowrap_mode = TextServer.AUTOWRAP_OFF
-	thr_label.position = Vector2(560, 868)
+	thr_label.position = Vector2(560, 1068)
 	root.add_child(thr_label)
-	var dn := _hud_button("", Vector2(600, 910), Vector2(96, 96), 48, "down")
+	var dn := _hud_button("", Vector2(600, 1110), Vector2(96, 96), 48, "down")
 	dn.pressed.connect(func(): _set_throttle(throttle - 1))
 	root.add_child(dn)
 	for p in [["left", Vector2(30, 1010), -1], ["right", Vector2(150, 1010), 1]]:
@@ -205,7 +205,7 @@ func _hud() -> void:
 	streaks.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(streaks)
 	root.move_child(streaks, 0)
-	var wb := _hud_button("WARP", Vector2(540, 40), Vector2(150, 64), 32, "")
+	var wb := _hud_button("WARP", Vector2(546, 880), Vector2(150, 64), 32, "")
 	wb.pressed.connect(func():
 		if warp.is_empty():
 			_warp_menu()
@@ -217,7 +217,7 @@ func _hud() -> void:
 	cargo.bay = self
 	add_child(cargo)
 	cargo.build(root)
-	mute_btn = _hud_button("Sound on", Vector2(380, 40), Vector2(150, 64), 32, "")   # silences the scanner and Inara
+	mute_btn = _hud_button("Sound on", Vector2(540, 40), Vector2(150, 64), 32, "")   # silences the scanner and Inara
 	mute_btn.pressed.connect(func():
 		sound.muted = not sound.muted
 		Voice.set_muted(sound.muted)
