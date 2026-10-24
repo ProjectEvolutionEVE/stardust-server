@@ -216,7 +216,9 @@ const guideLights=[];
  // THE TOWER (command deck): a long pod hanging under the bow (Eric, 10-11). Inara is stationed here, watching every craft
  // that leaves and comes home; the docking path runs beneath it. A wraparound band of tall lit windows looks out on all
  // sides, with a second row angled down over the approach. The pod's top is sunk into the hull so it reads as one piece.
- const TOWER={zc:45,L:11.3,W:3.7,H:2,yc:-10.5,p:2.5,gap:1.5};   // 1/3 of the first draft (Eric, 10-11)                       // centre z, half-length, half-width, half-height
+ // Size: 1/3 of the first draft (Eric, 10-11). Place: moved forward, close behind the bow (Eric 10-23; was zc 45), hanging
+ // at the same depth under the skin as before (its centre 0.9 m below the hull's underside).
+ const TOWER={zc:88,L:11.3,W:3.7,H:2,yc:-(mainSec(88).h+0.9),p:2.5,gap:1.5};   // centre z, half-length, half-width, half-height
  // the pod's centre line follows the hull's underside and sweeps up toward its nose, so the front blends into the hull
  const towerY=z=>-mainSec(z).h+(TOWER.yc+mainSec(TOWER.zc).h)+1.5*Math.max(0,(z-TOWER.zc)/TOWER.L)**2;
  const towerHalfW=z=>{const u=Math.min(1,Math.abs(z-TOWER.zc)/TOWER.L);return TOWER.W*Math.pow(1-Math.pow(u,TOWER.p),1/TOWER.p);};
