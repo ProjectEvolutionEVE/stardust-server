@@ -134,7 +134,7 @@ const wormhole=new THREE.Group();
 wormhole.position.copy(WORMHOLE_POS);wormhole.scale.setScalar(WORMHOLE_R);scene.add(wormhole);
 LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 
-// ── THE STARSHIP: Humboldt-Horizon class, Eric's design (10-10, finished 10-11). True scale: 263 m hull (266 m to the wingtips), 244 m wingtip to wingtip.
+// ── THE STARSHIP: Humboldt-Horizon class, Eric's design (10-10, finished 10-11). True scale: 263 m hull. No fin or wings (Eric 10-23).
 //    Model axes: bow toward +Z (the group is turned to face the Sun), Y up.
 //    Ships come home from the front, pass UNDER the long bow, and fly aft into the opening (the "mouth") between the
 //    bow and the lower rear fins. The command deck is the band of lit windows on the underside of the bow, looking
@@ -188,15 +188,7 @@ const guideLights=[];
  // fin from a 2-D triangle-ish outline (x = along the ship, y = out from the hull), thin
  function fin(outline,thick){const sh=new THREE.Shape();outline.forEach((p,i)=>i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]));
   const g=new THREE.ExtrudeGeometry(sh,{depth:thick,bevelEnabled:false});g.translate(0,0,-thick/2);return new THREE.Mesh(g,finMat);}
- // dorsal shark fin
- const DORSAL=[[-120,0],[-40,0],[-95,34],[-118,30]];
- const dorsal=fin(DORSAL,1.6);dorsal.rotation.y=-Math.PI/2;dorsal.position.y=16;ship.add(dorsal);
- // swept side wings (Eric's top-view illustration, 10-11): flat blades in the plane of the hull's side edges, rooted
- // inside the body and swept back to sharp tips beside the stern. Outline in ship coordinates (x out, z along).
- const WING=[[18,15],[122,-136],[106,-128],[18,-92]];
- [-1,1].forEach(s=>{const sh=new THREE.Shape();WING.forEach((p,i)=>i?sh.lineTo(s*p[0],p[1]):sh.moveTo(s*p[0],p[1]));
-  const g=new THREE.ExtrudeGeometry(sh,{depth:1.4,bevelEnabled:false});g.translate(0,0,-0.7);g.rotateX(Math.PI/2);
-  const w=new THREE.Mesh(g,finMat);w.position.y=-0.3;ship.add(w);});
+ // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
  // lower rear fins: blades rooted in the underside of the stern, splayed out and down at 45° (Eric's illustrations, 10-11);
  // the mouth is the gap between them, under the hull
  [-1,1].forEach(s=>{const b=fin([[-124,4],[-60,4],[-10,-46],[-40,-44],[-120,-12]],2.0);
@@ -250,8 +242,8 @@ const guideLights=[];
     v.set(sp[0]+nx*0.12,towerY(sp[1])+r.dy,sp[1]+nz*0.12);e.set(r.tilt,sp[2],0);q.setFromEuler(e);m4.compose(v,q,one);im.setMatrixAt(n,m4);});
    ship.add(im);}}
  // THE NAME (Eric, 10-11): "WSC ALEXANDER VON HUMBOLDT" on both sides of the raised section on top, clear of the
- // windows. It lines up with the tall rear fin: on the starboard side the first letter starts under the fin's leading
- // edge, and on the port side the last letter ends under it; from there the name runs aft. The lettering is a strip
+ // windows. It starts 40 m aft of amidships (where the old dorsal fin's leading edge stood, so it stays where Eric
+ // approved it): on the starboard side the first letter starts there, and on the port side the last letter ends there; from there the name runs aft. The lettering is a strip
  // laid onto the curved skin so it sits flush along its whole length.
  {const NAME='WSC  ALEXANDER  VON  HUMBOLDT',TH=3.4,YC=RIDGE_Y+2;
   const c=document.createElement('canvas'),g=c.getContext('2d');g.font='600 180px Georgia, "Times New Roman", serif';
@@ -260,7 +252,7 @@ const guideLights=[];
   const tex=new THREE.CanvasTexture(c);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=8;
   const mat=new THREE.MeshBasicMaterial({map:tex,transparent:true,fog:false,toneMapped:false,side:THREE.DoubleSide,
    polygonOffset:true,polygonOffsetFactor:-2});                                         // lit lettering, readable on the dark hull
-  const L=TH*tw/256,zFront=DORSAL[1][0],SEG=40;                                          // fin's leading edge on the hull
+  const L=TH*tw/256,zFront=-40,SEG=40;                                                   // where the name starts on the hull
   const skinX=(y,z)=>{const k=ridgeSec(z),sn=Math.max(-1,Math.min(1,(y-RIDGE_Y)/k.h));return k.w*Math.sqrt(1-sn*sn);};
   [-1,1].forEach(sd=>{const pos=[],uv=[],idx=[];
    const ROWS=8;                                                                         // rows across the height follow the curve
