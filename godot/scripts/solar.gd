@@ -34,7 +34,7 @@ var wh_l: Array
 var ship_sun_d: float
 
 var landmarks: Array = []        # {name, pos (ship frame), node, rad, far, home, color}
-var sun: MeshInstance3D
+var sun: Node3D
 var glow: MeshInstance3D
 var light: DirectionalLight3D
 var wormhole: Node3D
@@ -88,20 +88,22 @@ func setup(the_ship: Node3D) -> void:
 	light = DirectionalLight3D.new()     # the Sun: the one light
 	light.light_color = Color("fff1dc")
 	add_child(light)
-	sun = _sphere(_unlit(Color("fff3d0")), 48)
+	sun = _sun()
 	glow = _quad(_glow_tex([[0.0, Color(1, 0.94, 0.78, 1)], [0.18, Color(1, 0.84, 0.55, 0.55)],
 		[0.45, Color(1, 0.67, 0.31, 0.12)], [1.0, Color(1, 0.55, 0.16, 0)]]), true, 1.0)
 	for i in GIANTS.size():
 		var g: Dictionary = GIANTS[i]
 		var m := StandardMaterial3D.new()
-		m.albedo_color = g.color
+		m.albedo_texture = load("res://assets/planets/%s.jpg" % g.name.to_lower())   # NASA maps (assets/SOURCES.md)
+		m.emission_texture = m.albedo_texture
 		m.roughness = 1.0
 		m.metallic = 0.0
 		m.emission_enabled = true
-		m.emission = g.color
+		m.emission = Color.WHITE
 		m.emission_energy_multiplier = 0.07
 		m.disable_fog = true
 		var body := _sphere(m, 64)
+		body.basis = _w2l()             # its poles on the solar system's own axis
 		if g.get("ring", false):
 			body.add_child(_saturn_ring())
 		landmarks.append({"name": g.name, "node": body, "pos": giants_l[i], "rad": g.rad, "far": true, "color": Color("d9a441")})
@@ -259,9 +261,45 @@ func _saturn_ring() -> MeshInstance3D:
 	mi.mesh = st.commit()
 	mi.material_override = m
 	# the tilt is in the solar system's own axes, so turn it into the ship's frame
-	var w2l := Basis(Vector3(ax[0], ay[0], az[0]), Vector3(ax[1], ay[1], az[1]), Vector3(ax[2], ay[2], az[2]))
-	mi.basis = w2l * Basis(Vector3.RIGHT, PI / 2.4)
+	mi.basis = Basis(Vector3.RIGHT, PI / 2.4)      # Saturn itself is already turned into the solar system's axes
 	return mi
+
+
+func _w2l() -> Basis:
+	return Basis(Vector3(ax[0], ay[0], az[0]), Vector3(ax[1], ay[1], az[1]), Vector3(ax[2], ay[2], az[2]))
+
+
+## The Sun: NASA's Solar Dynamics Observatory photograph of its disc (HMI, visible light), always facing the camera.
+## The photo's disc fills 478/512 of the picture; everything outside it (black sky, the caption) is cut away.
+func _sun() -> Node3D:
+	var n := Node3D.new()
+	add_child(n)
+	var sh := Shader.new()
+	sh.code = """
+shader_type spatial;
+render_mode unshaded, cull_disabled, depth_draw_never, fog_disabled;
+uniform sampler2D tex : source_color, filter_linear_mipmap;
+void vertex() {
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0, 0, 0), vec4(0, length(MODEL_MATRIX[1].xyz), 0, 0), vec4(0, 0, length(MODEL_MATRIX[2].xyz), 0), vec4(0, 0, 0, 1));
+}
+void fragment() {
+	float r = length(UV - 0.5) * 2.0;
+	ALBEDO = texture(tex, UV).rgb;
+	ALPHA = 1.0 - smoothstep(0.925, 0.94, r);
+}
+"""
+	var m := ShaderMaterial.new()
+	m.shader = sh
+	m.set_shader_parameter("tex", load("res://assets/planets/sun_sdo_hmi.jpg"))
+	m.render_priority = 2              # drawn over its own glow, so the photo shows
+	var q := QuadMesh.new()
+	q.size = Vector2.ONE * 2.0 * 512.0 / 478.0
+	var mi := MeshInstance3D.new()
+	mi.mesh = q
+	mi.material_override = m
+	n.add_child(mi)
+	return n
 
 
 ## THE WORMHOLE (STORY-BIBLE): a throat onto another universe, ringed with light. Through the throat you see ANOTHER
