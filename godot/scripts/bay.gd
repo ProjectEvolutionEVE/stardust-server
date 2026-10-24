@@ -59,6 +59,12 @@ var scan_bar: ColorRect
 var info: Label
 var appr: Label
 var stick: Control
+var hud_root: Control
+var cargo: Node
+var mute_btn: Button
+var work_ring = null             # the ring you're working (Inara watches you drift out of it)
+var inara_t := 0.0
+var voiced := {}                 # this session's once-only moments (first strong return, first bearing)
 
 
 func _ready() -> void:
@@ -100,6 +106,7 @@ func _server_seed() -> void:
 	var r: Dictionary = await Api.call_api("POST", "/api/dfg/session", {})
 	if r.ok and r.data.has("seed"):
 		debris.reset(int(r.data.seed))
+		cargo.apply_ship(r.data)
 		lock = {}
 		bearings.clear()
 
@@ -205,6 +212,17 @@ func _hud() -> void:
 			warp_panel.visible = not warp_panel.visible)
 	root.add_child(wb)
 	_warp_panel(root)
+	hud_root = root
+	cargo = preload("res://scripts/cargo.gd").new()   # the hold, COLLECT and UNLOAD
+	cargo.bay = self
+	add_child(cargo)
+	cargo.build(root)
+	mute_btn = _hud_button("Sound on", Vector2(380, 40), Vector2(150, 64), 32, "")   # silences the scanner and Inara
+	mute_btn.pressed.connect(func():
+		sound.muted = not sound.muted
+		Voice.set_muted(sound.muted)
+		mute_btn.text = "Muted" if sound.muted else "Sound on")
+	root.add_child(mute_btn)
 
 
 ## Flight buttons (Eric 10-24): nothing solid, so the pilot sees through them. A thin deep-red outline, red text, and
@@ -307,6 +325,7 @@ func _process(dt: float) -> void:
 	else:
 		_fly(dt)
 		_scan(dt)
+		_watch_ring(now)
 		if now > cells_at:
 			debris.update_cells(_me())
 			cells_at = now + 0.2
@@ -315,6 +334,7 @@ func _process(dt: float) -> void:
 		cam.position = Vector3.ZERO
 	sol.place(org, cam)
 	debris.place(org)
+	cargo.tick(dt)
 	marks.queue_redraw()
 	cue.alpha += (cue.want - cue.alpha) * (1.0 - exp(-dt / 0.15))
 	stick.queue_redraw()
@@ -354,6 +374,8 @@ func _fly(dt: float) -> void:
 			_say("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly.", true)
 		else:
 			docked = false
+			Voice.say("launch")              # cleared for launch
+			Voice.story(hud_root, "launch")
 	if docked:
 		return
 	var me := _me()
@@ -378,6 +400,7 @@ func _fly(dt: float) -> void:
 			lock.pos = Solar.vec3d(ship.DOCK.aftMouth if lock.aft else ship.DOCK.mouth)
 			lock.stop_at = 22.0
 			lock.name = "Starship · docking"
+			Voice.say("approach")
 			if throttle > 0:
 				_set_throttle(0)
 			_say("Tractor beam has control. Throttle set to zero.")
@@ -385,6 +408,7 @@ func _fly(dt: float) -> void:
 			var aft: bool = lock.aft
 			lock = {}
 			_dock(aft)
+			Voice.say("docked")
 			_say("DOCKED\nWelcome home. Your Market terminal is at the Desk in your quarters.")
 			return
 		elif auto and lock.get("dock", 0) == 0 and d < lock.stop_at:
@@ -392,6 +416,8 @@ func _fly(dt: float) -> void:
 			lock.parked = true
 			auto = false
 			parked = true
+			if lock.get("field"):
+				Voice.say("parked")
 			_say("Holding position: " + lock.name)
 			if lock.get("field"):
 				lock.field.known = true
@@ -420,6 +446,35 @@ func _fly(dt: float) -> void:
 	if not auto and tf > 0.0:                    # under power the ship flies where it points
 		vel = vel.lerp(fwd * vel.length(), 1.0 - exp(-3.0 * dt))
 	cam.position += vel * dt
+
+
+## INARA keeps an eye on you (Eric 10-11): she welcomes you into a ring, and tells you when you drift out of the one
+## you're working (every 15 s, with her recorded line the first time).
+func _watch_ring(now: float) -> void:
+	var w: Array = sol.to_world_d(_me())
+	var here = sol.ring_of(w)
+	if here != null:
+		if work_ring == null or here.key != work_ring.key:
+			var first: bool = work_ring == null
+			work_ring = here
+			Voice.say("ring%d" % Solar.RINGS.find(here))
+			if first:
+				Voice.story(hud_root, "ring")
+			_say("INARA\nYou're in the " + here.name + ". Debris all around you. Start sweeping.")
+		inara_t = 0.0
+		return
+	if work_ring == null:
+		return
+	var r: float = work_ring.au * Solar.AU
+	var out := maxf(maxf(absf(Vector2(w[0], w[2]).length() - r) - sol.BAND_HALF, absf(w[1]) - sol.BAND_THICK), 0.0)
+	if out > 2e6:                                # well clear: you've left on purpose
+		work_ring = null
+		return
+	if now > inara_t:
+		if inara_t == 0.0:
+			Voice.say("drift%d" % Solar.RINGS.find(work_ring))
+		inara_t = now + 15.0
+		_say("INARA\nYou're drifting out of the %s, %s outside it. Turn back toward the debris." % [work_ring.name, Solar.fmt_dist(out)])
 
 
 # ── LOCK (double-tap): a scanner-locked field, or the field or landmark you can see nearest the tap ──
@@ -461,6 +516,8 @@ func _lock_at(at: Vector2) -> void:
 		return
 	lock = best
 	lock.auto = true
+	if best.has("dock"):
+		Voice.say("home")
 
 
 ## Docking (Eric 10-23): the bay is open at both ends, so the autopilot comes in from whichever end you are nearer.
@@ -507,6 +564,9 @@ func _scan(dt: float) -> void:
 	scan_strength += (raw - scan_strength) * (1.0 - exp(-9.0 * dt))
 	scan_best = best
 	if not best.is_empty() and bv > 0.28:        # strong enough to take a bearing on
+		if not voiced.has("ret"):
+			voiced.ret = true
+			Voice.say("ret")
 		var sv := Solar.vec(Solar.sub(best.center, me))
 		var dist := sv.length()
 		if sv.angle_to(fwd) < deg_to_rad(7.0):
@@ -514,6 +574,9 @@ func _scan(dt: float) -> void:
 				_fix_field(best)
 			elif not bearings.has(best.id):
 				bearings[best.id] = me
+				if not voiced.has("bearing"):
+					voiced.bearing = true
+					Voice.say("bearing")
 				sound.ping(660.0)
 				_say("BEARING TAKEN\nMove off to one side, then sweep this return again to fix its position.")
 			else:
@@ -545,6 +608,7 @@ func _fix_field(f: Dictionary) -> void:
 	bearings.erase(f.id)
 	lock = {"name": Debris.label_of(f), "pos": f.center, "stop_at": Debris.stand_off(f), "auto": false, "field": f}
 	sound.chime()
+	Voice.say("locked")
 	_say("FIELD LOCKED\nScanner quiet. Double-tap to fly there.")
 
 
@@ -743,10 +807,17 @@ func _warp_tick(dt: float) -> void:
 	streaks.alpha = 0.0
 	streaks.queue_redraw()
 	if w.d.has("ring"):
-		_say("ARRIVED\nDropping out in the " + w.d.ring.name + ". Debris all around you. Start sweeping.")
+		var first: bool = work_ring == null
+		work_ring = w.d.ring
+		inara_t = 0.0
+		Voice.say("warp%d" % Solar.RINGS.find(w.d.ring))
+		if first:
+			Voice.story(hud_root, "ring")
+		_say("INARA\nDropping out in the " + w.d.ring.name + ". Debris all around you. Start sweeping.")
 	elif w.d.key == "starship":
 		cam.look_at(cam.position + Solar.vec(Solar.sub([0.0, 0.0, 0.0], _me())), Vector3.UP)     # turned to face her
-		_say("ARRIVED\nThe Starship is ahead.")
+		Voice.say("arrived")
+		_say("ARRIVED\nThe Starship is ahead. Double-tap it to come aboard.")
 	else:
 		_say("ARRIVED\n" + w.label)
 

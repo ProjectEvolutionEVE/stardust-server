@@ -5,12 +5,39 @@ extends Node
 
 const OPEN := ["INARA-CALL-001", "INARA-CALL-002", "INARA-CALL-003", "INARA-CALL-004", "INARA-CALL-005"]
 const OPEN_CPT := ["INARA-CALL-006", "INARA-CALL-007", "INARA-CALL-008", "INARA-CALL-009", "INARA-CALL-010"]
-const MOMENTS := {"wake": ["INARA-TWR-042", "INARA-TWR-043"], "sleep": ["INARA-TWR-044", "INARA-TWR-045"],
-	"order": ["INARA-TWR-051"]}
+# Her short lines for moments, as the browser's MOMENTS (static/debris-flight.js). TWR-036 and 039 are SOURCE lines whose
+# voice use Eric has not approved yet: left out of the takes.
+const MOMENTS := {"bay": ["INARA-TWR-001", "INARA-TWR-002", "INARA-TWR-003"],
+	"launch": ["INARA-TOWER-001", "INARA-TWR-004", "INARA-TWR-005", "INARA-TWR-006"],
+	"ring0": ["INARA-RING-001", "INARA-TWR-007"], "ring1": ["INARA-RING-002", "INARA-TWR-008"],
+	"ring2": ["INARA-RING-003", "INARA-TWR-009"], "ring3": ["INARA-RING-004", "INARA-TWR-010"],
+	"warp0": ["INARA-RING-005"], "warp1": ["INARA-RING-006"], "warp2": ["INARA-RING-007"], "warp3": ["INARA-RING-008"],
+	"drift0": ["INARA-RING-013"], "drift1": ["INARA-RING-014"], "drift2": ["INARA-RING-015"], "drift3": ["INARA-RING-016"],
+	"ret": ["INARA-TOWER-002", "INARA-TWR-011", "INARA-TWR-012"], "bearing": ["INARA-TWR-013", "INARA-TWR-014"],
+	"locked": ["INARA-TOWER-003", "INARA-TWR-015", "INARA-TWR-016", "INARA-TWR-017"],
+	"parked": ["INARA-TWR-018", "INARA-TWR-019", "INARA-TWR-020"], "toobig": ["INARA-TOWER-004", "INARA-TWR-021"],
+	"firstpiece": ["INARA-TWR-022", "INARA-TWR-023"], "cleared": ["INARA-TWR-024", "INARA-TWR-025"],
+	"diamond": ["INARA-TWR-026", "INARA-TWR-027"], "full": ["INARA-TOWER-005", "INARA-TWR-028", "INARA-TWR-029"],
+	"home": ["INARA-TWR-030", "INARA-TWR-031"], "arrived": ["INARA-TWR-032"], "approach": ["INARA-TOWER-006"],
+	"docked": ["INARA-TOWER-007", "INARA-TWR-033", "INARA-TWR-034"], "unloaded": ["INARA-TWR-035"],
+	"low65": ["INARA-TWR-037", "INARA-TWR-038"], "low50": ["INARA-TWR-040", "INARA-TWR-041"],
+	"wake": ["INARA-TWR-042", "INARA-TWR-043"], "sleep": ["INARA-TWR-044", "INARA-TWR-045"],
+	"pass": ["INARA-TWR-049"], "fail": ["INARA-TWR-050"], "order": ["INARA-TWR-051"], "submitted": ["INARA-TWR-053"]}
+# Story beats (each heard once, after a call she asks first), as the browser's BEATS.
+const BEATS := {"library": ["INARA-STORY-003", "INARA-STORY-004"], "test": ["INARA-STORY-005", "INARA-STORY-006"],
+	"blueprint": ["INARA-STORY-007"], "launch": ["INARA-STORY-008", "INARA-STORY-009"],
+	"ring": ["INARA-STORY-010", "INARA-STORY-011"], "piece": ["INARA-STORY-012"], "unload": ["INARA-STORY-013"],
+	"diamond": ["INARA-STORY-016"]}
+# Tower lines heard aboard the ship get the chime first; every other TWR, RING and TOWER line comes over the flight radio
+# and gets no chime and no opener.
+const ABOARD := ["INARA-TWR-042", "INARA-TWR-043", "INARA-TWR-044", "INARA-TWR-045", "INARA-TWR-049", "INARA-TWR-050",
+	"INARA-TWR-051", "INARA-TWR-053"]
 const WELCOME := ["INARA-WELCOME-001", "INARA-WELCOME-002", "INARA-STORY-001", "INARA-STORY-002", "INARA-WELCOME-003"]
 
 var player: AudioStreamPlayer
 var busy := false
+var muted := false               # the flight's sound toggle silences her too
+var last := {}                   # the take last played for each moment: never the same twice in a row
 
 
 func _ready() -> void:
@@ -21,7 +48,7 @@ func _ready() -> void:
 ## Rings, and plays `ids` only if the player answers. `beat` (a story beat) is marked heard on the server once answered.
 func ring(parent: Control, ids: Array, beat := "") -> void:
 	var me: Dictionary = Session.me
-	if busy or ids.is_empty() or str(me.get("voice_set", "")) == "":
+	if busy or muted or ids.is_empty() or str(me.get("voice_set", "")) == "":
 		return
 	if beat != "":
 		var r := await Api.call_api("POST", "/api/dfg/voice/heard", {"beat": beat})
@@ -38,13 +65,38 @@ func ring(parent: Control, ids: Array, beat := "") -> void:
 	busy = false
 
 
-## A short line for a moment, played at once with no call (as the browser's V.say); skipped while she's busy.
+## A short line for a moment, played at once with no call (as the browser's VOICE.say); skipped while she's busy, so
+## one line at a time. Lines heard aboard get the chime first; flight radio lines don't.
 func say(m: String) -> void:
-	if busy or not MOMENTS.has(m) or str(Session.me.get("voice_set", "")) == "":
+	if busy or muted or not MOMENTS.has(m) or str(Session.me.get("voice_set", "")) == "":
 		return
+	var ids: Array = MOMENTS[m]
+	var c: Array = ids.filter(func(i): return i != last.get(m, "")) if ids.size() > 1 else ids
+	var id: String = c.pick_random()
+	last[m] = id
 	busy = true
-	await _play(MOMENTS[m].pick_random())
+	if aboard(id):
+		await _chime()
+	await _play(id)
 	busy = false
+
+
+static func aboard(id: String) -> bool:
+	return ABOARD.has(id) or not (id.begins_with("INARA-TWR-") or id.begins_with("INARA-RING-") or id.begins_with("INARA-TOWER-"))
+
+
+## A story beat (as the browser's VOICE.story): she calls first and plays it only if answered; the server keeps it heard.
+func story(parent: Control, beat: String) -> void:
+	if BEATS.has(beat) and Session.token != "":
+		ring(parent, BEATS[beat], beat)
+
+
+## The sound toggle: silences her at once and keeps her quiet until it's turned back on.
+func set_muted(m: bool) -> void:
+	muted = m
+	if m and player.playing:
+		player.stop()
+		player.finished.emit()     # let whatever was waiting on the line carry on
 
 
 func moment(m: String) -> Array:
@@ -54,7 +106,7 @@ func moment(m: String) -> Array:
 func _play(id: String) -> void:
 	var path := "/voice/%s/%s.mp3" % [Session.me.get("voice_set", ""), id]
 	var r := await Api.get_bytes(path)
-	if r.is_empty():
+	if r.is_empty() or muted:
 		return   # missing or offline: carry on silently
 	var s := AudioStreamMP3.new()
 	s.data = r

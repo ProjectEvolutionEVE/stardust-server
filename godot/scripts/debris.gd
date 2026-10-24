@@ -51,6 +51,7 @@ const ICO_HALF := 0.851
 const ROCK_TONES := [Color("8a817a"), Color("6f6a66"), Color("9c8f80"), Color("7a6a5c"), Color("5d5a58"), Color("8b7765")]
 
 const Solar := preload("res://scripts/solar.gd")
+var HIDDEN := Transform3D(Basis.from_scale(Vector3.ZERO), Vector3.ZERO)   # a piece that's been taken
 
 var seed_n := 0                  # the session seed (unsigned 32-bit)
 var sol: Node3D
@@ -216,13 +217,16 @@ func _make_field(id: String, ring: Dictionary, center_w: Array, size: String, n:
 		var rotb := Basis(Vector3.RIGHT, ex) * Basis(Vector3.UP, ey) * Basis(Vector3.BACK, ez)   # three.js Euler XYZ
 		var s: float = S.sc[0] * pow(S.sc[1] / S.sc[0], pow(r.next(), SIZE_BIAS))   # log-spread sizes, weighted to small
 		var sc := Vector3(s * (0.7 + r.next() * 0.6), s * (0.7 + r.next() * 0.6), s * (0.7 + r.next() * 0.6))
-		mm.set_instance_transform(i, Transform3D(rotb * Basis.from_scale(sc), v) * rock_fix)
+		var xf := Transform3D(rotb * Basis.from_scale(sc), v)
+		var taken: bool = mem.get("taken", []).size() > i and mem.taken[i]
+		mm.set_instance_transform(i, HIDDEN if taken else xf * rock_fix)
 		var mat: Array = piece_mineral(id, i, size)
 		var dims := [2 * ICO_HALF * sc.x, 2 * ICO_HALF * sc.y, 2 * ICO_HALF * sc.z]
 		dims.sort()
 		dims.reverse()
 		var vol := ICO_VOL * sc.x * sc.y * sc.z
-		f.pieces.append({"mat": mat[0], "dims": dims, "vol": vol, "box": dims[0] * dims[1] * dims[2], "mass": vol * mat[2], "taken": false})
+		f.pieces.append({"mat": mat[0], "dims": dims, "vol": vol, "box": dims[0] * dims[1] * dims[2], "mass": vol * mat[2], "taken": taken,
+			"fid": id, "idx": i, "xf": xf})
 		mm.set_instance_color(i, ROCK_TONES[floori(r.next() * ROCK_TONES.size())])
 	var node := MultiMeshInstance3D.new()
 	node.multimesh = mm
@@ -287,7 +291,7 @@ func _unload_cell(key: String) -> void:
 	var cell: Dictionary = cells[key]
 	cells.erase(key)
 	for f in cell.fields:
-		memory[f.id] = {"known": f.known, "cleared": f.cleared}
+		memory[f.id] = {"known": f.known, "cleared": f.cleared, "taken": f.pieces.map(func(q): return q.taken)}
 		f.node.queue_free()
 		for x in fields.size():
 			if fields[x].id == f.id:
@@ -314,6 +318,18 @@ func update_cells(me_l: Array) -> void:
 	for f in fields:     # per-field visibility by its size class; the fog then fades what is shown with distance
 		f.shown = not f.cleared and Solar.length(Solar.sub(f.center, me_l)) - f.rad < f.sight
 		f.node.visible = f.shown
+
+
+## Draw piece i of field f at `xf` (field-local, world axes; before Bennu's own fix), or hide it.
+func show_piece(f: Dictionary, i: int, xf = null) -> void:
+	f.node.multimesh.set_instance_transform(i, HIDDEN if xf == null else xf * rock_fix)
+
+
+func material(key: String) -> Array:
+	for m in MATERIALS:
+		if m[0] == key:
+			return m
+	return [key, key, 1.0, ""]
 
 
 ## Each frame: put the fields and dust where they are, relative to the floating origin.

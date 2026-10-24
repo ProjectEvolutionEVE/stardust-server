@@ -22,6 +22,7 @@ var ph2 := 0.0
 var lp := 0.0
 var blips: Array = []             # [frequency, start sample, length, volume, phase]
 var clock := 0
+var muted := false               # the flight's sound toggle
 
 
 func _ready() -> void:
@@ -68,7 +69,7 @@ func _make_hiss() -> void:
 
 ## s < 0: silent (locked, docking or docked); 0..1: how strong the return is.
 func scanner(s: float) -> void:
-	if s < 0.0:
+	if s < 0.0 or muted:
 		hiss_t = 0.0
 		tone_t = 0.0
 		return
@@ -87,6 +88,8 @@ func chime() -> void:
 
 
 func _blip(f: float, dur: float, vol: float, delay: float) -> void:
+	if muted:
+		return
 	blips.append([f, clock + int(delay * RATE), int(dur * RATE), vol, 0.0])
 
 
