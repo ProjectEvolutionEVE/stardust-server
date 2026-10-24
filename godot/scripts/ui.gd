@@ -96,3 +96,21 @@ func dec(x: float, places: int) -> String:
 	var f := ("%." + str(places) + "f") % frac
 	f = f.substr(1).rstrip("0").rstrip(".")
 	return ("-" if x < 0 else "") + num(whole) + f
+
+
+## Local time from the server's ISO time (UTC): "time" 14:05:09 · "short" Oct 24, 14:05 · "date" Oct 24, 2026 · "full" Oct 24, 2026, 14:05.
+func when(iso: String, style := "time") -> String:
+	var t := Time.get_unix_time_from_datetime_string(iso.substr(0, 19))
+	t += Time.get_time_zone_from_system().get("bias", 0) * 60
+	var d := Time.get_datetime_dict_from_unix_time(int(t))
+	var hm := "%02d:%02d" % [d.hour, d.minute]
+	const MON := ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+	var day := "%s %d" % [MON[d.month - 1], d.day]
+	match style:
+		"short":
+			return day + ", " + hm
+		"date":
+			return day + ", " + str(d.year)
+		"full":
+			return day + ", " + str(d.year) + ", " + hm
+	return hm + ":%02d" % d.second

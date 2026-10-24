@@ -13,11 +13,12 @@ func _ready() -> void:
 	box.add_child(tabs)
 	tabs.add_child(_bed(me))
 	tabs.add_child(preload("res://scripts/desk.gd").new())
-	for name in ["Closet", "Bookshelf", "Filing cabinet"]:
+	for name in ["Closet", "Bookshelf"]:
 		var t := VBoxContainer.new()
 		t.name = name
 		t.add_child(Ui.label("Coming to the app soon. Open it in the browser game for now.", 24, Ui.MUTED))
 		tabs.add_child(t)
+	tabs.add_child(preload("res://scripts/cabinet.gd").new())
 	if Session.quarters_tab != "":
 		var n := tabs.get_node_or_null(Session.quarters_tab)
 		if n:

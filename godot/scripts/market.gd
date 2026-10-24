@@ -201,18 +201,6 @@ func _clear(box: Node) -> void:
 		c.queue_free()
 
 
-## Local time from the server's ISO time (UTC).
-func _when(iso: String, with_date := false) -> String:
-	var t := Time.get_unix_time_from_datetime_string(iso.substr(0, 19))
-	t += Time.get_time_zone_from_system().get("bias", 0) * 60
-	var d := Time.get_datetime_dict_from_unix_time(int(t))
-	var hm := "%02d:%02d" % [d.hour, d.minute]
-	if with_date:
-		const MON := ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-		return "%s %d, %s" % [MON[d.month - 1], d.day, hm]
-	return hm + ":%02d" % d.second
-
-
 # ── ore market ──
 
 func item() -> Dictionary:
@@ -487,7 +475,7 @@ func _render_tape() -> void:
 	if tr.is_empty():
 		tape_box.add_child(Ui.label("No trades yet.", 22, Ui.MUTED))
 	for t in tr.slice(0, 14):
-		tape_box.add_child(_row([_when(t.at), Ui.num(t.price), _lots(t.qty, item())],
+		tape_box.add_child(_row([Ui.when(t.at), Ui.num(t.price), _lots(t.qty, item())],
 			[Ui.MUTED, UP if t.side == "buy" else DOWN, Ui.TEXT]))
 
 
@@ -526,7 +514,7 @@ func _render_mine() -> void:
 	if tr.is_empty():
 		hist_box.add_child(Ui.label("No trades yet.", 22, Ui.MUTED))
 	for t in tr.slice(0, 12):
-		hist_box.add_child(_row([_when(t.at, true) + "  " + ("Bought " if t.side == "buy" else "Sold ") + _info(t.item).name,
+		hist_box.add_child(_row([Ui.when(t.at, "short") + "  " + ("Bought " if t.side == "buy" else "Sold ") + _info(t.item).name,
 			_lots(t.qty, _info(t.item)) + " @ " + Ui.num(t.price)], [UP if t.side == "buy" else DOWN, Ui.TEXT]))
 	_render_book()
 
@@ -833,7 +821,7 @@ func _au_update(c: Dictionary, a: Dictionary) -> void:
 	c.starts.visible = not running
 	c.running.visible = running
 	if not running:
-		c.starts.text = "Starts " + _when(a.start_at, true)
+		c.starts.text = "Starts " + Ui.when(a.start_at, "short")
 		return
 	if c.shown_lot != c.lot:                      # the next copy went up: start its bid box afresh
 		c.shown_lot = c.lot
