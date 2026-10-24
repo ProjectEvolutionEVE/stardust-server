@@ -140,7 +140,8 @@ LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 //    in the belly. The command deck is the band of lit windows on the underside of the bow, looking
 //    down on that approach: it is the Tower, where Inara watches you come in.
 const ship=new THREE.Group();
-const DOCK={approach:new THREE.Vector3(0,-17,215),mouth:new THREE.Vector3(0,-15,-35)};   // ship-local waypoints: in at the bow end of the belly bay
+const DOCK={approach:new THREE.Vector3(0,-17,215),mouth:new THREE.Vector3(0,-15,-35),     // ship-local waypoints: in at the bow end of the belly bay
+ aftApproach:new THREE.Vector3(0,-17,-285),aftMouth:new THREE.Vector3(0,-15,-60)};          // and in at the stern end (Eric 10-23: the bay is open both ways)
 const guideLights=[];
 (function(){
  const hullMat=new THREE.MeshStandardMaterial({color:0x5a606b,roughness:.5,metalness:.35,fog:false});   // dark gunmetal (high metalness reads black with no reflections to show)
@@ -346,7 +347,8 @@ const guideLights=[];
  [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,180,0,2);ml.position.set(0,-CEIL-4,z);ship.add(ml);});
  // guide lights: a lane from in front of the bow, under it, into the mouth (they pulse in sequence toward the ship)
  const gm=new THREE.SphereGeometry(0.9,10,8);
- for(let i=0;i<16;i++){const t=i/15;const p=DOCK.approach.clone().lerp(DOCK.mouth,t);
+ for(const [from,to] of [[DOCK.approach,DOCK.mouth],[DOCK.aftApproach,DOCK.aftMouth]])   // bow lane, and the aft lane (Eric 10-23)
+  for(let i=0;i<16;i++){const t=i/15;const p=from.clone().lerp(to,t);
   [-1,1].forEach(s=>{const m=new THREE.Mesh(gm,new THREE.MeshBasicMaterial({color:0x7fe0a8,fog:false}));m.position.set(s*9,p.y-4,p.z);ship.add(m);guideLights.push({m,t});});}
 })();
 ship.position.copy(STARSHIP_POS);ship.lookAt(0,0,0);scene.add(ship);
