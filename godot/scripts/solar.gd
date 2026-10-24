@@ -51,6 +51,7 @@ static func norm(a: Array) -> Array: return mul(a, 1.0 / length(a))
 static func cross(a: Array, b: Array) -> Array:
 	return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
 static func vec(a: Array) -> Vector3: return Vector3(a[0], a[1], a[2])
+static func vec3d(v: Vector3) -> Array: return [v.x, v.y, v.z]
 
 
 func to_local_d(w: Array) -> Array:
