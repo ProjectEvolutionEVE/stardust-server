@@ -124,7 +124,7 @@ func _test(code: String) -> void:
 			c.button_group = group
 			c.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			c.add_theme_font_size_override("font_size", 24)
-			c.toggled.connect(func(on): if on: picks[str(q.id)] = o.id)
+			c.toggled.connect(func(on): if on: picks[str(int(q.id))] = o.id)   # JSON numbers arrive as floats: "0", not "0.0"
 			body.add_child(c)
 	var send := Ui.button("Hand in the test")
 	send.pressed.connect(_mark.bind(code, picks, r.data.questions.size()))
