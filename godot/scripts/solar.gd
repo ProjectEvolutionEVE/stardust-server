@@ -122,7 +122,7 @@ func place(org: Array, cam: Camera3D) -> void:
 	light.basis = Basis.looking_at(-vec(norm(to_sun)), Vector3.UP)
 	var s := _place_far(sun, sun_l, SUN_R, org, me, cam)
 	glow.position = sun.position
-	glow.scale = Vector3.ONE * maxf(s * 14.0, IMP_D * 0.01)
+	glow.scale = Vector3.ONE * maxf(s * 22.0, IMP_D * 0.012)   # a little more than the browser (Eric 10-24)
 	for i in GIANTS.size():
 		_place_far(landmarks[i + 1].node, giants_l[i], GIANTS[i].rad, org, me, cam)
 	var near := func(n: Node3D, p: Array) -> void:
@@ -253,6 +253,9 @@ func _saturn_ring() -> MeshInstance3D:
 			st.add_vertex(p[k])
 	var m := StandardMaterial3D.new()
 	m.albedo_color = Color(Color("cdb892"), 0.75)
+	m.emission_enabled = true          # a little light of its own, so the ring reads past the planet's edge (Eric 10-24)
+	m.emission = Color("cdb892")
+	m.emission_energy_multiplier = 0.3
 	m.roughness = 1.0
 	m.cull_mode = BaseMaterial3D.CULL_DISABLED
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA

@@ -462,6 +462,15 @@ class Marks extends Control:
 		var font := get_theme_default_font()
 		var fs := 20
 		var placed: Array = []
+		for c in get_parent().get_children():      # the HUD's buttons and words are in the way too (Eric 10-24)
+			if c == self or not c.visible or c is Panel or not (c is Button or c is Label):
+				continue
+			if c is Label and (c as Label).text == "":
+				continue
+			var r: Rect2 = c.get_rect()
+			if c == bay.thr_label:
+				r.size = c.get_minimum_size()
+			placed.append({"x": r.get_center().x, "y": r.get_center().y, "w": r.size.x, "h": r.size.y})
 		for l in bay.sol.landmarks:
 			var n: Node3D = l.node
 			var v: Vector3 = inv * n.global_position
@@ -484,7 +493,7 @@ class Marks extends Control:
 			var by := (1.0 - y) / 2.0 * H
 			var px := bx
 			var py := clampf(by, h / 2.0 + 6.0, H - h / 2.0 - 6.0)
-			for k in range(1, 13):
+			for k in range(1, 25):
 				var hit := false
 				for q in placed:
 					if absf(q.x - px) < (w + q.w) / 2.0 + 8.0 and absf(q.y - py) < (h + q.h) / 2.0 + 3.0:
@@ -496,7 +505,11 @@ class Marks extends Control:
 			placed.append({"x": px, "y": py, "w": w, "h": h})
 			var c: Color = l.color
 			var mc := Vector2(px, py - h / 2.0 + 8.0)
-			if on:
+			# no ring over a body whose own disc is already bigger than the ring: the body shows itself
+			var disc_px: float = l.rad / maxf(bay.sol.dist_to(l, me), 1.0) / th * H / 2.0
+			if on and disc_px > 8.0:
+				pass
+			elif on:
 				draw_arc(mc, 7.0, 0.0, TAU, 24, c, 2.5, true)
 			else:
 				var r := 8.0
