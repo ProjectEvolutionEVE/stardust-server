@@ -101,7 +101,7 @@ The full record is in the `quavara-docs` repository:
   - **Filing cabinet:** important documents. The receipts log lives here. The lockbox for valuables is inside it.
 
 ### Game world and economy
-9. **The Starship is the truth; the words match the ship.** The Starship is the WSC Alexander von Humboldt, already built and approved. Change descriptions to fit the model; never change the model to fit the words.
+9. **The Starship is the truth; the words match the ship.** The Starship is the WSC Alexander von Humboldt, already built and approved. Change descriptions to fit the model; never change the model to fit the words. **The Tower is the bridge (Eric 10-23): one and the same.** It is the command deck (the long windowed pod under the bow, in the ship's model), where the Captain and his officers run the entire ship. The Captain needs the same view outside the vessel that Inara has, with his bridge crew in the same space, within earshot of his commands.
 10. **Nothing is unlimited.** Every place that holds goods has a size. Each player has a fixed space in the Starship's cargo hold.
 11. **Blueprints are designed by players, never by us.** Never pre-build player designs. Eric's space-container example was only an example: **do not build it**. Players submit designs through the blueprint form, and the team reviews them.
 12. **The market** is a live order book, open 24/7, with limit orders and instant trades. The bank trades on the order book. The old supply-pressure formula is retired.
