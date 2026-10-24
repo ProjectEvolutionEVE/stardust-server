@@ -400,13 +400,17 @@ func _xfer_panel(root: Control) -> void:
 		x_panel.add_child(fill)
 		x_bars.append([fill, v])
 		y += 66.0
+	var sc := ScrollContainer.new()                # what moved: scrolls when there are many materials (Eric 10-24)
+	sc.position = Vector2(24, 344)
+	sc.size = Vector2(612, 196)
+	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	x_panel.add_child(sc)
 	x_sum = Ui.label("", 20, Ui.TEXT)
-	x_sum.position = Vector2(24, 350)
-	x_sum.size = Vector2(612, 200)
-	x_panel.add_child(x_sum)
+	x_sum.custom_minimum_size = Vector2(596, 0)
+	sc.add_child(x_sum)
 	x_rcpt = Ui.label("", 18, Ui.TEXT)
-	x_rcpt.position = Vector2(24, 560)
-	x_rcpt.size = Vector2(612, 150)
+	x_rcpt.position = Vector2(24, 552)
+	x_rcpt.size = Vector2(612, 170)
 	x_panel.add_child(x_rcpt)
 	x_save = bay._hud_button("SAVE RECEIPT", Vector2(24, 730), Vector2(300, 64), 32, "")
 	x_save.pressed.connect(_save_receipt)
@@ -499,6 +503,9 @@ func _xfer_tick(dt: float) -> void:
 		return
 	if x.done or x.wait:
 		return
+	if cargo.is_empty():                          # the hold was refreshed from the server meanwhile
+		_finish_xfer(false)
+		return
 	x.t += dt
 	var p: Dictionary = cargo[0]
 	_render_xfer(p.box * minf(1.0, x.t / x.per))   # the piece leaving drains the hold smoothly
@@ -557,9 +564,9 @@ func _finish_xfer(stopped: bool) -> void:
 		_apply_inventory(x.server.get("inventory", {}))   # the server's figures are the truth
 	if x.n > 0:
 		var sr: Dictionary = x.server.get("receipt", {}) if x.has("server") else {}
-		var rc := {"code": sr.code, "at": str(sr.get("issued_at", "")), "pieces": int(sr.pieces), "left": int(sr.get("left_aboard", 0)),
+		var rc := {"code": sr.code, "at": _when(str(sr.get("issued_at", ""))), "pieces": int(sr.pieces), "left": int(sr.get("left_aboard", 0)),
 			"kg": sr.get("kg", {}), "used": float(sr.space_used_m3), "total": float(sr.space_total_m3), "server": true} if not sr.is_empty() \
-			else {"code": _receipt_code(), "at": Time.get_datetime_string_from_system(), "pieces": x.n, "left": cargo.size(),
+			else {"code": _receipt_code(), "at": _when(""), "pieces": x.n, "left": cargo.size(),
 			"kg": x.moved, "used": store_used(), "total": store.cap, "server": false}
 		x.receipt = rc
 		x_rcpt.text = "RECEIPT %s · %s\n%d %s from your ship's hold to your space in the Starship's cargo hold%s. Your space after: %.3f of %.2f m³ used.\n%s" % [
@@ -568,6 +575,18 @@ func _finish_xfer(stopped: bool) -> void:
 			else "PROTOTYPE RECEIPT: made without a sign-in, so this code cannot be checked."]
 		x_save.visible = true
 	x_done.visible = true
+
+
+## A receipt's time in the player's own time zone, e.g. "Oct 24, 2026 · 7:35 AM" (the server sends UTC).
+static func _when(iso: String) -> String:
+	var t := Time.get_unix_time_from_system()
+	if iso != "":
+		t = Time.get_unix_time_from_datetime_string(iso.substr(0, 19))   # UTC, without fractions or offset
+	t += Time.get_time_zone_from_system().bias * 60
+	var d := Time.get_datetime_dict_from_unix_time(int(t))
+	var mon: String = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][d.month - 1]
+	var h: int = d.hour % 12
+	return "%s %d, %d · %d:%02d %s" % [mon, d.day, d.year, 12 if h == 0 else h, d.minute, "PM" if d.hour >= 12 else "AM"]
 
 
 func _receipt_code() -> String:
