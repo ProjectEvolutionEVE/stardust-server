@@ -136,15 +136,14 @@ LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 
 // ── THE STARSHIP: Humboldt-Horizon class, Eric's design (10-10, finished 10-11). True scale: 263 m hull. No fin or wings (Eric 10-23).
 //    Model axes: bow toward +Z (the group is turned to face the Sun), Y up.
-//    Ships come home from the front, pass UNDER the long bow, and fly aft into the opening (the "mouth") between the
-//    bow and the lower rear fins. The command deck is the band of lit windows on the underside of the bow, looking
+//    Ships come home from the front, pass UNDER the long bow, and fly aft into the docking bay (the "mouth")
+//    in the belly. The command deck is the band of lit windows on the underside of the bow, looking
 //    down on that approach: it is the Tower, where Inara watches you come in.
 const ship=new THREE.Group();
 const DOCK={approach:new THREE.Vector3(0,-34,215),mouth:new THREE.Vector3(0,-30,-35)};   // ship-local waypoints
 const guideLights=[];
 (function(){
  const hullMat=new THREE.MeshStandardMaterial({color:0x5a606b,roughness:.5,metalness:.35,fog:false});   // dark gunmetal (high metalness reads black with no reflections to show)
- const finMat=new THREE.MeshStandardMaterial({color:0x4a4f58,roughness:.55,metalness:.35,side:THREE.DoubleSide,fog:false});
  // hull sections: a top-view profile lofted with an OVAL cross-section (Eric, 10-11: the body matches the oval exhaust),
  // squeezed thin toward the bow tip. section() gives the half-width and half-height at any z, so parts sit on the skin.
  const SKIN=2.2;
@@ -185,14 +184,8 @@ const guideLights=[];
  // upper deck ridge
  const RIDGE=[[0,70],[6,30],[10,-40],[11,-110],[8,-126]],RIDGE_Y=12,ridgeSec=section(RIDGE,8,0,70);
  const ridge=new THREE.Mesh(dagger(RIDGE,8,0,70),hullMat);ridge.position.y=RIDGE_Y;ship.add(ridge);
- // fin from a 2-D triangle-ish outline (x = along the ship, y = out from the hull), thin
- function fin(outline,thick){const sh=new THREE.Shape();outline.forEach((p,i)=>i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]));
-  const g=new THREE.ExtrudeGeometry(sh,{depth:thick,bevelEnabled:false});g.translate(0,0,-thick/2);return new THREE.Mesh(g,finMat);}
  // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
- // lower rear fins: blades rooted in the underside of the stern, splayed out and down at 45° (Eric's illustrations, 10-11);
- // the mouth is the gap between them, under the hull
- [-1,1].forEach(s=>{const b=fin([[-124,4],[-60,4],[-10,-46],[-40,-44],[-120,-12]],2.0);
-  b.rotation.y=-Math.PI/2;const g=new THREE.Group();g.add(b);g.position.set(s*10,-5,0);g.rotation.z=s*Math.PI/4;ship.add(g);});
+ // No lower rear fins either (Eric 10-23): a sleek hull. The docking bay's opening in the belly comes next.
  // engine: an oval exhaust set into the stern (Eric's illustration, 10-11), no tail pipe. A dark well sunk flush into the stern,
  // and the heat source glowing from deep inside it: a long hot core between two round burners.
  const OV=0.42;                                                       // oval height / width
@@ -216,11 +209,12 @@ const guideLights=[];
  // THE TOWER (command deck): a long pod hanging under the bow (Eric, 10-11). Inara is stationed here, watching every craft
  // that leaves and comes home; the docking path runs beneath it. A wraparound band of tall lit windows looks out on all
  // sides, with a second row angled down over the approach. The pod's top is sunk into the hull so it reads as one piece.
- // Size: 1/3 of the first draft (Eric, 10-11). Place: moved forward, close behind the bow (Eric 10-23; was zc 45), hanging
- // at the same depth under the skin as before (its centre 0.9 m below the hull's underside).
- const TOWER={zc:88,L:11.3,W:3.7,H:2,yc:-(mainSec(88).h+0.9),p:2.5,gap:1.5};   // centre z, half-length, half-width, half-height
- // the pod's centre line follows the hull's underside and sweeps up toward its nose, so the front blends into the hull
- const towerY=z=>-mainSec(z).h+(TOWER.yc+mainSec(TOWER.zc).h)+1.5*Math.max(0,(z-TOWER.zc)/TOWER.L)**2;
+ // Size: 1/3 of the first draft (Eric, 10-11). Place: moved forward, close behind the bow (Eric 10-23; was zc 45).
+ // LEVEL (Eric 10-23): the pod's centre line is level, so it hangs below the hull at the front and, as the hull deepens
+ // aft, sinks into the body; its bottom meets the skin 0.5 m above its aft tip.
+ const TOWER={zc:88,L:11.3,W:3.7,H:2,p:2.5,gap:1.5};   // centre z, half-length, half-width, half-height
+ TOWER.yc=-mainSec(TOWER.zc-TOWER.L).h+TOWER.H-0.5;
+ const towerY=z=>TOWER.yc;
  const towerHalfW=z=>{const u=Math.min(1,Math.abs(z-TOWER.zc)/TOWER.L);return TOWER.W*Math.pow(1-Math.pow(u,TOWER.p),1/TOWER.p);};
  {const N=40,zs=[];for(let j=0;j<=48;j++){const t=-1+2*j/48;zs.push(TOWER.zc+TOWER.L*Math.sign(t)*Math.pow(Math.abs(t),0.8));}
   const pos=[],idx=[];
