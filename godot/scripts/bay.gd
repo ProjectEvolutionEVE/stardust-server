@@ -60,6 +60,7 @@ var info: Label
 var appr: Label
 var stick: Control
 var hud_root: Control
+var quarters_btn: Button          # only while docked: the quarters are aboard (Eric 10-24: not out in space)
 var cargo: Node
 var mute_btn: Button
 var work_ring = null             # the ring you're working (Inara watches you drift out of it)
@@ -185,9 +186,9 @@ func _hud() -> void:
 		bt.button_down.connect(func(): pivot = dirn)
 		bt.button_up.connect(func(): pivot = 0)
 		root.add_child(bt)
-	var q := _hud_button("Quarters", Vector2(24, 1140), Vector2(176, 51), 11, "")
-	q.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
-	root.add_child(q)
+	quarters_btn = _hud_button("Quarters", Vector2(24, 1140), Vector2(176, 51), 11, "")
+	quarters_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
+	root.add_child(quarters_btn)
 	marks = Marks.new()
 	marks.bay = self
 	marks.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -335,6 +336,7 @@ func _process(dt: float) -> void:
 	sol.place(org, cam)
 	debris.place(org)
 	cargo.tick(dt)
+	quarters_btn.visible = docked
 	marks.queue_redraw()
 	cue.alpha += (cue.want - cue.alpha) * (1.0 - exp(-dt / 0.15))
 	stick.queue_redraw()
