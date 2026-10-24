@@ -5,7 +5,8 @@
   · Each book has one short, friendly test: five questions, four right to pass, and it can be taken again any time.
     The right answers never leave the server. A pass earns a certificate.
   · The Raw Materials Catalogue is a reference book (Eric 10-11): read any time, no test.
-Ranks (rule 6, rule 16) and building (rule 23) will count these passes; neither is wired up yet."""
+Skills count these passes (Eric 10-23: flying, mining and selling each need their book). Ranks (rule 6, rule 16) and
+building (rule 23) will count them too; neither is wired up yet."""
 import json, random
 import store as ST
 import blueprints as BP
@@ -139,6 +140,27 @@ async def mark(conn, pid, code, answers):
                            pid, code, right, total)
     return {"book": code, "title": b["title"], "score": right, "of": total, "passed": passed, "pass_mark": LB.PASS_MARK,
             "review": review}
+
+
+# SKILLS EARNED IN THE LIBRARY (Eric 10-23): a new Trainee is sent to the library first. Each skill needs its own pass:
+# flying needs the Pilot Basic Training Handbook, mining (collecting) needs Mining, and selling on the market needs
+# Trading & Markets. Passing only the pilot's test lets a player fly any time, but not mine or sell.
+SKILLS = {"fly": "piloting", "mine": "mining", "sell": "trading"}
+SKILL_NEEDS = {"fly": "Pass the Pilot Basic Training Handbook test in the Starship Library before you can fly.",
+               "mine": "Pass the Mining test in the Starship Library before you can mine.",
+               "sell": "Pass the Trading & Markets test in the Starship Library before you can sell on the market."}
+
+
+async def skills(conn, pid):
+    """Which skills the player has earned: {fly, mine, sell} -> true/false."""
+    passed = {r["book_code"] for r in await conn.fetch("SELECT book_code FROM library_passes WHERE player_id=$1", pid)}
+    return {k: book in passed for k, book in SKILLS.items()}
+
+
+async def require(conn, pid, skill):
+    """Refuse the action unless the player has passed the book that teaches it."""
+    if not await conn.fetchval("SELECT 1 FROM library_passes WHERE player_id=$1 AND book_code=$2", pid, SKILLS[skill]):
+        raise ST.Refused(SKILL_NEEDS[skill])
 
 
 async def certificates(conn, pid):

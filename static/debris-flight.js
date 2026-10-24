@@ -448,6 +448,7 @@ const collectBtn=document.getElementById('collect'),holdEl=document.getElementBy
 function nextPiece(f){let best=-1,bd=1e9;for(let i=0;i<f.pieces.length;i++){const p=f.pieces[i];if(p.taken||!shapeFits(p)||!roomFor(p))continue;
   f.mats[i].decompose(tmpP,tmpQ,tmpS);tmpP.add(f.center);const d=tmpP.distanceTo(cam.position);if(d<bd){bd=d;best=i;}}return best;}
 function startCollect(){const f=lock&&lock.parked&&lock.field;if(!f)return;
+ if(!hasSkill('mine')){libraryFirst('mine');return;}   // no Mining pass: the server would refuse every piece
  const left=f.pieces.filter(p=>!p.taken);
  if(!left.some(shapeFits)){VOICE.say('toobig');toast('TOO BIG TO TAKE','These pieces won\'t fit in your hold. Keep searching for a field of smaller debris.');return;}
  const i=nextPiece(f);if(i<0){VOICE.say('full');toast('HOLD FULL','No room left for these pieces. Return to the Starship to unload.');return;}
@@ -612,7 +613,18 @@ function finishXfer(stopped){const x=xfer;x.done=true;renderXfer();xferNow(null)
 //    you collect (real density, the shape fits, room left, collecting takes time), keeps what's in your hold between
 //    sessions, does each unload and issues the receipt anyone can check. Without a sign-in (the private preview), the
 //    flight keeps everything in this browser as before.
-const NET={api:window.STARDUST_API||null,token:null,session:null,on:false,last:0,queue:Promise.resolve()};
+const NET={api:window.STARDUST_API||null,token:null,session:null,on:false,last:0,queue:Promise.resolve(),skills:null};
+// SKILLS FROM THE LIBRARY (Eric 10-23): a signed-in Trainee is sent to the Starship Library first. Flying needs the Pilot
+// Basic Training Handbook, mining needs Mining, selling needs Trading & Markets; the server enforces mining and selling,
+// and the flight checks flying here. Without an account (the offline preview) nothing is locked.
+const SKILL_NEED={fly:'Pass the Pilot Basic Training Handbook test before you can fly.',
+ mine:'Pass the Mining test before you can mine.',sell:'Pass the Trading & Markets test before you can sell.'};
+function hasSkill(k){return !NET.on||!NET.skills||NET.skills[k]!==false;}
+let libNoteAt=0;
+function libraryFirst(k){if(performance.now()-libNoteAt<4000)return;libNoteAt=performance.now();
+ toast('LIBRARY FIRST',SKILL_NEED[k]+' Open QUARTERS, then Exit Private Quarters to the Starship Library.');refreshSkills();}
+function refreshSkills(){if(NET.on)netCall('/me').then(m=>{NET.skills=m.skills||null;}).catch(()=>{});}
+window.addEventListener('stardust:passed',refreshSkills);   // a test just passed in the library
 async function netCall(path,body){
  const r=await fetch(NET.api+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NET.token},
    body:body?JSON.stringify(body):undefined});
@@ -633,7 +645,7 @@ async function netStart(){
  try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
   // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
   SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
-  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);}).catch(()=>{});return true;}
+  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);NET.skills=m.skills||null;}).catch(()=>{});return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
@@ -829,7 +841,9 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if(docked&&(throttle||(holding&&stk.t>dockedAt))){docked=false;VOICE.say('launch');VOICE.story('launch');}   // taking the stick back stops the autopilot (the lock stays)
+ if(docked&&(throttle||(holding&&stk.t>dockedAt))){
+  if(!hasSkill('fly')){throttle=0;thrEl.textContent='Throttle 0%';stk=null;stickRing.hidden=true;libraryFirst('fly');}   // no pilot's pass: stay docked
+  else{docked=false;VOICE.say('launch');VOICE.story('launch');}}   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
@@ -1119,6 +1133,7 @@ function renderWarpMenu(){
   b.children[2].textContent=fmtDist(cam.position.distanceTo(p));
   b.addEventListener('click',()=>{$('warppanel').hidden=true;startWarp(d);});$('warplist').appendChild(b);});}
 function startWarp(d){
+ if(docked&&!hasSkill('fly')){libraryFirst('fly');return;}   // warping out of the bay is flying too
  const to=destPoint(d),from=cam.position.clone(),dist=from.distanceTo(to);
  if(dist<20000){warn('You\'re already there.');return;}
  // bend the route around the Sun if the straight line passes within 0.25 AU of it
