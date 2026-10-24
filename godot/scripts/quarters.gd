@@ -12,11 +12,17 @@ func _ready() -> void:
 	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(tabs)
 	tabs.add_child(_bed(me))
-	for name in ["Desk", "Closet", "Bookshelf", "Filing cabinet"]:
+	tabs.add_child(preload("res://scripts/desk.gd").new())
+	for name in ["Closet", "Bookshelf", "Filing cabinet"]:
 		var t := VBoxContainer.new()
 		t.name = name
 		t.add_child(Ui.label("Coming to the app soon. Open it in the browser game for now.", 24, Ui.MUTED))
 		tabs.add_child(t)
+	if Session.quarters_tab != "":
+		var n := tabs.get_node_or_null(Session.quarters_tab)
+		if n:
+			tabs.current_tab = n.get_index()
+		Session.quarters_tab = ""
 	var out := Ui.button("Exit Private Quarters", false)   # rule 19: to the Library or the Docking Bay
 	out.pressed.connect(_exit)
 	box.add_child(out)

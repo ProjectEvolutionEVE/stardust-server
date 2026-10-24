@@ -5,7 +5,8 @@ extends Node
 
 const OPEN := ["INARA-CALL-001", "INARA-CALL-002", "INARA-CALL-003", "INARA-CALL-004", "INARA-CALL-005"]
 const OPEN_CPT := ["INARA-CALL-006", "INARA-CALL-007", "INARA-CALL-008", "INARA-CALL-009", "INARA-CALL-010"]
-const MOMENTS := {"wake": ["INARA-TWR-042", "INARA-TWR-043"], "sleep": ["INARA-TWR-044", "INARA-TWR-045"]}
+const MOMENTS := {"wake": ["INARA-TWR-042", "INARA-TWR-043"], "sleep": ["INARA-TWR-044", "INARA-TWR-045"],
+	"order": ["INARA-TWR-051"]}
 const WELCOME := ["INARA-WELCOME-001", "INARA-WELCOME-002", "INARA-STORY-001", "INARA-STORY-002", "INARA-WELCOME-003"]
 
 var player: AudioStreamPlayer
@@ -34,6 +35,15 @@ func ring(parent: Control, ids: Array, beat := "") -> void:
 			await Api.call_api("POST", "/api/dfg/voice/heard", {"beat": beat, "accepted": true})
 		for id in ids:
 			await _play(id)
+	busy = false
+
+
+## A short line for a moment, played at once with no call (as the browser's V.say); skipped while she's busy.
+func say(m: String) -> void:
+	if busy or not MOMENTS.has(m) or str(Session.me.get("voice_set", "")) == "":
+		return
+	busy = true
+	await _play(MOMENTS[m].pick_random())
 	busy = false
 
 

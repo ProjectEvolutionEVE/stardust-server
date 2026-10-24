@@ -71,3 +71,28 @@ func error(parent: Node, text: String) -> void:
 	d.dialog_text = text
 	parent.add_child(d)
 	d.popup_centered()
+
+
+## Whole numbers with thousands commas, as the browser shows them ("12,345"); "—" when there's none.
+func num(v: Variant) -> String:
+	if v == null:
+		return "—"
+	var n := int(round(float(v)))
+	var s := str(absi(n))
+	var out := ""
+	while s.length() > 3:
+		out = "," + s.right(3) + out
+		s = s.left(s.length() - 3)
+	return ("-" if n < 0 else "") + s + out
+
+
+## Up to `places` decimals, trailing zeros dropped ("1.5", "12,000.25").
+func dec(x: float, places: int) -> String:
+	var whole := floori(absf(x))
+	var frac := snappedf(absf(x) - whole, pow(10, -places))
+	if frac >= 1.0:
+		whole += 1
+		frac = 0.0
+	var f := ("%." + str(places) + "f") % frac
+	f = f.substr(1).rstrip("0").rstrip(".")
+	return ("-" if x < 0 else "") + num(whole) + f

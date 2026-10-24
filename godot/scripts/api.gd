@@ -2,7 +2,9 @@ extends Node
 ## Every call to the game server. Each call gets its own HTTPRequest, so screens can await them one at a time:
 ##   var r = await Api.call_api("GET", "/api/dfg/me")   ->  {ok, code, data, error}
 
-const BASE_URL := "https://game-server-production-9863.up.railway.app"
+const LIVE_URL := "https://game-server-production-9863.up.railway.app"
+## Local tests only: in a debug run, STARDUST_API=http://localhost:8091 points the app at a test server.
+var BASE_URL: String = OS.get_environment("STARDUST_API") if OS.is_debug_build() and OS.get_environment("STARDUST_API") != "" else LIVE_URL
 
 
 func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = true) -> Dictionary:

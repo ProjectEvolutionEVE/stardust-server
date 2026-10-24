@@ -67,3 +67,6 @@ func remember(channel: String, address: String, region: String) -> void:
 func forget() -> void:
 	if FileAccess.file_exists(REMEMBER_PATH):
 		DirAccess.remove_absolute(REMEMBER_PATH)
+
+## Which quarters tab opens next, e.g. "Desk" when coming back from the Market terminal.
+var quarters_tab := ""
