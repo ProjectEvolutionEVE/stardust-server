@@ -186,31 +186,55 @@ const guideLights=[];
  const ridge=new THREE.Mesh(dagger(RIDGE,8,0,70),hullMat);ridge.position.y=RIDGE_Y;ship.add(ridge);
  // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
  // No lower rear fins either (Eric 10-23): a sleek hull.
- // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar that runs from z=+20 to z=-112, open at
- // BOTH ends, so craft can come in or launch from the bow or the stern. Its section is an oval, like the hull's; the top
- // is sunk into the hull so the two read as one body. Each end is raked (the keel is shorter than the top), and almost
- // all of it is the opening: a wide oval with a rim, lit inside.
- // Oval outside, 30% wider, then 20% larger again and raised (Eric 10-23): 35% of the opening's height sits above the hull's
- // underside, so the ceiling you see inside the bay is the outer hull of the main body's bottom (y = -CEIL).
- const CEIL=mainSec(0).h,BAY={zf:20,za:-112,top:4.2,cy:-12,a:25.8,b:16.2,ocy:-15,hw:21.5,hh:10.2,p:2.4,rake:0.65};
- {const sh=new THREE.Shape();sh.absellipse(0,BAY.cy,BAY.a,BAY.b,0,Math.PI*2,false,0);   // outer section: an oval, its top sunk into the hull
-  const hole=new THREE.Path(),N=64;                                    // the opening: a wide oval
-  for(let i=0;i<N;i++){const a=i/N*Math.PI*2,c=Math.cos(a),sn=Math.sin(a);
-   const x=BAY.hw*Math.sign(c)*Math.pow(Math.abs(c),2/BAY.p),y=BAY.ocy+BAY.hh*Math.sign(sn)*Math.pow(Math.abs(sn),2/BAY.p);
-   i?hole.lineTo(x,y):hole.moveTo(x,y);}
-  hole.closePath();sh.holes.push(hole);
-  const g=new THREE.ExtrudeGeometry(sh,{depth:BAY.zf-BAY.za,bevelEnabled:false,curveSegments:48});g.translate(0,0,BAY.za);
-  {const pa=g.attributes.position;for(let i=0;i<pa.count;i++){const z=pa.getZ(i),k=BAY.rake*(BAY.top-pa.getY(i));   // rake both ends
-   if(Math.abs(z-BAY.zf)<1e-3)pa.setZ(i,z-k);else if(Math.abs(z-BAY.za)<1e-3)pa.setZ(i,z+k);}g.computeVertexNormals();}
+ // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar from z=+20 to z=-112, open at BOTH ends,
+ // so craft can come in or launch from the bow or the stern. It is built as ONE smooth shell (Eric: "not a tube added on"):
+ // an oval outside whose top is sunk into the hull, a wide oval tunnel inside, and rounded lips at both ends where the
+ // outside rolls over into the opening, so there are no sharp edges. The ends are raked (the keel is shorter than the top).
+ // 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main body's outer hull (y=-CEIL).
+ // A level deck runs the full length: the landing pad is flat.
+ const CEIL=mainSec(0).h,BAY={zf:20,za:-112,cy:-12,a:25.8,b:16.2,ocy:-15,hw:21.5,hh:10.2,pTop:2.4,pBot:6,rake:0.4,lip:7,aT:12,sweep:14};
+ BAY.deck=BAY.ocy-BAY.hh*0.75;
+ {const N=96,pw=(v,e)=>Math.sign(v)*Math.pow(Math.abs(v),e);
+  // Both outlines are sampled along the same rays from the opening's centre, so each lip rolls straight out from the
+  // opening to the outside with no twist. The opening: an oval on top, nearly square corners under the deck. The outside:
+  // an oval below its widest line; above it the shoulders narrow (to aT at the top) and slope up into the hull's flanks.
+  const insideOuter=(x,y)=>{const s=(y-BAY.cy)/BAY.b;if(Math.abs(s)>1)return false;const c=Math.sqrt(1-s*s);
+   return Math.abs(x)<=c*(s>0?BAY.a-(BAY.a-BAY.aT)*s:BAY.a);};
+  const dir=i=>{const t=i/N*Math.PI*2;return [Math.cos(t),Math.sin(t)];};
+  const inner=i=>{const [c,s]=dir(i),p=s>=0?BAY.pTop:BAY.pBot;
+   const r=1/Math.pow(Math.pow(Math.abs(c)/BAY.hw,p)+Math.pow(Math.abs(s)/BAY.hh,p),1/p);return [c*r,BAY.ocy+s*r];};
+  const outer=i=>{const [c,s]=dir(i);let lo=0,hi=60;for(let k=0;k<40;k++){const m=(lo+hi)/2;insideOuter(c*m,BAY.ocy+s*m)?lo=m:hi=m;}
+   return [c*lo,BAY.ocy+s*lo];};
+  const zm=(BAY.zf+BAY.za)/2,half=(BAY.zf-BAY.za)/2;
+  // the ends lean back: the lower a point, the further in, and the further out to the side, the further in (seen from
+  // below each end is a smooth curve, so there are no corners to stick out)
+  const rake=(z,y,x=0)=>z-((z-zm)/half)*(BAY.rake*(BAY.cy+BAY.b-y)+BAY.sweep*(x/BAY.a)**2);
+  const rings=[];
+  const ring=(f,z)=>{const r=[];for(let i=0;i<N;i++){const [x,y]=f(i);r.push([x,y,rake(z,y,x)]);}rings.push(r);};
+  const lipRing=(u,zEnd,dir)=>ring(i=>{const I=inner(i),O=outer(i),k=Math.sin(u*Math.PI/2);return [I[0]+(O[0]-I[0])*k,I[1]+(O[1]-I[1])*k];},
+   zEnd-dir*BAY.lip*(1-Math.cos(u*Math.PI/2)));
+  const LS=10,OS=40;
+  for(let j=0;j<=LS;j++)lipRing(j/LS,BAY.zf,1);                                          // bow lip: opening edge -> outside
+  for(let j=1;j<OS;j++)ring(outer,BAY.zf-BAY.lip-(BAY.zf-BAY.za-2*BAY.lip)*j/OS);        // the outside, bow to stern
+  for(let j=LS;j>=0;j--)lipRing(j/LS,BAY.za,-1);                                         // stern lip: outside -> opening edge
+  for(let j=1;j<OS;j++)ring(inner,BAY.za+(BAY.zf-BAY.za)*j/OS);                          // the tunnel, stern to bow
+  const pos=[],idx=[],R=rings.length;
+  for(const r of rings)for(const v of r)pos.push(v[0],v[1],v[2]);
+  for(let j=0;j<R;j++){const k=(j+1)%R;for(let i=0;i<N;i++){const a=j*N+i,b=j*N+(i+1)%N,c=k*N+i,d=k*N+(i+1)%N;idx.push(a,c,b,b,c,d);}}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);g.computeVertexNormals();
   const bayMat=hullMat.clone();bayMat.side=THREE.DoubleSide;ship.add(new THREE.Mesh(g,bayMat));
-  // inside: two rows of lights on the ceiling (the hull's underside) the length of the bay, and a strip along each side at deck level
+  // the deck: a level landing pad the full length of the tunnel, its ends following the rake
+  const dw=BAY.hw*Math.pow(1-Math.pow(0.75,BAY.pBot),1/BAY.pBot)-0.05;
+  const dz=[rake(BAY.zf,BAY.deck,dw)-1,rake(BAY.za,BAY.deck,dw)+1];   // trimmed to sit inside the swept ends
+  const deck=new THREE.Mesh(new THREE.PlaneGeometry(2*dw,dz[0]-dz[1]),new THREE.MeshStandardMaterial({color:0x3a3f47,roughness:.8,metalness:.2,side:THREE.DoubleSide,fog:false}));
+  deck.rotation.x=-Math.PI/2;deck.position.set(0,BAY.deck,(dz[0]+dz[1])/2);ship.add(deck);
+  // inside: two rows of lights on the ceiling (the hull's underside), and a blue strip along each side of the deck
   const lm=new THREE.MeshBasicMaterial({color:0xdfe8ff,fog:false,side:THREE.DoubleSide}),n=22;
-  const rows=[[-8,-CEIL-0.3,Math.PI/2],[8,-CEIL-0.3,Math.PI/2]];
-  for(const [x,y,rx] of rows){const im=new THREE.InstancedMesh(new THREE.PlaneGeometry(1.6,3.2),lm,n);
-   for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(rx);m.setPosition(x,y,z);im.setMatrixAt(i,m);}
+  for(const x of [-8,8]){const im=new THREE.InstancedMesh(new THREE.PlaneGeometry(1.6,3.2),lm,n);
+   for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(Math.PI/2);m.setPosition(x,-CEIL-0.3,z);im.setMatrixAt(i,m);}
    ship.add(im);}
-  [-1,1].forEach(sd=>{const strip=new THREE.Mesh(new THREE.PlaneGeometry(BAY.zf-BAY.za-30,0.5),new THREE.MeshBasicMaterial({color:0x7fb0ff,fog:false,side:THREE.DoubleSide}));
-   strip.rotation.y=Math.PI/2;strip.position.set(sd*(BAY.hw*0.85),BAY.ocy-BAY.hh*0.55,(BAY.zf+BAY.za)/2);ship.add(strip);});}
+  [-1,1].forEach(sd=>{const strip=new THREE.Mesh(new THREE.PlaneGeometry(dz[0]-dz[1]-10,0.5),new THREE.MeshBasicMaterial({color:0x7fb0ff,fog:false,side:THREE.DoubleSide}));
+   strip.rotation.y=Math.PI/2;strip.position.set(sd*(dw-0.3),BAY.deck+0.6,(dz[0]+dz[1])/2);ship.add(strip);});}
  // engine: an oval exhaust set into the stern (Eric's illustration, 10-11), no tail pipe. A dark well sunk flush into the stern,
  // and the heat source glowing from deep inside it: a long hot core between two round burners.
  const OV=0.42;                                                       // oval height / width
@@ -317,7 +341,7 @@ const guideLights=[];
  [[0,45,-20,4500,0xc8d4ff],[0,-75,60,2200,0xffe0b0],[60,0,-60,3000,0xc8d4ff],[-60,0,-60,3000,0xc8d4ff]].forEach(f=>{
   const l=new THREE.PointLight(f[4],f[3],0,2);l.position.set(f[0],f[1],f[2]);ship.add(l);});
  // the bay: work-lights inside the hangar
- [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,500,0,2);ml.position.set(0,-CEIL-4,z);ship.add(ml);});
+ [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,180,0,2);ml.position.set(0,-CEIL-4,z);ship.add(ml);});
  // guide lights: a lane from in front of the bow, under it, into the mouth (they pulse in sequence toward the ship)
  const gm=new THREE.SphereGeometry(0.9,10,8);
  for(let i=0;i<16;i++){const t=i/15;const p=DOCK.approach.clone().lerp(DOCK.mouth,t);
