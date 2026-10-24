@@ -169,23 +169,23 @@ func _hud() -> void:
 	lib_btn.visible = false
 	lib_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	root.add_child(lib_btn)
-	var up := _hud_button("", Vector2(600, 964), Vector2(96, 96), 48, "up")
+	var up := _hud_button("", Vector2(619, 1004), Vector2(77, 77), 38, "up")
 	up.pressed.connect(func(): _set_throttle(throttle + 1))
 	root.add_child(up)
-	thr_label = Ui.label("Throttle 0%", 22, HUD_RED)
+	thr_label = Ui.label("Throttle 0%", 18, HUD_RED)
 	thr_label.autowrap_mode = TextServer.AUTOWRAP_OFF
-	thr_label.position = Vector2(560, 1068)
+	thr_label.position = Vector2(588, 1084)
 	root.add_child(thr_label)
-	var dn := _hud_button("", Vector2(600, 1110), Vector2(96, 96), 48, "down")
+	var dn := _hud_button("", Vector2(619, 1124), Vector2(77, 77), 38, "down")
 	dn.pressed.connect(func(): _set_throttle(throttle - 1))
 	root.add_child(dn)
-	for p in [["left", Vector2(30, 1010), -1], ["right", Vector2(150, 1010), 1]]:
-		var bt := _hud_button("", p[1], Vector2(96, 96), 48, p[0])
+	for p in [["left", Vector2(24, 1040), -1], ["right", Vector2(121, 1040), 1]]:
+		var bt := _hud_button("", p[1], Vector2(77, 77), 38, p[0])
 		var dirn: int = p[2]
 		bt.button_down.connect(func(): pivot = dirn)
 		bt.button_up.connect(func(): pivot = 0)
 		root.add_child(bt)
-	var q := _hud_button("Quarters", Vector2(30, 1140), Vector2(220, 64), 14, "")
+	var q := _hud_button("Quarters", Vector2(24, 1140), Vector2(176, 51), 11, "")
 	q.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
 	root.add_child(q)
 	marks = Marks.new()
@@ -205,7 +205,7 @@ func _hud() -> void:
 	streaks.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(streaks)
 	root.move_child(streaks, 0)
-	var wb := _hud_button("WARP", Vector2(546, 880), Vector2(150, 64), 32, "")
+	var wb := _hud_button("WARP", Vector2(576, 942), Vector2(120, 51), 26, "")
 	wb.pressed.connect(func():
 		if warp.is_empty():
 			_warp_menu()
@@ -217,7 +217,7 @@ func _hud() -> void:
 	cargo.bay = self
 	add_child(cargo)
 	cargo.build(root)
-	mute_btn = _hud_button("Sound on", Vector2(540, 40), Vector2(150, 64), 32, "")   # silences the scanner and Inara
+	mute_btn = _hud_button("Sound on", Vector2(576, 40), Vector2(120, 51), 26, "")   # silences the scanner and Inara
 	mute_btn.pressed.connect(func():
 		sound.muted = not sound.muted
 		Voice.set_muted(sound.muted)
@@ -254,7 +254,7 @@ func _hud_button(text: String, at: Vector2, sz: Vector2, radius: int, shape: Str
 	b.position = at
 	b.size = sz
 	b.focus_mode = Control.FOCUS_NONE
-	b.add_theme_font_size_override("font_size", 22)
+	b.add_theme_font_size_override("font_size", 18)   # flight buttons 20% smaller (Eric 10-24)
 	var g := Glyph.new()
 	g.shape = shape
 	g.set_anchors_preset(Control.PRESET_FULL_RECT)

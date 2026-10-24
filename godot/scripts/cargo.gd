@@ -253,33 +253,33 @@ func tick(dt: float) -> void:
 
 # ── the screen ──
 func build(root: Control) -> void:
-	hold_btn = bay._hud_button("", Vector2(24, 76), Vector2(300, 52), 10, "")
-	hold_btn.add_theme_font_size_override("font_size", 18)
+	hold_btn = bay._hud_button("", Vector2(24, 76), Vector2(240, 42), 8, "")
+	hold_btn.add_theme_font_size_override("font_size", 15)
 	hold_btn.pressed.connect(func():
 		render_hold()
 		hold_panel.visible = not hold_panel.visible)
 	root.add_child(hold_btn)
 	var bg := ColorRect.new()
 	bg.color = Color(0.64, 0.07, 0.11, 0.18)
-	bg.position = Vector2(10, 42)
-	bg.size = Vector2(280, 4)
+	bg.position = Vector2(10, 34)
+	bg.size = Vector2(220, 3)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hold_btn.add_child(bg)
 	hold_fill = ColorRect.new()
 	hold_fill.color = bay.HUD_RED
-	hold_fill.position = Vector2(10, 42)
-	hold_fill.size = Vector2(0, 4)
+	hold_fill.position = Vector2(10, 34)
+	hold_fill.size = Vector2(0, 3)
 	hold_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hold_btn.add_child(hold_fill)
-	collect_btn = bay._hud_button("COLLECT", Vector2(230, 1100), Vector2(260, 80), 40, "")
-	collect_btn.add_theme_font_size_override("font_size", 26)
+	collect_btn = bay._hud_button("COLLECT", Vector2(256, 1120), Vector2(208, 64), 32, "")
+	collect_btn.add_theme_font_size_override("font_size", 21)
 	collect_btn.visible = false
 	collect_btn.pressed.connect(func():
 		bay.sound.ping(660.0)
 		start_collect())
 	root.add_child(collect_btn)
-	unload_btn = bay._hud_button("UNLOAD", Vector2(230, 1100), Vector2(260, 80), 40, "")
-	unload_btn.add_theme_font_size_override("font_size", 26)
+	unload_btn = bay._hud_button("UNLOAD", Vector2(256, 1120), Vector2(208, 64), 32, "")
+	unload_btn.add_theme_font_size_override("font_size", 21)
 	unload_btn.visible = false
 	unload_btn.pressed.connect(start_unload)
 	root.add_child(unload_btn)
@@ -345,7 +345,7 @@ func render_hold() -> void:
 		return
 	var used := bulk()
 	hold_btn.text = "HOLD %.2f / %.2f m³" % [used, hold.cap]
-	hold_fill.size.x = 280.0 * clampf(used / hold.cap, 0.0, 1.0)
+	hold_fill.size.x = 220.0 * clampf(used / hold.cap, 0.0, 1.0)
 	var rows := {}
 	for p in cargo:
 		var k: String = "flawless" if p.get("flawless", false) else p.mat
