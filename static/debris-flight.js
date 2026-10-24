@@ -140,7 +140,7 @@ LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 //    in the belly. The command deck is the band of lit windows on the underside of the bow, looking
 //    down on that approach: it is the Tower, where Inara watches you come in.
 const ship=new THREE.Group();
-const DOCK={approach:new THREE.Vector3(0,-20,215),mouth:new THREE.Vector3(0,-18,-35)};   // ship-local waypoints: in at the bow end of the belly bay
+const DOCK={approach:new THREE.Vector3(0,-18,215),mouth:new THREE.Vector3(0,-16,-35)};   // ship-local waypoints: in at the bow end of the belly bay
 const guideLights=[];
 (function(){
  const hullMat=new THREE.MeshStandardMaterial({color:0x5a606b,roughness:.5,metalness:.35,fog:false});   // dark gunmetal (high metalness reads black with no reflections to show)
@@ -186,41 +186,33 @@ const guideLights=[];
  const ridge=new THREE.Mesh(dagger(RIDGE,8,0,70),hullMat);ridge.position.y=RIDGE_Y;ship.add(ridge);
  // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
  // No lower rear fins either (Eric 10-23): a sleek hull.
- // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar from z=+20 to z=-112, open at BOTH ends,
- // so craft can come in or launch from the bow or the stern. It is built as ONE smooth shell (Eric: "not a tube added on"):
- // an oval outside whose top is sunk into the hull, a wide oval tunnel inside, and rounded lips at both ends where the
- // outside rolls over into the opening, so there are no sharp edges. Each lip is a long bell-mouth (22 m) that flares
- // gradually from the opening to the full belly, so nothing comes to a point. The ends are raked (the keel is shorter than the top).
- // 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main body's outer hull (y=-CEIL).
- // A level deck runs the full length: the landing pad is flat.
- const CEIL=mainSec(0).h,BAY={zf:20,za:-112,cy:-12,a:25.8,b:16.2,ocy:-15,hw:21.5,hh:10.2,pTop:2.4,pBot:6,rake:0.4,lip:22,yJ:-1.5,sweep:0,fp:3.5};
+ // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar from just behind the bridge to near the
+ // stern, open at BOTH ends, so craft can come in or launch from the bow or the stern. Its shape follows the raised
+ // spine on top (Eric: "the shape and feel of the top structure, on a larger scale"): a long, smooth oval body narrower
+ // than the hull, with long, gently sloping ends (the keel much shorter than the top), so craft fly in from the front
+ // and below. It is ONE shell: the outside rolls over at each end into the tunnel through a long rounded lip, so there
+ // are no sharp edges. 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main
+ // body's outer hull (y=-CEIL). A level deck runs the full length: the landing pad is flat.
+ const CEIL=mainSec(0).h,BAY={zf:35,za:-118,cy:-12,a:17.5,b:15,pOut:2.6,ocy:-15,hw:15,hh:9,pTop:2.4,pBot:4,rake:1.2,lip:12,sweep:18};
  BAY.deck=BAY.ocy-BAY.hh*0.75;
  {const N=96,pw=(v,e)=>Math.sign(v)*Math.pow(Math.abs(v),e);
   // Both outlines are sampled along the same rays from the opening's centre, so each lip rolls straight out from the
-  // opening to the outside with no twist. The opening: an oval on top, nearly square corners under the deck. The outside
-  // (Eric 10-23, his reference image): an oval below its widest line; above it each side sweeps up and OUT in a smooth
-  // concave curve and runs into the hull's flared flank at y=BAY.yJ, so the belly flows into the body as one surface.
-  const hullX=(s,w)=>Math.sqrt(Math.max(0,1-s*s))*w+MAIN_FLARE*w*Math.pow(1-Math.min(1,Math.abs(s)),EDGE_K);  // hull half-width at height s·h
-  // the hull's width and depth averaged over 40 m along the ship, so the sweep follows the hull without its kinks
-  const hullAvg=z=>{let w=0,h=0;for(let d=-20;d<=20;d+=5){const q=mainSec(z+d);w+=q.w;h+=q.h;}return {w:w/9,h:h/9};};
-  const insideOuter=(x,y,z)=>{const ax=Math.abs(x);
-   if(y<=BAY.cy){const s=(y-BAY.cy)/BAY.b;return s>=-1&&ax<=BAY.a*Math.sqrt(1-s*s);}
-   const {w,h}=hullAvg(z),xh=hullX(y/h,w)-0.5;
-   if(y>=BAY.yJ)return ax<=xh;
-   const u=(y-BAY.cy)/(BAY.yJ-BAY.cy),xj=hullX(BAY.yJ/h,w)-0.5;
-   return ax<=BAY.a+(xj-BAY.a)*Math.pow(u,BAY.fp);};                   // leaves the oval steep, then sweeps out almost level into the hull
+  // opening to the outside with no twist. The opening: an oval on top, squarer under the deck. The outside: an oval
+  // on top (sunk into the hull), fuller below.
+  const insideOuter=(x,y)=>{const s=(y-BAY.cy)/BAY.b;if(Math.abs(s)>1)return false;const p=s<0?BAY.pOut:2;
+   return Math.abs(x)<=BAY.a*Math.pow(1-Math.pow(Math.abs(s),p),1/p);};
   const dir=i=>{const t=i/N*Math.PI*2;return [Math.cos(t),Math.sin(t)];};
   const inner=i=>{const [c,s]=dir(i),p=s>=0?BAY.pTop:BAY.pBot;
    const r=1/Math.pow(Math.pow(Math.abs(c)/BAY.hw,p)+Math.pow(Math.abs(s)/BAY.hh,p),1/p);return [c*r,BAY.ocy+s*r];};
-  const outer=(i,z)=>{const [c,s]=dir(i);let lo=0,hi=60;for(let k=0;k<40;k++){const m=(lo+hi)/2;insideOuter(c*m,BAY.ocy+s*m,z)?lo=m:hi=m;}
+  const outer=i=>{const [c,s]=dir(i);let lo=0,hi=60;for(let k=0;k<40;k++){const m=(lo+hi)/2;insideOuter(c*m,BAY.ocy+s*m)?lo=m:hi=m;}
    return [c*lo,BAY.ocy+s*lo];};
   const zm=(BAY.zf+BAY.za)/2,half=(BAY.zf-BAY.za)/2;
   // the ends lean back: the lower a point, the further in, and the further out to the side, the further in (seen from
   // below each end is a smooth curve, so there are no corners to stick out)
   const rake=(z,y,x=0)=>z-((z-zm)/half)*(BAY.rake*(BAY.cy+BAY.b-y)+BAY.sweep*(x/BAY.a)**2);
   const rings=[];
-  const ring=(f,z)=>{const r=[];for(let i=0;i<N;i++){const [x,y]=f(i,z);r.push([x,y,rake(z,y,x)]);}rings.push(r);};
-  const lipRing=(u,zEnd,dir)=>ring(i=>{const I=inner(i),O=outer(i,zEnd),k=Math.sin(u*Math.PI/2);return [I[0]+(O[0]-I[0])*k,I[1]+(O[1]-I[1])*k];},
+  const ring=(f,z)=>{const r=[];for(let i=0;i<N;i++){const [x,y]=f(i);r.push([x,y,rake(z,y,x)]);}rings.push(r);};
+  const lipRing=(u,zEnd,dir)=>ring(i=>{const I=inner(i),O=outer(i),k=Math.sin(u*Math.PI/2);return [I[0]+(O[0]-I[0])*k,I[1]+(O[1]-I[1])*k];},
    zEnd-dir*BAY.lip*(1-Math.cos(u*Math.PI/2)));
   const LS=10,OS=40;
   for(let j=0;j<=LS;j++)lipRing(j/LS,BAY.zf,1);                                          // bow lip: opening edge -> outside
