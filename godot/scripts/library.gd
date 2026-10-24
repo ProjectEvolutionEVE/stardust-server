@@ -12,12 +12,14 @@ var body: VBoxContainer
 func _ready() -> void:
 	var outer := Ui.screen(self)
 	var top := HBoxContainer.new()
-	top.add_child(Ui.label("Starship Library", 40, Ui.GOLD))
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	top.add_child(spacer)
+	var title := Ui.label("Starship Library", 40, Ui.GOLD)
+	title.autowrap_mode = TextServer.AUTOWRAP_OFF          # one line; it takes the room the button doesn't
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(title)
 	var back := Ui.button("Quarters", false)
-	back.custom_minimum_size = Vector2(180, 64)
+	back.custom_minimum_size = Vector2(160, 56)
+	back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	back.add_theme_font_size_override("font_size", 22)
 	back.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
 	top.add_child(back)
 	outer.add_child(top)
