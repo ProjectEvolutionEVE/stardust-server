@@ -140,7 +140,7 @@ LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 //    in the belly. The command deck is the band of lit windows on the underside of the bow, looking
 //    down on that approach: it is the Tower, where Inara watches you come in.
 const ship=new THREE.Group();
-const DOCK={approach:new THREE.Vector3(0,-18,215),mouth:new THREE.Vector3(0,-16,-35)};   // ship-local waypoints: in at the bow end of the belly bay
+const DOCK={approach:new THREE.Vector3(0,-17,215),mouth:new THREE.Vector3(0,-15,-35)};   // ship-local waypoints: in at the bow end of the belly bay
 const guideLights=[];
 (function(){
  const hullMat=new THREE.MeshStandardMaterial({color:0x5a606b,roughness:.5,metalness:.35,fog:false});   // dark gunmetal (high metalness reads black with no reflections to show)
@@ -193,7 +193,8 @@ const guideLights=[];
  // and below. It is ONE shell: the outside rolls over at each end into the tunnel through a long rounded lip, so there
  // are no sharp edges. 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main
  // body's outer hull (y=-CEIL). A level deck runs the full length: the landing pad is flat.
- const CEIL=mainSec(0).h,BAY={zf:35,za:-118,cy:-12,a:17.5,b:15,pOut:2.6,ocy:-15,hw:15,hh:9,pTop:2.4,pBot:4,rake:1.2,lip:12,sweep:18};
+ // Eric 10-23: 20% longer toward the bow (front moved from z=35 to 66), 10% smaller in section.
+ const CEIL=mainSec(0).h,BAY={zf:66,za:-118,cy:-11.6,a:15.75,b:13.5,pOut:2.6,ocy:-14.3,hw:13.5,hh:8.1,pTop:2.4,pBot:4,rake:1.2,lip:12,sweep:16};
  BAY.deck=BAY.ocy-BAY.hh*0.75;
  {const N=96,pw=(v,e)=>Math.sign(v)*Math.pow(Math.abs(v),e);
   // Both outlines are sampled along the same rays from the opening's centre, so each lip rolls straight out from the
@@ -232,7 +233,7 @@ const guideLights=[];
   // inside: two rows of lights on the ceiling (the hull's underside), and a blue strip along each side of the deck
   const lm=new THREE.MeshBasicMaterial({color:0xdfe8ff,fog:false,side:THREE.DoubleSide}),n=22;
   for(const x of [-8,8]){const im=new THREE.InstancedMesh(new THREE.PlaneGeometry(1.6,3.2),lm,n);
-   for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(Math.PI/2);m.setPosition(x,-CEIL-0.3,z);im.setMatrixAt(i,m);}
+   for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(Math.PI/2);m.setPosition(x,-mainSec(z).h-0.3,z);im.setMatrixAt(i,m);}   // on the hull's underside, wherever it is
    ship.add(im);}
   [-1,1].forEach(sd=>{const strip=new THREE.Mesh(new THREE.PlaneGeometry(dz[0]-dz[1]-10,0.5),new THREE.MeshBasicMaterial({color:0x7fb0ff,fog:false,side:THREE.DoubleSide}));
    strip.rotation.y=Math.PI/2;strip.position.set(sd*(dw-0.3),BAY.deck+0.6,(dz[0]+dz[1])/2);ship.add(strip);});}
