@@ -106,49 +106,86 @@ func _hud() -> void:
 	note.size = Vector2(640, 180)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(note)
-	lib_btn = Ui.button("Go to the Starship Library")
-	lib_btn.position = Vector2(80, 330)
-	lib_btn.size = Vector2(560, 76)
+	lib_btn = _hud_button("Go to the Starship Library", Vector2(80, 330), Vector2(560, 76), 14, "")
 	lib_btn.visible = false
 	lib_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	root.add_child(lib_btn)
-	var up := _round_button("▲", Vector2(600, 760))
+	var up := _hud_button("", Vector2(600, 760), Vector2(96, 96), 48, "up")
 	up.pressed.connect(func(): _set_throttle(throttle + 1))
 	root.add_child(up)
-	thr_label = Ui.label("Throttle 0%", 22, Ui.GOLD)
+	thr_label = Ui.label("Throttle 0%", 22, HUD_RED)
 	thr_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 	thr_label.position = Vector2(560, 868)
 	root.add_child(thr_label)
-	var dn := _round_button("▼", Vector2(600, 910))
+	var dn := _hud_button("", Vector2(600, 910), Vector2(96, 96), 48, "down")
 	dn.pressed.connect(func(): _set_throttle(throttle - 1))
 	root.add_child(dn)
-	for p in [["◀", Vector2(30, 1010), -1], ["▶", Vector2(150, 1010), 1]]:
-		var b := _round_button(p[0], p[1])
+	for p in [["left", Vector2(30, 1010), -1], ["right", Vector2(150, 1010), 1]]:
+		var bt := _hud_button("", p[1], Vector2(96, 96), 48, p[0])
 		var dirn: int = p[2]
-		b.button_down.connect(func(): pivot = dirn)
-		b.button_up.connect(func(): pivot = 0)
-		root.add_child(b)
-	var q := Ui.button("Quarters", false)
-	q.position = Vector2(30, 1140)
-	q.size = Vector2(220, 64)
-	q.add_theme_font_size_override("font_size", 22)
+		bt.button_down.connect(func(): pivot = dirn)
+		bt.button_up.connect(func(): pivot = 0)
+		root.add_child(bt)
+	var q := _hud_button("Quarters", Vector2(30, 1140), Vector2(220, 64), 14, "")
 	q.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
 	root.add_child(q)
 
 
-func _round_button(text: String, at: Vector2) -> Button:
-	var b := Ui.button(text, false)
+## Flight buttons (Eric 10-24): nothing solid, so the pilot sees through them. A thin deep-red outline, red text, and
+## arrows drawn as red outlines; a tap lights the whole button 35% brighter for half a second.
+const HUD_RED := Color("a3121c")
+const HUD_LIT := Color(0.88, 0.16, 0.24)      # HUD_RED x 1.35
+
+
+class Glyph extends Control:
+	var shape := ""
+	var color := Color("a3121c")
+	func _draw() -> void:
+		var c := size / 2.0
+		var r := minf(size.x, size.y) * 0.22
+		var pts: PackedVector2Array
+		match shape:
+			"up": pts = [c + Vector2(0, -r), c + Vector2(r, r * 0.8), c + Vector2(-r, r * 0.8)]
+			"down": pts = [c + Vector2(0, r), c + Vector2(-r, -r * 0.8), c + Vector2(r, -r * 0.8)]
+			"left": pts = [c + Vector2(-r, 0), c + Vector2(r * 0.8, -r), c + Vector2(r * 0.8, r)]
+			"right": pts = [c + Vector2(r, 0), c + Vector2(-r * 0.8, r), c + Vector2(-r * 0.8, -r)]
+			_: return
+		pts.append(pts[0])
+		draw_polyline(pts, color, 2.0, true)
+
+
+func _hud_button(text: String, at: Vector2, sz: Vector2, radius: int, shape: String) -> Button:
+	var b := Button.new()
+	b.text = text
 	b.position = at
-	b.size = Vector2(96, 96)
-	b.custom_minimum_size = Vector2(96, 96)
-	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.1, 0.12, 0.18, 0.55)
-	s.border_color = Ui.GOLD
-	s.set_border_width_all(2)
-	s.set_corner_radius_all(48)
-	for st in ["normal", "hover", "pressed", "focus"]:
-		b.add_theme_stylebox_override(st, s)
+	b.size = sz
+	b.focus_mode = Control.FOCUS_NONE
+	b.add_theme_font_size_override("font_size", 22)
+	var g := Glyph.new()
+	g.shape = shape
+	g.set_anchors_preset(Control.PRESET_FULL_RECT)
+	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(g)
+	_paint(b, g, HUD_RED, radius)
+	b.button_down.connect(func():
+		_paint(b, g, HUD_LIT, radius)
+		get_tree().create_timer(0.5).timeout.connect(func(): if is_instance_valid(b): _paint(b, g, HUD_RED, radius)))
 	return b
+
+
+func _paint(b: Button, g: Glyph, c: Color, radius: int) -> void:
+	var s := StyleBoxFlat.new()
+	s.bg_color = Color(0, 0, 0, 0)          # transparent inside
+	s.border_color = c
+	s.set_border_width_all(1)
+	s.set_corner_radius_all(radius)
+	s.anti_aliasing = true
+	for st in ["normal", "hover", "pressed", "focus", "hover_pressed"]:
+		b.add_theme_stylebox_override(st, s)
+	for fc in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+		b.add_theme_color_override(fc, c)
+	g.color = c
+	g.queue_redraw()
 
 
 func _set_throttle(n: int) -> void:
