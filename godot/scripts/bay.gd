@@ -65,6 +65,10 @@ var cargo: Node
 var mute_btn: Button
 var work_ring = null             # the ring you're working (Inara watches you drift out of it)
 var inara_t := 0.0
+var band := {}                   # where you are against the ring you're working: {ring, out, radial, height, point}
+var edge: Control
+var _band_node := Node3D.new()   # stands where the band's nearest point is drawn, for its label
+var ring_map: Control
 var voiced := {}                 # this session's once-only moments (first strong return, first bearing)
 
 
@@ -89,6 +93,7 @@ func _ready() -> void:
 	cam.near = 0.3
 	cam.far = 400000
 	add_child(cam)
+	add_child(_band_node)
 	debris = preload("res://scripts/debris.gd").new()
 	add_child(debris)
 	debris.setup(sol, randi())     # until the server's seed arrives (or for good, when not signed in)
@@ -195,6 +200,17 @@ func _hud() -> void:
 	marks.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(marks)
 	root.move_child(marks, 0)          # labels under the buttons
+	edge = EdgeGlow.new()            # a faint gold glow round the whole screen when something needs you (Eric 10-24)
+	edge.set_anchors_preset(Control.PRESET_FULL_RECT)
+	edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(edge)
+	root.move_child(edge, 0)
+	ring_map = RingMap.new()         # the long-range scanner: where you are in the ring's band (Eric 10-24)
+	ring_map.bay = self
+	ring_map.position = Vector2(24, 128)
+	ring_map.size = Vector2(240, 128)
+	ring_map.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(ring_map)
 	stick = Stick.new()
 	stick.bay = self
 	stick.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -336,6 +352,10 @@ func _process(dt: float) -> void:
 	sol.place(org, cam)
 	debris.place(org)
 	cargo.tick(dt)
+	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
+	edge.queue_redraw()
+	ring_map.visible = not band.is_empty() and warp.is_empty() and not docked
+	ring_map.queue_redraw()
 	quarters_btn.visible = docked
 	marks.queue_redraw()
 	cue.alpha += (cue.want - cue.alpha) * (1.0 - exp(-dt / 0.15))
@@ -455,6 +475,7 @@ func _fly(dt: float) -> void:
 func _watch_ring(now: float) -> void:
 	var w: Array = sol.to_world_d(_me())
 	var here = sol.ring_of(w)
+	_measure_band(w, here if here != null else work_ring)
 	if here != null:
 		if work_ring == null or here.key != work_ring.key:
 			var first: bool = work_ring == null
@@ -477,6 +498,21 @@ func _watch_ring(now: float) -> void:
 			Voice.say("drift%d" % Solar.RINGS.find(work_ring))
 		inara_t = now + 15.0
 		_say("INARA\nYou're drifting out of the %s, %s outside it. Turn back toward the debris." % [work_ring.name, Solar.fmt_dist(out)])
+
+
+## Where you are against a ring's band (BAND: 25 km either side of its line, 6 km above and below): how far out, which
+## way, and the nearest point of the band, so the screen can point you back to it.
+func _measure_band(w: Array, rg) -> void:
+	if rg == null:
+		band = {}
+		return
+	var r: float = rg.au * Solar.AU
+	var rxy := Vector2(w[0], w[2]).length()
+	var rt := clampf(rxy, r - sol.BAND_HALF, r + sol.BAND_HALF)
+	var yt := clampf(w[1], -sol.BAND_THICK, sol.BAND_THICK)
+	var pw := [w[0] / rxy * rt, yt, w[2] / rxy * rt]
+	band = {"ring": rg, "radial": rxy - r, "height": w[1], "point": sol.to_local_d(pw),
+		"out": Solar.length(Solar.sub(pw, w))}
 
 
 # ── LOCK (double-tap): a scanner-locked field, or the field or landmark you can see nearest the tap ──
@@ -848,7 +884,11 @@ class Marks extends Control:
 			if c == bay.thr_label:
 				r.size = c.get_minimum_size()
 			placed.append({"x": r.get_center().x, "y": r.get_center().y, "w": r.size.x, "h": r.size.y})
-		for l in bay.sol.landmarks:
+		var lms: Array = bay.sol.landmarks.duplicate()
+		if not bay.band.is_empty() and bay.band.out > 1.0 and bay.warp.is_empty():   # outside the band: point the way back
+			bay._band_node.position = bay.Solar.vec(bay.Solar.sub(bay.band.point, bay.org)).limit_length(300000.0)
+			lms.append({"name": "Back to the " + bay.band.ring.name, "node": bay._band_node, "pos": bay.band.point, "rad": 0.0, "color": Color(1.0, 0.81, 0.42)})
+		for l in lms:
 			var n: Node3D = l.node
 			var v: Vector3 = inv * n.global_position
 			var behind := v.z >= 0.0
@@ -939,6 +979,57 @@ class Stick extends Control:
 			var r := 50.0 * (1.0 - i / 8.0)
 			draw_circle(Vector2.ZERO, r, Color(gold, a * 0.18))
 		draw_set_transform(Vector2.ZERO)
+
+
+## A faint gold glow round the whole edge of the screen, slowly breathing, while something needs your attention.
+class EdgeGlow extends Control:
+	var on := false
+	func _draw() -> void:
+		if not on:
+			return
+		var a := 0.22 + 0.12 * sin(Time.get_ticks_msec() / 1000.0 * 2.4)
+		var g := Color(1.0, 0.81, 0.42)
+		for i in 10:                             # soft: ten thin bands fading inward
+			var k := float(i) / 10.0
+			var c := Color(g, a * pow(1.0 - k, 2))
+			var d := i * 3.0
+			draw_rect(Rect2(d, d, size.x - 2 * d, size.y - 2 * d), c, false, 3.0)
+
+
+## The long-range scanner: a slice through the ring's band (toward the Sun on the left, outward on the right, above and
+## below), with you as a dot. Outside the band the dot turns gold; beyond the map's edge it waits at the edge.
+class RingMap extends Control:
+	var bay: Node
+	func _draw() -> void:
+		var b: Dictionary = bay.band
+		if b.is_empty():
+			return
+		var font := get_theme_default_font()
+		var green := Color("7fe0a8")
+		var gold := Color(1.0, 0.81, 0.42)
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.03, 0.05, 0.1, 0.55))
+		draw_rect(Rect2(Vector2.ZERO, size), Color(green, 0.35), false, 1.0)
+		draw_string(font, Vector2(8, 18), "LONG-RANGE · " + b.ring.name.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, green)
+		var area := Rect2(10, 26, size.x - 20, size.y - 52)
+		var mid := area.get_center()
+		var sx: float = area.size.x / 2.0 / (bay.sol.BAND_HALF * 3.0)    # the map shows three band-widths across
+		var sy: float = area.size.y / 2.0 / (bay.sol.BAND_THICK * 3.0)   # and three band-heights up and down
+		var bw: float = bay.sol.BAND_HALF * sx
+		var bh: float = bay.sol.BAND_THICK * sy
+		draw_rect(Rect2(mid - Vector2(bw, bh), Vector2(bw, bh) * 2.0), Color(green, 0.18))
+		draw_rect(Rect2(mid - Vector2(bw, bh), Vector2(bw, bh) * 2.0), Color(green, 0.5), false, 1.0)
+		draw_line(Vector2(mid.x - bw, mid.y), Vector2(mid.x + bw, mid.y), Color(green, 0.35), 1.0)   # the ring's line
+		var outside: bool = b.out > 1.0
+		var p := mid + Vector2(b.radial * sx, -b.height * sy)
+		var q := Vector2(clampf(p.x, area.position.x, area.end.x), clampf(p.y, area.position.y, area.end.y))
+		var c := gold if outside else green
+		draw_circle(q, 5.0, c)
+		if q != p:                                                 # beyond the map: an arrow at the edge
+			draw_line(q, q + (p - q).normalized() * 12.0, c, 2.0, true)
+		draw_string(font, Vector2(8, size.y - 8), "◀ Sun", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1, 0.5))
+		var t: String = ("%s outside the band" % bay.Solar.fmt_dist(b.out)) if outside else "inside the band"
+		draw_string(font, Vector2(size.x - 8 - font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x, size.y - 8), t,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 12, c)
 
 
 ## Streaking stars while in warp (the browser's 2D overlay).
