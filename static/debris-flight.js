@@ -161,7 +161,7 @@ const guideLights=[];
  // fillet, so the rear end has soft edges. The blade edges keep their full reach.
  const ROUND_L=6;
  function dagger(pts,height,taperFrom,taperTo,flare=0,hole=null){
-  const sec=section(pts,height,taperFrom,taperTo),N=64,S=80,zTip=pts[0][1],zEnd=pts[pts.length-1][1]-SKIN;
+  const sec=section(pts,height,taperFrom,taperTo),N=128,S=120,zTip=pts[0][1],zEnd=pts[pts.length-1][1]-SKIN;
   const pos=[],idx=[];
   const zs=[];for(let j=0;j<=S;j++){const z=zTip-(zTip-zEnd)*j/S;if(z>zEnd+ROUND_L)zs.push(z);}
   for(let j=0;j<=10;j++)zs.push(zEnd+ROUND_L*(1-j/10));                          // fine steps through the fillet
@@ -189,10 +189,11 @@ const guideLights=[];
  // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar from z=+20 to z=-112, open at BOTH ends,
  // so craft can come in or launch from the bow or the stern. It is built as ONE smooth shell (Eric: "not a tube added on"):
  // an oval outside whose top is sunk into the hull, a wide oval tunnel inside, and rounded lips at both ends where the
- // outside rolls over into the opening, so there are no sharp edges. The ends are raked (the keel is shorter than the top).
+ // outside rolls over into the opening, so there are no sharp edges. Each lip is a long bell-mouth (22 m) that flares
+ // gradually from the opening to the full belly, so nothing comes to a point. The ends are raked (the keel is shorter than the top).
  // 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main body's outer hull (y=-CEIL).
  // A level deck runs the full length: the landing pad is flat.
- const CEIL=mainSec(0).h,BAY={zf:20,za:-112,cy:-12,a:25.8,b:16.2,ocy:-15,hw:21.5,hh:10.2,pTop:2.4,pBot:6,rake:0.4,lip:7,yJ:-1.5,sweep:14};
+ const CEIL=mainSec(0).h,BAY={zf:20,za:-112,cy:-12,a:25.8,b:16.2,ocy:-15,hw:21.5,hh:10.2,pTop:2.4,pBot:6,rake:0.4,lip:22,yJ:-1.5,sweep:0,fp:3.5};
  BAY.deck=BAY.ocy-BAY.hh*0.75;
  {const N=96,pw=(v,e)=>Math.sign(v)*Math.pow(Math.abs(v),e);
   // Both outlines are sampled along the same rays from the opening's centre, so each lip rolls straight out from the
@@ -200,12 +201,14 @@ const guideLights=[];
   // (Eric 10-23, his reference image): an oval below its widest line; above it each side sweeps up and OUT in a smooth
   // concave curve and runs into the hull's flared flank at y=BAY.yJ, so the belly flows into the body as one surface.
   const hullX=(s,w)=>Math.sqrt(Math.max(0,1-s*s))*w+MAIN_FLARE*w*Math.pow(1-Math.min(1,Math.abs(s)),EDGE_K);  // hull half-width at height s·h
+  // the hull's width and depth averaged over 40 m along the ship, so the sweep follows the hull without its kinks
+  const hullAvg=z=>{let w=0,h=0;for(let d=-20;d<=20;d+=5){const q=mainSec(z+d);w+=q.w;h+=q.h;}return {w:w/9,h:h/9};};
   const insideOuter=(x,y,z)=>{const ax=Math.abs(x);
    if(y<=BAY.cy){const s=(y-BAY.cy)/BAY.b;return s>=-1&&ax<=BAY.a*Math.sqrt(1-s*s);}
-   const {w,h}=mainSec(z),xh=hullX(y/h,w)-0.5;
+   const {w,h}=hullAvg(z),xh=hullX(y/h,w)-0.5;
    if(y>=BAY.yJ)return ax<=xh;
    const u=(y-BAY.cy)/(BAY.yJ-BAY.cy),xj=hullX(BAY.yJ/h,w)-0.5;
-   return ax<=BAY.a+(xj-BAY.a)*u*u;};                                  // u² : leaves the oval level, then sweeps out
+   return ax<=BAY.a+(xj-BAY.a)*Math.pow(u,BAY.fp);};                   // leaves the oval steep, then sweeps out almost level into the hull
   const dir=i=>{const t=i/N*Math.PI*2;return [Math.cos(t),Math.sin(t)];};
   const inner=i=>{const [c,s]=dir(i),p=s>=0?BAY.pTop:BAY.pBot;
    const r=1/Math.pow(Math.pow(Math.abs(c)/BAY.hw,p)+Math.pow(Math.abs(s)/BAY.hh,p),1/p);return [c*r,BAY.ocy+s*r];};
