@@ -6,7 +6,7 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
   POST /api/dfg/auth/start      {channel:'sms'|'email', address, region} → a 6-digit code is sent
   POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
   POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
-  GET  /api/dfg/me              rank and name, language, location (Private Quarters), body bars and warning
+  GET  /api/dfg/me              rank and name, language, location (Private Quarters), body bars and warning, skills
   POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends
 Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   POST /api/dfg/session   start a session → {session_id, seed, ship, cargo}
@@ -126,7 +126,8 @@ async def _me(conn, pid):
             "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
             "needs_setup": not (named and p["language"]),
             "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
-            "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars)}
+            "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars),
+            "skills": await LIB.skills(conn, pid)}     # fly / mine / sell, each earned in the library (Eric 10-23)
 
 
 async def signup_options(request):
@@ -256,6 +257,7 @@ async def collect(request):
     body = await request.json()
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
+        await LIB.require(conn, pid, "mine")        # mining is learned in the library first (Eric 10-23)
         async with conn.transaction():
             # lock the player's ship row so two collects can't both squeeze into the last bit of room
             s = await ST.active_ship(conn, pid, lock=True)
@@ -401,6 +403,8 @@ async def market_order(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
+        if b.get("side") == "sell":
+            await LIB.require(conn, pid, "sell")    # selling is learned in the library first (Eric 10-23)
         return _json(await M.place(conn, pid, b.get("item"), b.get("side"), b.get("type"), b.get("qty"), b.get("price")))
 
 

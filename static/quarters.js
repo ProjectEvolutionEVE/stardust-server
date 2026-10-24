@@ -302,7 +302,7 @@ async function showTest(me,code,from){
   $('#sqBack').onclick=()=>showBook(me,code,from);
   $('#tsGo').onclick=async()=>{const answers={};t.questions.forEach(q=>{const x=root.querySelector(`input[name="q${q.id}"]:checked`);if(x)answers[q.id]=x.value;});
     if(Object.keys(answers).length<t.questions.length){const m=$('#tsMsg');m.className='msg err';m.textContent='Answer every question first.';return;}
-    try{const r=await call('/library/test',{book:code,answers});V.say(r.passed?'pass':'fail');if(r.passed)V.story('test');
+    try{const r=await call('/library/test',{book:code,answers});V.say(r.passed?'pass':'fail');if(r.passed){V.story('test');window.dispatchEvent(new Event('stardust:passed'));}
       place('STARSHIP LIBRARY · TEST',me,`<h2 style="margin:0">${r.passed?'✅ Passed':'Not quite'}: ${r.score} of ${r.of}</h2>
        <p class="soon">${r.passed?'Your certificate is in the filing cabinet in your quarters.':`You need ${r.pass_mark} right. Have another look at the book and try again any time.`}</p>
        <table>${r.review.map(q=>`<tr><td>${q.right?'✅':'❌'} ${esc(q.question)}${q.right?'':`<div class="soon">The answer: ${esc(q.answer)}</div>`}</td></tr>`).join('')}</table>
