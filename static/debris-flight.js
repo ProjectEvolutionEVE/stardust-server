@@ -187,32 +187,28 @@ const guideLights=[];
  // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
  // No lower rear fins either (Eric 10-23): a sleek hull.
  // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar that runs from z=+20 to z=-112, open at
- // BOTH ends, so craft can come in or launch from the bow or the stern. Its sides slant inward toward a flat keel; the top
+ // BOTH ends, so craft can come in or launch from the bow or the stern. Its section is an oval, like the hull's; the top
  // is sunk into the hull so the two read as one body. Each end is raked (the keel is shorter than the top), and almost
- // all of it is the opening: a wide rounded slot with a thin rim, lit inside.
- const BAY={zf:20,za:-112,top:-4,topW:16.5,keel:-31,keelW:14,cy:-20,hw:13.8,hh:8.5,p:4,rake:0.8};
- {const sh=new THREE.Shape(),kr=4;                                    // outer section: slanted sides, rounded keel corners
-  const sideX=y=>BAY.keelW+(BAY.topW-BAY.keelW)*(y-BAY.keel)/(BAY.top-BAY.keel);
-  sh.moveTo(-BAY.topW,BAY.top);sh.lineTo(BAY.topW,BAY.top);sh.lineTo(sideX(BAY.keel+kr),BAY.keel+kr);
-  sh.quadraticCurveTo(BAY.keelW,BAY.keel,BAY.keelW-kr,BAY.keel);sh.lineTo(-BAY.keelW+kr,BAY.keel);
-  sh.quadraticCurveTo(-BAY.keelW,BAY.keel,-sideX(BAY.keel+kr),BAY.keel+kr);sh.closePath();
-  const hole=new THREE.Path(),N=64;                                    // the opening: a rounded slot (superellipse)
+ // all of it is the opening: a wide oval with a rim, lit inside.
+ const BAY={zf:20,za:-112,top:-4,cy:-17.5,a:21.5,b:13.5,ocy:-20,hw:17.9,hh:8.5,p:2.4,rake:0.8};   // oval outside, 30% wider (Eric 10-23)
+ {const sh=new THREE.Shape();sh.absellipse(0,BAY.cy,BAY.a,BAY.b,0,Math.PI*2,false,0);   // outer section: an oval, its top sunk into the hull
+  const hole=new THREE.Path(),N=64;                                    // the opening: a wide oval
   for(let i=0;i<N;i++){const a=i/N*Math.PI*2,c=Math.cos(a),sn=Math.sin(a);
-   const x=BAY.hw*Math.sign(c)*Math.pow(Math.abs(c),2/BAY.p),y=BAY.cy+BAY.hh*Math.sign(sn)*Math.pow(Math.abs(sn),2/BAY.p);
+   const x=BAY.hw*Math.sign(c)*Math.pow(Math.abs(c),2/BAY.p),y=BAY.ocy+BAY.hh*Math.sign(sn)*Math.pow(Math.abs(sn),2/BAY.p);
    i?hole.lineTo(x,y):hole.moveTo(x,y);}
   hole.closePath();sh.holes.push(hole);
-  const g=new THREE.ExtrudeGeometry(sh,{depth:BAY.zf-BAY.za,bevelEnabled:false,curveSegments:12});g.translate(0,0,BAY.za);
+  const g=new THREE.ExtrudeGeometry(sh,{depth:BAY.zf-BAY.za,bevelEnabled:false,curveSegments:48});g.translate(0,0,BAY.za);
   {const pa=g.attributes.position;for(let i=0;i<pa.count;i++){const z=pa.getZ(i),k=BAY.rake*(BAY.top-pa.getY(i));   // rake both ends
    if(Math.abs(z-BAY.zf)<1e-3)pa.setZ(i,z-k);else if(Math.abs(z-BAY.za)<1e-3)pa.setZ(i,z+k);}g.computeVertexNormals();}
   const bayMat=hullMat.clone();bayMat.side=THREE.DoubleSide;ship.add(new THREE.Mesh(g,bayMat));
   // inside: two rows of ceiling lights the length of the bay, and a strip along each side at deck level
   const lm=new THREE.MeshBasicMaterial({color:0xdfe8ff,fog:false,side:THREE.DoubleSide}),n=22;
-  const rows=[[-5,BAY.cy+BAY.hh-0.6,Math.PI/2],[5,BAY.cy+BAY.hh-0.6,Math.PI/2]];
+  const rows=[[-6.5,BAY.ocy+BAY.hh-0.6,Math.PI/2],[6.5,BAY.ocy+BAY.hh-0.6,Math.PI/2]];
   for(const [x,y,rx] of rows){const im=new THREE.InstancedMesh(new THREE.PlaneGeometry(1.6,3.2),lm,n);
    for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(rx);m.setPosition(x,y,z);im.setMatrixAt(i,m);}
    ship.add(im);}
   [-1,1].forEach(sd=>{const strip=new THREE.Mesh(new THREE.PlaneGeometry(BAY.zf-BAY.za-30,0.5),new THREE.MeshBasicMaterial({color:0x7fb0ff,fog:false,side:THREE.DoubleSide}));
-   strip.rotation.y=Math.PI/2;strip.position.set(sd*(BAY.hw*0.93),BAY.cy-BAY.hh*0.55,(BAY.zf+BAY.za)/2);ship.add(strip);});}
+   strip.rotation.y=Math.PI/2;strip.position.set(sd*(BAY.hw*0.88),BAY.ocy-BAY.hh*0.55,(BAY.zf+BAY.za)/2);ship.add(strip);});}
  // engine: an oval exhaust set into the stern (Eric's illustration, 10-11), no tail pipe. A dark well sunk flush into the stern,
  // and the heat source glowing from deep inside it: a long hot core between two round burners.
  const OV=0.42;                                                       // oval height / width
@@ -319,7 +315,7 @@ const guideLights=[];
  [[0,45,-20,4500,0xc8d4ff],[0,-75,60,2200,0xffe0b0],[60,0,-60,3000,0xc8d4ff],[-60,0,-60,3000,0xc8d4ff]].forEach(f=>{
   const l=new THREE.PointLight(f[4],f[3],0,2);l.position.set(f[0],f[1],f[2]);ship.add(l);});
  // the bay: work-lights inside the hangar
- [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,500,0,2);ml.position.set(0,BAY.cy+4,z);ship.add(ml);});
+ [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,500,0,2);ml.position.set(0,BAY.ocy+4,z);ship.add(ml);});
  // guide lights: a lane from in front of the bow, under it, into the mouth (they pulse in sequence toward the ship)
  const gm=new THREE.SphereGeometry(0.9,10,8);
  for(let i=0;i<16;i++){const t=i/15;const p=DOCK.approach.clone().lerp(DOCK.mouth,t);
