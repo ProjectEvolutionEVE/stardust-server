@@ -353,7 +353,12 @@ const guideLights=[];
 })();
 ship.position.copy(STARSHIP_POS);ship.lookAt(0,0,0);scene.add(ship);
 ship.updateMatrixWorld(true);
-const DOCK_W={approach:ship.localToWorld(DOCK.approach.clone()),mouth:ship.localToWorld(DOCK.mouth.clone())};
+const DOCK_W={approach:ship.localToWorld(DOCK.approach.clone()),mouth:ship.localToWorld(DOCK.mouth.clone()),
+ aftApproach:ship.localToWorld(DOCK.aftApproach.clone()),aftMouth:ship.localToWorld(DOCK.aftMouth.clone())};
+// Docking (Eric 10-23): the bay is open at both ends, so the autopilot comes in from whichever end you are nearer:
+// behind the middle of the bay (ship-local z < -26) it takes the stern lane, otherwise the bow lane.
+function dockLock(){const aft=ship.worldToLocal(cam.position.clone()).z<-26;
+ return {name:'Starship',pos:aft?DOCK_W.aftApproach:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1,aft};}
 function pulseGuides(t){for(const g of guideLights){const ph=((t*0.6-g.t)%1+1)%1;const k=Math.pow(1-ph,6);g.m.material.color.setRGB(0.25+0.25*k,0.45+0.5*k,0.35+0.4*k);}}
 LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140});
 
@@ -750,11 +755,11 @@ const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long t
 // Docking also lets go of the controls (Eric's dock-then-undock bug, 10-20): throttle to 0 and any stick touch that began
 // before the dock is dropped, so only a NEW throttle-up or a NEW stick press launches again.
 let dockedAt=0;
-function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
+function settleDocked(aft=false){cam.position.copy(aft?DOCK_W.aftMouth:DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
  if(typeof throttle!=='undefined'){throttle=0;thrEl.textContent='Throttle 0%';}
  if(typeof stk!=='undefined'&&stk){stk=null;stickRing.hidden=true;}
  if(typeof pivot!=='undefined'){pivot.l=pivot.r=false;hold.boost=false;}
- cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
+ cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,aft?-400:400)));}   // facing out of the end you came in by
 let throttle=0;                           // 0..10 steps of 10%
 const thrEl=document.getElementById('thrtxt');
 function setThrottle(n){if(lock){if(lock.parked)lock=null;else lock.auto=false;}   // like the stick: touching the throttle takes the controls back
@@ -805,7 +810,7 @@ function lockAt(px,py){
  rayV.set(px/innerWidth*2-1,-(py/innerHeight)*2+1,0.5).unproject(cam).sub(cam.position).normalize();
  let best=null,bestAng=0.2;               // within ~11° of the tap
  const cands=FIELDS.filter(f=>f.shown).map(f=>({name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),field:f}))
-  .concat(LANDMARKS.map(l=>l.home?{name:'Starship',pos:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1}:
+  .concat(LANDMARKS.map(l=>l.home?dockLock():
    ({name:l.name,pos:l.pos,aim:l.draw.position,stopAt:l.rad*1.6,far:true})));
  // (c.aim: tap the ship itself; the autopilot heads for its approach point)
  for(const c of cands){tgtV.copy(c.aim||c.pos).sub(cam.position);const a=tgtV.angleTo(rayV);if(a<bestAng){bestAng=a;best=c;}}
@@ -835,9 +840,9 @@ function fly(dt){
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
  }
- if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
+ if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=lock.aft?DOCK_W.aftMouth:DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
   if(throttle){throttle=0;thrEl.textContent='Throttle 0%';}warn('Tractor beam has control. Throttle set to zero.');}   // a throttle left up from before would launch you again the moment you dock
- else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock=null;settleDocked();   // settle facing out past the bow, the view from the bay
+ else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){const aft=lock.aft;lock=null;settleDocked(aft);   // settle in the bay, facing out of the end you came in by
   VOICE.say('docked');toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;if(lock.field)VOICE.say('parked');warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
@@ -928,7 +933,7 @@ function scan(dt){
     if(moved>Math.max(35,dist*0.12)&&a1.angleTo(a2)>2.5*Math.PI/180)fixField(best);}
   }}
  scanEl.style.width=(scanStrength*100).toFixed(0)+'%';
- scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
+ scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?(lock.aft?'DOCKING · in under the stern':'DOCKING · under the bow'):lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
  snd.scanner(lock&&(lock.field||lock.dock)||docked?-1:scanStrength);
 }
 function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();VOICE.say('locked');
@@ -1138,7 +1143,7 @@ function warpTick(dt){
  if(w.t<total)return;
  warp=null;streaks(0);
  if(w.d.ring){const first=!workRing;workRing=w.d.ring;inaraT=0;VOICE.say('warp'+RINGS.indexOf(w.d.ring));if(first)VOICE.story('ring');inara('Dropping out in the '+w.d.ring.name+'. Debris all around you. Start sweeping.');}
- else if(w.d.key==='starship'){lock={name:'Starship',pos:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1,auto:false};
+ else if(w.d.key==='starship'){lock=Object.assign(dockLock(),{auto:false});
   VOICE.say('arrived');toast('ARRIVED','The Starship is ahead. Double-tap it to come aboard.');}
  else toast('ARRIVED',w.label);}
 // streaking stars while in warp (a 2D overlay)
