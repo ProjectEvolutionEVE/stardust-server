@@ -86,10 +86,11 @@ func _ask(parent: Control) -> bool:
 	s.set_corner_radius_all(14)
 	s.set_content_margin_all(20)
 	panel.add_theme_stylebox_override("panel", s)
-	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	panel.position.y = 260
 	panel.custom_minimum_size = Vector2(560, 0)
-	panel.position.x = (parent.size.x - 560) / 2.0
+	var center := CenterContainer.new()          # centred on the screen, whatever its size
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	center.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 14)
 	panel.add_child(box)
@@ -102,7 +103,7 @@ func _ask(parent: Control) -> bool:
 	for b in [yes, no]:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(b)
-	parent.add_child(panel)
+	parent.add_child(center)
 	var result := {"v": null}
 	yes.pressed.connect(func(): result.v = true)
 	no.pressed.connect(func(): result.v = false)
@@ -110,5 +111,5 @@ func _ask(parent: Control) -> bool:
 	while result.v == null and waited < 20.0:
 		await get_tree().process_frame
 		waited += get_process_delta_time()
-	panel.queue_free()
+	center.queue_free()
 	return result.v == true
