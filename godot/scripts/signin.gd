@@ -9,12 +9,14 @@ var address: LineEdit
 var code: LineEdit
 var send: Button
 var verify: Button
+var keep: CheckBox
+var pick: OptionButton
 
 
 func _ready() -> void:
 	box = Ui.screen(self)
 	box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
-	var pick := Ui.picker()
+	pick = Ui.picker()
 	pick.add_item("Email")
 	pick.add_item("Phone (text message)")
 	pick.item_selected.connect(_on_channel)
@@ -24,6 +26,11 @@ func _ready() -> void:
 	box.add_child(region)
 	address = Ui.field("Email address")
 	box.add_child(address)
+	keep = CheckBox.new()
+	keep.text = "Remember my email or phone on this device"
+	keep.add_theme_font_size_override("font_size", 22)
+	keep.toggled.connect(func(on): if not on: Session.forget())
+	box.add_child(keep)
 	send = Ui.button("Send my code")
 	send.pressed.connect(_send)
 	box.add_child(send)
@@ -43,6 +50,15 @@ func _ready() -> void:
 			var c: Dictionary = countries[i]
 			region.add_item("%s +%d" % [c.iso, int(str(c.dial).trim_prefix("+"))])
 			if c.iso == here or (here == "" and c.iso == "US"):
+				region.select(i)
+	var saved := Session.remembered()
+	if not saved.is_empty():
+		keep.button_pressed = true
+		pick.select(0 if saved.get("channel") == "email" else 1)
+		_on_channel(pick.selected)
+		address.text = str(saved.get("address", ""))
+		for i in countries.size():
+			if countries[i].iso == saved.get("region", ""):
 				region.select(i)
 
 
@@ -82,6 +98,10 @@ func _verify() -> void:
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
+	if keep.button_pressed:
+		Session.remember(channel, address.text.strip_edges(), _region())
+	else:
+		Session.forget()
 	Session.signed_in(r.data.token, r.data.me)
 	Session.call_on_enter = "wake"
 	get_tree().change_scene_to_file(Session.next_scene())

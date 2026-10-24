@@ -41,3 +41,29 @@ func _key() -> String:
 
 ## What Inara rings about when the quarters open: "wake" after signing in, "welcome" after first setup.
 var call_on_enter := ""
+
+
+## "Remember me" (Eric 10-24): the player may keep their email or phone on this device, encrypted with the same device key,
+## so sign-in starts filled in. Off unless they tick it; unticking erases it.
+const REMEMBER_PATH := "user://remember.dat"
+
+
+func remembered() -> Dictionary:
+	if not FileAccess.file_exists(REMEMBER_PATH):
+		return {}
+	var f := FileAccess.open_encrypted_with_pass(REMEMBER_PATH, FileAccess.READ, _key())
+	if not f:
+		return {}
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	return d if d is Dictionary else {}
+
+
+func remember(channel: String, address: String, region: String) -> void:
+	var f := FileAccess.open_encrypted_with_pass(REMEMBER_PATH, FileAccess.WRITE, _key())
+	if f:
+		f.store_string(JSON.stringify({"channel": channel, "address": address, "region": region}))
+
+
+func forget() -> void:
+	if FileAccess.file_exists(REMEMBER_PATH):
+		DirAccess.remove_absolute(REMEMBER_PATH)
