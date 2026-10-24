@@ -68,7 +68,7 @@ var inara_t := 0.0
 var band := {}                   # where you are against the ring you're working: {ring, out, radial, height, point}
 var edge: Control
 var _band_node := Node3D.new()   # stands where the band's nearest point is drawn, for its label
-var ring_map: Control
+var radar: Control
 var voiced := {}                 # this session's once-only moments (first strong return, first bearing)
 
 
@@ -205,12 +205,6 @@ func _hud() -> void:
 	edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(edge)
 	root.move_child(edge, 0)
-	ring_map = RingMap.new()         # the long-range scanner: where you are in the ring's band (Eric 10-24)
-	ring_map.bay = self
-	ring_map.position = Vector2(24, 128)
-	ring_map.size = Vector2(240, 128)
-	ring_map.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(ring_map)
 	stick = Stick.new()
 	stick.bay = self
 	stick.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -234,6 +228,12 @@ func _hud() -> void:
 	cargo.bay = self
 	add_child(cargo)
 	cargo.build(root)
+	radar = preload("res://scripts/radar.gd").new()   # the long-range scanner, pulled down from the top (Eric 10-24)
+	radar.bay = self
+	root.add_child(radar)
+	var rt := _hud_button("RADAR", Vector2(300, 76), Vector2(110, 42), 21, "")
+	rt.pressed.connect(func(): radar.toggle())
+	root.add_child(rt)
 	mute_btn = _hud_button("Sound on", Vector2(576, 40), Vector2(120, 51), 26, "")   # silences the scanner and Inara
 	mute_btn.pressed.connect(func():
 		sound.muted = not sound.muted
@@ -352,10 +352,10 @@ func _process(dt: float) -> void:
 	sol.place(org, cam)
 	debris.place(org)
 	cargo.tick(dt)
+	note.position.y = 640.0 if radar.open else 230.0      # out from under the radar while it's down
+	appr.position.y = 548.0 if radar.open else 96.0
 	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
 	edge.queue_redraw()
-	ring_map.visible = not band.is_empty() and warp.is_empty() and not docked
-	ring_map.queue_redraw()
 	quarters_btn.visible = docked
 	marks.queue_redraw()
 	cue.alpha += (cue.want - cue.alpha) * (1.0 - exp(-dt / 0.15))
@@ -876,7 +876,7 @@ class Marks extends Control:
 		var fs := 20
 		var placed: Array = []
 		for c in get_parent().get_children():      # the HUD's buttons and words are in the way too (Eric 10-24)
-			if c == self or not c.visible or c is Panel or not (c is Button or c is Label):
+			if c == self or not c.visible or c is Panel or not (c is Button or c is Label or c == bay.radar):
 				continue
 			if c is Label and (c as Label).text == "":
 				continue
@@ -910,15 +910,20 @@ class Marks extends Control:
 			var by := (1.0 - y) / 2.0 * H
 			var px := bx
 			var py := clampf(by, h / 2.0 + 6.0, H - h / 2.0 - 6.0)
-			for k in range(1, 25):
-				var hit := false
+			var hits := func(y: float) -> bool:
 				for q in placed:
-					if absf(q.x - px) < (w + q.w) / 2.0 + 8.0 and absf(q.y - py) < (h + q.h) / 2.0 + 3.0:
-						hit = true
-				if not hit:
+					if absf(q.x - px) < (w + q.w) / 2.0 + 8.0 and absf(q.y - y) < (h + q.h) / 2.0 + 3.0:
+						return true
+				return false
+			var clear := false
+			for k in range(1, 26):
+				if not hits.call(py):
+					clear = true
 					break
 				var step := ceili(k / 2.0) * (1 if k % 2 else -1)
 				py = clampf(by + step * (h + 4.0), h / 2.0 + 6.0, H - h / 2.0 - 6.0)
+			if not clear:                        # nowhere clear: stay where it belongs rather than land on a button
+				py = clampf(by, h / 2.0 + 6.0, H - h / 2.0 - 6.0)
 			placed.append({"x": px, "y": py, "w": w, "h": h})
 			var c: Color = l.color
 			var mc := Vector2(px, py - h / 2.0 + 8.0)
@@ -994,42 +999,6 @@ class EdgeGlow extends Control:
 			var c := Color(g, a * pow(1.0 - k, 2))
 			var d := i * 3.0
 			draw_rect(Rect2(d, d, size.x - 2 * d, size.y - 2 * d), c, false, 3.0)
-
-
-## The long-range scanner: a slice through the ring's band (toward the Sun on the left, outward on the right, above and
-## below), with you as a dot. Outside the band the dot turns gold; beyond the map's edge it waits at the edge.
-class RingMap extends Control:
-	var bay: Node
-	func _draw() -> void:
-		var b: Dictionary = bay.band
-		if b.is_empty():
-			return
-		var font := get_theme_default_font()
-		var green := Color("7fe0a8")
-		var gold := Color(1.0, 0.81, 0.42)
-		draw_rect(Rect2(Vector2.ZERO, size), Color(0.03, 0.05, 0.1, 0.55))
-		draw_rect(Rect2(Vector2.ZERO, size), Color(green, 0.35), false, 1.0)
-		draw_string(font, Vector2(8, 18), "LONG-RANGE · " + b.ring.name.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, green)
-		var area := Rect2(10, 26, size.x - 20, size.y - 52)
-		var mid := area.get_center()
-		var sx: float = area.size.x / 2.0 / (bay.sol.BAND_HALF * 3.0)    # the map shows three band-widths across
-		var sy: float = area.size.y / 2.0 / (bay.sol.BAND_THICK * 3.0)   # and three band-heights up and down
-		var bw: float = bay.sol.BAND_HALF * sx
-		var bh: float = bay.sol.BAND_THICK * sy
-		draw_rect(Rect2(mid - Vector2(bw, bh), Vector2(bw, bh) * 2.0), Color(green, 0.18))
-		draw_rect(Rect2(mid - Vector2(bw, bh), Vector2(bw, bh) * 2.0), Color(green, 0.5), false, 1.0)
-		draw_line(Vector2(mid.x - bw, mid.y), Vector2(mid.x + bw, mid.y), Color(green, 0.35), 1.0)   # the ring's line
-		var outside: bool = b.out > 1.0
-		var p := mid + Vector2(b.radial * sx, -b.height * sy)
-		var q := Vector2(clampf(p.x, area.position.x, area.end.x), clampf(p.y, area.position.y, area.end.y))
-		var c := gold if outside else green
-		draw_circle(q, 5.0, c)
-		if q != p:                                                 # beyond the map: an arrow at the edge
-			draw_line(q, q + (p - q).normalized() * 12.0, c, 2.0, true)
-		draw_string(font, Vector2(8, size.y - 8), "◀ Sun", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1, 0.5))
-		var t: String = ("%s outside the band" % bay.Solar.fmt_dist(b.out)) if outside else "inside the band"
-		draw_string(font, Vector2(size.x - 8 - font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x, size.y - 8), t,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 12, c)
 
 
 ## Streaking stars while in warp (the browser's 2D overlay).
