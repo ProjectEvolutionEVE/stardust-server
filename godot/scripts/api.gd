@@ -36,6 +36,7 @@ func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = 
 ## A file from the server (Inara's recordings). Empty if it isn't there.
 func get_bytes(path: String) -> PackedByteArray:
 	var req := HTTPRequest.new()
+	req.timeout = 15.0
 	add_child(req)
 	if req.request(BASE_URL + path) != OK:
 		req.queue_free()
