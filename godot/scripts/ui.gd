@@ -6,6 +6,7 @@ const PANEL := Color("121826")
 const GOLD := Color("d9a441")
 const TEXT := Color("eef0f5")
 const MUTED := Color("8a94a6")
+const GREEN := Color("4cc38a")        # done: a passed test, a chosen answer
 
 
 func screen(root: Control) -> VBoxContainer:

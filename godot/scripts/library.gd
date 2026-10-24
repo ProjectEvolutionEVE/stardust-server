@@ -72,6 +72,16 @@ func _book_row(b: Dictionary, unlocks: String) -> void:
 	if not b.written:
 		text += "  · being written"
 	var btn := Ui.button(text, false)
+	if b.passed:   # a completed book shows green
+		var g := StyleBoxFlat.new()
+		g.bg_color = Ui.PANEL
+		g.border_color = Ui.GREEN
+		g.set_border_width_all(2)
+		g.set_corner_radius_all(14)
+		for state in ["normal", "hover", "pressed", "focus"]:
+			btn.add_theme_stylebox_override(state, g)
+		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+			btn.add_theme_color_override(c, Ui.GREEN)
 	btn.disabled = not b.written
 	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	btn.add_theme_font_size_override("font_size", 24)
@@ -124,7 +134,12 @@ func _test(code: String) -> void:
 			c.button_group = group
 			c.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			c.add_theme_font_size_override("font_size", 24)
-			c.toggled.connect(func(on): if on: picks[str(int(q.id))] = o.id)   # JSON numbers arrive as floats: "0", not "0.0"
+			c.add_theme_color_override("font_pressed_color", Ui.GREEN)
+			c.add_theme_color_override("font_hover_pressed_color", Ui.GREEN)
+			c.toggled.connect(func(on):
+				c.text = ("✓ " if on else "") + o.text   # the chosen answer shows a green check
+				if on:
+					picks[str(int(q.id))] = o.id)   # JSON numbers arrive as floats: "0", not "0.0"
 			body.add_child(c)
 	var send := Ui.button("Hand in the test")
 	send.pressed.connect(_mark.bind(code, picks, r.data.questions.size()))
