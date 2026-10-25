@@ -19,7 +19,7 @@ waits on the other side.
 
 **Inara.** A real person (her story is told in the novel): an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
-an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages, with Arabic planned as the twelfth.
+an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 12 languages, including Arabic.
 
 **The full story** is a novel (title ▢, Eric), offered in the game in text and as an audiobook. A short
 illustrated, voiced slideshow tells the backstory before a new player's first launch. An Arabic edition of the novel
@@ -46,7 +46,7 @@ rest, because your body has limits.
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise);
   each bar takes more study than the last, and gives a smaller, still valuable, skill increase.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
-  finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 11 languages.
+  finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 12 languages, including Arabic.
 
 ## 3. Financial Literacy Integration
 
