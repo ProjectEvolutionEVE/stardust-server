@@ -14,6 +14,7 @@ import blueprints as BP
 import serials as SER
 import auctions as AU
 import library_books as LB
+import library as LIB
 from datetime import datetime, timezone, timedelta
 import game as G
 import minerals as MN
@@ -48,13 +49,27 @@ async def main():
     cl = TestClient(TestServer(S.make_app())); await cl.start_server()
     # The server decides what each piece is (seed, field, index). The older tests below name the material they want;
     # this shim aims each such collect at a real piece of that material in the session's universe, as a flight would.
-    SEEDS, USED, _post = {}, {}, cl.post
+    SEEDS, USED, GRANTED, _post = {}, {}, set(), cl.post
+    async def grant(who):          # give a test player the three skill passes (fly, mine, sell)
+        if who in GRANTED:
+            return
+        async with cl.app["pool"].acquire() as c:
+            gp = await ST.ensure_player(c, "dev:" + who, who)
+            for book in LIB.SKILLS.values():
+                await c.execute("""INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,$2,5,5)
+                                   ON CONFLICT DO NOTHING""", gp, book)
+        GRANTED.add(who)
     async def post(path, **kw):
         body = kw.get("json")
         if path == "/api/dfg/collect" and isinstance(body, dict) and "field" not in body and body.get("session_id") in SEEDS:
             sd = SEEDS[body["session_id"]]
             fid, idx, _ = find_piece(sd, body.get("material"), USED.setdefault(sd, set()))
             kw["json"] = dict(body, field=fid, index=idx)
+        # Mining and selling need their library passes (Eric 10-23). The older tests below are about other things, so
+        # their players are given those passes; "learner" is the one player who starts with none (tested below).
+        who = (kw.get("headers") or {}).get("X-Dev-Player")
+        if who and who != "learner" and path in ("/api/dfg/collect", "/api/dfg/market/order"):
+            await grant(who)
         r = await _post(path, **kw)
         if path == "/api/dfg/session" and r.status == 200:
             j = await r.json(); SEEDS[j["session_id"]] = j["seed"]
@@ -62,6 +77,33 @@ async def main():
     cl.post = post
     H = {"X-Dev-Player": "tester1"}
     r = await cl.get("/api/dfg/ship"); check("no sign-in → 401", r.status == 401)
+    # ── skills come from the library first (Eric 10-23): fly needs Piloting, mine needs Mining, sell needs Trading ──
+    HN = {"X-Dev-Player": "learner"}
+    r = await cl.get("/api/dfg/me", headers=HN); j = await r.json()
+    check("a new Trainee has no skills yet: fly, mine and sell all wait for the library",
+          j.get("skills") == {"fly": False, "mine": False, "sell": False})
+    r = await cl.post("/api/dfg/session", headers=HN); sidn = (await r.json())["session_id"]
+    learn_piece = {"session_id": sidn, "material": "iron", "dims": [0.5, 0.5, 0.5], "volume_m3": 0.06}
+    r = await cl.post("/api/dfg/collect", headers=HN, json=learn_piece); j = await r.json()
+    check("no Mining pass: collecting is refused and points to the library", r.status >= 400 and "Mining test" in j.get("error", ""))
+    r = await cl.post("/api/dfg/market/order", headers=HN, json={"item": "iron", "side": "sell", "type": "instant", "qty": 1}); j = await r.json()
+    check("no Trading pass: selling is refused and points to the library", r.status >= 400 and "Trading & Markets test" in j.get("error", ""))
+    async def pass_book(book):
+        right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS[book]["test"])}
+        return await (await cl.post("/api/dfg/library/test", headers=HN, json={"book": book, "answers": right})).json()
+    check("passing the Pilot test", (await pass_book("piloting")).get("passed"))
+    r = await cl.get("/api/dfg/me", headers=HN); j = await r.json()
+    check("the pilot's pass gives flying only", j["skills"] == {"fly": True, "mine": False, "sell": False})
+    r = await cl.post("/api/dfg/collect", headers=HN, json=learn_piece)
+    check("a pilot without the Mining pass still can't mine", r.status >= 400)
+    check("passing the Mining test", (await pass_book("mining")).get("passed"))
+    r = await cl.post("/api/dfg/collect", headers=HN, json=learn_piece); j = await r.json()
+    check("with the Mining pass, collecting works", r.status == 200 and "aboard" in j)
+    check("passing the Trading & Markets test", (await pass_book("trading")).get("passed"))
+    r = await cl.post("/api/dfg/market/order", headers=HN, json={"item": "iron", "side": "sell", "type": "instant", "qty": 1}); j = await r.json()
+    check("with the Trading pass, selling is no longer refused for the skill", "Trading & Markets test" not in j.get("error", ""))
+    r = await cl.get("/api/dfg/me", headers=HN); j = await r.json()
+    check("all three skills earned", j["skills"] == {"fly": True, "mine": True, "sell": True})
     r = await cl.post("/api/dfg/session", headers=H); j = await r.json()
     check("session starts with a seed", r.status == 200 and isinstance(j["seed"], int))
     check("starter hold 1.6 x 1.2 x 1.0 = 1.92 m³", j["ship"]["hold_m3"] == 1.92 and j["ship"]["used_m3"] == 0)
@@ -217,7 +259,7 @@ async def main():
     S.AUTH.SHOW_CODES = True
     async with cl.app["pool"].acquire() as c:
         n = await c.fetchval("SELECT count(*) FROM ledger WHERE kind='collect'")
-    check("every collect recorded in the ledger (4)", n == 4)
+    check("every collect recorded in the ledger (4, plus the learner's one)", n == 5)
     S.AUTH.DEV = True
 
     # ---- v2: storage, credits, history (Eric 10-11) ----
@@ -810,6 +852,7 @@ console.log(JSON.stringify(out));"""
     check(f"server roll: brownleeite in tiny fields ({tiny_b}) and never elsewhere {big}", tiny_b > 0 and not any(big.values()))
     # ---- forged collects: an edited browser can't choose what a piece is (security fix 10-19) ----
     HF = {"X-Dev-Player": "tester-forger"}
+    await grant("tester-forger")     # this block posts collects directly (_post), past the shim
     r = await cl.post("/api/dfg/session", headers=HF); jf = await r.json(); sidf, seedf = jf["session_id"], jf["seed"]
     fid, idx, size = find_piece(seedf, "basalt", set(), sizes={"large", "medium"})
     r = await _post("/api/dfg/collect", headers=HF, json={"session_id": sidf, "field": fid, "index": idx, "material": "brownleeite",

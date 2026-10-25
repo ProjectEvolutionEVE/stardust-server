@@ -134,17 +134,17 @@ const wormhole=new THREE.Group();
 wormhole.position.copy(WORMHOLE_POS);wormhole.scale.setScalar(WORMHOLE_R);scene.add(wormhole);
 LANDMARKS.push({name:'Wormhole',pos:WORMHOLE_POS,draw:wormhole,rad:WORMHOLE_R});
 
-// ── THE STARSHIP: Humboldt-Horizon class, Eric's design (10-10, finished 10-11). True scale: 263 m hull (266 m to the wingtips), 244 m wingtip to wingtip.
+// ── THE STARSHIP: Humboldt-Horizon class, Eric's design (10-10, finished 10-11). True scale: 263 m hull. No fin or wings (Eric 10-23).
 //    Model axes: bow toward +Z (the group is turned to face the Sun), Y up.
-//    Ships come home from the front, pass UNDER the long bow, and fly aft into the opening (the "mouth") between the
-//    bow and the lower rear fins. The command deck is the band of lit windows on the underside of the bow, looking
+//    Ships come home from the front, pass UNDER the long bow, and fly aft into the docking bay (the "mouth")
+//    in the belly. The command deck is the band of lit windows on the underside of the bow, looking
 //    down on that approach: it is the Tower, where Inara watches you come in.
 const ship=new THREE.Group();
-const DOCK={approach:new THREE.Vector3(0,-34,215),mouth:new THREE.Vector3(0,-30,-35)};   // ship-local waypoints
+const DOCK={approach:new THREE.Vector3(0,-17,215),mouth:new THREE.Vector3(0,-15,-35),     // ship-local waypoints: in at the bow end of the belly bay
+ aftApproach:new THREE.Vector3(0,-17,-285),aftMouth:new THREE.Vector3(0,-15,-60)};          // and in at the stern end (Eric 10-23: the bay is open both ways)
 const guideLights=[];
 (function(){
  const hullMat=new THREE.MeshStandardMaterial({color:0x5a606b,roughness:.5,metalness:.35,fog:false});   // dark gunmetal (high metalness reads black with no reflections to show)
- const finMat=new THREE.MeshStandardMaterial({color:0x4a4f58,roughness:.55,metalness:.35,side:THREE.DoubleSide,fog:false});
  // hull sections: a top-view profile lofted with an OVAL cross-section (Eric, 10-11: the body matches the oval exhaust),
  // squeezed thin toward the bow tip. section() gives the half-width and half-height at any z, so parts sit on the skin.
  const SKIN=2.2;
@@ -162,7 +162,7 @@ const guideLights=[];
  // fillet, so the rear end has soft edges. The blade edges keep their full reach.
  const ROUND_L=6;
  function dagger(pts,height,taperFrom,taperTo,flare=0,hole=null){
-  const sec=section(pts,height,taperFrom,taperTo),N=64,S=80,zTip=pts[0][1],zEnd=pts[pts.length-1][1]-SKIN;
+  const sec=section(pts,height,taperFrom,taperTo),N=128,S=120,zTip=pts[0][1],zEnd=pts[pts.length-1][1]-SKIN;
   const pos=[],idx=[];
   const zs=[];for(let j=0;j<=S;j++){const z=zTip-(zTip-zEnd)*j/S;if(z>zEnd+ROUND_L)zs.push(z);}
   for(let j=0;j<=10;j++)zs.push(zEnd+ROUND_L*(1-j/10));                          // fine steps through the fillet
@@ -185,22 +185,59 @@ const guideLights=[];
  // upper deck ridge
  const RIDGE=[[0,70],[6,30],[10,-40],[11,-110],[8,-126]],RIDGE_Y=12,ridgeSec=section(RIDGE,8,0,70);
  const ridge=new THREE.Mesh(dagger(RIDGE,8,0,70),hullMat);ridge.position.y=RIDGE_Y;ship.add(ridge);
- // fin from a 2-D triangle-ish outline (x = along the ship, y = out from the hull), thin
- function fin(outline,thick){const sh=new THREE.Shape();outline.forEach((p,i)=>i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]));
-  const g=new THREE.ExtrudeGeometry(sh,{depth:thick,bevelEnabled:false});g.translate(0,0,-thick/2);return new THREE.Mesh(g,finMat);}
- // dorsal shark fin
- const DORSAL=[[-120,0],[-40,0],[-95,34],[-118,30]];
- const dorsal=fin(DORSAL,1.6);dorsal.rotation.y=-Math.PI/2;dorsal.position.y=16;ship.add(dorsal);
- // swept side wings (Eric's top-view illustration, 10-11): flat blades in the plane of the hull's side edges, rooted
- // inside the body and swept back to sharp tips beside the stern. Outline in ship coordinates (x out, z along).
- const WING=[[18,15],[122,-136],[106,-128],[18,-92]];
- [-1,1].forEach(s=>{const sh=new THREE.Shape();WING.forEach((p,i)=>i?sh.lineTo(s*p[0],p[1]):sh.moveTo(s*p[0],p[1]));
-  const g=new THREE.ExtrudeGeometry(sh,{depth:1.4,bevelEnabled:false});g.translate(0,0,-0.7);g.rotateX(Math.PI/2);
-  const w=new THREE.Mesh(g,finMat);w.position.y=-0.3;ship.add(w);});
- // lower rear fins: blades rooted in the underside of the stern, splayed out and down at 45° (Eric's illustrations, 10-11);
- // the mouth is the gap between them, under the hull
- [-1,1].forEach(s=>{const b=fin([[-124,4],[-60,4],[-10,-46],[-40,-44],[-120,-12]],2.0);
-  b.rotation.y=-Math.PI/2;const g=new THREE.Group();g.add(b);g.position.set(s*10,-5,0);g.rotation.z=s*Math.PI/4;ship.add(g);});
+ // No dorsal fin and no swept side wings (Eric 10-23): the Starship never flies inside an atmosphere, so it needs neither.
+ // No lower rear fins either (Eric 10-23): a sleek hull.
+ // THE DOCKING BAY (Eric 10-23): the belly drops down into one long, open hangar from just behind the bridge to near the
+ // stern, open at BOTH ends, so craft can come in or launch from the bow or the stern. Its shape follows the raised
+ // spine on top (Eric: "the shape and feel of the top structure, on a larger scale"): a long, smooth oval body narrower
+ // than the hull, with long, gently sloping ends (the keel much shorter than the top), so craft fly in from the front
+ // and below. It is ONE shell: the outside rolls over at each end into the tunnel through a long rounded lip, so there
+ // are no sharp edges. 35% of the opening's height sits above the hull's underside, so the bay's ceiling is the main
+ // body's outer hull (y=-CEIL). A level deck runs the full length: the landing pad is flat.
+ // Eric 10-23: 20% longer toward the bow (front moved from z=35 to 66), 10% smaller in section.
+ const CEIL=mainSec(0).h,BAY={zf:66,za:-118,cy:-11.6,a:15.75,b:13.5,pOut:2.6,ocy:-14.3,hw:13.5,hh:8.1,pTop:2.4,pBot:4,rake:1.2,lip:12,sweep:16};
+ BAY.deck=BAY.ocy-BAY.hh*0.75;
+ {const N=96,pw=(v,e)=>Math.sign(v)*Math.pow(Math.abs(v),e);
+  // Both outlines are sampled along the same rays from the opening's centre, so each lip rolls straight out from the
+  // opening to the outside with no twist. The opening: an oval on top, squarer under the deck. The outside: an oval
+  // on top (sunk into the hull), fuller below.
+  const insideOuter=(x,y)=>{const s=(y-BAY.cy)/BAY.b;if(Math.abs(s)>1)return false;const p=s<0?BAY.pOut:2;
+   return Math.abs(x)<=BAY.a*Math.pow(1-Math.pow(Math.abs(s),p),1/p);};
+  const dir=i=>{const t=i/N*Math.PI*2;return [Math.cos(t),Math.sin(t)];};
+  const inner=i=>{const [c,s]=dir(i),p=s>=0?BAY.pTop:BAY.pBot;
+   const r=1/Math.pow(Math.pow(Math.abs(c)/BAY.hw,p)+Math.pow(Math.abs(s)/BAY.hh,p),1/p);return [c*r,BAY.ocy+s*r];};
+  const outer=i=>{const [c,s]=dir(i);let lo=0,hi=60;for(let k=0;k<40;k++){const m=(lo+hi)/2;insideOuter(c*m,BAY.ocy+s*m)?lo=m:hi=m;}
+   return [c*lo,BAY.ocy+s*lo];};
+  const zm=(BAY.zf+BAY.za)/2,half=(BAY.zf-BAY.za)/2;
+  // the ends lean back: the lower a point, the further in, and the further out to the side, the further in (seen from
+  // below each end is a smooth curve, so there are no corners to stick out)
+  const rake=(z,y,x=0)=>z-((z-zm)/half)*(BAY.rake*(BAY.cy+BAY.b-y)+BAY.sweep*(x/BAY.a)**2);
+  const rings=[];
+  const ring=(f,z)=>{const r=[];for(let i=0;i<N;i++){const [x,y]=f(i);r.push([x,y,rake(z,y,x)]);}rings.push(r);};
+  const lipRing=(u,zEnd,dir)=>ring(i=>{const I=inner(i),O=outer(i),k=Math.sin(u*Math.PI/2);return [I[0]+(O[0]-I[0])*k,I[1]+(O[1]-I[1])*k];},
+   zEnd-dir*BAY.lip*(1-Math.cos(u*Math.PI/2)));
+  const LS=10,OS=40;
+  for(let j=0;j<=LS;j++)lipRing(j/LS,BAY.zf,1);                                          // bow lip: opening edge -> outside
+  for(let j=1;j<OS;j++)ring(outer,BAY.zf-BAY.lip-(BAY.zf-BAY.za-2*BAY.lip)*j/OS);        // the outside, bow to stern
+  for(let j=LS;j>=0;j--)lipRing(j/LS,BAY.za,-1);                                         // stern lip: outside -> opening edge
+  for(let j=1;j<OS;j++)ring(inner,BAY.za+(BAY.zf-BAY.za)*j/OS);                          // the tunnel, stern to bow
+  const pos=[],idx=[],R=rings.length;
+  for(const r of rings)for(const v of r)pos.push(v[0],v[1],v[2]);
+  for(let j=0;j<R;j++){const k=(j+1)%R;for(let i=0;i<N;i++){const a=j*N+i,b=j*N+(i+1)%N,c=k*N+i,d=k*N+(i+1)%N;idx.push(a,c,b,b,c,d);}}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);g.computeVertexNormals();
+  const bayMat=hullMat.clone();bayMat.side=THREE.DoubleSide;ship.add(new THREE.Mesh(g,bayMat));
+  // the deck: a level landing pad the full length of the tunnel, its ends following the rake
+  const dw=BAY.hw*Math.pow(1-Math.pow(0.75,BAY.pBot),1/BAY.pBot)-0.05;
+  const dz=[rake(BAY.zf,BAY.deck,dw)-1,rake(BAY.za,BAY.deck,dw)+1];   // trimmed to sit inside the swept ends
+  const deck=new THREE.Mesh(new THREE.PlaneGeometry(2*dw,dz[0]-dz[1]),new THREE.MeshStandardMaterial({color:0x3a3f47,roughness:.8,metalness:.2,side:THREE.DoubleSide,fog:false}));
+  deck.rotation.x=-Math.PI/2;deck.position.set(0,BAY.deck,(dz[0]+dz[1])/2);ship.add(deck);
+  // inside: two rows of lights on the ceiling (the hull's underside), and a blue strip along each side of the deck
+  const lm=new THREE.MeshBasicMaterial({color:0xdfe8ff,fog:false,side:THREE.DoubleSide}),n=22;
+  for(const x of [-8,8]){const im=new THREE.InstancedMesh(new THREE.PlaneGeometry(1.6,3.2),lm,n);
+   for(let i=0;i<n;i++){const z=BAY.za+14+i*(BAY.zf-BAY.za-28)/(n-1);const m=new THREE.Matrix4().makeRotationX(Math.PI/2);m.setPosition(x,-mainSec(z).h-0.3,z);im.setMatrixAt(i,m);}   // on the hull's underside, wherever it is
+   ship.add(im);}
+  [-1,1].forEach(sd=>{const strip=new THREE.Mesh(new THREE.PlaneGeometry(dz[0]-dz[1]-10,0.5),new THREE.MeshBasicMaterial({color:0x7fb0ff,fog:false,side:THREE.DoubleSide}));
+   strip.rotation.y=Math.PI/2;strip.position.set(sd*(dw-0.3),BAY.deck+0.6,(dz[0]+dz[1])/2);ship.add(strip);});}
  // engine: an oval exhaust set into the stern (Eric's illustration, 10-11), no tail pipe. A dark well sunk flush into the stern,
  // and the heat source glowing from deep inside it: a long hot core between two round burners.
  const OV=0.42;                                                       // oval height / width
@@ -224,9 +261,12 @@ const guideLights=[];
  // THE TOWER (command deck): a long pod hanging under the bow (Eric, 10-11). Inara is stationed here, watching every craft
  // that leaves and comes home; the docking path runs beneath it. A wraparound band of tall lit windows looks out on all
  // sides, with a second row angled down over the approach. The pod's top is sunk into the hull so it reads as one piece.
- const TOWER={zc:45,L:11.3,W:3.7,H:2,yc:-10.5,p:2.5,gap:1.5};   // 1/3 of the first draft (Eric, 10-11)                       // centre z, half-length, half-width, half-height
- // the pod's centre line follows the hull's underside and sweeps up toward its nose, so the front blends into the hull
- const towerY=z=>-mainSec(z).h+(TOWER.yc+mainSec(TOWER.zc).h)+1.5*Math.max(0,(z-TOWER.zc)/TOWER.L)**2;
+ // Size: 1/3 of the first draft (Eric, 10-11). Place: moved forward, close behind the bow (Eric 10-23; was zc 45).
+ // LEVEL (Eric 10-23): the pod's centre line is level, so it hangs below the hull at the front and, as the hull deepens
+ // aft, sinks into the body; its bottom meets the skin 0.5 m above its aft tip.
+ const TOWER={zc:88,L:11.3,W:3.7,H:2,p:2.5,gap:1.5};   // centre z, half-length, half-width, half-height
+ TOWER.yc=-mainSec(TOWER.zc-TOWER.L).h+TOWER.H-0.5;
+ const towerY=z=>TOWER.yc;
  const towerHalfW=z=>{const u=Math.min(1,Math.abs(z-TOWER.zc)/TOWER.L);return TOWER.W*Math.pow(1-Math.pow(u,TOWER.p),1/TOWER.p);};
  {const N=40,zs=[];for(let j=0;j<=48;j++){const t=-1+2*j/48;zs.push(TOWER.zc+TOWER.L*Math.sign(t)*Math.pow(Math.abs(t),0.8));}
   const pos=[],idx=[];
@@ -250,8 +290,8 @@ const guideLights=[];
     v.set(sp[0]+nx*0.12,towerY(sp[1])+r.dy,sp[1]+nz*0.12);e.set(r.tilt,sp[2],0);q.setFromEuler(e);m4.compose(v,q,one);im.setMatrixAt(n,m4);});
    ship.add(im);}}
  // THE NAME (Eric, 10-11): "WSC ALEXANDER VON HUMBOLDT" on both sides of the raised section on top, clear of the
- // windows. It lines up with the tall rear fin: on the starboard side the first letter starts under the fin's leading
- // edge, and on the port side the last letter ends under it; from there the name runs aft. The lettering is a strip
+ // windows. It starts 40 m aft of amidships (where the old dorsal fin's leading edge stood, so it stays where Eric
+ // approved it): on the starboard side the first letter starts there, and on the port side the last letter ends there; from there the name runs aft. The lettering is a strip
  // laid onto the curved skin so it sits flush along its whole length.
  {const NAME='WSC  ALEXANDER  VON  HUMBOLDT',TH=3.4,YC=RIDGE_Y+2;
   const c=document.createElement('canvas'),g=c.getContext('2d');g.font='600 180px Georgia, "Times New Roman", serif';
@@ -260,7 +300,7 @@ const guideLights=[];
   const tex=new THREE.CanvasTexture(c);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=8;
   const mat=new THREE.MeshBasicMaterial({map:tex,transparent:true,fog:false,toneMapped:false,side:THREE.DoubleSide,
    polygonOffset:true,polygonOffsetFactor:-2});                                         // lit lettering, readable on the dark hull
-  const L=TH*tw/256,zFront=DORSAL[1][0],SEG=40;                                          // fin's leading edge on the hull
+  const L=TH*tw/256,zFront=-40,SEG=40;                                                   // where the name starts on the hull
   const skinX=(y,z)=>{const k=ridgeSec(z),sn=Math.max(-1,Math.min(1,(y-RIDGE_Y)/k.h));return k.w*Math.sqrt(1-sn*sn);};
   [-1,1].forEach(sd=>{const pos=[],uv=[],idx=[];
    const ROWS=8;                                                                         // rows across the height follow the curve
@@ -303,16 +343,22 @@ const guideLights=[];
  // hull floodlights, so the ship reads as a shape even on the side away from the Sun
  [[0,45,-20,4500,0xc8d4ff],[0,-75,60,2200,0xffe0b0],[60,0,-60,3000,0xc8d4ff],[-60,0,-60,3000,0xc8d4ff]].forEach(f=>{
   const l=new THREE.PointLight(f[4],f[3],0,2);l.position.set(f[0],f[1],f[2]);ship.add(l);});
- // the mouth: a faint blue work-light inside the opening
- const ml=new THREE.PointLight(0x7fb0ff,1800,0,2);ml.position.set(0,-22,-40);ship.add(ml);
+ // the bay: work-lights inside the hangar
+ [0,-46,-92].forEach(z=>{const ml=new THREE.PointLight(0xbfd4ff,180,0,2);ml.position.set(0,-CEIL-4,z);ship.add(ml);});
  // guide lights: a lane from in front of the bow, under it, into the mouth (they pulse in sequence toward the ship)
  const gm=new THREE.SphereGeometry(0.9,10,8);
- for(let i=0;i<16;i++){const t=i/15;const p=DOCK.approach.clone().lerp(DOCK.mouth,t);
+ for(const [from,to] of [[DOCK.approach,DOCK.mouth],[DOCK.aftApproach,DOCK.aftMouth]])   // bow lane, and the aft lane (Eric 10-23)
+  for(let i=0;i<16;i++){const t=i/15;const p=from.clone().lerp(to,t);
   [-1,1].forEach(s=>{const m=new THREE.Mesh(gm,new THREE.MeshBasicMaterial({color:0x7fe0a8,fog:false}));m.position.set(s*9,p.y-4,p.z);ship.add(m);guideLights.push({m,t});});}
 })();
 ship.position.copy(STARSHIP_POS);ship.lookAt(0,0,0);scene.add(ship);
 ship.updateMatrixWorld(true);
-const DOCK_W={approach:ship.localToWorld(DOCK.approach.clone()),mouth:ship.localToWorld(DOCK.mouth.clone())};
+const DOCK_W={approach:ship.localToWorld(DOCK.approach.clone()),mouth:ship.localToWorld(DOCK.mouth.clone()),
+ aftApproach:ship.localToWorld(DOCK.aftApproach.clone()),aftMouth:ship.localToWorld(DOCK.aftMouth.clone())};
+// Docking (Eric 10-23): the bay is open at both ends, so the autopilot comes in from whichever end you are nearer:
+// behind the middle of the bay (ship-local z < -26) it takes the stern lane, otherwise the bow lane.
+function dockLock(){const aft=ship.worldToLocal(cam.position.clone()).z<-26;
+ return {name:'Starship',pos:aft?DOCK_W.aftApproach:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1,aft};}
 function pulseGuides(t){for(const g of guideLights){const ph=((t*0.6-g.t)%1+1)%1;const k=Math.pow(1-ph,6);g.m.material.color.setRGB(0.25+0.25*k,0.45+0.5*k,0.35+0.4*k);}}
 LANDMARKS.unshift({name:'Starship',pos:ship.position,draw:ship,home:true,rad:140});
 
@@ -402,6 +448,7 @@ const collectBtn=document.getElementById('collect'),holdEl=document.getElementBy
 function nextPiece(f){let best=-1,bd=1e9;for(let i=0;i<f.pieces.length;i++){const p=f.pieces[i];if(p.taken||!shapeFits(p)||!roomFor(p))continue;
   f.mats[i].decompose(tmpP,tmpQ,tmpS);tmpP.add(f.center);const d=tmpP.distanceTo(cam.position);if(d<bd){bd=d;best=i;}}return best;}
 function startCollect(){const f=lock&&lock.parked&&lock.field;if(!f)return;
+ if(!hasSkill('mine')){libraryFirst('mine');return;}   // no Mining pass: the server would refuse every piece
  const left=f.pieces.filter(p=>!p.taken);
  if(!left.some(shapeFits)){VOICE.say('toobig');toast('TOO BIG TO TAKE','These pieces won\'t fit in your hold. Keep searching for a field of smaller debris.');return;}
  const i=nextPiece(f);if(i<0){VOICE.say('full');toast('HOLD FULL','No room left for these pieces. Return to the Starship to unload.');return;}
@@ -566,7 +613,18 @@ function finishXfer(stopped){const x=xfer;x.done=true;renderXfer();xferNow(null)
 //    you collect (real density, the shape fits, room left, collecting takes time), keeps what's in your hold between
 //    sessions, does each unload and issues the receipt anyone can check. Without a sign-in (the private preview), the
 //    flight keeps everything in this browser as before.
-const NET={api:window.STARDUST_API||null,token:null,session:null,on:false,last:0,queue:Promise.resolve()};
+const NET={api:window.STARDUST_API||null,token:null,session:null,on:false,last:0,queue:Promise.resolve(),skills:null};
+// SKILLS FROM THE LIBRARY (Eric 10-23): a signed-in Trainee is sent to the Starship Library first. Flying needs the Pilot
+// Basic Training Handbook, mining needs Mining, selling needs Trading & Markets; the server enforces mining and selling,
+// and the flight checks flying here. Without an account (the offline preview) nothing is locked.
+const SKILL_NEED={fly:'Pass the Pilot Basic Training Handbook test before you can fly.',
+ mine:'Pass the Mining test before you can mine.',sell:'Pass the Trading & Markets test before you can sell.'};
+function hasSkill(k){return !NET.on||!NET.skills||NET.skills[k]!==false;}
+let libNoteAt=0;
+function libraryFirst(k){if(performance.now()-libNoteAt<4000)return;libNoteAt=performance.now();
+ toast('LIBRARY FIRST',SKILL_NEED[k]+' Open QUARTERS, then Exit Private Quarters to the Starship Library.');refreshSkills();}
+function refreshSkills(){if(NET.on)netCall('/me').then(m=>{NET.skills=m.skills||null;}).catch(()=>{});}
+window.addEventListener('stardust:passed',refreshSkills);   // a test just passed in the library
 async function netCall(path,body){
  const r=await fetch(NET.api+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NET.token},
    body:body?JSON.stringify(body):undefined});
@@ -587,7 +645,7 @@ async function netStart(){
  try{const j=await netCall('/session',{});NET.session=j.session_id;NET.on=true;
   // the universe now comes from the server's seed, so the server can tell what every piece is: lay it out afresh
   SEED=j.seed>>>0;collecting=null;lock=null;for(const key of [...cells.keys()])unloadCell(key);fieldMemory.clear();
-  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);}).catch(()=>{});return true;}
+  netApplyShip(j);netCall('/me').then(m=>{VOICE.set(m.voice_set);VOICE.rank(m.rank);NET.skills=m.skills||null;}).catch(()=>{});return true;}
  catch(e){NET.on=false;return false;}}
 function netRefresh(){if(NET.on)netCall('/ship').then(netApplyShip).catch(()=>{});}
 // One collect at a time, in order, never closer together than the server allows (it refuses collects under 2 s apart).
@@ -709,11 +767,11 @@ const MAXV=60,BOOSTV=450,ACC=40,AUTOV=900;   // autopilot cruises fast on long t
 // Docking also lets go of the controls (Eric's dock-then-undock bug, 10-20): throttle to 0 and any stick touch that began
 // before the dock is dropped, so only a NEW throttle-up or a NEW stick press launches again.
 let dockedAt=0;
-function settleDocked(){cam.position.copy(DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
+function settleDocked(aft=false){cam.position.copy(aft?DOCK_W.aftMouth:DOCK_W.mouth);vel.set(0,0,0);rot.set(0,0,0);docked=true;dockedAt=performance.now();
  if(typeof throttle!=='undefined'){throttle=0;thrEl.textContent='Throttle 0%';}
  if(typeof stk!=='undefined'&&stk){stk=null;stickRing.hidden=true;}
  if(typeof pivot!=='undefined'){pivot.l=pivot.r=false;hold.boost=false;}
- cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,400)));}
+ cam.up.copy(new THREE.Vector3(0,1,0).transformDirection(ship.matrixWorld));cam.lookAt(ship.localToWorld(new THREE.Vector3(0,-30,aft?-400:400)));}   // facing out of the end you came in by
 let throttle=0;                           // 0..10 steps of 10%
 const thrEl=document.getElementById('thrtxt');
 function setThrottle(n){if(lock){if(lock.parked)lock=null;else lock.auto=false;}   // like the stick: touching the throttle takes the controls back
@@ -764,7 +822,7 @@ function lockAt(px,py){
  rayV.set(px/innerWidth*2-1,-(py/innerHeight)*2+1,0.5).unproject(cam).sub(cam.position).normalize();
  let best=null,bestAng=0.2;               // within ~11° of the tap
  const cands=FIELDS.filter(f=>f.shown).map(f=>({name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),field:f}))
-  .concat(LANDMARKS.map(l=>l.home?{name:'Starship',pos:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1}:
+  .concat(LANDMARKS.map(l=>l.home?dockLock():
    ({name:l.name,pos:l.pos,aim:l.draw.position,stopAt:l.rad*1.6,far:true})));
  // (c.aim: tap the ship itself; the autopilot heads for its approach point)
  for(const c of cands){tgtV.copy(c.aim||c.pos).sub(cam.position);const a=tgtV.angleTo(rayV);if(a<bestAng){bestAng=a;best=c;}}
@@ -783,7 +841,9 @@ function fly(dt){
  const [sx,sy]=stickXY();
  const holding=!!stk;
  if(holding&&lock){if(lock.parked)lock=null;else lock.auto=false;}   // leaving a field you parked at releases it; otherwise the lock stays
- if(docked&&(throttle||(holding&&stk.t>dockedAt))){docked=false;VOICE.say('launch');VOICE.story('launch');}   // taking the stick back stops the autopilot (the lock stays)
+ if(docked&&(throttle||(holding&&stk.t>dockedAt))){
+  if(!hasSkill('fly')){throttle=0;thrEl.textContent='Throttle 0%';stk=null;stickRing.hidden=true;libraryFirst('fly');}   // no pilot's pass: stay docked
+  else{docked=false;VOICE.say('launch');VOICE.story('launch');}}   // taking the stick back stops the autopilot (the lock stays)
  fwd.set(0,0,-1).applyQuaternion(cam.quaternion);right.set(1,0,0).applyQuaternion(cam.quaternion);up.set(0,1,0).applyQuaternion(cam.quaternion);
  // target turn rates
  let tp=0,ty=0,tr=0;
@@ -794,9 +854,9 @@ function fly(dt){
   want.copy(lock.pos).sub(cam.position).normalize();
   const lx=want.dot(right),ly=want.dot(up);ty=-lx*2.2;tp=ly*2.2;tr=0;
  }
- if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
+ if(lock&&lock.dock===1&&lock.auto&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.dock=2;lock.pos=lock.aft?DOCK_W.aftMouth:DOCK_W.mouth;lock.stopAt=22;lock.name='Starship · docking';VOICE.say('approach');
   if(throttle){throttle=0;thrEl.textContent='Throttle 0%';}warn('Tractor beam has control. Throttle set to zero.');}   // a throttle left up from before would launch you again the moment you dock
- else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock=null;settleDocked();   // settle facing out past the bow, the view from the bay
+ else if(lock&&lock.dock===2&&cam.position.distanceTo(lock.pos)<lock.stopAt){const aft=lock.aft;lock=null;settleDocked(aft);   // settle in the bay, facing out of the end you came in by
   VOICE.say('docked');toast('DOCKED','Welcome home. Your Market terminal is at the Desk in your quarters.');}
  if(lock&&lock.auto&&!lock.dock&&cam.position.distanceTo(lock.pos)<lock.stopAt){lock.auto=false;lock.parked=true;if(lock.field)VOICE.say('parked');warn('Holding position: '+lock.name);if(lock.field)lock.field.known=true;}
  if(lock&&!lock.auto&&!lock.parked&&lock.field&&lock.field.known&&cam.position.distanceTo(lock.pos)>lock.stopAt*4)lock=null;   // flew away from a visited field
@@ -887,7 +947,7 @@ function scan(dt){
     if(moved>Math.max(35,dist*0.12)&&a1.angleTo(a2)>2.5*Math.PI/180)fixField(best);}
   }}
  scanEl.style.width=(scanStrength*100).toFixed(0)+'%';
- scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?'DOCKING · under the bow':lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
+ scanTxt.textContent=docked?'DOCKED · throttle up to launch':lock&&lock.dock?(lock.aft?'DOCKING · in under the stern':'DOCKING · under the bow'):lock&&lock.parked?'HOLDING POSITION · in front of the field':lock&&lock.auto?'AUTOPILOT · hold to take the controls':lock&&lock.field?'LOCKED · double-tap to fly there':scanBest&&bearings.has(scanBest)&&scanStrength>0.2?'BEARING 1 OF 2 · move and sweep again':scanStrength>0.25?'RETURN':'SWEEPING';
  snd.scanner(lock&&(lock.field||lock.dock)||docked?-1:scanStrength);
 }
 function fixField(f){bearings.delete(f);lock={name:FIELD_LABEL(f),pos:f.center,stopAt:standOff(f),auto:false,field:f};snd.chime();VOICE.say('locked');
@@ -1073,6 +1133,7 @@ function renderWarpMenu(){
   b.children[2].textContent=fmtDist(cam.position.distanceTo(p));
   b.addEventListener('click',()=>{$('warppanel').hidden=true;startWarp(d);});$('warplist').appendChild(b);});}
 function startWarp(d){
+ if(docked&&!hasSkill('fly')){libraryFirst('fly');return;}   // warping out of the bay is flying too
  const to=destPoint(d),from=cam.position.clone(),dist=from.distanceTo(to);
  if(dist<20000){warn('You\'re already there.');return;}
  // bend the route around the Sun if the straight line passes within 0.25 AU of it
@@ -1097,7 +1158,7 @@ function warpTick(dt){
  if(w.t<total)return;
  warp=null;streaks(0);
  if(w.d.ring){const first=!workRing;workRing=w.d.ring;inaraT=0;VOICE.say('warp'+RINGS.indexOf(w.d.ring));if(first)VOICE.story('ring');inara('Dropping out in the '+w.d.ring.name+'. Debris all around you. Start sweeping.');}
- else if(w.d.key==='starship'){lock={name:'Starship',pos:DOCK_W.approach,aim:ship.position,stopAt:14,dock:1,auto:false};
+ else if(w.d.key==='starship'){lock=Object.assign(dockLock(),{auto:false});
   VOICE.say('arrived');toast('ARRIVED','The Starship is ahead. Double-tap it to come aboard.');}
  else toast('ARRIVED',w.label);}
 // streaking stars while in warp (a 2D overlay)
