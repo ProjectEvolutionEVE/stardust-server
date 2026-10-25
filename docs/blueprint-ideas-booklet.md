@@ -1,4 +1,4 @@
-# Blueprint Ideas: a beginner's roadmap (DRAFT for Eric's review)
+# Blueprint Ideas: a beginner's roadmap (approved by Eric 10-24)
 
 **SECRET (Eric 10-24): an Easter egg.** Revealed as a surprise on passing the test on **The Blueprint Designer's Handbook** (CLAUDE.md rule 31); never mentioned or hinted at anywhere a player can see before then. It is a book of IDEAS, never
 designs: every design is the player's own (rule 11). Each group runs from beginner ideas (anyone can picture them) to
@@ -49,6 +49,7 @@ Books: Pilot Basic Training Handbook, Ship Maintenance & Repair, Power Systems, 
 Books: Botany & Hydroponics, Water Management, Health & Fitness
 - **Hydroponic racks (beginner):** grow more in less space.
 - **Food stations:** meals that help your energy recover.
+- **Enriched crops (advanced):** harvests rich enough to sell at the market as food that speeds recovery.
 - **Water recyclers (advanced).**
 
 ## 8. Your own space · Quarters and personal things
