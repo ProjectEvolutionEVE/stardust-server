@@ -75,6 +75,7 @@ The full record is in the `quavara-docs` repository:
     - The game always runs in **real time**. Rest never speeds anything up: a 2-minute nap does not finish a build that takes weeks.
     - A **fatigue meter** slowly drains **stamina, energy and mental focus**, just like the real world. **Rest refills them.**
     - The **best rest is in the player's own bed** in their Private Quarters.
+    - **Resting in the cockpit (Eric 10-24):** stopped out in space, the player can sleep in the cockpit, and can sign out there and wake up there next time, instead of always flying back to the ship. Cockpit sleep refills the bars at **half the bed's rate** (35 per 12 hours, about 2.9 an hour). The bed stays the fastest rest.
     - **Thresholds and recovery (10-11):**
       - Below **50%** on any health-related bar, the player can no longer perform their duties to an acceptable level: abilities are impaired.
       - **65%** is the lowest recommended level.
@@ -128,6 +129,15 @@ The full record is in the `quavara-docs` repository:
 27. **Smelting yields follow real chemistry, kept simple (10-11):** every ore piece is **pure ore mineral**, so it yields its element's share by weight (from its formula), and the rest is slag. Example: 100 kg of chalcopyrite gives 34.6 kg of copper and 65.4 kg of slag. No mine-grade dilution.
 
 28. **The Starship's greenhouse and water plant (Eric's canon, Story Bible 2026-09-25; confirmed 10-11 as the same ship).** The WSC Alexander von Humboldt is the starship of the Story Bible (`quavara-site/games-holdback/STORY-BIBLE.md`). It has a **large self-sustaining greenhouse** and a **water generation plant** that makes its own H₂O, so water is an endless supply aboard. So **Botany & Hydroponics** is a library subject and an early career aboard (Greenhouse Tech / Botanist), not only on the new Earth later.
+
+29. **All new work goes into the Godot app (Eric 10-24).** "We will be working everything toward the Godot app and not go backwards." The live browser game stays as it is; it is only the source to port from.
+
+30. **Massive debris fields (Eric 10-24).** On top of the per-session fields:
+    - **Shared:** a massive field is the same for every player, kept in the game's own database, and it **depletes as it is mined**: what one player takes is gone for everyone.
+    - **Respawn:** once it is completely mined, it re-spawns somewhere else **in the same ring**.
+    - **At least one per ring**, always.
+    - Some hold **really large chunks** rich in the **mid-valued resources**: too big for a starter hold, so players have a reason to design ways to break them up, laser them into fine dust, or haul them (player blueprints, rule 11).
+    - A **beacon** placed in one saves its position, so the player can warp straight back to it after unloading. (Where beacons come from and how many a player may have: still open.)
 
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).

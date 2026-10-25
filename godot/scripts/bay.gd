@@ -60,6 +60,10 @@ var info: Label
 var appr: Label
 var stick: Control
 var hud_root: Control
+var sleep_btn: Button
+var sleep_panel: ColorRect
+var sleep_bars: Label
+var sleep_at := 0.0
 var quarters_btn: Button          # only while docked: the quarters are aboard (Eric 10-24: not out in space)
 var cargo: Node
 var mute_btn: Button
@@ -101,8 +105,111 @@ func _ready() -> void:
 	add_child(sound)
 	_dock()
 	_hud()
+	_wake_parked()
 	sol.place(org, cam)
 	_server_seed()
+
+
+## Signed out in the cockpit last time (Eric 10-24): wake up out there, where the craft was left, not in the bay.
+func _wake_parked() -> void:
+	var pk = Session.me.get("parked")
+	if not (pk is Dictionary and pk.get("pos") is Array):
+		return
+	docked = false
+	org = sol.to_local_d(pk.pos)
+	cam.position = Vector3.ZERO
+	Session.me.parked = null
+	_say("You wake in your cockpit, right where you left your craft.")
+	Voice.ring(hud_root, Voice.moment("wake"))
+	if Session.token != "":
+		Api.call_api("POST", "/api/dfg/rest", {"unpark": true})
+
+
+# ── RESTING IN THE COCKPIT (Eric 10-24): stopped out in space, sleep at half the bed's rate, or sign out right here ──
+func _can_sleep() -> bool:
+	return not docked and warp.is_empty() and vel.length() < 0.5 and throttle == 0 and not lock.get("auto", false) \
+		and not sleep_panel.visible
+
+
+func _sleep() -> void:
+	sleep_panel.move_to_front()          # over every instrument
+	sleep_panel.visible = true
+	holding = false
+	sleep_bars.text = "Resting…"
+	Voice.say("sleep")
+	if Session.token == "":
+		sleep_bars.text = "Not signed in: your rest isn't kept."
+		return
+	var r: Dictionary = await Api.call_api("POST", "/api/dfg/rest", {"asleep": true, "place": "cockpit"})
+	_show_bars(r)
+
+
+func _show_bars(r: Dictionary) -> void:
+	if not r.get("ok", false):
+		sleep_bars.text = r.get("error", "")
+		return
+	Session.me = r.data
+	var b: Dictionary = r.data.get("bars", {})
+	sleep_bars.text = "Stamina %d%% · Energy %d%% · Focus %d%%" % [roundi(b.get("stamina", 0)), roundi(b.get("energy", 0)), roundi(b.get("focus", 0))]
+
+
+func _refresh_bars() -> void:
+	_show_bars(await Api.call_api("GET", "/api/dfg/me"))
+
+
+func _wake() -> void:
+	sleep_panel.visible = false
+	if Session.token != "":
+		_show_bars(await Api.call_api("POST", "/api/dfg/rest", {"asleep": false}))
+
+
+func _sign_out_here() -> void:
+	var w: Array = sol.to_world_d(_me())
+	if Session.token != "":
+		var r: Dictionary = await Api.call_api("POST", "/api/dfg/auth/signout", {"place": "cockpit", "pos": w})
+		if not r.ok:
+			sleep_bars.text = r.error
+			return
+	Session.clear()
+	get_tree().change_scene_to_file("res://scenes/title.tscn")
+
+
+func _sleep_ui(root: Control) -> void:
+	sleep_btn = _hud_button("SLEEP", Vector2(24, 976), Vector2(120, 51), 26, "")
+	sleep_btn.pressed.connect(_sleep)
+	root.add_child(sleep_btn)
+	sleep_panel = ColorRect.new()
+	sleep_panel.color = Color(0, 0, 0, 0.78)
+	sleep_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	sleep_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	sleep_panel.visible = false
+	root.add_child(sleep_panel)
+	var box := VBoxContainer.new()
+	box.position = Vector2(60, 440)
+	box.size = Vector2(600, 400)
+	box.add_theme_constant_override("separation", 22)
+	sleep_panel.add_child(box)
+	var t := Ui.label("ASLEEP IN THE COCKPIT", 30, HUD_RED)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(t)
+	var n := Ui.label("Your craft holds its position. You rest here at half the rate of your own bed back aboard the Starship.", 20, Ui.MUTED)
+	n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(n)
+	sleep_bars = Ui.label("", 22, Color("7fe0a8"))
+	sleep_bars.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(sleep_bars)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 20)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_child(row)
+	var wk := _hud_button("WAKE UP", Vector2.ZERO, Vector2(260, 64), 32, "")
+	wk.custom_minimum_size = Vector2(260, 64)
+	wk.pressed.connect(_wake)
+	row.add_child(wk)
+	var so := _hud_button("SIGN OUT HERE", Vector2.ZERO, Vector2(260, 64), 32, "")
+	so.custom_minimum_size = Vector2(260, 64)
+	so.pressed.connect(_sign_out_here)
+	row.add_child(so)
 
 
 ## The universe comes from the server's seed, so the server can tell what every piece is (as the browser's netStart).
@@ -224,6 +331,7 @@ func _hud() -> void:
 	root.add_child(wb)
 	_warp_panel(root)
 	hud_root = root
+	_sleep_ui(root)
 	cargo = preload("res://scripts/cargo.gd").new()   # the hold, COLLECT and UNLOAD
 	cargo.bay = self
 	add_child(cargo)
@@ -357,6 +465,10 @@ func _process(dt: float) -> void:
 	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
 	edge.queue_redraw()
 	quarters_btn.visible = docked
+	sleep_btn.visible = _can_sleep()
+	if sleep_panel.visible and now > sleep_at and Session.token != "":   # the bars as they refill, once a minute
+		sleep_at = now + 60.0
+		_refresh_bars()
 	marks.queue_redraw()
 	cue.alpha += (cue.want - cue.alpha) * (1.0 - exp(-dt / 0.15))
 	stick.queue_redraw()

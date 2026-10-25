@@ -1,5 +1,6 @@
 """The character's body (Eric 10-11). Three bars, 0-100: stamina, energy and mental focus.
   · Awake (online, or working offline), each drains 2.2 points an hour: a 16-hour day takes 100% to 65%.
+  · Asleep in the cockpit, out in space (Eric 10-24), half that: 35 points per 12 hours. The bed is the best rest.
   · Asleep in bed, each refills 35 points per 6 hours (about 5.83 an hour): 6 hours takes 65% back to 100%; from 50% it
     takes about 8.5 hours. The game runs in real time: rest never speeds anything else up.
   · Abilities decline slightly near the top, severely below 65% (the lowest recommended level) and extremely below 50%.
@@ -8,6 +9,8 @@ from datetime import datetime, timezone
 
 DRAIN_PER_HOUR = 2.2
 REST_PER_HOUR = 35 / 6
+COCKPIT_REST = 0.5            # sleeping in the cockpit refills at half the bed's rate
+PLACES = ("bed", "cockpit")
 BARS = ("stamina", "energy", "focus")
 RECOMMENDED = 65
 IMPAIRED = 50
@@ -23,7 +26,8 @@ def current(row, now=None):
     out = {}
     for b in BARS:
         v = float(row[b])
-        v = v + REST_PER_HOUR * hours if row["asleep"] else v - DRAIN_PER_HOUR * hours
+        rest = REST_PER_HOUR * (COCKPIT_REST if row["rest_place"] == "cockpit" else 1.0)
+        v = v + rest * hours if row["asleep"] else v - DRAIN_PER_HOUR * hours
         out[b] = round(min(100.0, max(0.0, v)), 2)
     return out
 
@@ -47,10 +51,13 @@ def warning(bars):
     return None
 
 
-async def set_state(conn, pid, asleep):
-    """Bring the bars up to now, then switch between awake and asleep (waking up, or going to bed)."""
-    row = await conn.fetchrow("SELECT stamina, energy, focus, body_at, asleep FROM players WHERE id=$1 FOR UPDATE", pid)
+async def set_state(conn, pid, asleep, place="bed"):
+    """Bring the bars up to now (at the rate of wherever they were resting), then switch between awake and asleep,
+    in bed or in the cockpit."""
+    if place not in PLACES:
+        raise ValueError("place")
+    row = await conn.fetchrow("SELECT stamina, energy, focus, body_at, asleep, rest_place FROM players WHERE id=$1 FOR UPDATE", pid)
     cur = current(row)
-    await conn.execute("UPDATE players SET stamina=$2, energy=$3, focus=$4, body_at=now(), asleep=$5 WHERE id=$1",
-                       pid, cur["stamina"], cur["energy"], cur["focus"], asleep)
+    await conn.execute("UPDATE players SET stamina=$2, energy=$3, focus=$4, body_at=now(), asleep=$5, rest_place=$6 WHERE id=$1",
+                       pid, cur["stamina"], cur["energy"], cur["focus"], asleep, place)
     return cur

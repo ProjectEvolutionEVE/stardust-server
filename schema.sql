@@ -52,6 +52,10 @@ ALTER TABLE players ADD COLUMN IF NOT EXISTS energy  NUMERIC(6,3) NOT NULL DEFAU
 ALTER TABLE players ADD COLUMN IF NOT EXISTS focus   NUMERIC(6,3) NOT NULL DEFAULT 100;
 ALTER TABLE players ADD COLUMN IF NOT EXISTS body_at TIMESTAMPTZ NOT NULL DEFAULT now();
 ALTER TABLE players ADD COLUMN IF NOT EXISTS asleep  BOOLEAN NOT NULL DEFAULT true;     -- a new player starts in bed
+-- Where the character rests (Eric 10-24): 'bed' (full rate) or 'cockpit' (half rate, out in space). `parked` is where the
+-- craft waits when the player signed out in the cockpit ({"pos": [x, y, z]} in metres from the Sun); NULL = aboard.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS rest_place TEXT NOT NULL DEFAULT 'bed';
+ALTER TABLE players ADD COLUMN IF NOT EXISTS parked     JSONB;
 
 -- How a player signs in: a phone number or an email address. The ONLY personal information the game keeps.
 CREATE TABLE IF NOT EXISTS logins (

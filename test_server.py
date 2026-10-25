@@ -181,6 +181,31 @@ async def main():
     r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "pilot@example.com"}); j = await r.json()
     r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "PILOT@example.com", "code": j["dev_code"]}); j2 = await r.json()
     check("email sign-in works too (case doesn't matter) and is a different player", r.status == 200 and j2["new_player"])
+    # resting in the cockpit (Eric 10-24): half the bed's rate; signing out there, the player wakes there next time
+    TP = {"Authorization": "Bearer " + j2["token"]}
+    async with cl.app["pool"].acquire() as c:
+        pidp = await c.fetchval("SELECT player_id FROM logins WHERE channel='email' AND address='pilot@example.com'")
+    r = await cl.post("/api/dfg/rest", json={"asleep": True, "place": "cockpit"}, headers=TP); j = await r.json()
+    check("sleeping in the cockpit, still signed in", r.status == 200 and j["asleep"] and j["rest_place"] == "cockpit" and not j["in_bed"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET stamina=50, energy=50, focus=50, body_at=now() - interval '6 hours' WHERE id=$1", pidp)
+    r = await cl.get("/api/dfg/me", headers=TP); j = await r.json()
+    check("6 hours asleep in the cockpit from 50% gives 67.5% (half the bed's rate)", abs(j["bars"]["focus"] - 67.5) < 0.1)
+    r = await cl.post("/api/dfg/rest", json={"asleep": False}, headers=TP); j = await r.json()
+    check("waking in the cockpit", not j["asleep"] and abs(j["bars"]["focus"] - 67.5) < 0.1)
+    r = await cl.post("/api/dfg/rest", json={"asleep": True, "place": "hammock"}, headers=TP)
+    check("sleeping anywhere but the bed or the cockpit is refused", r.status == 422)
+    r = await cl.post("/api/dfg/auth/signout", json={"place": "cockpit", "pos": "out there"}, headers=TP)
+    check("signing out in the cockpit needs the craft's position", r.status == 422)
+    POS = [1.1e11, 1200.0, -9.9e10]
+    r = await cl.post("/api/dfg/auth/signout", json={"place": "cockpit", "pos": POS}, headers=TP); j = await r.json()
+    check("signing out in the cockpit: asleep out there", r.status == 200 and j["asleep"])
+    r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "pilot@example.com"}); cc = (await r.json())["dev_code"]
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "pilot@example.com", "code": cc}); j = await r.json()
+    check("signing in again wakes the player in the cockpit, where the craft was parked",
+          j["me"]["location"] == "Cockpit" and j["me"]["parked"]["pos"] == POS and not j["me"]["asleep"])
+    r = await cl.post("/api/dfg/rest", json={"unpark": True}, headers={"Authorization": "Bearer " + j["token"]}); j = await r.json()
+    check("once the flight picks the craft up, it's no longer parked", j["parked"] is None and j["location"] == "Private Quarters")
     r = await cl.post("/api/dfg/auth/start", json={"channel": "email", "address": "pilot@example.com"}); c3 = (await r.json())["dev_code"]
     for _ in range(5):
         await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "pilot@example.com", "code": "999999" if c3 != "999999" else "888888"})

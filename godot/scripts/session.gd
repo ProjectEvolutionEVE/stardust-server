@@ -30,9 +30,12 @@ func clear() -> void:
 		DirAccess.remove_absolute(SAVE_PATH)
 
 
-## Where a signed-in player goes next: setup until their name and language are chosen, then their quarters.
+## Where a signed-in player goes next: setup until their name and language are chosen, then their quarters; or their
+## cockpit, if they signed out there (Eric 10-24).
 func next_scene() -> String:
-	return "res://scenes/setup.tscn" if me.get("needs_setup", true) else "res://scenes/quarters.tscn"
+	if me.get("needs_setup", true):
+		return "res://scenes/setup.tscn"
+	return "res://scenes/bay.tscn" if me.get("parked") else "res://scenes/quarters.tscn"
 
 
 func _key() -> String:
