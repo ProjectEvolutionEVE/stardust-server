@@ -14,7 +14,7 @@ Humboldt went to study it and found, on the other side, a twin of our universe: 
 and animals, but no humans and no sign that any had ever lived there. After a 12-month survey proved it could sustain
 human life, the ship came home through the wormhole to find our solar system devastated. Mercury, Venus, Earth and Mars
 and most of their moons have been destroyed by something no one understands, and an unknown civilisation of scavengers,
-silent and unarmed, is sifting through the wreckage. The crew rebuild, study, and look for answers, and the New Earth
+silent and unarmed, is sifting through the debris. The crew rebuild, study, and look for answers, and the New Earth
 waits on the other side.
 
 **Inara.** The ship's AI in its command centre, and the one voice that talks the player through the whole game: launch

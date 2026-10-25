@@ -11,7 +11,7 @@ library. Every line comes from the Story Bible's canon (docs/STORY-BIBLE.md); no
 | 3 | A green New Earth: forests, rivers, animals | "A New Earth. Air, water, forests, animals. And no people. No sign that anyone had ever lived there." |
 | 4 | The crew at work on the New Earth | "For twelve months we tested everything. It could be home. We were so happy." |
 | 5 | The ship coming back through the wormhole, the solar system ahead in ruins | "Then we came home. Mercury, Venus, Earth and Mars were gone. Broken into rings of debris around the Sun." |
-| 6 | Silhouettes of scavenger craft in a debris field | "We're not alone out here. Others are sifting through the wreckage. They don't answer us. We don't know who they are." |
+| 6 | Silhouettes of scavenger craft in a debris field | "We're not alone out here. Others are sifting through the debris. They don't answer us. We don't know who they are." |
 | 7 | The Tower (the bridge), Inara's light | "Nobody knows what did this. Everyone has a theory. The odds are dim, but the future is unwritten." |
 | 8 | A small craft in the docking bay, ready to launch | "I'm Inara. I'll be with you out there. Let's get you trained, Trainee." |
 
