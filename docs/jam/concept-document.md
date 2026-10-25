@@ -19,8 +19,7 @@ waits on the other side.
 
 **Inara.** A real person (her story is told in the novel): an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
-an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages (or read
-her words on screen in any language).
+an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages, with Arabic planned as the twelfth.
 
 **The full story** is a novel (title ▢, Eric), offered in the game in text and as an audiobook. A short
 illustrated, voiced slideshow tells the backstory before a new player's first launch. An Arabic edition of the novel
