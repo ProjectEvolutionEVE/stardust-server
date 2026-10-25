@@ -694,3 +694,59 @@ CREATE TABLE IF NOT EXISTS voice_beats (
   heard_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (player_id, beat)
 );
+
+-- The Starship Bank's deposits, loans and savings goals (Eric 10-25, rule 36; lending.py). Credits stay in-game (rule 2).
+CREATE TABLE IF NOT EXISTS bank_deposits (
+  id          BIGSERIAL PRIMARY KEY,
+  player_id   BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind        TEXT NOT NULL CHECK (kind IN ('savings','term')),
+  principal   BIGINT NOT NULL CHECK (principal >= 0),
+  rate_pct    NUMERIC(6,3) NOT NULL,               -- a week, simple interest
+  term_weeks  INT,                                 -- term deposits only
+  opened_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  since       TIMESTAMPTZ NOT NULL DEFAULT now(),  -- savings: interest counts from here (each change folds it in)
+  closed_at   TIMESTAMPTZ,
+  paid_out    BIGINT
+);
+CREATE INDEX IF NOT EXISTS bank_deposits_player ON bank_deposits(player_id) WHERE closed_at IS NULL;
+CREATE TABLE IF NOT EXISTS bank_loans (
+  id            BIGSERIAL PRIMARY KEY,
+  player_id     BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  principal     BIGINT NOT NULL CHECK (principal > 0),
+  balance       BIGINT NOT NULL CHECK (balance >= 0),   -- what's still owed, before this week's interest
+  rate_pct      NUMERIC(6,3) NOT NULL,                  -- a week
+  term_weeks    INT NOT NULL,
+  payment       BIGINT NOT NULL,                        -- the weekly payment
+  purpose       TEXT NOT NULL,
+  next_due      TIMESTAMPTZ NOT NULL,
+  payments_made INT NOT NULL DEFAULT 0,
+  late_count    INT NOT NULL DEFAULT 0,
+  opened_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  closed_at     TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS bank_loans_due ON bank_loans(next_due) WHERE closed_at IS NULL;
+CREATE TABLE IF NOT EXISTS bank_goals (
+  id         BIGSERIAL PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  goal       TEXT NOT NULL,
+  target     BIGINT NOT NULL CHECK (target > 0),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  done_at    TIMESTAMPTZ,
+  dropped    BOOLEAN NOT NULL DEFAULT false
+);
+INSERT INTO settings(key, value, note) VALUES
+  ('bank_savings_pct',     0.5,  'Bank savings account: interest a week, % (Eric 10-25 rule 36; first setting)'),
+  ('bank_term2_pct',       1.0,  'Term deposit, 2 weeks: interest a week, %'),
+  ('bank_term4_pct',       1.25, 'Term deposit, 4 weeks: interest a week, %'),
+  ('bank_term8_pct',       1.5,  'Term deposit, 8 weeks: interest a week, %'),
+  ('bank_loan_min_pct',    6,    'Loans: interest a week for the strongest record, % (Eric 10-25: 6-12)'),
+  ('bank_loan_max_pct',    12,   'Loans: interest a week for the weakest record, %'),
+  ('bank_loan_min_weeks',  2,    'Loans: shortest term, weeks'),
+  ('bank_loan_max_weeks',  12,   'Loans: longest term, weeks'),
+  ('bank_loan_base',       1000, 'Loans: what a player with no income yet may borrow (at standing 50)'),
+  ('bank_loan_income_x',   2,    'Loans: limit = base + this x the last 4 weeks'' income, scaled by standing/50'),
+  ('bank_loan_min_score',  20,   'Loans: no new loan below this standing (0-100)'),
+  ('bank_late_fee_pct',    5,    'Loans: late fee, % of the missed payment, added to what''s owed'),
+  ('bank_reserve_pct',     20,   'The Bank keeps this % of what it owes depositors in reserve, never lent (rule 10)')
+ON CONFLICT (key) DO NOTHING;
+

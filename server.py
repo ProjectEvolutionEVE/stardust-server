@@ -37,6 +37,11 @@ The Starship Library (rules 22, 24; library.py):
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
+The Starship Bank (Eric 10-25, rule 36; lending.py): deposits, loans and savings goals:
+  GET  /api/dfg/bank                 savings, term deposits, loans, goals, standing, rates
+  POST /api/dfg/bank/deposit         {kind:'savings'|'term', amount, weeks?} · /withdraw {amount} or {deposit_id}
+  POST /api/dfg/bank/loan/quote      {amount, weeks, purpose} → the Bank's decision and terms · /loan/take (same body)
+  POST /api/dfg/bank/loan/pay        {loan_id, amount?} (no amount: pay it off) · /goal {goal, target} · /goal/drop {goal_id}
 Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST /api/dfg/voice/heard {beat[, accepted]} → {play}
   (each story beat once per player) · PUT /api/dfg/admin/voice/<set>/<ID>.mp3 and GET /api/dfg/admin/voice/manifest
   (header X-Upload-Key = env DFG_UPLOAD_KEY). Files live in VOICE_DIR (default /data/voice, a Railway volume).
@@ -58,6 +63,7 @@ import auctions as AU
 import library as LIB
 import archives as AR
 import voice as VO
+import lending as LN
 from datetime import datetime
 import asyncio
 
@@ -247,6 +253,36 @@ async def rest(request):
         return _json(await _me(conn, pid))
 
 
+async def bank(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await LN.summary(conn, pid))
+
+
+async def bank_post(request):
+    """The Bank's counter: deposit, withdraw, ask for a loan, take it, pay it, and savings goals."""
+    op, b = request.match_info["op"], await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if op == "deposit":
+            await LN.deposit(conn, pid, b.get("kind"), b.get("amount"), b.get("weeks"))
+        elif op == "withdraw":
+            await LN.withdraw(conn, pid, b.get("amount"), b.get("deposit_id"))
+        elif op == "loan/quote":
+            return _json(await LN.quote(conn, pid, b.get("amount"), b.get("weeks"), b.get("purpose")))
+        elif op == "loan/take":
+            await LN.take(conn, pid, b.get("amount"), b.get("weeks"), b.get("purpose"))
+        elif op == "loan/pay":
+            await LN.pay(conn, pid, b.get("loan_id"), b.get("amount"))
+        elif op == "goal":
+            await LN.set_goal(conn, pid, b.get("goal"), b.get("target"))
+        elif op == "goal/drop":
+            await LN.drop_goal(conn, pid, b.get("goal_id"))
+        else:
+            raise web.HTTPNotFound()
+        return _json(await LN.summary(conn, pid))
+
+
 async def _state(conn, pid):
     s = await ST.active_ship(conn, pid)
     credits = await conn.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pid)
@@ -399,10 +435,11 @@ async def _startup(app):
         await LIB.ensure_book_types(conn)                  # each written library book is an item type
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
+    app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
 
 
 async def _cleanup(app):
-    for k in ("bank", "auctions"):
+    for k in ("bank", "auctions", "lending"):
         app[k].cancel()
         try:
             await app[k]
@@ -681,6 +718,8 @@ def make_app():
     app.router.add_post("/api/dfg/auth/verify", auth_verify)
     app.router.add_post("/api/dfg/auth/signout", auth_signout)
     app.router.add_post("/api/dfg/rest", rest)
+    app.router.add_get("/api/dfg/bank", bank)
+    app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
     app.router.add_post("/api/dfg/voice/heard", voice_heard)

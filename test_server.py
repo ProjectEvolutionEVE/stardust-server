@@ -4,6 +4,7 @@ import re as REX
 import os, asyncio, time, json
 os.environ["DFG_DEV_AUTH"] = "1"
 os.environ["DFG_BANK"] = "0"
+os.environ["DFG_LENDING"] = "0"                  # the Bank's loan loop too; the tests tick it
 os.environ["DFG_AUCTIONS"] = "0"                 # the auction loop too; the tests tick it                     # the bank's background loop stays off; the tests run its ticks themselves
 os.environ["DFG_SHOW_CODES"] = "1"
 from aiohttp.test_utils import TestServer, TestClient
@@ -961,6 +962,64 @@ console.log(JSON.stringify(out));"""
               n1 > 1000 and n2 == 0 and bp2["since"] < bp["since"] and span["mn"] >= bp["floor_price"] and len(cs) >= 40
               and (bp2["start_price"], bp2["floor_price"], bp2["ref_price"]) == (bp["start_price"], bp["floor_price"], bp["ref_price"]))
         check("backfill: the last price is still the newest real trade", await M.last_price(c, "basalt") == last_before)
+    # ── the Starship Bank: deposits, loans and savings goals (rule 36) ──
+    import lending as LN
+    BK = {"X-Dev-Player": "saver"}
+    r = await cl.get("/api/dfg/bank", headers=BK); j = await r.json()
+    start = j["credits"]
+    check("the Bank screen: a new player has credits and nothing at the Bank yet", r.status == 200 and start > 0 and j["at_bank"] == 0)
+    r = await cl.post("/api/dfg/bank/deposit", headers=BK, json={"kind": "savings", "amount": 1000}); j = await r.json()
+    check("depositing into savings moves the credits to the Bank", j["credits"] == start - 1000 and j["savings"]["balance"] == 1000)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE bank_deposits SET since=since - interval '2 weeks' WHERE kind='savings'")
+    r = await cl.get("/api/dfg/bank", headers=BK); j = await r.json()
+    check("savings earn 0.5% a week: 2 weeks on 1,000 is 10", j["savings"]["balance"] == 1010)
+    r = await cl.post("/api/dfg/bank/deposit", headers=BK, json={"kind": "term", "amount": 1000, "weeks": 4}); j = await r.json()
+    t = j["terms"][0]
+    check("a 4-week term deposit shows what it pays at the end (1.25% a week: 1,050)", t["at_maturity"] == 1050 and not t["matured"])
+    r = await cl.post("/api/dfg/bank/withdraw", headers=BK, json={"deposit_id": t["id"]}); j = await r.json()
+    check("closing a term deposit early gives back only what was put in", j["credits"] == start - 1000)
+    r = await cl.post("/api/dfg/bank/withdraw", headers=BK, json={"amount": 5000})
+    check("you can't take out more savings than you have", r.status == 422)
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"}); q = await r.json()
+    check("a loan quote: approved, 6-12% a week, a weekly payment and the total cost shown first",
+          q["approved"] and 6 <= q["rate_pct"] <= 12 and q["payment"] * 4 == q["total"] and q["cost"] > 0)
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "supplies"}); q2 = await r.json()
+    check("borrowing for things that are gone tomorrow costs more", q2["rate_pct"] > q["rate_pct"])
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 9_000_000, "weeks": 4, "purpose": "ship"}); q3 = await r.json()
+    check("asking for far more than the Bank will lend is turned down, with the reason", not q3["approved"] and "up to" in q3["why"])
+    before = (await (await cl.get("/api/dfg/bank", headers=BK)).json())["credits"]
+    r = await cl.post("/api/dfg/bank/loan/take", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"}); j = await r.json()
+    ln = j["loans"][0]
+    check("taking the loan pays the credits out", j["credits"] == before + 800 and ln["balance"] == 800 and ln["payment"] == q["payment"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE bank_loans SET next_due=now() - interval '1 minute'")
+        await LN.tick(c)
+    j = await (await cl.get("/api/dfg/bank", headers=BK)).json()
+    check("the weekly payment is taken on its date", j["loans"][0]["payments_made"] == 1 and j["credits"] == before + 800 - q["payment"]
+          and j["loans"][0]["balance"] < 800)
+    pay_left = j["loans"][0]["payoff"]
+    check("paying off early costs less than the remaining payments", pay_left < q["payment"] * 3)
+    r = await cl.post("/api/dfg/bank/loan/pay", headers=BK, json={"loan_id": ln["id"]}); j = await r.json()
+    check("paying a loan off early closes it", j["loans"] == [] and j["standing"]["on_time"] == 1)
+    # a payment the player can't cover: a late fee and lower standing
+    B2 = {"X-Dev-Player": "spender"}
+    r = await cl.post("/api/dfg/bank/loan/take", headers=B2, json={"amount": 500, "weeks": 2, "purpose": "supplies"})
+    async with cl.app["pool"].acquire() as c:
+        pid2 = await c.fetchval("SELECT id FROM players WHERE player_key LIKE '%spender'")
+        acct2 = await ST.account_of(c, pid2)
+        sink = await ST.system_account(c, "sink")
+        have = await c.fetchval("SELECT credits FROM accounts WHERE id=$1", acct2)
+        async with c.transaction():
+            await ST.transfer(c, acct2, sink, have, "test_spend")
+        await c.execute("UPDATE bank_loans SET next_due=now() - interval '1 minute' WHERE player_id=$1", pid2)
+        await LN.tick(c)
+    j = await (await cl.get("/api/dfg/bank", headers=B2)).json()
+    check("a missed payment adds a late fee and lowers the standing", j["loans"][0]["late"] == 1 and j["loans"][0]["balance"] > 500
+          and j["standing"]["score"] < 50)
+    r = await cl.post("/api/dfg/bank/goal", headers=BK, json={"goal": "ship", "target": 2000}); j = await r.json()
+    g = j["goals"][0]
+    check("a savings goal shows progress from what's at the Bank", g["name"] == "A new ship" and g["progress"] == j["at_bank"] and not g["reached"])
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])
