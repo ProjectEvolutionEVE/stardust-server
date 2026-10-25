@@ -110,7 +110,8 @@ The full record is in the `quavara-docs` repository:
 12. **The market** is a live order book, open 24/7, with limit orders and instant trades. The bank trades on the order book. The old supply-pressure formula is retired.
 13. **Every transfer of goods gives the player a receipt** with a code anyone can check (`/api/dfg/receipt/{code}`). The player reads their receipts in a log in their Private Quarters while docked, and can save a copy to their own device.
 14. **ElevenLabs (company-wide rule):** never use live ElevenLabs speech for players. Live voices come from Google Chirp 3 (or Sarvam). Pre-recorded ElevenLabs audio files are allowed.
-15. **Inara's voice (10-11; voice chosen 10-19: Lily):** her prepared lines are **pre-recorded ElevenLabs audio files** in the Lily voice, in the languages ElevenLabs speaks best. Never live ElevenLabs.
+15. **Inara is a real person, not an AI (Eric 10-25).** Her story is told through the novel. She is an officer in the Starship's command centre, the Tower, guiding the smaller craft. Never call her an AI anywhere.
+    **Inara's voice (10-11; voice chosen 10-19: Lily):** her prepared lines are **pre-recorded ElevenLabs audio files** in the Lily voice, in the languages ElevenLabs speaks best. Never live ElevenLabs.
 16. **Careers (10-11):**
     - The Starship posts **job openings** aboard the ship. Like the real world, some need higher qualifications: education, a test with certification, and experience.
     - Postings arrive in the **incoming COMMS** list in each player's Private Quarters, alongside news from the game: upcoming updates, and messages from Starship Central Command.

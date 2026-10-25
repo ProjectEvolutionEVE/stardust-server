@@ -17,7 +17,7 @@ and most of their moons have been destroyed by something no one understands, and
 silent and unarmed, is sifting through the debris. The crew rebuild, study, and look for answers, and the New Earth
 waits on the other side.
 
-**Inara.** The ship's AI in its command centre, and the one voice that talks the player through the whole game: launch
+**Inara.** A real person (her story is told in the novel): an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, has a secret love of chocolate, and keeps
 an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages (or read
 her words on screen in any language).
@@ -47,7 +47,7 @@ rest, because your body has limits.
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise);
   each bar takes more study than the last, and gives a smaller, still valuable, skill increase.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
-  finds (one diamond in 100,000 is near-flawless), and Inara, the ship's AI, who talks you through it in 11 languages.
+  finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 11 languages.
 
 ## 3. Financial Literacy Integration
 
