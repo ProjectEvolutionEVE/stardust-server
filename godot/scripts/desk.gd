@@ -44,6 +44,12 @@ func load_desk() -> void:
 	body.add_child(_heading("WALLET"))
 	var wallet := Ui.label("Loading…", 26)
 	body.add_child(wallet)
+	body.add_child(_heading("LEDGER"))
+	body.add_child(Ui.label("Every credit in and out, oldest first, with your balance after each.", 22, Ui.MUTED))
+	var ledger := VBoxContainer.new()
+	ledger.add_theme_constant_override("separation", 4)
+	body.add_child(ledger)
+	_ledger(ledger)
 	body.add_child(_heading("MY ITEMS"))
 	body.add_child(Ui.label("Everything you own, in a folder for each place it's kept.", 22, Ui.MUTED))
 	var items := VBoxContainer.new()
@@ -73,6 +79,63 @@ func load_desk() -> void:
 	tops.sort_custom(_by_place)
 	for p in tops:
 		items.add_child(_folder(p, all, 0))
+
+
+## The ledger (Eric 10-25): monies in, monies out, a description and the running balance on every line, and the
+## balance at the bottom. From the server's credit history (GET /api/dfg/history, the last 50 entries).
+const LEDGER_WHAT := {"start": "Starting credits", "bank_deposit": "Deposit to the Starship Bank",
+	"bank_withdraw": "Withdrawal from the Starship Bank", "bank_loan": "Loan from the Starship Bank", "bank_repay": "Loan payment",
+	"blueprint_print": "Printing blueprint copies", "auction_fee": "WSC auction fee"}
+
+
+func _ledger(box: VBoxContainer) -> void:
+	var r := await Api.call_api("GET", "/api/dfg/history")
+	if not r.ok:
+		box.add_child(Ui.label(r.error, 22, Ui.GOLD))
+		return
+	var rows: Array = r.data.get("history", [])
+	if rows.is_empty():
+		box.add_child(Ui.label("No transactions yet.", 22, Ui.MUTED))
+		return
+	rows.reverse()
+	box.add_child(_ledger_row("Date", "Description", "In", "Out", "Balance", Ui.MUTED))
+	for e in rows:
+		var ch := int(e.change)
+		box.add_child(_ledger_row(str(e.at).substr(5, 5).replace("-", "/"), _describe(e), Ui.num(ch) if ch > 0 else "",
+			Ui.num(-ch) if ch < 0 else "", Ui.num(e.balance_after), Ui.TEXT))
+	var line := ColorRect.new()
+	line.color = Ui.MUTED
+	line.custom_minimum_size = Vector2(0, 2)
+	box.add_child(line)
+	box.add_child(_ledger_row("", "Balance", "", "", Ui.num(rows[-1].balance_after), Ui.GOLD))
+
+
+func _describe(e: Dictionary) -> String:
+	var ref: Dictionary = e.get("ref", {})
+	var ch := int(e.change)
+	match str(e.reason):
+		"trade":
+			return ("Sold " if ch > 0 else "Bought ") + "%s × %s" % [str(ref.get("qty", "")), str(ref.get("item", "")).capitalize()]
+		"auction":
+			return "Blueprint copy sold at auction" if ch > 0 else "Won a blueprint copy at auction"
+	return LEDGER_WHAT.get(str(e.reason), str(e.reason).capitalize())
+
+
+func _ledger_row(date: String, what: String, cin: String, cout: String, bal: String, c: Color) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 8)
+	for cell in [[date, 70, c, HORIZONTAL_ALIGNMENT_LEFT], [what, 0, c, HORIZONTAL_ALIGNMENT_LEFT],
+			[cin, 96, Ui.GREEN if c == Ui.TEXT else c, HORIZONTAL_ALIGNMENT_RIGHT],
+			[cout, 96, Color("e5605a") if c == Ui.TEXT else c, HORIZONTAL_ALIGNMENT_RIGHT], [bal, 110, c, HORIZONTAL_ALIGNMENT_RIGHT]]:
+		var l := Ui.label(cell[0], 18, cell[2])
+		l.horizontal_alignment = cell[3]
+		if cell[1] > 0:
+			l.custom_minimum_size = Vector2(cell[1], 0)
+			l.autowrap_mode = TextServer.AUTOWRAP_OFF
+		else:
+			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		h.add_child(l)
+	return h
 
 
 func _heading(t: String) -> Label:

@@ -1,0 +1,69 @@
+﻿Zoud GameLab Financial Literacy (FinLit) Jam
+Game Concept & GDD Document Starter Kit
+
+A Game Concept Document or Game Design Document (GDD) helps you explain your game's vision, how it works and what makes it special.
+For Zoud GameLab, your document is particularly useful because it helps judges understand your game's financial literacy objectives, creative vision and potential for further development beyond the jam.
+Use the following six sections as a simple starting template.
+
+1. Game Overview
+Introduce your game and its central idea.
+* Game title and genre
+* Brief description of the concept
+* Intended platform (PC, mobile, browser, etc.)
+* Target audience
+* What makes your game interesting or different?
+Tip: Start with trying to describe your game in just two or three sentences.
+
+2. Core Gameplay
+Explain what players actually do.
+* What is the player's main objective?
+* What actions can they perform?
+* What challenges or decisions will they face?
+* How does the game progress?
+* What makes the experience fun and engaging?
+Tip: Focus on your core gameplay loop—the actions players repeat throughout the game.
+
+________________
+3. Financial Literacy Integration
+This is especially important for Zoud GameLab!
+Explain how your game explores financial literacy through gameplay.
+* Which financial concepts does your game address?
+* How are those concepts connected to gameplay mechanics?
+* What choices or consequences help players explore these ideas?
+* What do you hope players will understand after playing?
+Example: A resource-management game could introduce budgeting by challenging players to balance limited income against competing expenses and unexpected events.
+
+4. Visual Style & Player Experience
+Give readers an idea of what your game looks and feels like.
+* Art style and visual direction
+* Setting, world or narrative (if relevant)
+* General tone and atmosphere
+* Important interface or accessibility considerations
+Tip: Screenshots, sketches, diagrams or mood boards can help communicate your ideas quickly.
+
+5. Development & Future Plans
+Explain what you've achieved and where the project could go next.
+* What features are included in your current prototype?
+* What would you like to develop or improve?
+* What are your main development priorities?
+* What challenges or risks might you need to overcome?
+Tip: Be realistic! A focused, achievable plan is more useful than a long list of ambitious features.
+
+6. Your Team
+Briefly introduce the people behind your game.
+* Team members and their roles
+* Relevant experience or skills
+* Any additional expertise or support that might be needed
+For solo developers, simply describe your own role and the skills you bring to the project.
+
+A Few Final Tips
+* Keep it clear and concise. Avoid unnecessary technical language or lengthy explanations.
+* Show, don't just tell. Use diagrams, screenshots or examples where they help explain your ideas.
+* Focus on the player. Explain what people actually do and experience in your game.
+* Connect the mechanics to financial literacy. Make it clear how your game explores the jam theme.
+* Be realistic. Distinguish between what you've already created and what you hope to develop in the future.
+* Make it easy to read. Use clear headings, short paragraphs and a logical structure.
+
+Ready to Submit?
+If you're entering your game for Zoud GameLab awards or development funding, remember to include your Game Concept Document or GDD as a PDF, shared through a publicly accessible link that doesn't require login or permission requests.
+Important Note: Your project budget is a separate submission document.
