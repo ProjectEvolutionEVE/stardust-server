@@ -146,6 +146,20 @@ The full record is in the `quavara-docs` repository:
 32. **Career ladders (Eric 10-24; replaces the single ladder of rule 6).**
     - **Each career has its own ladder.** Everyone still starts as a Trainee. Passing a career's library books and tests moves the player up that career's ladder one step at a time; a Trainee who passes the Pilot Basic Training Handbook becomes a Pilot.
     - **Each career has its own top:** Captain for flight (larger, more challenging ships with crew), CEO for business, and the equal of these for every other career, science included (the Starship is a science and research vessel, so it needs a career for each branch of science that moves the game forward).
+    - **The careers and their steps (approved by Eric 10-24), each after Trainee, five steps = five bars:**
+      | Career | Bars 1 to 5 (the fifth is the top) |
+      |---|---|
+      | Flight | Pilot · Senior Pilot · Flight Officer · First Officer · **Captain** |
+      | Business | Trader · Broker · Manager · Director · **CEO** |
+      | Science (by branch: Geologist, Botanist, Chemist, Wormhole Physicist…) | Research Assistant · Scientist · Senior Scientist · Lead Scientist · **Chief Science Officer** |
+      | Engineering | Apprentice · Technician · Engineer · Senior Engineer · **Chief Engineer** |
+      | Mining & Materials | Prospector · Miner · Metallurgist · Senior Metallurgist · **Director of Resources** |
+      | Medicine | Medic · Doctor · Senior Doctor · Surgeon · **Chief Medical Officer** |
+      | Computer Science | Programmer · Developer · Senior Developer · Systems Architect · **Chief Technology Officer** |
+      | Navigation & Cartography | Navigator · Senior Navigator · Navigation Officer · Lead Navigator · **Chief Navigator** |
+      | *Military (later, with weapons and combat)* | *Cadet · … · **Commander*** |
+      In the Science career the branch replaces the word "Scientist" (e.g. "Senior Botanist").
+    - **The Drafting Table (Eric 10-24):** drafting is wider than blueprints. One Drafting Table serves many careers, each with its own kind of sheet: blueprints (engineering and design), flow charts and process trees (business, marketing and trading, science and research, computer science), route and plot charts (navigation, logistics), survey maps (mining), growing plans (botany), building plans (construction), and later battle plans (military).
     - **Careers can share books:** some education counts toward more than one career.
     - **A uniform for each career, kept in the Closet:** its **colour is the career**; **gold or silver bars** show how far the player has advanced in their training. A **gold** bar is for getting **every answer right**; **silver** if one was missed. Gold earns a **slightly larger skill increase** than silver.
     - **Five steps per career, one bar per step (Eric 10-24).** Each bar takes many books and tests, and each bar up takes more than the one before it: "the difference between earning a GED and a PhD."
