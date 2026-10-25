@@ -79,7 +79,7 @@ costs; saving toward a named goal works; paying debt early saves money; short-te
   view, like a pilot's heads-up display.
 - **Tone:** calm, curious and hopeful: rebuilding after loss, learning, and making a life far from home.
 - **Interface and accessibility:** big touch controls for one thumb on a phone; sound cues backed by visual ones (the
-  scanner bar, the gold rim cue, on-screen messages alongside what Inara says (full subtitles are planned)); Inara's voice in 11 languages, or none.
+  scanner bar, the gold rim cue, on-screen messages alongside what Inara says (full subtitles are planned)); Inara's voice in 12 languages including Arabic, or none.
 - **Inclusive by design:** players choose a name from the game's list and a rank they earn, no real names; no player
   chat (a safe, quiet universe); suitable for a general audience.
 
