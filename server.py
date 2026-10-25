@@ -6,8 +6,11 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
   POST /api/dfg/auth/start      {channel:'sms'|'email', address, region} → a 6-digit code is sent
   POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
   POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
-  GET  /api/dfg/me              rank and name, language, location (Private Quarters), body bars and warning, skills
-  POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends
+  GET  /api/dfg/me              rank and name, language, location (Private Quarters or Cockpit), body bars and warning, skills
+  POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends. With {place:'cockpit',
+                                pos:[x,y,z]} it sleeps in the cockpit out in space instead, and wakes there (Eric 10-24)
+  POST /api/dfg/rest            {asleep, place:'bed'|'cockpit'} sleep or wake without signing out · {unpark:true} the
+                                craft has left the spot it was parked at (the flight picked it up)
 Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   POST /api/dfg/session   start a session → {session_id, seed, ship, cargo}
   GET  /api/dfg/ship      the ship and what's in its hold
@@ -117,7 +120,7 @@ async def log_event(conn, pid, kind, **data):
 async def _me(conn, pid):
     """Who the player is and where: rank and name, language, the body's bars and any warning."""
     p = await conn.fetchrow("""SELECT account_no, first_name, last_name, language, track, rank_step, stamina, energy, focus,
-                                      body_at, asleep FROM players WHERE id=$1""", pid)
+                                      body_at, asleep, rest_place, parked FROM players WHERE id=$1""", pid)
     bars = BODY.current(p)
     rank = RANKS[p["track"]][p["rank_step"] - 1]
     named = bool(p["first_name"] and p["last_name"])
@@ -125,7 +128,8 @@ async def _me(conn, pid):
             "voice_set": VO.voice_set(p["language"]),
             "title": f"{rank} {p['first_name']} {p['last_name']}" if named else rank,
             "needs_setup": not (named and p["language"]),
-            "location": "Private Quarters", "in_bed": True, "asleep": p["asleep"],
+            "location": "Cockpit" if p["parked"] else "Private Quarters", "in_bed": p["rest_place"] == "bed",
+            "asleep": p["asleep"], "rest_place": p["rest_place"], "parked": json.loads(p["parked"]) if p["parked"] else None,
             "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars),
             "skills": await LIB.skills(conn, pid)}     # fly / mine / sell, each earned in the library (Eric 10-23)
 
@@ -199,17 +203,48 @@ async def voice_heard(request):
         return _json({"play": await VO.heard(conn, pid, b.get("beat"), b.get("accepted") is True)})
 
 
+def _parked_pos(b):
+    """A craft's parked position from the game: three finite numbers, metres from the Sun, inside Saturn's orbit and a bit.
+    NOT YET VERIFIED: the craft's position lives in the game, as with unloading (README)."""
+    p = b.get("pos")
+    if not (isinstance(p, list) and len(p) == 3 and all(isinstance(v, (int, float)) and abs(v) < 2.0e12 for v in p)):
+        raise ST.Refused("Where is your craft? The position didn't come through.")
+    return [float(v) for v in p]
+
+
 async def auth_signout(request):
-    """Signing out happens from the bed: the character goes to sleep and the sign-in on this device ends (Eric 10-11)."""
+    """Signing out: the character goes to sleep and the sign-in on this device ends. In bed (Eric 10-11), or in the cockpit
+    out in space (Eric 10-24), where they wake up next time."""
+    b = await request.json() if request.can_read_body else {}
+    cockpit = b.get("place") == "cockpit"
+    pos = _parked_pos(b) if cockpit else None
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
         async with conn.transaction():
-            await BODY.set_state(conn, pid, asleep=True)
-        await log_event(conn, pid, "signout")
+            await BODY.set_state(conn, pid, asleep=True, place="cockpit" if cockpit else "bed")
+            await conn.execute("UPDATE players SET parked=$2 WHERE id=$1", pid, json.dumps({"pos": pos}) if cockpit else None)
+        await log_event(conn, pid, "signout", place="cockpit" if cockpit else "bed")
         token = AUTH.bearer(request.headers)
         if token:
             await AUTH.revoke(conn, token)
         return _json({"signed_out": True, "asleep": True})
+
+
+async def rest(request):
+    """Sleep or wake without signing out: in bed, or in the cockpit out in space (half rate). {unpark: true} clears the
+    spot the craft was parked at, once the flight has picked it up."""
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        async with conn.transaction():
+            if b.get("unpark") is True:
+                await conn.execute("UPDATE players SET parked=NULL WHERE id=$1", pid)
+            if "asleep" in b:
+                place = b.get("place", "bed")
+                if place not in BODY.PLACES:
+                    raise ST.Refused("Sleep in your bed or in your cockpit.")
+                await BODY.set_state(conn, pid, asleep=b.get("asleep") is True, place=place)
+        return _json(await _me(conn, pid))
 
 
 async def _state(conn, pid):
@@ -645,6 +680,7 @@ def make_app():
     app.router.add_post("/api/dfg/auth/start", auth_start)
     app.router.add_post("/api/dfg/auth/verify", auth_verify)
     app.router.add_post("/api/dfg/auth/signout", auth_signout)
+    app.router.add_post("/api/dfg/rest", rest)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
     app.router.add_post("/api/dfg/voice/heard", voice_heard)
