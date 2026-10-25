@@ -150,7 +150,7 @@ The full record is in the `quavara-docs` repository:
     - **A uniform for each career, kept in the Closet:** its **colour is the career**; **gold or silver bars** show how far the player has advanced in their training. A **gold** bar is for getting **every answer right**; **silver** if one was missed. Gold earns a **slightly larger skill increase** than silver.
     - **Five steps per career, one bar per step (Eric 10-24).** Each bar takes many books and tests, and each bar up takes more than the one before it: "the difference between earning a GED and a PhD."
     - **The climb gets longer:** more books and more tests at each higher step. The top levels must feel **earned through much effort and time** playing, reading and taking tests. The aim is a **wide range of player skill levels**.
-    - **Books and tests per bar (Eric 10-24):** bar 1: **5** · bar 2: **15** · bar 3: **45** · bar 4: **120** · bar 5: **325**.
+    - **Books and tests per bar (Eric 10-24), stacking on top of each other:** bar 1: **5** · bar 2: **15** more · bar 3: **45** more · bar 4: **120** more · bar 5: **325** more. Totals passed: **5, 20, 65, 185 and 510**. The fifth bar in gold takes **510 books and tests, all perfect**: "something well deserved and well earned."
     - **Every test is still five questions**, on in-game details or real-life knowledge of the subject. Each step's tests are **slightly harder** than the last. **Perfection makes the difference: all answers right earns gold, anything less earns silver.**
     - **Later:** the player's character appearance, built from the name they chose (a future build).
 
