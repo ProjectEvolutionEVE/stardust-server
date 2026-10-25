@@ -21,7 +21,7 @@ waits on the other side.
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
 an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 12 languages, including Arabic.
 
-**The full story** is a novel (title ▢, Eric), offered in the game in text and as an audiobook. A short
+**The full story** is a novel, *Stardust - Inara*, offered in the game in text and as an audiobook. A short
 illustrated, voiced slideshow tells the backstory before a new player's first launch. An Arabic edition of the novel
 and slideshow is planned, as a thank-you to the UAE, the jam's host country.
 
