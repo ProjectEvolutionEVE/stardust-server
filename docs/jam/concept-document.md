@@ -18,7 +18,7 @@ silent and unarmed, is sifting through the debris. The crew rebuild, study, and 
 waits on the other side.
 
 **Inara.** A real person (her story is told in the novel): an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
-clearances, finds, warnings, and the story as it unfolds. She likes fireflies, has a secret love of chocolate, and keeps
+clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
 an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages (or read
 her words on screen in any language).
 
