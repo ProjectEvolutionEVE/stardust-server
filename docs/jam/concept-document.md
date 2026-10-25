@@ -9,6 +9,23 @@ gone; their remains circle the Sun as four rings of debris. Players live aboard 
 Humboldt, parked beside a mysterious wormhole beyond Jupiter, and build a life and a career from what they find, learn,
 make and trade.
 
+**The story, in short.** A wormhole opened near the far side of Jupiter. The research starship WSC Alexander von
+Humboldt went to study it and found, on the other side, a twin of our universe: a New Earth with air, water, forests
+and animals, but no humans and no sign that any had ever lived there. After a 12-month survey proved it could sustain
+human life, the ship came home through the wormhole to find our solar system devastated. Mercury, Venus, Earth and Mars
+and most of their moons have been destroyed by something no one understands, and an unknown civilisation of scavengers,
+silent and unarmed, is sifting through the wreckage. The crew rebuild, study, and look for answers, and the New Earth
+waits on the other side.
+
+**Inara.** The ship's AI in its command centre, and the one voice that talks the player through the whole game: launch
+clearances, finds, warnings, and the story as it unfolds. She likes fireflies, has a secret love of chocolate, and keeps
+an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 11 languages (or read
+her words on screen in any language).
+
+**The full story** is a novel, *Signal in the Noise*, offered in the game in text and as an audiobook. A short
+illustrated, voiced slideshow tells the backstory before a new player's first launch. An Arabic edition of the novel
+and slideshow is planned, as a thank-you to the UAE, the jam's host country.
+
 - **Genre:** space life sim, mining and economy, with careers you learn through a shipboard library.
 - **Platform:** mobile first (Godot 4; iOS and Android), then PC (Steam) and the web.
 - **Audience:** a general audience of players who like exploration, crafting and economies; also anyone who wants to
