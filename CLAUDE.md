@@ -192,6 +192,8 @@ The full record is in the `quavara-docs` repository:
     - Before signing, the player sees the total cost of borrowing and what the purchase is expected to earn ("will it pay for itself?").
     - **First numbers (Claude's, to tune):** savings 0.5% a week; term deposits 1% a week for 2 weeks, 1.25% for 4, 1.5% for 8; **loans 6-12% a week depending on risk (Eric 10-25)**, simple interest on the balance left; the Bank keeps 20% of deposits in reserve.
 
+37. **Money in every career (Eric 10-25; Zoud GameLab financial-literacy jam).** Wise money management is folded into **every** career's books and tests, so whichever path a player takes they learn budgeting, saving, spending, investing, debt and smart money decisions in that field (e.g. a miner's income against costs, saving for a ship build or a production plant, saving for retirement in Tahiti on the New Earth). No separate finance career for now.
+
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
 1. **The game's name: CHOSEN (Eric 10-13): "Stardust - Terra Deleta"** (and "Stardust - Terra Nova" for the land game). Still to do: attorney trademark clearance before launch. ("Earth2.0" was dropped: it conflicts with an existing "EARTH 2" filing.)
