@@ -44,6 +44,8 @@ The full record is in the `quavara-docs` repository:
 
    **Civilian ranks first, military later (10-11).** The WSC is a civilian space agency, so the ladder starts out **civilian**. When hostile territory, weapons, and fights over resource-rich contested space arrive in the game, **military ranks are added** alongside it. Build the rank system so a second (military) track can be added later without reworking the first.
 
+   **REPLACED (Eric 10-24): each career now has its own ladder (rule 32).** The single ladder below is kept for the record.
+
    **The civilian ladder (approved by Eric, 10-11), lowest to highest:**
    1. Trainee
    2. Crew Member
@@ -140,6 +142,15 @@ The full record is in the `quavara-docs` repository:
     - A **beacon** placed in one saves its position, so the player can warp straight back to it after unloading. **Beacons are player blueprints (Eric 10-24), not Starship equipment** (rule 31).
 
 31. **The Blueprint Ideas booklet (Eric 10-24).** **A secret: an Easter egg** revealed as a surprise in the early stage of mastering blueprint design. Never mention, list, tease or hint at it anywhere a player can see before they earn it (library shelves, book text, tests, FAQ, help, COMMS, store pages). **How it's revealed (Eric 10-24):** on passing, a message arrives in the player's **COMMS** telling them they have just unlocked **a special gift from the Stardust creators, as a thank you for playing**; the player must **confirm to unlock it**, and only then does the booklet appear (on their bookshelf). Passing the blueprint training (The Blueprint Designer's Handbook) earns a **booklet of product ideas**: an organized suggestion tree (groups, sub-groups, beginner ideas up to advanced ones) that acts as a **beginner's roadmap, never the end-all**, to open players' minds to how wide their designs can range. It suggests IDEAS only; the designs are still the players' own (rule 11). **Beacons** are one group, with sub-groups for different needs: early beacons anyone can see and find; advanced ones carry a **code so only the player who deployed it can track it down**. **Why (Eric):** show players how valuable blueprints are to the game. The more blueprints exist, the more others can build what they want, and every player takes their inventory in a direction unique to them.
+
+32. **Career ladders (Eric 10-24; replaces the single ladder of rule 6).**
+    - **Each career has its own ladder.** Everyone still starts as a Trainee. Passing a career's library books and tests moves the player up that career's ladder one step at a time; a Trainee who passes the Pilot Basic Training Handbook becomes a Pilot.
+    - **Each career has its own top:** Captain for flight (larger, more challenging ships with crew), CEO for business, and the equal of these for every other career, science included (the Starship is a science and research vessel, so it needs a career for each branch of science that moves the game forward).
+    - **Careers can share books:** some education counts toward more than one career.
+    - **A uniform for each career, kept in the Closet:** its **colour is the career**; **gold or silver bars** show how far the player has advanced in their training. A **gold** bar is for getting **every answer right**; **silver** if one was missed. Gold earns a **slightly larger skill increase** than silver.
+    - **The climb gets longer:** more books and more tests at each higher step. The top levels must feel **earned through much effort and time** playing, reading and taking tests. The aim is a **wide range of player skill levels**.
+    - Each test stays short and friendly (rule 24); it is the NUMBER of books and tests that grows.
+    - **Later:** the player's character appearance, built from the name they chose (a future build).
 
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
