@@ -184,6 +184,14 @@ The full record is in the `quavara-docs` repository:
     - **A burst, then a crash:** sugary snack +15 energy, then energy drains 1.5x for 3 h · energy drink +20 energy and +10 focus, then both drain 2x for 4 h and the next sleep refills 25% slower · party food (made for taste) +5 energy and a small focus lift, then stamina drains 1.2x for 6 h.
     - **Rules:** no alcohol and no drugs (coffee and tea are fine) · effects of the same kind don't stack (a second one resets the timer) · food never replaces sleep: bursts in a row leave you worse off than resting.
 
+36. **The Bank: deposits and loans (Eric 10-25; for the Zoud GameLab financial-literacy jam).** Credits stay in-game only (rule 2).
+    - **Deposits earn interest:** players are encouraged to deposit credits with the Bank: a **savings account** (withdraw any time, small interest) and **term deposits** (locked for a set term for a higher rate; withdrawing early gives up the interest).
+    - **Deposits fund the loans:** the Bank pays depositors' interest out of the extra revenue its lending rates bring in (the spread). Lendable funds = deposits plus the Bank treasury, less a reserve kept on hand (nothing is unlimited, rule 10).
+    - **Only the Bank lends** (players never deal with each other, rule 8). It **weighs every application** for risk (repayment history, recent income, existing debt, what the loan is for) and sets the **term, the payment dates, the payment amounts and the early-payoff amount**.
+    - **Paying off early saves interest:** the early-payoff amount is what's left plus interest only up to that day, so the goal and the lesson is to pay loans off early. Missed payments bring a late fee and lower the player's credit standing.
+    - Before signing, the player sees the total cost of borrowing and what the purchase is expected to earn ("will it pay for itself?").
+    - **First numbers (Claude's, to tune):** savings 0.5% a week; term deposits 1% a week for 2 weeks, 1.25% for 4, 1.5% for 8; loans 2-4% a week depending on risk, simple interest on the balance left; the Bank keeps 20% of deposits in reserve.
+
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
 1. **The game's name: CHOSEN (Eric 10-13): "Stardust - Terra Deleta"** (and "Stardust - Terra Nova" for the land game). Still to do: attorney trademark clearance before launch. ("Earth2.0" was dropped: it conflicts with an existing "EARTH 2" filing.)
