@@ -54,6 +54,11 @@ func load_desk() -> void:
 	var mk := Ui.button("📈 Open the market terminal")
 	mk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/market.tscn"))
 	body.add_child(mk)
+	body.add_child(_heading("STARSHIP BANK"))
+	body.add_child(Ui.label("Savings, term deposits, loans and your savings goals (rule 36).", 22, Ui.MUTED))
+	var bk := Ui.button("🏦 Open the Starship Bank")
+	bk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/bank.tscn"))
+	body.add_child(bk)
 	var r := await Api.call_api("GET", "/api/dfg/inventory")
 	if not r.ok:
 		wallet.text = "—"
