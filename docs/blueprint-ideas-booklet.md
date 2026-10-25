@@ -1,6 +1,6 @@
 # Blueprint Ideas: a beginner's roadmap (DRAFT for Eric's review)
 
-Earned by passing the test on **The Blueprint Designer's Handbook** (CLAUDE.md rule 31). It is a book of IDEAS, never
+**SECRET (Eric 10-24): an Easter egg.** Revealed as a surprise on passing the test on **The Blueprint Designer's Handbook** (CLAUDE.md rule 31); never mentioned or hinted at anywhere a player can see before then. It is a book of IDEAS, never
 designs: every design is the player's own (rule 11). Each group runs from beginner ideas (anyone can picture them) to
 advanced ones. The library books listed are the ones a designer would likely need (rule 23).
 
