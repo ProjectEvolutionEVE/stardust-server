@@ -749,4 +749,6 @@ INSERT INTO settings(key, value, note) VALUES
   ('bank_late_fee_pct',    5,    'Loans: late fee, % of the missed payment, added to what''s owed'),
   ('bank_reserve_pct',     20,   'The Bank keeps this % of what it owes depositors in reserve, never lent (rule 10)')
 ON CONFLICT (key) DO NOTHING;
-
+INSERT INTO settings(key, value, note) VALUES
+  ('tow_fee', 1500, 'Out of fuel in space: the tow back to the Starship costs this many credits, paid to the WSC (rule 38, Eric 10-25; first setting)')
+ON CONFLICT (key) DO NOTHING;

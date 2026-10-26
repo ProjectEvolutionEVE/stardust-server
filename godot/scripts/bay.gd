@@ -64,7 +64,19 @@ var sleep_btn: Button
 var sleep_panel: ColorRect
 var sleep_bars: Label
 var sleep_at := 0.0
-var quarters_btn: Button          # only while docked: the quarters are aboard (Eric 10-24: not out in space)
+var quarters_btn: Button
+# FUEL (rule 38, Eric 10-25): the WSC's craft comes with fuel, topped up at every return to the Starship. Out in space it
+# ticks down slowly (more slowly when stopped); run dry and Inara has you towed home, for a pretty penny.
+const FUEL_FLY_H := 6.0           # hours of flying on a full tank
+const FUEL_IDLE_H := 24.0         # hours stopped or asleep in the cockpit on a full tank
+const FUEL_WARP := 4.0            # % a warp takes
+const FUEL_FILE := "user://fuel.dat"
+var fuel := 100.0
+var fuel_warned := 100
+var towing := false
+var fuel_saved_at := 0.0
+var fuel_label: Label
+var fuel_fill: ColorRect          # only while docked: the quarters are aboard (Eric 10-24: not out in space)
 var cargo: Node
 var mute_btn: Button
 var work_ring = null             # the ring you're working (Inara watches you drift out of it)
@@ -106,6 +118,7 @@ func _ready() -> void:
 	_dock()
 	_hud()
 	_wake_parked()
+	_fuel_load()
 	sol.place(org, cam)
 	_server_seed()
 
@@ -123,6 +136,84 @@ func _wake_parked() -> void:
 	Voice.ring(hud_root, Voice.moment("wake"))
 	if Session.token != "":
 		Api.call_api("POST", "/api/dfg/rest", {"unpark": true})
+
+
+func _fuel_ui(root: Control) -> void:
+	fuel_label = Ui.label("", 15, Color("7fe0a8"))
+	fuel_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	fuel_label.position = Vector2(26, 124)
+	root.add_child(fuel_label)
+	var bg := ColorRect.new()
+	bg.color = Color(0.5, 0.88, 0.66, 0.15)
+	bg.position = Vector2(26, 148)
+	bg.size = Vector2(236, 5)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(bg)
+	fuel_fill = ColorRect.new()
+	fuel_fill.position = Vector2(26, 148)
+	fuel_fill.size = Vector2(236, 5)
+	fuel_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(fuel_fill)
+
+
+## Out in the cockpit last time: the tank kept ticking while you were away (at the stopped rate).
+func _fuel_load() -> void:
+	var f := FileAccess.open(FUEL_FILE, FileAccess.READ)
+	if f == null:
+		return
+	var d = JSON.parse_string(f.get_as_text())
+	f.close()
+	if d is Dictionary and not docked:
+		var hours := maxf(0.0, (Time.get_unix_time_from_system() - float(d.get("at", 0))) / 3600.0)
+		fuel = clampf(float(d.get("fuel", 100)) - hours * 100.0 / FUEL_IDLE_H, 0.0, 100.0)
+
+
+func _fuel_tick(dt: float, now: float) -> void:
+	if docked:
+		if fuel < 100.0:
+			fuel = 100.0                 # topped up at the Starship (fuel is included)
+			fuel_warned = 100
+	elif not towing:
+		var flying: bool = not warp.is_empty() or vel.length() > 0.5
+		fuel = maxf(0.0, fuel - dt / 3600.0 * 100.0 / (FUEL_FLY_H if flying else FUEL_IDLE_H))
+		for mark in [25, 10]:
+			if fuel <= mark and fuel_warned > mark:
+				fuel_warned = mark
+				_say("INARA\nFuel at %d%%. Time to head home to the Starship." % mark)
+		if fuel <= 0.0:
+			_tow()
+	fuel_label.text = "FUEL %d%%" % ceili(fuel)
+	var c := Color("7fe0a8") if fuel > 25.0 else (Color(1.0, 0.81, 0.42) if fuel > 10.0 else Color("e5605a"))
+	fuel_label.add_theme_color_override("font_color", c)
+	fuel_fill.color = c
+	fuel_fill.size.x = 236.0 * fuel / 100.0
+	if now > fuel_saved_at:              # kept on this device, so a cockpit sign-out remembers it
+		fuel_saved_at = now + 5.0
+		var f := FileAccess.open(FUEL_FILE, FileAccess.WRITE)
+		if f:
+			f.store_string(JSON.stringify({"fuel": fuel, "at": Time.get_unix_time_from_system()}))
+			f.close()
+
+
+## Out of fuel: Inara sends a tow. It brings you home and it isn't cheap (the server charges the fee, rule 38).
+func _tow() -> void:
+	towing = true
+	lock = {}
+	warp = {}
+	vel = Vector3.ZERO
+	_set_throttle(0)
+	_say("INARA\nYou're out of fuel. Sit tight, I'm sending a tow to bring you in. It won't be cheap.")
+	await get_tree().create_timer(6.0).timeout
+	var charged := 0
+	if Session.token != "":
+		var r: Dictionary = await Api.call_api("POST", "/api/dfg/tow", {})
+		if r.ok:
+			charged = int(r.data.get("charged", 0))
+	_dock()
+	fuel = 100.0
+	fuel_warned = 100
+	towing = false
+	_say("TOWED HOME\nThe tow cost you %s credits. Keep an eye on your fuel." % Ui.num(charged))
 
 
 # ── RESTING IN THE COCKPIT (Eric 10-24): stopped out in space, sleep at half the bed's rate, or sign out right here ──
@@ -332,6 +423,7 @@ func _hud() -> void:
 	_warp_panel(root)
 	hud_root = root
 	_sleep_ui(root)
+	_fuel_ui(root)
 	cargo = preload("res://scripts/cargo.gd").new()   # the hold, COLLECT and UNLOAD
 	cargo.bay = self
 	add_child(cargo)
@@ -465,6 +557,7 @@ func _process(dt: float) -> void:
 	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
 	edge.queue_redraw()
 	quarters_btn.visible = docked
+	_fuel_tick(dt, now)
 	sleep_btn.visible = _can_sleep()
 	if sleep_panel.visible and now > sleep_at and Session.token != "":   # the bars as they refill, once a minute
 		sleep_at = now + 60.0
@@ -894,6 +987,10 @@ func start_warp(d: Dictionary) -> void:
 	if docked and not Session.me.get("skills", {}).get("fly", false):    # warping out of the bay is flying too
 		_say("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly.", true)
 		return
+	if fuel < FUEL_WARP:
+		_say("Not enough fuel to warp. Fly home, or wait for a tow.")
+		return
+	fuel -= FUEL_WARP
 	var to := _dest_point(d)
 	var from := _me()
 	var dist := Solar.length(Solar.sub(to, from))

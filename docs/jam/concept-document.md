@@ -42,7 +42,7 @@ rest, because your body has limits.
 - **The biggest decision comes first: your career.** What you choose to study decides your path, and your attributes grow as you learn more and pass more of the library's tests.
 - **Everyday challenges and decisions:** which ring and field to work; what fits your hold; sell now or wait for a better price;
   save, lock credits in a term deposit, or borrow; spend on food that helps you work or on treats that make you crash.
-- **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise);
+- **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise; 4 of 5 correct to pass, and retakes any time);
   each bar takes more study than the last, and gives a smaller, still valuable, skill increase.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
   finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 12 languages, including Arabic.
