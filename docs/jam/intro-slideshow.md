@@ -1,6 +1,6 @@
 # The intro slideshow: script (DRAFT for Eric)
 
-Before a new player's first launch: about 8 illustrated slides, each with one or two lines spoken by Inara (recorded
+Before a new player's first launch: about 7 illustrated slides, each with one or two lines spoken by Inara (recorded
 files only, rules 14 and 15), and the words on screen in the player's language. Skippable, and replayable from the
 library. Every line comes from the Story Bible's canon (docs/STORY-BIBLE.md); nothing here is new story.
 
@@ -11,13 +11,12 @@ library. Every line comes from the Story Bible's canon (docs/STORY-BIBLE.md); no
 | 3 | A green New Earth: forests, rivers, animals | "A New Earth. Air, water, forests, animals. And no people. No sign that anyone had ever lived there." |
 | 4 | The crew at work on the New Earth | "For twelve months we tested everything. It could be home. We were so happy." |
 | 5 | The ship coming back through the wormhole, the solar system ahead in ruins | "Then we came home. Mercury, Venus, Earth and Mars were gone. Broken into rings of debris around the Sun." |
-| 6 | Silhouettes of scavenger craft in a debris field | "We're not alone out here. Others are sifting through the debris. They don't answer us. We don't know who they are." |
-| 7 | The Tower (the bridge), Inara's light | "Nobody knows what did this. Everyone has a theory. The odds are dim, but the future is unwritten." |
-| 8 | A small craft in the docking bay, ready to launch | "I'm Inara. I'll be with you out there. Let's get you trained, Trainee." |
+| 6 | The Tower (the bridge), Inara's light | "Nobody knows what did this. Everyone has a theory. The odds are dim, but the future is unwritten." |
+| 7 | A small craft in the docking bay, ready to launch | "I'm Inara. I'll be with you out there. Let's get you trained, Trainee." |
 
 **Needed:**
-- **Pictures:** 8 illustrations in the game's look (Eric's art, or images Eric approves).
-- **Recordings:** 8 lines in Inara's voice for each voiced language, made from the approved script with ElevenLabs. This
+- **Pictures:** 7 illustrations in the game's look (Eric's art, or images Eric approves).
+- **Recordings:** 7 lines in Inara's voice for each voiced language, made from the approved script with ElevenLabs. This
   costs ElevenLabs credits, and Eric approves before recording.
-- **Arabic:** a translation of the 8 lines for the on-screen text, plus Arabic recordings if Eric approves an Arabic
+- **Arabic:** a translation of the 7 lines for the on-screen text, plus Arabic recordings if Eric approves an Arabic
   voice.

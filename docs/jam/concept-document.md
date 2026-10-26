@@ -13,8 +13,7 @@ make and trade.
 Humboldt went to study it and found, on the other side, a twin of our universe: a New Earth with air, water, forests
 and animals, but no humans and no sign that any had ever lived there. After a 12-month survey proved it could sustain
 human life, the ship came home through the wormhole to find our solar system devastated. Mercury, Venus, Earth and Mars
-and most of their moons have been destroyed by something no one understands, and an unknown civilisation of scavengers,
-silent and unarmed, is sifting through the debris. The crew rebuild, study, and look for answers, and the New Earth
+and most of their moons have been destroyed by something no one understands, and their remains circle the Sun as rings of debris. The crew rebuild, study, and look for answers, and the New Earth
 waits on the other side.
 
 **Inara.** The lead character of the novel *Stardust - Inara*: an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
