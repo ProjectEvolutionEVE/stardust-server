@@ -752,3 +752,24 @@ ON CONFLICT (key) DO NOTHING;
 INSERT INTO settings(key, value, note) VALUES
   ('tow_fee', 1500, 'Out of fuel in space: the tow back to the Starship costs this many credits, paid to the WSC (rule 38, Eric 10-25; first setting)')
 ON CONFLICT (key) DO NOTHING;
+
+-- Flying the WSC's craft (Eric 10-25, rule 38; craft.py): 50 credits an hour, or a 500-a-week lease a month at a time.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS flight_owed NUMERIC(12,4) NOT NULL DEFAULT 0;   -- fractions of a credit carried
+CREATE TABLE IF NOT EXISTS craft_leases (
+  id             BIGSERIAL PRIMARY KEY,
+  player_id      BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  started_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  next_charge_at TIMESTAMPTZ NOT NULL,
+  term_ends_at   TIMESTAMPTZ NOT NULL,
+  weeks_paid     INT NOT NULL DEFAULT 0,
+  auto_renew     BOOLEAN NOT NULL DEFAULT true,
+  ended_at       TIMESTAMPTZ,
+  end_reason     TEXT
+);
+CREATE INDEX IF NOT EXISTS craft_leases_due ON craft_leases(next_charge_at) WHERE ended_at IS NULL;
+INSERT INTO settings(key, value, note) VALUES
+  ('craft_hourly',      50,  'Flight time without a lease: credits an hour, paid to the WSC (Eric 10-25, rule 38)'),
+  ('craft_weekly',      500, 'The craft lease: credits a week, paid to the WSC (Eric 10-25)'),
+  ('craft_lease_weeks', 4,   'The lease is taken this many weeks at a time and renews automatically (Eric 10-25: a month)')
+ON CONFLICT (key) DO NOTHING;
+

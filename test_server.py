@@ -1020,6 +1020,24 @@ console.log(JSON.stringify(out));"""
     r = await cl.post("/api/dfg/bank/goal", headers=BK, json={"goal": "ship", "target": 2000}); j = await r.json()
     g = j["goals"][0]
     check("a savings goal shows progress from what's at the Bank", g["name"] == "A new ship" and g["progress"] == j["at_bank"] and not g["reached"])
+    # flying costs credits (rule 38): 50 an hour, or a 500-a-week lease
+    import craft as CRM
+    FL = {"X-Dev-Player": "flyer"}
+    c0 = (await (await cl.get("/api/dfg/craft", headers=FL)).json())["credits"]
+    r = await cl.post("/api/dfg/craft/flight", headers=FL, json={"seconds": 1800}); j = await r.json()
+    check("half an hour of flight costs 25 credits at 50 an hour", j["charged"] == 25 and j["credits"] == c0 - 25)
+    r = await cl.post("/api/dfg/craft/flight", headers=FL, json={"seconds": 36}); j = await r.json()
+    r = await cl.post("/api/dfg/craft/flight", headers=FL, json={"seconds": 36}); j2 = await r.json()
+    check("fractions of a credit carry over to the next report", j["charged"] == 0 and j2["charged"] == 1)
+    r = await cl.post("/api/dfg/craft/lease", headers=FL, json={}); j = await r.json()
+    check("the weekly lease charges its first 500 now", j["lease"]["weeks_paid"] == 1 and j["credits"] == c0 - 26 - 500)
+    r = await cl.post("/api/dfg/craft/flight", headers=FL, json={"seconds": 3600}); j = await r.json()
+    check("with a lease, flight time costs nothing more", j["charged"] == 0 and j["lease"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE craft_leases SET next_charge_at=now() - interval '1 minute'")
+        await CRM.tick(c)
+    j = await (await cl.get("/api/dfg/craft", headers=FL)).json()
+    check("the next week's 500 is taken on its date", j["lease"]["weeks_paid"] == 2 and j["credits"] == c0 - 26 - 1000)
     # out of fuel: the tow costs 1,500 credits, paid to the WSC (rule 38)
     TW = {"X-Dev-Player": "drifter"}
     before = (await (await cl.get("/api/dfg/bank", headers=TW)).json())["credits"]

@@ -38,6 +38,8 @@ Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
 The Starship Bank (Eric 10-25, rule 36; lending.py): deposits, loans and savings goals:
+  GET  /api/dfg/craft                flight costs: hourly rate, the weekly lease and yours (rule 38)
+  POST /api/dfg/craft/lease          start the weekly lease (first week paid now) · /renew {auto_renew} · /flight {seconds}
   POST /api/dfg/tow                  out of fuel: towed home for a fee (setting tow_fee) paid to the WSC (rule 38)
   GET  /api/dfg/bank                 savings, term deposits, loans, goals, standing, rates
   POST /api/dfg/bank/deposit         {kind:'savings'|'term', amount, weeks?} · /withdraw {amount} or {deposit_id}
@@ -65,6 +67,7 @@ import library as LIB
 import archives as AR
 import voice as VO
 import lending as LN
+import craft as CR
 from datetime import datetime
 import asyncio
 
@@ -252,6 +255,26 @@ async def rest(request):
                     raise ST.Refused("Sleep in your bed or in your cockpit.")
                 await BODY.set_state(conn, pid, asleep=b.get("asleep") is True, place=place)
         return _json(await _me(conn, pid))
+
+
+async def craft_get(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await CR.status(conn, pid))
+
+
+async def craft_post(request):
+    """The craft lease and flight time (rule 38): start a lease, turn auto-renew on or off, or report flight time."""
+    op, b = request.match_info["op"], await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if op == "lease":
+            await CR.start_lease(conn, pid)
+        elif op == "renew":
+            await CR.set_renew(conn, pid, b.get("auto_renew"))
+        elif op == "flight":
+            return _json({**await CR.flight(conn, pid, b.get("seconds")), **await CR.status(conn, pid)})
+        return _json(await CR.status(conn, pid))
 
 
 async def tow(request):
@@ -453,10 +476,11 @@ async def _startup(app):
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
     app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
+    app["craft"] = asyncio.create_task(CR.run(app))       # weekly craft-lease payments (rule 38)
 
 
 async def _cleanup(app):
-    for k in ("bank", "auctions", "lending"):
+    for k in ("bank", "auctions", "lending", "craft"):
         app[k].cancel()
         try:
             await app[k]
@@ -737,6 +761,8 @@ def make_app():
     app.router.add_post("/api/dfg/rest", rest)
     app.router.add_get("/api/dfg/bank", bank)
     app.router.add_post("/api/dfg/tow", tow)
+    app.router.add_get("/api/dfg/craft", craft_get)
+    app.router.add_post("/api/dfg/craft/{op:lease|renew|flight}", craft_post)
     app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)

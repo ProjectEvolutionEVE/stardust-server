@@ -105,10 +105,43 @@ func _render() -> void:
 		c.queue_free()
 	var d := data
 	body.add_child(Ui.label("Wallet: %s credits   ·   At the Bank: %s credits" % [Ui.num(d.credits), Ui.num(d.at_bank)], 24))
+	_craft()
 	_goals(d)
 	_savings(d)
 	_terms(d)
 	_loans(d)
+
+
+# ── your craft, leased from the WSC (rule 38): 50 credits an hour, or 500 a week on a 28-day contract ──
+func _craft() -> void:
+	body.add_child(_heading("YOUR CRAFT (LEASED FROM THE WSC)"))
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	body.add_child(box)
+	var r: Dictionary = await Api.call_api("GET", "/api/dfg/craft")
+	if not r.ok or not is_instance_valid(box):
+		return
+	var c: Dictionary = r.data
+	if c.lease == null:
+		box.add_child(Ui.label("You pay %s credits an hour of flight, fuel included. A lease is %s a week on a %d-day contract, each week paid up front, and renews by itself: cheaper if you fly more than %d hours a week." % [
+			Ui.num(c.hourly), Ui.num(c.weekly), int(c.lease_weeks) * 7, int(c.weekly) / int(c.hourly)], 22))
+		var take := _small_button("Lease my craft: %s a week" % Ui.num(c.weekly), true)
+		take.pressed.connect(func(): _act_craft("craft/lease", {}, "Leased. Flight time is included until the lease ends."))
+		box.add_child(take)
+		return
+	var l: Dictionary = c.lease
+	box.add_child(Ui.label("Leased: flight time included. Next payment %s on %s. Contract to %s, %s." % [Ui.num(c.weekly),
+		str(l.next_charge).substr(0, 10), str(l.term_ends).substr(0, 10), "renewing automatically" if l.auto_renew else "not renewing"], 22, Ui.GREEN))
+	var t := _small_button("Stop auto-renew" if l.auto_renew else "Turn auto-renew back on")
+	var on: bool = not l.auto_renew
+	t.pressed.connect(func(): _act_craft("craft/renew", {"auto_renew": on}, "Updated."))
+	box.add_child(t)
+
+
+func _act_craft(path: String, payload: Dictionary, done: String) -> void:
+	var r: Dictionary = await Api.call_api("POST", "/api/dfg/" + path, payload)
+	msg.text = done if r.ok else r.error
+	_load()
 
 
 # ── savings goals: what you're saving for, and how far you've got ──

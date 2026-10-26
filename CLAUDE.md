@@ -199,7 +199,7 @@ The full record is in the `quavara-docs` repository:
     - **By the hour of flight time:** dearer over time, good for players building other careers who fly only now and then.
     - **A longer-term craft contract:** cheaper per hour for players who fly a lot.
     - **Fuel from ice:** water ice from the debris is split (electrolysis, the "element separator") into hydrogen and oxygen. **Hydrogen is the fuel that runs the small mining craft**; oxygen is useful aboard. So ice has real value on the market.
-    - **Prices (Eric 10-25):** **hourly, 50 credits an hour** of flight; or a **weekly lease, 500 credits a week**, taken one month at a time and **renewing automatically**, paid to the WSC. The weekly lease is cheaper for anyone flying more than 10 hours a week.
+    - **Prices (Eric 10-25):** **hourly, 50 credits an hour** of flight; or a **weekly lease, 500 credits a week**, a **28-day contract** paid **500 every 7 days, each week paid up front**, **renewing automatically**, paid to the WSC. The weekly lease is cheaper for anyone flying more than 10 hours a week.
     - **A fuel bar (Eric 10-25)** on the flight screen: it ticks down slowly while the craft is out (more slowly when parked), and **every return to the Starship tops it up** (fuel is included). If it runs dry out in space, **Inara has the craft towed back in, and the tow costs a pretty penny**: it keeps players honest about parking in space and never coming home.
 
 39. **The roadmap (Eric 10-25).**
