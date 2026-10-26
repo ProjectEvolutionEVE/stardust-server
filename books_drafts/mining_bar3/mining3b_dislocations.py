@@ -1,0 +1,37 @@
+"""Flaws That Let Metal Bend (bar 3, Metallurgist, part B): vacancies and dislocations, and why real metal is far weaker than a perfect crystal."""
+CODE = "mining3b_dislocations"
+BOOK = {
+    "title": "Flaws That Let Metal Bend",
+    "subtitle": "Vacancies and dislocations: why real metal is much weaker than a perfect crystal",
+    "chapters": [
+        ("A perfect crystal would be very strong",
+         "On paper, a perfect crystal of metal would be far stronger than the metal we really use. Every atom in a row would have to slide past its neighbours at the same moment. Real metal bends much more easily, and the reason lies in its flaws."),
+        ("Vacancies",
+         "A vacancy is a missing atom, a gap in the pattern. Vacancies are common, and there are more of them as the metal gets hotter. They let atoms move around inside a solid, which is how atoms slowly mix, called diffusion."),
+        ("Dislocations",
+         "A dislocation is a line of misfit in the crystal, where one extra row of atoms stops partway through the pattern. Under a small push, a dislocation can move across the crystal one step at a time, like a ripple moving across a rug. Each step shifts only a little of the metal, so the whole piece gives without all its bonds breaking at once."),
+        ("Why bending is easier",
+         "Moving one dislocation takes far less force than sliding a whole plane of atoms at once. That is why real metals can be bent, drawn into wire and pressed into shape at stresses far below the limit a perfect crystal would suggest."),
+        ("Work hardening",
+         "Every bend creates more dislocations, and they tangle with one another like knotted string. A tangled metal is harder to bend again, which is called work hardening. Metal that has been cold rolled is harder than the same metal after it has been annealed."),
+        ("Controlling the flaws",
+         "A metallurgist learns how many dislocations a metal carries, because that sets how easily it bends and how hard it is. Working, heating and cooling all change the count. The skill is in choosing the treatment that leaves the metal with the right number."),
+    ],
+    "test": [
+        ("What is a vacancy in a metal?",
+         [("a", "An extra atom squeezed into the pattern"), ("b", "A missing atom, a gap in the pattern"), ("c", "A bubble of air"), ("d", "A fold in the surface")],
+         "b"),
+        ("How does a dislocation help a metal bend?",
+         [("a", "It moves across the crystal step by step, so the piece gives a little at a time"), ("b", "It locks every atom in place"), ("c", "It turns the metal into glass"), ("d", "It stops the metal from bending at all")],
+         "a"),
+        ("What is work hardening?",
+         [("a", "Heating a metal until it melts"), ("b", "Coating a metal in zinc"), ("c", "Making a metal harder by bending it, which tangles its dislocations"), ("d", "Mixing two metals in a furnace")],
+         "c"),
+        ("Why is a real metal much weaker than a perfect crystal would be?",
+         [("a", "It has no atoms at all"), ("b", "Gravity pulls its atoms apart"), ("c", "Its colour is too dull"), ("d", "Its flaws let it bend at much lower force")],
+         "d"),
+        ("Why is cold-worked metal usually harder than the same metal after annealing?",
+         [("a", "Its dislocations are tangled, so they move less easily"), ("b", "It has lost all its atoms"), ("c", "It has turned into a liquid"), ("d", "It has more vacancies than a perfect crystal")],
+         "a"),
+    ],
+}

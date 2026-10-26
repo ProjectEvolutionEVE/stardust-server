@@ -1,0 +1,37 @@
+"""Ore the Water Sorts (bar 3, Metallurgist, part A): placers and layered rock, deposits that flowing water and time built."""
+CODE = "mining3a_placers"
+BOOK = {
+    "title": "Ore the Water Sorts",
+    "subtitle": "Placers and layered rock: deposits that flowing water and time built",
+    "chapters": [
+        ("Heavy grains travel less",
+         "Flowing water carries light grains a long way and drops heavy ones sooner. Gold, at 19,300 kilograms per cubic metre, is about seven times as dense as quartz at 2,650. That gap is why gold settles out so readily in moving water."),
+        ("Placer deposits",
+         "A placer is a deposit of loose grains in river gravel, beach sand or an old stream bed. People have found placer gold this way for thousands of years. Placers are often shallow, so they can be worked with simple tools."),
+        ("Ore laid down in layers",
+         "Sedimentary rock forms from particles that settle in layers, in lakes, seas and basins. Ore can form in layers too. A bed of ore laid down flat can run across a wide area and be followed by drilling."),
+        ("Banded iron formations",
+         "Banded iron formations are sedimentary rocks made of thin bands of iron oxide and chert, a fine-grained silica rock. Most are more than 1.8 billion years old. They are a major source of the world's iron ore."),
+        ("Reading the bands",
+         "A band that runs for many kilometres is easy to trace across the ground. The grade can still change from one band to the next, so a careful team samples each band separately rather than taking one average."),
+        ("Aboard",
+         "The fields are not layered beds. Their pieces are loose, and each is pure ore mineral (rule 27). The water-sorting picture of placers and layers is background knowledge that explains why real ore collects where it does."),
+    ],
+    "test": [
+        ("Why does heavy gold collect in river gravel?",
+         [("a", "Flowing water drops heavy grains sooner than light ones"), ("b", "Gold floats better than stone"), ("c", "Gold is a gas"), ("d", "Rivers pull gold uphill")],
+         "a"),
+        ("About how many times denser is gold than quartz, using the figures in this book?",
+         [("a", "About the same"), ("b", "About seven times"), ("c", "About half"), ("d", "About ten thousand times")],
+         "b"),
+        ("What is a placer deposit?",
+         [("a", "A deep mine shaft"), ("b", "A gas cloud"), ("c", "Loose grains in gravel, sand or an old stream bed"), ("d", "A frozen lake")],
+         "c"),
+        ("What are banded iron formations?",
+         [("a", "Pure gold in cracks"), ("b", "Ice sheets"), ("c", "Lava flows"), ("d", "Sedimentary layers of iron oxide and silica")],
+         "d"),
+        ("About how old are most banded iron formations?",
+         [("a", "More than 1.8 billion years"), ("b", "Less than a thousand years"), ("c", "About ten thousand years"), ("d", "They were made in a furnace")],
+         "a"),
+    ],
+}

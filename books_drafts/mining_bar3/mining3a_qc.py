@@ -1,0 +1,37 @@
+"""Trust the Lab (bar 3, Metallurgist, part A): how a laboratory checks its own answers before it reports them."""
+CODE = "mining3a_qc"
+BOOK = {
+    "title": "Trust the Lab",
+    "subtitle": "Standards, blanks and duplicates: how a laboratory checks its own answers",
+    "chapters": [
+        ("Check the check",
+         "An assay result is only as good as the lab behind it. A careful lab checks its own work in every batch, using samples whose answers it already knows. A result with no checks behind it is only a guess."),
+        ("Reference materials",
+         "A certified reference material is a sample whose metal content has been measured carefully, often by many labs. The lab runs one in each batch. If its result lands far from the certified value, the whole batch is suspect."),
+        ("Blanks",
+         "A blank is a sample with no metal in it. It shows whether the lab is leaving metal behind, or picking it up from its own equipment, from one sample to the next. This problem is called contamination, and blanks catch it."),
+        ("Duplicates",
+         "A duplicate is a second portion of the same sample, prepared and tested on its own. When the two results agree closely, the work is repeatable. When they differ widely, the sample or the method has a problem to find."),
+        ("Batches and drift",
+         "Checks run through the whole batch, not only at the start. An instrument can drift over a long day, so a check near the end matters as much as one at the beginning. A batch that fails its checks is rerun, not reported."),
+        ("Honest numbers",
+         "A good lab reports its checks along with its results, so the buyer can trust the figure. The game uses a different kind of check: the server works out the expected yield from the chemistry (rule 25), so a smelter's delivery can be checked against it."),
+    ],
+    "test": [
+        ("What is a blank in a lab?",
+         [("a", "A sample of pure gold"), ("b", "A sample with no metal in it, used to check for contamination"), ("c", "A broken sample"), ("d", "A form to fill in")],
+         "b"),
+        ("What does a certified reference material let a lab do?",
+         [("a", "Melt the whole batch"), ("b", "Sell metal"), ("c", "Check its results against a known value"), ("d", "Add metal to the batch")],
+         "c"),
+        ("Two duplicates agree closely. What does that suggest?",
+         [("a", "The lab cheated"), ("b", "The sample is pure gold"), ("c", "Nothing at all"), ("d", "The work is repeatable")],
+         "d"),
+        ("When should the checks in a batch run?",
+         [("a", "Through the batch, not just at the start"), ("b", "Only once, in the morning"), ("c", "Only when the buyer asks"), ("d", "Never")],
+         "a"),
+        ("A batch fails its checks. What is the right step?",
+         [("a", "Report it anyway"), ("b", "Rerun the batch"), ("c", "Hide the failed result"), ("d", "Sell the batch")],
+         "b"),
+    ],
+}

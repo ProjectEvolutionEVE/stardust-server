@@ -1,0 +1,37 @@
+"""From Concentrate to Copper (bar 3, Metallurgist, part A): smelting a copper concentrate in stages, through matte and blister copper to anodes."""
+CODE = "mining3a_matte"
+BOOK = {
+    "title": "From Concentrate to Copper",
+    "subtitle": "Smelting a copper concentrate in stages: matte, blister copper and anodes",
+    "chapters": [
+        ("A rich concentrate",
+         "Flotation gives a copper concentrate, a fine powder rich in chalcopyrite. The concentrate still holds iron and sulfur along with the copper, so it cannot be used as metal yet. It must be smelted."),
+        ("Matte",
+         "In the smelting furnace the concentrate melts and separates into two liquids. Most of the iron, the waste and some sulfur float up as slag. The copper and some iron sulfide sink into a dense liquid called matte, which is richer in copper than the concentrate was."),
+        ("Converting the matte",
+         "Matte is poured into a converter, and air is blown through it. The remaining iron and sulfur are oxidised out, which leaves blister copper. It is about 98 to 99 per cent copper, and it has small bubbles on its surface where gas escaped as it set."),
+        ("Sulfur gas",
+         "The sulfur leaves the process as sulfur dioxide gas. Modern smelters capture that gas rather than letting it out, and turn it into sulfuric acid. A smelter's sulfur becomes a product, not a waste."),
+        ("Anodes",
+         "Blister copper is cast into thick plates called anodes. An anode is not yet pure enough to sell as the finest copper. The next step, refining, takes out the remaining impurities."),
+        ("What it means for our ore",
+         "Chalcopyrite, our copper ore, gives 34.63 per cent copper by weight in the game. Real smelting takes it through these stages. The game counts only the metal's share and treats the rest as slag (rule 27), so the stages here are background."),
+    ],
+    "test": [
+        ("What is matte?",
+         [("a", "Pure gold"), ("b", "A type of brick"), ("c", "A sheet of ice"), ("d", "A copper and iron sulfide mix")],
+         "d"),
+        ("About how much copper is in blister copper?",
+         [("a", "About 98 to 99 per cent"), ("b", "About 10 per cent"), ("c", "About 50 per cent"), ("d", "Pure gold")],
+         "a"),
+        ("What happens to the sulfur in converting?",
+         [("a", "It turns into gold"), ("b", "It is oxidised off as sulfur dioxide"), ("c", "It stays in the copper"), ("d", "It is poured into lead")],
+         "b"),
+        ("What is an anode in copper making?",
+         [("a", "A pump"), ("b", "A type of drill"), ("c", "A thick cast plate of blister copper"), ("d", "A sealed jar")],
+         "c"),
+        ("What gas is captured and turned into sulfuric acid?",
+         [("a", "Helium"), ("b", "Water vapour"), ("c", "Nitrogen"), ("d", "Sulfur dioxide")],
+         "d"),
+    ],
+}

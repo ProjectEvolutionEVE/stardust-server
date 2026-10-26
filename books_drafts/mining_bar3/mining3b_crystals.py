@@ -1,0 +1,37 @@
+"""Atoms in Neat Rows (bar 3, Metallurgist, part B): the crystal patterns that metals form, and why the pattern matters."""
+CODE = "mining3b_crystals"
+BOOK = {
+    "title": "Atoms in Neat Rows",
+    "subtitle": "The crystal patterns of metals: cubic, close-packed and grains",
+    "chapters": [
+        ("Metal is a crystal",
+         "Most metals are crystals. Their atoms sit in a regular pattern that repeats in every direction, a bit like the bricks in a wall. The smallest block that repeats the whole pattern is called the unit cell."),
+        ("Body-centred cubic",
+         "In a body-centred cubic pattern, or BCC, one atom sits at each corner of a cube and one more sits in the middle. Iron at room temperature is BCC, and so are chromium, tungsten and molybdenum. BCC metals are strong, but many of them turn brittle when they get cold."),
+        ("Face-centred cubic",
+         "In a face-centred cubic pattern, or FCC, atoms sit at the corners of the cube and in the middle of each face. Copper, aluminium, nickel, silver and gold are all FCC. FCC metals are usually easy to bend and shape, even when they are cold."),
+        ("Close-packed hexagons",
+         "Some metals pack their atoms in stacked hexagonal layers, called hexagonal close-packed or HCP. Magnesium, zinc and titanium are HCP at room temperature. With fewer directions in which their atoms can slide, many HCP metals are harder to bend than FCC metals."),
+        ("Grains",
+         "A piece of metal is rarely a single crystal. It is a mass of many small crystals called grains, and the edges where grains meet are grain boundaries. Smaller grains usually make a metal stronger, and heating and cooling can change the grain size."),
+        ("Why the pattern matters",
+         "The crystal pattern decides how a metal behaves when it is bent, heated or cooled. Someone who knows the pattern can guess how a metal will be worked before any test is run. Every later book in this shelf builds on this idea."),
+    ],
+    "test": [
+        ("What crystal pattern does copper have?",
+         [("a", "Body-centred cubic"), ("b", "Face-centred cubic"), ("c", "Hexagonal close-packed"), ("d", "No pattern at all, like glass")],
+         "b"),
+        ("Which of these is BCC at room temperature?",
+         [("a", "Copper"), ("b", "Aluminium"), ("c", "Magnesium"), ("d", "Iron")],
+         "d"),
+        ("What is a grain in a metal?",
+         [("a", "One small crystal, with its neighbours meeting at grain boundaries"), ("b", "A bubble of trapped gas"), ("c", "A grain of sand from the seabed"), ("d", "A thin layer of rust")],
+         "a"),
+        ("About what temperature does iron change from BCC to FCC when it is heated?",
+         [("a", "100 C"), ("b", "500 C"), ("c", "About 912 C"), ("d", "About 1,538 C, its melting point")],
+         "c"),
+        ("Which metal is HCP at room temperature?",
+         [("a", "Silver"), ("b", "Magnesium"), ("c", "Tungsten"), ("d", "Nickel")],
+         "b"),
+    ],
+}
