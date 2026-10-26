@@ -33,3 +33,10 @@ hardest lines (round-trip 96.8%-100%, clean tails).
 - Minor: Inara's name was heard as إنارة, and على متن ran together on STORY-001.
 - The round trip tests that the speech is understood. It does not test a native accent, and Lily is still not
   ElevenLabs-verified in Arabic. Eric decides: keep it, or replace it with a verified Arabic voice.
+
+**Full Arabic round trip (Whisper large-v3, float32, local; 10-26):**
+- Of 179 lines, 139 match 95% or better, 34 match 85-95%, and 6 come back under 85%.
+- 7 words came back as different words, all on Arabic's hard sounds: ق→غ, س→ص, a lost shadda, م→ن.
+- Most other differences are the ear, not the voice: English words, numbers, and words run together.
+- Verdict: understandable, but not native-clean. The same pattern as Lily's Tamil in July.
+- Details: `~/Desktop/inara-ar-check/verdict.md` and `report.txt`.
