@@ -606,7 +606,7 @@ async def bp_print(request):
             raise ST.Refused("Only your own approved designs can be printed.")
         qty = b.get("copies")
         if b.get("quote"):
-            return _json(await SER.print_price(conn, code, qty if isinstance(qty, int) and qty > 0 else 1))
+            return _json(await SER.print_price(conn, code, qty if isinstance(qty, int) and qty > 0 else 1, pid))
         out = await SER.print_run(conn, pid, code, qty)
         return _json({**out, "design": await BP.detail(conn, pid, sid)})
 
