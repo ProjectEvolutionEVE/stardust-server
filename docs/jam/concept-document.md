@@ -84,18 +84,29 @@ costs; saving toward a named goal works; paying debt early saves money; short-te
 
 ## 5. Development & Future Plans
 
-**In the current build:** sign-in; Private Quarters (bed, desk, closet, bookshelf, filing cabinet); the Starship Library
-with books and tests; the 3D Starship and docking bay; the true-scale solar system, warp and radar; debris fields,
-scanner, collecting and unloading; the live market and blueprint auctions; Inara's recorded voice; resting in bed or in
-the cockpit; the Starship Bank with savings, term deposits, loans and savings goals.
+**What ships for the jam:** the game on phones and on PC. Sign-in; Private Quarters (bed, desk with the ledger,
+closet, bookshelf, filing cabinet); the Starship Library with books and five-question tests for **all five bars of
+every career**, wired to the career ladders, so a player can rise from Trainee to the top of their field; the 3D
+Starship and docking bay; the true-scale solar system, warp, radar and fuel; debris fields, scanner, collecting and
+unloading; the live market and blueprint auctions; the Starship Bank with savings, term deposits, loans and savings
+goals; flight time paid to the WSC; resting in bed or in the cockpit; Inara in 12 languages; the illustrated, voiced
+intro.
 
-**Next:** career ladders wired to the library (books for every bar are being written), uniforms, food and drink with
-their effects, massive shared debris fields, player-designed ships and equipment through the blueprint system, and the
-phone release.
+**After the jam: Stardust - Terra Deleta grows.** Food and drink with their effects, massive shared debris fields,
+player-designed ships and equipment built from blueprints, and then **multiplayer**. Players choose a side: work for
+the WSC, or play as the scavengers sifting the debris, a civilisation that cannot speak with the humans it meets. Real
+players on both sides make every encounter a challenge no script could write. **The twist: each player believes they
+are the human, and that the other side is the alien.**
+
+**Then a companion game: Stardust - Terra Nova.** The colonisation of the New Earth on the other side of the wormhole,
+on the ground. It shares the same WSC Bank and market, so resources gathered in space are sold to players on the
+planet's surface. Terra Nova is an MMO: players build communities to share resources and protect each other, because
+the New Earth's creatures have never seen our kind, and meeting them can be deadly.
 
 **Risks and how we handle them:** content volume (hundreds of library books: written in batches and fact-checked);
 balance of the economy (every number is a live setting tuned in playtesting); accuracy of money lessons (checked
-against established financial-education sources).
+against established financial-education sources); growing to multiplayer (the server already keeps the economy, the
+Bank and every transfer, so the world players share is in place before multiplayer arrives).
 
 ## 6. Your Team
 

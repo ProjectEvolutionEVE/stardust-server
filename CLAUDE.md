@@ -202,6 +202,11 @@ The full record is in the `quavara-docs` repository:
     - The prices are not set yet (to tune in playtesting).
     - **A fuel bar (Eric 10-25)** on the flight screen: it ticks down slowly while the craft is out (more slowly when parked), and **every return to the Starship tops it up** (fuel is included). If it runs dry out in space, **Inara has the craft towed back in, and the tow costs a pretty penny**: it keeps players honest about parking in space and never coming home.
 
+39. **The roadmap (Eric 10-25).**
+    - **For the jam:** books and tests for **all five bars of every career** before it ships.
+    - **After the jam:** Stardust - Terra Deleta becomes **multiplayer**. Players choose to work for the WSC or to be the **scavengers** (real players instead of NPCs), who cannot communicate with the humans they meet (rule 8 stays: no talking across the divide). **The twist: each player thinks they are the human and the other side is the alien.**
+    - **Stardust - Terra Nova**, the companion game: land-based colonisation of the New Earth, sharing the same WSC Bank and market; resources gathered in space are sold to players on the surface. An **MMO**: communities for shared resources and protection, because the New Earth's creatures have never seen our kind and meeting them can be deadly.
+
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
 1. **The game's name: CHOSEN (Eric 10-13): "Stardust - Terra Deleta"** (and "Stardust - Terra Nova" for the land game). Still to do: attorney trademark clearance before launch. ("Earth2.0" was dropped: it conflicts with an existing "EARTH 2" filing.)
