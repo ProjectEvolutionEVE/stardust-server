@@ -24,3 +24,12 @@ Keep this file, `VOICE_BY_LANG` and the recording script in step.
 - Once Eric picks an Arabic voice, add it above and to `VOICE_BY_LANG`, then re-record into a fresh folder:
   `python3 tools/inara-record.py --lang ar --out ~/Desktop/inara-ar-new`
 - Replace `~/Desktop/inara-ar` with that folder, then upload with `python3 tools/upload-voice.py --only ar --redo INARA-` to replace the server's copies.
+
+**Arabic Gauntlet result (Eric ran `tools/inara-certify.py --lang ar`, 10-26):** Lily's Arabic passed on all 14 of the
+hardest lines (round-trip 96.8%-100%, clean tails).
+- Two lines need an ear-check:
+  - INARA-FAQ-013, where "900" was heard as a non-word;
+  - INARA-FAQ-035, where the last word lifts like a question (+64 Hz).
+- Minor: Inara's name was heard as إنارة, and على متن ran together on STORY-001.
+- The round trip tests that the speech is understood. It does not test a native accent, and Lily is still not
+  ElevenLabs-verified in Arabic. Eric decides: keep it, or replace it with a verified Arabic voice.
