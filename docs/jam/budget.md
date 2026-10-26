@@ -13,10 +13,9 @@ loans and savings goals, the Desk ledger) and the game server on Railway. Spent 
 
 | Phase | What's delivered | Time |
 |---|---|---|
-| 1. Jam build (to Nov 15) | Phone build, money books in every career, concept doc, 2-minute video | 3 weeks |
-| 2. Mobile release | iOS and Android release, career ladders wired to the library, uniforms, food and drink | ▢ months |
-| 3. Content | Library books for every bar of every career (hundreds of books, written and fact-checked in batches) | ▢ months |
-| 4. PC and web | Steam release, web version, massive shared debris fields, player-designed ships | ▢ months |
+| 1. Jam build (to Nov 15) | Phone build, career ladders and uniforms, library books for all five bars of every career, concept doc, 2-minute video | 3 weeks |
+| 2. Mobile release | iOS and Android store release | ▢ months |
+| 3. PC and web | Steam release, web version | ▢ months |
 
 ## 3. Costs
 

@@ -394,7 +394,8 @@ async def collect(request):
             if await conn.fetchval("SELECT 1 FROM cargo WHERE session_id=$1 AND field_id=$2 AND piece_index=$3",
                                    sid, field, index):
                 raise G.Refused("That piece is already aboard.")
-            if sess["gap"] is not None and sess["gap"].total_seconds() < G.MIN_COLLECT_S:
+            quickest = G.MIN_COLLECT_S / (1 + await CAR.skill(conn, pid, "mining"))   # the Mining uniform collects faster
+            if sess["gap"] is not None and sess["gap"].total_seconds() < quickest:
                 raise G.Refused("Collecting takes time. Wait for the piece to come aboard.")
             if not G.shape_fits(p["dims"], hold):
                 raise G.Refused("That piece won't fit in your hold.")

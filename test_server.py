@@ -754,6 +754,11 @@ async def main():
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "navigation"})
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()
     check("in the quarters: change to Navigation, addressed as Senior Navigator", r.status == 200 and me["rank"] == "Senior Navigator")
+    async with cl.app["pool"].acquire() as c:
+        cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")
+        sk_nav, sk_min = await CAR.skill(c, cpid, "navigation"), await CAR.skill(c, cpid, "mining")
+    check("a skill counts only while its uniform is worn: Navigation's counts, Mining's is 0",
+          abs(sk_nav - me["career"]["skill_pct"] / 100) < 1e-9 and sk_nav > 0 and sk_min == 0)
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "pirate"})
     r2 = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": None})
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()

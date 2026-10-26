@@ -129,7 +129,7 @@ func _send_collects() -> void:
 	sending = true
 	while not queue.is_empty():
 		var p: Dictionary = queue.pop_front()
-		var wait := last_sent + 2.2 - Time.get_ticks_msec() / 1000.0
+		var wait := last_sent + 2.2 / (1.0 + Session.skill("mining")) - Time.get_ticks_msec() / 1000.0
 		if wait > 0.0:
 			await get_tree().create_timer(wait).timeout
 		last_sent = Time.get_ticks_msec() / 1000.0
@@ -199,7 +199,7 @@ func start_collect() -> void:
 		Voice.say("full")
 		bay._say("HOLD FULL\nNo room left for these pieces. Return to the Starship to unload.")
 		return
-	collecting = {"f": f, "i": i, "t": 0.0, "dur": 2.0 + minf(10.0, f.pieces[i].box * 12.0)}
+	collecting = {"f": f, "i": i, "t": 0.0, "dur": (2.0 + minf(10.0, f.pieces[i].box * 12.0)) / (1.0 + Session.skill("mining"))}
 
 
 func tick(dt: float) -> void:
