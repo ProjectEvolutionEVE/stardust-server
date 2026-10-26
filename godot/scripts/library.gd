@@ -47,8 +47,14 @@ func _shelves() -> void:
 	if not r.ok:
 		body.add_child(Ui.label(r.error, 24, Ui.GOLD))
 		return
+	render(r.data)
+
+
+## The shelves from GET /api/dfg/library: Start here, then a shelf per career with its bars, then every subject.
+func render(data: Dictionary) -> void:
+	_clear()
 	var books := {}
-	for g in r.data.shelves:
+	for g in data.shelves:
 		for b in g.books:
 			books[b.code] = b
 	body.add_child(Ui.label("Start here", 30, Ui.GOLD))
@@ -57,10 +63,50 @@ func _shelves() -> void:
 		var b: Dictionary = books.get(s[0], {})
 		if not b.is_empty():
 			_book_row(b, SKILL_WORD[s[1]])
-	for g in r.data.shelves:
+	if data.has("careers"):
+		body.add_child(Ui.label("Careers", 30, Ui.GOLD))
+		body.add_child(Ui.label("Pass every book on a bar's shelf to earn that bar. A bar is gold when every test in it is perfect; retake any test to turn silver gold.", 22, Ui.MUTED))
+		for c in data.careers:
+			_career(c, data.get("uniform") == c.code)
+	for g in data.shelves:
 		body.add_child(Ui.label(g.group, 28, Ui.GOLD))
 		for b in g.books:
 			_book_row(b, "")
+
+
+## One career's shelf (rule 32): its colour, the title earned, its five bars, and its books by bar (tap to open).
+func _career(c: Dictionary, worn: bool) -> void:
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 12)
+	head.add_child(Ui.swatch(c.colour))
+	var name := Ui.button("%s  ·  %s%s" % [c.name, c.title, "  (wearing)" if worn else ""], false)
+	name.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name.add_theme_font_size_override("font_size", 24)
+	head.add_child(name)
+	body.add_child(head)
+	var strip := Ui.bar_strip(c.bars, 16)             # its own line, so the shelf fits a phone's width
+	strip.size_flags_horizontal = Control.SIZE_SHRINK_END
+	body.add_child(strip)
+	var shelf := VBoxContainer.new()
+	shelf.add_theme_constant_override("separation", 10)
+	shelf.visible = false
+	body.add_child(shelf)
+	name.pressed.connect(func(): shelf.visible = not shelf.visible)
+	if float(c.skill_pct) > 0:
+		shelf.add_child(Ui.label("%s skill: +%s%%" % [c.name, Ui.dec(float(c.skill_pct), 2)], 22, Ui.GREEN))
+	for bar in c.bars:
+		var medal = bar.get("medal")
+		var state: String = ("Gold" if medal == "gold" else "Silver") if medal != null else "Not yet"
+		shelf.add_child(Ui.label("Bar %d · %s · %s" % [int(bar.bar), bar.title, state], 26,
+			Ui.GOLD if medal == "gold" else (Ui.SILVER if medal == "silver" else Ui.TEXT)))
+		shelf.add_child(Ui.label(str(bar.note), 20, Ui.MUTED))
+		var saved := body
+		body = shelf                         # _book_row adds to body; aim it at this shelf for a moment
+		for b in c.books:
+			if int(b.bar) == int(bar.bar):
+				_book_row(b, "")
+		body = saved
 
 
 func _book_row(b: Dictionary, unlocks: String) -> void:

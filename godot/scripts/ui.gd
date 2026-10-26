@@ -114,3 +114,35 @@ func when(iso: String, style := "time") -> String:
 		"full":
 			return day + ", " + str(d.year) + ", " + hm
 	return hm + ":%02d" % d.second
+
+
+const SILVER := Color("c0c6d0")       # a silver career bar (rule 32)
+
+
+## A career's five bars (rule 32), left to right: gold, silver, or an empty slot not earned yet.
+func bar_strip(bars: Array, h := 22) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	for b in bars:
+		var s := Panel.new()
+		s.custom_minimum_size = Vector2(h * 2, h)
+		var st := StyleBoxFlat.new()
+		var medal = b.get("medal")
+		st.bg_color = GOLD if medal == "gold" else (SILVER if medal == "silver" else Color(PANEL, 0.6))
+		st.border_color = MUTED if medal == null else st.bg_color
+		st.set_border_width_all(1)
+		st.set_corner_radius_all(4)
+		s.add_theme_stylebox_override("panel", st)
+		s.tooltip_text = "%s: %s" % [b.title, b.note]
+		row.add_child(s)
+	return row
+
+
+## A small square of a career's uniform colour ("2f6fd6").
+func swatch(hex, size := 28) -> ColorRect:
+	var c := ColorRect.new()
+	c.color = Color(str(hex)) if hex != null else MUTED
+	c.custom_minimum_size = Vector2(size, size)
+	c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return c
