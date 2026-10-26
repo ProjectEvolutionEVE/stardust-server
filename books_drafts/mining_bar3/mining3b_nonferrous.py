@@ -1,0 +1,37 @@
+"""Brass, Bronze and Other Alloys (bar 3, Metallurgist, part B): non-ferrous alloys of copper, zinc, tin and nickel, and what each one is for."""
+CODE = "mining3b_nonferrous"
+BOOK = {
+    "title": "Brass, Bronze and Other Alloys",
+    "subtitle": "Non-ferrous alloys of copper, zinc, tin and nickel, and what each is for",
+    "chapters": [
+        ("Non-ferrous means not iron",
+         "A non-ferrous metal is any metal whose main part is not iron. Copper, aluminium, zinc, tin, lead and nickel are all non-ferrous. Many of them become much more useful once they are alloyed."),
+        ("Bronze",
+         "Bronze is mostly copper with some tin added. It is hard, resists wear and corrodes slowly in sea water, which made it a favourite for ship fittings and bells. People have been making bronze for thousands of years."),
+        ("Brass",
+         "Brass is copper with zinc. More zinc makes it stronger and harder, though a very high zinc content makes it brittle. Brass is easy to machine and has a golden colour, so it is used for instruments, fittings and decoration."),
+        ("Cupronickel",
+         "Copper with about a quarter nickel is called cupronickel. It resists salt water well and is tough, so it is used for coinage and for pipes that carry sea water in ships."),
+        ("Nickel superalloys",
+         "Nickel-based superalloys keep their strength at very high temperatures. They are used in the hot parts of jet engines and gas turbines, where ordinary steel would soften. Chromium and other metals are often added to the mix for extra strength."),
+        ("Solder",
+         "Solder is a low-melting alloy, often of tin and lead, or of tin with a little copper and silver. It melts at a low heat and joins metal parts together. Lead-free solders are now common because of health and environmental rules."),
+    ],
+    "test": [
+        ("What is bronze mostly made of?",
+         [("a", "Iron and carbon"), ("b", "Copper with some tin"), ("c", "Zinc and lead"), ("d", "Gold and silver")],
+         "b"),
+        ("Which two metals make up brass?",
+         [("a", "Copper and zinc"), ("b", "Iron and nickel"), ("c", "Tin and lead"), ("d", "Silver and gold")],
+         "a"),
+        ("Why are nickel superalloys used in jet engines?",
+         [("a", "They are soft and easy to bend"), ("b", "They float on water"), ("c", "They keep their strength at very high temperatures"), ("d", "They are made of glass")],
+         "c"),
+        ("What is solder used for?",
+         [("a", "Making glass"), ("b", "Joining metal parts with a low-melting alloy"), ("c", "Building stone walls"), ("d", "Hardening steel")],
+         "b"),
+        ("What do bronze and brass have in common?",
+         [("a", "Both are copper alloys"), ("b", "Both are pure iron"), ("c", "Both are ceramics"), ("d", "Both are plastics")],
+         "a"),
+    ],
+}

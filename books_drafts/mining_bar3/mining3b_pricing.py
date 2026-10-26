@@ -1,0 +1,37 @@
+"""What Refining Adds to Value (bar 3, Metallurgist, part B): ore priced by the lot against metal by the kilogram, and what a refiner must cover."""
+CODE = "mining3b_pricing"
+BOOK = {
+    "title": "What Refining Adds to Value",
+    "subtitle": "Ore by the lot against metal by the kilogram, and what a refiner must cover",
+    "chapters": [
+        ("Ore is rock with metal in it",
+         "Ore is rock that holds enough of a metal to be worth taking out. Most of its weight is other minerals and rock. A buyer of ore pays for the whole lot, and only the metal inside it can be sold later."),
+        ("Refining takes out the rest",
+         "Smelting and refining separate the metal from the rock and the other elements. The product is worth more per kilogram than the ore, because most of each kilogram is the metal that buyers want. Those steps cost money in fuel, equipment, labour and time."),
+        ("How much metal is in a lot",
+         "Multiply the lot's weight by the metal's share to find how much metal it holds. In the game, ore pieces are pure ore mineral, so a 100 kg lot of copper ore holds 34.63 per cent copper by weight. That is about 34.6 kg of copper, and the rest is slag."),
+        ("Cost per kilogram of metal",
+         "Divide the lot's price by the kilograms of metal it holds, and you have the cost of that metal before any smelting. At the starting prices, copper ore works out at about 17 credits for each kilogram of copper, and iron ore at about 3 credits for each kilogram of iron. The game's list prices ore only, so a refiner's margin depends on the price of the metal it sells."),
+        ("What a refiner must cover",
+         "A refiner who buys ore must pay for the ore, the furnace, the fuel, the labour and any fee before a sale earns a profit. The margin is what remains after those costs. A plan that ignores one of them can lose money even when the metal sells well."),
+        ("Interest on money tied up",
+         "Money spent on ore and equipment before any metal is sold has a cost. If that money is borrowed, interest adds to it over time. A refiner who waits a long time for sales pays more in interest, so steady sales matter as much as the price."),
+    ],
+    "test": [
+        ("What is ore?",
+         [("a", "Pure metal ready for a bridge"), ("b", "Bread from a ship's galley"), ("c", "Rock that holds enough metal to be worth taking out"), ("d", "Glass made from sand")],
+         "c"),
+        ("How much copper is in a 100 kg lot of copper ore in the game?",
+         [("a", "100 kg"), ("b", "About 34.6 kg"), ("c", "About 65.4 kg"), ("d", "600 kg")],
+         "b"),
+        ("How do you find the cost per kilogram of metal in a lot?",
+         [("a", "Multiply the price by the lot's weight"), ("b", "Add the weight of the hold"), ("c", "Subtract the floor from the price"), ("d", "Divide the lot price by the kilograms of metal it holds")],
+         "d"),
+        ("Why does interest matter to a refiner who buys ore?",
+         [("a", "Money tied up before a sale grows more costly over time"), ("b", "Interest turns ore into gold"), ("c", "Interest makes ore lighter"), ("d", "Interest is paid only by the Sun")],
+         "a"),
+        ("Why is refined metal worth more per kilogram than ore?",
+         [("a", "Most of each kilogram is wanted metal, and the refining costs are covered by the sale"), ("b", "Ore is always heavier than metal"), ("c", "Metal becomes magnetic when it is refined"), ("d", "Rock is more expensive to store than metal")],
+         "a"),
+    ],
+}

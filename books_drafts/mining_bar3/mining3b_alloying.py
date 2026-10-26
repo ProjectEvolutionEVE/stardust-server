@@ -1,0 +1,37 @@
+"""Mixing Metals on Purpose (bar 3, Metallurgist, part B): how alloys are made, and how adding a little of one element changes the strength of another."""
+CODE = "mining3b_alloying"
+BOOK = {
+    "title": "Mixing Metals on Purpose",
+    "subtitle": "Alloys: how adding a little of one element changes the strength of a metal",
+    "chapters": [
+        ("What an alloy is",
+         "An alloy is a metal mixed with one or more other elements. The added elements change how strong, hard, light or easy to shape the metal is. Most metals used for building and making things are alloys, not pure metal."),
+        ("Swapping in new atoms",
+         "When the added atoms are close in size to the metal's own atoms, they take the place of some of them in the pattern. This is a substitutional alloy, and brass is one example. Copper with zinc added is harder than pure copper and still easy to shape."),
+        ("Small atoms in the gaps",
+         "Very small atoms, such as carbon in iron, fit into the gaps between the metal's atoms. These are called interstitial atoms. They push against the pattern, which makes it harder for dislocations to move through the metal."),
+        ("Hardening with tiny particles",
+         "Some alloys can be heated and then cooled so that tiny particles of a second phase form inside the metal. The particles block dislocations, and the metal gets stronger. Aluminium with a little copper can be hardened this way, a method first found in the early 1900s."),
+        ("Sterling silver",
+         "Sterling silver is 92.5 per cent silver, with 7.5 per cent copper. Pure silver is soft and dents easily, so the copper makes it harder and more useful for cutlery and jewellery."),
+        ("Choosing a mix",
+         "Every alloy is a trade. A little more of one element can add strength while cutting how easily the metal bends, or make it lighter while raising its cost. A metallurgist picks the mix that fits the job."),
+    ],
+    "test": [
+        ("What is an alloy?",
+         [("a", "A pure metal from a single ore"), ("b", "A metal mixed with other elements"), ("c", "A rock with no metal in it"), ("d", "A type of glass")],
+         "b"),
+        ("Brass is an alloy of which two metals?",
+         [("a", "Iron and carbon"), ("b", "Tin and lead"), ("c", "Copper and zinc"), ("d", "Silver and gold")],
+         "c"),
+        ("What is sterling silver?",
+         [("a", "Pure silver"), ("b", "Silver mixed with lead"), ("c", "Silver mixed with copper, about 92.5 per cent silver"), ("d", "Silver mixed with iron")],
+         "c"),
+        ("What do tiny carbon atoms do when they are added to iron?",
+         [("a", "Turn the iron into gold"), ("b", "Melt the iron at room temperature"), ("c", "Remove all the dislocations"), ("d", "Fill the gaps between iron atoms and make it harder to bend")],
+         "d"),
+        ("Why does hardening by tiny particles work?",
+         [("a", "The particles let the metal stretch with no force"), ("b", "The particles block dislocations from moving"), ("c", "The particles make the metal glow"), ("d", "The particles add weight without changing the shape")],
+         "b"),
+    ],
+}

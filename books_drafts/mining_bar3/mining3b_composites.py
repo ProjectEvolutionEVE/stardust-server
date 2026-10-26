@@ -1,0 +1,37 @@
+"""Layers and Fibres (bar 3, Metallurgist, part B): composite materials, with strong fibres held in a matrix, from concrete to carbon fibre."""
+CODE = "mining3b_composites"
+BOOK = {
+    "title": "Layers and Fibres",
+    "subtitle": "Composites: strong fibres held in a matrix, from concrete to carbon fibre",
+    "chapters": [
+        ("Two materials, one part",
+         "A composite is made of two or more materials that keep their own character but work together. Usually there are strong fibres or particles, and a matrix that holds them in place. The result can beat either part on its own."),
+        ("The fibres carry the load",
+         "In most composites the fibres take most of the pull. The matrix keeps the fibres in line, shares the load between them and keeps out air and water. When one fibre breaks, its load moves to its neighbours."),
+        ("Carbon fibre",
+         "Carbon fibre reinforced polymer is made of very thin carbon fibres set in a plastic resin. It is stiff and strong for its weight, which is why it appears in aircraft, racing bicycles and high-end sports equipment."),
+        ("Concrete and rebar",
+         "Concrete is a composite too. Its gravel and sand sit in a cement matrix, and concrete is strong when squeezed but weak when pulled. Steel rebar set inside it takes the pulling forces, so reinforced concrete is strong both ways."),
+        ("Wood is a composite",
+         "Wood is a natural composite of cellulose fibres held in a matrix called lignin. That is why wood is strong along the grain and splits so easily along it. Its direction matters, as it does for many composites."),
+        ("Direction matters",
+         "Most fibre composites are strongest along the fibres and much weaker across them. Engineers lay the fibres to match the loads a part must carry, layer by layer, so the part is strong only where it needs to be."),
+    ],
+    "test": [
+        ("What are the two main parts of a composite?",
+         [("a", "Fibres or particles, and a matrix"), ("b", "Gold and silver"), ("c", "Water and ice"), ("d", "Iron and rust")],
+         "a"),
+        ("What do the fibres in a composite mainly do?",
+         [("a", "Carry most of the pull"), ("b", "Melt when they are heated"), ("c", "Hide the matrix"), ("d", "Stop all rust")],
+         "a"),
+        ("Why is concrete reinforced with steel rebar?",
+         [("a", "Concrete is too heavy"), ("b", "Steel makes concrete float"), ("c", "Concrete is weak when pulled, and steel takes the pulling forces"), ("d", "Rebar gives concrete its colour")],
+         "c"),
+        ("What natural composite is wood made of?",
+         [("a", "Cellulose fibres in a lignin matrix"), ("b", "Pure carbon"), ("c", "Liquid glass"), ("d", "Frozen water")],
+         "a"),
+        ("Along which direction is a fibre composite usually strongest?",
+         [("a", "Across the fibres"), ("b", "Along the fibres"), ("c", "In the matrix only"), ("d", "Equally strong in every direction")],
+         "b"),
+    ],
+}

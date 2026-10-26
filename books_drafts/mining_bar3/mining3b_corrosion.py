@@ -1,0 +1,37 @@
+"""Rust and the Electric Cell (bar 3, Metallurgist, part B): corrosion science, from the tiny battery that forms on metal to the ways engineers stop it."""
+CODE = "mining3b_corrosion"
+BOOK = {
+    "title": "Rust and the Electric Cell",
+    "subtitle": "Corrosion science: how metal gives up electrons, and how to stop it",
+    "chapters": [
+        ("Corrosion is a chemical reaction",
+         "Corrosion is a metal reacting with its surroundings and turning back into a compound. Iron turns into rust, a flaky mix of iron oxides. Most corrosion is slow, but it can weaken a structure for years before anyone notices."),
+        ("Rust needs water and oxygen",
+         "Rust forms when iron, water and oxygen meet. Dry iron stays bright for a long time, and so does iron kept free of oxygen. Water is the link, because it carries the charged particles that let the reaction run."),
+        ("A small battery",
+         "Corrosion works like a tiny battery. One spot on the metal becomes the anode, where metal atoms give up electrons and dissolve. Another spot becomes the cathode, where oxygen takes those electrons. The water between them acts as the electrolyte that carries the charge."),
+        ("Salt speeds it up",
+         "Salt water is a strong electrolyte, so the cell runs faster in it. That is why steel by the sea rusts more quickly than steel in a dry town. Road salt does the same to car bodies in winter."),
+        ("Sacrificial protection",
+         "Zinc is more eager to give up electrons than iron, so zinc can protect the iron. Galvanised steel has a zinc coating, and zinc blocks bolted to a ship's hull wear away first, so the steel stays intact."),
+        ("Passive layers",
+         "Stainless steel holds at least about 10.5 per cent chromium, which forms a very thin, tough oxide skin. Aluminium forms a similar oxide film. These passive layers repair themselves quickly when scratched, which keeps the metal from rusting."),
+    ],
+    "test": [
+        ("What is an anode in corrosion?",
+         [("a", "The spot where metal gives up electrons and dissolves"), ("b", "The spot where oxygen is taken up"), ("c", "A dry patch of air"), ("d", "A type of paint")],
+         "a"),
+        ("What must be present for iron to rust?",
+         [("a", "Water and oxygen"), ("b", "Sunlight alone"), ("c", "Dry air alone"), ("d", "A layer of glass")],
+         "a"),
+        ("Why does steel rust faster by the sea?",
+         [("a", "Sea air is warmer"), ("b", "The sea makes steel magnetic"), ("c", "Salt water is an electrolyte that speeds the cell"), ("d", "Steel is weaker near the sea")],
+         "c"),
+        ("Why is zinc used to protect steel?",
+         [("a", "It is harder than iron"), ("b", "It gives up electrons more readily than iron"), ("c", "It is not a metal at all"), ("d", "It stops oxygen in every case")],
+         "b"),
+        ("What gives stainless steel its resistance to rust?",
+         [("a", "A thin, tough oxide skin formed by chromium"), ("b", "A thick gold plating"), ("c", "A layer of salt"), ("d", "Pure carbon")],
+         "a"),
+    ],
+}
