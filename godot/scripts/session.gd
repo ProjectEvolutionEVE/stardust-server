@@ -39,6 +39,13 @@ func skill(career: String) -> float:
 	return float(c.get("skill_pct", 0.0)) / 100.0 if c.get("code") == career else 0.0
 
 
+## A Science uniform with its fifth bar in gold lets the miner pick which raw material to collect (Eric 10-26).
+func can_pick_material() -> bool:
+	var c: Dictionary = me.get("career", {}) if me.get("career") is Dictionary else {}
+	var bars: Array = c.get("bars", [])
+	return c.get("code") == "science" and bars.size() >= 5 and bars[4] is Dictionary and bars[4].get("medal") == "gold"
+
+
 func next_scene() -> String:
 	if me.get("needs_setup", true):
 		return "res://scenes/setup.tscn"
