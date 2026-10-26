@@ -200,6 +200,7 @@ The full record is in the `quavara-docs` repository:
     - **A longer-term craft contract:** cheaper per hour for players who fly a lot.
     - **Fuel from ice:** water ice from the debris is split (electrolysis, the "element separator") into hydrogen and oxygen. **Hydrogen is the fuel that runs the small mining craft**; oxygen is useful aboard. So ice has real value on the market.
     - The prices are not set yet (to tune in playtesting).
+    - **A fuel bar (Eric 10-25)** on the flight screen: it ticks down slowly while the craft is out (more slowly when parked), and **every return to the Starship tops it up** (fuel is included). If it runs dry out in space, **Inara has the craft towed back in, and the tow costs a pretty penny**: it keeps players honest about parking in space and never coming home.
 
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
