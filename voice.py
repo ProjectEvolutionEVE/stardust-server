@@ -16,7 +16,7 @@ from aiohttp import web
 # A player's language → the voice set that speaks it. Languages not listed get no voice (still Eric's to answer:
 # what players in languages ElevenLabs doesn't speak well get; CLAUDE.md, open question 2).
 VOICED = {"en": "en", "zh": "zh", "zh-TW": "zh", "de": "de", "pl": "pl", "es": "es", "fr": "fr", "ko": "ko",
-          "tr": "tr", "pt": "pt-BR", "ru": "ru", "ja": "ja"}
+          "tr": "tr", "pt": "pt-BR", "ru": "ru", "ja": "ja", "ar": "ar"}
 SETS = set(VOICED.values())
 # Every line ID there is: the recording script's English list (docs/inara-lines/en.json).
 LINE_IDS = set(json.loads((Path(__file__).parent / "docs" / "inara-lines" / "en.json").read_text()))

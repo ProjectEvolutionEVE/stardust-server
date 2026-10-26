@@ -8,7 +8,7 @@ Every one carries its own SERIAL:
 Run numbers only go up (one run at a time per design, under a row lock), and the database refuses a duplicate serial.
 Anyone can check a serial: what it is, which run, which copy, and when it was made. Never who owns it.
 A bought copy can't be resold (Eric 10-11): only the designer sells copies (may_sell)."""
-import json, secrets
+import json, math, secrets
 import store as ST
 
 ORIGINAL = "ORIGINAL"
@@ -58,13 +58,16 @@ async def issue_original(conn, pid, blueprint_code):
     return await _issue(conn, blueprint_code, "original", pid, 1, await _cabinet(conn, pid))
 
 
-async def print_price(conn, blueprint_code, qty):
-    """What a run costs (Eric 10-11): the one-time setup fee on a design's first run, plus the price of each copy."""
+async def print_price(conn, blueprint_code, qty, pid=None):
+    """What a run costs (Eric 10-11): the one-time setup fee on a design's first run, plus the price of each copy.
+    An Engineering uniform prints cheaper (Eric 10-26): each price / (1 + skill), rounded up to whole credits."""
+    import careers as CAR
     s = await ST.settings(conn)
     first = not await conn.fetchval("SELECT 1 FROM production_runs WHERE blueprint_code=$1 AND kind='print'", blueprint_code)
-    setup = int(s["blueprint_setup_fee"]) if first else 0
-    return {"setup_fee": setup, "per_copy": int(s["blueprint_copy_cost"]), "copies": qty,
-            "total": setup + int(s["blueprint_copy_cost"]) * qty}
+    k = 1 + (await CAR.skill(conn, pid, "engineering") if pid is not None else 0.0)
+    setup = math.ceil(int(s["blueprint_setup_fee"]) / k) if first else 0
+    per = math.ceil(int(s["blueprint_copy_cost"]) / k)
+    return {"setup_fee": setup, "per_copy": per, "copies": qty, "total": setup + per * qty}
 
 
 async def print_run(conn, pid, blueprint_code, qty):
@@ -79,7 +82,7 @@ async def print_run(conn, pid, blueprint_code, qty):
             raise ST.Refused("Only the holder of a design's original can print copies of it.")
         await conn.fetchval("SELECT model_code FROM item_types WHERE code=$1 FOR UPDATE", blueprint_code)  # one run at a time
         loc = await _cabinet(conn, pid, qty * float(s["blueprint_copy_m3"]))
-        price = await print_price(conn, blueprint_code, qty)
+        price = await print_price(conn, blueprint_code, qty, pid)
         acct = await ST.account_of(conn, pid)
         if await conn.fetchval("SELECT credits FROM accounts WHERE id=$1", acct) < price["total"]:
             raise ST.Refused(f"Printing {qty} copies costs {price['total']:,} credits, and you don't have enough.")

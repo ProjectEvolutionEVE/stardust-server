@@ -15,7 +15,8 @@ library. Every line comes from the Story Bible's canon (docs/STORY-BIBLE.md); no
 | 7 | A small craft in the docking bay, ready to launch | "I'm Inara. I'll be with you out there. Let's get you trained, Trainee." |
 
 **Needed:**
-- **Pictures:** 7 illustrations in the game's look (Eric's art, or images Eric approves).
+- **Pictures:** screenshots from live gameplay once the build is complete (Eric 10-26). Slides 3 and 4 (the New Earth)
+  have no scene in the game, so they need art or approved images.
 - **Recordings:** 7 lines in Inara's voice for each voiced language, made from the approved script with ElevenLabs. This
   costs ElevenLabs credits, and Eric approves before recording.
 - **Arabic:** a translation of the 7 lines for the on-screen text, plus Arabic recordings if Eric approves an Arabic
