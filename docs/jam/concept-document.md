@@ -40,7 +40,8 @@ rest, because your body has limits.
 
 - **Objectives:** build a career and a life: rise through a career's five bars (Pilot to Captain, Trader to CEO, and
   more), afford a better ship or a production plant, reach long-term goals.
-- **Challenges and decisions:** which ring and field to work; what fits your hold; sell now or wait for a better price;
+- **The biggest decision comes first: your career.** What you choose to study decides your path, and your attributes grow as you learn more and pass more of the library's tests.
+- **Everyday challenges and decisions:** which ring and field to work; what fits your hold; sell now or wait for a better price;
   save, lock credits in a term deposit, or borrow; spend on food that helps you work or on treats that make you crash.
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise);
   each bar takes more study than the last, and gives a smaller, still valuable, skill increase.
