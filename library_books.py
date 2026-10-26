@@ -391,3 +391,18 @@ import importlib as _il, pkgutil as _pk, books as _books
 for _m in _pk.iter_modules(_books.__path__):
     _mod = _il.import_module(f"books.{_m.name}")
     BOOKS[_mod.CODE] = _mod.BOOK
+
+# The career books (Eric 10-24, rule 32): books_drafts/<career>_bar<N>/<code>.py, the same CODE/BOOK shape. A book's
+# career is its folder's name and its bar is the folder's N (careers.py builds the ladders from these tags).
+import importlib.util as _iu, pathlib as _pl, re as _re
+for _d in sorted((_pl.Path(__file__).parent / "books_drafts").glob("*_bar*")):
+    _mt = _re.fullmatch(r"([a-z]+)_bar(\d+)", _d.name)
+    if not (_mt and _d.is_dir()):
+        continue
+    for _f in sorted(_d.glob("*.py")):
+        _sp = _iu.spec_from_file_location(f"books_drafts.{_d.name}.{_f.stem}", _f)
+        _mod = _iu.module_from_spec(_sp)
+        _sp.loader.exec_module(_mod)
+        if _mod.CODE in BOOKS:
+            raise RuntimeError(f"two books share the code {_mod.CODE}")
+        BOOKS[_mod.CODE] = dict(_mod.BOOK, career=_mt[1], bar=int(_mt[2]))
