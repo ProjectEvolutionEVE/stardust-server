@@ -773,3 +773,12 @@ INSERT INTO settings(key, value, note) VALUES
   ('craft_lease_weeks', 4,   'The lease is taken this many weeks at a time and renews automatically (Eric 10-25: a month)')
 ON CONFLICT (key) DO NOTHING;
 
+
+-- Career ladders (Eric 10-24, rule 32; careers.py): the career uniform the player wears (NULL = the Trainee's plain one),
+-- and the skill gains per bar as live settings.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS uniform TEXT;
+INSERT INTO settings(key, value, note) VALUES
+  ('skill_start_gain',     10,  'Career skill gain of a silver bar 1, in % (rule 32; first setting to tune)'),
+  ('skill_step_factor',    0.6, 'Each bar up gains this times the bar before it (rule 32)'),
+  ('skill_gold_bonus_pct', 10,  'A gold bar gains this % more than its silver (rule 32)')
+ON CONFLICT (key) DO NOTHING;

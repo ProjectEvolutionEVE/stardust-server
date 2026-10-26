@@ -33,6 +33,8 @@ The blueprint form (rule 23; blueprints.py):
 The Starship Library (rules 22, 24; library.py):
   GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
   GET  /api/dfg/library/archive/{code}?page=N  an Archives of Earth book, paged (archives.py)
+Careers (rule 32; careers.py): GET /api/dfg/careers  every career's bars (gold/silver), title and skill, and the worn uniform
+  POST /api/dfg/closet/uniform {career: code | null}  wear a career's uniform (quarters only; a career with a pass)
   GET  /api/dfg/library/test/{code} the questions (no answers) · POST /library/test {book, answers} · GET /library/certificates
 Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
@@ -64,6 +66,7 @@ import blueprints as BP
 import serials as SER
 import auctions as AU
 import library as LIB
+import careers as CAR
 import archives as AR
 import voice as VO
 import lending as LN
@@ -132,7 +135,8 @@ async def _me(conn, pid):
     p = await conn.fetchrow("""SELECT account_no, first_name, last_name, language, track, rank_step, stamina, energy, focus,
                                       body_at, asleep, rest_place, parked FROM players WHERE id=$1""", pid)
     bars = BODY.current(p)
-    rank = RANKS[p["track"]][p["rank_step"] - 1]
+    career = await CAR.worn(conn, pid)       # the worn uniform's career (rule 32): its title is the one they're addressed by
+    rank = career["title"]
     named = bool(p["first_name"] and p["last_name"])
     return {"account_no": p["account_no"], "rank": rank, "first_name": p["first_name"], "last_name": p["last_name"], "language": p["language"],
             "voice_set": VO.voice_set(p["language"]),
@@ -141,7 +145,8 @@ async def _me(conn, pid):
             "location": "Cockpit" if p["parked"] else "Private Quarters", "in_bed": p["rest_place"] == "bed",
             "asleep": p["asleep"], "rest_place": p["rest_place"], "parked": json.loads(p["parked"]) if p["parked"] else None,
             "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars),
-            "skills": await LIB.skills(conn, pid)}     # fly / mine / sell, each earned in the library (Eric 10-23)
+            "skills": await LIB.skills(conn, pid),
+            "uniform": career["code"], "career": career}     # fly / mine / sell, each earned in the library (Eric 10-23)
 
 
 async def signup_options(request):
@@ -717,6 +722,21 @@ async def lib_certificates(request):
         return _json({"certificates": await LIB.certificates(conn, pid)})
 
 
+# ── CAREERS AND UNIFORMS (rule 32; careers.py) ──
+async def careers_all(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await CAR.all_careers(conn, pid))
+
+
+async def closet_uniform(request):
+    """The Closet: put on one career's uniform ({career: code}, or null for the Trainee's plain one). Quarters only."""
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await CAR.wear(conn, pid, b.get("career")))
+
+
 def make_app():
     app = web.Application(middlewares=[cors])
     app.router.add_post("/api/dfg/session", start_session)
@@ -742,6 +762,8 @@ def make_app():
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
     app.router.add_post("/api/dfg/blueprints/withdraw", bp_withdraw)
     app.router.add_post("/api/dfg/blueprints/print", bp_print)
+    app.router.add_get("/api/dfg/careers", careers_all)
+    app.router.add_post("/api/dfg/closet/uniform", closet_uniform)
     app.router.add_get("/api/dfg/library", lib_shelves)
     app.router.add_get("/api/dfg/library/book/{code}", lib_book)
     app.router.add_get("/api/dfg/library/archive/{code}", lib_archive)
