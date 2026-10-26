@@ -721,8 +721,10 @@ async def main():
     l = await ladder("flight")
     check("all bar-2 books perfect: bar 2 GOLD, Senior Pilot, skill 11 + 6.6",
           l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
-    check("bar 3 has fewer books written than its 65 threshold: it can't be earned yet, and says so",
-          not l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Not open yet" in l["bars"][2]["note"])
+    check("bar 3's 45 books are written: it is open, not yet earned, and lists what's left",
+          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Pass every book" in l["bars"][2]["note"])
+    check("bar 4 has fewer books written than its 185 threshold: it can't be earned yet, and says so",
+          not l["bars"][3]["can_earn"] and not l["bars"][3]["earned"] and "Not open yet" in l["bars"][3]["note"])
     nv = CAR.books_by_bar("navigation")
     for b in nv[2]:
         await take(b)
