@@ -786,7 +786,7 @@ func _scan_return(f: Dictionary, me: Array, fwd: Vector3) -> float:
 		return 0.0
 	var sv := Solar.vec(Solar.sub(f.center, me))
 	var d := maxf(0.0, sv.length() - f.rad)
-	var R: float = SCAN_RANGE[f.size]
+	var R: float = SCAN_RANGE[f.size] * (1.0 + Session.skill("flight"))   # a Flight uniform hears fields from farther (Eric 10-26)
 	if d > R:
 		return 0.0
 	var ang := sv.angle_to(fwd)
