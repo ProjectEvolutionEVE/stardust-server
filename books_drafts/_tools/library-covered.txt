@@ -1,0 +1,18 @@
+appraisal: Appraisal
+assaying: Assaying
+bookkeeping: Bookkeeping
+botany: Botany & Hydroponics
+ceramics: Ceramics & Glassmaking
+commodities: Commodities
+contracts: Contracts & Services
+drafting: Engineering & Drafting
+electronics: Electronics
+fabrication: Fabrication
+health: Health & Fitness
+life_support: Life Support
+logistics: Logistics & Hauling
+maintenance: Ship Maintenance & Repair
+mining: Mining
+power: Power Systems
+refining: Refining & Chemistry
+(library_books.py) Prospecting & Geology; Trading & Markets; Pilot Basic Training Handbook; Metallurgy; The Blueprint Designer's Handbook; The Raw Materials Catalogue
