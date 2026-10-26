@@ -14,7 +14,7 @@ BOOK = {
         ('Bronze: copper and tin',
          "Bronze is mainly copper, with tin added, often around a tenth of the mix. It is harder than copper, and it casts "
          "well into detailed shapes. That is why people have used it for bells, statues and bearings for thousands of years. "
-         "Bronze is about 8,800 kg per cubic metre, a little heavier than copper's 8,960 is not quite true, so treat it as close to that of copper."),
+         "Bronze is about 8,800 kg per cubic metre, a little lighter than pure copper at 8,960."),
         ('Aluminium alloys',
          "Pure aluminium is soft, so it is mixed with small amounts of copper, magnesium, zinc or silicon to make alloys strong "
          "enough for frames and skins. Aluminium is 2,700 kg per cubic metre, about a third as heavy as steel for the same "
