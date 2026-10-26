@@ -1,0 +1,37 @@
+"""Open Pit or Underground (bar 3, Metallurgist, part C): how a mine is laid out, and how the choice depends on depth, shape and cost."""
+CODE = "mining3c_open_or_underground"
+BOOK = {
+    "title": "Open Pit or Underground",
+    "subtitle": "How a mine is laid out, and what decides between a pit and a shaft",
+    "chapters": [
+        ("Two basic ways in",
+         "Ore close to the surface is often dug from an open pit, a large stepped hole open to the sky. Deeper ore is reached through shafts and ramps, which makes an underground mine. Both are real, and both can pay."),
+        ("The pit and its steps",
+         "An open pit is cut in steps called benches. The walls are cut at an angle that keeps them from sliding, and that angle depends on the rock. Roads spiral down the walls so that trucks can carry ore and waste out."),
+        ("The stripping ratio",
+         "Before the ore can be reached, the waste rock above and around it must be moved. The stripping ratio is the tonnes of waste moved for each tonne of ore. A high ratio adds cost, so the ore must be richer to pay."),
+        ("Underground by design",
+         "An underground mine moves less waste to reach the ore, but it needs ventilation, support and hoists. It is often chosen for rich ore that lies deep or in a narrow vein. The digging cost per tonne is usually higher, so the grade must justify it."),
+        ("Choosing between them",
+         "Engineers draw both plans and price each one. The choice depends on depth, shape, rock strength and the grade at each level. Cost is one factor. Safety and the local rules are always another."),
+        ("Money in the plan",
+         "A cheap start is not always the cheapest year. An open pit may need a large sum to move waste before any ore appears, so that money must be saved or borrowed early. Good planners show the cash for each year, not only the total."),
+    ],
+    "test": [
+        ("What is a stripping ratio?",
+         [("a", "The number of drill holes"), ("b", "The tonnes of waste moved for each tonne of ore"), ("c", "The grade of the ore"), ("d", "The colour of the pit wall")],
+         "b"),
+        ("Which mine type is usually chosen for ore close to the surface?",
+         [("a", "An underground mine"), ("b", "A deep shaft"), ("c", "An open pit"), ("d", "A sealed vault")],
+         "c"),
+        ("Why must a high stripping ratio mean richer ore?",
+         [("a", "Moving waste is free"), ("b", "Moving waste adds cost, so the ore needs more metal to pay"), ("c", "Richer ore is always cheaper to dig"), ("d", "Waste rock contains gold")],
+         "b"),
+        ("What is a bench in an open pit?",
+         [("a", "A seat for workers"), ("b", "A type of drill bit"), ("c", "A pump house"), ("d", "A step cut into the pit wall")],
+         "d"),
+        ("What does an underground mine need that an open pit needs less?",
+         [("a", "Ventilation, support and hoists"), ("b", "Roads for trucks"), ("c", "Waste dumps"), ("d", "Daylight")],
+         "a"),
+    ],
+}

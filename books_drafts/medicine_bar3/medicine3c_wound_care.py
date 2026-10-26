@@ -1,0 +1,37 @@
+"""Cleaning and Dressing a Wound: clean water, clean hands, a clean cover, and knowing when a wound needs more help."""
+CODE = "medicine3c_wound_care"
+BOOK = {
+    "title": "Cleaning and Dressing a Wound",
+    "subtitle": "Stop the bleeding, clean it gently, cover it, and know when to get more help",
+    "chapters": [
+        ("Stop the bleeding first",
+         "Press firmly on the wound with a clean cloth or dressing, and keep pressing. If the cloth soaks through, add more layers on top rather than lifting it to look. Keep the wound raised if you can."),
+        ("Clean the wound",
+         "Rinse the wound with clean running water to wash out dirt. Wash the skin around the wound too, moving outwards, away from the cut, so that dirt is not pushed in. Wash your own hands first."),
+        ("Do not scrub, do not pick",
+         "Scrubbing damages the fragile new tissue and slows healing. Remove only loose dirt, gently. Anything deeply stuck in a wound should be left for a trained carer to remove."),
+        ("Cover it",
+         "A clean, non-fluffy dressing keeps the wound protected from germs and helps it stay moist enough to heal. Change the dressing if it becomes wet or dirty. Check that your tetanus vaccination is up to date, because dirty wounds can carry the germ that causes tetanus."),
+        ("Watch the wound",
+         "Look at the wound each day for spreading redness, heat, swelling, pus, a bad smell or new pain. Write down the date, the size and how it looks, so changes are easy to spot. Early signs are much easier to treat."),
+        ("When to get more help",
+         "Get a trained carer to look at a deep wound, a wound with an object still in it, a bite, a wound that will not stop bleeding, or a wound on the face or over a joint. Do not wait for a problem to become serious before asking."),
+    ],
+    "test": [
+        ("What should you do first with a bleeding wound?",
+         [("a", "Wash it with soap"), ("b", "Look for an object still in it"), ("c", "Press firmly with a clean cloth"), ("d", "Remove the dressing to check it")],
+         "c"),
+        ("Why should you wash the skin around a wound outwards, away from it?",
+         [("a", "So dirt is not pushed into the wound"), ("b", "So the bleeding slows"), ("c", "So the skin grows faster"), ("d", "So the dressing sticks better")],
+         "a"),
+        ("Why should you not scrub a wound?",
+         [("a", "It makes the bleeding stop less quickly"), ("b", "It is the fastest way to clean a wound"), ("c", "It hardens the scar"), ("d", "It can damage the fragile new tissue")],
+         "d"),
+        ("Which wound should a trained carer look at?",
+         [("a", "A small graze that has stopped bleeding"), ("b", "A deep wound with an object still stuck in it"), ("c", "A wound that is clean and dry"), ("d", "A scrape that you have already washed")],
+         "b"),
+        ("What is a good reason to check a wound each day?",
+         [("a", "To see whether it is getting prettier"), ("b", "To measure the scar in advance"), ("c", "To spot spreading redness, pus or new pain early"), ("d", "To keep the dressing dry")],
+         "c"),
+    ],
+}

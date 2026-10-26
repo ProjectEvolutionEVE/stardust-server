@@ -1,0 +1,37 @@
+"""Tyres, Bits and Liners (bar 3, Metallurgist, part C): the wear parts of a mine, what they cost, and why cost per tonne is the fair way to compare them."""
+CODE = "mining3c_wear_parts"
+BOOK = {
+    "title": "Tyres, Bits and Liners",
+    "subtitle": "The wear parts of a mine, and what they really cost per tonne",
+    "chapters": [
+        ("Parts that are used up",
+         "Some parts of a mine are meant to wear out. Drill bits dull, mill liners thin, crusher jaws grind down, and haul-truck tyres wear with every load. Engineers call these wear parts, and they are a steady cost."),
+        ("Cost per tonne",
+         "A mine measures wear by what each part costs for every tonne it moves or breaks. A cheaper part that wears out twice as fast can cost more in the end. Comparing cost per tonne is the fairest way to choose."),
+        ("Hours and replacement",
+         "Wear parts are often changed on a schedule, by hours run or tonnes handled. A good plan replaces a part before it fails, because one failed part can stop the whole line."),
+        ("Harder is not always better",
+         "Harder steel resists wear, but it can crack under a sudden blow. Engineers choose a material that balances hardness and toughness for each job, so the part lasts without breaking."),
+        ("Spares on the shelf",
+         "Keeping a few spare parts stops a long wait when something fails. But stock ties up money. Planners balance how many spares to keep against how often each part is likely to fail."),
+        ("The yearly tally",
+         "Adding up the wear parts over a year gives the true cost of moving each tonne. That number belongs in the budget, next to fuel, power and wages."),
+    ],
+    "test": [
+        ("What is a wear part?",
+         [("a", "A part meant to be worn down and replaced"), ("b", "A part that never touches the ore"), ("c", "A type of gold"), ("d", "An office chair")],
+         "a"),
+        ("Why compare parts by cost per tonne?",
+         [("a", "Cheaper parts always last longest"), ("b", "It is the fairest way to compare a part's true cost"), ("c", "Tonnes are the only unit used"), ("d", "It hides the wear")],
+         "b"),
+        ("Why is harder steel not always better for a wear part?",
+         [("a", "It is too heavy to move"), ("b", "It rusts in dry air"), ("c", "It can crack under a sudden blow"), ("d", "It melts in the sun")],
+         "c"),
+        ("Why do planners keep some spare parts?",
+         [("a", "To make the line noisier"), ("b", "To sell them at a profit"), ("c", "To replace the ore"), ("d", "To avoid long waits when a part fails")],
+         "d"),
+        ("Where does the yearly wear-part tally belong?",
+         [("a", "In the budget, next to fuel, power and wages"), ("b", "Nowhere"), ("c", "Only in the ore report"), ("d", "In the weather log")],
+         "a"),
+    ],
+}

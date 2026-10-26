@@ -1,0 +1,37 @@
+"""Who Owns Ore in Space? (bar 3, Metallurgist, part C): the 1967 Outer Space Treaty, national space-resource laws, and why a team checks its plan with a lawyer before it moves any rock."""
+CODE = "mining3c_space_law"
+BOOK = {
+    "title": "Who Owns Ore in Space?",
+    "subtitle": "Treaties, national laws, and why the rules are still being written",
+    "chapters": [
+        ("A question for the treaties",
+         "The 1967 Outer Space Treaty, signed by many countries including the United States and the Soviet Union, says that outer space, including the Moon and other bodies, cannot be claimed by any nation. Taking a resource from a body is a separate question from claiming the body itself."),
+        ("Taking is not the same as claiming",
+         "Many lawyers say that taking a resource is different from owning the ground beneath it. Some countries have passed laws that let their own citizens and companies keep what they extract in space. Other countries have not decided."),
+        ("Laws differ by country",
+         "A company must follow the law of the country that licenses it, and it may also face the rules of other countries. The rules are still being written. A careful team checks every plan with a lawyer before it moves a single rock."),
+        ("Avoiding harm to others",
+         "The treaty also asks states to avoid harmful interference with the activities of others in space. A mining plan must consider other missions and the shared space they use. Good planning keeps records and reports what it finds."),
+        ("No single rulebook",
+         "No one agency enforces mining rules in space today. The rules come from treaties, national laws and agreements between companies. With no single rulebook, every project carries legal risk."),
+        ("Money and trust",
+         "A plan that depends on a law nobody has tested is a risky plan. Investors want clear rights before they lend. Clear rules can make a project cheaper to fund, because the risk is easier to judge."),
+    ],
+    "test": [
+        ("What does the 1967 Outer Space Treaty say about the Moon?",
+         [("a", "Any nation may buy it"), ("b", "It is not subject to national appropriation by claim of sovereignty"), ("c", "It belongs to the first company to land on it"), ("d", "It must be given to the first explorer")],
+         "b"),
+        ("Does taking a resource from a space body automatically mean owning the ground?",
+         [("a", "Yes, always"), ("b", "No, many lawyers see the two as different questions"), ("c", "Only with a shovel"), ("d", "Only with a bank loan")],
+         "b"),
+        ("Why should a team check its plan with a lawyer?",
+         [("a", "Lawyers dig the ore"), ("b", "Lawyers pay for the fuel"), ("c", "Laws differ by country and are still being written"), ("d", "Lawyers set the price of ore")],
+         "c"),
+        ("What does the treaty ask states to avoid?",
+         [("a", "Harmful interference with the activities of others"), ("b", "Tourism"), ("c", "Radio signals"), ("d", "Naming stars")],
+         "a"),
+        ("Which statement about space-mining rules today is true?",
+         [("a", "One world agency enforces them all"), ("b", "The rules were fixed in 1900"), ("c", "There are no rules at all"), ("d", "Rules come from treaties, national laws and agreements, with no single rulebook")],
+         "d"),
+    ],
+}

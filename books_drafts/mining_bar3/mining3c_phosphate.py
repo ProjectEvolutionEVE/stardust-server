@@ -1,0 +1,37 @@
+"""Phosphate: Food From Rock (bar 3, Metallurgist, part C): apatite, the phosphate ore that feeds plants, and why its phosphorus must be won and treated before it helps a crop."""
+CODE = "mining3c_phosphate"
+BOOK = {
+    "title": "Phosphate: Food From Rock",
+    "subtitle": "Apatite, the phosphate ore that feeds plants",
+    "chapters": [
+        ("A mineral for growing food",
+         "Apatite is a group of phosphate minerals, and it is the main source of phosphorus for fertiliser. In the game, apatite is the ore that gives phosphorus for fertiliser in the greenhouse."),
+        ("The formula",
+         "The apatite in our fields is fluorapatite, written Ca5(PO4)3F. It holds calcium, phosphorus, oxygen and a little fluorine. About one part in five of its weight is phosphorus, so a large piece gives a useful share, but not most of its weight."),
+        ("Why plants need phosphorus",
+         "Phosphorus is part of the molecules that store energy in a cell, and part of the code that carries inherited information. Plants take it up from the soil. Farms replace what the crops take away with fertiliser."),
+        ("Making it usable",
+         "Phosphate rock is dug from open pits or mines, then ground and treated with acid. The acid turns the phosphate into a form that plants can take up. Raw rock alone does little for a crop."),
+        ("Deposits in few places",
+         "Phosphate deposits are not spread evenly around the world. Supply can be concentrated in a few regions, so prices can jump. Good farming uses phosphorus carefully and recycles what it can."),
+        ("Money in fertiliser",
+         "Fertiliser is one of the largest costs for a farm. Growers compare its price with the harvest they expect. A careful grower spends where the soil is short of phosphorus and saves where it is rich."),
+    ],
+    "test": [
+        ("What is apatite mainly used for?",
+         [("a", "Making glass"), ("b", "Being the main source of phosphorus for fertiliser"), ("c", "Fuel for trucks"), ("d", "Making magnets")],
+         "b"),
+        ("Why do plants need phosphorus?",
+         [("a", "It is part of the molecules that store energy and the code inside cells"), ("b", "It makes leaves blue"), ("c", "It makes soil hot"), ("d", "It is a metal they store")],
+         "a"),
+        ("Why must phosphate rock be treated before it helps a crop?",
+         [("a", "It must be frozen"), ("b", "It must be soaked in oil"), ("c", "It must be ground and treated with acid to become usable"), ("d", "It must be melted into glass")],
+         "c"),
+        ("Roughly what share of the weight of fluorapatite is phosphorus?",
+         [("a", "About one half"), ("b", "About one part in five"), ("c", "About one part in a hundred"), ("d", "All of it")],
+         "b"),
+        ("What should a grower compare when deciding how much fertiliser to buy?",
+         [("a", "The paint colour of the barn"), ("b", "The number of drill holes"), ("c", "The weather forecast for Mars"), ("d", "The price against the harvest expected")],
+         "d"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Ground That Moves (bar 3, Metallurgist, part C): rock falls, wall slides and how mines watch the ground so that people are kept out of harm's way."""
+CODE = "mining3c_ground_control"
+BOOK = {
+    "title": "Ground That Moves",
+    "subtitle": "Rock falls, wall slides, and how mines watch the ground",
+    "chapters": [
+        ("Rock under strain",
+         "Deep rock carries the weight of everything above it. Digging removes support, so the rock around an opening settles and shifts. Ground control is the work of keeping that movement safe."),
+        ("Walls that slide",
+         "A pit wall can slide when water gets into its cracks, or when the angle is too steep. A slide can be large and fast. That is why walls are cut at safe angles and watched with sensors."),
+        ("Support underground",
+         "Underground, crews use rock bolts, mesh, sprayed concrete and steel frames to hold the rock in place. Each tunnel is designed for its depth and for how strong its rock is."),
+        ("Watching for signs",
+         "Cracks that grow, new creaks and small falls of loose rock are warning signs. Many mines use survey points and instruments that show movement long before it becomes a fall."),
+        ("Keep people clear",
+         "The safest rule is to keep people out from under ground that is not supported. Barriers, exclusion zones and clear procedures stop anyone from working where a fall can reach them."),
+        ("The cost of a fall",
+         "A fall can stop a mine for weeks and can cost lives. Support, monitoring and training cost money every year, and that is far less than the cost of an accident. A safe mine pays for care before it needs it."),
+    ],
+    "test": [
+        ("Which is a common warning sign that ground is moving?",
+         [("a", "Bright sunshine"), ("b", "Cracks that grow and new creaks"), ("c", "A clean floor"), ("d", "Fresh paint")],
+         "b"),
+        ("What is shotcrete?",
+         [("a", "A kind of drill bit"), ("b", "A fuel for trucks"), ("c", "A type of metal"), ("d", "Sprayed concrete used to hold rock")],
+         "d"),
+        ("Why are pit walls cut at safe angles?",
+         [("a", "To look neat from the top"), ("b", "To make the ore brighter"), ("c", "To stop them sliding"), ("d", "To save water")],
+         "c"),
+        ("What is the safest rule near ground that is not supported?",
+         [("a", "Keep people out from under it"), ("b", "Stand under it to watch"), ("c", "Dig faster"), ("d", "Work only at night")],
+         "a"),
+        ("Why do mines pay for ground monitoring every year?",
+         [("a", "It costs far less than an accident"), ("b", "It makes the rock grow back"), ("c", "It replaces the ore"), ("d", "It warms the tunnels")],
+         "a"),
+    ],
+}

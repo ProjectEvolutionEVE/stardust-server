@@ -1,0 +1,37 @@
+"""Triage: sorting people by how urgently they need care when there is more need than help."""
+CODE = "medicine3c_triage"
+BOOK = {
+    "title": "Triage: Who Is Seen First",
+    "subtitle": "Sorting people by how urgently they need care when help is limited",
+    "chapters": [
+        ("More need than help",
+         "Triage is the process of sorting people by how urgently they need care, when there are more people needing help than carers to give it. The word comes from the French for sorting. Good triage makes sure the most urgent cases are never left waiting."),
+        ("A quick first look",
+         "A triage carer makes a fast first check. Can the person walk and talk? Are they breathing? Is blood reaching the body well? Are they alert? These quick checks sort people in seconds, and they are repeated as needed."),
+        ("Colour tags",
+         "Many systems use colour tags. Red marks the most urgent cases, who need care now. Yellow marks serious cases who can wait a little. Green marks minor injuries. A fourth tag is used for people who cannot be helped with the care available."),
+        ("Reviewing as things change",
+         "A person's condition can change, so triage is repeated. A person tagged green who begins to feel worse, breathe harder or grow confused must be checked again and may move up a tag."),
+        ("Fair, quick and honest",
+         "Triage decides by need, not by who shouts loudest or who is best known. Each decision should be recorded, so that others can see how the order of care was chosen. A clear reason is the mark of fair triage."),
+        ("Triage on a small crew",
+         "Even one carer can use the same idea: check the most urgent person first, call for help early, and keep an eye on those who can wait. On a small crew, every person may be the one who sorts the others, so everyone should learn the basics."),
+    ],
+    "test": [
+        ("What is triage?",
+         [("a", "Storing spare supplies in order"), ("b", "Making a full diagnosis for one patient"), ("c", "Sorting people by how urgently they need care when help is limited"), ("d", "Sharing out a meal")],
+         "c"),
+        ("Which checks are part of a first triage look?",
+         [("a", "Whether the person can walk and talk, is breathing and is alert"), ("b", "Their favourite food"), ("c", "The colour of their clothes"), ("d", "How long they have worked on the ship")],
+         "a"),
+        ("Which colour tag marks the most urgent cases?",
+         [("a", "Green"), ("b", "Yellow"), ("c", "Black"), ("d", "Red")],
+         "d"),
+        ("Why is triage repeated?",
+         [("a", "Because the first result is always wrong"), ("b", "Because a person's condition can change"), ("c", "Because forms must be signed again"), ("d", "Because the tags wear out")],
+         "b"),
+        ("What should decide the order in which people are seen?",
+         [("a", "Who asks first"), ("b", "Who is best known to the carers"), ("c", "How urgently each person needs care"), ("d", "Who has the most friends in the crew")],
+         "c"),
+    ],
+}

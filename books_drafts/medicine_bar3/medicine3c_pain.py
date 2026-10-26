@@ -1,0 +1,37 @@
+"""Pain: a warning and a problem, why it happens, why it sometimes lasts, and how it is managed."""
+CODE = "medicine3c_pain"
+BOOK = {
+    "title": "Pain: A Warning and a Problem",
+    "subtitle": "Why pain happens, why it sometimes lasts, and how it is managed",
+    "chapters": [
+        ("Pain is a signal",
+         "Pain is the body's alarm. Special nerve endings, called nociceptors, sense damage or the threat of it, and send signals along the spinal cord to the brain. The pain you feel is the brain's response to those signals."),
+        ("Acute and chronic",
+         "Acute pain comes on after an injury or illness and fades as the body heals. Chronic pain lasts longer than normal healing would explain, often for three months or more, and can continue even after the first cause has gone."),
+        ("Pain is felt, not just measured",
+         "Two people with the same injury may feel different amounts of pain. Mood, stress, lack of sleep and past experience all change how loud the signal feels. Pain is real even when no damage can be seen."),
+        ("Looking after a painful body",
+         "For many kinds of pain, a short rest, gentle movement as it allows, and a heat or cold pack on the sore area help. Support the injured part and do not push through sharp pain. Keep the approach simple and sensible."),
+        ("Medicines, with care",
+         "Some pain is eased by medicines. A clinician chooses them for each person and explains how to use them safely. Medicines that dull pain can also hide a serious problem, so note what was taken and when."),
+        ("When pain needs a check",
+         "Get a clinician to check sudden, severe pain, pain with a fever, pain that wakes you at night, or pain that grows worse over several days. Keep a short note of where it hurts, how it feels and what makes it better or worse."),
+    ],
+    "test": [
+        ("What are nociceptors?",
+         [("a", "Bones"), ("b", "Blood vessels"), ("c", "Nerve endings that sense damage or the threat of it"), ("d", "Muscles")],
+         "c"),
+        ("What is the main difference between acute and chronic pain?",
+         [("a", "Acute pain is short and linked to an injury, while chronic pain lasts beyond normal healing"), ("b", "Acute pain is always louder"), ("c", "Chronic pain is never real"), ("d", "The two are exactly the same")],
+         "a"),
+        ("Why can two people feel different amounts of pain from the same injury?",
+         [("a", "Their bones are different lengths"), ("b", "Mood, stress, sleep and past experience change how the signal feels"), ("c", "One of them has no nerves"), ("d", "The injury is a different colour")],
+         "b"),
+        ("What is a good first step for a minor muscle strain?",
+         [("a", "Running a long distance at once"), ("b", "Hiding the pain"), ("c", "Ignoring it entirely"), ("d", "A short rest, gentle movement as it allows, and a heat or cold pack")],
+         "d"),
+        ("Why should you note what pain medicine was taken, and when?",
+         [("a", "To make the box look tidy"), ("b", "To win a prize for careful notes"), ("c", "So a clinician can see what was taken and not miss a serious problem"), ("d", "To prove you are brave")],
+         "c"),
+    ],
+}

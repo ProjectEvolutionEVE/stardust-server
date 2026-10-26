@@ -1,0 +1,37 @@
+"""Sleep Disorders: when sleep breaks down, from insomnia and breathing pauses to restless legs."""
+CODE = "medicine3c_sleep_disorders"
+BOOK = {
+    "title": "Sleep Disorders: When Sleep Breaks Down",
+    "subtitle": "Insomnia, breathing pauses in sleep and restless legs, and when to ask for help",
+    "chapters": [
+        ("More than a bad night",
+         "A bad night is common and usually passes. A sleep disorder is trouble sleeping that lasts for weeks or keeps coming back, and it leaves a person tired, slow or unwell during the day."),
+        ("Insomnia",
+         "Insomnia is trouble falling asleep, staying asleep or waking too early, even when there is time to rest. The first help is often a set of routine habits and a structured talking therapy, known as CBT for insomnia. Medicine is a choice for a clinician to make, not a first step taken alone."),
+        ("Sleep apnoea",
+         "In sleep apnoea, the airway narrows or closes again and again during the night, so breathing pauses many times. Common signs are loud snoring, gasping, and feeling very sleepy in the day. It needs a clinician's check, and treatments include a machine that holds the airway open."),
+        ("Restless legs",
+         "Restless legs syndrome causes a strong urge to move the legs, often with odd feelings in them. It tends to be worst in the evening or when resting. Moving the legs usually eases it, at least for a while."),
+        ("Shift work and changing clocks",
+         "Shift work and fast travel across time zones can upset the body clock, which is known as shift work disorder. Keep sleep times as regular as the work allows, use light and darkness on purpose, and plan rest around each shift."),
+        ("When to ask for help",
+         "Ask a clinician if sleep trouble lasts for weeks, if you snore loudly with pauses, or if you feel very sleepy while working or driving. A sleep diary, written over a couple of weeks, helps the clinician see the pattern."),
+    ],
+    "test": [
+        ("What does insomnia mean?",
+         [("a", "Sleeping too much each night"), ("b", "Dreaming every night"), ("c", "Sleeping only in the afternoon"), ("d", "Trouble falling or staying asleep when there is time to sleep")],
+         "d"),
+        ("Which is a common sign of sleep apnoea?",
+         [("a", "Clear and healthy skin"), ("b", "Loud snoring with breathing pauses"), ("c", "Warm hands at night"), ("d", "Reading quickly in bed")],
+         "b"),
+        ("What is restless legs syndrome?",
+         [("a", "An urge to move the legs, often at rest or in the evening"), ("b", "Legs that never finish growing"), ("c", "Numb feet from wearing tight shoes"), ("d", "Bone pain that comes and goes at night")],
+         "a"),
+        ("What is a common first step for insomnia?",
+         [("a", "A long nap at midday every day"), ("b", "Staying awake until exhaustion"), ("c", "Routine habits and structured talking therapy, known as CBT for insomnia"), ("d", "Strong drinks before bed")],
+         "c"),
+        ("Which is a good reason to ask a clinician about sleep?",
+         [("a", "You had one bad night last month"), ("b", "You enjoy a short nap"), ("c", "You slept well on holiday"), ("d", "You snore loudly and feel sleepy during the day for weeks")],
+         "d"),
+    ],
+}

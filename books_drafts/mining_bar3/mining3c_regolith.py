@@ -1,0 +1,37 @@
+"""Regolith: The Loose Skin of Airless Worlds (bar 3, Metallurgist, part C): the broken dust that covers the Moon and many asteroids, and why it behaves so differently from soil."""
+CODE = "mining3c_regolith"
+BOOK = {
+    "title": "Regolith",
+    "subtitle": "The loose layer of broken rock and dust on airless worlds",
+    "chapters": [
+        ("A layer of broken dust",
+         "On the Moon and on many asteroids, the surface is covered by a loose layer of broken rock and fine dust. Scientists call it regolith. Impacts broke its pieces apart over billions of years."),
+        ("No air, no rain",
+         "On Earth, wind, water and living things break rock down into soil. Airless worlds have none of these. On the Moon, the regolith is churned mainly by tiny impacts and shaped by particles streaming from the Sun."),
+        ("Space weathering",
+         "Solar wind and tiny impacts change the very thin outer skin of each grain. This is called space weathering. Over time it darkens and reddens the surface, and telescopes can read those changes when they study an asteroid."),
+        ("Digging loose ground",
+         "Loose regolith is easy to dig but hard to hold in place. Fine dust hangs in the vacuum and clings to everything it touches. Machines need good seals, and the dust can wear away moving parts."),
+        ("The Apollo samples",
+         "Apollo astronauts brought home regolith from the Moon. Those samples taught scientists how the layer forms. Some held tiny glass beads and fragments of rock that were melted by impacts."),
+        ("Money in a dusty mine",
+         "Dust costs money. It wears parts, blocks seals and can damage instruments. A plan that budgets for cleaning and for replacing seals costs less over the years than one that is caught short."),
+    ],
+    "test": [
+        ("What is regolith?",
+         [("a", "A solid layer of bedrock"), ("b", "A loose layer of broken rock and dust on a surface"), ("c", "A type of rocket fuel"), ("d", "Liquid water under ice")],
+         "b"),
+        ("What mainly shapes regolith on the Moon?",
+         [("a", "Rain and wind"), ("b", "Plant roots"), ("c", "Ocean waves"), ("d", "Tiny impacts and particles from the Sun")],
+         "d"),
+        ("What is space weathering?",
+         [("a", "Changes made by solar wind and tiny impacts that darken a surface"), ("b", "Storms on the surface"), ("c", "A paint for spacecraft"), ("d", "The cooling of a planet")],
+         "a"),
+        ("What did the Apollo astronauts bring home?",
+         [("a", "Living plants"), ("b", "A new rocket"), ("c", "Regolith samples"), ("d", "Liquid water")],
+         "c"),
+        ("Why does fine dust cause trouble for machines?",
+         [("a", "It makes them lighter"), ("b", "It can wear moving parts and block seals"), ("c", "It cools the engines"), ("d", "It conducts electricity")],
+         "b"),
+    ],
+}

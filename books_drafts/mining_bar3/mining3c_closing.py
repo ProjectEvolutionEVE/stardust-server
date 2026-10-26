@@ -1,0 +1,37 @@
+"""Closing and Restoring a Site (bar 3, Metallurgist, part C): how a mine is closed safely, restored where possible, and paid for by money set aside early."""
+CODE = "mining3c_closing"
+BOOK = {
+    "title": "Closing and Restoring a Site",
+    "subtitle": "How a mine ends safely, and who pays for the land afterwards",
+    "chapters": [
+        ("A mine has an end",
+         "Every mine runs out of ore one day. Before it closes, the site must be made safe, cleaned up and, where possible, restored. This work is called closure and rehabilitation."),
+        ("What closure involves",
+         "Crews remove buildings and machines, make the pit walls stable, cover waste with soil and plant grass or trees, and seal the shafts. They also treat any water that still flows from the site."),
+        ("Money set aside early",
+         "Many governments require mines to set money aside for closure long before the mine ends. This is often called a closure bond or financial assurance. The money is kept separate, so it is there even if the company fails."),
+        ("Why plan from day one",
+         "Planning closure from the start lets a mine save soil, sort its waste and build stable land shapes as it goes. Work done early is usually cheaper and does less harm than a rush at the end."),
+        ("Land after the mine",
+         "A closed site can be used again for farming, forest, wildlife or even a lake. The best future use is agreed with local people before the mine starts, not after it closes."),
+        ("Saving for the end",
+         "Setting aside a little each year is a simple way to pay for a far-off cost. The same habit helps any person saving for a later need, such as a home or a retirement."),
+    ],
+    "test": [
+        ("What is closure in mining?",
+         [("a", "Opening a new shaft"), ("b", "The safe ending and restoring of a mine site"), ("c", "A type of loan"), ("d", "Selling the ore")],
+         "b"),
+        ("What is a closure bond?",
+         [("a", "Money set aside early so that closure is paid for"), ("b", "A medal for miners"), ("c", "A type of drill"), ("d", "A tax on ore")],
+         "a"),
+        ("Why plan closure from day one?",
+         [("a", "Closure is never needed"), ("b", "Land gets worse on purpose"), ("c", "Crews work only at night"), ("d", "Work done early is cheaper and does less harm")],
+         "d"),
+        ("Which is a possible end use for a closed mine site?",
+         [("a", "Dumping more waste"), ("b", "Leaving the pit walls unstable"), ("c", "Farming, forest or wildlife"), ("d", "A fuel store with no care")],
+         "c"),
+        ("Why keep closure money in a protected account?",
+         [("a", "So it is there even if the company fails"), ("b", "So it can buy new drills"), ("c", "So it is spent on the ore"), ("d", "So the pit can be made deeper")],
+         "a"),
+    ],
+}

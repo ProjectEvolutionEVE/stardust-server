@@ -1,0 +1,37 @@
+"""Air Underground (bar 3, Metallurgist, part C): ventilation, gases and dust in a mine, and how planned air keeps workers healthy."""
+CODE = "mining3c_air_underground"
+BOOK = {
+    "title": "Air Underground",
+    "subtitle": "Ventilation, gases and dust, and keeping the air safe to breathe",
+    "chapters": [
+        ("Fresh air is not automatic",
+         "Underground, air does not refresh itself. Engines, blasting and breathing all use up oxygen and add gases and dust. A mine moves fresh air in and foul air out through a planned ventilation system."),
+        ("Fans and airways",
+         "Fans push or pull air along set routes called airways. Doors and barriers guide the air to where people are working. A ventilation plan is drawn like a map of the mine's air."),
+        ("Diesel and carbon monoxide",
+         "Diesel engines are useful underground, but they give off carbon monoxide and fine particles. Carbon monoxide has no colour and no smell, so mines measure it and cut it with filters and fresh air."),
+        ("Dust that reaches the lungs",
+         "Fine dust from drilling and crushing can carry crystalline silica. Breathing it causes silicosis, a serious lung disease. Water sprays, sealed cabs and masks lower the risk. Dust that a person breathes is far more harmful than dust on the floor."),
+        ("Sensors and alarms",
+         "Mines use gas detectors that sound an alarm before levels become dangerous. Workers can wear personal monitors too. An alarm only helps when everyone knows what to do as soon as it sounds."),
+        ("The money in clean air",
+         "Fans and filters use power, and that costs money every year. Clean air also means fewer sick days and fewer claims. Planners compare the power bill with the cost of illness, and the clean air usually wins."),
+    ],
+    "test": [
+        ("Why do underground mines need planned ventilation?",
+         [("a", "Air refreshes itself"), ("b", "Engines and blasting use oxygen and add gases and dust"), ("c", "Ore needs air to grow"), ("d", "Air cools the Sun")],
+         "b"),
+        ("What causes silicosis?",
+         [("a", "Breathing fine crystalline silica dust"), ("b", "Drinking dirty water"), ("c", "Carrying heavy loads"), ("d", "Loud noise")],
+         "a"),
+        ("Which gas from diesel engines has no colour and no smell?",
+         [("a", "Steam"), ("b", "Oxygen"), ("c", "Carbon monoxide"), ("d", "Salt")],
+         "c"),
+        ("What do fans do in a mine?",
+         [("a", "Cut rock"), ("b", "Make noise only"), ("c", "Turn water into gas"), ("d", "Push or pull air along set routes")],
+         "d"),
+        ("What do gas detector alarms do?",
+         [("a", "Warn people before levels become dangerous"), ("b", "Cool the mine"), ("c", "Pay wages"), ("d", "Start the trucks")],
+         "a"),
+    ],
+}

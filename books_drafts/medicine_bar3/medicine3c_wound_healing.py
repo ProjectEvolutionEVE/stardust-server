@@ -1,0 +1,37 @@
+"""Wound Healing: how the body closes a cut, from the first clot to the last scar."""
+CODE = "medicine3c_wound_healing"
+BOOK = {
+    "title": "Wound Healing: Four Stages",
+    "subtitle": "How the body closes a cut, from the first clot to the last scar",
+    "chapters": [
+        ("A cut starts a repair",
+         "When the skin is broken, the body starts repairing it within seconds. The small blood vessels near the cut narrow, and the blood begins to clot. Healing is a set of overlapping stages, not one single event."),
+        ("Stopping the bleeding",
+         "Platelets, tiny pieces of blood, gather at the cut and form a plug. Threads of a protein called fibrin hold the plug in place. This first stage, called haemostasis, usually takes minutes."),
+        ("The clean-up",
+         "Over the next few days, white blood cells arrive to clear germs and dead tissue. Some redness, warmth and swelling are normal at this stage. More redness, pus or pain that spreads means the wound needs a closer look."),
+        ("Building new tissue",
+         "New blood vessels grow into the wound. Cells lay down collagen, a tough protein, to fill the gap, and new skin cells slowly spread across the surface. This stage takes days to a few weeks."),
+        ("Remodelling and the scar",
+         "Over months, the collagen is reorganised and the scar becomes stronger and less red. A scar rarely reaches the full strength of the skin it replaced, because the new tissue is laid down in a less orderly way."),
+        ("What helps and what slows healing",
+         "A clean, covered wound, rest and good food all support healing. An untreated infection, smoking, poor sleep and long periods of high blood sugar all slow it down. Looking after the basics is the best help a healing body can get."),
+    ],
+    "test": [
+        ("What happens first when a cut is made?",
+         [("a", "The scar forms"), ("b", "Platelets gather and begin a clot"), ("c", "New skin cells spread across the wound"), ("d", "Collagen is reorganised")],
+         "b"),
+        ("What is the main job of the inflammation stage?",
+         [("a", "Making the scar less red"), ("b", "Growing new bone"), ("c", "Hardening the blood"), ("d", "Clearing germs and dead tissue")],
+         "d"),
+        ("What is collagen?",
+         [("a", "A tough protein used to fill and strengthen new tissue"), ("b", "A type of white blood cell"), ("c", "A hormone that makes you sleepy"), ("d", "A kind of bandage")],
+         "a"),
+        ("Why does a scar rarely reach the full strength of the skin it replaced?",
+         [("a", "Scars cannot get any stronger at all"), ("b", "The body stops healing after a week"), ("c", "The new tissue is laid down in a less orderly way and does not fully match the original"), ("d", "Collagen dissolves in sunlight")],
+         "c"),
+        ("Which of these slows healing?",
+         [("a", "A clean, covered wound"), ("b", "An untreated infection"), ("c", "Regular rest"), ("d", "Good food")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Allergies and Anaphylaxis: when the immune system overreacts, and how to recognise a severe reaction."""
+CODE = "medicine3c_allergy"
+BOOK = {
+    "title": "Allergies and Anaphylaxis",
+    "subtitle": "When the immune system overreacts, and how to recognise a severe reaction",
+    "chapters": [
+        ("An overreaction",
+         "An allergy happens when the immune system treats a harmless substance as a threat. Common triggers include pollen, certain foods, insect stings and some medicines. The body's response, not the substance itself, causes the trouble."),
+        ("Mild and common",
+         "Mild allergic reactions may cause sneezing, itchy eyes, a runny nose or a rash. They are uncomfortable but usually not life-threatening. Noting them, and avoiding the trigger where possible, keeps them under control."),
+        ("Anaphylaxis",
+         "Anaphylaxis is a rapid, severe, whole-body allergic reaction. Signs can include swelling of the face, lips or throat, trouble breathing or wheezing, dizziness or fainting, and a fast, weak pulse. It can get worse within minutes."),
+        ("Act fast",
+         "Anaphylaxis is an emergency. Call for trained help at once. If the person has a prescribed auto-injector, help them use it exactly as they were trained. Lay them flat if they feel faint, or let them sit up if breathing is easier that way."),
+        ("Know the triggers",
+         "Knowing what sets off a reaction is the best protection. Reading labels, asking about ingredients and keeping a written list of known allergies are simple steps that prevent many reactions."),
+        ("Share the plan",
+         "Anyone who may have to help should know the allergy and the plan. Write the allergy in the health record, at the top, where it will be seen first by anyone who opens the record."),
+    ],
+    "test": [
+        ("What is an allergy?",
+         [("a", "The immune system reacting to a harmless substance"), ("b", "An infection caused by a germ"), ("c", "A broken bone"), ("d", "A kind of deep sleep")],
+         "a"),
+        ("Which of these is a mild allergic sign?",
+         [("a", "Blue lips"), ("b", "Trouble breathing"), ("c", "Fainting"), ("d", "Itchy eyes and a runny nose")],
+         "d"),
+        ("What is anaphylaxis?",
+         [("a", "A mild itchy rash"), ("b", "An ordinary cold"), ("c", "A rapid, severe, whole-body allergic reaction"), ("d", "A kind of bruise")],
+         "c"),
+        ("What is the first thing to do when anaphylaxis is suspected?",
+         [("a", "Wait an hour to see what happens"), ("b", "Call for trained help at once"), ("c", "Give the person a long bath"), ("d", "Let them walk to the clinic alone")],
+         "b"),
+        ("Why should an allergy be written at the top of a health record?",
+         [("a", "So the page looks neat"), ("b", "So the printer is kept busy"), ("c", "To make the record longer"), ("d", "So anyone who helps can see it first")],
+         "d"),
+    ],
+}

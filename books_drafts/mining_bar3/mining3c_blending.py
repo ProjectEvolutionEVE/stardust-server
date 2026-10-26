@@ -1,0 +1,37 @@
+"""Blending the Mine Plan (bar 3, Metallurgist, part C): mixing ore from many places so the plant gets a steady feed."""
+CODE = "mining3c_blending"
+BOOK = {
+    "title": "Blending the Mine Plan",
+    "subtitle": "Mixing ore from many places so the plant gets a steady feed",
+    "chapters": [
+        ("The plant wants a steady feed",
+         "A processing plant works best when the ore it receives is steady. A sudden rich load can overwhelm it, and a poor load wastes energy and chemicals. Planners therefore decide which ore goes to the plant, and when."),
+        ("Many faces, one plant",
+         "A mine usually has several areas being dug at once, called faces or benches, and each one has its own grade. The mine plan picks a mix from these areas so that the average feed stays near the plant's target."),
+        ("Stockpiles as a buffer",
+         "Ore that is not needed straight away is kept in a stockpile. A stockpile can be built in layers, so that a loader takes a little from each layer and the mix comes out even."),
+        ("Blending in numbers",
+         "A blend is worked out by weight. If one face gives 2 units of metal per hundred tonnes, and another gives 4, equal tonnes of each make a blend of 3. Planners check the blend every shift and adjust the next one."),
+        ("Why a steady feed pays",
+         "A steady plant runs at a steady rate and recovers more of the metal. There are fewer shutdowns, fewer repairs and less wasted time. A small gain in recovery can be worth a large sum over a year."),
+        ("The trade-offs",
+         "Blending too early can hide a poor batch. Waiting too long fills the yard with ore that nobody uses. Good planners keep a record of every blend and review it. The aim is a plan that is both steady and honest."),
+    ],
+    "test": [
+        ("Why do plants prefer a steady feed?",
+         [("a", "They like it quiet"), ("b", "A sudden rich or poor load upsets the plant"), ("c", "Steady ore is cheaper to ship"), ("d", "Ore changes colour")],
+         "b"),
+        ("What is a stockpile for?",
+         [("a", "Storing the company's money"), ("b", "Drilling test holes"), ("c", "Paying wages"), ("d", "A buffer that keeps ore for later use")],
+         "d"),
+        ("Equal tonnes from one face at 2 units and another at 4 units are blended. What is the average grade?",
+         [("a", "2"), ("b", "6"), ("c", "3"), ("d", "4")],
+         "c"),
+        ("What do planners do with each blend?",
+         [("a", "Hide it"), ("b", "Sell it at once"), ("c", "Ignore it until the year ends"), ("d", "Record it and check it every shift")],
+         "d"),
+        ("What is a risk of blending too early?",
+         [("a", "It can hide a poor batch"), ("b", "It makes the plant too quiet"), ("c", "It stops the rain"), ("d", "It makes the ore lighter")],
+         "a"),
+    ],
+}

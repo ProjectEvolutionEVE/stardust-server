@@ -1,0 +1,37 @@
+"""Keeping Health Records: what to write down, who can see it, and why a good record saves time and lives."""
+CODE = "medicine3c_records"
+BOOK = {
+    "title": "Keeping Health Records",
+    "subtitle": "What to write down, who can see it, and why a good record saves time and lives",
+    "chapters": [
+        ("Why write it down",
+         "A health record is a written account of what was seen, what was done and what came of it. Good records keep care steady when one carer hands over to another, or when a new carer takes over a case."),
+        ("What to include",
+         "Write the date and time, the person's name, what happened, the signs that were found, the care that was given, and who gave it. Note any medicine given, with the time it was given. A short, complete entry is worth more than a long, vague one."),
+        ("Allergies and key facts",
+         "Keep a short list at the top of the record with allergies, long-term conditions and important past events. Anyone who opens the record should see these first, before anything else."),
+        ("Writing clearly",
+         "Write plainly, in facts rather than guesses. Record what you saw and did, not what you assume. Date and sign each entry. A mistake is corrected by crossing it out and writing the correction beside it, so the first entry can still be read."),
+        ("Privacy and consent",
+         "Health records are private. Share only what the next carer needs, and tell the person what is written about them. Keep the record in a secure place where only those with a reason can read it."),
+        ("Records as a trail",
+         "Over time, a set of records shows patterns: a headache that keeps coming back, a wound that heals slowly, or a crew member whose sleep is getting worse. Patterns like these are often the first sign that something needs a closer look."),
+    ],
+    "test": [
+        ("What is the main purpose of a health record?",
+         [("a", "To fill a shelf"), ("b", "To replace the crew"), ("c", "To cut the cost of stock"), ("d", "To carry care accurately from one carer to the next")],
+         "d"),
+        ("Which item belongs at the top of a health record?",
+         [("a", "The weather outside"), ("b", "The colour of the sickbay walls"), ("c", "Allergies and key facts"), ("d", "The price of the supplies")],
+         "c"),
+        ("How should a mistake in a record be corrected?",
+         [("a", "Cross it out and write the correction beside it, so the first entry can still be read"), ("b", "Erase it completely"), ("c", "Tear the page out"), ("d", "Write over it in ink only")],
+         "a"),
+        ("What should a health record contain?",
+         [("a", "Guesses about how the person feels"), ("b", "Facts: what was seen, what was done and when"), ("c", "Opinions about other crew members"), ("d", "Jokes to lighten the mood")],
+         "b"),
+        ("Why is a series of records useful?",
+         [("a", "It lets you skip future check-ups"), ("b", "It replaces the need for a carer"), ("c", "It hides changes over time"), ("d", "It shows patterns, such as a slow-healing wound, that a single note can miss")],
+         "d"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Broken Bones and Splints: spotting a fracture, keeping it still, and checking the blood flow beyond it."""
+CODE = "medicine3c_fractures"
+BOOK = {
+    "title": "Broken Bones and Splints",
+    "subtitle": "Spotting a fracture, keeping it still, and checking the blood flow beyond it",
+    "chapters": [
+        ("Signs of a fracture",
+         "A broken bone often causes sharp pain, swelling, bruising, and a limb that looks wrong or cannot be used. Some breaks are hard to see at first. Treat any suspected break as a real break until a trained carer says otherwise."),
+        ("Do not straighten it",
+         "Do not try to push a bone back into line. Support the limb in the position you find it, and let a trained carer decide what else is needed. Moving the injured part as little as possible reduces the pain and the damage."),
+        ("Splint the joints on both sides",
+         "A splint holds the injury still. It should reach the joint above the break and the joint below it. Pad the splint well, and tie it firmly but not tightly, so the limb is held without being squeezed."),
+        ("Check the blood flow",
+         "After splinting, check the fingers or toes beyond the splint. Look at their colour, warmth, feeling and movement. If they turn pale or blue, feel cold or numb, or cannot move, the splint may be too tight, and trained help is needed at once."),
+        ("An open break",
+         "When bone breaks through the skin, it is an open fracture, and the wound carries a risk of infection. Cover the wound with a clean dressing and do not push the bone back in. Get trained help quickly."),
+        ("Keep still and record it",
+         "Keep the person still, warm and comfortable while help is on the way. Write down the time, the cause of the injury and what was done, so the carer can plan the next step. A clear note saves time later."),
+    ],
+    "test": [
+        ("Which is a common sign of a fracture?",
+         [("a", "Feeling stronger than usual"), ("b", "Less swelling"), ("c", "Clear and unmarked skin"), ("d", "Sharp pain and swelling")],
+         "d"),
+        ("Why should a splint reach the joints on both sides of a break?",
+         [("a", "So the bone cannot move at either end"), ("b", "So the splint looks neat"), ("c", "So the skin dries faster"), ("d", "So the bruise stays visible")],
+         "a"),
+        ("What should you check beyond a splint?",
+         [("a", "The stars in the sky"), ("b", "The person's shoes"), ("c", "The colour, warmth, feeling and movement of the fingers or toes"), ("d", "The person's name")],
+         "c"),
+        ("What is an open fracture?",
+         [("a", "A bone that has been fully healed"), ("b", "A bone that breaks through the skin"), ("c", "A bone seen clearly on a scan"), ("d", "A cracked fingernail")],
+         "b"),
+        ("What should you do with an open fracture?",
+         [("a", "Push the bone firmly back in"), ("b", "Wash the bone with hot water"), ("c", "Tie the splint as tight as possible"), ("d", "Cover the wound with a clean dressing and get trained help")],
+         "d"),
+    ],
+}

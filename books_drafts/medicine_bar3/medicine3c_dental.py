@@ -1,0 +1,37 @@
+"""Dental Care: how plaque causes decay and gum disease, and the simple habits that prevent both."""
+CODE = "medicine3c_dental"
+BOOK = {
+    "title": "Dental Care: Teeth and Gums",
+    "subtitle": "How plaque causes decay and gum disease, and the simple habits that prevent both",
+    "chapters": [
+        ("Teeth and their jobs",
+         "Teeth cut, tear and grind food, and they help shape speech. Each tooth has hard enamel on the outside, dentine beneath it, and a soft pulp at its centre, where the nerves and blood vessels are. Enamel does not regrow once it is lost."),
+        ("Plaque",
+         "Plaque is a sticky film of bacteria that forms on teeth every day. The bacteria in plaque turn sugars into acids, and those acids soften and wear away the enamel. Brushing removes plaque before it can harden."),
+        ("Decay and gum disease",
+         "Decay makes holes in teeth. Gum disease often begins as gingivitis, with red, swollen gums that bleed when brushed. If it is left alone it can become periodontitis, which damages the bone that holds the teeth in place."),
+        ("Brushing and flossing",
+         "Brush twice a day with fluoride toothpaste, for about two minutes, and clean between the teeth with floss or small brushes. Fluoride strengthens enamel and helps repair early damage before a hole forms."),
+        ("Less sugar, more often",
+         "How often you eat sugar matters as much as how much you eat, because each sugary contact keeps acid working on the teeth for a while. Water and sugar-free drinks are the best everyday choices, and sweets are best kept to mealtimes."),
+        ("Dental emergencies",
+         "If a permanent tooth is knocked out, pick it up by the crown, not the root. Rinse it gently with water or milk if it is dirty, keep it moist, and get dental help as soon as possible. Regular check-ups catch small problems while they are still easy to treat."),
+    ],
+    "test": [
+        ("What is the hard outer layer of a tooth called?",
+         [("a", "Pulp"), ("b", "Enamel"), ("c", "Plaque"), ("d", "Gum")],
+         "b"),
+        ("What does plaque do to teeth?",
+         [("a", "It makes teeth whiter"), ("b", "It makes teeth grow faster"), ("c", "It protects teeth from sugar"), ("d", "Its bacteria make acids that wear away enamel")],
+         "d"),
+        ("What is gingivitis?",
+         [("a", "Early gum disease, with red, swollen and bleeding gums"), ("b", "A type of tooth"), ("c", "A bite that is too deep"), ("d", "A dental filling")],
+         "a"),
+        ("What does fluoride do for teeth?",
+         [("a", "Makes teeth bigger"), ("b", "Turns teeth white only"), ("c", "Strengthens enamel and helps repair early damage"), ("d", "Removes all plaque in a single day")],
+         "c"),
+        ("Which is a better everyday choice than sugary drinks sipped all day?",
+         [("a", "Sweets between meals"), ("b", "Water or sugar-free drinks"), ("c", "Sugary drinks sipped all day"), ("d", "Sticky snacks at bedtime")],
+         "b"),
+    ],
+}

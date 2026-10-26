@@ -1,0 +1,37 @@
+"""Rubble Piles (bar 3, Metallurgist, part C): small asteroids that are loose heaps of rock held together by weak gravity, and what that means for anyone who digs them."""
+CODE = "mining3c_rubble_piles"
+BOOK = {
+    "title": "Rubble Piles",
+    "subtitle": "Small asteroids held together by weak gravity, and how to work them",
+    "chapters": [
+        ("Loose heaps in space",
+         "Many small asteroids are not solid rock. They are piles of rubble, held together only by their own weak gravity and by loose contact between the pieces. Spacecraft have photographed some of them, and found boulders resting on boulders."),
+        ("Gravity that barely pulls",
+         "A small body has very little gravity. A stone dropped on it may take minutes to land, and it may bounce away. Anything that touches the surface must be anchored, or it will drift off."),
+        ("Spinning fast",
+         "A body that spins quickly can throw loose rubble off its surface. Astronomers measure spin rates to judge whether a small asteroid can hold itself together. A fast spin makes a loose pile far less stable."),
+        ("Samples from rubble",
+         "Japan's Hayabusa2 mission and NASA's OSIRIS-REx mission each collected samples from small asteroids, Ryugu and Bennu. Both were loose, dusty and rich in carbon compounds. Their samples brought home what loose rubble is made of."),
+        ("Digging a rubble pile",
+         "A rubble pile shifts under a drill or a cutting tool, so the work must be slow and careful. Loose pieces can escape as soon as they are freed, so they must be collected at once."),
+        ("Mining with care",
+         "Taking too much from a rubble pile can upset its balance, and the body may settle into a new shape. A careful plan takes small amounts and watches how the body moves between each step."),
+    ],
+    "test": [
+        ("What is a rubble-pile asteroid?",
+         [("a", "A solid iron block"), ("b", "A loose heap of rock held together by weak gravity"), ("c", "A comet made of gas"), ("d", "A moon of Jupiter")],
+         "b"),
+        ("Why must anything touching a small body be anchored?",
+         [("a", "Its gravity is too weak to hold it down"), ("b", "Metal rusts on contact"), ("c", "Dust blocks the sunlight"), ("d", "It must stay warm")],
+         "a"),
+        ("What can a fast spin do to a rubble pile?",
+         [("a", "Make it grow"), ("b", "Throw loose rubble off its surface"), ("c", "Turn it into gas"), ("d", "Make it hotter")],
+         "b"),
+        ("Which two missions collected samples from rubble-pile asteroids?",
+         [("a", "Apollo and Voyager"), ("b", "Cassini and Galileo"), ("c", "Viking and Pathfinder"), ("d", "Hayabusa2 and OSIRIS-REx")],
+         "d"),
+        ("What is the main lesson for mining a rubble pile?",
+         [("a", "Take as much as you can at once"), ("b", "Never touch it"), ("c", "Take small amounts and watch how the body moves"), ("d", "Melt the whole body")],
+         "c"),
+    ],
+}
