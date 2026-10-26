@@ -110,7 +110,8 @@ The full record is in the `quavara-docs` repository:
 12. **The market** is a live order book, open 24/7, with limit orders and instant trades. The bank trades on the order book. The old supply-pressure formula is retired.
 13. **Every transfer of goods gives the player a receipt** with a code anyone can check (`/api/dfg/receipt/{code}`). The player reads their receipts in a log in their Private Quarters while docked, and can save a copy to their own device.
 14. **ElevenLabs (company-wide rule):** never use live ElevenLabs speech for players. Live voices come from Google Chirp 3 (or Sarvam). Pre-recorded ElevenLabs audio files are allowed.
-15. **Inara's voice (10-11; voice chosen 10-19: Lily):** her prepared lines are **pre-recorded ElevenLabs audio files** in the Lily voice, in the languages ElevenLabs speaks best. Never live ElevenLabs.
+15. **Inara is the lead (fictional) character of the novel "Stardust - Inara", never an AI (Eric 10-25).** The novel ends where the game begins. She is an officer in the Starship's command centre, the Tower, guiding the smaller craft. Never call her an AI anywhere. In this game's (and the novel's) version she has her occasional cigar back (the Story Bible had retired it for chocolate); in jam and public materials, leave both out.
+    **Inara's voice (10-11; voice chosen 10-19: Lily):** her prepared lines are **pre-recorded ElevenLabs audio files** in the Lily voice, in the languages ElevenLabs speaks best. Never live ElevenLabs.
 16. **Careers (10-11):**
     - The Starship posts **job openings** aboard the ship. Like the real world, some need higher qualifications: education, a test with certification, and experience.
     - Postings arrive in the **incoming COMMS** list in each player's Private Quarters, alongside news from the game: upcoming updates, and messages from Starship Central Command.
@@ -193,6 +194,18 @@ The full record is in the `quavara-docs` repository:
     - **First numbers (Claude's, to tune):** savings 0.5% a week; term deposits 1% a week for 2 weeks, 1.25% for 4, 1.5% for 8; **loans 6-12% a week depending on risk (Eric 10-25)**, simple interest on the balance left; the Bank keeps 20% of deposits in reserve.
 
 37. **Money in every career (Eric 10-25; Zoud GameLab financial-literacy jam).** Wise money management is folded into **every** career's books and tests, so whichever path a player takes they learn budgeting, saving, spending, investing, debt and smart money decisions in that field (e.g. a miner's income against costs, saving for a ship build or a production plant, saving for retirement in Tahiti on the New Earth). No separate finance career for now.
+
+38. **Flying costs credits: the WSC owns the craft (Eric 10-25).** The small mining craft belong to the WSC; the player is just the pilot. Flying is paid for, with **fuel included** in the price, so joyriding and exploring cost the same per hour as mining: players learn they must earn a living to support what they do. Two ways to pay, set up with the WSC:
+    - **By the hour of flight time:** dearer over time, good for players building other careers who fly only now and then.
+    - **A longer-term craft contract:** cheaper per hour for players who fly a lot.
+    - **Fuel from ice:** water ice from the debris is split (electrolysis, the "element separator") into hydrogen and oxygen. **Hydrogen is the fuel that runs the small mining craft**; oxygen is useful aboard. So ice has real value on the market.
+    - The prices are not set yet (to tune in playtesting).
+    - **A fuel bar (Eric 10-25)** on the flight screen: it ticks down slowly while the craft is out (more slowly when parked), and **every return to the Starship tops it up** (fuel is included). If it runs dry out in space, **Inara has the craft towed back in, and the tow costs a pretty penny**: it keeps players honest about parking in space and never coming home.
+
+39. **The roadmap (Eric 10-25).**
+    - **For the jam:** books and tests for **all five bars of every career** before it ships.
+    - **After the jam:** Stardust - Terra Deleta becomes **multiplayer**. Players choose to work for the WSC or to be the **scavengers** (real players instead of NPCs), who cannot communicate with the humans they meet (rule 8 stays: no talking across the divide). **The twist: each player thinks they are the human and the other side is the alien.**
+    - **Stardust - Terra Nova**, the companion game: land-based colonisation of the New Earth, sharing the same WSC Bank and market; resources gathered in space are sold to players on the surface. An **MMO**: communities for shared resources and protection, because the New Earth's creatures have never seen our kind and meeting them can be deadly.
 
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).

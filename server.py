@@ -38,6 +38,7 @@ Blueprint auctions (Eric 10-12; auctions.py):
   GET  /api/dfg/auctions             running and upcoming auctions, the copy that's up, recent results, my bids
   POST /api/dfg/auctions/bid         {lot_id, amount} · /schedule {id, copies, floor, start_at, below_cost_ok} · /cancel {auction_id}
 The Starship Bank (Eric 10-25, rule 36; lending.py): deposits, loans and savings goals:
+  POST /api/dfg/tow                  out of fuel: towed home for a fee (setting tow_fee) paid to the WSC (rule 38)
   GET  /api/dfg/bank                 savings, term deposits, loans, goals, standing, rates
   POST /api/dfg/bank/deposit         {kind:'savings'|'term', amount, weeks?} · /withdraw {amount} or {deposit_id}
   POST /api/dfg/bank/loan/quote      {amount, weeks, purpose} → the Bank's decision and terms · /loan/take (same body)
@@ -251,6 +252,22 @@ async def rest(request):
                     raise ST.Refused("Sleep in your bed or in your cockpit.")
                 await BODY.set_state(conn, pid, asleep=b.get("asleep") is True, place=place)
         return _json(await _me(conn, pid))
+
+
+async def tow(request):
+    """Out of fuel in space (rule 38, Eric 10-25): Inara has the craft towed back to the Starship, and the tow is expensive.
+    The fee goes to the WSC; a player short of credits pays what they have."""
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        fee = int((await ST.settings(conn)).get("tow_fee", 1500))
+        async with conn.transaction():
+            acct = await ST.account_of(conn, pid)
+            have = await conn.fetchval("SELECT credits FROM accounts WHERE id=$1 FOR UPDATE", acct)
+            charged = min(fee, have)
+            if charged > 0:
+                await ST.transfer(conn, acct, await ST.wsc_account(conn), charged, "tow", {"fee": fee})
+        await log_event(conn, pid, "tow", charged=charged)
+        return _json({"charged": charged, "fee": fee})
 
 
 async def bank(request):
@@ -719,6 +736,7 @@ def make_app():
     app.router.add_post("/api/dfg/auth/signout", auth_signout)
     app.router.add_post("/api/dfg/rest", rest)
     app.router.add_get("/api/dfg/bank", bank)
+    app.router.add_post("/api/dfg/tow", tow)
     app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)

@@ -1020,6 +1020,12 @@ console.log(JSON.stringify(out));"""
     r = await cl.post("/api/dfg/bank/goal", headers=BK, json={"goal": "ship", "target": 2000}); j = await r.json()
     g = j["goals"][0]
     check("a savings goal shows progress from what's at the Bank", g["name"] == "A new ship" and g["progress"] == j["at_bank"] and not g["reached"])
+    # out of fuel: the tow costs 1,500 credits, paid to the WSC (rule 38)
+    TW = {"X-Dev-Player": "drifter"}
+    before = (await (await cl.get("/api/dfg/bank", headers=TW)).json())["credits"]
+    r = await cl.post("/api/dfg/tow", headers=TW, json={}); j = await r.json()
+    after = (await (await cl.get("/api/dfg/bank", headers=TW)).json())["credits"]
+    check("a tow home costs the tow fee", r.status == 200 and j["charged"] == 1500 and after == before - 1500)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])
