@@ -15,7 +15,7 @@ and is never printed.
 import argparse, glob, json, os, sys, urllib.request, urllib.error
 
 SERVER = "https://game-server-production-9863.up.railway.app"
-SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja"}
+SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja", "ar"}
 RADIO = ("INARA-TWR-", "INARA-RING-", "INARA-TOWER-")
 # Tower lines spoken aboard the ship (waking, bedtime, library tests, market order, blueprint sent): plain, with the chime
 ABOARD = {"INARA-TWR-%03d" % n for n in (42, 43, 44, 45, 49, 50, 51, 53)}

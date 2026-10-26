@@ -12,7 +12,7 @@ self-contained. The server code is `voice.py`; the player is `VOICE` in `static/
 | `VOICE_DIR` | optional; defaults to `/data/voice`. Files sit at `/data/voice/<set>/<ID>.mp3` |
 | `DFG_UPLOAD_KEY` | the upload key (step 1 below). With it unset, every upload is refused |
 
-Voice sets: `en zh de pl es fr ko tr pt-BR ru ja`. A player's language picks the set (`voice.py`, `VOICED`:
+Voice sets: `en zh de pl es fr ko tr pt-BR ru ja ar` (Arabic recorded 10-26). A player's language picks the set (`voice.py`, `VOICED`:
 `zh-TW`→`zh`, `pt`→`pt-BR`, the rest by the same code). Other languages get no voice yet (still Eric's to decide).
 
 To add the volume: Railway dashboard → project `stardust` → `game-server` → right-click → Attach Volume, mount
