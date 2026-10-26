@@ -1,0 +1,37 @@
+"""Dissolving the Metal (bar 3, Metallurgist, part A): chemical solutions that take metal out of ore, and how the metal is won back."""
+CODE = "mining3a_leaching"
+BOOK = {
+    "title": "Dissolving the Metal",
+    "subtitle": "Chemical solutions that take metal out of ore, and how the metal is won back",
+    "chapters": [
+        ("Dissolve, do not melt",
+         "Leaching uses a chemical solution to dissolve the metal out of the ore, so the ore never has to be melted. It suits low-grade ore, and ore that is too poor or too fine for other methods."),
+        ("Heap leaching",
+         "Crushed ore is piled on a lined pad, and a solution is trickled down through the heap. The metal dissolves and drains to a collecting pond. Heap leaching is cheap to set up and suits very large volumes of low-grade ore."),
+        ("Acid for copper oxides",
+         "Copper oxide ores dissolve well in dilute sulfuric acid. Copper sulfide ores dissolve much more slowly, so they are usually treated another way. Which ore you have decides which method you use."),
+        ("Cyanide for gold",
+         "Gold dissolves in a dilute cyanide solution, and this is how a large share of the world's gold is recovered from low-grade ore. Cyanide is very poisonous, so these plants run under strict controls."),
+        ("Solvent and current",
+         "A copper solution is mixed with an organic solvent that takes up the copper. The copper is then moved into a clean acid solution. Passing an electric current through that solution deposits pure copper on a cathode. This step is called electrowinning."),
+        ("Slow money",
+         "Leaching is slow, and a heap can take months to drain. Money stays tied up in ore that sits on the pad. The plant is cheap to build compared with a smelter, so teams weigh lower costs against slower recovery."),
+    ],
+    "test": [
+        ("What is leaching?",
+         [("a", "Melting ore in a furnace"), ("b", "Dissolving metal out with a chemical solution"), ("c", "Freezing ore"), ("d", "Painting ore")],
+         "b"),
+        ("What is heap leaching?",
+         [("a", "Stacking gold bars"), ("b", "Melting a heap"), ("c", "Trickling a solution through a pile of crushed ore"), ("d", "Sorting ore by hand")],
+         "c"),
+        ("What is electrowinning?",
+         [("a", "Heating ore with sunlight"), ("b", "Blowing air through a froth"), ("c", "Sweeping a floor"), ("d", "Depositing metal from a solution with an electric current")],
+         "d"),
+        ("Copper oxide ores dissolve well in which liquid?",
+         [("a", "Dilute sulfuric acid"), ("b", "Pure water"), ("c", "Oil"), ("d", "Milk")],
+         "a"),
+        ("Why is leaching often slow?",
+         [("a", "The solution is too hot"), ("b", "A heap can take months to drain"), ("c", "Gold is too light"), ("d", "The ore is too dry")],
+         "b"),
+    ],
+}

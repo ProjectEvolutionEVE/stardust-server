@@ -1,0 +1,37 @@
+"""Ore Born in Magma (bar 3, Metallurgist, part A): how some ore forms as hot melted rock cools deep underground."""
+CODE = "mining3a_magmatic"
+BOOK = {
+    "title": "Ore Born in Magma",
+    "subtitle": "How some ore forms as hot melted rock cools deep underground",
+    "chapters": [
+        ("Magma is melted rock",
+         "Magma is rock that has melted deep underground, hot enough to flow. As it cools slowly, its minerals form crystals, one kind after another. Some minerals crystallise early and sink, and others stay in the melt until the very end."),
+        ("Heavy droplets sink",
+         "Some magmas carry tiny droplets of a metal sulfide liquid. These droplets are denser than the melt around them, so they sink and collect on the floor of the chamber. A thick collection of them can be rich enough to mine."),
+        ("Layers in a big chamber",
+         "A huge chamber of magma can cool into layered rock. The Bushveld Complex in South Africa is a famous example, with thin layers of chromite and bands rich in platinum-group metals. Those layers can be followed for many kilometres."),
+        ("Chromite settles first",
+         "Chromite crystallises early and settles to the bottom as dark, heavy grains. Platinum-group metals often sit in the same layers. Because the layers run flat, a miner who finds one layer can often trace it further."),
+        ("Nickel sulfide deposits",
+         "Nickel sulfide deposits form when sulfide droplets collect in magma and cool into dense ore. Pentlandite, the nickel ore in our fields, is a sulfide of the same family. Its grains are often found together with other sulfides."),
+        ("Aboard",
+         "The game does not model how a deposit formed. Each debris piece is pure ore mineral (rule 27), so its formula gives its metal's share. The story of magma is background that explains why real ore is found in layers and pockets."),
+    ],
+    "test": [
+        ("What is magma?",
+         [("a", "Cold water under ice"), ("b", "A type of metal"), ("c", "Rock melted deep underground"), ("d", "Dust from a comet")],
+         "c"),
+        ("Why do sulfide droplets in magma collect at the bottom of a chamber?",
+         [("a", "They float to the top"), ("b", "They evaporate"), ("c", "Gravity only pulls gold"), ("d", "They are denser than the melt and sink")],
+         "d"),
+        ("The Bushveld Complex is best known for what?",
+         [("a", "Layers of chromite and platinum-group metals"), ("b", "Oil wells"), ("c", "Salt lakes"), ("d", "Coal seams")],
+         "a"),
+        ("Pentlandite is the main ore of which metal?",
+         [("a", "Gold"), ("b", "Nickel"), ("c", "Aluminium"), ("d", "Lithium")],
+         "b"),
+        ("What does the game say about each debris piece?",
+         [("a", "It is half rock and half ice"), ("b", "It is always pure gold"), ("c", "It is pure ore mineral, so its formula gives its metal's share"), ("d", "It cannot be weighed")],
+         "c"),
+    ],
+}

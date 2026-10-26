@@ -1,0 +1,37 @@
+"""Breaking Rock Apart (bar 3, Metallurgist, part A): crushers, mills and liberation, and why ore must be ground before the metal can be taken."""
+CODE = "mining3a_grinding"
+BOOK = {
+    "title": "Breaking Rock Apart",
+    "subtitle": "Crushers, mills and liberation: why ore must be ground before the metal can be taken",
+    "chapters": [
+        ("Why break it",
+         "Ore is mixed up with waste rock, and its metal grains are locked inside the other minerals. To separate them, the rock must be broken into pieces small enough that the metal grains are free of most of the waste around them."),
+        ("Liberation",
+         "Liberation means freeing a mineral grain from the minerals around it. A coarse piece may hold both ore and waste together. Grind it finer and the grains come apart. The size at which most grains are free is called the liberation size."),
+        ("Crushing in steps",
+         "A jaw crusher squeezes large rock between two plates. A cone crusher does a similar job on finer rock. Crushing happens in several steps, each one making the pieces a little smaller."),
+        ("Fine grinding",
+         "A ball mill is a rotating drum with steel balls inside. As it turns, the balls tumble and grind the ore, usually with water, to a fine powder. Ball mills give the finest sizes in a processing plant."),
+        ("Energy and steel",
+         "Grinding uses a large share of a concentrator's energy, and it wears steel balls and liners. Grinding finer than needed wastes energy, and it can make the later steps harder. Teams aim for the size they need, and no finer."),
+        ("Money per tonne",
+         "Crushing and grinding are paid for by the tonne. A plant that handles more tonnes a day spreads its fixed costs further, but every extra hour of grinding adds to the power bill. The game does not model crushing: each debris piece is already pure ore mineral (rule 27)."),
+    ],
+    "test": [
+        ("What is liberation?",
+         [("a", "Selling ore"), ("b", "Melting metal"), ("c", "Painting a crusher"), ("d", "Freeing a mineral grain from the rock around it")],
+         "d"),
+        ("What does a ball mill do?",
+         [("a", "Grinds ore to a fine powder with steel balls"), ("b", "Carries ships"), ("c", "Pumps water"), ("d", "Measures density")],
+         "a"),
+        ("Why do teams avoid grinding finer than they need to?",
+         [("a", "Fine grains are against the rules"), ("b", "Fine grinding costs energy and can make later steps harder"), ("c", "Steel balls break the ore"), ("d", "Gold cannot be found in fine grains")],
+         "b"),
+        ("How does a jaw crusher work?",
+         [("a", "It freezes the rock"), ("b", "It spins the rock in water"), ("c", "It squeezes rock between two plates"), ("d", "It burns the rock")],
+         "c"),
+        ("How does crushing usually happen in a plant?",
+         [("a", "In one blow"), ("b", "In space, without a plant"), ("c", "In a single second"), ("d", "In several steps, each one a little finer")],
+         "d"),
+    ],
+}

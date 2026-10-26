@@ -1,0 +1,37 @@
+"""Metal That Comes Back (bar 3, Metallurgist, part A): why recycled metal saves energy, and how scrap is sorted and melted again."""
+CODE = "mining3a_recycling"
+BOOK = {
+    "title": "Metal That Comes Back",
+    "subtitle": "Why recycled metal saves energy, and how scrap is sorted and melted again",
+    "chapters": [
+        ("Metal does not wear out",
+         "Most metals can be melted and cast again without losing their basic properties. Recycled metal can be as good as metal that was dug out, provided it is kept clean and sorted by type."),
+        ("Saving energy",
+         "Making aluminium from bauxite takes far more energy than melting old aluminium. Recycled aluminium needs only about 5 per cent of the energy used to make new aluminium from ore."),
+        ("Sorting scrap",
+         "Scrap is sorted by type, because mixed alloys spoil the metal. Magnets pull steel out of a scrap pile. Eddy-current machines throw aluminium and copper scraps away from other non-magnetic metals by using a changing magnetic field."),
+        ("Melting and cleaning",
+         "Sorted scrap is melted in furnaces and adjusted to the right chemistry. Impurities float up as dross or slag and are skimmed off. This is smelting, but it starts from metal rather than from ore."),
+        ("Copper and steel",
+         "Copper and steel are among the most recycled metals. Copper scrap has a market price because of the copper it holds, and steel scrap is a major input for new steel. Both are traded again and again."),
+        ("Money in scrap",
+         "Scrap is bought and sold by weight and grade, so its value depends on how clean and sorted it is. A sorted pile earns more than a mixed one. In the game, ore is traded by the lot (rule 21), and recycling is background."),
+    ],
+    "test": [
+        ("About how much of the energy does recycled aluminium need, compared with new aluminium?",
+         [("a", "About 50 per cent"), ("b", "About 100 per cent"), ("c", "About 5 per cent"), ("d", "About 200 per cent")],
+         "c"),
+        ("Why must scrap be sorted by type?",
+         [("a", "Sorting makes it gold"), ("b", "Mixed metal is heavier"), ("c", "Scrap has no value"), ("d", "Mixed alloys spoil the metal")],
+         "d"),
+        ("What pulls steel out of a scrap pile?",
+         [("a", "A magnet"), ("b", "Water"), ("c", "Sunlight"), ("d", "Sound")],
+         "a"),
+        ("What is dross in melting?",
+         [("a", "A type of ore"), ("b", "Impurities skimmed off the top"), ("c", "Pure metal"), ("d", "A coin")],
+         "b"),
+        ("How is scrap usually bought and sold?",
+         [("a", "By colour only"), ("b", "By the number of pieces"), ("c", "By weight and grade"), ("d", "By smell")],
+         "c"),
+    ],
+}

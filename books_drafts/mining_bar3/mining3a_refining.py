@@ -1,0 +1,37 @@
+"""Purity: Karats, Fineness and Cathodes (bar 3, Metallurgist, part A): electrorefining copper and reading the marks on pure metal."""
+CODE = "mining3a_refining"
+BOOK = {
+    "title": "Purity: Karats, Fineness and Cathodes",
+    "subtitle": "Electrorefining copper, and reading the marks on pure metal",
+    "chapters": [
+        ("Purity is a number",
+         "Purity is measured by how much of the metal is really there, not by how it looks. Gold is marked in karats, while silver and some gold alloys are marked by fineness. Copper is usually given as a percentage."),
+        ("Karats",
+         "Pure gold is 24 karats. An 18-karat piece holds 18 parts of gold in 24, which is 75 per cent gold. The rest is other metal, which is often added to make the gold harder."),
+        ("Fineness",
+         "Fineness counts parts per thousand. A piece marked 999 is 99.9 per cent pure. Sterling silver is marked 925, which means 92.5 per cent silver."),
+        ("Electrorefining copper",
+         "Impure copper anodes hang in an electrolyte, a conducting liquid, beside thin starter sheets of pure copper called cathodes. A current dissolves copper from the anodes and deposits it on the cathodes. Most impurities do not move across, and they fall to the bottom as sludge."),
+        ("Cathode copper",
+         "The copper that builds up on the cathodes is very pure, about 99.99 per cent. This is the form in which most copper is traded for wire and electrical use. Each cathode is a sheet of copper that can be sold as it is."),
+        ("Why purity pays",
+         "Purer metal sells for more, and it conducts electricity better. Refining takes power and time, so a plant weighs the higher price against the cost of the extra step. In the game, ore is priced by the lot (rule 21), and the book's refining steps are background."),
+    ],
+    "test": [
+        ("What does 24 karats mean for gold?",
+         [("a", "Half gold"), ("b", "Silver"), ("c", "Ore that is not yet smelted"), ("d", "Pure gold")],
+         "d"),
+        ("Sterling silver is marked 925. What does that mean?",
+         [("a", "92.5 per cent silver"), ("b", "9.25 per cent silver"), ("c", "925 grams of silver"), ("d", "925 credits")],
+         "a"),
+        ("In electrorefining copper, what builds up on the cathode?",
+         [("a", "Slag"), ("b", "Pure copper"), ("c", "Sulfur"), ("d", "Ice")],
+         "b"),
+        ("About how pure is cathode copper?",
+         [("a", "About 50 per cent"), ("b", "About 10 per cent"), ("c", "About 99.99 per cent"), ("d", "Exactly 100 per cent")],
+         "c"),
+        ("How much gold is in 18-karat gold?",
+         [("a", "18 per cent"), ("b", "50 per cent"), ("c", "100 per cent"), ("d", "75 per cent")],
+         "d"),
+    ],
+}

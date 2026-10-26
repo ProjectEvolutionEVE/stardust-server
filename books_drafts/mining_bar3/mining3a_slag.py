@@ -1,0 +1,37 @@
+"""Slag and What Else Comes Out (bar 3, Metallurgist, part A): the leftovers of smelting, and the useful things they hold."""
+CODE = "mining3a_slag"
+BOOK = {
+    "title": "Slag and What Else Comes Out",
+    "subtitle": "The leftovers of smelting, and the useful things they hold",
+    "chapters": [
+        ("Slag floats",
+         "Slag is the waste that floats on top of molten metal in a furnace. It is less dense than the metal beneath it, so it separates by itself. It cools into a glassy or stony rock, mostly made of silica, iron and other oxides."),
+        ("Slag as a material",
+         "Cooled slag can be crushed and used as road aggregate, the stone in road base and concrete. Some slags, ground very fine, are used as an ingredient in cement. Slag can therefore be sold as a product rather than thrown away."),
+        ("Sulfur into acid",
+         "When sulfide ores are smelted, the sulfur leaves as a gas. Captured, it becomes sulfuric acid. Sulfuric acid is used in leaching, in fertiliser and in many other industries, so a smelter can sell the sulfur it would otherwise have lost."),
+        ("Anode slimes",
+         "During copper refining, a sludge settles under the anodes. These anode slimes hold silver, gold, platinum-group metals, selenium and tellurium. Refiners recover these metals, so a copper plant can earn money from its sludge."),
+        ("By-products",
+         "A by-product is a metal recovered alongside the main one. Molybdenum often comes from copper porphyry deposits, and many copper plants also make gold or silver. Good by-products can change how much money an operation makes."),
+        ("In the game",
+         "The game counts only the metals in each formula, and the rest of a piece is slag (rule 27). The by-products and uses in this book are real-world background, not game features."),
+    ],
+    "test": [
+        ("What is slag?",
+         [("a", "Gold dust"), ("b", "Ice"), ("c", "Waste that floats on molten metal"), ("d", "A diamond")],
+         "c"),
+        ("What can crushed slag be used for?",
+         [("a", "Fuel for cars"), ("b", "Cutting diamonds"), ("c", "Medicine"), ("d", "Road aggregate")],
+         "d"),
+        ("What do anode slimes hold?",
+         [("a", "Silver, gold and platinum-group metals"), ("b", "Pure water"), ("c", "Coal"), ("d", "Salt")],
+         "a"),
+        ("What is a by-product?",
+         [("a", "A part of a furnace"), ("b", "A metal recovered alongside the main one"), ("c", "A type of ore"), ("d", "A ship")],
+         "b"),
+        ("Captured sulfur dioxide is used to make which product?",
+         [("a", "Paint"), ("b", "Glass"), ("c", "Sulfuric acid"), ("d", "Drinking water")],
+         "c"),
+    ],
+}

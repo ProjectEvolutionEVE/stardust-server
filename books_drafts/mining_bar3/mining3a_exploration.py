@@ -1,0 +1,37 @@
+"""Finding the Ore Before You Dig (bar 3, Metallurgist, part A): maps, sensors and drill holes, and what a careful team checks first."""
+CODE = "mining3a_exploration"
+BOOK = {
+    "title": "Finding the Ore Before You Dig",
+    "subtitle": "Maps, sensors and drill holes: how real teams look before they spend",
+    "chapters": [
+        ("Start with the map",
+         "Geologists begin by mapping the rock at the surface. They note the kinds of rock, the cracks and faults, and any old workings. A map tells a team where to look next, and it costs far less than drilling."),
+        ("Magnetic surveys",
+         "An instrument carried over the ground measures tiny changes in the local magnetic field. Rocks rich in magnetite change it strongly, so a survey shows where such rocks lie underground, even when they are hidden under soil."),
+        ("Gravity surveys",
+         "Dense rock pulls a little harder than light rock. Very precise gravity measurements can show a heavy ore body, or a light layer of rock, below the surface. The survey gives a picture of mass hidden underground."),
+        ("Electrical methods",
+         "Sulfide minerals can show an electrical response when a current is passed through the ground. Induced polarisation surveys look for that response. Sulfide-rich ore often stands out clearly in these results."),
+        ("Drilling to test",
+         "A promising target is tested by drilling. Drill core is a long cylinder of rock, and it is logged and sampled along its length. Drilling is costly, so teams drill only their best targets, and a few holes can cost a lot and find little."),
+        ("Order the money",
+         "Each method costs more than the one before. A map costs little, and a drill hole costs much more. A careful team puts the cheap tests first, so they narrow the choice before the expensive ones are paid for."),
+    ],
+    "test": [
+        ("What does a geological map show first?",
+         [("a", "The price of ore"), ("b", "The kinds of rock, cracks and faults"), ("c", "The weather"), ("d", "The colour of the sky")],
+         "b"),
+        ("Which survey picks up rocks rich in magnetite?",
+         [("a", "A taste test"), ("b", "A sound survey"), ("c", "A magnetic survey"), ("d", "A tide chart")],
+         "c"),
+        ("What is drill core?",
+         [("a", "A bag of coins"), ("b", "A shield for a ship"), ("c", "A type of smelter"), ("d", "A long cylinder of rock taken from a drill hole")],
+         "d"),
+        ("Why do teams test cheap methods before they drill?",
+         [("a", "Drilling is costly, so cheaper methods narrow the choice"), ("b", "Drilling is free"), ("c", "Drills are too small to use"), ("d", "Maps are not allowed")],
+         "a"),
+        ("What do induced polarisation surveys look for?",
+         [("a", "Sunlight"), ("b", "An electrical response from sulfides"), ("c", "Wind speed"), ("d", "Sound waves")],
+         "b"),
+    ],
+}
