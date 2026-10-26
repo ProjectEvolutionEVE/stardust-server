@@ -1,0 +1,37 @@
+"""Separating by Weight and by Magnet (bar 3, Metallurgist, part A): sluices, jigs, shaking tables and magnetic drums."""
+CODE = "mining3a_separation"
+BOOK = {
+    "title": "Separating by Weight and by Magnet",
+    "subtitle": "Sluices, jigs and shaking tables for heavy ore, and magnets for magnetite",
+    "chapters": [
+        ("Heavy sinks",
+         "Gravity separation uses the difference in density between ore and waste. In moving water, a heavy grain sinks faster than a light one. Gold, at 19,300 kilograms per cubic metre, is about seven times as dense as quartz, so the difference is large."),
+        ("Sluices and jigs",
+         "A sluice is a long trough with riffles along its floor. Heavy grains settle behind the riffles while the water carries light waste away. A jig pushes water up and down through a bed of ore, so the heavy grains work their way to the bottom."),
+        ("Shaking tables",
+         "A shaking table is a sloping deck that is shaken gently, with a thin film of water flowing across it. Heavy grains and light grains move in different directions, so the mixture spreads into bands. Tables suit fine heavy ore."),
+        ("Magnets pull magnetite",
+         "Magnetite is strongly magnetic, so a magnet can pull it away from waste. A drum separator turns a magnetic drum through a slurry, and magnetic grains cling to it while the waste falls away. Strong magnets suit strongly magnetic ore, and very strong magnets are needed for weakly magnetic minerals."),
+        ("When each method works",
+         "Gravity separation works best when the metal is much denser than the waste. Magnetic separation works only when the ore is magnetic. Neither method works well on a mineral that matches the waste in weight or in magnetism."),
+        ("Aboard",
+         "The game does not model these steps. Each piece is already pure ore mineral (rule 27), and its weight comes from its size and its real density. The methods here are background that explains how real ore is cleaned."),
+    ],
+    "test": [
+        ("Why does gravity separation work?",
+         [("a", "Ore is always red"), ("b", "Ore and waste differ in density"), ("c", "Water is magnetic"), ("d", "Metal floats")],
+         "b"),
+        ("What is a sluice?",
+         [("a", "A type of mill"), ("b", "A furnace"), ("c", "A trough with riffles where heavy grains settle"), ("d", "A ship's hold")],
+         "c"),
+        ("Which ore is pulled out with a magnetic drum separator?",
+         [("a", "Quartz"), ("b", "Ice"), ("c", "Diamond"), ("d", "Magnetite")],
+         "d"),
+        ("What does a shaking table do?",
+         [("a", "Splits grains into bands by weight, with water flowing across"), ("b", "Turns water into ice"), ("c", "Turns metal into gas"), ("d", "Turns rock into dust")],
+         "a"),
+        ("When is gravity separation hard to use?",
+         [("a", "When the metal is much denser than the waste"), ("b", "When the metal and the waste have similar densities"), ("c", "When the metal is very heavy gold"), ("d", "When water is flowing")],
+         "b"),
+    ],
+}

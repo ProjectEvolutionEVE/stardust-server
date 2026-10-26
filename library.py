@@ -13,6 +13,7 @@ import blueprints as BP
 import library_books as LB
 import minerals as MN
 import archives as AR
+import careers as CAR
 
 
 def _catalogue_chapters():
@@ -69,7 +70,14 @@ async def shelves(conn, pid):
         if g == "Making things":         # the handbook sits beside Engineering & Drafting; a design can't require it
             items.insert(1, _entry("blueprint-handbook", LB.BOOKS["blueprint-handbook"]["title"], out_ids, passed))
         groups.append({"group": g, "books": items})
-    return {"shelves": groups, "archives": {"wing": "Archives of Earth", "shelves": AR.shelves()}, "pass_mark": LB.PASS_MARK,
+    # a shelf per career (rule 32), its books in bar order, with the player's bars on that ladder
+    lad = await CAR.all_careers(conn, pid)
+    careers = []
+    for c, l in zip(CAR.CAREERS, lad["careers"]):
+        careers.append(dict(l, books=[dict(_entry(code, None, out_ids, passed), bar=n, perfect=bool(
+            passed.get(code) and passed[code]["score"] >= passed[code]["of_total"]))
+            for n, codes in CAR.books_by_bar(c["code"]).items() for code in codes]))
+    return {"shelves": groups, "careers": careers, "uniform": lad["uniform"], "archives": {"wing": "Archives of Earth", "shelves": AR.shelves()}, "pass_mark": LB.PASS_MARK,
             "passed": len(passed), "note": "The library is free. Read here, or check a book out to your bookshelf."}
 
 

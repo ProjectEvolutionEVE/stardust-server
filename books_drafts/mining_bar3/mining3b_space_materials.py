@@ -1,0 +1,37 @@
+"""Materials for Space (bar 3, Metallurgist, part B): what a material must survive outside the air, from vacuum and heat swings to radiation and debris."""
+CODE = "mining3b_space_materials"
+BOOK = {
+    "title": "Materials for Space",
+    "subtitle": "Vacuum, heat, radiation and impacts: what a material must survive outside the air",
+    "chapters": [
+        ("A harder place",
+         "Space is not just cold. It has near vacuum, strong radiation, sudden swings of heat and tiny fast particles. A material that is fine on the ground must be chosen again for the conditions it will meet in space."),
+        ("Vacuum",
+         "With almost no air, a material cannot shed heat by moving air past it. Gas trapped in some plastics and glues can leak out into the vacuum, which is called outgassing. Clean metal surfaces can even cold weld, sticking together when they are pressed in a vacuum."),
+        ("Hot and cold",
+         "A part in sunlight can be far hotter than the same part in shadow. These swings happen again and again, which makes materials expand and shrink. Different materials expand at different rates, so the joins between them can be strained and crack over time."),
+        ("Radiation",
+         "High-energy radiation from the Sun and from deep space can break chemical bonds in plastics and damage electronics. Dense shielding helps, and engineers choose materials that handle the dose they will receive."),
+        ("Impacts and debris",
+         "Tiny grains of dust and debris move so fast that they can pit a surface. A common protection is a Whipple shield, a thin outer sheet set some distance in front of the main wall. It breaks up a particle before the particle reaches the wall."),
+        ("Choosing for weight",
+         "Every kilogram sent into space costs energy and money, so light materials are prized. Aluminium, titanium and carbon fibre composites are common choices. Each one is picked by weighing strength, heat and cost together."),
+    ],
+    "test": [
+        ("What does outgassing mean?",
+         [("a", "Gas trapped in a material escapes into a vacuum"), ("b", "Gas is pumped into a tank"), ("c", "A ship releases its exhaust"), ("d", "Oxygen turns into water")],
+         "a"),
+        ("What is a Whipple shield for?",
+         [("a", "Stopping heat from the Sun"), ("b", "Holding fuel"), ("c", "Keeping dust out of a hold"), ("d", "Breaking up tiny fast particles before they reach the main wall")],
+         "d"),
+        ("Why do temperature swings matter to materials in space?",
+         [("a", "The materials turn into liquid"), ("b", "The materials expand and shrink, straining their joins"), ("c", "The materials gain magnetism"), ("d", "The materials become heavier")],
+         "b"),
+        ("What can cold welding do in a vacuum?",
+         [("a", "Make metal melt"), ("b", "Turn glass into metal"), ("c", "Make two clean metal surfaces stick together"), ("d", "Remove all the heat")],
+         "c"),
+        ("Why are light materials prized for space?",
+         [("a", "Every kilogram sent into space costs energy and money"), ("b", "Light metals never corrode"), ("c", "Light materials make the Sun brighter"), ("d", "Heavy materials cannot be shaped")],
+         "a"),
+    ],
+}

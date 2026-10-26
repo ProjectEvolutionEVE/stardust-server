@@ -1,0 +1,37 @@
+"""Wear Over Time (bar 3, Metallurgist, part B): fatigue from repeated loads and creep under heat, and how parts fail below their breaking point."""
+CODE = "mining3b_fatigue_creep"
+BOOK = {
+    "title": "Wear Over Time",
+    "subtitle": "Fatigue and creep: how parts fail after many loads, or slowly under heat",
+    "chapters": [
+        ("Failure below the limit",
+         "A part can fail even when every load is well below its breaking point. Two slow processes do it. Fatigue comes from repeated loads, and creep comes from long loads at high heat. Both build up slowly and can end suddenly."),
+        ("Fatigue",
+         "Each load cycle makes a tiny change at a weak spot, often a scratch on the surface or a notch. Over thousands or millions of cycles, a crack forms and grows a little each time. Then the sound metal left behind can no longer carry the load, and the part breaks."),
+        ("The Comet airliners",
+         "In the 1950s, several Comet jet airliners broke up in the air. Investigators found that fatigue cracks had grown from the corners of the square windows. Rounded window corners became a lasting lesson for aircraft design."),
+        ("Creep",
+         "Creep is slow, steady stretching under a constant load, and it happens most at high temperatures. A turbine blade or a pipe in a hot plant can hold a load for years and slowly grow until it fails. Creep matters most when the metal is hotter than roughly 40 per cent of its melting point, measured in kelvin."),
+        ("Designing against both",
+         "Engineers guard against fatigue by keeping stresses low at notches, polishing surfaces and inspecting parts after set hours of use. They guard against creep by choosing alloys that resist slow stretching at the working heat. Creep-resistant alloys often contain nickel and cobalt."),
+        ("Money over the long run",
+         "A cheap part that fails early can cost far more than a stronger one. Inspection, replacement and downtime all add up over the years. Choosing a material for how long it lasts, not only for its price, is a simple way to save money."),
+    ],
+    "test": [
+        ("What is fatigue in a metal?",
+         [("a", "Turning into glass"), ("b", "Becoming magnetic"), ("c", "Failure from repeated loads that grow a crack over time"), ("d", "Heating until it melts")],
+         "c"),
+        ("What went wrong with the Comet airliners?",
+         [("a", "Their paint was too thick"), ("b", "They ran out of fuel"), ("c", "Their engines were made of wood"), ("d", "Fatigue cracks grew from the corners of the square windows")],
+         "d"),
+        ("What is creep?",
+         [("a", "A sudden snap in the cold"), ("b", "Slow stretching under a steady load, most at high temperature"), ("c", "A shiny surface finish"), ("d", "Rust spreading under paint")],
+         "b"),
+        ("Which part is most at risk of creep?",
+         [("a", "A steel nail in a dry box"), ("b", "A wooden table"), ("c", "A turbine blade in a hot engine"), ("d", "A glass bottle on a shelf")],
+         "c"),
+        ("Which step reduces the risk of fatigue at a notch?",
+         [("a", "Adding a sharp corner"), ("b", "Rounding and polishing the notch"), ("c", "Heating it in the sun"), ("d", "Leaving a scratch in place")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Ceramics and Glass (bar 3, Metallurgist, part B): hard, heat-proof, brittle materials made from fired minerals and sand."""
+CODE = "mining3b_ceramics"
+BOOK = {
+    "title": "Ceramics and Glass",
+    "subtitle": "Hard, heat-proof and brittle: materials made from fired rock and sand",
+    "chapters": [
+        ("Not metal",
+         "Ceramics and glass are not metals. They are made from minerals, usually by heating powders until the grains fuse. Most of them do not conduct electricity well, and many keep their shape at temperatures that would soften most metals."),
+        ("Firing a ceramic",
+         "A ceramic is shaped from powder and then fired in a kiln or furnace. The heat fuses the grains into a hard solid. Clay pots, bricks and roof tiles are all fired ceramics."),
+        ("Advanced ceramics",
+         "Advanced ceramics are made from purer powders, such as alumina, silicon carbide and zirconia. They are very hard, resist wear and handle great heat, so they are used for cutting tools, bearings and engine parts."),
+        ("Glass has no pattern",
+         "Glass is an amorphous solid, which means its atoms are arranged without a repeating pattern. Its main ingredient is silica, the mineral in common sand. Soda and lime are added to make it easier to melt and shape."),
+        ("Brittle by nature",
+         "In ceramics and glass, the atoms cannot easily slide past one another, so there is little bending before they break. They fail suddenly. A glass bottle survives a gentle squeeze but shatters when dropped on a hard floor."),
+        ("Heat shields",
+         "Ceramic tiles protect spacecraft when they return through the air, because they can take intense heat without melting. The Space Shuttle's tiles were made mostly of silica fibre. Basalt, the rock in our catalogue, can be melted and spun into a similar fibre."),
+    ],
+    "test": [
+        ("What is glass, in terms of its atoms?",
+         [("a", "An amorphous solid with no repeating pattern"), ("b", "A crystal of pure iron"), ("c", "A liquid metal"), ("d", "A gas")],
+         "a"),
+        ("What is the main ingredient of ordinary glass?",
+         [("a", "Iron ore"), ("b", "Silica, which is sand"), ("c", "Coal"), ("d", "Sugar")],
+         "b"),
+        ("Why do ceramics usually break suddenly instead of bending?",
+         [("a", "They are made of liquid"), ("b", "They are coated in rust"), ("c", "Their atoms cannot easily slide past one another"), ("d", "They are too cold")],
+         "c"),
+        ("What is firing?",
+         [("a", "Cooling a metal in water"), ("b", "Painting a surface with zinc"), ("c", "Breaking rock with a hammer"), ("d", "Heating a shaped powder until its grains fuse")],
+         "d"),
+        ("Why were ceramic tiles used on the Space Shuttle?",
+         [("a", "They float in air"), ("b", "They can take intense heat during re-entry"), ("c", "They are made of gold"), ("d", "They conduct electricity very well")],
+         "b"),
+    ],
+}

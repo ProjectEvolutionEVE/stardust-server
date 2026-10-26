@@ -1,0 +1,37 @@
+"""Pulling and Pressing (bar 3, Metallurgist, part B): tensile and hardness tests, and how labs measure what a metal can take."""
+CODE = "mining3b_hardness_tensile"
+BOOK = {
+    "title": "Pulling and Pressing",
+    "subtitle": "Tensile and hardness tests: how labs measure how a metal behaves",
+    "chapters": [
+        ("Why test a metal",
+         "Before a metal goes into a part, engineers test it. They want to know how much load it can take, how far it stretches and how hard its surface is. A test gives numbers, and numbers can be compared from one batch to the next."),
+        ("The tensile test",
+         "In a tensile test, a machine pulls a standard bar at a steady rate while it measures the force and the stretch. The results are plotted as a stress-strain curve. Stress is the force spread over the bar's cross-section, and strain is how far the bar has stretched."),
+        ("Yield and breaking",
+         "The yield strength is the stress at which the metal starts to bend for good, instead of springing back. The ultimate tensile strength is the highest stress the bar takes before it necks down and fails. Elongation shows how far the bar stretched before it broke."),
+        ("Hardness tests",
+         "A hardness test presses a hard tip into the surface and measures the mark it leaves. Brinell uses a ball, Rockwell reads the depth of the mark, and Vickers uses a diamond pyramid. The scales differ, so a hardness number must always name its test."),
+        ("Mohs for minerals",
+         "The Mohs scale is a simple scratch test for minerals, from talc at 1 to diamond at 10. It is quick and useful in the field, but it does not measure strength. A geologist uses it on a rock outcrop, and a metallurgist uses a machine."),
+        ("Tests cost, failures cost more",
+         "A test takes time and money, and a failed batch costs far more. Buyers often ask for a test certificate with each batch of metal. A modest cost for testing can prevent an expensive failure later."),
+    ],
+    "test": [
+        ("What does a tensile test do?",
+         [("a", "Heats the metal until it melts"), ("b", "Pulls a standard bar until it fails, measuring force and stretch"), ("c", "Drops a weight onto the metal"), ("d", "Rubs the metal with sand")],
+         "b"),
+        ("What is yield strength?",
+         [("a", "The stress at which the metal starts to bend permanently"), ("b", "The colour of the metal"), ("c", "The weight of a bar"), ("d", "The temperature at which the metal melts")],
+         "a"),
+        ("Which hardness test uses a diamond pyramid?",
+         [("a", "Brinell"), ("b", "Mohs"), ("c", "Rockwell"), ("d", "Vickers")],
+         "d"),
+        ("On the Mohs scale, which mineral is the hardest?",
+         [("a", "Talc"), ("b", "Quartz"), ("c", "Diamond"), ("d", "Gypsum")],
+         "c"),
+        ("Why must a hardness number name its test?",
+         [("a", "Because each test uses a different scale"), ("b", "Because hardness is measured in litres"), ("c", "Because all tests give the same number"), ("d", "Because the numbers are chosen at random")],
+         "a"),
+    ],
+}

@@ -677,6 +677,86 @@ async def main():
     r3 = await cl.get("/api/dfg/inventory", headers=HL); inv = await r3.json()
     shelf = next(p for p in inv["places"] if p["kind"] == "bookshelf")
     check("returning a book takes it off the bookshelf", r.status == 200 and shelf["items"] == [])
+    # ---- career ladders (rule 32): bars, gold vs silver, skill, uniform and title ----
+    import careers as CAR
+    HC = {"X-Dev-Player": "tester-career"}
+    async def take(book, misses=0):
+        ans = {str(i): ("x" if i < misses else a) for i, (_, _, a) in enumerate(LB.BOOKS[book]["test"])}
+        return await (await cl.post("/api/dfg/library/test", headers=HC, json={"book": book, "answers": ans})).json()
+    async def ladder(code):
+        j = await (await cl.get("/api/dfg/careers", headers=HC)).json()
+        return next(c for c in j["careers"] if c["code"] == code)
+    fl = CAR.books_by_bar("flight")
+    j = await (await cl.get("/api/dfg/careers", headers=HC)).json()
+    check("eight careers, five bars each, thresholds 5/20/65/185/510, career books loaded into the library",
+          [c["code"] for c in j["careers"]] == ["flight", "business", "science", "engineering", "mining", "medicine", "computing", "navigation"]
+          and all(len(c["bars"]) == 5 for c in j["careers"]) and j["thresholds"] == [5, 20, 65, 185, 510]
+          and len(fl[1]) >= 5 and len(fl[2]) >= 15 and all(LB.BOOKS[b]["bar"] == 1 for b in fl[1]) and j["uniform"] is None)
+    me = await (await cl.get("/api/dfg/me", headers=HC)).json()
+    check("no bars yet: the title is Trainee and the skill is 0", me["rank"] == "Trainee" and me["career"]["skill_pct"] == 0)
+    r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "flight"})
+    check("no Flight pass yet: its uniform isn't in the Closet", r.status == 422)
+    for b in fl[1][:-1]:
+        await take(b)
+    l = await ladder("flight")
+    check("one bar-1 book not passed: the bar isn't earned", not l["bars"][0]["earned"] and l["bars"][0]["passed"] == len(fl[1]) - 1)
+    t = await take(fl[1][-1], misses=1)
+    l = await ladder("flight")
+    check("every bar-1 book passed, one with a miss: bar 1 is SILVER, title Pilot, skill +10%",
+          t["passed"] and t["score"] == 4 and l["bars"][0]["earned"] and l["bars"][0]["medal"] == "silver"
+          and l["title"] == "Pilot" and abs(l["skill_pct"] - 10) < 1e-9)
+    await take(fl[1][-1], misses=2)                   # a worse retake never lowers the best score
+    l2 = await ladder("flight")
+    await take(fl[1][-1])
+    l = await ladder("flight")
+    check("a worse retake keeps silver; a perfect retake turns bar 1 GOLD (+11%)",
+          l2["bars"][0]["medal"] == "silver" and l["bars"][0]["medal"] == "gold" and abs(l["skill_pct"] - 11) < 1e-9)
+    r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "flight"}); w = await r.json()
+    me = await (await cl.get("/api/dfg/me", headers=HC)).json()
+    check("wearing the Flight uniform: addressed as Pilot, /me carries its bars and skill",
+          r.status == 200 and me["uniform"] == "flight" and me["rank"] == "Pilot" and me["title"] == "Pilot"
+          and me["career"]["bars"][0]["medal"] == "gold" and abs(me["career"]["skill_pct"] - 11) < 1e-9)
+    for b in fl[2]:
+        await take(b)
+    l = await ladder("flight")
+    check("all bar-2 books perfect: bar 2 GOLD, Senior Pilot, skill 11 + 6.6",
+          l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
+    check("bar 3 has fewer books written than its 65 threshold: it can't be earned yet, and says so",
+          not l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Not open yet" in l["bars"][2]["note"])
+    nv = CAR.books_by_bar("navigation")
+    for b in nv[2]:
+        await take(b)
+    l = await ladder("navigation")
+    check("bar 2's books without bar 1: no bar (one step at a time)", l["step"] == 0 and not l["bars"][1]["earned"]
+          and "first" in l["bars"][1]["note"] and l["title"] == "Trainee")
+    for b in nv[1]:
+        await take(b, misses=1)
+    l = await ladder("navigation")
+    check("bar 1 silver, bar 2 gold: each bar's medal is its own; skill 10 + 6.6",
+          l["bars"][0]["medal"] == "silver" and l["bars"][1]["medal"] == "gold" and abs(l["skill_pct"] - 16.6) < 1e-9)
+    s = await (await cl.get("/api/dfg/library", headers=HC)).json()
+    fs = next(c for c in s["careers"] if c["code"] == "flight")
+    check("the library has a shelf per career, books tagged by bar, with the ladder",
+          len(s["careers"]) == 8 and len([b for b in fs["books"] if b["bar"] <= 2]) == len(fl[1]) + len(fl[2])
+          and all(b["passed"] and b["perfect"] for b in fs["books"] if b["bar"] <= 2)
+          and fs["bars"][1]["medal"] == "gold" and s["uniform"] == "flight")
+    async with cl.app["pool"].acquire() as c:
+        cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")
+        await c.execute("UPDATE players SET parked=$2 WHERE id=$1", cpid, json.dumps({"pos": [0, 0, 0]}))
+        r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "navigation"})
+        await c.execute("UPDATE players SET parked=NULL WHERE id=$1", cpid)
+    check("out in the craft: uniforms are changed only in the quarters", r.status == 422 and "quarters" in (await r.json())["error"])
+    r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "navigation"})
+    me = await (await cl.get("/api/dfg/me", headers=HC)).json()
+    check("in the quarters: change to Navigation, addressed as Senior Navigator", r.status == 200 and me["rank"] == "Senior Navigator")
+    r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "pirate"})
+    r2 = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": None})
+    me = await (await cl.get("/api/dfg/me", headers=HC)).json()
+    check("an unknown uniform is refused; the Trainee's plain uniform makes the title Trainee again",
+          r.status == 422 and r2.status == 200 and me["uniform"] is None and me["rank"] == "Trainee")
+    sv, gd = CAR.gains({})
+    check("skill gains: silver 10, 6, 3.6, 2.16, 1.296; gold 1.1x (all five: 23.056 / 25.3616)",
+          [round(x, 4) for x in sv] == [10, 6, 3.6, 2.16, 1.296] and abs(sum(gd) - 1.1 * sum(sv)) < 1e-9)
     # brand new, an upgrade, or a newer version or model (Eric 10-11)
     r = await cl.get("/api/dfg/blueprints/options", headers=HB); o = await r.json()
     codes = {b["code"]: b for b in o["bases"]}

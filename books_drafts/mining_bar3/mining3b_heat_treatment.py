@@ -1,0 +1,37 @@
+"""Heat, Cool, Repeat (bar 3, Metallurgist, part B): annealing, quenching and tempering, and how one steel can be soft or hard."""
+CODE = "mining3b_heat_treatment"
+BOOK = {
+    "title": "Heat, Cool, Repeat",
+    "subtitle": "Annealing, quenching and tempering: how the same steel can be soft or hard",
+    "chapters": [
+        ("The same steel, different results",
+         "The same piece of steel can be soft enough to file or hard enough to scratch glass. The difference comes from how it is heated and cooled. This is heat treatment, and it changes the steel's structure without changing its shape."),
+        ("Annealing",
+         "Annealing heats a metal and then lets it cool slowly. The atoms settle into a softer, more even pattern, and the strain from bending or hammering is eased. An annealed metal is easier to shape again."),
+        ("Quenching",
+         "Quenching cools hot steel very fast, by dropping it into water or oil. The carbon is trapped in a hard, strained structure called martensite. Quenched steel is very hard, but it is also brittle and can crack."),
+        ("Tempering",
+         "Tempering reheats quenched steel to a lower temperature and holds it there for a while. Some of the hardness is traded away, and the steel becomes tougher, able to bend a little before it breaks. Tools and springs are often tempered."),
+        ("Cooling speed",
+         "How fast steel cools decides what structure it gets. Slow cooling gives soft pearlite, very fast cooling gives hard martensite, and cooling in between gives a mix. A thick piece cools more slowly in its middle than at its surface, so its size matters too."),
+        ("A sequence of choices",
+         "A blacksmith may heat, hammer, anneal and harden a blade several times, each step set to what the steel must do next. Heat treatment is a series of choices, not one magic step."),
+    ],
+    "test": [
+        ("What does annealing usually do to steel?",
+         [("a", "Makes it harder and more brittle"), ("b", "Softens it and eases the strain"), ("c", "Turns it into glass"), ("d", "Adds carbon to its surface")],
+         "b"),
+        ("What is quenching?",
+         [("a", "Heating steel very slowly"), ("b", "Coating steel in zinc"), ("c", "Grinding steel to dust"), ("d", "Cooling hot steel very fast in water or oil")],
+         "d"),
+        ("What is martensite?",
+         [("a", "A hard, strained structure formed by quenching"), ("b", "A soft layer of gold"), ("c", "A type of rust"), ("d", "A ceramic tile")],
+         "a"),
+        ("Why is quenched steel tempered?",
+         [("a", "To make it brittle again"), ("b", "To make it tougher, so it can bend a little before it breaks"), ("c", "To remove all of its carbon"), ("d", "To make it melt")],
+         "b"),
+        ("Which cooling gives the hardest steel?",
+         [("a", "Very slow cooling in a furnace"), ("b", "Cooling in a bucket of warm sand"), ("c", "Fast quenching in water or oil"), ("d", "Wrapping it in cloth")],
+         "c"),
+    ],
+}

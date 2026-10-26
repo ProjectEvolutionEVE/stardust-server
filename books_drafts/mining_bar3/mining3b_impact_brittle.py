@@ -1,0 +1,37 @@
+"""When Metal Cracks (bar 3, Metallurgist, part B): impact tests, the ductile-to-brittle transition, and why some steel breaks in the cold."""
+CODE = "mining3b_impact_brittle"
+BOOK = {
+    "title": "When Metal Cracks",
+    "subtitle": "Impact tests and brittle fracture: why some steel breaks in the cold",
+    "chapters": [
+        ("A sudden blow",
+         "A part can pass a slow pull test and still fail when it is struck hard. Impact tests check how much energy a metal can absorb in a sudden blow. The word for that ability is toughness."),
+        ("The Charpy test",
+         "In the common Charpy test, a notched bar sits on two supports, and a heavy pendulum swings down and breaks it. The energy the pendulum loses, measured in joules, shows how tough the metal is. The notch makes the test strict on purpose."),
+        ("Ductile and brittle",
+         "A ductile metal stretches and tears slowly, and it takes a lot of energy to break. A brittle metal breaks almost at once, with little stretch and little energy absorbed. Many steels move from the tough state to the brittle state as the temperature falls."),
+        ("The cold changes things",
+         "The temperature at which a steel changes from tough to brittle is called the ductile-to-brittle transition. Engineers test impact at the coldest temperature a part will see. A bridge in winter faces the cold, not only the summer heat."),
+        ("Notches and sharp corners",
+         "A sharp corner, notch or crack packs stress into a tiny spot. A small flaw can start a brittle fracture that runs through the whole part. This is why designers round off corners and avoid sudden changes in shape."),
+        ("A hard lesson",
+         "During the Second World War, some welded cargo ships of the Liberty type cracked in two in cold seas. The steel, the welds and the cold were all part of the cause. Engineers learned to test for toughness at low temperatures and to design away from sharp corners."),
+    ],
+    "test": [
+        ("What does an impact test measure?",
+         [("a", "How much energy a metal can absorb in a sudden blow"), ("b", "The colour of the metal"), ("c", "The temperature at which it melts"), ("d", "How much it weighs")],
+         "a"),
+        ("What unit is the energy in a Charpy test given in?",
+         [("a", "Litres"), ("b", "Kelvin"), ("c", "Joules"), ("d", "Carats")],
+         "c"),
+        ("What is the ductile-to-brittle transition?",
+         [("a", "A type of paint"), ("b", "The point where iron turns into gold"), ("c", "The temperature where a metal starts to change from tough to brittle"), ("d", "The moment a metal melts")],
+         "c"),
+        ("Why does a sharp notch make a part more likely to break?",
+         [("a", "It concentrates stress into a tiny spot"), ("b", "It adds weight"), ("c", "It cools the part down"), ("d", "It removes all the carbon")],
+         "a"),
+        ("What lesson came from the welded Liberty ships in cold seas?",
+         [("a", "Ships should never be built of steel"), ("b", "Cold water makes steel stronger every time"), ("c", "Welding has no effect on a ship's steel"), ("d", "Cold can make tough steel fail, so toughness must be tested at low temperature")],
+         "d"),
+    ],
+}

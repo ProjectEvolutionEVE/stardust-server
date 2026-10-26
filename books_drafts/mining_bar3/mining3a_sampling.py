@@ -1,0 +1,37 @@
+"""A Sample That Means Something (bar 3, Metallurgist, part A): how to take a piece of rock that speaks for the whole."""
+CODE = "mining3a_sampling"
+BOOK = {
+    "title": "A Sample That Means Something",
+    "subtitle": "How to take a piece of the rock that truly speaks for the whole",
+    "chapters": [
+        ("A sample is not the deposit",
+         "A sample is a small piece of a much larger body of rock. Its value depends on whether it represents the whole, rather than only a lucky or unlucky part. A poor sample can mislead a whole project, however good the lab that tests it."),
+        ("The nugget effect",
+         "Coarse gold often sits in a few large grains. A small sample may miss those grains and read low, or catch one grain and read high. This is called the nugget effect. The fix is more samples, or larger ones."),
+        ("Sampling error",
+         "Even a careful sample carries some error. For a given sample size, the error grows when the grains are large and the metal is rare. Teams plan the sample size before they start, so the answer is good enough for the decision it supports."),
+        ("Crush, mix and split",
+         "Large samples are crushed and then split down in steps. Each step must mix the material first, so that every part has the same chance of going into the portion that is kept. Skipping the mixing is a common source of bias."),
+        ("Channels and drill core",
+         "A rock face can be sampled in a channel, a narrow cut across a band of rock. Drill core is split along its length, with half sent to the lab and half kept. Keeping half lets someone check the result later."),
+        ("The game's pieces",
+         "The game does not ask you to take samples. Each debris piece is pure ore mineral (rule 27), so its formula gives its metal's share exactly. The methods in this book are real-world background."),
+    ],
+    "test": [
+        ("What does a good sample do?",
+         [("a", "Represents the whole body of rock"), ("b", "Shows only the best piece"), ("c", "Hides the metal"), ("d", "Melts in the lab")],
+         "a"),
+        ("What is the nugget effect?",
+         [("a", "A type of diamond"), ("b", "Coarse gold in few grains, which makes small samples unreliable"), ("c", "Metal with no weight"), ("d", "A very rare gas")],
+         "b"),
+        ("Why is half of a drill core split off and kept?",
+         [("a", "To make it lighter"), ("b", "To sell it"), ("c", "So others can check the result later"), ("d", "To burn it")],
+         "c"),
+        ("How do labs reduce bias when splitting a sample?",
+         [("a", "They take only the top layer"), ("b", "They split it by hand without mixing"), ("c", "They use only the heaviest pieces"), ("d", "They crush, mix and split in steps")],
+         "d"),
+        ("For a given sample size, what makes the sampling error larger?",
+         [("a", "Large grains of a rare metal, such as coarse gold"), ("b", "Thorough mixing"), ("c", "Many small pieces"), ("d", "A riffle splitter")],
+         "a"),
+    ],
+}

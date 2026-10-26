@@ -1,0 +1,37 @@
+"""Iron and Carbon (bar 3, Metallurgist, part B): the iron-carbon system, and the phases of ferrite, austenite, cementite and pearlite."""
+CODE = "mining3b_iron_carbon"
+BOOK = {
+    "title": "Iron and Carbon",
+    "subtitle": "The iron-carbon system: ferrite, austenite, cementite and pearlite",
+    "chapters": [
+        ("Why carbon matters",
+         "Iron on its own is fairly soft. Add a little carbon and the mix can be made much harder. Almost all steel is iron with carbon in it, and the amount of carbon sets much of how the steel behaves."),
+        ("Ferrite",
+         "Ferrite is nearly pure iron, with very little carbon dissolved in it. It is soft and easy to bend, and its atoms form the body-centred cubic pattern. At room temperature, the iron in most plain steel is ferrite."),
+        ("Austenite",
+         "Heat iron above about 912 C and its atoms rearrange into a face-centred pattern called austenite. Austenite can hold far more carbon than ferrite, up to about 2 per cent at its hottest point. Steel is heated into the austenite range before it is shaped or hardened."),
+        ("Cementite",
+         "Cementite is iron carbide, a hard and brittle compound with the formula Fe3C. It forms when there is more carbon than the iron can hold. A steel with cementite in it is harder, but it cracks more easily."),
+        ("Pearlite",
+         "Austenite cooled slowly at about 0.8 per cent carbon turns into pearlite. Pearlite is a fine layered mix of ferrite and cementite. It is strong without being too brittle, which makes it a useful middle ground."),
+        ("Reading the system",
+         "Engineers use a chart called the iron-carbon diagram to see which phase a steel will form at each temperature and carbon content. The chart is the map that heat treatment follows."),
+    ],
+    "test": [
+        ("What is ferrite?",
+         [("a", "Nearly pure iron, soft, with very little carbon"), ("b", "A hard carbide of iron"), ("c", "A type of glass"), ("d", "Liquid steel")],
+         "a"),
+        ("What is cementite?",
+         [("a", "Iron carbide, hard and brittle"), ("b", "Soft, pure iron"), ("c", "A zinc coating"), ("d", "A ceramic tile")],
+         "a"),
+        ("When does austenite form in iron?",
+         [("a", "When iron is cooled to freezing"), ("b", "When iron is heated above about 912 C"), ("c", "When iron is struck with a hammer"), ("d", "When iron is put in water")],
+         "b"),
+        ("What is pearlite?",
+         [("a", "A pearl from the sea"), ("b", "A pure gold alloy"), ("c", "A layered mix of ferrite and cementite"), ("d", "Cast iron with flakes of graphite")],
+         "c"),
+        ("What does the iron-carbon diagram show?",
+         [("a", "Which phase forms at each temperature and carbon content"), ("b", "The price of iron ore"), ("c", "The colour of rust"), ("d", "How much steel a furnace can hold")],
+         "a"),
+    ],
+}

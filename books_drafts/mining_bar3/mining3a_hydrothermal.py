@@ -1,0 +1,37 @@
+"""Hot Water, Cold Rock (bar 3, Metallurgist, part A): how hot fluids carry metal through cracks and leave it behind."""
+CODE = "mining3a_hydrothermal"
+BOOK = {
+    "title": "Hot Water, Cold Rock",
+    "subtitle": "How hot fluids carry metal through cracks and leave it behind",
+    "chapters": [
+        ("Water under the ground",
+         "Water heated by hot rock below the surface can carry dissolved metal, though only in very small amounts. It moves through cracks and tiny pores in the rock. The hotter and more pressurised the water, the more it can hold."),
+        ("Leaving the metal behind",
+         "Metal stays dissolved only while the conditions stay the same. When the temperature or pressure falls, or the chemistry of the water changes, the metal comes out as solid minerals. Those minerals gather in the cracks they flowed through."),
+        ("Veins",
+         "A vein is a sheet of minerals filling a crack in the rock. Quartz is common in many veins, and gold, silver and sulfide minerals can sit inside them. Veins can be thin and rich, or wide and deep."),
+        ("Porphyry copper",
+         "Large copper deposits often form around a body of cooled magma called a porphyry. Hot fluids from it spread through the surrounding rock and leave copper sulfides in fine cracks. Many of these deposits hold less than one per cent copper, but they are very large."),
+        ("Epithermal deposits",
+         "Epithermal deposits form nearer the surface, from hot fluids at lower temperatures than the deepest veins. They can hold gold and silver in thin veins and in cracks near the surface. Their metal is often easier to reach than deep ore."),
+        ("Size against richness",
+         "A porphyry is big but low in grade, so it needs a large plant and a steady flow of ore to pay back its cost. A rich vein is small and needs less equipment, but it may not last long. Choosing between them is a question of cost and size, as well as metal."),
+    ],
+    "test": [
+        ("What carries metal in a hydrothermal deposit?",
+         [("a", "Hot water"), ("b", "Wind"), ("c", "Dry sand"), ("d", "Frozen ice")],
+         "a"),
+        ("What often makes dissolved metal come out of hot water?",
+         [("a", "Sunlight"), ("b", "A fall in temperature or pressure, or a change in chemistry"), ("c", "Adding more water"), ("d", "Blowing on it")],
+         "b"),
+        ("What is a vein?",
+         [("a", "A river bed"), ("b", "A type of furnace"), ("c", "A sheet of minerals filling a crack"), ("d", "A pipe for water")],
+         "c"),
+        ("Porphyry copper deposits are best described as:",
+         [("a", "Small and very rich"), ("b", "Made of pure gold"), ("c", "Found only in ice"), ("d", "Large, and often low in grade")],
+         "d"),
+        ("Where do epithermal deposits form?",
+         [("a", "Nearer the surface, from hot fluids at lower temperatures"), ("b", "Deep in the mantle"), ("c", "In space"), ("d", "From sea ice")],
+         "a"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Cast Iron or Steel (bar 3, Metallurgist, part B): how carbon content separates cast iron from steel, and which job suits each."""
+CODE = "mining3b_cast_steel"
+BOOK = {
+    "title": "Cast Iron or Steel",
+    "subtitle": "Carbon content decides the difference, and each one suits a different job",
+    "chapters": [
+        ("One rule of thumb",
+         "Steel is iron with less than about 2 per cent carbon. Cast iron has more, usually between 2 and 4 per cent. The line between them is set by how much carbon the iron holds."),
+        ("Straight from the furnace",
+         "A blast furnace makes pig iron, which holds about 4 per cent carbon and is brittle. Pig iron is melted again and poured into moulds. Most of it becomes steel in a later step, because the extra carbon has to come out."),
+        ("Cast iron",
+         "Cast iron melts at a low enough heat to flow into fine shapes. In grey cast iron, the carbon forms flakes of graphite, which make it easy to machine and good at soaking up vibration. It handles squeezing well, but it breaks easily when it is hit or bent."),
+        ("Steel",
+         "Steel can be forged, rolled, drawn into wire and welded. It bends and stretches before it breaks, so it can take a knock. That is why steel is chosen for beams, rails, tools and ship plates."),
+        ("How each is shaped",
+         "Cast iron is made by pouring molten metal into a mould, which suits engine blocks and pipes. Steel is more often shaped while hot, by forging or rolling. The way a part is made is part of the choice of metal."),
+        ("Alloy steels",
+         "Adding chromium, nickel, manganese or molybdenum to steel makes an alloy steel. These can be harder, tougher or more resistant to rust than plain carbon steel. Stainless steel is an alloy steel with enough chromium to resist staining."),
+    ],
+    "test": [
+        ("Roughly how much carbon does cast iron hold?",
+         [("a", "0.1 per cent"), ("b", "2 to 4 per cent"), ("c", "10 per cent"), ("d", "50 per cent")],
+         "b"),
+        ("What is pig iron?",
+         [("a", "A soft steel for wire"), ("b", "A coating that stops rust"), ("c", "A brittle iron, about 4 per cent carbon, from the blast furnace"), ("d", "Pure silver")],
+         "c"),
+        ("Why does grey cast iron machine easily?",
+         [("a", "Its carbon forms flakes of graphite"), ("b", "It is pure gold"), ("c", "It is made of glass"), ("d", "It is liquid at room temperature")],
+         "a"),
+        ("Which property makes steel suitable for beams and rails?",
+         [("a", "It shatters when it is struck"), ("b", "It is a liquid at room temperature"), ("c", "It cannot be welded"), ("d", "It bends and stretches before it breaks")],
+         "d"),
+        ("Which element makes steel stainless?",
+         [("a", "Chromium"), ("b", "Sulfur"), ("c", "Phosphorus"), ("d", "Carbon in large amounts")],
+         "a"),
+    ],
+}

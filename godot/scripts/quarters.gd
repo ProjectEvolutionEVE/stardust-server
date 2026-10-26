@@ -12,6 +12,8 @@ var overview: Control
 var tab_view: VBoxContainer
 var backdrop: TextureRect
 var shade: ColorRect
+var who: HBoxContainer
+var closet: VBoxContainer
 
 
 func _ready() -> void:
@@ -30,7 +32,10 @@ func _ready() -> void:
 	add_child(shade)
 	move_child(shade, 2)
 	box.add_child(Ui.label(me.get("location", "Private Quarters"), 40, Ui.GOLD))
-	box.add_child(Ui.label(me.get("title", ""), 24, Ui.MUTED))
+	who = HBoxContainer.new()                  # the title, the worn uniform's colour and its bars (rule 32)
+	who.add_theme_constant_override("separation", 12)
+	box.add_child(who)
+	_show_who(me)
 	overview = _room()
 	box.add_child(overview)
 	_library_alert(box, me.get("skills", {}))
@@ -49,13 +54,20 @@ func _ready() -> void:
 	tab_view.add_child(tabs)
 	tabs.add_child(_bed(me))
 	tabs.add_child(preload("res://scripts/desk.gd").new())
-	for name in ["Closet", "Bookshelf"]:
+	closet = VBoxContainer.new()
+	closet.name = "Closet"
+	closet.add_theme_constant_override("separation", 12)
+	tabs.add_child(closet)
+	for name in ["Bookshelf"]:
 		var t := VBoxContainer.new()
 		t.name = name
 		t.add_child(Ui.label("Coming to the app soon. Open it in the browser game for now.", 24, Ui.MUTED))
 		tabs.add_child(t)
 	tabs.add_child(preload("res://scripts/cabinet.gd").new())
 	tabs.tab_changed.connect(func(_i): _closeup())
+	closet.visibility_changed.connect(func():
+		if closet.is_visible_in_tree():
+			_load_closet())
 	var spacer := Control.new()                # on the room view, keeps the exit button at the bottom
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	spacer.name = "spacer"
@@ -113,6 +125,86 @@ func _room() -> Control:
 		glow.tween_property(b, "modulate", Color(1.25, 1.2, 1.05), 1.2).set_trans(Tween.TRANS_SINE)
 		glow.tween_property(b, "modulate", Color(0.85, 0.85, 0.85), 1.2).set_trans(Tween.TRANS_SINE)
 	return pic
+
+
+## Where the player's name shows: their title (the worn career's highest step), its uniform colour and its bars.
+func _show_who(me: Dictionary) -> void:
+	for c in who.get_children():
+		c.queue_free()
+	var career: Dictionary = me.get("career") if me.get("career") is Dictionary else {}
+	if career.get("colour") != null:
+		who.add_child(Ui.swatch(career.colour, 24))
+	var t := Ui.label(str(me.get("title", "")), 24, Ui.MUTED)
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	who.add_child(t)
+	var bars: Array = career.get("bars", [])
+	if not bars.is_empty():
+		who.add_child(Ui.bar_strip(bars, 18))
+
+
+## The Closet (rule 32): a uniform for every career studied; one is worn, and its title is the one the player goes by.
+func _load_closet() -> void:
+	var r := await Api.call_api("GET", "/api/dfg/careers")
+	if not r.ok:
+		_closet_clear()
+		closet.add_child(Ui.label(r.error, 24, Ui.GOLD))
+		return
+	render_closet(r.data)
+
+
+func _closet_clear() -> void:
+	for c in closet.get_children():
+		c.queue_free()
+
+
+func render_closet(data: Dictionary) -> void:
+	_closet_clear()
+	closet.add_child(Ui.label("Your uniforms", 30, Ui.GOLD))
+	closet.add_child(Ui.label("Wear one at a time. The career you wear gives its skill bonus and the title you are addressed by.", 22, Ui.MUTED))
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	closet.add_child(scroll)
+	var list := VBoxContainer.new()
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	list.add_theme_constant_override("separation", 10)
+	scroll.add_child(list)
+	var worn = data.get("uniform")
+	list.add_child(_uniform_row(null, "Trainee coveralls", "Trainee", null, [], worn == null, true))
+	for c in data.careers:
+		var skill: String = " · skill +%s%%" % Ui.dec(float(c.skill_pct), 2) if float(c.skill_pct) > 0 else ""
+		list.add_child(_uniform_row(c.code, c.name, str(c.title) + skill, c.colour, c.bars, worn == c.code, c.studied))
+
+
+func _uniform_row(code, name: String, sub: String, colour, bars: Array, worn: bool, open: bool) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	row.add_child(Ui.swatch(colour, 40))
+	var b := Ui.button(("✓ " if worn else "") + name + "  ·  " + sub, false)
+	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.clip_text = true
+	b.add_theme_font_size_override("font_size", 22)
+	b.disabled = worn or not open
+	if not open:
+		b.text = name + "  ·  not studied yet"
+	b.pressed.connect(_wear.bind(code))
+	row.add_child(b)
+	if open and not bars.is_empty():
+		row.add_child(Ui.bar_strip(bars, 12))
+	return row
+
+
+func _wear(code) -> void:
+	var r := await Api.call_api("POST", "/api/dfg/closet/uniform", {"career": code})
+	if not r.ok:
+		Ui.error(self, r.error)
+		return
+	var me := await Api.call_api("GET", "/api/dfg/me")
+	if me.ok:
+		Session.me = me.data
+		_show_who(me.data)
+	_load_closet()
 
 
 func _show_room() -> void:

@@ -1,0 +1,37 @@
+"""Bubbles That Carry the Ore (bar 3, Metallurgist, part A): how finely ground ore is floated so that sulfide minerals rise into a froth."""
+CODE = "mining3a_flotation"
+BOOK = {
+    "title": "Bubbles That Carry the Ore",
+    "subtitle": "How finely ground ore is floated so that sulfide minerals rise into a froth",
+    "chapters": [
+        ("Mixed into a slurry",
+         "Finely ground ore is mixed with water to make a slurry. Air is then blown through it, and the mineral grains are sorted by whether their surfaces repel water. That single difference does most of the work."),
+        ("Surfaces that repel water",
+         "Many sulfide minerals have surfaces that repel water. A chemical called a collector sticks to the sulfide grains and makes them even more water-repelling. Waste rock stays wet and sinks to the bottom of the tank."),
+        ("Bubbles carry the grains",
+         "Air bubbles stick to the water-repelling grains and carry them up to a froth on the surface. The froth is skimmed off as a concentrate, which is much richer in metal than the ore that went in."),
+        ("Frothers and pH",
+         "A frother makes the bubbles stable enough to carry their load. The acidity or alkalinity of the slurry, its pH, is also controlled, because it decides which minerals the collector will stick to."),
+        ("Copper, zinc and lead",
+         "Flotation is used for many sulfide ores. Chalcopyrite is floated for copper, sphalerite for zinc and galena for lead. Copper porphyries, which are often low in grade, are treated this way on a very large scale."),
+        ("Recovery and cost",
+         "A flotation plant is judged by its recovery, the share of the metal it captures, and by the grade of its concentrate. Reagents and power cost money for every tonne. A plant that recovers more metal for the same cost earns more from each tonne it handles."),
+    ],
+    "test": [
+        ("What does a collector do in flotation?",
+         [("a", "Melts gold"), ("b", "Freezes the ore"), ("c", "Makes sulfide grains water-repelling"), ("d", "Adds weight to waste")],
+         "c"),
+        ("What carries the ore grains up to the top of the tank?",
+         [("a", "Gravity alone"), ("b", "A magnet"), ("c", "Fire"), ("d", "Air bubbles")],
+         "d"),
+        ("What is the froth that is skimmed off called?",
+         [("a", "Concentrate, which is richer in metal"), ("b", "Slag"), ("c", "Tailings with no metal left"), ("d", "Ice")],
+         "a"),
+        ("Why is the pH of the slurry controlled?",
+         [("a", "It keeps the ship's lights on"), ("b", "It changes which minerals the collector sticks to"), ("c", "It turns metal into gas"), ("d", "It makes the water hot")],
+         "b"),
+        ("What does recovery measure?",
+         [("a", "The paint on the plant"), ("b", "The noise the plant makes"), ("c", "The share of the metal the plant captures"), ("d", "The colour of the froth")],
+         "c"),
+    ],
+}

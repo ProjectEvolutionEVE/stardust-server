@@ -1,0 +1,37 @@
+"""What a Processing Plant Is Worth (bar 3, Metallurgist, part A): throughput, recovery and cost, and how a plant earns or loses money."""
+CODE = "mining3a_economics"
+BOOK = {
+    "title": "What a Processing Plant Is Worth",
+    "subtitle": "Throughput, recovery and cost: how a plant earns or loses money",
+    "chapters": [
+        ("Three numbers",
+         "A processing plant runs on three main numbers. Throughput is how much ore it handles each day. Recovery is the share of the metal it captures. Cost is what each tonne costs to process. Every plan starts with these three."),
+        ("Money in and money out",
+         "Revenue is the metal recovered multiplied by its price. The operating cost is the cost per tonne multiplied by the tonnes handled. What is left after costs is the margin, and the margin is what pays for the plant."),
+        ("Building the plant",
+         "A plant costs a large sum to build, which is called the capital cost. That cost is paid back over several years out of the margin. Payback time is how long the margin takes to cover the capital."),
+        ("Bigger plants",
+         "A large plant often costs less per tonne, because its fixed costs are shared across more tonnes. But it needs more ore to feed it, and it can take longer to build. Lower cost per tonne from size is called economies of scale."),
+        ("Interest and risk",
+         "Borrowed money carries interest. A plant paid for with a loan must earn enough to cover the interest as well as the capital. If metal prices fall, a plant with a thin margin can slip into a loss."),
+        ("Cut-off in practice",
+         "Teams combine these numbers to decide which ore is worth processing. This links to the cut-off grade in the grades book. In the game, the market prices ore by the lot (rule 21), and a buyer weighs that price against what the metal is worth to them."),
+    ],
+    "test": [
+        ("What is recovery?",
+         [("a", "The share of the metal the plant captures"), ("b", "Ore left in the ground"), ("c", "The speed of the trucks"), ("d", "The colour of the plant")],
+         "a"),
+        ("How is revenue worked out?",
+         [("a", "Cost multiplied by colour"), ("b", "Metal recovered multiplied by its price"), ("c", "Tonnes plus credits"), ("d", "Depth multiplied by time")],
+         "b"),
+        ("What is payback time?",
+         [("a", "The time to paint the plant"), ("b", "The time of day"), ("c", "The time it takes for the margin to cover the capital"), ("d", "The time it takes to fly there")],
+         "c"),
+        ("Why can a bigger plant cost less per tonne?",
+         [("a", "Big plants use no power"), ("b", "Ore is cheaper in big plants"), ("c", "Big plants have no workers"), ("d", "Its fixed costs are shared over more tonnes")],
+         "d"),
+        ("What does a loan add to a plant's costs?",
+         [("a", "Interest"), ("b", "Free metal"), ("c", "Shares in the plant"), ("d", "Sunlight")],
+         "a"),
+    ],
+}
