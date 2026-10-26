@@ -1,0 +1,37 @@
+"""Venus, the hot neighbour: the runaway greenhouse, pressure, clouds, Magellan's radar, Akatsuki and the missions to come."""
+CODE = "flight4_venus"
+BOOK = {
+    "title": "Venus, the Hot Neighbour",
+    "subtitle": "A world of heavy air, hot ground and hidden surface",
+    "chapters": [
+        ("A runaway greenhouse",
+         "Venus is the hottest planet, hotter than Mercury, because its thick carbon dioxide air traps heat very effectively. Scientists use Venus as an example of a runaway greenhouse, where heat keeps building until it cannot escape."),
+        ("Pressure",
+         "The air pressure at the surface of Venus is about ninety times that of Earth's, roughly the pressure found nearly a kilometre under the ocean. A craft must be built to survive this squeeze as well as the heat."),
+        ("Clouds",
+         "Thick clouds of sulphuric acid hide the surface from ordinary cameras. The clouds reflect sunlight, so Venus looks bright in the sky, even though its surface is hidden. Light passes through only in a few narrow windows."),
+        ("Magellan's radar",
+         "NASA's Magellan spacecraft used radar to see through the clouds. From 1990 to 1994 it mapped most of the surface in fine detail, showing volcanoes, plains and craters. Radar is still the main way to see Venus's ground."),
+        ("Akatsuki",
+         "Japan's Akatsuki spacecraft reached Venus in 2015 after an earlier attempt failed, and studied its atmosphere and clouds for years. Its data showed winds and cloud features that are still being studied."),
+        ("Missions to come",
+         "Several missions to Venus have been proposed or planned for the coming years, to map the surface in greater detail and to study its geology and air. Each one will test how well craft can survive the heat and pressure."),
+    ],
+    "test": [
+        ("Why is Venus hotter than Mercury?",
+         [("a", "It is closer to the Sun"), ("b", "It has no atmosphere"), ("c", "Its thick carbon dioxide air traps heat very effectively"), ("d", "It spins faster")],
+         "c"),
+        ("About how much is the surface pressure of Venus compared with Earth?",
+         [("a", "About the same"), ("b", "About one tenth"), ("c", "About one hundred times less"), ("d", "About ninety times")],
+         "d"),
+        ("What did Magellan do at Venus?",
+         [("a", "It used radar through the clouds to map most of the surface from 1990 to 1994"), ("b", "It landed a rover"), ("c", "It cooled the planet"), ("d", "It brought back soil samples")],
+         "a"),
+        ("Why does Venus look bright from space?",
+         [("a", "Its surface glows"), ("b", "Its thick clouds of sulphuric acid reflect sunlight"), ("c", "It has lots of lakes"), ("d", "It has rings")],
+         "b"),
+        ("What did Japan's Akatsuki spacecraft study?",
+         [("a", "The Moon's far side"), ("b", "Mars's polar caps"), ("c", "Venus's atmosphere and clouds"), ("d", "The rings of Saturn")],
+         "c"),
+    ],
+}

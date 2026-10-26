@@ -1,0 +1,37 @@
+"""Titan and Enceladus: Titan's air and lakes, Huygens, Enceladus' plumes, Cassini, life ideas and future targets."""
+CODE = "flight4_saturn_moons"
+BOOK = {
+    "title": "Titan and Enceladus",
+    "subtitle": "Two of Saturn's moons that surprised everyone",
+    "chapters": [
+        ("Titan's air",
+         "Titan is Saturn's largest moon and the only moon with a thick atmosphere. Its air is denser than Earth's, and it is mostly nitrogen with a little methane. Its haze hides the surface from ordinary light."),
+        ("Lakes",
+         "Titan has lakes and seas of liquid methane and ethane at its poles. They are the only known bodies with stable liquid on the surface other than Earth. Rain of methane feeds them, much as rain feeds rivers here."),
+        ("Huygens",
+         "The Huygens probe was carried by the Cassini spacecraft and landed on Titan in 2005. It sent back the first pictures from the surface of a world in the outer Solar System. Its images showed riverbeds and pebbles of ice."),
+        ("Enceladus' plumes",
+         "Enceladus is a small icy moon with jets of water vapour and ice erupting from its south pole. Cassini flew through these plumes and tasted the material. The jets come from a liquid ocean beneath the ice."),
+        ("Life ideas",
+         "The salty ocean of Enceladus, with its warmth from tidal heating and its chemistry, is one of the most promising places to look for life beyond Earth. Scientists are careful: finding conditions for life is not the same as finding life."),
+        ("Future targets",
+         "NASA has planned a rotorcraft mission to Titan that would fly between sites on its surface. Missions to Enceladus are also proposed to sample the plumes. Both moons remain high on the list of worlds to visit."),
+    ],
+    "test": [
+        ("What makes Titan unusual among moons?",
+         [("a", "It has no atmosphere at all"), ("b", "It is made of gold"), ("c", "It orbits the Sun"), ("d", "It is the only moon with a thick atmosphere")],
+         "d"),
+        ("What do Titan's lakes contain?",
+         [("a", "Liquid methane and ethane"), ("b", "Fresh water"), ("c", "Molten iron"), ("d", "Sea water")],
+         "a"),
+        ("What did the Huygens probe do?",
+         [("a", "It landed on the Moon"), ("b", "It landed on Titan in 2005 and sent back the first surface pictures from the outer Solar System"), ("c", "It orbited the Sun"), ("d", "It brought samples home")],
+         "b"),
+        ("What comes out of Enceladus' south pole?",
+         [("a", "Lava"), ("b", "Sand"), ("c", "Jets of water vapour and ice"), ("d", "Radio signals")],
+         "c"),
+        ("Why is Enceladus promising in the search for life?",
+         [("a", "It has cities"), ("b", "It has no ice"), ("c", "It is a planet with oxygen air"), ("d", "Its warm, salty ocean may hold the conditions life needs")],
+         "d"),
+    ],
+}

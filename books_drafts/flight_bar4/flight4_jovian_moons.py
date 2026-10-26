@@ -1,0 +1,37 @@
+"""The Galilean moons: Io's fire, Europa's ocean, Ganymede's field, Callisto's craters, Galileo's discovery and radiation."""
+CODE = "flight4_jovian_moons"
+BOOK = {
+    "title": "The Galilean Moons",
+    "subtitle": "Four large moons of Jupiter, each strange in its own way",
+    "chapters": [
+        ("Discovery",
+         "Galileo Galilei saw four large moons of Jupiter in 1610 with a small telescope. They are now called the Galilean moons. Their discovery showed that not everything in the sky circled the Earth."),
+        ("Io's fire",
+         "Io is the most volcanically active body in the Solar System. Tidal heating, caused by Jupiter's pull as Io's orbit is stretched, keeps its interior hot. Its surface is covered in volcanoes and lava lakes."),
+        ("Europa's ocean",
+         "Europa has a smooth icy shell, and beneath it is believed to lie a salty ocean that may hold more water than Earth's oceans. Its cracked surface suggests the ice moves and breaks. Europa is one of the strongest targets in the search for life beyond Earth."),
+        ("Ganymede's field",
+         "Ganymede is the largest moon in the Solar System, bigger than Mercury. It is the only moon known to make its own magnetic field, which suggests a liquid layer deep inside."),
+        ("Callisto's craters",
+         "Callisto is heavily cratered, and its surface is among the oldest in the Solar System. It has little tidal heating, so its surface has changed very little for billions of years."),
+        ("Radiation",
+         "Jupiter's magnetic field traps huge amounts of charged particles near the moons. This radiation is strong enough to damage electronics and harm living things. Any craft visiting Europa must be heavily shielded."),
+    ],
+    "test": [
+        ("Who first saw the four large moons of Jupiter in 1610?",
+         [("a", "A sailor with a map"), ("b", "A crew on a rocket"), ("c", "Galileo Galilei, with a small telescope"), ("d", "No one until 1960")],
+         "c"),
+        ("Which Galilean moon is the most volcanically active?",
+         [("a", "Europa"), ("b", "Callisto"), ("c", "Ganymede"), ("d", "Io")],
+         "d"),
+        ("What is believed to lie under Europa's icy shell?",
+         [("a", "A salty ocean"), ("b", "A lake of lava"), ("c", "A desert of sand"), ("d", "Solid iron")],
+         "a"),
+        ("Why is Ganymede special?",
+         [("a", "It is the smallest moon"), ("b", "It is the largest moon in the Solar System and makes its own magnetic field"), ("c", "It has no craters"), ("d", "It orbits the Sun")],
+         "b"),
+        ("Why must a craft visiting Europa be shielded?",
+         [("a", "Because Europa is too cold to touch"), ("b", "Because Europa has no gravity"), ("c", "Because Jupiter's trapped radiation can damage electronics"), ("d", "Because the moon is made of glass")],
+         "c"),
+    ],
+}

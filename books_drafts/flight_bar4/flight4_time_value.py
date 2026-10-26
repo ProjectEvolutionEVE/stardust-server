@@ -1,0 +1,37 @@
+"""The time value of money: present and future value, discount rates, compounding, loan cases and project choice."""
+CODE = "flight4_time_value"
+BOOK = {
+    "title": "The Time Value of Money",
+    "subtitle": "Why a credit today is worth more than one later",
+    "chapters": [
+        ("Money now and later",
+         "A credit you have today can be put to work, for example saved at interest or used to buy something that earns. So a credit today is worth more than the same credit promised in a year. This is the time value of money."),
+        ("Present value",
+         "Present value is what a future sum is worth today. To find it, you divide the future sum by one plus the rate for each year you wait. A sum of 110 credits due in a year, at a rate of 10 percent, has a present value of 100 credits."),
+        ("Discount rates",
+         "The rate used to bring future money back to today is called the discount rate. It reflects what your money could earn elsewhere and how risky the payment is. A higher discount rate makes distant money worth much less today."),
+        ("Compounding",
+         "Compounding means interest is earned on earlier interest as well as on the original sum. Over many years, compounding can grow savings a long way, and it works the same way against a debt that is not paid."),
+        ("Worked loan cases",
+         "Suppose a loan of 1,000 credits charges 5 percent a year on the balance left. After one year you owe 1,050 if you pay nothing. Paying part of the balance early lowers the interest on everything that follows, which is why early payments save money."),
+        ("Choosing between projects",
+         "To compare two projects with money coming in at different times, bring each stream of money back to present value and compare the totals. The project with the higher present value is usually the better choice, given the same risk."),
+    ],
+    "test": [
+        ("Why is money today worth more than the same money later?",
+         [("a", "Because the coins wear out"), ("b", "Because it can be put to work, such as saved at interest"), ("c", "Because later money is always lost"), ("d", "Because the bank keeps it")],
+         "b"),
+        ("What is present value?",
+         [("a", "The value of a gift today"), ("b", "The number of years since a sum was made"), ("c", "What a future sum is worth today"), ("d", "The price of a present")],
+         "c"),
+        ("What does a higher discount rate do to distant money?",
+         [("a", "It makes it worth more today"), ("b", "It makes it disappear"), ("c", "It changes nothing"), ("d", "It makes it worth much less today")],
+         "d"),
+        ("What is compounding?",
+         [("a", "Interest earned on earlier interest as well as on the original sum"), ("b", "Adding coins into a box"), ("c", "Paying a fee for a loan"), ("d", "Losing money every year")],
+         "a"),
+        ("Why do early loan payments save money?",
+         [("a", "They increase the interest rate"), ("b", "They reduce the balance that interest is charged on from then on"), ("c", "They cancel the loan at once"), ("d", "They have no effect at all")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Staging: why rockets stage, mass ratios, serial and parallel stages, the best split, separation and failure cases."""
+CODE = "flight4_rocket_staging"
+BOOK = {
+    "title": "Staging",
+    "subtitle": "Why a rocket drops empty parts to reach orbit",
+    "chapters": [
+        ("Why stage",
+         "A rocket carries its own fuel, and the fuel tanks and engines are heavy. Once a tank is empty, it is dead weight. Dropping empty parts lets the rest of the rocket accelerate much more easily, so staging is the usual way to reach orbit."),
+        ("Mass ratios",
+         "The mass ratio is the full weight of a stage divided by its empty weight. A higher mass ratio means more of the stage is fuel, and it can carry the rest of the rocket further. Designers work hard to keep empty structures light."),
+        ("Serial and parallel stages",
+         "In serial staging, one stage sits on top of another and fires after the one below is dropped. In parallel staging, extra boosters burn alongside the core and fall away together. Both approaches are used on real rockets."),
+        ("The best split",
+         "The fuel should be shared between stages so each stage burns out at the right moment. Too much on the first stage makes it heavy to lift. Too much on the upper stages makes them too small to do their job. Engineers search for the best split."),
+        ("Separation",
+         "Stages separate on signal, with small explosive bolts or springs, and with thrust from small rockets to push them apart. The timing must be exact so the next engine lights and the falling stage does not hit it."),
+        ("When staging fails",
+         "A staging failure can destroy a mission. If a stage fails to separate, or the next engine does not light, the rocket may not reach its target. Careful checks, backup timing and tested hardware reduce this risk."),
+    ],
+    "test": [
+        ("Why do rockets drop empty parts?",
+         [("a", "To make the rocket heavier"), ("b", "Because empty tanks are dead weight, and dropping them lets the rest accelerate more easily"), ("c", "To make noise"), ("d", "To stop the engines")],
+         "b"),
+        ("What is the mass ratio of a stage?",
+         [("a", "Its colour"), ("b", "The number of its windows"), ("c", "Its full weight divided by its empty weight"), ("d", "The distance from Earth")],
+         "c"),
+        ("What is parallel staging?",
+         [("a", "Two rockets that never fly"), ("b", "A stage that never separates"), ("c", "A rocket that flies sideways only"), ("d", "Boosters that burn alongside the core and fall away together")],
+         "d"),
+        ("Why must the fuel split between stages be chosen carefully?",
+         [("a", "Too much on the first stage makes it too heavy to lift; too much on the upper stages leaves them too small"), ("b", "Because fuel has no weight"), ("c", "Because stages never fire"), ("d", "Because splits are set by the weather")],
+         "a"),
+        ("What can a staging failure mean?",
+         [("a", "The rocket becomes lighter and faster"), ("b", "The rocket may not reach its target"), ("c", "Nothing at all"), ("d", "The launch is always cancelled before liftoff")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""High-reliability organisations: how carriers, power plants and control rooms keep risky work safe."""
+CODE = "flight4_hro"
+BOOK = {
+    "title": "High-reliability Organisations",
+    "subtitle": "Aircraft carriers and the habits that keep risky work safe",
+    "chapters": [
+        ("What they are",
+         "Some organisations run dangerous work for years with very few accidents. Aircraft carriers, nuclear power plants and air traffic control rooms are examples. Researchers who studied them asked what these groups do differently from others that fail more often."),
+        ("Preoccupation with failure",
+         "These organisations watch closely for small errors and near misses, and they treat them as warnings. A tiny fault is reported and talked about, not hidden. A small crack can grow into a large failure, so they pay attention to the small things first."),
+        ("Reluctance to simplify",
+         "They do not accept an easy explanation just because it is neat. They keep asking what else might be going on, and they check their picture of the situation against the facts. A simple story that fits all the data is still worth testing."),
+        ("Sensitivity and resilience",
+         "They stay aware of what is actually happening on the front line, not only what the plan on paper says. When something goes wrong they recover fast, and they train people to improvise safely, so a surprise does not turn into a disaster."),
+        ("Deference to expertise",
+         "When a problem appears, the person who knows most about it leads, whatever their rank. On a carrier deck a young crew member can stop a launch if they see danger, and nobody should punish them for it."),
+        ("Using these habits",
+         "A crew that reports small faults, questions neat answers, watches the front line, recovers quickly and listens to the expert is much harder to surprise. These habits cost little to practise and they pay back in fewer accidents."),
+    ],
+    "test": [
+        ("What does preoccupation with failure mean?",
+         [("a", "Watching closely for small errors and near misses as warnings"), ("b", "Ignoring small problems so that morale stays high"), ("c", "Planning to fail on purpose so that the team can practise"), ("d", "Worrying only about the biggest disasters")],
+         "a"),
+        ("What does reluctance to simplify mean?",
+         [("a", "Refusing to use simple tools"), ("b", "Not accepting an easy explanation without checking it against the facts"), ("c", "Cutting the number of staff to save money"), ("d", "Always choosing the cheapest option")],
+         "b"),
+        ("What is deference to expertise?",
+         [("a", "The boss always makes every decision"), ("b", "Everyone votes on each problem"), ("c", "The person who knows most about a problem leads, whatever their rank"), ("d", "The newest person is always asked first")],
+         "c"),
+        ("Why do these organisations recover quickly after a surprise?",
+         [("a", "They never make mistakes"), ("b", "They stop all work for a year"), ("c", "They hide problems from the public"), ("d", "They train people to improvise safely and bounce back")],
+         "d"),
+        ("Why does a small fault get reported in these organisations?",
+         [("a", "Because it may grow into a larger failure"), ("b", "Because reporting earns a bonus"), ("c", "Because the rules say to report only the largest faults"), ("d", "Because faults are always fatal")],
+         "a"),
+    ],
+}

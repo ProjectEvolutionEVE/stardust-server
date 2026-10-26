@@ -1,0 +1,37 @@
+"""Insurance and space: pooling risk, setting premiums, launch insurance, deductibles, moral hazard and real claims."""
+CODE = "flight4_insurance"
+BOOK = {
+    "title": "Insurance and Space",
+    "subtitle": "How shared risk protects a single owner from a large loss",
+    "chapters": [
+        ("Pooling risk",
+         "Insurance works by pooling. Many people or companies each pay a small amount into a shared fund, and the fund pays out to the few who suffer a loss. No single member bears the full cost of a disaster alone."),
+        ("Setting the premium",
+         "The premium is the regular payment for cover. It is set from the expected cost of claims, plus the cost of running the insurer and a margin for safety. If the premium is too low, the fund runs short; if it is too high, nobody buys the cover."),
+        ("Launch insurance",
+         "A satellite or spacecraft can be lost during launch, and its value can be very high. Launch insurance covers that risk, so an owner is not ruined if the rocket fails. The premium reflects the rocket's record and the value of the payload."),
+        ("Deductibles",
+         "A deductible is the part of a loss the owner pays before the insurer pays anything. Deductibles keep small claims from clogging the system and make the owner care about avoiding loss in the first place."),
+        ("Moral hazard",
+         "Moral hazard is the risk that a person changes behaviour because they are insured. A driver who knows the car is covered may take more chances. Insurers reduce this with deductibles, limits and inspections."),
+        ("Real claims",
+         "When an insured satellite is lost, the insurer pays out according to the policy, and the premium pool absorbs the loss. Claims show why the premium must cover real losses, not just the hope that none will come."),
+    ],
+    "test": [
+        ("How does insurance pool risk?",
+         [("a", "Many members pay small amounts into a shared fund that pays the few who suffer a loss"), ("b", "Each member pays the whole cost of its own losses"), ("c", "The government pays every loss"), ("d", "Losses are shared by lottery")],
+         "a"),
+        ("What is a deductible?",
+         [("a", "A tax on premiums"), ("b", "The part of a loss the owner pays before the insurer pays"), ("c", "A reward for making no claim"), ("d", "The price of the rocket")],
+         "b"),
+        ("What is moral hazard?",
+         [("a", "A hazard that only affects morals"), ("b", "A type of rocket fuel"), ("c", "A change in behaviour because a person is insured against loss"), ("d", "A weather event")],
+         "c"),
+        ("What does launch insurance cover?",
+         [("a", "The cost of the launch crew's holidays"), ("b", "The price of fuel after orbit"), ("c", "The cost of a telescope lens"), ("d", "The loss of a satellite or payload during launch")],
+         "d"),
+        ("What must a premium cover in order to keep the pool healthy?",
+         [("a", "The expected cost of claims, the cost of running the insurer, and a safety margin"), ("b", "Only the insurer's office rent"), ("c", "Nothing, since losses never happen"), ("d", "Only the owner's wages")],
+         "a"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Finding other worlds: transits, the wobble, Kepler and TESS, atmosphere studies and habitable zones."""
+CODE = "flight4_exoplanets"
+BOOK = {
+    "title": "Finding Other Worlds",
+    "subtitle": "How astronomers find planets around distant stars",
+    "chapters": [
+        ("Transit",
+         "When a planet passes in front of its star, it blocks a little of the starlight. Measuring this small dip in brightness, again and again, can reveal the planet's size and how long it takes to orbit."),
+        ("The wobble",
+         "A planet also tugs its star slightly, making the star move in a small circle. This wobble changes the star's spectrum by the Doppler shift. Measuring it reveals the planet's mass."),
+        ("Kepler",
+         "NASA's Kepler space telescope launched in 2009 and watched a patch of sky for years. It found thousands of planets by the transit method, and it changed how common planets are thought to be. Kepler finished its work in 2018."),
+        ("TESS",
+         "NASA's TESS satellite, launched in 2018, surveys most of the sky in strips to find nearby bright stars with transiting planets. Its targets are often easier to study in detail afterward."),
+        ("Atmospheres",
+         "When a planet crosses its star, starlight passing through its air carries a faint fingerprint of the gases there. Telescopes such as the James Webb Space Telescope can read these signals to study the atmospheres of some planets."),
+        ("Habitable zones",
+         "The habitable zone is the band of distances from a star where a planet could hold liquid water on its surface, if its air is right. It is a useful guide for where to look, but it does not prove that life is there."),
+    ],
+    "test": [
+        ("What is a transit in planet finding?",
+         [("a", "A train to another star"), ("b", "A planet passing in front of its star and dimming the starlight"), ("c", "A sudden flash of colour"), ("d", "A journey by rocket")],
+         "b"),
+        ("What does the wobble of a star reveal?",
+         [("a", "The colour of its paint"), ("b", "The number of its moons"), ("c", "The mass of a planet tugging on it"), ("d", "The name of its planet")],
+         "c"),
+        ("Which telescope searched a patch of sky for planets from 2009 and finished in 2018?",
+         [("a", "Hubble in 1990"), ("b", "Voyager"), ("c", "Magellan"), ("d", "Kepler")],
+         "d"),
+        ("What is a habitable zone?",
+         [("a", "The band of distances where liquid water could sit on a planet's surface"), ("b", "A city on a planet"), ("c", "The space inside a star"), ("d", "A type of rocket engine")],
+         "a"),
+        ("Does a planet in the habitable zone prove that life is there?",
+         [("a", "Yes, always"), ("b", "No, it is only a useful guide for where to look"), ("c", "Yes, if it has rings"), ("d", "No, because stars have no habitable zones")],
+         "b"),
+    ],
+}

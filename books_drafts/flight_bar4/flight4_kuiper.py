@@ -1,0 +1,37 @@
+"""The Kuiper Belt: discovery, Pluto's change of status, Eris, New Horizons, Arrokoth and the source of comets."""
+CODE = "flight4_kuiper"
+BOOK = {
+    "title": "The Kuiper Belt",
+    "subtitle": "The icy region beyond Neptune, home to dwarf planets and comets",
+    "chapters": [
+        ("Discovery",
+         "The first object found beyond Neptune's orbit, in 1992, opened up a large region of icy bodies now called the Kuiper Belt. Many more have been found since, and the belt is thought to hold a great number of small objects."),
+        ("Pluto's change",
+         "Pluto was called a planet from its discovery in 1930 until 2006. The International Astronomical Union then defined a planet more strictly, and Pluto was reclassified as a dwarf planet because it has not cleared its orbit of other bodies."),
+        ("Eris",
+         "Eris was found in 2005 in the outer Solar System. It is about as massive as Pluto and forced astronomers to decide what counts as a planet. Its discovery was one of the reasons the definition was revised."),
+        ("New Horizons",
+         "NASA's New Horizons spacecraft flew past Pluto in July 2015, and sent back the first close pictures of its surface and its heart-shaped plain. It then continued deeper into the outer Solar System."),
+        ("Arrokoth",
+         "On the first day of 2019, New Horizons flew past Arrokoth, a small object in the Kuiper Belt. Its two lobes look like a snowman, and it shows that small bodies there formed gently from clouds of dust."),
+        ("A source of comets",
+         "Many short-period comets, which orbit the Sun in a few decades, are thought to come from the Kuiper Belt. Its icy bodies are the frozen remains from the early Solar System."),
+    ],
+    "test": [
+        ("What was the first Kuiper Belt object found in 1992?",
+         [("a", "A planet found inside Mercury"), ("b", "The first object found beyond Neptune's orbit"), ("c", "A comet with a tail"), ("d", "The Moon")],
+         "b"),
+        ("Why was Pluto reclassified as a dwarf planet in 2006?",
+         [("a", "It is too hot"), ("b", "It has rings"), ("c", "It has not cleared its orbit of other bodies"), ("d", "It is made of gold")],
+         "c"),
+        ("What did New Horizons do in July 2015?",
+         [("a", "It landed on Eris"), ("b", "It brought samples back"), ("c", "It orbited Jupiter"), ("d", "It flew past Pluto and sent back close pictures")],
+         "d"),
+        ("What does Arrokoth look like?",
+         [("a", "Two lobes that look like a snowman"), ("b", "A ring around the Sun"), ("c", "A cube of iron"), ("d", "A ball of fire")],
+         "a"),
+        ("Where do many short-period comets seem to come from?",
+         [("a", "The centre of the Galaxy"), ("b", "The Kuiper Belt"), ("c", "The Moon's far side"), ("d", "Jupiter's storms")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Capital and operating costs of a ship: one-time spending against running costs, depreciation and budgeting both."""
+CODE = "flight4_capex_opex"
+BOOK = {
+    "title": "Capital and Operating Costs of a Ship",
+    "subtitle": "One-time spending, running costs and planning for both",
+    "chapters": [
+        ("Two kinds of spending",
+         "Capital costs are one-time purchases that last for years, such as a ship, a dock or a new engine. Operating costs are the regular costs of running things, such as fuel, wages, food and repairs. A good budget keeps the two apart, because they behave very differently."),
+        ("Depreciation",
+         "A ship loses value as it gets older and wears out. Depreciation is the way accounts spread the cost of a long-lived purchase across the years it is used. It is not cash leaving the bank each year, but it shows that the ship is slowly being used up."),
+        ("The cost of crew",
+         "Crew wages, training, food and rest are often the largest running cost of a ship. Under-crewing saves money on paper but can make the ship less safe and more tired. Include the full cost of people when you budget a voyage."),
+        ("Maintenance and fuel",
+         "Maintenance is the cost of keeping a ship working: regular checks, spare parts and repairs. Fuel is a running cost that changes with how far and how fast a ship travels. Planning maintenance early is cheaper than a breakdown far from home."),
+        ("Budgeting both",
+         "A sound plan shows the one-time capital cost and the yearly operating cost side by side. It also shows how each changes if the ship flies more or less. A plan that only counts the purchase price will always look too cheap."),
+        ("Keeping the plan honest",
+         "Compare the budget with what really happens each month. When the running cost is higher than planned, find out why before it grows. Clear records of both kinds of spending let an owner decide wisely when to buy, repair or sell."),
+    ],
+    "test": [
+        ("Which of these is a capital cost?",
+         [("a", "The fuel for this month"), ("b", "A one-time purchase that lasts for years, such as a new engine"), ("c", "The wages paid this week"), ("d", "Food for the crew")],
+         "b"),
+        ("What is depreciation?",
+         [("a", "Cash paid out each year for fuel"), ("b", "A fee for a loan"), ("c", "A way to spread the cost of a long-lived purchase over the years it is used"), ("d", "The price of a ticket")],
+         "c"),
+        ("Why is the cost of crew important to a budget?",
+         [("a", "It is never paid"), ("b", "It only applies to ships that are parked"), ("c", "It is paid by the government"), ("d", "It is often the largest running cost, and it must be counted in full")],
+         "d"),
+        ("What does planning maintenance early achieve?",
+         [("a", "It is usually cheaper than a breakdown far from home"), ("b", "It avoids all repairs forever"), ("c", "It makes the ship lighter"), ("d", "It removes the need for fuel")],
+         "a"),
+        ("Why should a budget show both kinds of cost side by side?",
+         [("a", "So that the purchase price looks as small as possible"), ("b", "So the owner sees the one-time and yearly costs and how each changes"), ("c", "Because the law requires one page only"), ("d", "Because operating costs never change")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Comets: the nucleus, the coma and tails, orbits, Halley, Rosetta and Philae, and the impact risk."""
+CODE = "flight4_comets"
+BOOK = {
+    "title": "Comets",
+    "subtitle": "Icy visitors that grow tails as they near the Sun",
+    "chapters": [
+        ("The nucleus",
+         "A comet's solid heart, the nucleus, is a mix of ice, dust and rock, often only a few kilometres across. It is the only solid part of the comet, and everything else we see is made by the nucleus's gases and dust."),
+        ("Coma and tails",
+         "As a comet nears the Sun, its ice warms and turns to gas. The gas and dust form a glowing cloud called the coma. Solar wind and sunlight push the dust into one tail and the charged gas into another, so tails point away from the Sun."),
+        ("Orbits",
+         "Long-period comets take thousands of years or more to return. Short-period comets return in less than two hundred years. Their orbits can be very stretched, sending them far beyond Neptune and close to the Sun."),
+        ("Halley",
+         "Halley's Comet returns about every seventy-six years. Its appearance in 1910 and again in 1986 was watched around the world. Its next return is expected in 2061."),
+        ("Rosetta and Philae",
+         "The European Space Agency's Rosetta spacecraft orbited comet 67P in 2014 and released the Philae lander onto its surface. It studied the comet for more than two years, and its data changed our picture of comets."),
+        ("Impact risk",
+         "Some comets and asteroids cross Earth's orbit. Scientists track objects that could pass close to Earth, and they study ways to deflect one if one were ever found on a collision course. Early warning gives the best chance to act."),
+    ],
+    "test": [
+        ("What is a comet's nucleus made of?",
+         [("a", "Solid gold"), ("b", "Liquid water only"), ("c", "A mix of ice, dust and rock"), ("d", "Air")],
+         "c"),
+        ("What forms a comet's coma and tails?",
+         [("a", "Paint from the Sun"), ("b", "Rain from Earth"), ("c", "Old rockets"), ("d", "Gas and dust released as the ice warms near the Sun")],
+         "d"),
+        ("Roughly how often does Halley's Comet return?",
+         [("a", "Every seventy-six years"), ("b", "Every week"), ("c", "Every ten thousand years"), ("d", "It never returns")],
+         "a"),
+        ("What did Rosetta do?",
+         [("a", "It flew to the Moon"), ("b", "It orbited comet 67P and released the Philae lander onto its surface"), ("c", "It landed on Venus"), ("d", "It collected sunlight")],
+         "b"),
+        ("Why does early warning matter for impact risk?",
+         [("a", "It stops comets from existing"), ("b", "It makes comets heavier"), ("c", "It gives the best chance to act if an object is on a collision course"), ("d", "It has no value")],
+         "c"),
+    ],
+}

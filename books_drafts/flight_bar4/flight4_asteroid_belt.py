@@ -1,0 +1,37 @@
+"""The asteroid belt: size and mass, spacing, Ceres, asteroid families, the Dawn mission and how crowded it is."""
+CODE = "flight4_asteroid_belt"
+BOOK = {
+    "title": "The Asteroid Belt",
+    "subtitle": "A wide ring of rocky bodies between Mars and Jupiter",
+    "chapters": [
+        ("Size and mass",
+         "The asteroid belt lies between the orbits of Mars and Jupiter. Its total mass is far less than that of the Moon. Most of the belt is made of small rocks, and the biggest body, Ceres, holds a large share of the total."),
+        ("Spacing",
+         "Despite the name, the belt is mostly empty space. The rocks are so spread out that a spacecraft can pass through it with little risk. Films showing thick clouds of rock greatly exaggerate how crowded it is."),
+        ("Ceres",
+         "Ceres is the largest body in the belt and is classed as a dwarf planet. It is round because its own gravity pulled it into shape. Bright patches on its surface are salt deposits left by water."),
+        ("Asteroid families",
+         "Some asteroids share similar orbits and similar makeup. They are grouped into families, which are thought to come from a larger body that broke apart in an old collision. Families help scientists trace the belt's history."),
+        ("The Dawn mission",
+         "NASA's Dawn spacecraft orbited Vesta and then Ceres between 2011 and 2018. It was the first spacecraft to orbit two different bodies beyond the Moon. Its images and data changed how scientists see both."),
+        ("How crowded it is",
+         "Asteroids are spaced far apart in the belt. Jupiter's gravity keeps many of them from settling into a single body. For a craft, the greater risk is the long distance, not a dense field of rock."),
+    ],
+    "test": [
+        ("Where is the asteroid belt?",
+         [("a", "Between Earth and Venus"), ("b", "Between Mars and Jupiter"), ("c", "Beyond Neptune"), ("d", "Inside Mercury's orbit")],
+         "b"),
+        ("What is Ceres?",
+         [("a", "The Sun's largest moon"), ("b", "A comet"), ("c", "The largest body in the belt, classed as a dwarf planet"), ("d", "A spacecraft")],
+         "c"),
+        ("What are asteroid families?",
+         [("a", "Groups of people who study rock"), ("b", "Types of spacecraft"), ("c", "The names of planets"), ("d", "Groups of asteroids with similar orbits and makeup, thought to come from one broken body")],
+         "d"),
+        ("What did Dawn do?",
+         [("a", "It orbited Vesta and then Ceres from 2011 to 2018"), ("b", "It landed on Mars"), ("c", "It flew past Pluto"), ("d", "It brought Ceres home")],
+         "a"),
+        ("Why is the asteroid belt less dangerous to fly through than films suggest?",
+         [("a", "It has no rocks at all"), ("b", "Its rocks are spread far apart in mostly empty space"), ("c", "It is made of ice that melts"), ("d", "It is inside the Sun")],
+         "b"),
+    ],
+}

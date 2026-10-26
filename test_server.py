@@ -723,8 +723,11 @@ async def main():
           l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
     check("bar 3's 45 books are written: it is open, not yet earned, and lists what's left",
           l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Pass every book" in l["bars"][2]["note"])
-    check("bar 4 has fewer books written than its 185 threshold: it can't be earned yet, and says so",
-          not l["bars"][3]["can_earn"] and not l["bars"][3]["earned"] and "Not open yet" in l["bars"][3]["note"])
+    fb = CAR.books_by_bar("flight")
+    want = {4: 120, 5: 325}
+    check("bars 4 and 5: open once all their books are written, otherwise 'Not open yet'; never earned out of turn",
+          all(not l["bars"][n - 1]["earned"] and (l["bars"][n - 1]["can_earn"] if len(fb.get(n, [])) >= want[n]
+              else "Not open yet" in l["bars"][n - 1]["note"]) for n in (4, 5)))
     nv = CAR.books_by_bar("navigation")
     for b in nv[2]:
         await take(b)

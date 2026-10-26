@@ -1,0 +1,37 @@
+"""Return and recovery: splashdown, landing on land, recovery crews, the first hours after landing, Soyuz landings and medical checks."""
+CODE = "flight4_return"
+BOOK = {
+    "title": "Return and Recovery",
+    "subtitle": "Bringing a crew home safely and what happens in the first hours",
+    "chapters": [
+        ("Splashdown",
+         "Many capsules come home by parachute into the ocean, a landing called a splashdown. The sea is soft, but it can be rough, so recovery ships and aircraft wait nearby to pick the crew up quickly."),
+        ("Landing on land",
+         "Some capsules land on land, using parachutes and sometimes small rockets to slow the final touchdown. A land landing lets the crew leave sooner, but it needs clear and dry ground at the right place."),
+        ("Recovery crews",
+         "Recovery teams are trained long before the flight. They reach the capsule, check it is safe, help the crew out and carry them to shelter. Practice makes the first minutes calm for the crew."),
+        ("The first hours",
+         "After landing, crew members are often weak and unsteady, because their bodies have adjusted to weightlessness. They are helped to sit, given food and water, and watched closely. Simple steps make a big difference."),
+        ("Soyuz landings",
+         "The Soyuz capsule has landed on the steppe of Kazakhstan for decades, using parachutes and retro-rockets for a soft finish. Its landing is one of the most practised returns in spaceflight."),
+        ("Medical checks",
+         "Crews have full medical checks soon after landing. Doctors look at balance, heart, blood pressure and bones. Early checks show what the body needs for recovery and help plan the next steps."),
+    ],
+    "test": [
+        ("What is a splashdown?",
+         [("a", "A swim in a pool"), ("b", "A crash on a runway"), ("c", "A launch from the sea"), ("d", "A landing in the ocean by parachute")],
+         "d"),
+        ("Why are recovery teams trained in advance?",
+         [("a", "So they can reach the capsule, check it is safe and help the crew quickly"), ("b", "So they can fly the capsule"), ("c", "So they can write the report"), ("d", "They are not trained")],
+         "a"),
+        ("Why are crew members often unsteady after landing?",
+         [("a", "They have drunk too much water"), ("b", "Their bodies have adjusted to weightlessness"), ("c", "They are too old"), ("d", "The capsule is too hot")],
+         "b"),
+        ("Where have Soyuz capsules landed for decades?",
+         [("a", "In the middle of Antarctica"), ("b", "On the Moon"), ("c", "On the steppe of Kazakhstan"), ("d", "In a lake in Italy")],
+         "c"),
+        ("What is checked in the medical checks soon after landing?",
+         [("a", "Only the colour of the eyes"), ("b", "The name of the capsule"), ("c", "Nothing, since crews are always well"), ("d", "Balance, heart, blood pressure and bones")],
+         "d"),
+    ],
+}

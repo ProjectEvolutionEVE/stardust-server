@@ -1,0 +1,37 @@
+"""Pricing a service: cost plus, value, competitors, fixed and variable costs, margins, and when to say no."""
+CODE = "flight4_pricing"
+BOOK = {
+    "title": "Pricing a Service",
+    "subtitle": "How to set a price that covers costs and earns a fair return",
+    "chapters": [
+        ("Cost plus",
+         "The simplest method adds a fixed margin to the cost of delivering a service. It is easy to explain and makes sure costs are covered. It can miss what customers would really pay, so it is usually only a starting point."),
+        ("Value",
+         "Value pricing sets the price by the benefit the customer gets. A service that saves a customer much time or money can charge more than its cost to deliver. Knowing what the customer values is the key skill."),
+        ("Competitors",
+         "Looking at what similar providers charge gives a useful check. A price far above the market needs a clear reason, such as better quality or speed. A price far below may signal that costs are not covered."),
+        ("Fixed and variable costs",
+         "Fixed costs stay the same whatever the number of customers, such as rent and insurance. Variable costs rise with each job, such as materials and fuel. A fair price must cover both over time."),
+        ("Margins",
+         "A margin is the part of the price left after costs, often shown as a share of the price. A higher margin gives room to grow and to absorb bad months. A margin that is too thin leaves the business exposed to any surprise."),
+        ("When to say no",
+         "Sometimes the right answer is no. If a job's price does not cover its variable costs, taking it loses money on every sale. Saying no to a poor deal protects the business for the work that does pay."),
+    ],
+    "test": [
+        ("What does a cost-plus price do?",
+         [("a", "Sets the price by the colour of the service"), ("b", "Ignores all costs"), ("c", "Adds a margin to the cost of delivering the service"), ("d", "Copies the first price ever charged")],
+         "c"),
+        ("What is value pricing?",
+         [("a", "Setting the price by the weight of the goods"), ("b", "Giving everything away"), ("c", "Charging the same price to all customers forever"), ("d", "Setting the price by the benefit the customer gets")],
+         "d"),
+        ("Which of these is a fixed cost?",
+         [("a", "Rent, paid whatever the number of jobs"), ("b", "Materials used in each job"), ("c", "Fuel for each trip"), ("d", "The cost of a single part")],
+         "a"),
+        ("What is a margin?",
+         [("a", "The edge of a page"), ("b", "The part of the price left after costs, often shown as a share of the price"), ("c", "The number of customers"), ("d", "A type of loan")],
+         "b"),
+        ("When is saying no to a job the right choice?",
+         [("a", "When the customer is friendly"), ("b", "When the job is large"), ("c", "When the price does not even cover its variable costs"), ("d", "When the job is new")],
+         "c"),
+    ],
+}

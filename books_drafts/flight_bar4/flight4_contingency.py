@@ -1,0 +1,37 @@
+"""Contingency reserves: why a project holds a margin, how it is sized, who holds it, and how it comes back."""
+CODE = "flight4_contingency"
+BOOK = {
+    "title": "Contingency Reserves",
+    "subtitle": "The margin a plan keeps for the unexpected",
+    "chapters": [
+        ("Why hold a margin",
+         "No plan can list every surprise. A contingency reserve is extra money or time kept aside for problems nobody could fully predict. Without one, the first surprise forces a choice between cutting the project and overspending it."),
+        ("Percent rules",
+         "Many teams add a fixed percentage to a base estimate, often somewhere between a tenth and a third, depending on how new and risky the work is. A percent rule is a starting point. Known risks are better sized one by one."),
+        ("Who holds the margin",
+         "A reserve works best when a named person or group holds it and decides when it is used. If every team keeps its own hidden margin, the total is hard to see and easy to waste. Central control keeps the reserve honest."),
+        ("Apollo's margins",
+         "The Apollo programme kept careful margins in its weight, fuel and schedule. Engineers knew that tests would reveal problems, and that a margin was the only way to absorb them without a crisis. Margins were treated as part of the design, not as spare money."),
+        ("Using the reserve",
+         "Each time the reserve is used, record why, how much and what it bought. A clear record shows whether the risks were real and helps the next estimate. A reserve spent without a reason is a warning sign."),
+        ("Return of funds",
+         "Money left in the reserve at the end can be returned to the owners or put to a new use. Returning unused reserve builds trust, because it shows the plan was honest and the margin was not padded for comfort."),
+    ],
+    "test": [
+        ("What is a contingency reserve?",
+         [("a", "Extra money or time kept aside for problems nobody could fully predict"), ("b", "Money spent on the first day"), ("c", "A fee paid to the bank each year"), ("d", "The final price of a product")],
+         "a"),
+        ("Why are known risks often sized one by one rather than with a percent rule?",
+         [("a", "Percent rules are never allowed"), ("b", "A percent rule is only a starting point, and each known risk can be sized more accurately"), ("c", "Known risks cost nothing"), ("d", "Percent rules are only for games")],
+         "b"),
+        ("Why is it better for one named group to hold the reserve?",
+         [("a", "So that every team can hide its own margin"), ("b", "So nobody ever uses it"), ("c", "So the total is visible and used with a decision, not wasted"), ("d", "So the reserve grows by itself")],
+         "c"),
+        ("What did the Apollo programme treat its margins as?",
+         [("a", "Spare money to spend on extras"), ("b", "A penalty for the engineers"), ("c", "A way to avoid testing"), ("d", "Part of the design, to absorb the problems that testing would reveal")],
+         "d"),
+        ("Why should each use of the reserve be recorded?",
+         [("a", "So the team can see whether the risks were real and improve the next estimate"), ("b", "So the reserve can be spent without limit"), ("c", "So the reserve can be hidden"), ("d", "Because the law forbids using reserves")],
+         "a"),
+    ],
+}

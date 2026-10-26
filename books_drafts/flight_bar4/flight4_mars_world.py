@@ -1,0 +1,37 @@
+"""Mars as a place: size and air, polar caps, volcanoes, the great canyon, water history and dust storms."""
+CODE = "flight4_mars_world"
+BOOK = {
+    "title": "Mars as a Place",
+    "subtitle": "A thin-aired world with volcanoes, canyons and an old, wet past",
+    "chapters": [
+        ("Size and air",
+         "Mars is about half the width of Earth, and its air is very thin. The air is mostly carbon dioxide, and the surface pressure is less than one hundredth of Earth's. Air this thin gives little protection from the Sun's radiation and little warmth."),
+        ("Polar caps",
+         "Mars has polar caps made of water ice and frozen carbon dioxide. They grow and shrink with the seasons. The caps show that water is still held on the planet today."),
+        ("Volcanoes",
+         "Olympus Mons is one of the largest volcanoes in the Solar System, rising far higher than Mount Everest. Its great size came from lava flowing for a very long time over a planet with weak gravity and no plate movement to move the crust."),
+        ("The great canyon",
+         "Valles Marineris is a canyon system many times longer and deeper than the Grand Canyon. It stretches across a large part of the planet's surface and shows how the crust has been pulled apart."),
+        ("Water in the past",
+         "Dry river valleys, lake beds and minerals that form in water show that Mars once had liquid water on its surface. Most of that water is now locked in ice or has been lost to space over billions of years."),
+        ("Dust storms",
+         "Mars has dust storms that can grow large enough to cover the whole planet for weeks. They block sunlight, which can stop solar-powered machines from working. Anyone who lands on Mars must plan for them."),
+    ],
+    "test": [
+        ("What is the main gas in the air of Mars?",
+         [("a", "Oxygen"), ("b", "Helium"), ("c", "Hydrogen"), ("d", "Carbon dioxide")],
+         "d"),
+        ("What are Mars's polar caps made of?",
+         [("a", "Water ice and frozen carbon dioxide"), ("b", "Only rock"), ("c", "Liquid metal"), ("d", "Sand")],
+         "a"),
+        ("What is Olympus Mons?",
+         [("a", "A canyon"), ("b", "One of the largest volcanoes in the Solar System"), ("c", "A sea"), ("d", "A moon of Mars")],
+         "b"),
+        ("What is Valles Marineris?",
+         [("a", "A deep ocean"), ("b", "A crater on the Moon"), ("c", "A canyon system many times longer and deeper than the Grand Canyon"), ("d", "A Martian city")],
+         "c"),
+        ("Why are Martian dust storms a problem for solar-powered machines?",
+         [("a", "They make the machines lighter"), ("b", "They supply power"), ("c", "They cool the machines too much to matter"), ("d", "They block sunlight, so the machines may stop working")],
+         "d"),
+    ],
+}

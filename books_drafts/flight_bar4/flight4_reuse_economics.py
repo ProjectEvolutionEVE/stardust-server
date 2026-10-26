@@ -1,0 +1,37 @@
+"""The economics of reuse: fixed and flight costs, refurbishment, flight rates, break-even and the Shuttle's lessons."""
+CODE = "flight4_reuse_economics"
+BOOK = {
+    "title": "The Economics of Reuse",
+    "subtitle": "When a reusable craft saves money, and when it does not",
+    "chapters": [
+        ("Fixed and flight costs",
+         "Some costs are paid whether a craft flies or not: the factory, the design team, the insurance and the staff who keep the books. Flight costs are paid each time it flies, for fuel, checks and any parts used up. Reuse only saves money when the fixed costs are spread over enough flights."),
+        ("Refurbishment",
+         "A reusable craft must be inspected, cleaned, repaired and tested after each flight. The cost of this refurbishment can be large. If it grows as fast as building a new craft would, reuse brings little saving."),
+        ("Flight rate",
+         "The more often a craft flies, the more its fixed costs are shared. A craft that flies once a year carries almost all its fixed cost on each flight. A craft that flies every few weeks carries very little. Flight rate is one of the most powerful levers in the whole economics."),
+        ("Break-even",
+         "Break-even is the point where total income covers total cost. For a reusable craft, you find it by adding fixed costs, flight costs and refurbishment, then asking how many flights are needed before the spending is repaid. A plan that does not reach break-even in a sensible time is a poor plan."),
+        ("Lessons from the Shuttle",
+         "The Shuttle was designed to be reused, but its refurbishment was long and costly, and it flew less often than planned. The lesson is that reuse must be designed in from the start, with inspection that is simple and quick, not added on later."),
+        ("Reusable boosters today",
+         "Reusable boosters work best when they land quickly, need little work between flights, and fly often. The economics are a balance of three things: how cheap each flight is, how many flights are made, and how much each reuse costs."),
+    ],
+    "test": [
+        ("Which of these is a fixed cost?",
+         [("a", "The factory and design team, paid whether or not the craft flies"), ("b", "The fuel for one flight"), ("c", "A part used up in one flight"), ("d", "The cost of the flight crew's meals on that flight")],
+         "a"),
+        ("What is refurbishment?",
+         [("a", "Painting the craft a new colour"), ("b", "Inspecting, cleaning, repairing and testing a craft after a flight"), ("c", "Building a brand new craft"), ("d", "Selling the craft")],
+         "b"),
+        ("Why does a higher flight rate help reuse pay?",
+         [("a", "It makes the craft heavier"), ("b", "It removes the need for refurbishment"), ("c", "It shares the fixed costs over more flights"), ("d", "It stops insurance costs")],
+         "c"),
+        ("What is break-even?",
+         [("a", "The point where a craft is completely worn out"), ("b", "The day a craft is first built"), ("c", "The point where the crew goes home"), ("d", "The point where total income covers total cost")],
+         "d"),
+        ("What was a key lesson from the Shuttle's reuse?",
+         [("a", "Reuse must be designed in from the start, with quick and simple inspection"), ("b", "Reuse should never be tried"), ("c", "Refurbishment is always free"), ("d", "Crews should not inspect craft")],
+         "a"),
+    ],
+}

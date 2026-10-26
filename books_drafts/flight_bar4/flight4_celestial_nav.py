@@ -1,0 +1,37 @@
+"""Celestial navigation: the sextant, star fixes, Apollo's sextant, star tables, accuracy and the backup role."""
+CODE = "flight4_celestial_nav"
+BOOK = {
+    "title": "Celestial Navigation",
+    "subtitle": "Finding your position from the stars, the old way and the backup way",
+    "chapters": [
+        ("Sextants",
+         "A sextant measures the angle between a star or the Sun and the horizon. It was used at sea for centuries to find latitude. The instrument is simple, reliable and needs no power."),
+        ("Star fixes",
+         "A star fix takes sights on several stars at known times. Each sight gives a line of position, and where the lines cross is the navigator's location. Taking more sights gives a more reliable fix."),
+        ("Apollo's sextant",
+         "The Apollo command modules carried a sextant and a telescope. Astronauts used them to take star sights and to line up the spacecraft for manoeuvres. The old tool was still useful in the most modern machines."),
+        ("Star tables",
+         "Navigators use printed tables that list where each star will be at a given time. With the time and the sight, they can work out their position. Modern software does the arithmetic, but the method is the same."),
+        ("Accuracy",
+         "A good navigator with a sextant can reach a position within a few kilometres at sea. Accuracy depends on clear skies, a steady horizon, a good time check and skill. Errors grow quickly if any part is careless."),
+        ("A backup role",
+         "Today, satellites give most positions. Celestial navigation remains a valuable backup, because stars cannot be jammed or switched off. A crew that knows the stars can still find its way if the main system fails."),
+    ],
+    "test": [
+        ("What does a sextant measure?",
+         [("a", "The weight of a rock"), ("b", "The speed of wind"), ("c", "The angle between a star or the Sun and the horizon"), ("d", "The depth of a lake")],
+         "c"),
+        ("What is a star fix?",
+         [("a", "Mending a star"), ("b", "A fixed star on a map"), ("c", "A type of rocket"), ("d", "Sights on several stars at known times, crossing lines to find a position")],
+         "d"),
+        ("What did Apollo command modules carry for navigation?",
+         [("a", "A sextant and a telescope"), ("b", "A radio tower"), ("c", "A sail"), ("d", "A map of Mars")],
+         "a"),
+        ("Why is celestial navigation a valuable backup today?",
+         [("a", "Because stars move slowly"), ("b", "Because stars cannot be jammed or switched off"), ("c", "Because it is the only navigation that works"), ("d", "Because satellites never fail")],
+         "b"),
+        ("What makes a star sight more accurate?",
+         [("a", "Careless timing and cloud"), ("b", "Looking at the Moon only"), ("c", "A good time check, a clear horizon and skill"), ("d", "Working in the dark with no tables")],
+         "c"),
+    ],
+}

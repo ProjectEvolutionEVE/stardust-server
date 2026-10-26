@@ -1,0 +1,37 @@
+"""Reading starlight: spectra, dark lines, the Doppler shift, identifying elements and temperature, and discoveries made this way."""
+CODE = "flight4_spectra"
+BOOK = {
+    "title": "Reading Starlight",
+    "subtitle": "How light is split into colours to tell what a distant star is made of",
+    "chapters": [
+        ("Spectra",
+         "When light passes through a prism or grating, it spreads into a band of colours called a spectrum. Every star produces one, and the pattern in it carries information about the star."),
+        ("Dark lines",
+         "Many spectra have dark lines in them. Each line is a colour that a gas has absorbed as the light passed through it. Each element absorbs at its own set of colours, so the lines act like a fingerprint."),
+        ("Doppler shift",
+         "When a star moves toward us, its lines shift toward blue. When it moves away, they shift toward red. This Doppler shift lets astronomers measure how fast a star is moving toward or away from Earth."),
+        ("Identifying elements",
+         "By matching the lines in a star's spectrum to those made in a laboratory, astronomers can tell which elements a star contains. This is how we know what the Sun and distant stars are made of."),
+        ("Temperature",
+         "A star's colour and the strength of its lines both show its temperature. Hot stars look blue, while cooler stars look red. Careful reading of the lines gives the temperature of the outer layers."),
+        ("Discoveries",
+         "Helium was first found in the Sun's spectrum in 1868, before anyone found it on Earth. Spectroscopy also shows that galaxies are moving away from one another, and it lets us study the atmospheres of planets around other stars."),
+    ],
+    "test": [
+        ("What is a spectrum?",
+         [("a", "A band of colours made when light is split"), ("b", "A kind of telescope lens"), ("c", "A magnetic field"), ("d", "A type of star")],
+         "a"),
+        ("What does the Doppler shift tell astronomers?",
+         [("a", "How hot a star is only"), ("b", "How fast a star is moving toward or away from Earth"), ("c", "How big a planet is"), ("d", "The colour of a sky")],
+         "b"),
+        ("What does a star's colour show?",
+         [("a", "Its distance from Earth"), ("b", "Its age in days"), ("c", "Its temperature"), ("d", "The name of its planets")],
+         "c"),
+        ("How does a spectrum show which elements a star contains?",
+         [("a", "The star tells us in words"), ("b", "The colours are painted on"), ("c", "Each element is the same colour"), ("d", "The dark lines match the patterns that each element makes in a laboratory")],
+         "d"),
+        ("Where was helium first found?",
+         [("a", "In the Sun's spectrum, in 1868"), ("b", "In a mine in 1990"), ("c", "In a comet's tail in 1500"), ("d", "In the Moon's dust in 1969")],
+         "a"),
+    ],
+}

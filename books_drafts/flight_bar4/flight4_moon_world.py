@@ -1,0 +1,37 @@
+"""The Moon as a place: origin, maria and highlands, regolith, polar ice, the far side and the Apollo samples."""
+CODE = "flight4_moon_world"
+BOOK = {
+    "title": "The Moon as a Place",
+    "subtitle": "Our nearest world, with plains, dust and ice in the dark",
+    "chapters": [
+        ("Origin",
+         "The leading idea is that the Moon formed from debris thrown up when a Mars-sized body struck the young Earth. The debris gathered into the Moon over time. Samples and computer models support this giant-impact idea."),
+        ("Maria and highlands",
+         "The Moon has two main kinds of surface. The dark plains, called maria, are old lava flows of basalt. The lighter highlands are much older and are covered in craters. Together they show a long and varied history."),
+        ("Regolith",
+         "The surface is covered by regolith, a layer of broken rock and fine dust. The dust is sharp and clings to everything, and it was a real problem for the Apollo astronauts. Any future base must handle it."),
+        ("Poles and ice",
+         "Some craters near the Moon's poles are in permanent shadow, so their floors stay very cold. Measurements suggest these craters hold water ice. Ice there could one day supply drinking water, air and fuel for people on the Moon."),
+        ("The far side",
+         "The Moon always keeps the same face toward Earth, because it turns once on its axis for each orbit. The far side is never seen from the ground, and it has fewer maria and more craters than the near side."),
+        ("Apollo samples",
+         "The Apollo missions brought back about 380 kilograms of lunar rock and soil. These samples are still studied today, and they revealed the Moon's age and the story of its formation."),
+    ],
+    "test": [
+        ("What do the dark plains on the Moon called maria consist of?",
+         [("a", "Old lava flows of basalt"), ("b", "Ice sheets"), ("c", "Glass from the Sun"), ("d", "Old ocean floors")],
+         "a"),
+        ("What is regolith?",
+         [("a", "A type of rocket"), ("b", "A layer of broken rock and fine dust covering the surface"), ("c", "A lunar sea"), ("d", "A kind of bread")],
+         "b"),
+        ("Why might ice in polar craters matter?",
+         [("a", "It makes the Moon hotter"), ("b", "It hides the far side"), ("c", "It could supply water, air and fuel for people on the Moon"), ("d", "It makes the Moon's orbit change")],
+         "c"),
+        ("Why do we never see the Moon's far side from the ground?",
+         [("a", "Because the far side is always dark"), ("b", "Because clouds hide it"), ("c", "Because it has moved away"), ("d", "Because the Moon always keeps the same face toward Earth")],
+         "d"),
+        ("About how much lunar material did the Apollo missions bring back?",
+         [("a", "About 380 kilograms"), ("b", "About 38 tonnes"), ("c", "About 38 grams"), ("d", "None at all")],
+         "a"),
+    ],
+}

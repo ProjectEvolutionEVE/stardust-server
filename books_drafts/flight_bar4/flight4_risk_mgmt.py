@@ -1,0 +1,37 @@
+"""Risk management: likelihood and consequence, the four responses, and why scores can mislead."""
+CODE = "flight4_risk_mgmt"
+BOOK = {
+    "title": "Risk Management",
+    "subtitle": "Likelihood, consequence and what to do about each risk",
+    "chapters": [
+        ("What a risk is",
+         "A risk is a possible event that would hurt the plan if it happened. Risk has two parts: how likely the event is, and how bad it would be if it happened. Both matter, because a rare disaster can be as serious as a common small problem."),
+        ("The risk matrix",
+         "Many teams plot each risk on a grid, with likelihood on one side and consequence on the other. Risks in the top corner need the most attention. The grid is a way to compare risks side by side and decide where to spend effort first."),
+        ("Four responses",
+         "There are four basic ways to handle a risk. You can accept it and keep watching, mitigate it by lowering its likelihood or impact, avoid it by not doing the risky thing, or transfer it to someone else, such as an insurer or a contractor. Most real plans mix these."),
+        ("Residual risk",
+         "After you act, some risk is still there. That remaining risk is called residual risk. A good plan states it openly and decides whether it is small enough to live with, rather than pretending it has gone."),
+        ("Reviewing risks",
+         "Risks change as a project changes. New information, new partners and new equipment can make an old risk bigger or smaller. A risk list should be reviewed on a regular schedule, not written once and forgotten."),
+        ("The flaws of scores",
+         "A score is only as good as the numbers behind it. People often guess likelihood and consequence, and two people can score the same risk very differently. Scores help start a conversation, but they should not end it. Look at the reasons behind each number."),
+    ],
+    "test": [
+        ("What are the two parts of a risk?",
+         [("a", "Cost and colour"), ("b", "Speed and weight"), ("c", "Likelihood and consequence"), ("d", "Name and date")],
+         "c"),
+        ("Which response means transferring a risk to someone else?",
+         [("a", "Accept"), ("b", "Mitigate"), ("c", "Avoid"), ("d", "Transfer, such as through insurance or a contractor")],
+         "d"),
+        ("What is residual risk?",
+         [("a", "The risk left after you have acted"), ("b", "Risk that is completely gone"), ("c", "The risk of rubbish in a store"), ("d", "Risk that only affects the past")],
+         "a"),
+        ("Why are risk lists reviewed on a schedule?",
+         [("a", "Because risks never change"), ("b", "Because new information and changes can make a risk bigger or smaller"), ("c", "Because the list is shorter each time"), ("d", "Because reviews are required by the sun")],
+         "b"),
+        ("What is a flaw of risk scores?",
+         [("a", "They are always exact"), ("b", "They cannot be written down"), ("c", "Two people can score the same risk very differently because the numbers are often guesses"), ("d", "They are never used in planning")],
+         "c"),
+    ],
+}

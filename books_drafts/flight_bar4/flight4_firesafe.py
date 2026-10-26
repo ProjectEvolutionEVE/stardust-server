@@ -1,0 +1,37 @@
+"""Fire aboard: flame in microgravity, detection, extinguishers, safe materials, the Apollo 1 and Mir fires, and response drills."""
+CODE = "flight4_firesafe"
+BOOK = {
+    "title": "Fire Aboard",
+    "subtitle": "Why fire behaves differently in space and how crews stay ready",
+    "chapters": [
+        ("Flame in microgravity",
+         "On Earth, hot air rises and fresh air flows in, which feeds a flame. In weightlessness, there is no such flow, so flames are smaller, dimmer and rounder, and they can smother themselves in their own waste gases. Fire behaves in ways that surprise people trained on Earth."),
+        ("Detection",
+         "Smoke detectors must work in a closed cabin without the usual airflow. Crews are trained to notice smell, heat and sound as well as the alarm. Early detection gives the best chance to act before a fire grows."),
+        ("Extinguishers",
+         "Each craft carries extinguishers suited to the fires it might have, and the crew knows which to use for which kind of fire. Using the wrong one can make things worse, so training is essential."),
+        ("Safe materials",
+         "Spacecraft materials are chosen to resist ignition, and wiring is protected. Oxygen-rich air makes fires far more dangerous, so the air mix and pressure are kept under close control."),
+        ("Apollo 1 and Mir",
+         "The Apollo 1 fire in 1967 killed three astronauts on the launch pad in a pure oxygen cabin. The Mir station had a fire in 1997 that began in an oxygen generator. Both events changed how crews handle oxygen and materials."),
+        ("Response drills",
+         "Crews practise fire drills again and again, so each person knows where the extinguisher, the mask and the exit are. Calm, practised action is the most important safety tool a crew has."),
+    ],
+    "test": [
+        ("Why do flames behave differently in weightlessness?",
+         [("a", "Flames are colder"), ("b", "Flames cannot exist"), ("c", "Flames grow much larger"), ("d", "There is no airflow to bring fresh air, so flames are smaller and dimmer")],
+         "d"),
+        ("Why must extinguishers be chosen for the kind of fire?",
+         [("a", "Using the wrong one can make the fire worse"), ("b", "Extinguishers are all the same"), ("c", "Fire cannot be put out"), ("d", "Only one kind of fire exists")],
+         "a"),
+        ("Why are oxygen-rich air mixes kept under close control?",
+         [("a", "Oxygen stops fires"), ("b", "Oxygen-rich air makes fires far more dangerous"), ("c", "Oxygen is never needed"), ("d", "It is for cooking")],
+         "b"),
+        ("What happened in the Apollo 1 fire?",
+         [("a", "A fire on the Moon in 1969"), ("b", "No one was harmed"), ("c", "Three astronauts died on the launch pad in a pure oxygen cabin, in 1967"), ("d", "A fire in a car park in 1990")],
+         "c"),
+        ("Why do crews practise fire drills again and again?",
+         [("a", "So they can lose weight"), ("b", "So fire becomes more common"), ("c", "Because the law forbids sleep"), ("d", "So each person knows where the extinguisher, mask and exit are and acts calmly")],
+         "d"),
+    ],
+}

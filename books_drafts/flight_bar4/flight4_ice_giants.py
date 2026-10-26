@@ -1,0 +1,37 @@
+"""Uranus and Neptune: the tilt, the rings, Triton, the single Voyager 2 flybys, winds and proposed missions."""
+CODE = "flight4_ice_giants"
+BOOK = {
+    "title": "Uranus and Neptune",
+    "subtitle": "The two distant ice giants, and why we know so little about them",
+    "chapters": [
+        ("The tilt",
+         "Uranus is tipped so far over that it appears to roll around the Sun on its side. Its axis is tilted by about ninety-eight degrees. Scientists think a large collision long ago knocked it over."),
+        ("Rings",
+         "Both Uranus and Neptune have faint rings made of dark dust and rock. The rings of Uranus were found in 1977, before any spacecraft had visited the planet, by watching starlight dim as it passed behind them."),
+        ("Triton",
+         "Neptune's largest moon, Triton, travels backward around its planet, the opposite way to the planet's spin. Scientists believe it was captured from the outer region of the Solar System. Triton has active geysers of nitrogen gas."),
+        ("One flyby each",
+         "Voyager 2 is the only spacecraft to have flown past Uranus, in 1986, and past Neptune, in 1989. Those short visits gave us most of what we know. A return would reveal far more about both worlds."),
+        ("Winds",
+         "Neptune has some of the strongest winds in the Solar System, with speeds above two thousand kilometres an hour. Storms there can be very large and long-lived, and they show the planet's internal heat at work."),
+        ("Missions proposed",
+         "Scientists have proposed orbiters and probes to visit Uranus and Neptune. Such missions would study their interiors, magnetic fields, moons and rings in far more detail than Voyager could."),
+    ],
+    "test": [
+        ("Why does Uranus appear to roll around the Sun?",
+         [("a", "Its axis is tipped about ninety-eight degrees"), ("b", "Its orbit is square"), ("c", "It has no gravity"), ("d", "It spins backward at night")],
+         "a"),
+        ("Which spacecraft is the only one to have flown past both Uranus and Neptune?",
+         [("a", "Galileo"), ("b", "Voyager 2"), ("c", "Cassini"), ("d", "MESSENGER")],
+         "b"),
+        ("Why does Triton travel backward around Neptune?",
+         [("a", "It is painted that way"), ("b", "It is driven by a rocket"), ("c", "It was probably captured from the outer Solar System"), ("d", "It is a planet")],
+         "c"),
+        ("What do Neptune's storms and winds show?",
+         [("a", "That the planet is cold and still"), ("b", "That Neptune has no atmosphere"), ("c", "That there is no sunlight there"), ("d", "That the planet's internal heat drives strong winds and storms")],
+         "d"),
+        ("How were the rings of Uranus first found?",
+         [("a", "By watching starlight dim as it passed behind them"), ("b", "By landing on them"), ("c", "By sending a probe through them"), ("d", "By a photo from Earth's surface")],
+         "a"),
+    ],
+}

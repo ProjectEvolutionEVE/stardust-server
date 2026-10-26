@@ -1,0 +1,37 @@
+"""Cash flow for an operator: profit is not cash, timing, forecasting, buffers, seasonal swings and early warning signs."""
+CODE = "flight4_cashflow"
+BOOK = {
+    "title": "Cash Flow for an Operator",
+    "subtitle": "Why a profitable business can still run out of money",
+    "chapters": [
+        ("Profit is not cash",
+         "Profit is what remains after costs are counted in the accounts. Cash is what is actually in the bank. A sale made on credit adds to profit now, but the money arrives only when the customer pays, so a business can be profitable and short of cash at the same time."),
+        ("Timing",
+         "Money in and money out rarely arrive on the same day. Wages and fuel must be paid before customers pay. The gap between the two is where many small businesses get into trouble."),
+        ("Forecasting",
+         "A cash forecast lists the expected money in and out week by week or month by month. It shows the low points before they arrive. Forecasts are not exact, but a forecast that is updated often beats a guess made once."),
+        ("Buffers",
+         "A cash buffer is a reserve kept for the lean months. Holding enough to cover several weeks of running costs gives time to act when income drops. The buffer is the difference between a bad month and a crisis."),
+        ("Seasonal swings",
+         "Many operators earn more in some seasons than others. Plan for the quiet months before they arrive, by saving in the busy months and by agreeing terms that match the rhythm of the business."),
+        ("Early warning signs",
+         "Watch for sales that grow while cash shrinks, bills paid late, and a rising pile of unpaid invoices. These signs appear well before a shortage becomes a crisis, and acting early is far cheaper than acting late."),
+    ],
+    "test": [
+        ("Why can a profitable business run short of cash?",
+         [("a", "Because profit is always counted in cash"), ("b", "Because profit is never real"), ("c", "Because banks never lend"), ("d", "Because sales on credit add to profit before the money is paid")],
+         "d"),
+        ("What is a cash forecast?",
+         [("a", "A list of expected money in and out over time, showing low points early"), ("b", "A guess made once and never changed"), ("c", "A weather report"), ("d", "A list of staff names")],
+         "a"),
+        ("What is a cash buffer for?",
+         [("a", "To pay for decorations"), ("b", "To give time to act through lean months"), ("c", "To avoid paying taxes forever"), ("d", "To double the profit")],
+         "b"),
+        ("Why plan for seasonal swings?",
+         [("a", "Because income is always the same every month"), ("b", "Because seasons cannot be predicted"), ("c", "So the quiet months are covered before they arrive"), ("d", "Because the business never earns in the busy months")],
+         "c"),
+        ("Which is an early warning sign of cash trouble?",
+         [("a", "Bills paid on time"), ("b", "A full cash buffer"), ("c", "Invoices paid quickly"), ("d", "Sales growing while cash shrinks")],
+         "d"),
+    ],
+}

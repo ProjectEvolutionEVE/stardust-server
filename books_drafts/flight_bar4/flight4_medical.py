@@ -1,0 +1,37 @@
+"""Medicine on long flights: medical kits, training crew doctors, imaging, telemedicine, dental care and emergency options."""
+CODE = "flight4_medical"
+BOOK = {
+    "title": "Medicine on Long Flights",
+    "subtitle": "Keeping a crew healthy when help is far away",
+    "chapters": [
+        ("Medical kits",
+         "A long flight carries a medical kit chosen for the likely problems of the crew, such as cuts, infections, pain and allergies. Every item is checked, stored safely and replaced before it expires. The kit is a plan, not a shopping list."),
+        ("Training crew doctors",
+         "Not every crew has a physician, so one or more crew members are trained as medical officers. They learn to diagnose common problems, care for injuries and follow the instructions of doctors on the ground."),
+        ("Imaging",
+         "Small ultrasound machines let a trained crew member look inside the body, for example to check the heart or a wound. Clear images guided by a doctor on the ground can make a diagnosis much more accurate."),
+        ("Telemedicine",
+         "Telemedicine links the crew to doctors on Earth through video and data. The doctor can see the patient, read the readings and guide the treatment. Delays in signals must be planned for, because a message can take time to arrive."),
+        ("Dental care",
+         "A dental kit lets a trained crew member deal with some urgent problems, such as a broken filling or a painful tooth. Dental care aboard is limited, so routine checks before the flight matter a great deal."),
+        ("Emergency options",
+         "If a serious problem cannot be treated aboard, the crew plans an emergency return. Planning for that option, including the ways to reach a safe place quickly, is part of every long mission."),
+    ],
+    "test": [
+        ("What is a medical kit for a long flight?",
+         [("a", "A kit of tools for the engine"), ("b", "A kit chosen for the likely medical problems of the crew"), ("c", "A kit of paints"), ("d", "A kit for cooking")],
+         "b"),
+        ("Why are some crew members trained as medical officers?",
+         [("a", "Because medical officers fly the ship"), ("b", "Because the law forbids doctors"), ("c", "Because not every crew has a physician"), ("d", "Because training is free")],
+         "c"),
+        ("What does telemedicine do?",
+         [("a", "It sends the crew to sleep"), ("b", "It replaces all food"), ("c", "It stops the ship moving"), ("d", "It links the crew to doctors on Earth through video and data")],
+         "d"),
+        ("Why must delays in signals be planned for?",
+         [("a", "Because a message can take time to arrive"), ("b", "Because signals never travel"), ("c", "Because doctors do not use signals"), ("d", "Because the crew never talks")],
+         "a"),
+        ("When might a crew plan an emergency return?",
+         [("a", "Every day"), ("b", "When a serious problem cannot be treated aboard"), ("c", "When the crew wants a holiday"), ("d", "Never")],
+         "b"),
+    ],
+}

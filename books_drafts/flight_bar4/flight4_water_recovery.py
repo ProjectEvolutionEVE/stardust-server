@@ -1,0 +1,37 @@
+"""Recycling water aboard: urine processors, humidity condensate, filters, recovery rates, losses and the cost of carrying water."""
+CODE = "flight4_water_recovery"
+BOOK = {
+    "title": "Recycling Water Aboard",
+    "subtitle": "Reusing every drop because carrying water into space is so costly",
+    "chapters": [
+        ("Why recycle",
+         "Every litre of water launched costs a great deal of money. A crew on a long voyage needs water for drinking, cooking, washing and hygiene. Recycling lets the same water be used again and again, so less must be carried."),
+        ("Urine processors",
+         "Urine is collected and treated by a processor that separates the water from the waste. The recovered water is then cleaned and checked before it is used again. The process is complex, but it turns waste into drinkable water."),
+        ("Humidity condensate",
+         "Breathing and sweating add water to the air. A condenser cools the air and collects the water that drops out, which is then cleaned and reused. This source gives a steady amount of water every day."),
+        ("Filters",
+         "Filters take out particles, microbes and chemicals. Each stage removes a different kind of contaminant. Filters must be changed on schedule, and the water is tested often to check it is safe."),
+        ("Recovery rates",
+         "Aboard the International Space Station, the water recovery system now recovers most of the water that comes from the crew, and the rate has been raised over the years. Each gain reduces how much water must be launched."),
+        ("Losses and costs",
+         "Some water is always lost, in brine left from processing and in water stuck in equipment. Replacing the losses still needs supplies from outside. Every saving is worth having, because each litre carried costs so much to launch."),
+    ],
+    "test": [
+        ("Why is water recycled aboard a long voyage?",
+         [("a", "Because water is not needed"), ("b", "Because water is free in space"), ("c", "Because carrying water into space is very costly"), ("d", "Because water cannot be stored")],
+         "c"),
+        ("What does a urine processor do?",
+         [("a", "It makes fuel"), ("b", "It cooks food"), ("c", "It makes music"), ("d", "It separates water from waste so that the water can be cleaned and reused")],
+         "d"),
+        ("Where does humidity condensate come from?",
+         [("a", "Water from breathing and sweating, collected as the air is cooled"), ("b", "Rain from outside"), ("c", "Melted ice from a comet"), ("d", "A water tank in the engine")],
+         "a"),
+        ("Why are filters tested and changed on schedule?",
+         [("a", "So the filters can be sold"), ("b", "So the water stays safe to drink"), ("c", "So the water changes colour"), ("d", "So the crew can sleep")],
+         "b"),
+        ("Why is there always some loss in water recovery?",
+         [("a", "Water always disappears on its own"), ("b", "Crews drink it all"), ("c", "Brine and water stuck in equipment cannot all be recovered"), ("d", "Recovery is perfect")],
+         "c"),
+    ],
+}
