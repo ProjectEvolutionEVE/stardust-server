@@ -76,6 +76,7 @@ var fuel_warned := 100
 var towing := false
 var fuel_saved_at := 0.0
 var fuel_label: Label
+var flight_secs := 0.0            # flight time not yet reported to the WSC (rule 38: 50 credits an hour, or the lease)
 var fuel_fill: ColorRect          # only while docked: the quarters are aboard (Eric 10-24: not out in space)
 var cargo: Node
 var mute_btn: Button
@@ -174,6 +175,11 @@ func _fuel_tick(dt: float, now: float) -> void:
 			fuel = 100.0                 # topped up at the Starship (fuel is included)
 			fuel_warned = 100
 	elif not towing:
+		flight_secs += dt
+		if flight_secs >= 60.0 and Session.token != "":   # each minute out in the craft is reported; the server bills it
+			var secs := flight_secs
+			flight_secs = 0.0
+			Api.call_api("POST", "/api/dfg/craft/flight", {"seconds": secs})
 		var flying: bool = not warp.is_empty() or vel.length() > 0.5
 		fuel = maxf(0.0, fuel - dt / 3600.0 * 100.0 / (FUEL_FLY_H if flying else FUEL_IDLE_H))
 		for mark in [25, 10]:
