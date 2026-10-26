@@ -103,4 +103,9 @@ against established financial-education sources).
 
 ## 6. Your Team
 
-*(Eric to fill in: the team, roles and experience. Rise Solutions LLC is the company behind the game.)*
+**Eric Wagoner, founder and developer, Rise Solutions LLC.** Game design, story, direction and every final decision.
+This is Eric's first game jam.
+
+**AI collaborators.** Eric builds with AI models as his development team: Anthropic's Claude models do about 95% of the
+work (code, the game server, the library books and their tests, documents), and xAI's Grok about 5%. Every rule, story
+line and design decision is Eric's; the models write and check to his rules, and he reviews what ships.
