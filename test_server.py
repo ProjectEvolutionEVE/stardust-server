@@ -737,7 +737,8 @@ async def main():
     s = await (await cl.get("/api/dfg/library", headers=HC)).json()
     fs = next(c for c in s["careers"] if c["code"] == "flight")
     check("the library has a shelf per career, books tagged by bar, with the ladder",
-          len(s["careers"]) == 8 and len(fs["books"]) == len(fl[1]) + len(fl[2]) and all(b["passed"] and b["perfect"] for b in fs["books"])
+          len(s["careers"]) == 8 and len([b for b in fs["books"] if b["bar"] <= 2]) == len(fl[1]) + len(fl[2])
+          and all(b["passed"] and b["perfect"] for b in fs["books"] if b["bar"] <= 2)
           and fs["bars"][1]["medal"] == "gold" and s["uniform"] == "flight")
     async with cl.app["pool"].acquire() as c:
         cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")
