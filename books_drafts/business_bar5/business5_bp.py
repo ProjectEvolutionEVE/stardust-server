@@ -1,0 +1,37 @@
+"""BP and the Deepwater Horizon: a deep-sea rig, a blowout, and how a safety culture is built or broken."""
+CODE = 'business5_bp'
+BOOK = {
+    "title": 'BP and the Deepwater Horizon',
+    "subtitle": 'A rig, a blowout, and a culture of risk',
+    "chapters": [
+        ('A deep-water rig',
+         'In 2010 the Deepwater Horizon was a drilling rig working in the Gulf of Mexico, far out at sea. It was drilling a well for the oil company BP, in water more than a kilometre deep. Work like this is costly, complex and dangerous, so it needs strong safety rules.'),
+        ('The blowout',
+         'On 20 April 2010 gas surged up the well and exploded on the rig. Eleven workers died, and the rig later sank. Oil flowed from the damaged well for almost three months before it was capped.'),
+        ('Decisions under pressure',
+         'Investigations pointed to a chain of decisions made under time and cost pressure. Warning signs were missed or set aside, and test results were read in a way that hid the danger. Safety is made of many small choices, not one big rule.'),
+        ('The spill and its cost',
+         "Millions of barrels of oil reached the sea and the coast. The harm to wildlife and fishing lasted for years. The company's costs for clean-up, claims and fines ran into many billions of dollars."),
+        ('The legal settlement',
+         'BP agreed to pay large sums to governments and to people and businesses harmed by the spill. It also pleaded guilty to criminal charges. A safety failure can bring a legal bill that lasts for many years.'),
+        ('Risk culture',
+         "A company's risk culture is how its people think about danger when deadlines loom. Leaders shape it by what they reward, what they ask about and what they punish. A chief executive who asks every week about the safest way to work sends a stronger signal than a poster on the wall."),
+    ],
+    "test": [
+        ('In what year did the Deepwater Horizon blowout happen?',
+         [('a', '2005'), ('b', '1998'), ('c', '2010'), ('d', '2015')],
+         'c'),
+        ('About how long did oil flow from the damaged well before it was capped?',
+         [('a', 'A few hours'), ('b', 'About three months'), ('c', 'About a week'), ('d', 'About ten years')],
+         'b'),
+        ('Why did investigators say the disaster was not one single mistake?',
+         [('a', 'The rig was too small to matter'), ('b', 'The weather was the only cause'), ('c', 'Nobody was working that day'), ('d', 'A chain of decisions and missed warnings came together')],
+         'd'),
+        ("What does a company's risk culture depend on most?",
+         [('a', 'The colour of its logo'), ('b', 'How many ships it owns'), ('c', 'What its leaders reward, ask about and punish'), ('d', 'The price of oil on that day')],
+         'c'),
+        ('Which outcome did BP face after the spill?',
+         [('a', 'Large settlements and a criminal guilty plea'), ('b', 'No charges at all'), ('c', 'Only a small fine for paperwork'), ('d', 'The government paid for everything')],
+         'a'),
+    ],
+}

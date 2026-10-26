@@ -1,0 +1,37 @@
+"""Microfinance and Muhammad Yunus: Grameen Bank, small loans, group lending, repayment records, criticisms, and the 2006 Nobel Prize."""
+CODE = 'business5_microfinance'
+BOOK = {
+    "title": 'Microfinance and Muhammad Yunus',
+    "subtitle": 'Small loans for people who had no bank, and the debate they started',
+    "chapters": [
+        ('Grameen Bank',
+         'Muhammad Yunus founded the Grameen Bank in Bangladesh in 1983. It was set up to lend small sums to people who were too poor to qualify for a normal bank loan. The word Grameen means village in Bengali.'),
+        ('Small loans',
+         'Microfinance means very small loans, often for a few dollars, used to start or grow a tiny business. A loan might buy a sewing machine, a cow or a stock of goods to sell. The aim is to help people earn a steady income.'),
+        ('Group lending',
+         'Grameen used group lending, where small groups of borrowers take loans together and support one another. Members often meet regularly and share responsibility for repayment. Peer pressure and trust helped many loans get repaid.'),
+        ('Repayment records',
+         'Many microfinance lenders reported high repayment rates over the years. These records helped show that poor borrowers could be reliable customers. Lenders often saw that most borrowers repaid on time.'),
+        ('Criticisms',
+         'Critics say some microfinance loans carry high interest rates, and some borrowers fall into debt they cannot manage. Others argue that the benefits have been overstated. Good lenders work hard to avoid leaving borrowers worse off.'),
+        ('The 2006 Nobel Prize',
+         'In 2006 the Nobel Peace Prize was shared by Muhammad Yunus and the Grameen Bank. The prize recognised the idea that small loans could help lift people out of poverty. The award spread interest in microfinance around the world.'),
+    ],
+    "test": [
+        ('In what country was the Grameen Bank founded?',
+         [('a', 'Iceland'), ('b', 'Bangladesh'), ('c', 'Peru'), ('d', 'Finland')],
+         'b'),
+        ('What does microfinance mean?',
+         [('a', 'Tiny coins used only for holidays'), ('b', 'A very small bank building'), ('c', 'A microscope for money'), ('d', 'Very small loans, often used to start or grow tiny businesses')],
+         'd'),
+        ('What is group lending?',
+         [('a', 'A large bank lends to a single rich person'), ('b', 'A ban on lending to groups'), ('c', 'Small groups of borrowers take loans together and support one another'), ('d', 'A tour of a bank with friends')],
+         'c'),
+        ('Which prize did Muhammad Yunus and Grameen share in 2006?',
+         [('a', 'The Nobel Peace Prize'), ('b', 'A prize for baking bread'), ('c', 'A prize for the fastest runner'), ('d', 'A prize for painting houses')],
+         'a'),
+        ('What is one criticism of microfinance?',
+         [('a', 'It gives away too much free food'), ('b', 'It has never lent any money'), ('c', 'Some loans carry high interest, and some borrowers fall into debt'), ('d', 'It is only used by ships')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Regression and Forecasting Relationships: the line of best fit, slope and intercept, R squared, residuals, overfitting and extrapolation."""
+CODE = 'business5_regression'
+BOOK = {
+    "title": 'Regression and Forecasting Relationships',
+    "subtitle": 'The line of best fit, slope and intercept, R squared, residuals, overfitting and extrapolation',
+    "chapters": [
+        ('A line through the points',
+         'When two things seem to move together, a regression finds the straight line that best fits the points. The line lets you estimate one value from the other. It turns a cloud of dots into a rule you can test.'),
+        ('Slope and intercept',
+         'The slope tells how much the output changes for each unit of input. The intercept is the value where the line crosses the vertical axis. Together they describe the relationship in one simple equation.'),
+        ('R squared',
+         'R squared measures how much of the variation in the output the line explains, on a scale from 0 to 1. A high value means the points sit close to the line. A high value does not prove that one thing causes the other.'),
+        ('Residuals',
+         'A residual is the gap between an actual point and the value the line predicts for it. Looking at residuals shows whether the line misses in some pattern. A pattern in the residuals suggests the model is missing something.'),
+        ('Overfitting',
+         'A model with too many parts can fit the past almost perfectly and still predict the future badly. This is overfitting: the model learns the noise rather than the true pattern. Simple models often forecast better than complicated ones.'),
+        ('Extrapolation',
+         'Extrapolation means using the line beyond the range of the data you have. The further you go, the more the relationship may change. Wise forecasters treat far predictions with caution.'),
+    ],
+    "test": [
+        ('What does the slope of a line of best fit tell you?',
+         [('a', 'The colour of the chart'), ('b', 'How much the output changes for each unit of input'), ('c', 'The number of data points'), ('d', 'The date of the data')],
+         'b'),
+        ('What does R squared measure?',
+         [('a', 'The cost of the study'), ('b', 'The number of residuals'), ('c', 'The age of the data'), ('d', 'How much of the variation the line explains, from 0 to 1')],
+         'd'),
+        ('What is a residual?',
+         [('a', 'The slope'), ('b', 'The intercept'), ('c', "The gap between an actual point and the line's prediction"), ('d', 'A type of chart')],
+         'c'),
+        ('What is overfitting?',
+         [('a', 'A model that learns noise and then predicts future values badly'), ('b', 'Fitting a model to too little data'), ('c', 'Using a line that is too flat'), ('d', 'Charts with too many colours')],
+         'a'),
+        ('Why is extrapolation risky?',
+         [('a', 'Lines never change'), ('b', 'Points are always exact'), ('c', 'The relationship may change beyond the range of the data'), ('d', 'Charts cannot be drawn')],
+         'c'),
+    ],
+}

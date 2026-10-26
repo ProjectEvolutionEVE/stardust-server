@@ -1,0 +1,37 @@
+"""Mission, Vision and Values: what each statement is for, how to tell a useful one from an empty one, and how to live by it."""
+CODE = 'business5_visionmission'
+BOOK = {
+    "title": 'Mission, Vision and Values',
+    "subtitle": 'What each statement is for, and how to make them mean something',
+    "chapters": [
+        ('Three different statements',
+         'A mission says why the organisation exists and what it does. A vision describes the future it hopes to create. Values name the principles it will keep to while it works. Each does a different job, and mixing them up makes all three weaker.'),
+        ('Examples that worked',
+         'The best statements are short, specific and easy to remember. They name a real purpose and a real choice. A statement that a staff member can repeat from memory is more likely to guide daily work.'),
+        ('Empty statements',
+         "An empty statement sounds grand but says nothing. Words like excellence, innovation and integrity can appear in almost any firm's statement. Ask what the statement would tell a new employee about how to decide something hard."),
+        ('Goals to match',
+         'A statement is only useful when it links to goals. Ask what the firm will measure to show it is living the mission. Set goals that test the values, not just the sales figures.'),
+        ('Living the values',
+         'Values show up in choices: who gets promoted, what gets rewarded, and what leaders do when no one is watching. Staff notice quickly when words and actions differ. Leaders should explain hard decisions in terms of the values.'),
+        ('Reviewing them',
+         'The world changes, so statements need review. Check every few years whether the mission still fits the work, whether the vision still inspires, and whether the values still guide choices. Change them only when the change is real.'),
+    ],
+    "test": [
+        ('What does a mission statement describe?',
+         [('a', 'Why the organisation exists and what it does'), ('b', 'The price of its products'), ('c', 'The number of its staff'), ('d', 'The colour of its office')],
+         'a'),
+        ('What does a vision describe?',
+         [('a', 'The office rules'), ('b', "Last year's accounts"), ('c', 'The future the organisation hopes to create'), ('d', 'The names of the directors')],
+         'c'),
+        ('What is a sign of an empty statement?',
+         [('a', 'A clear purpose'), ('b', 'Grand words that say nothing about a hard choice'), ('c', 'Short, specific wording'), ('d', 'A link to goals')],
+         'b'),
+        ('Where do values show up most clearly?',
+         [('a', 'Only on the front door'), ('b', 'Only in advertising'), ('c', 'Only in the annual party'), ('d', 'In choices, such as who is promoted and what is rewarded')],
+         'd'),
+        ('How often does the text suggest reviewing the statements?',
+         [('a', 'Never, once written they are final'), ('b', 'Every hour'), ('c', 'Every few years, or when the world changes'), ('d', 'Only when the firm is sold')],
+         'c'),
+    ],
+}

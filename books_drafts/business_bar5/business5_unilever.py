@@ -1,0 +1,37 @@
+"""Unilever: Lever Brothers and Dutch margarine, the 1929 merger, brands in many lands, a living plan and a changing portfolio."""
+CODE = 'business5_unilever'
+BOOK = {
+    "title": 'Unilever',
+    "subtitle": 'Soap, margarine, and brands in many lands',
+    "chapters": [
+        ('Lever Brothers and soap',
+         'William and James Lever started Lever Brothers in England in 1885, selling Sunlight soap. They built a business on a popular, simple product sold to ordinary families. A clear brand promise can help a small firm grow.'),
+        ('Dutch margarine',
+         'Margarine Unie was a Dutch company that made margarine, a cheaper spread for butter. The two businesses had complementary strengths in the same kinds of products. Companies that complement each other can grow faster together.'),
+        ('The 1929 merger',
+         'In 1929 Lever Brothers and Margarine Unie joined to form Unilever. The merger created one of the largest consumer goods companies of its time. Mergers can bring scale, but they must bring real synergy.'),
+        ('Brands in many lands',
+         'Unilever sells food, home and personal care products under many brands in many countries. It adapts products and advertising to local tastes. A global portfolio needs local care, not one message everywhere.'),
+        ('The sustainable living plan',
+         'In 2010 Unilever launched a Sustainable Living Plan with goals for the environment and for social good. The plan tied business targets to wider social aims. Long-term goals can guide daily choices when they are measured.'),
+        ('Changes to the portfolio',
+         'Unilever has sold some brands and bought others over the years to focus its business. A portfolio should be reviewed often, so that money goes where growth and value are strongest. Some strong brands are better sold than kept.'),
+    ],
+    "test": [
+        ('What did Lever Brothers sell in England under the Sunlight name?',
+         [('a', 'Cars'), ('b', 'Bicycles'), ('c', 'Radios'), ('d', 'Soap')],
+         'd'),
+        ('What was Margarine Unie?',
+         [('a', 'A German bank'), ('b', 'A French winery'), ('c', 'A Dutch company making margarine'), ('d', 'A Swiss watch maker')],
+         'c'),
+        ('In what year did Lever Brothers and Margarine Unie join to form Unilever?',
+         [('a', '1929'), ('b', '1885'), ('c', '2010'), ('d', '1964')],
+         'a'),
+        ('What did Unilever launch in 2010?',
+         [('a', 'A chain of cinemas'), ('b', 'A new airline'), ('c', 'A Sustainable Living Plan'), ('d', 'A toy line')],
+         'c'),
+        ('What does the chapter say a global portfolio needs?',
+         [('a', 'The same message in every country'), ('b', 'Local care, not one message everywhere'), ('c', 'No brands at all'), ('d', 'Only one product')],
+         'b'),
+    ],
+}

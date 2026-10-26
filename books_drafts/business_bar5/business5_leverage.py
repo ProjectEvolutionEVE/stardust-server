@@ -1,0 +1,37 @@
+"""Leverage and Margin Calls: borrowing to invest, how it magnifies gains and losses, and why forced selling can spiral."""
+CODE = 'business5_leverage'
+BOOK = {
+    "title": 'Leverage and Margin Calls',
+    "subtitle": 'Borrowing to invest, the margin rules, and the spiral of forced sales',
+    "chapters": [
+        ('Borrowing to invest',
+         'Leverage means using borrowed money to invest more than you could with your own cash. A broker may lend against the shares you hold, and the loan is called a margin loan. It can make a good result much bigger, and a bad result much worse.'),
+        ('Magnified gains and losses',
+         'Suppose you put in 1,000 and borrow another 1,000 to buy 2,000 of shares. A 10 percent rise makes your 2,000 worth 2,200, and after repaying the loan you have made 200 on your own 1,000. A 10 percent fall takes away 200 of your 1,000, which is a 20 percent loss.'),
+        ('Maintenance margin',
+         'Brokers require that your own money stays above a minimum share of the total value. This minimum is the maintenance margin. When prices fall and your share drops below it, the broker takes action.'),
+        ('The margin call',
+         'A margin call is a demand to add cash or securities to bring your account back above the minimum. If you do not act quickly, the broker may sell your holdings without asking you. The sale happens at the market price, which may be the worst moment.'),
+        ('The spiral',
+         'When many leveraged investors are forced to sell at once, their selling pushes prices down. That pushes other investors below their minimums, and more sales follow. The spiral can feed on itself until the forced sellers stop.'),
+        ('Sensible limits',
+         'Borrowing to invest can make sense for some people, but it is a serious step. Keep a cushion of spare cash, know the minimum you must hold, and never borrow more than you could repay if prices fell hard. Slow and steady usually beats a quick bet.'),
+    ],
+    "test": [
+        ('What is leverage?',
+         [('a', 'A type of bicycle'), ('b', 'A bank holiday'), ('c', 'Using borrowed money to invest more than your own cash would allow'), ('d', 'A tax on savings')],
+         'c'),
+        ('In the example, what does a 10 percent fall in a 2,000 holding do to a 1,000 own stake when it is leveraged?',
+         [('a', 'Adds 200'), ('b', 'Takes away 200, which is a 20 percent loss on the 1,000'), ('c', 'Changes nothing'), ('d', 'Takes away 10 percent of the loan only')],
+         'b'),
+        ('What is the maintenance margin?',
+         [('a', 'The interest rate on a savings account'), ('b', 'The fee for opening an account'), ('c', 'The price of a loaf of bread'), ('d', 'The minimum share of the total value that your own money must stay above')],
+         'd'),
+        ('What is a margin call?',
+         [('a', 'A phone call about a holiday'), ('b', 'A bonus from the bank'), ('c', 'A demand to add cash or securities to get back above the minimum'), ('d', 'A notice of a new tax')],
+         'c'),
+        ('Why can a forced-selling spiral make prices fall further?',
+         [('a', 'Each round of sales pushes prices lower, which forces more sales'), ('b', 'Sales always raise prices'), ('c', 'Prices are fixed by law'), ('d', 'Investors never sell')],
+         'a'),
+    ],
+}

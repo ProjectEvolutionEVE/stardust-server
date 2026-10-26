@@ -1,0 +1,37 @@
+"""Money Market Funds: short-term safe debt, the stable dollar, the 2008 break, and the rules since."""
+CODE = 'business5_mmf'
+BOOK = {
+    "title": 'Money Market Funds',
+    "subtitle": 'Short-term safe debt, the stable dollar, and the rules that followed 2008',
+    "chapters": [
+        ('Short-term safe debt',
+         'A money market fund is a fund that invests in very short-term debt, such as government bills and high-quality company loans that mature within months. It aims to keep its price steady and to give savers easy access to their money.'),
+        ('The stable dollar',
+         'Most money market funds aim to keep each share at one dollar. Savers put money in and take it out at that value, and the interest they earn is paid on top. This steady value is why many people treat these funds like a bank account.'),
+        ('The Reserve Primary break',
+         'In September 2008, the Reserve Primary Fund held debt issued by the failing bank Lehman Brothers. Its share value fell below one dollar, an event called breaking the buck. Investors rushed to withdraw, and the shock spread to the wider market.'),
+        ('Gates and fees',
+         "After 2008, rules were changed so that some funds can charge fees on withdrawals or limit them, which is called a gate, when stress hits. These tools are meant to slow sudden runs. Savers should read the fund's rules to see what applies."),
+        ('Rules since',
+         'New rules in later years required some funds to let their share value move with the market. Others were given tools to manage redemptions during stress. The aim was to make the funds sturdier, while keeping them useful for savers.'),
+        ('A role for savers',
+         'Money market funds can be a convenient place to hold cash for short periods. They are not the same as a bank deposit, and they do carry some risk. A sensible saver knows the difference and keeps an eye on the rules.'),
+    ],
+    "test": [
+        ('What kind of debt does a money market fund mainly hold?',
+         [('a', 'Long property loans for fifty years'), ('b', 'Shares of a single small farm'), ('c', 'Very short-term debt'), ('d', 'Gold coins only')],
+         'c'),
+        ('What does "breaking the buck" mean?',
+         [('a', 'A bank closes its doors'), ('b', 'The share value falls below one dollar'), ('c', 'A coin is lost in a shop'), ('d', 'A price rises by a dollar')],
+         'b'),
+        ('What did the Reserve Primary Fund hold that caused trouble in 2008?',
+         [('a', 'Paintings from a museum'), ('b', 'Tickets to a football game'), ('c', 'Shares in a bakery'), ('d', 'Debt issued by Lehman Brothers, which was failing')],
+         'd'),
+        ('What is a gate on a money market fund?',
+         [('a', 'A metal fence around a bank'), ('b', 'A ticket to enter a park'), ('c', 'A limit or fee on withdrawals when the fund is under stress'), ('d', 'A new name for the fund')],
+         'c'),
+        ('Is a money market fund exactly the same as a bank deposit?',
+         [('a', 'No, it is different and carries some risk'), ('b', 'Yes, in every way'), ('c', 'Yes, but only on Sundays'), ('d', 'Only if the fund is in a museum')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Zaibatsu and Keiretsu: family holding groups in Japan, the postwar breakup, cross-shareholdings and main banks."""
+CODE = 'business5_zaibatsu'
+BOOK = {
+    "title": 'The Zaibatsu and Keiretsu',
+    "subtitle": 'Family holding groups, a postwar breakup, and new networks',
+    "chapters": [
+        ('Mitsui, Mitsubishi and Sumitomo',
+         'The zaibatsu were large family-controlled business groups in Japan, including Mitsui, Mitsubishi and Sumitomo. Each group ran many firms in banking, trade, mining and industry. Their size gave them great influence over the economy.'),
+        ('Family holding companies',
+         "Each zaibatsu was controlled through a holding company owned by one family. The holding company held shares in the group's many firms. Control through a holding company can concentrate power in a few hands."),
+        ('The postwar breakup',
+         'After the Second World War, occupation authorities broke up the zaibatsu holding companies to reduce concentrated economic power. An antimonopoly law followed in 1947. Breaking up a group can change its power, but not always its habits.'),
+        ('Cross-shareholdings',
+         'After the breakup, firms in a keiretsu, a loose group, often held shares in one another. These cross-shareholdings linked businesses together and gave them stability. Shared ownership can build trust, and it can also shield weak firms.'),
+        ('Main banks',
+         'Each keiretsu usually had a main bank at its centre, which lent money to member firms and helped them in hard times. The main bank relationship gave firms steady finance. Strong ties to a lender can help a firm survive a bad year.'),
+        ('How they changed',
+         "Japan's business groups have changed since the postwar years, with new rules, new markets and foreign investors. Many links have loosened over time. Networks that once protected firms must adapt to new competition."),
+    ],
+    "test": [
+        ('Which family-controlled group is named in the chapter?',
+         [('a', 'Ford'), ('b', 'Tata'), ('c', 'Philips'), ('d', 'Mitsui')],
+         'd'),
+        ("What was the role of a zaibatsu's holding company?",
+         [('a', 'It only sold tickets for trains'), ('b', 'It made wooden furniture'), ('c', "It held shares in the group's many firms"), ('d', 'It printed newspapers')],
+         'c'),
+        ('What happened to the zaibatsu after the Second World War?',
+         [('a', 'Occupation authorities broke up the holding companies'), ('b', 'They were made larger by law'), ('c', 'They moved to another country'), ('d', 'They became charities')],
+         'a'),
+        ('What were cross-shareholdings?',
+         [('a', 'Shares given to customers'), ('b', 'Shares in a ship'), ('c', 'Firms in a group holding shares in one another'), ('d', 'Shares in a school')],
+         'c'),
+        ("What role did a keiretsu's main bank play?",
+         [('a', "It printed the group's logo"), ('b', 'It lent money to member firms and helped them in hard times'), ('c', 'It ran the factories'), ('d', "It sold the group's furniture")],
+         'b'),
+    ],
+}

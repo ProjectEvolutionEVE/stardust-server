@@ -1,0 +1,37 @@
+"""Choosing When to Claim Retirement Benefits: early, full and late claiming, the actuarial trade, longevity risk, spouses, working while claiming, and a break-even calculation."""
+CODE = 'business5_sstiming'
+BOOK = {
+    "title": 'Choosing When to Claim Retirement Benefits',
+    "subtitle": 'One pension, many possible start dates',
+    "chapters": [
+        ('One pension, many start dates',
+         'Many government pension systems let a person choose when to start receiving the regular benefit. Starting earlier means more payments over a shorter span of years. Starting later means smaller payments each month, but for more months or years.'),
+        ('Early, full and late claiming',
+         'Claiming before the full retirement point gives a smaller regular payment for life. Claiming at the full point gives the standard amount set by the rules. Waiting beyond it usually increases the payment, up to a set limit.'),
+        ('The actuarial trade',
+         'The adjustments for early and late claiming are designed to be roughly fair on average, across the expected length of life. A person who lives longer than average tends to gain from waiting. A person who dies sooner tends to gain from claiming early.'),
+        ('Longevity risk',
+         'Longevity risk is the risk of living longer than savings or income expect. A larger regular payment for life can protect against this. It is one of the main reasons some people choose to wait.'),
+        ('Spouses',
+         'Couples may have benefit rules that depend on both partners, such as spouse or survivor payments. The choice made by one partner can affect what the other receives later. Looking at the couple as a whole often gives a better answer.'),
+        ('Working while claiming, and a break-even calculation',
+         'Some systems reduce early payments if a person keeps earning above a set amount. The break-even point is where the total received from waiting catches up with the total from claiming earlier. Comparing these totals, using realistic life expectancy, is a simple way to test the choice.'),
+    ],
+    "test": [
+        ('What typically happens if you claim before your full benefit point?',
+         [('a', 'Your payment is larger'), ('b', 'It is free'), ('c', 'Your regular payment is smaller'), ('d', 'It is doubled')],
+         'c'),
+        ('What is longevity risk?',
+         [('a', 'Being tall'), ('b', 'The risk of living longer than savings or income expect'), ('c', 'Running fast'), ('d', 'Rain on the day you retire')],
+         'b'),
+        ('What is a break-even point in this choice?',
+         [('a', 'A bank fee'), ('b', 'A type of tax'), ('c', 'A card game'), ('d', 'The point where the totals from claiming earlier and later are equal')],
+         'd'),
+        ("Why might a spouse's situation matter?",
+         [('a', 'It is never relevant'), ('b', 'It lets you skip taxes'), ('c', 'Couples can have benefit rules that depend on both partners'), ('d', 'It is a bank holiday')],
+         'c'),
+        ('What is the main aim of comparing the options?',
+         [('a', 'To pick the claim time that fits your health, needs and other income'), ('b', 'To pick the nicest font'), ('c', 'To avoid using a calculator'), ('d', 'To guess')],
+         'a'),
+    ],
+}

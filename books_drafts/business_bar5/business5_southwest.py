@@ -1,0 +1,37 @@
+"""Southwest Airlines: a low-cost carrier built on one aircraft type, short routes and quick turns, and its culture."""
+CODE = 'business5_southwest'
+BOOK = {
+    "title": 'Southwest Airlines',
+    "subtitle": 'One aircraft type, simple routes, and a culture that cares about people',
+    "chapters": [
+        ('A start in Texas',
+         'Southwest Airlines began flying in 1971 from Texas, with a handful of planes. Its founders had a simple idea for short, low-cost flights between a few cities. It grew into one of the largest airlines in the United States.'),
+        ('One aircraft type',
+         'Southwest flew mostly one kind of aircraft, the Boeing 737. Pilots, mechanics and spare parts were all for the same planes, so training and maintenance were simpler and cheaper. Simplicity in the fleet is a choice that saves money at every turn.'),
+        ('Point-to-point routes',
+         'Instead of a central hub that sends passengers through many connections, Southwest flies point to point between cities. Planes fly shorter routes and make more trips each day. Fewer connections means fewer delays and less lost luggage.'),
+        ('Quick turnarounds',
+         'Southwest became known for quick turnarounds at the gate. A plane that spends less time on the ground flies more hours in a day, which spreads its cost over more trips. Speed on the ground pays in the air.'),
+        ('Hedging fuel',
+         'Fuel is a large cost for any airline. Southwest was known for buying fuel in advance, which protected it against sudden price rises. Hedging is a way of paying a known price for a risk that could hurt.'),
+        ('Culture and pay',
+         "Southwest is known for a culture that puts employees first and keeps staff motivated. Its leaders have stressed fair treatment, shared effort and good pay tied to results. A strong culture is hard for rivals to copy, and it is one of the company's strengths."),
+    ],
+    "test": [
+        ('In what year did Southwest Airlines begin flying?',
+         [('a', '1948'), ('b', '1971'), ('c', '1995'), ('d', '2003')],
+         'b'),
+        ('Why did Southwest fly mostly one type of aircraft?',
+         [('a', 'Because it was the only plane that could fly in Texas'), ('b', 'To carry more freight than passengers'), ('c', 'Because the law required one type'), ('d', 'To make training and maintenance simpler and cheaper')],
+         'd'),
+        ('What is point-to-point flying?',
+         [('a', 'Flying only to one central hub'), ('b', 'Flying only over the sea'), ('c', 'Flying directly between cities without a central hub'), ('d', 'Flying only at night')],
+         'c'),
+        ('What does hedging fuel mean?',
+         [('a', 'Paying a known price in advance to protect against price rises'), ('b', 'Burning fuel slowly'), ('c', 'Selling fuel to other airlines'), ('d', 'Buying fuel only after prices fall')],
+         'a'),
+        ('Why does a fast turnaround at the gate matter?',
+         [('a', 'It lets passengers skip security'), ('b', 'It makes the plane lighter'), ('c', 'The plane flies more hours in a day, spreading its cost over more trips'), ('d', 'It removes the need for pilots')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Laffer Curve: the napkin story, tax rates and revenue, the peak, the 1980s tax debate, evidence on where countries sit and what remains useful."""
+CODE = 'business5_laffer'
+BOOK = {
+    "title": 'The Laffer Curve',
+    "subtitle": 'How tax rates and tax revenue can rise and then fall',
+    "chapters": [
+        ('The napkin story',
+         'In 1974 economist Arthur Laffer is said to have sketched the idea on a restaurant napkin in Washington. The story is famous, though some details are disputed.'),
+        ('Tax rate and revenue',
+         'At a 0 percent rate, the government raises nothing. At 100 percent it also raises nothing, because no one would work or report income. In between, revenue rises with the rate and then falls.'),
+        ('The peak',
+         'Somewhere in between is a rate that raises the most revenue. Whether a given rate sits above or below that peak depends on how much people change their work, saving and reporting when taxes change.'),
+        ('The 1980s',
+         'In the 1980s, United States tax cuts were defended partly with this idea. Supporters argued that lower rates would boost growth enough to pay for themselves. Most economists judged that the cuts did not pay for themselves in full.'),
+        ('Where countries sit',
+         'Estimates of where a particular country sits on the curve vary widely, and experts disagree. The answer depends on which group is taxed and over what period.'),
+        ('What remains useful',
+         'The lesson that survives is that tax rates change behaviour, and very high rates can shrink the base they tax. The simple form of the curve does not settle how much revenue a given rate will raise.'),
+    ],
+    "test": [
+        ('What does the Laffer curve show?',
+         [('a', 'Tax rates always raise revenue'), ('b', 'The prices of goods'), ('c', 'How tax revenue can rise and then fall as rates change'), ('d', 'Population growth')],
+         'c'),
+        ('At which two rates does the chapter say no revenue is raised?',
+         [('a', '0 percent and 100 percent'), ('b', '10 percent and 20 percent'), ('c', '50 percent and 60 percent'), ('d', '5 percent and 95 percent')],
+         'a'),
+        ('Where was the napkin story set?',
+         [('a', 'In a bank in Paris'), ('b', 'In a school in London'), ('c', 'In a restaurant in Washington'), ('d', 'In a factory in Tokyo')],
+         'c'),
+        ('What did supporters of the 1980s tax cuts argue?',
+         [('a', 'Taxes should never fall'), ('b', 'Lower rates would raise growth enough to pay for themselves'), ('c', 'Cuts raise no growth'), ('d', 'Cuts only help banks')],
+         'b'),
+        ('What does the lesson that remains useful say?',
+         [('a', 'Tax rates have no effect on behaviour'), ('b', 'Revenue always rises with the rate'), ('c', 'Taxes should be paid in gold'), ('d', 'Tax rates affect behaviour, and very high rates can shrink what they tax')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Product Life Cycle: products move through introduction, growth, maturity and decline, and each stage calls for different choices."""
+CODE = 'business5_lifecycle'
+BOOK = {
+    "title": 'The Product Life Cycle',
+    "subtitle": 'Introduction, growth, maturity and decline, and how to choose at each stage',
+    "chapters": [
+        ('Four stages',
+         'Many products follow a life cycle with four stages: introduction, growth, maturity and decline. Not every product goes through all four, and some stay in maturity for decades. The idea helps managers plan ahead for each stage.'),
+        ('Introduction and growth',
+         'At introduction, sales are low and costs are high, as the product is new and little known. In growth, sales rise quickly as more customers learn about it and buy. Profits often start to appear in this stage.'),
+        ('Maturity',
+         'In maturity, sales level off because most customers who want the product already have it. Competition is fierce and prices often fall. The firm must defend its share, cut costs and find new uses or buyers.'),
+        ('Decline',
+         'In decline, sales fall as newer products or changing tastes take over. Firms must decide whether to cut costs, sell the product on, or leave the market. Many firms leave too late, after losses have built up.'),
+        ("Raymond Vernon's version",
+         'In 1966, the economist Raymond Vernon applied a similar cycle to international trade. A new product is first made in the rich country where it was invented, then made abroad as it matures. The idea explained how production moved between countries.'),
+        ('Extending a life, or exiting',
+         "Firms can extend a product's life with new features, new markets or new uses. When the numbers show no hope of revival, the wise choice may be to exit. Decide early, with clear figures, rather than waiting for a crisis."),
+    ],
+    "test": [
+        ('How many stages does the basic product life cycle have?',
+         [('a', 'Two'), ('b', 'Seven'), ('c', 'Four'), ('d', 'Ten')],
+         'c'),
+        ('Which stage has low sales and high costs for a new, little-known product?',
+         [('a', 'Introduction'), ('b', 'Decline'), ('c', 'Maturity'), ('d', 'Growth')],
+         'a'),
+        ('What happens to prices in maturity, according to the text?',
+         [('a', 'They always rise sharply'), ('b', 'They are fixed by law'), ('c', 'They often fall, as competition is fierce'), ('d', 'They are set by the weather')],
+         'c'),
+        ('Who applied a similar cycle to international trade in 1966?',
+         [('a', 'Henry Mintzberg'), ('b', 'Raymond Vernon'), ('c', 'John Boyd'), ('d', 'Eric Ries')],
+         'b'),
+        ('What does the text warn about exiting a declining product?',
+         [('a', 'Firms must never leave a market'), ('b', 'Exits always make a profit'), ('c', 'Exits are only allowed in growth'), ('d', 'Many firms leave too late, after losses have built up')],
+         'd'),
+    ],
+}

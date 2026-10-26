@@ -1,0 +1,37 @@
+"""How Pension Funds Invest: pooled retirement money, liabilities, funded status, discount rates, the Dutch and Canadian models, and underfunding."""
+CODE = 'business5_pensionfunds'
+BOOK = {
+    "title": 'How Pension Funds Invest',
+    "subtitle": 'Pooled retirement money, the promises it must keep, and how it is invested',
+    "chapters": [
+        ('Pooled retirement money',
+         'A pension fund collects contributions from workers and employers and invests them for retirement. Pooling money lets the fund invest on a large scale, spread risk across many people, and hire professional managers.'),
+        ('Liabilities',
+         'A pension fund has liabilities, which are the future payments it has promised to retirees. The fund must estimate how much those payments will cost over many years. Its investments are chosen with those promises in mind.'),
+        ('Funded status',
+         "Funded status compares the value of a fund's assets with the present value of its liabilities. A fund with more assets than liabilities is fully funded. A fund with fewer assets is underfunded and may need more contributions or better returns."),
+        ('Discount rates',
+         "To work out the present value of future payments, a fund uses a discount rate. A lower discount rate makes future promises look more costly today. Small changes in the rate can change a fund's reported position a great deal."),
+        ('The Dutch and Canadian models',
+         'The Netherlands has a system of collective pension funds that share risks across members and often adjust benefits to conditions. Canada has large public pension investment boards that invest on behalf of the national pension plan. Both show different ways to manage long-term savings.'),
+        ('The underfunding problem',
+         'Many pension funds in several countries have been underfunded, especially after weak markets or low interest rates. Shortfalls can force higher contributions, lower benefits or government support. Careful funding is the best protection for retirees.'),
+    ],
+    "test": [
+        ('What does a pension fund collect and invest?',
+         [('a', 'Old furniture from homes'), ('b', 'Shipping containers'), ('c', 'Contributions from workers and employers, for retirement'), ('d', 'Recipes for bread')],
+         'c'),
+        ('What are liabilities for a pension fund?',
+         [('a', "A list of the fund's holidays"), ('b', 'The future payments it has promised to retirees'), ('c', "The fund's office furniture"), ('d', 'The number of pens in the office')],
+         'b'),
+        ('What does funded status compare?',
+         [('a', 'The height of the office with its width'), ('b', 'The number of staff with their shoe sizes'), ('c', 'The price of bread with the price of tea'), ('d', 'The value of assets with the present value of liabilities')],
+         'd'),
+        ('What happens to the present value of promises when the discount rate is lower?',
+         [('a', 'Future promises disappear'), ('b', 'Future promises become free'), ('c', 'Future promises look more costly today'), ('d', 'Nothing changes at all')],
+         'c'),
+        ('What is underfunding?',
+         [('a', 'When a fund has fewer assets than the value of its promised payments'), ('b', 'When a fund has too many staff'), ('c', 'When a fund pays too much tax'), ('d', 'When a fund buys too many paintings')],
+         'a'),
+    ],
+}

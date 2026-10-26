@@ -1,0 +1,37 @@
+"""Singer and the Sewing Machine: Isaac Singer's patents, the patent pool, installment buying, salesrooms worldwide and the brand."""
+CODE = 'business5_singer'
+BOOK = {
+    "title": 'Singer and the Sewing Machine',
+    "subtitle": 'Patents, a patent pool, installment buying and a global brand',
+    "chapters": [
+        ("Isaac Singer's patents",
+         'In 1851 Isaac Singer patented an improved sewing machine that used a needle moving up and down with a foot treadle. His design worked well and sold strongly. A better product can win a market, but it still needs protecting.'),
+        ('The patent pool',
+         'Other inventors, including Elias Howe, claimed rights over the sewing machine. In 1856 the makers agreed to share their key patents in a patent pool. The pool ended costly legal fights and let the industry grow.'),
+        ('Installment buying',
+         'Singer sold machines on installment, letting families pay a little at a time. This was an early form of consumer credit that spread widely. Credit can open a market to people who could not pay at once, but the terms must be clear.'),
+        ('Salesrooms worldwide',
+         'The company opened salesrooms and service centres in many countries. Shops showed how the machine worked and offered repairs and training. Good service after the sale builds loyalty.'),
+        ('The brand',
+         'The name Singer became known around the world for sewing machines. A strong brand helped sell machines even where other makers competed. A name that stands for quality is a long-lasting asset.'),
+        ('Early consumer credit',
+         "Singer's installment plans were among the first large-scale consumer credit schemes. They showed how credit could turn a costly product into an everyday purchase. Good businesses keep credit fair and make sure customers understand what they owe."),
+    ],
+    "test": [
+        ('In what year did Isaac Singer patent his improved sewing machine?',
+         [('a', '1950'), ('b', '1785'), ('c', '1999'), ('d', '1851')],
+         'd'),
+        ('What was the patent pool for?',
+         [('a', 'Selling pools to hotels'), ('b', 'Growing fish'), ('c', 'Sharing key patents among makers to end costly legal fights'), ('d', 'Making cars')],
+         'c'),
+        ('What was installment buying?',
+         [('a', 'Paying for goods a little at a time'), ('b', 'Buying goods only in cash, all at once'), ('c', 'Trading goods for coins'), ('d', 'Hiring someone else to buy goods')],
+         'a'),
+        ('Why did Singer open salesrooms in many countries?',
+         [('a', 'To sell only cakes'), ('b', 'To run post offices'), ('c', 'To show the machine and offer repairs and training'), ('d', 'To hide the machines')],
+         'c'),
+        ('What does the chapter say about a strong brand?',
+         [('a', 'It is worthless once a product is sold'), ('b', 'It is a long-lasting asset that helps sell products'), ('c', 'It only matters in the first year'), ('d', 'It cannot be built')],
+         'b'),
+    ],
+}

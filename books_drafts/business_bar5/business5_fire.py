@@ -1,0 +1,37 @@
+"""Financial Independence: the 4 percent rule and its origin, the Trinity study, the savings rate maths, coast and lean variants, withdrawal risks, and what the goal asks of a life."""
+CODE = 'business5_fire'
+BOOK = {
+    "title": 'Financial Independence',
+    "subtitle": 'Having savings that pay for a life, so work becomes a choice',
+    "chapters": [
+        ('What financial independence means',
+         'Financial independence means having enough savings and investments that their income covers living costs, so that paid work is a choice. It is a goal of saving and planning, not of spending less for its own sake. The amount needed depends on the life you want to live.'),
+        ('The 4 percent rule',
+         'The 4 percent rule is a rule of thumb for how much to take from a portfolio. It suggests withdrawing about 4 percent of the starting value in the first year, then adjusting that amount for inflation each year. William Bengen studied US market history in 1994 to test this idea.'),
+        ('The Trinity study',
+         "The Trinity study, published in 1998 by professors at Trinity University, tested withdrawal rates against past market returns. It found that a 4 percent rate survived most historical periods over thirty years, with a stock-heavy mix. Its results shaped the rule's popularity."),
+        ('Savings rate maths',
+         'The share of income saved matters more than many people expect. A higher savings rate shortens the time needed to build a large enough portfolio. The rule is simple: saving a bigger share of income brings the goal closer.'),
+        ('Coast and lean variants',
+         'Coast means saving enough early that growth alone can reach the goal, with no more saving needed. Lean means planning to live on a smaller budget, so the target is smaller. Both are variants that try to fit the plan to a real life.'),
+        ('Withdrawal risks',
+         'Sequence risk is the danger that poor market returns come early, just as withdrawals begin. A portfolio can be hurt badly even if average returns are fine over time. Flexible spending and a cash buffer are common ways to reduce this risk.'),
+    ],
+    "test": [
+        ('What does the 4 percent rule suggest?',
+         [('a', 'Paying 4 percent tax on everything'), ('b', 'Earning 4 coins a day'), ('c', 'Withdrawing about 4 percent of the starting portfolio in the first year, then adjusting for inflation'), ('d', 'Spending 4 hours a day at work')],
+         'c'),
+        ('Who studied the 4 percent rule in 1994 using US market history?',
+         [('a', 'Winston Churchill'), ('b', 'William Bengen'), ('c', 'Isaac Newton'), ('d', 'Marie Curie')],
+         'b'),
+        ('What is sequence risk?',
+         [('a', 'Lining up money in order'), ('b', 'A dance move'), ('c', 'A bank merger'), ('d', 'Poor market returns early in retirement can do more damage')],
+         'd'),
+        ('What does a higher savings rate do?',
+         [('a', 'Makes savings disappear'), ('b', 'Raises taxes forever'), ('c', 'Shortens the time needed to reach financial independence'), ('d', 'Stops all spending')],
+         'c'),
+        ('What does coast mean in this context?',
+         [('a', 'Having saved enough early that growth alone can reach the goal, with no more saving needed'), ('b', 'Sailing at weekends'), ('c', 'Living on a boat'), ('d', 'Stopping work at once')],
+         'a'),
+    ],
+}

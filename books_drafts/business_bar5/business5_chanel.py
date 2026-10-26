@@ -1,0 +1,37 @@
+"""Coco Chanel and the house she built: hats, jersey, the little black dress, and a brand that outlived its founder."""
+CODE = 'business5_chanel'
+BOOK = {
+    "title": 'Coco Chanel and the House of Chanel',
+    "subtitle": 'Simple design, a famous perfume and a name that lasts',
+    "chapters": [
+        ('From hats to fashion',
+         'Gabrielle Coco Chanel began by making hats in Paris in the 1910s. Her plain, practical designs were a break from the heavy styles of the time. She soon began making clothes as well.'),
+        ('Jersey and comfort',
+         "Chanel used jersey, a soft knitted fabric that had been used mostly for men's underwear. She made it into elegant women's clothes. Comfort and ease became part of her style."),
+        ('The little black dress',
+         'She is known for a simple black dress cut to be worn every day. It became a classic that many women still own. Simplicity was her selling point.'),
+        ('Chanel No. 5',
+         'In the 1920s she released a perfume, Chanel No. 5, made with the perfumer Ernest Beaux. It became one of the best-known perfumes in the world. The deal behind it was complicated, and it led to a long dispute over its profits.'),
+        ('Licensing',
+         "A brand can earn money by letting other firms make products under its name for a fee. This is called licensing. It can spread a brand's reach, but it needs care to protect the name."),
+        ('A brand as an asset',
+         'A strong name is itself valuable, much like a building or a machine. Chanel died in 1971, but her name has gone on for decades. Protecting a brand is part of running the business.'),
+    ],
+    "test": [
+        ('Coco Chanel began her career by making what?',
+         [('a', 'Cars'), ('b', 'Bridges'), ('c', 'Pottery'), ('d', 'Hats')],
+         'd'),
+        ("What fabric did Chanel use to make comfortable women's clothes?",
+         [('a', 'Heavy leather'), ('b', 'Stiff canvas'), ('c', 'Jersey'), ('d', 'Gold lace')],
+         'c'),
+        ('What is the little black dress?',
+         [('a', 'A plain black dress cut to be worn every day'), ('b', 'A gown with a long train'), ('c', 'A wedding dress'), ('d', 'A raincoat')],
+         'a'),
+        ("What is the name of Chanel's famous perfume?",
+         [('a', 'Rose No. 9'), ('b', 'Violet Blue'), ('c', 'Chanel No. 5'), ('d', 'Gold Light')],
+         'c'),
+        ('What is licensing?',
+         [('a', 'Paying a fine'), ('b', 'Letting other firms make products under your name for a fee'), ('c', 'Closing a shop'), ('d', 'Hiring staff')],
+         'b'),
+    ],
+}

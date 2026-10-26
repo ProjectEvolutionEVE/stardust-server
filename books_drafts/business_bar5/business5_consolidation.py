@@ -1,0 +1,37 @@
+"""Consolidated Statements: how a group of companies is reported as one, with its parent, subsidiaries and part-owned firms."""
+CODE = 'business5_consolidation'
+BOOK = {
+    "title": 'Consolidated Statements',
+    "subtitle": 'Reading the accounts of a whole group as one business',
+    "chapters": [
+        ('A group of companies',
+         'Many businesses own other businesses. The parent company owns part or all of its subsidiaries, and the group as a whole may run hundreds of firms. Investors and lenders need to see the whole group, not each firm alone.'),
+        ('Control',
+         'Control usually means owning more than half of the voting power, but it can also come from contracts or other rights. A firm that is controlled is a subsidiary, even if the parent holds less than all its shares. The question is who decides how the business is run.'),
+        ('Adding up the parts',
+         'A consolidated account adds together the assets, debts, income and costs of the parent and its subsidiaries, line by line. It shows the group as one economic unit. The result is a picture of what the whole group owns and owes.'),
+        ('Eliminating internal sales',
+         "Sales between companies in the same group are removed from the consolidated figures. If they stayed in, the same sale would be counted twice. Only sales to outsiders show in the group's income."),
+        ('Non-controlling interests',
+         'When a parent owns less than all of a subsidiary, the share held by outsiders is shown separately. This is called a non-controlling interest, once known as a minority interest. It appears within equity, so readers can see the part that belongs to others.'),
+        ('The equity method',
+         "A company with a large but not controlling stake in another firm usually uses the equity method. It shows its share of that firm's profit in a single line, rather than adding up the firm's whole accounts. Reading a group account means knowing which firms are fully consolidated and which are not."),
+    ],
+    "test": [
+        ('What usually signals control of a subsidiary?',
+         [('a', 'Owning more than half of the voting power'), ('b', 'Owning a single share'), ('c', 'Living close to the subsidiary'), ('d', 'Having the same logo')],
+         'a'),
+        ('Why are sales between companies in the same group removed from a consolidated account?',
+         [('a', 'They are illegal'), ('b', 'Taxes forbid them'), ('c', 'They would count the same sale twice'), ('d', 'They always make a loss')],
+         'c'),
+        ('What is the equity method used for?',
+         [('a', 'Companies the parent fully controls'), ('b', 'Significant stakes that are not controlled, shown as a share of profit'), ('c', 'Cash accounts at a bank'), ('d', 'Movements in share prices')],
+         'b'),
+        ('What is a non-controlling interest?',
+         [('a', 'A bank loan'), ('b', 'A fine'), ('c', "The parent's own share"), ('d', 'The part of a subsidiary owned by outsiders, shown separately')],
+         'd'),
+        ('What does a consolidated account show?',
+         [('a', "Only the parent's cash"), ('b', "Each company's accounts, one by one, and nothing more"), ('c', 'The group as one economic unit'), ('d', 'The tax bill of the directors')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Credit Default Swaps: insurance-like contracts on debt, the premium, AIG's exposure, and the push to clear them."""
+CODE = 'business5_cds'
+BOOK = {
+    "title": 'Credit Default Swaps',
+    "subtitle": 'Insurance-like contracts on debt, and what happened when the insurer could not pay',
+    "chapters": [
+        ('An insurance-like contract',
+         'A credit default swap is a contract that works a little like insurance on a loan or bond. The buyer makes regular payments to the seller. In return, the seller agrees to pay the buyer if the borrower fails to meet its debts.'),
+        ('The premium',
+         'The regular payment is called the premium, and it is usually stated as a yearly percentage of the amount insured. A riskier borrower costs more to insure. The premium is a rough signal of how worried the market is about that borrower.'),
+        ('The credit event',
+         "The payout happens only if a defined credit event takes place. This can be a missed payment or a formal default. Both sides rely on the contract's wording, so the exact definition matters a great deal."),
+        ("AIG's exposure",
+         'The insurance group AIG sold huge amounts of this protection without holding enough money to pay if many borrowers failed together. When the housing market turned, AIG faced losses it could not cover. The government stepped in to rescue it in 2008.'),
+        ('Naked protection',
+         "Some buyers bought these contracts without owning the debt at all. This is called naked protection, and it works like a bet on a default. Critics said it could make a borrower's failure more profitable for those betting on it."),
+        ('The push to clearing',
+         "After 2008, many standard credit default swaps were required to be cleared through central counterparties. Clearing reduces the risk that one large seller's failure can spread through the whole market. The contracts are now watched more closely than before."),
+    ],
+    "test": [
+        ('What is a credit default swap most like?',
+         [('a', 'A savings account'), ('b', 'A ticket to a concert'), ('c', 'Insurance on a loan or bond'), ('d', 'A bus pass')],
+         'c'),
+        ('What is the premium in a credit default swap?',
+         [('a', 'The name of the borrower'), ('b', 'The regular payment made by the buyer to the seller'), ('c', 'The payment the seller makes on default'), ('d', 'A prize for winning a game')],
+         'b'),
+        ('What is a credit event?',
+         [('a', 'A party for borrowers'), ('b', 'A rise in the weather temperature'), ('c', 'A bank holiday'), ('d', 'A defined event, such as a default, that triggers a payout')],
+         'd'),
+        ('What went wrong for AIG?',
+         [('a', 'It stopped selling insurance on cars'), ('b', 'It moved its office to Paris'), ('c', 'It sold huge protection without enough money to cover many failures'), ('d', 'It bought a bakery chain')],
+         'c'),
+        ('What is naked protection?',
+         [('a', 'Buying a swap without owning the debt, like a bet on default'), ('b', 'Wearing no clothes at work'), ('c', 'A way to store money in a box'), ('d', 'A tax on shirts')],
+         'a'),
+    ],
+}

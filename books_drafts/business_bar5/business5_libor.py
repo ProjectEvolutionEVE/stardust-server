@@ -1,0 +1,37 @@
+"""The LIBOR Scandal: what the benchmark rate measured, how it was rigged, the fines, and the move to new rates."""
+CODE = 'business5_libor'
+BOOK = {
+    "title": 'The LIBOR Scandal',
+    "subtitle": 'A benchmark rate that was rigged, and the lesson it taught',
+    "chapters": [
+        ('What LIBOR measured',
+         'LIBOR, the London Interbank Offered Rate, was a benchmark for the interest rates banks charged one another for short loans. It was used to set the price of many loans, mortgages and financial contracts around the world. A small change in the rate could move huge sums of money.'),
+        ('The daily survey',
+         "Each day a panel of banks reported the rate they would expect to pay to borrow. The reported figures were combined into the published rate. The system relied on the honesty of each bank's report, not on actual trades in every case."),
+        ('The rigging',
+         'Some traders and bank staff sent false reports or coordinated their submissions. They did this to help their trading positions or to make their bank look healthier. Over several years, the rate was pushed away from the true level in ways that benefited a few.'),
+        ('The fines',
+         'Regulators in several countries investigated the rigging and fined a number of major banks. The fines ran to billions of dollars in total, and some traders faced criminal charges. The scandal damaged trust in banks across the world.'),
+        ('The move to new rates',
+         'Regulators pushed to replace LIBOR with rates based on real transactions or on overnight lending. In the United States, a rate called SOFR took over, and LIBOR was phased out in dollars, with the main rates ending in 2023. The change was long and difficult.'),
+        ('A lesson on benchmarks',
+         'A benchmark is only as good as the honesty and the data behind it. Rates based on real trades are harder to manipulate than rates based on opinions. Anyone who relies on a benchmark should ask how it is built.'),
+    ],
+    "test": [
+        ('What was LIBOR?',
+         [('a', 'A type of bread'), ('b', 'A football league'), ('c', 'A tax on holidays'), ('d', 'A benchmark for interest rates banks charged one another for short loans')],
+         'd'),
+        ('How were the LIBOR figures produced?',
+         [('a', 'By a computer guessing the weather'), ('b', 'By counting coins in a bag'), ('c', 'From a daily survey of a panel of banks'), ('d', 'From a poll of schoolchildren')],
+         'c'),
+        ('What went wrong with LIBOR?',
+         [('a', 'Some staff sent false reports to benefit their positions'), ('b', 'The rate was always exactly correct'), ('c', 'The rate was set by a single shopkeeper'), ('d', 'It was printed on the wrong paper')],
+         'a'),
+        ('What followed the scandal?',
+         [('a', 'Everyone was given a medal'), ('b', 'The rate was made longer'), ('c', 'Regulators fined several major banks, and some traders faced charges'), ('d', 'Banks were given free money')],
+         'c'),
+        ('What lesson does the LIBOR story teach about benchmarks?',
+         [('a', 'Benchmarks never matter'), ('b', 'A benchmark is only as good as the honesty and data behind it'), ('c', 'Benchmarks are always right by law'), ('d', 'Benchmarks should be kept secret')],
+         'b'),
+    ],
+}

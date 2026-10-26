@@ -1,0 +1,37 @@
+"""Royal Dutch Shell: from seashells to oil, the 1907 merger, a dual structure, a reserves restatement and the energy shift."""
+CODE = 'business5_shell'
+BOOK = {
+    "title": 'Royal Dutch Shell',
+    "subtitle": 'From seashells to oil, a merger, and the energy shift',
+    "chapters": [
+        ('Seashells to oil',
+         'The business that became Shell began in London, trading shell-shaped souvenirs and then shipping oil. Marcus Samuel built a shipping and trading firm around oil in the late 1800s. The name Shell stayed with the brand even as the business changed.'),
+        ('The 1907 merger',
+         "In 1907 Shell's trading company joined with the Royal Dutch oil company to form one group. The two firms kept their own shares and bodies. That merger laid the groundwork for a global oil company."),
+        ('An Anglo-Dutch structure',
+         'The group kept two parent companies, one in the Netherlands and one in Britain, linked by agreements. This structure was unusual and made the company harder to understand for some investors. Structure should make a business clearer, not more confusing.'),
+        ('Reserves restatement',
+         'In 2004 Shell admitted it had overstated its estimates of oil and gas reserves. The company cut its reserve figures, and senior staff left. Estimates of what you own must be honest, because investors rely on them.'),
+        ('A move and a simplification',
+         'In the early 2020s Shell simplified its structure, dropped the Royal Dutch name and moved its headquarters to London. Simpler structures can help investors and managers. A business should simplify when complexity no longer serves it.'),
+        ('The energy transition',
+         'The world is moving towards cleaner energy, and oil companies face pressure to change their plans. Shell has invested in low-carbon energy while still producing oil and gas. Long-term leaders must decide how fast to change and how to pay for it.'),
+    ],
+    "test": [
+        ('What did the Shell business first trade in?',
+         [('a', 'Cars'), ('b', 'Bread'), ('c', 'Shell-shaped souvenirs and then oil shipping'), ('d', 'Computers')],
+         'c'),
+        ("In what year did Shell's trading company join with Royal Dutch?",
+         [('a', '1907'), ('b', '1950'), ('c', '1985'), ('d', '1862')],
+         'a'),
+        ('What did Shell admit in 2004?',
+         [('a', 'It had no oil at all'), ('b', 'It had sold its ships'), ('c', 'It had overstated its oil and gas reserve estimates'), ('d', 'It had moved to a new planet')],
+         'c'),
+        ('Why does the chapter say honest reserve estimates matter?',
+         [('a', 'They decide the colour of the logo'), ('b', 'Investors rely on them'), ('c', 'They set the number of petrol stations'), ('d', 'They control the weather')],
+         'b'),
+        ('What did Shell do to its structure in the early 2020s?',
+         [('a', 'It split into a thousand small firms'), ('b', 'It closed all its offices'), ('c', 'It sold its name to a bakery'), ('d', 'It simplified it and moved its headquarters to London')],
+         'd'),
+    ],
+}

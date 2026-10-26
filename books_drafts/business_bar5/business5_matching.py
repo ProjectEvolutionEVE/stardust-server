@@ -1,0 +1,37 @@
+"""Matching Markets and Alvin Roth: markets without prices, Gale and Shapley, kidney exchange, school choice, the residency match and the 2012 Nobel."""
+CODE = 'business5_matching'
+BOOK = {
+    "title": 'Matching Markets and Alvin Roth',
+    "subtitle": 'Markets without prices: kidney exchange, school choice and stable matches',
+    "chapters": [
+        ('Markets without prices',
+         'Some markets cannot use prices. A kidney cannot be bought and sold, and in many school systems a place cannot be bought at a market price. Matching markets pair people with places by agreed rules instead.'),
+        ('Gale and Shapley',
+         'In 1962 David Gale and Lloyd Shapley showed that a simple procedure, deferred acceptance, produces a stable match. In a stable match, no student and school would both prefer to be paired with each other instead.'),
+        ('Kidney exchange',
+         'A patient with a willing but incompatible donor can swap donors with another pair in the same position. Alvin Roth helped design exchange systems that match patients who would otherwise wait much longer.'),
+        ('School choice',
+         'Cities use matching systems to assign pupils to schools. Families list their preferences, and the system tries to give each child a place that is stable and fair. Designers work to keep these systems simple to use.'),
+        ('The medical residency match',
+         'In the United States, a clearinghouse has matched medical graduates with residency programmes since the early 1950s. Roth studied the match and showed why stable matches tend to last.'),
+        ('His Nobel',
+         'Alvin Roth shared the 2012 Nobel Prize in Economics with Lloyd Shapley for the theory of stable allocations and the practice of market design. The prize recognised that markets without prices can work well.'),
+    ],
+    "test": [
+        ('Why do some markets avoid using prices?',
+         [('a', 'Some goods, such as a kidney, cannot be bought and sold'), ('b', 'Prices are illegal everywhere'), ('c', 'Prices always cost nothing'), ('d', 'Markets never have buyers')],
+         'a'),
+        ('What did deferred acceptance show?',
+         [('a', 'A way to set a national tax'), ('b', 'A method for printing money'), ('c', 'A procedure that produces a stable match'), ('d', 'A rule that bans all matches')],
+         'c'),
+        ('What is a kidney exchange?',
+         [('a', 'A market for buying kidneys'), ('b', 'A way for patients with incompatible donors to swap donors with other pairs'), ('c', 'A bank of organs for sale'), ('d', 'A tax on hospitals')],
+         'b'),
+        ('What do school-choice systems aim for?',
+         [('a', 'Selling places to the richest'), ('b', 'Letting schools choose any pupil'), ('c', 'Random pupils without lists'), ('d', 'Giving each child a stable and fair place based on listed preferences')],
+         'd'),
+        ('Alvin Roth shared the 2012 Nobel Prize with whom?',
+         [('a', 'Gary Becker'), ('b', 'Milton Friedman'), ('c', 'Lloyd Shapley'), ('d', 'Robert Solow')],
+         'c'),
+    ],
+}

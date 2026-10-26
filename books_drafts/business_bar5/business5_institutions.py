@@ -1,0 +1,37 @@
+"""Institutions and Growth: the rules of the game, extractive and inclusive institutions, Nogales, colonial legacies and the evidence."""
+CODE = 'business5_institutions'
+BOOK = {
+    "title": 'Institutions and Growth',
+    "subtitle": 'The rules of the game, inclusive and extractive institutions, and the evidence',
+    "chapters": [
+        ('The rules of the game',
+         'Douglass North described institutions as the rules of the game: the laws and the customs that shape what people do. Good rules lower the cost of trading and investing. Weak rules make every deal riskier and every investment harder to protect.'),
+        ('Extractive and inclusive',
+         'Daron Acemoglu and James Robinson, in Why Nations Fail (2012), contrast extractive institutions, which take wealth from many people for the benefit of a few, with inclusive ones, which spread rights and opportunity widely. Inclusive institutions tend to support lasting growth.'),
+        ('Nogales',
+         'Acemoglu and Robinson use the example of two towns called Nogales, one in Arizona and one in Sonora, Mexico, just across the border. The people and the land are alike, but incomes and living conditions differ greatly. The difference lies largely in the institutions on each side.'),
+        ('Why ideas do not copy easily',
+         'An institution that works in one country can behave differently in another, where courts, police or public trust are weaker. Laws on paper are not enough. Context decides how a rule works in practice.'),
+        ('Colonial legacies',
+         "Some scholars argue that colonial rulers set up institutions to serve the colonisers, and that these patterns outlived independence. One well-known study uses data on settler mortality to test this idea. Economists still debate how much of today's difference this explains."),
+        ('Evidence and limits',
+         'Institutions are hard to measure, and cause and effect can run both ways. Richer countries can also afford to build better institutions. Economists test these ideas with data, history and careful comparisons, and treat every big claim with caution.'),
+    ],
+    "test": [
+        ('Who described institutions as the rules of the game?',
+         [('a', 'Karl Marx'), ('b', 'Douglass North'), ('c', 'Adam Smith'), ('d', 'John Maynard Keynes')],
+         'b'),
+        ('What do extractive institutions mainly do?',
+         [('a', 'Spread rights widely'), ('b', 'Share power equally'), ('c', 'Depend only on trade'), ('d', 'Take wealth from many people for the benefit of a few')],
+         'd'),
+        ('What did the Nogales example show?',
+         [('a', 'Two towns with the same wealth and the same laws'), ('b', 'A town split by a river into two countries'), ('c', 'Two towns with the same people and land but very different incomes'), ('d', 'A port that does no trade')],
+         'c'),
+        ('Why do institutions not copy easily from one country to another?',
+         [('a', 'Their effect depends on local courts, enforcement and trust'), ('b', 'They are always identical everywhere'), ('c', 'They work the same in every setting'), ('d', 'They cost nothing to set up')],
+         'a'),
+        ('Which caution applies to the link between institutions and growth?',
+         [('a', 'Institutions are easy to measure'), ('b', 'Only poor countries have institutions'), ('c', 'Richer countries may also build better institutions, so cause and effect can run both ways'), ('d', 'Institutions never change')],
+         'c'),
+    ],
+}

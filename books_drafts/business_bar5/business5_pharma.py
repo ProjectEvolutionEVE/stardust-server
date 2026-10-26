@@ -1,0 +1,37 @@
+"""The Economics of Medicines: research cost and risk, patents, generics, pricing, orphan drugs and the Hatch-Waxman balance."""
+CODE = 'business5_pharma'
+BOOK = {
+    "title": 'The Economics of Medicines',
+    "subtitle": 'Research cost, patents, generics and who pays',
+    "chapters": [
+        ('Research is costly and risky',
+         'Developing a new medicine takes many years of research and testing. Most candidates that reach human trials never reach a pharmacy shelf. The cost of the failures has to be paid by the successes.'),
+        ('Patents give time',
+         'A patent gives an inventor the right to be the only seller for a set period. That time lets a company recover its research costs and fund the next project. Patents are meant to reward invention, but they also create a temporary monopoly.'),
+        ('Generics',
+         'When a patent ends, other firms can make generic copies of the medicine. Generics are usually much cheaper, because the copier does not repeat the expensive early research. Competition among generic makers can push prices down further.'),
+        ('Pricing and insurers',
+         'Prices are shaped by a mix of companies, insurers, and governments. Insurers and public programmes often negotiate prices for large groups of patients. Patients may pay a share of the cost themselves.'),
+        ('Orphan drugs',
+         'A rare disease may affect too few patients to sell a medicine at the usual profit. In the United States the Orphan Drug Act of 1983 gives extra incentives, such as tax credits and a period of market exclusivity, to develop treatments for rare conditions. These rules aim to make such research worth doing.'),
+        ('The Hatch-Waxman balance',
+         "The Hatch-Waxman Act of 1984 balanced two goals: encouraging new drugs and making generics available sooner. It let generic makers seek approval by relying on the original drug's safety data, and it gave brand makers some extra patent time to make up for testing delays. The balance is still debated today."),
+    ],
+    "test": [
+        ('What does a patent give a medicine maker?',
+         [('a', 'A set period as the only seller'), ('b', 'Free testing by the government'), ('c', 'A guaranteed profit forever'), ('d', 'Ownership of rival labs')],
+         'a'),
+        ('Why are generic medicines usually cheaper?',
+         [('a', 'They are made with lower safety'), ('b', 'They are sold only online'), ('c', 'The maker does not repeat the expensive early research'), ('d', 'They are never tested')],
+         'c'),
+        ('What did the Orphan Drug Act of 1983 aim to do?',
+         [('a', 'Stop all generic medicines'), ('b', 'Encourage treatments for rare diseases'), ('c', 'Ban rare medicines'), ('d', 'Set prices for every drug')],
+         'b'),
+        ('What did the Hatch-Waxman Act of 1984 balance?',
+         [('a', 'Doctors and nurses'), ('b', 'Tea and coffee prices'), ('c', 'Airline fares'), ('d', 'New drug research and faster access to generics')],
+         'd'),
+        ('Who often negotiates prices for large groups of patients?',
+         [('a', 'Pharmacies only'), ('b', 'Patients alone'), ('c', 'Insurers and public programmes'), ('d', 'Patent offices')],
+         'c'),
+    ],
+}

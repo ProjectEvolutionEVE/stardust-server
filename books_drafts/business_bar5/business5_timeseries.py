@@ -1,0 +1,37 @@
+"""Time Series and Seasonal Patterns: trend, season and noise, moving averages, smoothing, autocorrelation and forecast error."""
+CODE = 'business5_timeseries'
+BOOK = {
+    "title": 'Time Series and Seasonal Patterns',
+    "subtitle": 'Trend, season and noise, moving averages, smoothing and forecast error',
+    "chapters": [
+        ('Data over time',
+         'A time series is a set of values recorded at regular intervals, such as monthly sales. Its shape often holds a trend, a seasonal pattern, and random noise. Separating these parts is the first step in forecasting.'),
+        ('Trend, season and noise',
+         'The trend is the long-run direction, the season is the pattern that repeats each year, and the noise is what is left over. A shop selling ice cream may see a summer peak every year. A good forecast captures the first two and admits the third.'),
+        ('Moving averages',
+         'A moving average replaces each value with the average of the values around it. It smooths out short ups and downs to show the underlying trend. The longer the window, the smoother the line becomes.'),
+        ('Smoothing',
+         'Exponential smoothing gives recent values more weight than old ones. This lets a forecast adapt when the business changes. It is simple to run and often works well.'),
+        ('Autocorrelation',
+         'Autocorrelation measures how a value relates to earlier values in the same series. A strong link at a lag of twelve months, for example, points to a yearly cycle. Checking it helps choose a model that matches the data.'),
+        ('Forecast error and Box and Jenkins',
+         'Every forecast has error, and tracking that error is how you judge a model. George Box and Gwilym Jenkins developed a widely used method in the 1970s for building time series models. Their approach checks the model against the data before trusting it.'),
+    ],
+    "test": [
+        ('What does a time series consist of?',
+         [('a', 'Values recorded at regular intervals'), ('b', 'Random colours'), ('c', 'Only one value'), ('d', 'Map coordinates')],
+         'a'),
+        ('What is a seasonal pattern?',
+         [('a', 'A long-run direction'), ('b', 'The leftover noise'), ('c', 'A pattern that repeats each year'), ('d', 'A type of contract')],
+         'c'),
+        ('What does a moving average do?',
+         [('a', 'It makes data random'), ('b', 'It smooths short ups and downs to show the trend'), ('c', 'It deletes the trend'), ('d', 'It sets the forecast to zero')],
+         'b'),
+        ('What does exponential smoothing give more weight to?',
+         [('a', 'The oldest values only'), ('b', 'Random values'), ('c', 'Missing values'), ('d', 'Recent values')],
+         'd'),
+        ('Who developed a widely used method for time series models in the 1970s?',
+         [('a', 'Norman Borlaug'), ('b', 'Theodore Vail'), ('c', 'George Box and Gwilym Jenkins'), ('d', 'Henry Wickham')],
+         'c'),
+    ],
+}

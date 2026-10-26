@@ -1,0 +1,37 @@
+"""George Soros and Reflexivity: beliefs that move prices, The Alchemy of Finance, the 1992 sterling bet, boom and bust, the Quantum Fund and his critics."""
+CODE = 'business5_soros'
+BOOK = {
+    "title": 'George Soros and Reflexivity',
+    "subtitle": 'When beliefs move prices, and prices move beliefs',
+    "chapters": [
+        ('Beliefs moving prices',
+         "George Soros argued that people's beliefs do not just reflect the market; they can change it. He called this two-way feedback reflexivity. Prices shape beliefs, and beliefs shape prices, in a loop."),
+        ('Reflexivity',
+         'In The Alchemy of Finance (1987), Soros set out a model in which a boom or bust can feed on itself. Rising prices attract buyers, whose purchases push prices higher still, until the loop turns.'),
+        ('The 1992 bet',
+         "In September 1992 Britain left the European exchange rate mechanism after heavy pressure on the pound. Soros's fund had bet against sterling and reportedly made a large profit."),
+        ('Boom and bust',
+         'Soros saw boom and bust as a pattern in which beliefs and prices reinforce each other, and in which the turn can come suddenly. He did not expect the two halves of the cycle to be symmetrical.'),
+        ('The Quantum Fund',
+         'Soros built the Quantum Fund and ran it for many years, with large swings in performance. Its famous trades made him a household name in finance.'),
+        ('Philanthropy and critics',
+         'Soros has funded open-society and education causes through his foundations. Critics have accused him of destabilising currencies. He has argued that his trades tested his theories in practice.'),
+    ],
+    "test": [
+        ('What is reflexivity?',
+         [('a', 'Money reflects light'), ('b', 'Markets never change'), ('c', 'Prices and beliefs affect each other in a loop'), ('d', 'Bonds always rise')],
+         'c'),
+        ("Which book set out Soros's model in 1987?",
+         [('a', 'The Wealth of Nations'), ('b', 'The Alchemy of Finance'), ('c', 'Capital'), ('d', 'The General Theory')],
+         'b'),
+        ('What happened to sterling in September 1992?',
+         [('a', 'It joined the euro'), ('b', 'It was fixed to gold'), ('c', 'It doubled in value'), ('d', 'Britain left the European exchange rate mechanism after heavy pressure')],
+         'd'),
+        ("What is the boom-bust pattern in Soros's model?",
+         [('a', 'Prices move in a perfectly straight line'), ('b', 'Booms never end'), ('c', 'Beliefs and prices reinforce each other, and the turn can come suddenly'), ('d', 'Busts are always caused by government')],
+         'c'),
+        ('What did Soros found?',
+         [('a', 'The Quantum Fund'), ('b', 'Berkshire Hathaway'), ('c', 'The Federal Reserve'), ('d', 'The Bank of England')],
+         'a'),
+    ],
+}

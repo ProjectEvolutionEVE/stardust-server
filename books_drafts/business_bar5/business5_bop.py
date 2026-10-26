@@ -1,0 +1,37 @@
+"""The Balance of Payments: current and financial accounts, the identity that links them, trade deficits, who finances them, reserves and adjustment."""
+CODE = 'business5_bop'
+BOOK = {
+    "title": 'The Balance of Payments',
+    "subtitle": "How a country's dealings with the rest of the world add up",
+    "chapters": [
+        ('Two accounts',
+         "A country's balance of payments records its transactions with the rest of the world. The current account covers trade in goods and services, income flows and transfers. The financial account records flows of investment and lending."),
+        ('The identity',
+         'Over a full year, the current account and the financial account offset each other, apart from small errors in the data. A current-account deficit must be matched by net financial inflows from abroad.'),
+        ('Trade deficits',
+         'A country that buys more from abroad than it sells runs a trade deficit. This is not automatically bad. It can reflect strong investment, or simply that the country consumes more than it produces.'),
+        ('Who finances them',
+         'Foreign buyers of bonds, shares and property, lenders and companies investing in the country pay for the deficit. This financing can be stable, or it can reverse suddenly if confidence falls.'),
+        ('Reserves',
+         'Central banks hold foreign currency reserves to settle international payments and to cushion shocks. Large reserves give room to act in a crisis.'),
+        ('Adjustment',
+         "A deficit can be corrected through the exchange rate, domestic prices and incomes, or policy. Each route has costs, and how fast it works depends on the country's circumstances."),
+    ],
+    "test": [
+        ('What does the current account cover?',
+         [('a', 'Only share prices'), ('b', 'Central bank staff pay'), ('c', 'Government bond auctions'), ('d', 'Trade in goods and services, income flows and transfers')],
+         'd'),
+        ('Over a full year, how do the current and financial accounts relate?',
+         [('a', 'They always rise together'), ('b', 'They never match'), ('c', 'They offset each other, apart from small errors'), ('d', 'They always show a surplus for everyone')],
+         'c'),
+        ('What does a trade deficit mean?',
+         [('a', 'Buying more from abroad than selling'), ('b', 'Selling more than buying'), ('c', 'Holding no foreign currency'), ('d', 'Printing foreign notes')],
+         'a'),
+        ('What are central bank reserves used for?',
+         [('a', 'Paying staff salaries only'), ('b', 'Buying land for shops'), ('c', 'Settling international payments and cushioning shocks'), ('d', 'Printing tourist maps')],
+         'c'),
+        ('How can a deficit be corrected?',
+         [('a', 'By ignoring it forever'), ('b', 'Through the exchange rate, domestic prices and incomes, or policy'), ('c', 'By printing gold'), ('d', 'By closing borders at no cost')],
+         'b'),
+    ],
+}

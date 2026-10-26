@@ -1,0 +1,37 @@
+"""Ray Dalio and Principles: Bridgewater's beginnings, the All Weather idea, radical transparency, the debt cycle, the 2008 period and the culture debate."""
+CODE = 'business5_dalio'
+BOOK = {
+    "title": 'Ray Dalio and Principles',
+    "subtitle": 'Bridgewater, the All Weather idea, radical transparency and the debt cycle',
+    "chapters": [
+        ("Bridgewater's start",
+         'Ray Dalio founded Bridgewater Associates in 1975 as a small business. It grew into one of the largest hedge funds in the world.'),
+        ('The All Weather idea',
+         "Dalio's All Weather approach holds a mix of assets that can cope reasonably well in different economic conditions, whether growth is rising or falling and inflation is rising or falling. The aim is not to depend on any single forecast."),
+        ('Radical transparency',
+         'Bridgewater encourages staff to record and review disagreements openly. Dalio calls this radical transparency and argues that it helps find the best answers. Critics say it can feel harsh.'),
+        ('The debt cycle',
+         'Dalio describes how debt builds up over time, so that income must keep rising to service it. When debt grows faster than income, a crunch may follow, and policy responses come after it.'),
+        ('The period around 2008',
+         'Dalio warned about the dangers of debt before the 2008 financial crisis. His firm reportedly did well in that year, and commentators often cite this record.'),
+        ('How the culture is judged',
+         'Principles, the book Dalio published in 2017, sets out his rules for decisions and teamwork. Some people admire its openness, while others find the culture hard to live with. Its record is judged both by results and by how it treats people.'),
+    ],
+    "test": [
+        ('In what year did Dalio found Bridgewater Associates?',
+         [('a', '1955'), ('b', '1995'), ('c', '2005'), ('d', '1975')],
+         'd'),
+        ('What is radical transparency?',
+         [('a', 'Keeping every meeting secret'), ('b', 'Publishing every trade to the press'), ('c', 'Staff record and review disagreements openly'), ('d', "Hiding the firm's name")],
+         'c'),
+        ('What is the All Weather idea?',
+         [('a', 'A mix of assets that can cope with different economic conditions'), ('b', 'Betting only on sunshine stocks'), ('c', 'Holding only cash'), ('d', 'Trading only in summer')],
+         'a'),
+        ("What does Dalio's debt cycle describe?",
+         [('a', 'Debt never builds up'), ('b', 'Governments never borrow'), ('c', 'Debt builds up, so income must keep rising to service it'), ('d', 'Debt is paid off in a single day')],
+         'c'),
+        ('Which book did Dalio publish in 2017?',
+         [('a', 'The Intelligent Investor'), ('b', 'Principles'), ('c', "Liar's Poker"), ('d', 'The Snowball')],
+         'b'),
+    ],
+}

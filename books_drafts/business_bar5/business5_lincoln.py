@@ -1,0 +1,37 @@
+"""Lincoln's Team of Rivals: how Abraham Lincoln brought his rivals into his cabinet, and what Doris Kearns Goodwin's account shows."""
+CODE = 'business5_lincoln'
+BOOK = {
+    "title": "Lincoln's Team of Rivals",
+    "subtitle": 'Bringing rivals into the cabinet, handling egos and owning mistakes',
+    "chapters": [
+        ('A cabinet of rivals',
+         'When Abraham Lincoln became President in 1861, he chose several men who had beaten him for the nomination or had opposed him. William Seward and Salmon Chase were among them. Lincoln believed a government needed the best minds, even when they disagreed with him.'),
+        ('Handling egos',
+         'Seward and Chase were proud men who each expected to lead. Lincoln had to manage their egos, often through patient talks and small gestures of respect. He kept each one working for the nation, not for his own cause.'),
+        ('Listening',
+         'Lincoln listened carefully to advice, including advice he did not like. He often asked people to argue their positions, and he weighed what they said before deciding. This habit helped him see problems from several sides.'),
+        ('Owning errors',
+         'Lincoln was willing to admit when he had made a mistake. He took responsibility in public, and he avoided blaming others for failures. This openness helped build trust with his team and the public.'),
+        ('Patience',
+         'Lincoln was patient when plans were slow to take effect. He waited for the right moment to act, and he kept his goal in view across many setbacks. Patience and timing are part of the story Goodwin tells.'),
+        ("Doris Kearns Goodwin's account",
+         "The historian Doris Kearns Goodwin wrote about these men in her 2005 book Team of Rivals. Her account shows how a leader can use diverse talent without giving up his own judgement. It is a useful study, though it is one historian's view."),
+    ],
+    "test": [
+        ('Which two rivals did Lincoln include in his cabinet?',
+         [('a', 'Ulysses Grant and Robert Lee'), ('b', 'Frederick Douglass and John Brown'), ('c', 'Andrew Jackson and Henry Clay'), ('d', 'William Seward and Salmon Chase')],
+         'd'),
+        ('What did Lincoln believe a government needed?',
+         [('a', 'No advisers at all'), ('b', 'Only people who agreed with him'), ('c', 'The best minds, even when they disagreed with him'), ('d', 'Only his own family')],
+         'c'),
+        ('What habit helped Lincoln see problems from several sides?',
+         [('a', 'Listening carefully and asking people to argue their positions'), ('b', 'Ignoring advice'), ('c', 'Making every choice alone at night'), ('d', 'Refusing all meetings')],
+         'a'),
+        ('How did Lincoln handle his own mistakes?',
+         [('a', 'He denied they happened'), ('b', 'He blamed others'), ('c', 'He admitted them in public and took responsibility'), ('d', 'He hid them from everyone')],
+         'c'),
+        ("What is the name of Doris Kearns Goodwin's book on Lincoln's team?",
+         [('a', 'The Art of War'), ('b', 'Team of Rivals'), ('c', 'Crossing the Chasm'), ('d', 'Endurance and Ice')],
+         'b'),
+    ],
+}

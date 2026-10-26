@@ -1,0 +1,37 @@
+"""The OODA Loop: John Boyd's cycle of observe, orient, decide and act, and why speed of the cycle matters."""
+CODE = 'business5_ooda'
+BOOK = {
+    "title": 'The OODA Loop',
+    "subtitle": "Observe, orient, decide, act: John Boyd's cycle and why tempo wins",
+    "chapters": [
+        ("A fighter pilot's idea",
+         'John Boyd was a United States fighter pilot and military thinker. He studied air combat, especially the Korean War, and wondered why some pilots won more fights than others. His answer was the speed at which a pilot could go round a cycle of thought and action.'),
+        ('Observe',
+         'The first step is to observe what is happening. In a fight, a pilot looks at the rival, the sky and the instruments. In business, observing means taking in news, customer signals and data about the market.'),
+        ('Orient',
+         'Orientation is the step Boyd saw as the most important. It means making sense of what you see, using your past experience, your culture and your ideas. Two people can observe the same thing and orient very differently.'),
+        ('Decide and act',
+         'Next comes a decision, and then action. The loop then starts again, because the situation keeps changing. A team that completes the loop faster than its rival can keep the rival reacting and off balance.'),
+        ('Tempo',
+         'Boyd called this speed of the cycle tempo. A faster loop lets you change course before your rival can respond. Tempo is not the same as rushing. It means cutting delays and staying clear about what you are trying to achieve.'),
+        ('Using it in business',
+         'Ask how long your team takes to notice a change, decide and act. Look for steps where work waits for approval or for information. Work on the orientation step too, by asking whether your shared picture of the market is accurate.'),
+    ],
+    "test": [
+        ('What did John Boyd study to build the OODA idea?',
+         [('a', 'Ocean shipping routes'), ('b', 'Air combat, especially in the Korean War'), ('c', 'Banking laws'), ('d', 'Ancient farming')],
+         'b'),
+        ('What are the four steps of the OODA loop?',
+         [('a', 'Start, stop, wait, end'), ('b', 'Plan, buy, sell, report'), ('c', 'Hire, train, pay, retire'), ('d', 'Observe, orient, decide, act')],
+         'd'),
+        ('Which step did Boyd see as the most important?',
+         [('a', 'Observe'), ('b', 'Decide'), ('c', 'Orient'), ('d', 'Act')],
+         'c'),
+        ('What does tempo mean in this idea?',
+         [('a', 'The speed of the cycle'), ('b', 'The colour of the aircraft'), ('c', 'The number of pilots'), ('d', 'The price of fuel')],
+         'a'),
+        ('What does the text say tempo is NOT the same as?',
+         [('a', 'Clear aims'), ('b', 'Cutting delays'), ('c', 'Rushing'), ('d', 'Keeping a loop going')],
+         'c'),
+    ],
+}

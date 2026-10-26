@@ -1,0 +1,37 @@
+"""The Minimum Wage Debate: the simple model, Card and Krueger, monopsony, regional studies, living-wage campaigns and how to read the evidence."""
+CODE = 'business5_minwage'
+BOOK = {
+    "title": 'The Minimum Wage Debate',
+    "subtitle": 'The simple model, the evidence, and how to read it',
+    "chapters": [
+        ('The simple model',
+         'In a simple competitive market, a minimum wage above the market rate lowers the number of jobs, because employers hire fewer workers at the higher price. This is the textbook prediction.'),
+        ('Card and Krueger',
+         'In 1994 David Card and Alan Krueger compared fast-food restaurants on either side of the border between New Jersey and Pennsylvania, after New Jersey raised its minimum wage. They found no fall in jobs, which challenged the simple model.'),
+        ('Monopsony',
+         'If a single employer dominates a local labour market, it may keep pay below what workers would earn in a competitive market. A minimum wage can then raise pay and sometimes employment. Economists debate how common this is.'),
+        ('Regional studies',
+         'Later research compares many local areas and often finds small job effects from modest increases. Results depend on how large the rise is, local conditions and the period studied.'),
+        ('Living-wage campaigns',
+         'Some cities and groups ask for a living wage, set by what a worker needs to cover basic costs. A living wage can be higher than the minimum wage and may apply only to certain contracts.'),
+        ('Reading the evidence',
+         'Good evidence asks how large the rise is, who is affected, and what happens over time. Careful comparisons matter more than slogans on either side of the debate.'),
+    ],
+    "test": [
+        ('What does the textbook simple model predict for a minimum wage above the market rate?',
+         [('a', 'Employers hire fewer workers'), ('b', 'Employers always hire more workers'), ('c', 'Wages fall in every case'), ('d', 'Prices fall to zero')],
+         'a'),
+        ('What did Card and Krueger compare in their 1994 study?',
+         [('a', "Two countries' tax rates"), ('b', 'Car factories in Michigan'), ('c', 'Fast-food restaurants on either side of the New Jersey and Pennsylvania border'), ('d', 'Schools in Texas')],
+         'c'),
+        ('What is monopsony?',
+         [('a', 'A single seller of goods'), ('b', 'A single dominant employer in a local labour market'), ('c', 'A market with no workers'), ('d', 'A tax on wages')],
+         'b'),
+        ('What does a living wage depend on?',
+         [('a', 'The price of the cheapest car'), ('b', 'The stock market index'), ('c', 'The national debt'), ('d', 'What a worker needs to cover basic living costs')],
+         'd'),
+        ('Which questions help when reading minimum-wage evidence?',
+         [('a', 'Whether the author is famous'), ('b', 'How many slogans the campaign has'), ('c', 'How large the rise is, who is affected, and what happens over time'), ('d', 'Whether the result pleases one side')],
+         'c'),
+    ],
+}

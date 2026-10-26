@@ -1,0 +1,37 @@
+"""The Story of the Credit Card: Diners Club in 1950, BankAmericard, interchange fees, revolving balances, rewards, and the cost to households."""
+CODE = 'business5_cards'
+BOOK = {
+    "title": 'The Story of the Credit Card',
+    "subtitle": 'From the 1950 charge card to today, and the cost of borrowing on it',
+    "chapters": [
+        ('Diners Club in 1950',
+         'In 1950 the Diners Club card was launched in the United States. It was a charge card for dining at a small group of restaurants, and the balance had to be paid in full each month. It was a card for a few travellers and businesspeople at first.'),
+        ('BankAmericard',
+         'In 1958 Bank of America launched BankAmericard, which let customers carry a balance from month to month. It spread widely and later became the Visa network. The card showed that a bank could lend through a card to many ordinary people.'),
+        ('Interchange fees',
+         'When a card is used, the shop pays a fee. Part of that fee, the interchange fee, goes to the bank that issued the card. These fees help fund the system, and they are one reason shops set their prices as they do.'),
+        ('Revolving balances',
+         'A balance that is not paid in full rolls over to the next month, and interest is charged on it. This is called a revolving balance. Credit card interest rates are often high, so a small balance can grow quickly if it is not cleared.'),
+        ('Rewards',
+         'Many cards offer points, cash back or travel rewards. The rewards are paid for by fees and interest from the card system. A card that is paid in full every month can be a useful tool, while a card that carries a balance can cost more than its rewards are worth.'),
+        ('The cost to a household',
+         'Interest on credit card debt can add a large cost over time. Paying the full balance each month avoids interest altogether. Setting a budget, tracking spending and paying early are the simplest ways to keep card use in check.'),
+    ],
+    "test": [
+        ('In what year was the Diners Club card launched?',
+         [('a', '1820'), ('b', '1700'), ('c', '1950'), ('d', '1999')],
+         'c'),
+        ('What did BankAmericard allow that Diners Club did not?',
+         [('a', 'Carrying a balance from month to month'), ('b', 'Paying with gold'), ('c', 'Buying a plane'), ('d', 'Working as a teacher')],
+         'a'),
+        ('What is an interchange fee?',
+         [('a', 'A fee for changing the colour of a card'), ('b', 'A tax on bread'), ('c', 'A fee the shop pays when a card is used, part of which goes to the card issuer'), ('d', 'A payment for a holiday')],
+         'c'),
+        ('What is a revolving balance?',
+         [('a', 'A spinning door in a bank'), ('b', 'A balance not paid in full that rolls over with interest charged'), ('c', 'A coin that spins on a table'), ('d', 'A kind of bicycle wheel')],
+         'b'),
+        ('What is the best way to avoid interest on a credit card?',
+         [('a', 'Paying only the smallest amount for years'), ('b', 'Never checking the statement'), ('c', 'Borrowing more to pay off the card'), ('d', 'Paying the full balance each month')],
+         'd'),
+    ],
+}

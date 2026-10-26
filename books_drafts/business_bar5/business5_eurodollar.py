@@ -1,0 +1,37 @@
+"""Eurodollars: US dollars held outside the United States, from 1950s London to today's global funding."""
+CODE = 'business5_eurodollar'
+BOOK = {
+    "title": 'Eurodollars',
+    "subtitle": 'Dollars held abroad, from 1950s London to global funding',
+    "chapters": [
+        ('Dollars held abroad',
+         'A eurodollar is a US dollar deposited in a bank outside the United States. The name is a little misleading, because the dollars can be held anywhere outside America, not only in Europe. The market in them grew large over the decades.'),
+        ('London in the 1950s',
+         'Banks in London began to accept dollar deposits in the 1950s. London had long experience in trade and finance, and it offered a welcoming place for dollar business. This was the start of a large offshore market in dollars.'),
+        ('Cold War reasons',
+         'Some governments in the Eastern Bloc held dollars in Europe rather than in the United States. They worried that US authorities might freeze their accounts during a political dispute. Keeping dollars abroad gave them a degree of safety.'),
+        ('Offshore funding',
+         'Banks and companies used the market to borrow dollars outside the United States. Because it was less regulated, borrowing costs could be lower. The market gave firms a flexible source of dollar funding around the world.'),
+        ('The rate',
+         'The eurodollar rate is the interest rate on these offshore dollar deposits. It is set by supply and demand in the market, and it has often been used as a reference for loans. Banks around the world looked to it when pricing dollar credit.'),
+        ('Its place in global finance',
+         "Eurodollar markets now form a large part of global dollar lending. They show how money can flow across borders, and how the dollar's role reaches far beyond the United States. Understanding them helps explain how global finance connects."),
+    ],
+    "test": [
+        ('What is a eurodollar?',
+         [('a', 'A euro coin with a dollar sign'), ('b', 'A bank card in Europe'), ('c', 'A US dollar deposited in a bank outside the United States'), ('d', 'A tax on tourists')],
+         'c'),
+        ('Where did the offshore dollar market begin to grow in the 1950s?',
+         [('a', 'London'), ('b', 'Tokyo'), ('c', 'Sydney'), ('d', 'Cairo')],
+         'a'),
+        ('Why did some governments keep dollars outside the United States?',
+         [('a', 'Dollars were banned in the United States'), ('b', 'The dollar did not exist yet'), ('c', 'They worried their accounts might be frozen in a political dispute'), ('d', 'They were not allowed to hold money')],
+         'c'),
+        ('What does the offshore market allow firms to do?',
+         [('a', 'Print banknotes'), ('b', 'Borrow dollars outside the United States, often with a flexible source of funds'), ('c', 'Avoid all paperwork forever by law'), ('d', 'Sell houses on the moon')],
+         'b'),
+        ('What is the eurodollar rate?',
+         [('a', 'The price of a bus ticket'), ('b', 'The rate of rainfall'), ('c', 'The weight of a coin'), ('d', 'The interest rate on offshore dollar deposits')],
+         'd'),
+    ],
+}

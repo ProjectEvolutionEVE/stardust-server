@@ -1,0 +1,37 @@
+"""NASDAQ: the 1971 screen market, dealers quoting prices, and how it became home to small and technology firms."""
+CODE = 'business5_nasdaq'
+BOOK = {
+    "title": 'NASDAQ',
+    "subtitle": 'The screen market from 1971, and how it grew into a home for technology firms',
+    "chapters": [
+        ('A market with no floor',
+         'NASDAQ opened in February 1971 as the first electronic stock market. Instead of a trading floor, it linked dealers across the country through computer screens. Its name began as an abbreviation for the National Association of Securities Dealers Automated Quotations.'),
+        ('Dealers quoting prices',
+         'On NASDAQ, dealers stood ready to buy and to sell, and each one posted a bid price and an ask price. The bid is what the dealer will pay, and the ask is what the dealer will charge. The gap between them is how the dealer earns a living.'),
+        ('Small and tech firms',
+         'NASDAQ became a home for smaller and younger companies that could not easily meet the rules of older exchanges. Over time it grew especially strong with technology firms, and many well-known names began their public lives there.'),
+        ('The dot-com listings',
+         'In the late 1990s, NASDAQ was the centre of the internet stock boom. Many new internet companies listed their shares there, and the index that tracks them rose sharply. When the boom turned, prices fell by a large share over the following years.'),
+        ('Competition with the NYSE',
+         'For many years NASDAQ and the New York Stock Exchange competed for listings and trading. Each one tried to attract companies with lower costs, faster systems or a good reputation. Competition pushed both to improve.'),
+        ('Later mergers',
+         'NASDAQ later became a publicly owned company and grew through a series of mergers and purchases. It now runs several exchanges and markets around the world. Its early screen idea is still at the heart of its business.'),
+    ],
+    "test": [
+        ('In what year did NASDAQ open?',
+         [('a', '1971'), ('b', '1821'), ('c', '1995'), ('d', '1600')],
+         'a'),
+        ("What does a dealer's bid price mean?",
+         [('a', 'The name of the company'), ('b', 'The date of the trade'), ('c', 'What the dealer will pay to buy'), ('d', 'The tax on the sale')],
+         'c'),
+        ('Which kind of firm was NASDAQ especially known for attracting?',
+         [('a', 'Only the largest oil firms'), ('b', 'Smaller and younger companies, including many in technology'), ('c', 'Only banks owned by governments'), ('d', 'Only farms')],
+         'b'),
+        ('What happened to NASDAQ during the late 1990s internet boom?',
+         [('a', 'It closed for the whole decade'), ('b', 'It moved to a ship'), ('c', 'It stopped listing any firms'), ('d', 'Many internet companies listed there and its index rose sharply')],
+         'd'),
+        ('How did NASDAQ and the NYSE relate for many years?',
+         [('a', 'They were the same company'), ('b', 'They never traded any shares'), ('c', 'They competed for listings and trading'), ('d', 'They shared one trading floor by law')],
+         'c'),
+    ],
+}

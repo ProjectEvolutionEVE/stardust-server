@@ -1,0 +1,37 @@
+"""The Basel Capital Rules: bank capital as a cushion, risk weights, Basel I to III, liquidity ratios, stress tests and the main criticisms."""
+CODE = 'business5_basel'
+BOOK = {
+    "title": 'The Basel Capital Rules',
+    "subtitle": 'How banks are required to hold a cushion against losses',
+    "chapters": [
+        ('Capital as a cushion',
+         'Capital is the money a bank has from its owners, which absorbs losses before depositors or lenders are hurt. A bank with a thin cushion can fail quickly when loans go bad. Capital rules set how thick that cushion must be.'),
+        ('Risk weights',
+         'Not all assets are equally risky, so the rules weight them. A loan that is more likely to go bad needs more capital set aside than a safe government bond. Risk weights make the capital requirement follow the risk the bank is actually taking.'),
+        ('Basel I, II and III',
+         'The Basel Committee, a group of central banks and regulators, produced the Basel Accords. Basel I came in 1988, Basel II in 2004, and Basel III after the 2008 financial crisis. Each one tightened the rules on capital and on how risk was measured.'),
+        ('Liquidity ratios',
+         'Capital is not the only test. A bank must also keep enough cash and easily sold assets to meet short-term needs. The liquidity coverage ratio and the net stable funding ratio were added to make sure banks can survive a rush of withdrawals.'),
+        ('Stress tests',
+         'Stress tests ask how a bank would cope with harsh but plausible scenarios, such as a sharp fall in house prices or a recession. Supervisors use the results to decide whether a bank holds enough capital. A bank that fails the test may have to raise more money or cut payouts.'),
+        ('Criticisms',
+         'Critics say the risk weights can be gamed, because banks may argue that their risky assets are safer than they are. The models are complex and hard to check, and some argue the rules still allow too much borrowing. The debate over the right level of capital continues.'),
+    ],
+    "test": [
+        ('What is the main purpose of bank capital rules?',
+         [('a', 'To make banks stop lending'), ('b', 'To require a cushion against losses'), ('c', 'To set interest rates for everyone'), ('d', 'To print money')],
+         'b'),
+        ('What do risk weights do?',
+         [('a', "Set the bank's colour"), ('b', 'Remove all capital requirements'), ('c', 'Set staff salaries'), ('d', 'Make riskier assets need more capital')],
+         'd'),
+        ('Which Basel accord came after the 2008 financial crisis?',
+         [('a', 'Basel I'), ('b', 'Basel II'), ('c', 'Basel III'), ('d', 'Basel Zero')],
+         'c'),
+        ('What is a liquidity ratio about?',
+         [('a', 'Having cash or easily sold assets for short-term needs'), ('b', "Painting the bank's walls"), ('c', 'Bank holidays'), ('d', 'Planting trees')],
+         'a'),
+        ('What are stress tests?',
+         [('a', 'Exams for students'), ('b', 'Yoga classes'), ('c', 'Tests of how banks cope with harsh but plausible scenarios'), ('d', 'Fire drills')],
+         'c'),
+    ],
+}

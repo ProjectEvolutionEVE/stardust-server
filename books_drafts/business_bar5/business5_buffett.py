@@ -1,0 +1,37 @@
+"""Warren Buffett and Berkshire Hathaway: the textile start, buying whole companies, insurance float, the annual letters, patience and succession."""
+CODE = 'business5_buffett'
+BOOK = {
+    "title": 'Warren Buffett and Berkshire Hathaway',
+    "subtitle": 'From a failing textile mill to one of the largest companies in America',
+    "chapters": [
+        ('A textile start',
+         'In 1965 Warren Buffett took control of Berkshire Hathaway, a struggling New England textile maker. He later said the mill was a poor business, and he used the company as a shell for a much larger enterprise.'),
+        ('Buying whole companies',
+         'Berkshire grew by buying whole businesses, and also by holding large stakes in publicly traded shares. Buffett looked for firms with lasting advantages and capable managers, and he held them for many years.'),
+        ('Insurance float',
+         'Insurance companies collect premiums before they pay claims. That money, called float, can be invested while it waits. Berkshire built a large float through its insurance businesses, which helped fund its investments.'),
+        ('The annual letters',
+         'Each year Buffett wrote a letter to shareholders explaining results, mistakes and his thinking. The letters are widely read as lessons in plain business writing.'),
+        ('Patience and temperament',
+         'Buffett stressed patience, discipline and avoiding costly impulses. He often said that temperament counts for a great deal in investing.'),
+        ('Succession',
+         'Any company closely tied to one founder faces the question of who comes next. How Berkshire is led after Buffett has drawn wide interest from investors and scholars alike.'),
+    ],
+    "test": [
+        ('What did Buffett take control of in 1965?',
+         [('a', 'A bakery chain'), ('b', 'Berkshire Hathaway, a textile maker'), ('c', 'A railway'), ('d', 'A bank in Omaha')],
+         'b'),
+        ('What is insurance float?',
+         [('a', 'Money set aside for taxes'), ('b', 'A loan from a government'), ('c', 'Coins given to shareholders'), ('d', 'Premiums collected before claims are paid, which can be invested while they wait')],
+         'd'),
+        ('What did Buffett write each year for shareholders?',
+         [('a', 'A textbook of accounting'), ('b', 'A romance novel'), ('c', 'A letter explaining results and his thinking'), ('d', 'A tax form')],
+         'c'),
+        ('Which quality did Buffett often stress?',
+         [('a', 'Patience and discipline'), ('b', 'Speed of trading'), ('c', 'Frequent trading'), ('d', 'Borrowing heavily')],
+         'a'),
+        ('How did Berkshire mainly grow?',
+         [('a', 'Printing shares for free'), ('b', 'Avoiding all investments'), ('c', 'Buying whole companies and large stakes in shares'), ('d', 'Selling its mill')],
+         'c'),
+    ],
+}

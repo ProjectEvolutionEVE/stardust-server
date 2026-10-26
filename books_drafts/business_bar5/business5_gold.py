@@ -1,0 +1,37 @@
+"""Gold Rushes: California in 1849, who really got rich, supplies and shovels, the Klondike, the Witwatersrand and the towns left behind."""
+CODE = 'business5_gold'
+BOOK = {
+    "title": 'Gold Rushes',
+    "subtitle": 'California, the Klondike, and the Witwatersrand, and who really got rich',
+    "chapters": [
+        ("Gold at Sutter's Mill",
+         "Gold was found at Sutter's Mill in California in January 1848. News spread, and in 1849 a huge flood of people hurried west. Many came by ship and by wagon, hoping to strike it rich."),
+        ('Who got rich',
+         'Most miners did not get rich. The people who sold goods to them often did better: shopkeepers, boat owners, and suppliers. Levi Strauss, who sold sturdy trousers to miners, is a well-known example.'),
+        ('Supplies and shovels',
+         'Sam Brannan bought up picks, shovels, and pans early and sold them to the miners at high prices. Selling supplies needs less luck, because customers always need tools. A steady trade can beat a risky hunt for gold.'),
+        ('The Klondike',
+         'Gold was found in the Klondike region of northwest Canada in 1896. The rush that followed brought thousands of people to the far north. Rough conditions and high costs meant many of them lost more than they gained.'),
+        ('The Witwatersrand',
+         'Gold-bearing rock was found on the Witwatersrand in South Africa in 1886. Deep mines were dug, and the city of Johannesburg grew rapidly around them. The mines became one of the largest gold sources in history.'),
+        ('The towns left behind',
+         'A rush can build towns quickly, and then leave them emptier when the gold runs out. Banks, roads, and schools may be built for a boom that does not last. The lesson for any business is that a boom is not a plan.'),
+    ],
+    "test": [
+        ("In what year was gold found at Sutter's Mill?",
+         [('a', '1896'), ('b', '1886'), ('c', '1848'), ('d', '1902')],
+         'c'),
+        ('Who often did best in a gold rush?',
+         [('a', 'People who sold goods and supplies to miners'), ('b', 'Only the miners who struck gold'), ('c', 'Governments only'), ('d', 'Shipbuilders in Europe')],
+         'a'),
+        ('Who was Sam Brannan?',
+         [('a', 'A gold miner in the Klondike'), ('b', 'A famous novelist'), ('c', 'A man who bought tools early and sold them to miners'), ('d', 'A railway engineer')],
+         'c'),
+        ('Where was a new gold rush started in 1896?',
+         [('a', "Sutter's Mill"), ('b', 'The Klondike'), ('c', 'The Witwatersrand'), ('d', 'Manaus')],
+         'b'),
+        ('What is one effect of a boom that does not last?',
+         [('a', 'Towns grow forever'), ('b', 'Banks always grow larger'), ('c', 'Roads are never needed'), ('d', 'Towns can be left emptier when the gold runs out')],
+         'd'),
+    ],
+}

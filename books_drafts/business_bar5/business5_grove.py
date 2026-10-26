@@ -1,0 +1,37 @@
+"""Andy Grove and Intel: from memory chips to microprocessors, strategic inflection points, and the 1994 Pentium flaw."""
+CODE = 'business5_grove'
+BOOK = {
+    "title": 'Andy Grove and Intel',
+    "subtitle": 'Changing course when the market changes under you',
+    "chapters": [
+        ('From memory to processors',
+         'Intel was first known for memory chips. Its later success came from microprocessors, the chips that act as the brain of a computer. Moving from one product to another is one of the hardest choices a firm can make.'),
+        ('The 1985 decision',
+         'In 1985 Intel decided to leave the memory chip business and focus on microprocessors. Andy Grove and Gordon Moore made the choice. Leaders must be willing to give up what worked before when the market shifts.'),
+        ('Strategic inflection points',
+         'Grove called a strategic inflection point a moment when the market changes so much that a business must change too. The old way stops working. Spotting these moments early is a key part of management.'),
+        ('Only the Paranoid Survive',
+         'Grove wrote a book with that title, arguing that firms should keep watching for threats and never feel safe. Healthy fear of change can keep a company alert. Too much fear can freeze a team, so balance matters.'),
+        ('The Pentium problem',
+         'In 1994 Intel found a rare error in the division sums of its Pentium chip. The company first said the flaw was too small to matter for most users. After public pressure it offered a free replacement to anyone who asked, which was a costly lesson in listening to customers.'),
+        ('Lessons in management',
+         'Grove wrote about high-output management, which means focusing on the work that gets results. He pushed teams to measure what they did. A good manager watches results and keeps the work moving.'),
+    ],
+    "test": [
+        ('Intel was first known for making which product?',
+         [('a', 'Cars'), ('b', 'Memory chips'), ('c', 'Bread'), ('d', 'Tractors')],
+         'b'),
+        ('What did Intel decide in 1985?',
+         [('a', 'Stop making microprocessors'), ('b', 'Buy a bank'), ('c', 'Move to Japan'), ('d', 'Leave the memory chip business and focus on microprocessors')],
+         'd'),
+        ('What is a strategic inflection point?',
+         [('a', 'A typing error in the accounts'), ('b', 'A payment due date'), ('c', 'A moment when the market changes so much that a business must change to survive'), ('d', 'A coffee break for staff')],
+         'c'),
+        ('What was the Pentium problem of 1994?',
+         [('a', 'A rare error in certain division sums'), ('b', 'A battery fault'), ('c', 'A slow screen'), ('d', 'A broken keyboard')],
+         'a'),
+        ('Who wrote the book Only the Paranoid Survive?',
+         [('a', 'Gordon Moore'), ('b', 'Bill Gates'), ('c', 'Andy Grove'), ('d', 'Steve Jobs')],
+         'c'),
+    ],
+}

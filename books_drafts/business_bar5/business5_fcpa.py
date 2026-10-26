@@ -1,0 +1,37 @@
+"""The Foreign Corrupt Practices Act: the 1977 US law against bribing foreign officials, the Lockheed payments, books and records, facilitation payments, and compliance programmes."""
+CODE = 'business5_fcpa'
+BOOK = {
+    "title": 'The Foreign Corrupt Practices Act',
+    "subtitle": 'Keeping bribes out of business abroad',
+    "chapters": [
+        ('A law against bribing abroad',
+         'The Foreign Corrupt Practices Act, passed in 1977, makes it a crime for US companies and certain others to bribe foreign officials to win or keep business. It also requires honest accounting records. The law applies to conduct abroad as well as at home.'),
+        ("Lockheed's payments",
+         "In the 1970s, investigations revealed that the aircraft maker Lockheed had made large payments to foreign officials and politicians to win contracts. The scandal shocked the public and helped push Congress to act. It is the story most often told about the law's origins."),
+        ('Books and records',
+         'The act requires companies with securities listed in the US to keep accurate books and records and to maintain internal controls. Hidden payments often show up as false entries in the accounts. The accounting rules are as important as the bribery ban.'),
+        ('Facilitation payments',
+         'A facilitation payment is a small payment made to speed up a routine government action, such as issuing a permit. The act allows such payments only in narrow cases, and they remain risky. Many firms ban them outright in their own rules.'),
+        ('Siemens settlement',
+         'In 2008, the German engineering firm Siemens reached a large settlement with US and German authorities over bribery. It was one of the biggest cases under the act. The case showed that authorities will pursue large firms across borders.'),
+        ('Compliance programmes',
+         'Companies manage the risk with compliance programmes. These usually include training, internal controls, checks on third parties such as agents, and safe ways for staff to report concerns. A good programme is tested in practice, not just written down.'),
+    ],
+    "test": [
+        ('In what year was the Foreign Corrupt Practices Act passed?',
+         [('a', '1997'), ('b', '1987'), ('c', '1977'), ('d', '1967')],
+         'c'),
+        ('What did the Lockheed scandal involve?',
+         [('a', 'Payments to foreign officials to win contracts'), ('b', 'A football team'), ('c', 'Cookie recipes'), ('d', 'A new airline seat')],
+         'a'),
+        ('What do the books and records rules require?',
+         [('a', 'Written poems'), ('b', 'Dates written in red'), ('c', 'Accurate accounting records'), ('d', 'Blank pages')],
+         'c'),
+        ('What is a facilitation payment?',
+         [('a', 'A large bribe to win an aircraft contract'), ('b', 'A small payment to speed a routine government action, which the act allows only in narrow cases'), ('c', 'A bank loan'), ('d', 'A tax')],
+         'b'),
+        ('What do compliance programmes typically include?',
+         [('a', 'Dancing classes'), ('b', 'Free holidays'), ('c', 'Office pets'), ('d', 'Training, internal controls and safe ways to report concerns')],
+         'd'),
+    ],
+}

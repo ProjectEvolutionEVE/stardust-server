@@ -1,0 +1,37 @@
+"""Demography and the Economy: age structures, the demographic dividend, ageing, dependency ratios, migration and pensions."""
+CODE = 'business5_demography'
+BOOK = {
+    "title": 'Demography and the Economy',
+    "subtitle": 'Age structures, the dividend, ageing, dependency ratios, migration and pensions',
+    "chapters": [
+        ('Age structure',
+         'A population pyramid shows how many people sit in each age group. A wide base means many young people, and a narrow top means few people in old age. Countries whose birth rates fall over time gradually grow older, and their pyramids change shape.'),
+        ('The demographic dividend',
+         "When the share of working-age people grows faster than the share of young and old dependants, a country can gain from having more workers for each person they support. East Asia's rapid growth from the 1960s is often linked to this effect. The gain is not automatic: it needs jobs, schooling and savings."),
+        ('Ageing',
+         'As people live longer and birth rates fall, the share of people over 65 grows. Pension and health systems built for a younger population come under strain. Many countries now debate working longer, saving more or raising taxes.'),
+        ('Dependency ratios',
+         'The dependency ratio compares people too young or too old to work with people of working age. A rising ratio means each worker supports more people. It is a simple measure, but a useful first look at pressure on public budgets.'),
+        ('Migration',
+         'Migration changes the age and size of a population. Working-age people who move in can ease the strain on an ageing country, while emigration can drain a region. Its effect on growth depends on skills, jobs and housing.'),
+        ('Pensions and growth',
+         "Pay-as-you-go pensions use today's workers' contributions to pay today's retirees. Fewer workers for each retiree puts this model under pressure. Higher productivity and more people in work are the main ways to ease the burden."),
+    ],
+    "test": [
+        ('What does a wide base in a population pyramid usually show?',
+         [('a', 'Many people over 80'), ('b', 'A shrinking workforce'), ('c', 'Many young people'), ('d', 'Heavy migration out')],
+         'c'),
+        ('What is the demographic dividend?',
+         [('a', 'A tax on pensions'), ('b', 'A period when working-age people grow faster than dependants'), ('c', 'A bonus paid to every citizen'), ('d', 'A rule for citizenship')],
+         'b'),
+        ('What does the dependency ratio compare?',
+         [('a', 'Imports with exports'), ('b', 'Men with women'), ('c', 'Cities with villages'), ('d', 'People too young or too old to work with people of working age')],
+         'd'),
+        ('Why do pay-as-you-go pensions come under pressure as populations age?',
+         [('a', 'Retirees stop receiving payments'), ('b', 'Workers pay in more than they draw'), ('c', 'Fewer workers support each retiree'), ('d', 'Interest rates always rise')],
+         'c'),
+        ('Which factor can ease the strain on an ageing country most directly?',
+         [('a', 'Working-age migrants who find jobs'), ('b', 'Lower productivity'), ('c', 'Falling employment'), ('d', 'A higher dependency ratio')],
+         'a'),
+    ],
+}

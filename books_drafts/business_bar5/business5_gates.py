@@ -1,0 +1,37 @@
+"""Bill Gates and Microsoft: BASIC and the Altair, the IBM deal for DOS, Windows, the antitrust case, and software licensing."""
+CODE = 'business5_gates'
+BOOK = {
+    "title": 'Bill Gates and Microsoft',
+    "subtitle": 'How a software company grew into a giant, and what it faced',
+    "chapters": [
+        ('Founding Microsoft',
+         'Bill Gates and Paul Allen founded Microsoft in 1975. The company began by writing software for early personal computers. Small beginnings can grow into large industries.'),
+        ('BASIC and the Altair',
+         'Microsoft wrote a version of the BASIC programming language for the Altair, an early hobby computer. The language made it easier for people to write their own programs. It gave the young company its first big break.'),
+        ('The IBM deal for DOS',
+         'When IBM made its first personal computer, Microsoft supplied the operating system, DOS. The deal helped the company become a major force in software. Supplying the core software can matter more than making the hardware.'),
+        ('Windows',
+         'Windows gave users a visual screen with windows and icons, so people could use a computer without typing commands. Windows became the most widely used operating system for personal computers. Ease of use can decide which product people choose.'),
+        ('The antitrust case',
+         'In the late 1990s the US government took Microsoft to court, arguing that it used its market power in ways that hurt rivals. The case was a major test of how the law treats very large firms. Companies with great power face close scrutiny.'),
+        ('Software licensing and giving',
+         'Microsoft earned much of its money by licensing software, which gives users the right to use it under set terms. Later Gates devoted much of his effort to the Gates Foundation, which funds health and education work. Wealth can be used to support public goals.'),
+    ],
+    "test": [
+        ('In which year was Microsoft founded?',
+         [('a', '1955'), ('b', '1965'), ('c', '1975'), ('d', '1985')],
+         'c'),
+        ('Which early computer did Microsoft write BASIC for?',
+         [('a', 'Atari'), ('b', 'Altair'), ('c', 'Commodore'), ('d', 'Apple Lisa')],
+         'b'),
+        ("What operating system did Microsoft supply for IBM's first PC?",
+         [('a', 'Unix'), ('b', 'Linux'), ('c', 'Android'), ('d', 'DOS')],
+         'd'),
+        ('What was the antitrust case about?',
+         [('a', 'A tax on bread'), ('b', 'A flight dispute'), ('c', 'Microsoft using its market power in ways that hurt rivals'), ('d', 'Foreign currency')],
+         'c'),
+        ('What is software licensing?',
+         [('a', 'Giving users the right to use software under set terms'), ('b', 'Selling computers'), ('c', 'Sewing badges'), ('d', 'Building roads')],
+         'a'),
+    ],
+}

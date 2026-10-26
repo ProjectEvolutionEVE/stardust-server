@@ -1,0 +1,37 @@
+"""IBM Through the Eras: punch cards to mainframes to PCs, a near-fatal loss, and the move from hardware to services."""
+CODE = 'business5_ibm'
+BOOK = {
+    "title": 'IBM Through the Eras',
+    "subtitle": 'Punch cards, the big bet, the PC, and the turn to services',
+    "chapters": [
+        ('Punch cards',
+         "IBM grew from machines that sorted and counted punched cards for government and business. Its early machines helped run censuses and payrolls. Data processing became the core of the company's business."),
+        ('The System/360 bet',
+         'In 1964 IBM launched the System/360, a family of computers that could run the same software across many sizes. It was a huge bet of billions of dollars at the time. The bet paid off by making computers easier to buy, use and expand.'),
+        ('The personal computer',
+         'In 1981 IBM introduced its personal computer, which set a standard that many other makers copied. The choice of open parts helped the PC spread quickly. The same openness also let rivals take much of the profit from the hardware.'),
+        ('The 1993 loss',
+         'By the early 1990s IBM was losing money on a large scale, and in 1993 it posted a loss of billions of dollars. Its size had made it slow, and its mainframe business was shrinking. A famous company can still face a crisis of its own making.'),
+        ("Gerstner's change",
+         'Lou Gerstner joined IBM as chief executive in 1993 and reshaped it. He cut costs, broke up parts of the company and pushed it to focus on customers. He is often remembered for saying that IBM needed a strategy built on what customers needed, not on products alone.'),
+        ('Services over hardware',
+         'IBM moved more of its business into services, consulting and software. Selling help and expertise can earn steadier income than selling machines. A company must decide where it creates the most value for customers.'),
+    ],
+    "test": [
+        ("What did IBM's early punch card machines do?",
+         [('a', 'Made cars'), ('b', 'Sorted and counted punched cards'), ('c', 'Printed newspapers'), ('d', 'Grew crops')],
+         'b'),
+        ('What was the System/360?',
+         [('a', 'A type of satellite'), ('b', 'A bank card'), ('c', 'A printer for maps'), ('d', 'A family of computers that could run the same software across sizes')],
+         'd'),
+        ('When did IBM introduce its personal computer?',
+         [('a', '1964'), ('b', '1999'), ('c', '1981'), ('d', '1945')],
+         'c'),
+        ("Who led IBM's change in 1993?",
+         [('a', 'Lou Gerstner'), ('b', 'Herman Hollerith'), ('c', 'Ole Kirk Christiansen'), ('d', 'Phil Knight')],
+         'a'),
+        ('What did IBM shift towards after its change?',
+         [('a', 'Only selling punch cards'), ('b', 'Selling its chip factories to farmers'), ('c', 'Services, consulting and software'), ('d', 'Making toy trains')],
+         'c'),
+    ],
+}

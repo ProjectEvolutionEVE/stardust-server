@@ -1,0 +1,37 @@
+"""Dynamic Capabilities: how firms sense change, seize new chances and reshape themselves to keep up."""
+CODE = 'business5_dyncap'
+BOOK = {
+    "title": 'Dynamic Capabilities',
+    "subtitle": 'Sensing, seizing and reconfiguring: how a firm keeps adapting',
+    "chapters": [
+        ('Keeping up with change',
+         'A strong resource can lose its value when the world shifts. In 1997, David Teece, Gary Pisano and Amy Shuen proposed dynamic capabilities: the ability of a firm to renew its skills as markets change. The idea is about staying fit, not just being strong today.'),
+        ('Sensing',
+         'Sensing means noticing changes early. A firm scans its market, its customers and its technology, looking for signs of a shift. Firms that sense late often find that rivals have already moved.'),
+        ('Seizing',
+         'Seizing means acting on what the firm has sensed. The firm chooses where to invest, builds a business model around the chance, and commits the resources needed. Good ideas that are never acted on earn nothing.'),
+        ('Reconfiguring',
+         'Reconfiguring means changing the firm itself to fit the new shape. Teams are moved, old assets are sold or repurposed, and routines are rewritten. This step is often the hardest, because it asks people to let go of habits that once worked.'),
+        ('Learning routines',
+         'Dynamic capabilities grow from learning. Firms that review their results, test new ideas in small steps and share what they learn adapt faster. Learning becomes a routine in itself.'),
+        ('Why some firms adapt',
+         'Firms that adapt well tend to keep their attention outward, invest in learning and act before a crisis forces them. Ask your own firm: how fast would we notice a change, act on it, and rebuild if needed?'),
+    ],
+    "test": [
+        ('In what year did Teece, Pisano and Shuen propose dynamic capabilities?',
+         [('a', '1957'), ('b', '1997'), ('c', '2019'), ('d', '1880')],
+         'b'),
+        ('What are the three parts of dynamic capabilities?',
+         [('a', 'Buying, selling and storing'), ('b', 'Hiring, firing and training'), ('c', 'Printing, posting and paying'), ('d', 'Sensing, seizing and reconfiguring')],
+         'd'),
+        ('What does sensing mean?',
+         [('a', 'Cutting prices'), ('b', 'Signing contracts'), ('c', 'Noticing changes early'), ('d', 'Moving offices')],
+         'c'),
+        ('Why can a strong resource lose its value?',
+         [('a', 'The world shifts and the resource no longer fits'), ('b', 'Resources must be renewed every day by law'), ('c', 'Resources always grow more valuable'), ('d', 'Resources cannot be used')],
+         'a'),
+        ('Which step is often the hardest, because it asks people to let go of old habits?',
+         [('a', 'Sensing'), ('b', 'Seizing'), ('c', 'Reconfiguring'), ('d', 'Learning')],
+         'c'),
+    ],
+}

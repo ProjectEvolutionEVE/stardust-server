@@ -1,0 +1,37 @@
+"""Volkswagen's Emissions Scandal: clean diesel claims, a hidden switch, and what a lie costs a company."""
+CODE = 'business5_vw'
+BOOK = {
+    "title": "Volkswagen's Emissions Scandal",
+    "subtitle": 'Clean diesel claims, a hidden switch, and the cost of a lie',
+    "chapters": [
+        ('A promise of clean diesel',
+         'In the 2000s Volkswagen sold diesel cars in the United States as clean and fun to drive. The promise was a big part of the sales pitch, because diesel engines were efficient and popular. A green story sells, but only if it is true.'),
+        ('The defeat device',
+         'Some diesel engines carried software that could tell when the car was being tested. On the test stand the software switched on the full pollution controls. On the road the controls eased off, so the cars released far more pollution than the tests showed. Regulators call a hidden switch like this a defeat device.'),
+        ('The discovery',
+         'In 2014 researchers tested the cars on real roads and found a gap between the road results and the official tests. In September 2015 US regulators issued a formal notice of violation. The company first denied the problem, then admitted that the software had been fitted to millions of cars worldwide.'),
+        ('The bill',
+         'The cost was enormous. Fines, vehicle buybacks, repairs and settlements ran into many billions of dollars. The share price fell sharply, and the brand lost trust for years. Money spent on clean-up is money that cannot be spent on new products.'),
+        ('People held to account',
+         'Several managers and engineers were charged in the United States and Germany. Some were convicted and sent to prison. The lesson is that a company answers for what its people do, even when the top team did not see the decision being made.'),
+        ('Trust as capital',
+         'Trust is a kind of capital. It takes years to build, and one lie can wipe it out quickly. A chief executive who protects the truth, admits problems early and fixes the cause will recover faster than one who waits to be caught.'),
+    ],
+    "test": [
+        ('What was the defeat device in the diesel cars?',
+         [('a', 'A tool that made the engines faster'), ('b', 'Software that cut pollution controls during normal driving but not during tests'), ('c', 'A part that cooled the engine on hot days'), ('d', 'A fuel additive sold to drivers')],
+         'b'),
+        ('In what year did US regulators issue the formal notice of violation?',
+         [('a', '2005'), ('b', '1998'), ('c', '2020'), ('d', '2015')],
+         'd'),
+        ("Why was the company's trust damaged so badly?",
+         [('a', 'Its cars were too cheap'), ('b', 'It moved its factories abroad'), ('c', 'It denied the problem first and the truth came out later'), ('d', 'Its diesel fuel was too expensive')],
+         'c'),
+        ('Who can be held responsible for a decision like this?',
+         [('a', 'The company, and the people who made the decisions'), ('b', 'Only the car itself'), ('c', 'Only the government'), ('d', "Only the company's chief executive who knew everything")],
+         'a'),
+        ('What does the chapter call trust in a business?',
+         [('a', 'A tax on profit'), ('b', 'A discount on fuel'), ('c', 'A kind of capital that takes years to build'), ('d', 'A type of engine part')],
+         'c'),
+    ],
+}

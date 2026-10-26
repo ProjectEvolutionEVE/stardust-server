@@ -1,0 +1,37 @@
+"""The Buttonwood Agreement and the NYSE: how Wall Street's stock exchange grew from a 1792 agreement under a tree."""
+CODE = 'business5_nyse'
+BOOK = {
+    "title": 'The Buttonwood Agreement and the NYSE',
+    "subtitle": 'From a tree on Wall Street in 1792 to the trading floor and the screen',
+    "chapters": [
+        ('A tree on Wall Street',
+         'In May 1792, a group of brokers met under a buttonwood tree on Wall Street in New York. They signed an agreement to trade with one another on set terms and to charge fixed commissions. It is known as the Buttonwood Agreement.'),
+        ('The twenty-four brokers',
+         'The agreement was signed by 24 brokers. They agreed to deal only with each other, which gave them a shared market and a reason to trust one another. From this small group grew the New York Stock Exchange.'),
+        ('The trading floor',
+         "For more than two centuries, the exchange was built around a large trading floor. Brokers shouted and used hand signals to find buyers and sellers. Floor trading was loud, busy and a central part of the city's life."),
+        ('The specialist',
+         'Each stock was assigned to a specialist, a firm or person responsible for keeping an orderly market in it. The specialist would buy or sell when needed to smooth out sudden gaps between buyers and sellers. The role still exists in changed form.'),
+        ('The move to screens',
+         'Over the late twentieth and early twenty-first centuries, the exchange moved toward electronic trading. Orders increasingly flowed through computers rather than the floor. Today most trading is electronic, although the exchange still keeps a physical presence.'),
+        ('Why the story matters',
+         'The Buttonwood Agreement shows that a market is built on trust. Its rules, its members and its prices give buyers and sellers a common place to meet. Every exchange since has depended on the same basic idea.'),
+    ],
+    "test": [
+        ('Where was the Buttonwood Agreement made?',
+         [('a', 'In a London coffee shop'), ('b', 'Under a tree on Wall Street in New York'), ('c', 'On a ship at sea'), ('d', 'In a school in Boston')],
+         'b'),
+        ('In what year was the Buttonwood Agreement signed?',
+         [('a', '1950'), ('b', '1492'), ('c', '1620'), ('d', '1792')],
+         'd'),
+        ('How many brokers signed the agreement?',
+         [('a', '12'), ('b', '50'), ('c', '24'), ('d', '100')],
+         'c'),
+        ('What was the role of a specialist on the exchange?',
+         [('a', 'To keep an orderly market in an assigned stock'), ('b', 'To print newspapers'), ('c', 'To sell tickets to visitors'), ('d', 'To guard the building')],
+         'a'),
+        ('What broad change happened to the exchange over the late twentieth century?',
+         [('a', 'It closed for good in 1900'), ('b', 'It stopped trading shares'), ('c', 'It moved toward electronic trading'), ('d', 'It moved to a farm')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Bullwhip Effect: small changes in customer demand grow into large swings up a supply chain, and sharing information calms them."""
+CODE = 'business5_bullwhip'
+BOOK = {
+    "title": 'The Bullwhip Effect',
+    "subtitle": 'How small swings in demand grow up the supply chain, and how to calm them',
+    "chapters": [
+        ('A small wave at the end',
+         'Think of a supply chain as a line of firms: a shop, a wholesaler, a factory and a supplier of raw materials. A small change in what shoppers buy can cause a much larger swing in orders at the far end of the line. This is the bullwhip effect.'),
+        ('Amplification up the chain',
+         'Each firm in the chain orders based on the orders it receives, not on what the customer really buys. Each one adds a safety margin. Small ripples grow at each step, like the end of a whip cracking.'),
+        ('The beer game',
+         'At MIT, a role-play called the beer game shows the effect. Players run a simple supply chain for a single drink, and their orders swing wildly even though customer demand is steady. Many players are surprised by how large the swings become.'),
+        ('Causes',
+         'Several causes feed the effect. Firms update forecasts from orders rather than from sales. They order in large batches. Prices change often, and in shortages firms may order more than they need to be safe.'),
+        ('Information sharing',
+         'The main fix is to share real sales data along the chain. When every firm sees what customers are really buying, the swings shrink. Trust is needed, because firms must reveal information they might rather keep private.'),
+        ('Other fixes',
+         'Firms can also order in smaller, more regular batches, use steady pricing, and agree rules that stop shortages from making orders balloon. Each fix works best together with shared information.'),
+    ],
+    "test": [
+        ('What does the bullwhip effect describe?',
+         [('a', 'A rise in office rent'), ('b', 'A whip used in factories'), ('c', 'A tax on shipping'), ('d', 'Small swings in customer demand growing up the supply chain')],
+         'd'),
+        ('Where does the effect start in the chain?',
+         [('a', 'At the bank'), ('b', 'At the head office in the capital'), ('c', "At the end, with the customer's purchases"), ('d', 'At the raw material mine only')],
+         'c'),
+        ('What is the beer game?',
+         [('a', 'A role-play that shows the swings in orders'), ('b', 'A real brewery tour'), ('c', 'A contest for drink sales'), ('d', 'A law about alcohol')],
+         'a'),
+        ('Which of these is a cause mentioned in the text?',
+         [('a', 'Keeping every order in a drawer'), ('b', 'Selling only on Sundays'), ('c', 'Ordering in large batches'), ('d', 'Having no customers')],
+         'c'),
+        ('What is the main fix?',
+         [('a', 'Closing the factory'), ('b', 'Sharing real sales data along the chain'), ('c', 'Hiding data from every firm'), ('d', 'Ordering the most possible each time')],
+         'b'),
+    ],
+}

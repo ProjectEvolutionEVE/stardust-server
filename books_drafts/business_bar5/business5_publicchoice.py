@@ -1,0 +1,37 @@
+"""Public Choice Theory: Buchanan and Tullock, self-interest in politics, logrolling, special interests, rational ignorance and constitutional rules."""
+CODE = 'business5_publicchoice'
+BOOK = {
+    "title": 'Public Choice Theory',
+    "subtitle": 'Self-interest in politics, logrolling, special interests and the rules that restrain them',
+    "chapters": [
+        ('Politicians as people',
+         "Public choice theory applies the economist's tools to politics. It assumes that voters, politicians and officials act partly in their own interest, as people do in every other part of life."),
+        ('Buchanan and Tullock',
+         "James Buchanan and Gordon Tullock's book The Calculus of Consent (1962) helped found the field. They asked which rules let people live together with decisions that are fair and stable."),
+        ('Logrolling',
+         'In logrolling, legislators trade votes: you back my project and I back yours. Each bill can pass even when most of the people it affects would be worse off overall.'),
+        ('Special interests',
+         'A small group with a lot at stake often organises better than a large group with small stakes each. Its lobbying can shape policy more than the general public might expect.'),
+        ('Rational ignorance',
+         'One vote rarely changes the result of an election, so individual voters have little reason to study every issue. Many stay poorly informed, and that suits some interests.'),
+        ('Constitutional rules',
+         'Public choice writers argue that rules matter. Constitutions, balanced budget requirements and limits on spending can restrain self-interest. Good rules can shape better outcomes than trust in good intentions alone.'),
+    ],
+    "test": [
+        ('What does public choice theory assume about politicians?',
+         [('a', 'They are self-interested, as other people are'), ('b', 'They always act only for the public'), ('c', 'They act at random'), ('d', 'They have no incentives at all')],
+         'a'),
+        ('Who wrote The Calculus of Consent?',
+         [('a', 'Karl Marx'), ('b', 'Adam Smith'), ('c', 'James Buchanan and Gordon Tullock'), ('d', 'Vilfredo Pareto')],
+         'c'),
+        ('What is logrolling?',
+         [('a', 'Cutting down timber'), ('b', "Trading votes so that each member's project passes"), ('c', 'Rolling bills across a desk'), ('d', 'Voting by secret ballot')],
+         'b'),
+        ('What is rational ignorance?',
+         [('a', 'Voters refuse to vote'), ('b', 'Voters know everything about every issue'), ('c', 'Politicians hide every fact'), ('d', 'Voters rarely study issues because one vote seldom changes the result')],
+         'd'),
+        ('Why can a small group with much at stake often influence policy?',
+         [('a', 'It is larger than the others'), ('b', 'It has no money'), ('c', 'It has more to gain and often organises better than large groups with small stakes'), ('d', 'It never lobbies')],
+         'c'),
+    ],
+}

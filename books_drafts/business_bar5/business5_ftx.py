@@ -1,0 +1,37 @@
+"""The Collapse of FTX: customer money used by a related trading firm, a run in November 2022, and lessons on custody."""
+CODE = 'business5_ftx'
+BOOK = {
+    "title": 'The Collapse of FTX',
+    "subtitle": 'Customer funds, a sudden run, and lessons on custody',
+    "chapters": [
+        ('An exchange and a trading firm',
+         'FTX was a cryptocurrency exchange, and Alameda Research was a trading firm linked to the same founder. Customers used the exchange to buy and sell digital tokens. The two companies were closely connected, and that connection was hidden from many customers.'),
+        ('Customer funds',
+         "Customers deposited money on FTX expecting it to be held safely for them. Instead, large amounts were moved to Alameda and used for risky bets and other spending. When a customer deposits money with a firm, that money is not the firm's own to spend."),
+        ('The November 2022 run',
+         "In early November 2022 a news report raised questions about Alameda's balance sheet. Customers rushed to withdraw their money, and FTX could not meet the demand. A run happens when many people want their money back at once and the firm cannot pay."),
+        ('Bankruptcy',
+         'FTX filed for bankruptcy on 11 November 2022. Its founder was arrested and later convicted of fraud. Bankruptcy proceedings aimed to return what was left to customers, step by step.'),
+        ('The trial',
+         'The trial in 2023 found the founder guilty of defrauding customers and investors. The case set out how customer money was moved and hidden. A company that lies about where money sits can face serious criminal charges.'),
+        ('Lessons on custody',
+         "Custody means who holds an asset and how it is protected. Ask whether money is kept apart from the company's own funds, and whether an independent check confirms it. Trust is not a substitute for proof of custody."),
+    ],
+    "test": [
+        ('What was Alameda Research?',
+         [('a', 'A museum of art'), ('b', 'A bank for farmers'), ('c', 'A trading firm linked to the same founder as FTX'), ('d', 'A car maker')],
+         'c'),
+        ('What went wrong with customer money at FTX?',
+         [('a', 'It was moved to a related firm and used for risky bets'), ('b', 'It was locked in a vault and forgotten'), ('c', 'It was spent on charity'), ('d', 'It was returned the same day')],
+         'a'),
+        ('When did FTX file for bankruptcy?',
+         [('a', '1 January 2015'), ('b', '5 July 2010'), ('c', '11 November 2022'), ('d', '20 April 2019')],
+         'c'),
+        ('What is a bank run?',
+         [('a', 'A race between two banks to open branches'), ('b', 'Many people rushing to withdraw money that the firm cannot pay'), ('c', 'A new kind of loan'), ('d', 'A sporting event for staff')],
+         'b'),
+        ('What does custody mean in this chapter?',
+         [('a', 'A court order for fines'), ('b', 'A type of coin'), ('c', 'A staff pension scheme'), ('d', 'Who holds an asset and how it is protected')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Dutch Flower Auction: the descending clock, Aalsmeer, cooling chains and global buyers, a model of market design."""
+CODE = 'business5_dutchflowers'
+BOOK = {
+    "title": 'The Dutch Flower Auction',
+    "subtitle": 'The descending clock, cold chains, and a model of market design',
+    "chapters": [
+        ('The clock auction',
+         'In a Dutch clock auction, the price starts high and drops on a large clock until a buyer stops it. The first buyer to press the button takes the lot at that price. The method can sell huge volumes of flowers in very little time.'),
+        ('Aalsmeer',
+         'The famous auction hall at Aalsmeer, near Amsterdam, has been one of the largest flower markets in the world. Growers bring their flowers there each day to be sold. A central place for trade can bring many buyers and sellers together.'),
+        ('Descending price',
+         'Because the price falls until someone bids, sellers and buyers meet at the point where demand meets supply. The clock quickly shows the level at which the market will clear. Simple rules can reveal prices fast.'),
+        ('Cooling chains',
+         'Flowers spoil quickly, so they must be kept cold from the farm to the shop. Cooling chains of trucks, warehouses and planes keep them fresh. A product that spoils fast makes logistics a central part of the business.'),
+        ('Global buyers',
+         'Buyers from many countries come to the auction or bid remotely. Flowers grown in one place can reach shops across the world within a day or two. Good market design can connect distant buyers and sellers.'),
+        ('A model of market design',
+         'The Dutch flower auction is studied as a model of market design, a way to build markets that work well. Its rules balance speed, fairness and the needs of both sides. Good design makes trade easy, fair and efficient.'),
+    ],
+    "test": [
+        ('What happens to the price in a Dutch clock auction?',
+         [('a', 'It rises by a fixed sum every second'), ('b', 'It never changes'), ('c', 'It starts high and drops until a buyer stops it'), ('d', 'It is set by the weather')],
+         'c'),
+        ('Where is the famous flower auction hall?',
+         [('a', 'Paris'), ('b', 'Aalsmeer, near Amsterdam'), ('c', 'Madrid'), ('d', 'Vienna')],
+         'b'),
+        ('Why are cooling chains important for flowers?',
+         [('a', 'Cold makes flowers grow faster'), ('b', 'Cold makes flowers heavier'), ('c', 'Cold changes the colour of the auction clock'), ('d', 'Flowers spoil quickly without cold')],
+         'd'),
+        ('What does the chapter say a good market design does?',
+         [('a', 'Stops all trade'), ('b', 'Hides prices from buyers'), ('c', 'Makes trade easy, fair and efficient'), ('d', 'Lets only one seller sell')],
+         'c'),
+        ('Why can the descending clock reveal prices quickly?',
+         [('a', 'Price falls until demand meets supply'), ('b', 'Buyers are paid to stay silent'), ('c', 'The price is fixed in advance'), ('d', 'The auction has no buyers')],
+         'a'),
+    ],
+}

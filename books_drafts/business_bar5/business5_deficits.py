@@ -1,0 +1,37 @@
+"""Government Deficits and Public Debt: deficit against debt, debt to GDP, who holds the debt, Ricardian equivalence, crowding out and sustainability."""
+CODE = 'business5_deficits'
+BOOK = {
+    "title": 'Government Deficits and Public Debt',
+    "subtitle": 'The yearly gap, the total owed, and when debt is sustainable',
+    "chapters": [
+        ('Deficit and debt',
+         'A deficit is the yearly shortfall when a government spends more than it takes in. Debt is the total owed from past deficits, after surpluses are set against it. The deficit is a flow over a year; the debt is a stock built up over time.'),
+        ('Debt to GDP',
+         'Economists compare debt with the size of the economy, measured by GDP. A given amount of debt is easier to carry when the economy is large and growing.'),
+        ('Who holds the debt',
+         'Government bonds are held by banks, pension funds, individuals and foreign investors. Who holds the debt affects who receives the interest and how exposed a country is to outside shocks.'),
+        ('Ricardian equivalence',
+         "Robert Barro revived an idea from David Ricardo. If people expect future taxes to repay today's borrowing, they may save more now, so debt-financed spending may not add much to demand. The idea is debated and depends on its assumptions."),
+        ('Crowding out',
+         'When government borrowing competes with private borrowers, interest rates may rise and private investment may fall. How strong this effect is depends on how much spare capacity the economy has.'),
+        ('Sustainability',
+         'Debt is sustainable when the economy grows fast enough, or interest rates are low enough, that debt does not rise without limit. Economists watch the gap between interest rates and growth.'),
+    ],
+    "test": [
+        ('What is a deficit?',
+         [('a', 'The yearly shortfall when spending exceeds income'), ('b', 'The total of all past surpluses'), ('c', 'A tax on bonds'), ('d', "A bank's profit")],
+         'a'),
+        ('Debt is usually compared with what?',
+         [('a', 'The height of the population'), ('b', 'The number of cars'), ('c', 'GDP'), ('d', 'Rainfall')],
+         'c'),
+        ('Who might hold government bonds?',
+         [('a', 'Only the prime minister'), ('b', 'Banks, pension funds, individuals and foreign investors'), ('c', 'Nobody'), ('d', 'Only schools')],
+         'b'),
+        ('Whose idea does Ricardian equivalence revive?',
+         [('a', 'Adam Smith'), ('b', 'John Maynard Keynes'), ('c', 'Karl Marx'), ('d', 'David Ricardo')],
+         'd'),
+        ('What is crowding out?',
+         [('a', 'Private firms borrow for free'), ('b', 'Debt disappears over time'), ('c', 'Government borrowing raises interest rates and can reduce private investment'), ('d', 'Taxes fall to zero')],
+         'c'),
+    ],
+}

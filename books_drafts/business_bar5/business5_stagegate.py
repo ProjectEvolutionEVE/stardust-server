@@ -1,0 +1,37 @@
+"""Stage-Gate and R&D Portfolios: ideas pass through gates, weak ones are stopped early, and money follows the stage."""
+CODE = 'business5_stagegate'
+BOOK = {
+    "title": 'Stage-Gate and R&D Portfolios',
+    "subtitle": 'Ideas pass through gates, weak ones stop early, and money follows the stage',
+    "chapters": [
+        ('Gates along the way',
+         'Robert Cooper developed the Stage-Gate method in the 1980s. A new product moves through stages of work, and at each gate a team decides whether to go on, change course or stop. Each gate asks for evidence before more money is spent.'),
+        ('Kill early',
+         'The cheapest time to stop a bad idea is at the start. Stage-Gate teaches teams to kill weak ideas before they consume large budgets. A project that is stopped early has cost little, and its people can work on something better.'),
+        ('Funding by stage',
+         'Money is released stage by stage, not all at once. Early stages get small amounts for quick tests. Later stages get larger sums once the idea has shown promise. The size of the spend follows the strength of the evidence.'),
+        ('A balanced portfolio',
+         'A research and development portfolio holds many projects at different stages. Some are safe, with small, sure gains. Others are bold, with a chance of large rewards. A good portfolio balances the two, rather than betting everything on one.'),
+        ('Success rates',
+         'Most new ideas do not become successful products, and this is normal. A firm that expects this plans for it, and judges its portfolio as a whole. Judging each project alone can lead to over-caution or too many losses.'),
+        ('Metrics',
+         'Teams track measures such as time to each gate, the share of projects stopped, and the value of what reaches the market. Choose measures that help people make good decisions, not measures that reward keeping failing projects alive.'),
+    ],
+    "test": [
+        ('Who developed the Stage-Gate method?',
+         [('a', 'Igor Ansoff'), ('b', 'Robert Cooper'), ('c', 'Gary Klein'), ('d', 'Joan Woodward')],
+         'b'),
+        ('What is the main purpose of a gate?',
+         [('a', 'To set the office rent'), ('b', 'To keep out visitors'), ('c', 'To record staff holidays'), ('d', 'To decide whether to go on, change course or stop')],
+         'd'),
+        ('Why does Stage-Gate teach teams to stop weak ideas early?',
+         [('a', 'Early ideas are always the best'), ('b', 'It is required by law in every country'), ('c', 'It is the cheapest time to stop a bad idea'), ('d', 'Stopping never costs anything later')],
+         'c'),
+        ('How is money usually released in this method?',
+         [('a', 'Stage by stage, in step with the evidence'), ('b', 'All at once on the first day'), ('c', 'Only after the product is sold'), ('d', 'Never, because projects are free')],
+         'a'),
+        ('What does a balanced R&D portfolio hold?',
+         [('a', 'Only one very large project'), ('b', 'Only safe projects with no risk'), ('c', 'A mix of safe and bold projects at different stages'), ('d', 'Only bold projects with no safe ones')],
+         'c'),
+    ],
+}

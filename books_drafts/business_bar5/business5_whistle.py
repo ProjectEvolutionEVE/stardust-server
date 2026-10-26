@@ -1,0 +1,37 @@
+"""Whistleblowing: speaking up about wrongdoing, the story of Sherron Watkins at Enron, legal protections and the cost to the person."""
+CODE = 'business5_whistle'
+BOOK = {
+    "title": 'Whistleblowing',
+    "subtitle": 'Speaking up about wrongdoing: Sherron Watkins at Enron, protections and the cost',
+    "chapters": [
+        ('What a whistleblower is',
+         'A whistleblower is a person who reports wrongdoing inside an organisation, to someone who can act on it. The wrongdoing may be illegal, unsafe or seriously unfair. The person usually works inside the firm they report on.'),
+        ('Sherron Watkins at Enron',
+         'In August 2001, Sherron Watkins, a vice president at the energy firm Enron, wrote a memo to its chief executive, Ken Lay. She raised concerns about accounting practices and the risks they hid. Enron collapsed later that year, and her warning is often studied as a case of speaking up.'),
+        ('Legal protections',
+         'Many countries protect whistleblowers from unfair treatment. In the United States, the Sarbanes-Oxley Act of 2002 gave protection to employees who report certain fraud. Protections differ widely between countries, so check the rules that apply.'),
+        ('The cost to the person',
+         'Speaking up can cost a whistleblower their job, their reputation and their peace of mind. Many people who report wrongdoing face pressure, isolation or long legal fights. Anyone thinking of speaking up should seek advice first.'),
+        ('Designing channels',
+         'Firms can make speaking up safer by setting up clear, confidential channels. A good channel lets people report without fear, tracks each report and reports back what was done. Staff must trust that the channel works.'),
+        ("The manager's duty",
+         'Managers have a duty to listen when someone raises a concern. They should not punish the person who speaks, and they should check the facts with care. Ignoring a warning is itself a choice, with its own consequences.'),
+    ],
+    "test": [
+        ('What is a whistleblower?',
+         [('a', 'A person who sells whistles'), ('b', 'A referee at a football match'), ('c', 'A person who reports wrongdoing inside an organisation'), ('d', 'A manager who hides errors')],
+         'c'),
+        ('Who wrote the 2001 memo at Enron?',
+         [('a', 'Sherron Watkins'), ('b', 'Ken Lay alone'), ('c', 'Pierre Wack'), ('d', 'Lu Hong')],
+         'a'),
+        ('Which US law gave protection to employees who report certain fraud, in 2002?',
+         [('a', 'The Lincoln Rules'), ('b', 'The Beer Game Act'), ('c', 'The Sarbanes-Oxley Act'), ('d', 'The Diffusion Act')],
+         'c'),
+        ('What is a cost of speaking up, according to the text?',
+         [('a', 'The person always gets a prize'), ('b', 'The person may lose their job and face pressure'), ('c', 'The person is always paid double'), ('d', 'The person is never affected')],
+         'b'),
+        ('What should a manager do when someone raises a concern?',
+         [('a', 'Punish the person at once'), ('b', 'Ignore it and say nothing'), ('c', 'Tell the press first'), ('d', 'Listen, check the facts and not punish the person who spoke')],
+         'd'),
+    ],
+}

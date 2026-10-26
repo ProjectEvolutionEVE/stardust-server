@@ -1,0 +1,37 @@
+"""Time Management and the Eisenhower Matrix: sorting work by urgent and important, the four boxes, and how to plan a week."""
+CODE = 'business5_eisenhower'
+BOOK = {
+    "title": 'Time Management and the Eisenhower Matrix',
+    "subtitle": 'Urgent against important: four boxes for sorting work and planning a week',
+    "chapters": [
+        ('A saying of the President',
+         'Dwight Eisenhower is often quoted as saying that he had two kinds of problems, the urgent and the important. The urgent ones press for attention. The important ones shape the future. The distinction is the root of a useful planning tool.'),
+        ('Four boxes',
+         'The Eisenhower matrix sorts tasks into four boxes. Urgent and important tasks are done now. Important but not urgent tasks are planned. Urgent but not important tasks are delegated. Neither urgent nor important tasks are dropped.'),
+        ("Covey's quadrants",
+         'Stephen Covey popularised a similar grid in his 1989 book The 7 Habits of Highly Effective People. He urged people to spend more time on important work that is not urgent, such as planning and relationships, and less on crises.'),
+        ('Batching',
+         'Batching means doing similar tasks together, such as answering messages at set times. It reduces the cost of switching between jobs. Batching frees long periods for important work that does not feel urgent.'),
+        ('Saying no',
+         'Every yes to a small task is a no to something else. Learn to decline or postpone requests that do not fit your important goals. A short, polite no can save hours of later stress.'),
+        ('Planning a week',
+         'Each week, pick two or three important goals and block time for them before the urgent work fills the diary. Review the week at its end and move one goal forward. Small, steady planning beats a crisis-driven week.'),
+    ],
+    "test": [
+        ('How many boxes does the Eisenhower matrix use?',
+         [('a', 'Four'), ('b', 'Two'), ('c', 'Nine'), ('d', 'Six')],
+         'a'),
+        ('What should be done with urgent and important tasks?',
+         [('a', 'Dropped'), ('b', 'Handed to a robot'), ('c', 'Done now'), ('d', 'Put off for a year')],
+         'c'),
+        ('Which book by Stephen Covey popularised a similar grid?',
+         [('a', 'The Art of War'), ('b', 'The 7 Habits of Highly Effective People'), ('c', 'Team of Rivals'), ('d', 'Influence')],
+         'b'),
+        ('What does batching mean?',
+         [('a', 'Sending one message per year'), ('b', 'Baking bread every day'), ('c', 'Stacking boxes in the store'), ('d', 'Doing similar tasks together')],
+         'd'),
+        ('What is the suggested way to plan a week?',
+         [('a', 'Leave the week to chance'), ('b', 'Fill every hour with the urgent tasks that arrive'), ('c', 'Pick two or three important goals and block time for them first'), ('d', 'Plan nothing')],
+         'c'),
+    ],
+}

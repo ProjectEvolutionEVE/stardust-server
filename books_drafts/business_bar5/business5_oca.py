@@ -1,0 +1,37 @@
+"""Optimal Currency Areas and the Euro: Mundell's test, labour mobility, fiscal transfers, the 1999 launch, the euro crisis and reforms."""
+CODE = 'business5_oca'
+BOOK = {
+    "title": 'Optimal Currency Areas and the Euro',
+    "subtitle": 'When sharing one currency works, and what the euro teaches',
+    "chapters": [
+        ("Mundell's test",
+         "Robert Mundell's 1961 paper asked which regions make a good fit for sharing one currency. An optimal currency area is one where a shared money works well, because shocks are similar or the economy can adjust easily."),
+        ('Labour mobility',
+         'If workers can move easily from a slump region to a booming one, a shared currency is easier to live with. Language, housing and rules can slow that movement.'),
+        ('Fiscal transfers',
+         'When one region suffers a bad shock, a common budget that sends money to it can cushion the blow. Without transfers, the adjustment falls mainly on wages, jobs and prices.'),
+        ('The 1999 launch',
+         'The euro began as an accounting currency in 1999 across eleven countries, and notes and coins arrived in 2002. The new central bank set one interest rate for the whole area.'),
+        ('Strains',
+         'The euro crisis after 2010 showed how hard adjustment can be when a country cannot devalue its currency. Greece, Ireland, Portugal and others needed support, and austerity and recession followed in several cases.'),
+        ('Reforms',
+         'Europe responded with bailout funds, a banking union and tighter rules on budgets. Economists still debate how much further integration is needed for the currency to work well for every member.'),
+    ],
+    "test": [
+        ('Who wrote the 1961 paper on optimal currency areas?',
+         [('a', 'Irving Fisher'), ('b', 'John Maynard Keynes'), ('c', 'Adam Smith'), ('d', 'Robert Mundell')],
+         'd'),
+        ('What helps a shared currency work better?',
+         [('a', 'Workers cannot move at all'), ('b', 'Each region prints its own notes'), ('c', 'Workers can move easily between regions'), ('d', 'Wages are banned')],
+         'c'),
+        ('What do fiscal transfers do?',
+         [('a', 'Cushion a region hit by a bad shock'), ('b', "Raise a region's exchange rate"), ('c', 'Abolish taxes'), ('d', 'Set interest rates for banks')],
+         'a'),
+        ('When did the euro begin as an accounting currency?',
+         [('a', '1979'), ('b', '2010'), ('c', '1999'), ('d', '1945')],
+         'c'),
+        ('What did the euro crisis show?',
+         [('a', 'That currencies never matter'), ('b', 'That adjustment is hard when countries cannot devalue'), ('c', 'That every member gained equally'), ('d', 'That shared currencies cannot be used')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Real Options: the value of flexibility, the option to wait, expanding or abandoning, oil field examples, option trees and options thinking."""
+CODE = 'business5_realoptions'
+BOOK = {
+    "title": 'Real Options',
+    "subtitle": 'The value of flexibility, the option to wait, expansion and abandonment',
+    "chapters": [
+        ('Flexibility has value',
+         'Many business choices can be delayed, expanded, or dropped. That freedom is valuable, even though it is hard to see on a simple spreadsheet. Real options thinking tries to put a price on that flexibility.'),
+        ('The option to wait',
+         'When a project is costly to start and the future is uncertain, it can be worth waiting for more information. Waiting keeps the chance to invest later, at a better time. The cost of waiting is any value lost by the delay.'),
+        ('Expand or abandon',
+         'A business may choose to expand a project when it goes well, or to abandon it when it goes badly. Each of these choices is an option with value. Ignoring them can make a project look worse than it really is.'),
+        ('Oil field examples',
+         'Oil companies face this problem often. A field may be worth developing only if oil prices stay high, so the company may wait, drill, or sell its rights. The option view explains why firms hold land they do not yet use.'),
+        ('Pricing with trees',
+         'A simple tree shows possible future values at each step, with probabilities attached. Working backward from the end, one can price the option at the start. This is how options are priced in practice, in simple form.'),
+        ('Thinking in options',
+         'Real options thinking asks what you could do next, and what it would cost to keep a choice open. It rewards flexibility and careful timing. It is most useful when uncertainty is high and reversing course is possible.'),
+    ],
+    "test": [
+        ('What is a real option?',
+         [('a', 'A kind of fruit'), ('b', 'A fixed price contract'), ('c', 'A choice to act later, which has value'), ('d', 'A tax penalty')],
+         'c'),
+        ('When might waiting be worth it?',
+         [('a', 'When the future is certain and cheap'), ('b', 'When the future is uncertain and the start cost is high'), ('c', 'Never'), ('d', 'Only in summer')],
+         'b'),
+        ('What might a business choose to do when a project goes badly?',
+         [('a', 'Expand it fast'), ('b', 'Ignore it'), ('c', 'Hide it'), ('d', 'Abandon it')],
+         'd'),
+        ('Why do oil companies sometimes hold land they do not yet use?',
+         [('a', 'Land is free'), ('b', 'Government orders'), ('c', 'The option to develop it later may be worth holding'), ('d', 'Land is never useful')],
+         'c'),
+        ('How are simple option trees used?',
+         [('a', 'To show possible values at each step and work backward to a price'), ('b', 'To draw pictures of trees'), ('c', 'To count leaves'), ('d', 'To set salaries')],
+         'a'),
+    ],
+}

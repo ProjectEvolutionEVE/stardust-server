@@ -1,0 +1,37 @@
+"""Jobs to Be Done: customers hire products to do a job, and the job behind a purchase often matters more than the product."""
+CODE = 'business5_jtbd'
+BOOK = {
+    "title": 'Jobs to Be Done',
+    "subtitle": 'The job behind a purchase: why people hire products, and how to find the job',
+    "chapters": [
+        ('The milkshake story',
+         'Clayton Christensen told a story about a fast-food firm that wanted to sell more milkshakes. Its team studied who bought them and when. They found that many people bought a milkshake in the morning to make a long, boring commute more bearable.'),
+        ('Hiring a product',
+         'Christensen said that customers hire a product to do a job for them. The milkshake was hired to keep a driver busy and calm. A firm that asks only who its customers are may miss the job they are trying to get done.'),
+        ('Switching forces',
+         'A customer switches to a new product when the pull of something better outweighs the push of the old one and the worry of changing. Each of these forces can be studied. A new product must be clearly better, and the change must feel safe.'),
+        ('Interviews',
+         'To find the job, talk to people about the last time they bought something. Ask what was happening, what they tried first and what made them choose. Listen to the story rather than asking for opinions about features.'),
+        ('Framing a market',
+         'When a firm frames its market by jobs rather than by product types, it may see rivals it had missed. A milkshake competes with a banana, a bagel or a radio programme, because each can do part of the same job.'),
+        ('Using the idea',
+         'Write down the job each of your products is hired for, in one plain sentence. Check it with real customers. Then ask whether your product does that job well, and what else might be hired for it.'),
+    ],
+    "test": [
+        ("What was the job behind the milkshake purchase in Christensen's story?",
+         [('a', 'Cooling a warm kitchen'), ('b', 'Keeping a driver busy and calm on a long commute'), ('c', 'Fixing a broken car'), ('d', 'Cleaning up after a meal')],
+         'b'),
+        ('According to the idea, what do customers do with a product?',
+         [('a', 'Own it forever'), ('b', 'Trade it for shares'), ('c', 'Test it for the firm'), ('d', 'Hire it to do a job')],
+         'd'),
+        ('What decides whether a customer switches products?',
+         [('a', 'The colour of the packaging only'), ('b', 'The weather on the day'), ('c', 'The pull of the new product against the push of the old one, and the worry of change'), ('d', 'The number of staff in the shop')],
+         'c'),
+        ('What kind of question works best when finding the job?',
+         [('a', 'Ask about the last time they bought something and what happened'), ('b', 'Ask what their friends think of the logo'), ('c', 'Ask only for a score out of ten'), ('d', 'Ask nothing at all')],
+         'a'),
+        ('Why might a firm see new rivals when it frames its market by jobs?',
+         [('a', 'Rivals are always in the same shop'), ('b', 'Jobs and products are always the same'), ('c', 'Other things may do part of the same job'), ('d', 'Frames have no effect')],
+         'c'),
+    ],
+}

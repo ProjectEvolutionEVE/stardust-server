@@ -1,0 +1,37 @@
+"""Transfer Pricing and Global Tax: how prices between branches of one group affect tax, the arm's-length rule, and the global minimum tax deal."""
+CODE = 'business5_transferpricing'
+BOOK = {
+    "title": 'Transfer Pricing and Global Tax',
+    "subtitle": 'Prices inside one group, and who gets to tax the profit',
+    "chapters": [
+        ('Trade inside one group',
+         'A multinational company often sells goods and services between its own branches in different countries. The price set for these internal trades decides how much profit each country sees. That is why tax authorities watch these prices closely.'),
+        ("The arm's-length principle",
+         "The arm's-length principle says that related companies should price their dealings as if they were unrelated parties bargaining freely. This is the standard the tax rules use to judge internal prices. Most countries follow it."),
+        ('Profit shifting',
+         'Profit shifting moves income to places where tax is lower, by setting internal prices that leave little profit in high-tax countries. It can be done within the law, but it can also cross into abuse. Governments lose revenue when it happens.'),
+        ('The OECD rules',
+         "The Organisation for Economic Co-operation and Development publishes guidelines on transfer pricing that many countries use. The guidelines explain how to test whether a price is at arm's length. They are not a single law, but they shape national rules."),
+        ('The Double Irish',
+         'The Double Irish was a structure that used two Irish companies, with one set up so that it was not taxed as Irish, to move profit from valuable intellectual property offshore. It became a famous example of profit shifting. Changes in tax rules have since closed it down.'),
+        ('The minimum tax deal',
+         'In 2021 more than 130 countries agreed to a global minimum tax of 15 percent on the profits of large multinationals. The aim is to stop profits being moved to places where they are taxed very little. Its full effect depends on each country putting the rules in place.'),
+    ],
+    "test": [
+        ("What does arm's-length mean in transfer pricing?",
+         [('a', "Priced by the chief executive's arm"), ('b', 'Priced in cash only'), ('c', 'Priced as if the parties were unrelated'), ('d', 'Priced at zero')],
+         'c'),
+        ('What is profit shifting?',
+         [('a', 'Moving profit to lower-tax places within a group'), ('b', 'Moving office chairs around'), ('c', 'Paying staff in shifts'), ('d', 'Paying tax early')],
+         'a'),
+        ('What rate is the OECD minimum tax agreed in 2021?',
+         [('a', '5 percent'), ('b', '25 percent'), ('c', '15 percent'), ('d', '40 percent')],
+         'c'),
+        ('What is the Double Irish?',
+         [('a', 'A pair of tax-free bonds'), ('b', 'A structure using Irish companies to move profits away from tax'), ('c', 'A cinema chain'), ('d', 'An Irish stamp tax')],
+         'b'),
+        ('Who uses the OECD transfer pricing guidelines?',
+         [('a', 'Only sports clubs'), ('b', 'Only banks in one town'), ('c', 'Nobody'), ('d', "Many countries' tax authorities and companies")],
+         'd'),
+    ],
+}

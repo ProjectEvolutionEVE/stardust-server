@@ -1,0 +1,37 @@
+"""Stakeholder Capitalism: the debate between serving shareholders alone and serving customers, staff, suppliers and the community too."""
+CODE = 'business5_stakeholder'
+BOOK = {
+    "title": 'Stakeholder Capitalism',
+    "subtitle": 'Serving owners alone, or serving everyone a firm touches: the debate and its trade-offs',
+    "chapters": [
+        ('Shareholder primacy',
+         'Many firms have long been run mainly for their owners, the shareholders. This view is often called shareholder primacy. Its supporters say that clear goals help a firm run well and create value for everyone.'),
+        ('The 1970 essay',
+         "In 1970, the economist Milton Friedman wrote an essay in the New York Times Magazine arguing that a firm's social duty is to increase its profits within the law. The essay is one of the most cited statements of the shareholder view."),
+        ('The 2019 statement',
+         'In 2019, the Business Roundtable, a group of large American firms, said that companies should serve all their stakeholders, not just owners. Its statement listed customers, staff, suppliers and communities. Critics called it a change of words more than deeds.'),
+        ('Benefit corporations',
+         'A benefit corporation is a company that is legally required to pursue a public benefit as well as profit. Maryland was the first US state to create this form, in 2010. Many other states and countries have since added similar rules.'),
+        ('Trade-offs',
+         'Serving many groups can mean hard choices. Higher pay for staff can mean lower profit for owners. A firm may need to balance these interests, and be open about the choices it makes.'),
+        ('Measuring it',
+         'Stakeholder goals are hard to measure. Firms use reports on staff, customers, suppliers and the environment, but the measures are not always reliable. Clear measures and honest reporting matter most.'),
+    ],
+    "test": [
+        ('What is shareholder primacy?',
+         [('a', 'A rule that staff must own the firm'), ('b', 'A law that bans profits'), ('c', 'A way to share office space'), ('d', 'A view that a firm is run mainly for its owners')],
+         'd'),
+        ('Who wrote the 1970 essay that argued for shareholders?',
+         [('a', 'Everett Rogers'), ('b', 'Gary Klein'), ('c', 'Milton Friedman'), ('d', 'Henry Mintzberg')],
+         'c'),
+        ('What did the 2019 statement from the Business Roundtable say?',
+         [('a', 'Companies should serve all stakeholders, not only owners'), ('b', 'Companies should stop paying tax'), ('c', 'Companies should close on Sundays'), ('d', 'Companies should hide their accounts')],
+         'a'),
+        ('What is a benefit corporation?',
+         [('a', 'A charity with no staff'), ('b', 'A firm that cannot make any profit'), ('c', 'A firm legally required to pursue a public benefit as well as profit'), ('d', 'A bank for tourists')],
+         'c'),
+        ('What trade-off does the text describe?',
+         [('a', 'Owners always gain when staff are paid less'), ('b', 'Higher staff pay can mean lower profit for owners'), ('c', 'Profit and pay never affect each other'), ('d', 'Customers have no effect on the firm')],
+         'b'),
+    ],
+}

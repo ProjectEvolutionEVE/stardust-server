@@ -1,0 +1,37 @@
+"""Commercial Paper: short-term unsecured company borrowing, backup credit lines, and the freeze of 2008."""
+CODE = 'business5_cp'
+BOOK = {
+    "title": 'Commercial Paper',
+    "subtitle": 'Short-term company borrowing, backup lines, and the freeze of 2008',
+    "chapters": [
+        ('Short-term company borrowing',
+         'Commercial paper is a short-term promise to repay money, issued by a company rather than a bank. Most of it matures within a few months. Companies use it to cover everyday costs such as wages, stock and bills.'),
+        ('Unsecured notes',
+         "Commercial paper is usually unsecured, which means no specific asset is pledged to back it. Investors rely on the company's ability to repay. Only firms with strong credit ratings can sell it easily."),
+        ('Maturity',
+         'The maturity is the date the company must repay. For commercial paper it is usually under nine months, which keeps the borrowing short. Investors who buy it are lending for a short time and expect a small return.'),
+        ('Backup lines',
+         'Companies that issue commercial paper usually arrange a backup credit line from a bank. If investors stop buying the paper, the company can borrow from the bank instead. The backup line is a safety net for the company.'),
+        ('The 2008 freeze',
+         'In 2008 many investors stopped buying commercial paper, fearing that issuers might fail. Companies that relied on it had to draw on backup lines or find other funding. The freeze was one of the most worrying signs of the crisis.'),
+        ('Use in cash management',
+         'For companies with cash to spare, commercial paper can be a safe place to park money for a short time. For companies that need cash, it is a fast and cheap way to borrow. Treasurers weigh both sides with care.'),
+    ],
+    "test": [
+        ('Who issues commercial paper?',
+         [('a', 'Companies'), ('b', 'Teachers at school'), ('c', 'Weather stations'), ('d', 'Museums')],
+         'a'),
+        ('What does "unsecured" mean for commercial paper?',
+         [('a', 'It is kept in a safe'), ('b', 'It has no value'), ('c', 'No specific asset is pledged to back it'), ('d', 'It is given away free')],
+         'c'),
+        ('About how long does commercial paper usually last?',
+         [('a', 'Fifty years'), ('b', 'Under nine months'), ('c', 'One hundred years'), ('d', 'One hour exactly')],
+         'b'),
+        ('Why do companies arrange backup credit lines?',
+         [('a', 'To pay for holidays only'), ('b', 'To print their own money'), ('c', 'To avoid all taxes'), ('d', 'So they can borrow from a bank if investors stop buying their paper')],
+         'd'),
+        ('What happened in 2008 to commercial paper?',
+         [('a', 'It became legal tender'), ('b', 'It was sold in bulk at a museum'), ('c', 'Many investors stopped buying it, and the market froze'), ('d', 'Its maturity became ten years')],
+         'c'),
+    ],
+}

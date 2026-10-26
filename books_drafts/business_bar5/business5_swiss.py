@@ -1,0 +1,37 @@
+"""Swiss Watches and the Quartz Crisis: mechanical craft, Seiko's quartz in 1969, the Swiss fall, Swatch and luxury repositioning."""
+CODE = 'business5_swiss'
+BOOK = {
+    "title": 'Swiss Watches and the Quartz Crisis',
+    "subtitle": 'Mechanical craft, a new technology, and a reinvention',
+    "chapters": [
+        ('Mechanical craft',
+         "For generations Swiss watchmakers were the world's leaders in fine mechanical watches. Skilled craftspeople made watches with many tiny moving parts. Craft is a real advantage, but it can make a firm slow to see a new technology."),
+        ("Seiko's quartz in 1969",
+         'In December 1969 the Japanese firm Seiko launched the Astron, one of the first quartz wristwatches. Quartz watches used a crystal and a battery, and they were far more accurate and cheaper to make. A new technology can change an industry in a few years.'),
+        ('The Swiss fall',
+         'Swiss makers were slow to adopt quartz at first, and many firms lost share of the world market. Many watch makers closed or merged in the 1970s and 1980s. A firm that ignores a better technology can fall quickly.'),
+        ('The Swatch idea',
+         'In the 1980s Nicolas Hayek led a group of Swiss firms into a new company that launched the Swatch, a cheap, colourful and reliable plastic watch. The Swatch showed that Swiss makers could compete on design and fun. Reinventing a product can save an industry.'),
+        ("Hayek's group",
+         'Hayek brought together the Swiss watch makers and used the group to rebuild the industry around quartz and fashion. The company later became a large watch group. Strong leadership can unite rivals to face a shared threat.'),
+        ('Luxury repositioning',
+         'Swiss firms later moved their top watches towards luxury, with high prices, fine materials and a story of heritage. The mechanical watch became a symbol of craft and status. A business can change its place in the market to match what its strengths are worth.'),
+    ],
+    "test": [
+        ('In what month and year did Seiko launch the Astron?',
+         [('a', 'December 1969'), ('b', 'June 1950'), ('c', 'March 1985'), ('d', 'July 1930')],
+         'a'),
+        ('What did quartz watches use to keep time?',
+         [('a', 'A water wheel'), ('b', 'A steam engine'), ('c', 'A crystal and a battery'), ('d', 'A candle')],
+         'c'),
+        ("What product did Nicolas Hayek's group launch in the 1980s?",
+         [('a', 'The Model T'), ('b', 'The Swatch'), ('c', 'The Walkman'), ('d', 'The Concorde')],
+         'b'),
+        ('What did the Swiss firms do later with their top watches?',
+         [('a', 'Gave them away free'), ('b', 'Sold them only by mail'), ('c', 'Made them out of paper'), ('d', 'Moved them towards luxury and heritage')],
+         'd'),
+        ('What does the chapter say a firm that ignores a better technology may do?',
+         [('a', 'Double its share overnight'), ('b', 'Become a charity'), ('c', 'Fall quickly'), ('d', 'Stop making watches for ever on purpose')],
+         'c'),
+    ],
+}

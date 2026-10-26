@@ -1,0 +1,37 @@
+"""Anita Roddick and The Body Shop: refills, natural ingredients, social campaigns, franchising, and the sale controversy."""
+CODE = 'business5_roddick'
+BOOK = {
+    "title": 'Anita Roddick and The Body Shop',
+    "subtitle": 'A values-led brand, and the question of keeping its identity',
+    "chapters": [
+        ('A shop in Brighton',
+         'Anita Roddick opened the first Body Shop in Brighton, England, in 1976. She began with a small range of natural products. It was a shop run on a tight budget.'),
+        ('Refills and reuse',
+         'Customers could bring back empty bottles to have them refilled. This cut waste and saved money. Reuse can be good for the planet and for the business.'),
+        ('Natural ingredients',
+         "The company sold products made from plant-based and natural ingredients. It showed what a natural brand could look like. The brand's promise shaped what it bought and how it sold."),
+        ('Campaigns',
+         'Roddick ran campaigns on social and environmental causes, from human rights to animal welfare. The campaigns helped build a loyal customer base. A brand that stands for something can attract people who share its values.'),
+        ('Franchise growth',
+         'The Body Shop grew quickly through franchises, where other owners ran shops under its name for a fee. Franchising spreads a brand fast. It also gives up some control over each shop.'),
+        ('The sale controversy',
+         "In 2006 The Body Shop was sold to the French company L'Oreal, and many of its supporters were unhappy. The debate showed how hard it is for a values-led brand to keep its identity once it becomes large."),
+    ],
+    "test": [
+        ('Where did Anita Roddick open the first Body Shop?',
+         [('a', 'London'), ('b', 'Paris'), ('c', 'Manchester'), ('d', 'Brighton, England')],
+         'd'),
+        ('What did the Body Shop encourage customers to do with bottles?',
+         [('a', 'Throw them away'), ('b', 'Keep them as ornaments'), ('c', 'Bring them back to refill'), ('d', 'Sell them to glassmakers')],
+         'c'),
+        ('What is franchising?',
+         [('a', "Owners run shops under a company's name for a fee"), ('b', 'Selling shares on a stock market'), ('c', 'Hiring robots'), ('d', 'Closing shops in winter')],
+         'a'),
+        ('Which company bought The Body Shop in 2006?',
+         [('a', 'Nestle'), ('b', 'Unilever'), ('c', "L'Oreal"), ('d', 'Shell')],
+         'c'),
+        ("What were Roddick's campaigns about?",
+         [('a', 'Only sports'), ('b', 'Social and environmental causes such as human rights and animal welfare'), ('c', 'Tax policy'), ('d', 'Space travel')],
+         'b'),
+    ],
+}

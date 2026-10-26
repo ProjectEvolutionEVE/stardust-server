@@ -1,0 +1,37 @@
+"""Contract Law Basics: offer, acceptance and consideration, capacity, breach and remedies, written against oral agreements, and the Carlill case."""
+CODE = 'business5_contractlaw'
+BOOK = {
+    "title": 'Contract Law Basics',
+    "subtitle": 'When a promise becomes binding, and what happens when it is broken',
+    "chapters": [
+        ('What makes a contract',
+         'A contract is a promise, or set of promises, that the law will enforce. For most contracts, the parties must intend to be bound, make an offer and accept it, and exchange something of value. Missing any one of these can stop a deal from binding anyone.'),
+        ('Offer and acceptance',
+         'An offer is a clear proposal to be bound on set terms. Acceptance is a clear yes to those terms, and it must match the offer. A reply that changes the terms is usually a counter-offer, not an acceptance.'),
+        ('Consideration',
+         'Consideration is something of value given in exchange for a promise. It can be money, goods, services or a promise to do or not do something. A promise with nothing given in return is often not enforceable as a simple contract.'),
+        ('Capacity',
+         'Capacity means the legal ability to enter a contract. Some people, such as those who lack mental capacity or who are under legal restrictions, may be protected from being bound. Companies must act through people who have authority to bind them.'),
+        ('Breach and remedies',
+         'A breach is a failure to do what the contract requires. The usual remedy is damages, which is money to compensate for the loss. In some cases a court may order the party to perform, which is called specific performance.'),
+        ('Written against oral',
+         'Many everyday contracts can be oral and still be binding, but some must be in writing to be enforced, such as contracts to sell land. A written contract makes the terms easier to prove. The Carlill case of 1893 shows that an advert can also form a binding promise.'),
+    ],
+    "test": [
+        ('What is consideration?',
+         [('a', 'A kind thought'), ('b', 'Something of value given in exchange for a promise'), ('c', 'A written apology'), ('d', 'A tax')],
+         'b'),
+        ('What was the Carlill case about?',
+         [('a', 'A boat accident'), ('b', 'A ban on smoking'), ('c', 'A bank merger'), ('d', 'A promise in an advert that was held to be binding')],
+         'd'),
+        ('What is a remedy for breach of contract?',
+         [('a', 'A medal'), ('b', 'A change of colour'), ('c', 'Damages, which means money to compensate for the loss'), ('d', 'A holiday')],
+         'c'),
+        ('Which kind of agreement is often valid even when it is oral?',
+         [('a', 'Many simple everyday agreements'), ('b', 'Sales of land'), ('c', 'Wills'), ('d', 'Government contracts')],
+         'a'),
+        ('What must happen after an offer for a contract to form?',
+         [('a', 'A burial'), ('b', 'A new coat'), ('c', 'Acceptance of the offer'), ('d', 'Nothing at all')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Akio Morita and Sony: a transistor radio, the Walkman, a global name, and leading by product vision."""
+CODE = 'business5_morita'
+BOOK = {
+    "title": 'Akio Morita and Sony',
+    "subtitle": 'A small Tokyo firm that changed how the world listens',
+    "chapters": [
+        ('A small start',
+         'Akio Morita and Masaru Ibuka founded a small electronics company in Tokyo after the Second World War. It began under the name Tokyo Tsushin Kogyo. A small firm has to find a gap in the market to grow.'),
+        ('The transistor radio',
+         'Sony used transistors, small electronic switches that replaced bulky valves. Its transistor radio was small enough to carry in a pocket. It gave the company a name in markets far from Japan.'),
+        ('The Walkman',
+         'In 1979 Sony launched the Walkman, a small personal stereo for playing music on the move. It changed how people listened to music. A new product can create a new habit.'),
+        ('A global name',
+         'Sony used a short name that was easy to say in many languages, and it sold products around the world. Building a brand across countries takes time and steady quality. Trust is earned one product at a time.'),
+        ('Made in Japan',
+         'Morita wanted people to see Japanese goods as high in quality, not as cheap copies. He worked to win that respect for his company and his country. Reputation is a business asset that must be protected.'),
+        ('Leading by vision',
+         'Morita led by a clear view of what new products could do for people. He pushed his teams to imagine what customers did not yet know they wanted. A good leader sets a direction and lets teams find the way.'),
+    ],
+    "test": [
+        ('Which Sony product of 1979 let people listen to music on the move?',
+         [('a', 'Pocket camera'), ('b', 'Floppy disk'), ('c', 'Vinyl record player'), ('d', 'Walkman')],
+         'd'),
+        ("What was the company's name before it became Sony?",
+         [('a', 'Osaka Electric'), ('b', 'Nagoya Steel'), ('c', 'Tokyo Tsushin Kogyo'), ('d', 'Kyoto Radio')],
+         'c'),
+        ("What technology did Sony's pocket radio use?",
+         [('a', 'Transistors'), ('b', 'Steam power'), ('c', 'Cotton spinning'), ('d', 'Glassmaking')],
+         'a'),
+        ('Morita led his company mainly through:',
+         [('a', 'Strict cost cutting only'), ('b', 'Copying rival products'), ('c', 'A clear vision for new products'), ('d', 'Buying small banks')],
+         'c'),
+        ("Who was Morita's partner in founding the company?",
+         [('a', 'Soichiro Honda'), ('b', 'Masaru Ibuka'), ('c', 'Konosuke Matsushita'), ('d', 'Jack Welch')],
+         'b'),
+    ],
+}

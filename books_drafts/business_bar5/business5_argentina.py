@@ -1,0 +1,37 @@
+"""Argentina's Defaults: the peso peg, the 2001 default, the holdout creditors, the court fight, and repeated cycles."""
+CODE = 'business5_argentina'
+BOOK = {
+    "title": "Argentina's Defaults",
+    "subtitle": 'The peso peg, the 2001 default, the holdouts, and a long history of cycles',
+    "chapters": [
+        ('The peso peg',
+         'In 1991 Argentina tied its peso to the US dollar at a fixed rate of one to one. The peg was meant to end years of high inflation. It worked for a while, but it left the country unable to adjust its currency when trouble came.'),
+        ('The 2001 default',
+         'By late 2001 Argentina had large debts, a shrinking economy and no way to devalue. In December 2001 the government stopped paying much of its debt. The default was one of the largest in history, and the country faced a deep crisis.'),
+        ('Holdout creditors',
+         'In the restructuring that followed, most creditors accepted new bonds worth less than the originals. A group of holdout creditors refused and went to court. They sought the full value of their bonds, and the dispute lasted many years.'),
+        ('The court fight',
+         'United States courts ruled in favour of the holdouts, and the country faced demands for full payment. Argentina resisted for years, and the case became a major example of how sovereign debt disputes are fought in court.'),
+        ('Recovery',
+         'In 2016 a new government reached a settlement with most of the holdout creditors, and the country returned to international markets. The recovery was welcomed, but it did not last long for every household.'),
+        ('Repeated cycles',
+         'Argentina has defaulted several times in its history. The pattern of borrowing, crisis, default and recovery has repeated over decades. Its story is a reminder that a sound plan and steady rules matter as much as quick fixes.'),
+    ],
+    "test": [
+        ('In what year did Argentina tie the peso to the US dollar?',
+         [('a', '1700'), ('b', '1850'), ('c', '1991'), ('d', '2020')],
+         'c'),
+        ('When did Argentina stop paying much of its debt in the 2001 default?',
+         [('a', 'May 1800'), ('b', 'December 2001'), ('c', 'July 1950'), ('d', 'October 1960')],
+         'b'),
+        ('Who were the holdout creditors?',
+         [('a', 'Farmers who grew holly'), ('b', 'Shopkeepers who owed money'), ('c', 'Tourists who visited Buenos Aires'), ('d', 'Creditors who refused the restructuring and went to court')],
+         'd'),
+        ('Where did the holdouts take their case?',
+         [('a', 'To a village meeting'), ('b', 'To a football club'), ('c', 'To United States courts'), ('d', 'To the moon')],
+         'c'),
+        ("What is a common theme across Argentina's defaults?",
+         [('a', 'A pattern of borrowing, crisis, default and recovery that repeats'), ('b', 'Never borrowing at all'), ('c', 'Always paying early'), ('d', 'Printing money in gold')],
+         'a'),
+    ],
+}

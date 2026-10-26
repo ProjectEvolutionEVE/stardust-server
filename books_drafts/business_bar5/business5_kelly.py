@@ -1,0 +1,37 @@
+"""The Kelly Criterion: bet size for growth, John Kelly at Bell Labs, the formula, Thorp and blackjack, half Kelly, and its use and misuse."""
+CODE = 'business5_kelly'
+BOOK = {
+    "title": 'The Kelly Criterion',
+    "subtitle": 'Bet size for growth, John Kelly at Bell Labs, the formula, and half Kelly',
+    "chapters": [
+        ('How much to bet',
+         'When you have an edge, the question is how much to risk, not only whether to play. Betting too little wastes the edge, and betting too much risks ruin. The Kelly criterion gives a rule for the bet size that grows wealth fastest over time.'),
+        ('Kelly at Bell Labs',
+         'John L. Kelly Jr., a physicist at Bell Labs, published the idea in 1956. He drew on information theory to show how to grow a bankroll through a series of favourable bets. The paper linked gambling and communication in an unexpected way.'),
+        ('The formula',
+         'For a simple bet with odds b, win probability p, and loss probability q, the Kelly fraction is (bp minus q) divided by b. If the result is zero or below, there is no edge and you should not bet. The formula gives the fraction of your bankroll to wager.'),
+        ('Thorp and blackjack',
+         'Edward Thorp used the Kelly idea in blackjack, where card counting gave him a small edge. He described the method in his book Beat the Dealer, published in 1962. He later applied similar thinking to investing.'),
+        ('Half Kelly',
+         'Many practitioners bet half the Kelly fraction. This gives up a little growth in exchange for much less volatility. It also protects against errors in estimating the edge, which are common.'),
+        ('Use and misuse',
+         'The Kelly rule needs a reliable edge and a reliable estimate of it, which are rare in practice. Overbetting on a wrong estimate can lead to ruin, even with a good formula. Use Kelly as a guide to careful sizing, never as a promise.'),
+    ],
+    "test": [
+        ('In what year did John Kelly publish his criterion?',
+         [('a', '1948'), ('b', '1962'), ('c', '1956'), ('d', '1978')],
+         'c'),
+        ('Where did John L. Kelly Jr. work?',
+         [('a', 'Monte Carlo'), ('b', 'Bell Labs'), ('c', 'Las Vegas'), ('d', 'Chicago')],
+         'b'),
+        ('What does a Kelly fraction of zero or below mean?',
+         [('a', 'Bet everything'), ('b', 'Double the bet'), ('c', 'Bet on a horse'), ('d', 'No edge, so do not bet')],
+         'd'),
+        ('What is half Kelly?',
+         [('a', 'Betting the full Kelly fraction twice'), ('b', 'Betting nothing'), ('c', 'Betting half the Kelly fraction to lower volatility'), ('d', 'A card game')],
+         'c'),
+        ('What book did Edward Thorp publish in 1962?',
+         [('a', 'Beat the Dealer'), ('b', 'The Wealth of Nations'), ('c', 'The Misbehavior of Markets'), ('d', 'The Visual Display of Quantitative Information')],
+         'a'),
+    ],
+}

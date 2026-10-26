@@ -1,0 +1,37 @@
+"""Executive Compensation: how bosses are paid through salary, bonus and shares, why pay ratios and votes exist, and the criticisms."""
+CODE = 'business5_execpay'
+BOOK = {
+    "title": 'Executive Compensation',
+    "subtitle": 'Salary, bonus and shares: how top pay is built, and what people argue about',
+    "chapters": [
+        ('The parts of pay',
+         "Executive pay usually has three parts: a base salary, an annual bonus, and long-term pay in shares or share options. Each part is meant to reward something different, such as steady work, this year's results and long-term value."),
+        ('Options and shares',
+         "A share option gives the right to buy shares at a set price later. If the share price rises, the option gains value. Share pay is meant to link the boss's wealth with the owners' wealth, though it can also encourage risky choices."),
+        ('Pay ratios',
+         "In the United States, the Dodd-Frank law of 2010 required firms to disclose a pay ratio, comparing the chief executive's pay with the median worker's pay. The figures are often debated, and they tell only part of the story."),
+        ('Say on pay',
+         'Many countries let shareholders vote on pay. In the United States, the Dodd-Frank law introduced a non-binding say-on-pay vote. The vote gives owners a voice, but the result does not force the board to change pay.'),
+        ('Links to results',
+         "Good pay design ties rewards to results that are measured clearly and fairly over several years. Critics say that many plans reward short-term gains or things outside a leader's control."),
+        ('The criticisms',
+         'Critics argue that top pay has risen faster than typical worker pay, and that some plans are too complex to understand. Supporters reply that talented leaders are hard to find and that pay must compete. The debate is still open.'),
+    ],
+    "test": [
+        ('What are the three usual parts of executive pay?',
+         [('a', 'Base salary, annual bonus and long-term shares'), ('b', 'Rent, food and travel'), ('c', 'Fines, tips and gifts'), ('d', 'Pension, parking and phone')],
+         'a'),
+        ('What does a share option give its holder?',
+         [('a', 'A seat on the bus'), ('b', 'A free holiday each year'), ('c', 'The right to buy shares at a set price later'), ('d', 'A lifetime guarantee of a job')],
+         'c'),
+        ('What does a pay ratio compare?',
+         [('a', "Two rival banks' pay"), ('b', "The chief executive's pay with the median worker's pay"), ('c', 'The weekday with the weekend'), ('d', 'The price of two different products')],
+         'b'),
+        ('What is say on pay?',
+         [('a', "A teacher's lesson on salary"), ('b', 'A law that sets all pay at one level'), ('c', 'A bonus paid to shareholders'), ('d', 'A shareholder vote on pay, which is often non-binding')],
+         'd'),
+        ('Which criticism is made of many pay plans?',
+         [('a', 'They always reward the lowest results'), ('b', 'They are paid in cash only'), ('c', "They can reward short-term gains or things outside the leader's control"), ('d', 'They are illegal everywhere')],
+         'c'),
+    ],
+}

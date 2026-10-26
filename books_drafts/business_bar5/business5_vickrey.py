@@ -1,0 +1,37 @@
+"""Vickrey Auctions and Auction Theory: the second-price auction, truthful bids, revenue equivalence, spectrum auctions and design in practice."""
+CODE = 'business5_vickrey'
+BOOK = {
+    "title": 'Vickrey Auctions and Auction Theory',
+    "subtitle": 'Second-price auctions, truthful bids, spectrum sales and the design of rules',
+    "chapters": [
+        ('The second-price auction',
+         "In a sealed-bid auction, each bidder writes one secret bid. In William Vickrey's version, the highest bidder wins but pays the second-highest bid."),
+        ('Truthful bids',
+         'In a second-price auction, bidding your true value is the safe choice. Bid less and you may lose an item you value more than its price. Bid more and you risk paying above what it is worth to you. Vickrey set this out in 1961.'),
+        ('Revenue equivalence',
+         'Under standard conditions, several different auction formats can raise the same expected revenue. This is the revenue equivalence idea. It shows that the setting can matter more than the format.'),
+        ('Spectrum auctions',
+         'Governments sell radio frequencies in auctions. The United States began such auctions in 1994. Designers wrote careful rules so that bidders could assemble the packages of licences they wanted.'),
+        ('Milgrom and Wilson',
+         'Paul Milgrom and Robert Wilson helped design modern spectrum auctions. In 2020 they shared the Nobel Prize in Economics for their work on auction theory and its practical formats.'),
+        ('Design in practice',
+         'Good auction design must handle real complications: several items at once, bidders who want packages, and rules that stop collusion. The rules matter as much as the mathematics.'),
+    ],
+    "test": [
+        ('In a Vickrey second-price auction, what does the winner pay?',
+         [('a', 'Their own bid'), ('b', 'Nothing'), ('c', 'The second-highest bid'), ('d', 'The lowest bid')],
+         'c'),
+        ('Why is bidding your true value the safe choice in a second-price auction?',
+         [('a', 'Because you pay the second bid, not your own'), ('b', 'Because the seller sets the price'), ('c', 'Because bidding more always wins'), ('d', 'Because it is the lowest bid')],
+         'a'),
+        ('Who shared the 2020 Nobel Prize in Economics for auction theory?',
+         [('a', 'Adam Smith and David Ricardo'), ('b', 'Milton and Rose Friedman'), ('c', 'Paul Milgrom and Robert Wilson'), ('d', 'Daniel Kahneman and Amos Tversky')],
+         'c'),
+        ('What does revenue equivalence suggest?',
+         [('a', 'Auction formats always raise different revenue'), ('b', 'Under standard conditions, many formats raise the same expected revenue'), ('c', 'Auctions never earn money'), ('d', 'Only one auction format exists')],
+         'b'),
+        ('Why are spectrum auctions designed so carefully?',
+         [('a', 'So the government can ignore the bids'), ('b', 'Because radio frequencies cost nothing'), ('c', 'Because there is only one bidder'), ('d', 'Because bidders may want packages, and rules must stop collusion')],
+         'd'),
+    ],
+}

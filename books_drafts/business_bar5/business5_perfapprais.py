@@ -1,0 +1,37 @@
+"""Performance Appraisal: setting goals, rating work fairly, avoiding bias and the halo effect, and using feedback well."""
+CODE = 'business5_perfapprais'
+BOOK = {
+    "title": 'Performance Appraisal',
+    "subtitle": 'Goals, fair ratings, bias and feedback, and how appraisal links to pay',
+    "chapters": [
+        ('What an appraisal is for',
+         'A performance appraisal is a regular review of how someone has done their job. It usually sets goals, rates results and gives feedback. Done well, it helps people grow. Done badly, it causes anger and mistrust.'),
+        ('Goals and ratings',
+         "Goals should be clear, agreed and measurable where possible. Ratings should follow the goals, not the rater's mood. A good rating scale has clear descriptions of each level, so two managers would rate the same work in similar ways."),
+        ('Bias and the halo effect',
+         'Raters can be biased. The halo effect happens when one good trait makes everything else look good too. Another bias makes raters favour people like themselves. Checking ratings against evidence reduces these errors.'),
+        ('Forced ranking',
+         'Some firms use forced ranking, where a set share of staff must be rated low. The idea is to sort strong from weak, but critics say it can damage teamwork and push people to compete with each other.'),
+        ('Feedback loops',
+         'Feedback works best when it is regular, specific and about actions. An appraisal once a year is too rare to change much. Short, frequent talks help people fix problems before they grow.'),
+        ('360-degree reviews and pay',
+         'A 360-degree review gathers views from peers, reports and managers. It can give a fuller picture, but it needs care and trust. Links to pay should be clear and fair, so that people trust the system.'),
+    ],
+    "test": [
+        ('What does a performance appraisal usually do?',
+         [('a', 'Sets the price of products'), ('b', 'Sets goals, rates results and gives feedback'), ('c', 'Books the holiday rota'), ('d', "Sells the firm's shares")],
+         'b'),
+        ('What is the halo effect?',
+         [('a', 'A bonus paid in gold'), ('b', 'A light that shines over the desk'), ('c', 'A rule that all staff must smile'), ('d', 'One good trait makes everything else look good too')],
+         'd'),
+        ('What is forced ranking?',
+         [('a', 'Ranking the office plants'), ('b', 'Ranking every rival firm by size'), ('c', 'Rating a set share of staff low'), ('d', 'Ranking the cafe menu')],
+         'c'),
+        ('What makes feedback work best, according to the text?',
+         [('a', 'It is regular, specific and about actions'), ('b', 'It is written in code'), ('c', 'It is once a year and vague'), ('d', 'It is given only in public')],
+         'a'),
+        ('What is a 360-degree review?',
+         [('a', 'A review done in a circle around the office'), ('b', 'A review that never ends'), ('c', 'A review that gathers views from peers, reports and managers'), ('d', "A review by the company's bank")],
+         'c'),
+    ],
+}

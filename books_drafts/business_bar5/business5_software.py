@@ -1,0 +1,37 @@
+"""The Software Business Model: zero extra cost, licences and subscriptions, open source, lock-in, platform stores and piracy."""
+CODE = 'business5_software'
+BOOK = {
+    "title": 'The Software Business Model',
+    "subtitle": 'Zero marginal cost, licences and subscriptions, open source, lock-in and piracy',
+    "chapters": [
+        ('Almost no extra cost',
+         'Software is costly to create, but a copy costs almost nothing to make and send. This means the cost of one more customer is very low. That changes how software is priced and sold.'),
+        ('Licences and subscriptions',
+         'Software once came as a boxed product, sold once with a licence to use it. Many firms now sell subscriptions that bring regular payments. Subscriptions help a company plan its income over time.'),
+        ('Open source',
+         'Open source software is released with code that anyone may read, change, and share, under licences that set the terms. Many businesses earn money by offering support, hosting, and services built around open code. Free code can still support a business.'),
+        ('Lock-in',
+         'When switching away from a product costs a lot of time or money, customers are locked in. A company may benefit from lock-in, but customers may lose their choice. Good businesses earn loyalty rather than rely on barriers.'),
+        ('Platform stores',
+         'App stores and platform marketplaces take a share of sales, and they set the rules for who can sell. Developers depend on the platform for reach, and platforms depend on developers for content. Both sides gain when the store works well.'),
+        ('Piracy and pricing',
+         'Copies of software can be shared without payment, which is called piracy. Some firms respond by lowering prices, offering trials, or adding value through service. The best answer often makes paying easier than copying.'),
+    ],
+    "test": [
+        ('What does one extra copy of software cost to make, roughly?',
+         [('a', 'Very high'), ('b', 'The same as a car'), ('c', 'Almost nothing'), ('d', 'Equal to the development cost')],
+         'c'),
+        ('What does a subscription bring to a software firm?',
+         [('a', 'Regular payments that help plan its income'), ('b', 'One-time sales only'), ('c', 'Free copies forever'), ('d', 'No customers at all')],
+         'a'),
+        ('What do open source licences allow?',
+         [('a', 'Only the original maker to see the code'), ('b', 'Only paying users to share it'), ('c', 'Anyone to read, change and share the code under set terms'), ('d', 'No sharing at all')],
+         'c'),
+        ('What is lock-in?',
+         [('a', 'A physical lock on a server'), ('b', 'When switching away costs customers a lot of time or money'), ('c', 'A free trial'), ('d', 'A law banning software')],
+         'b'),
+        ('What is one good way to respond to piracy?',
+         [('a', 'Raise prices sharply and stop support'), ('b', 'Ban all customers'), ('c', 'Stop selling software'), ('d', 'Make paying easier, with trials or added value')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Malcolm McLean and the Shipping Container: a trucker's idea, the 1956 voyage of the Ideal X, and the supply chains it reshaped."""
+CODE = 'business5_maersk'
+BOOK = {
+    "title": 'Malcolm McLean and the Shipping Container',
+    "subtitle": "A trucker's idea, a standard box, and the world it reshaped",
+    "chapters": [
+        ("A trucker's idea",
+         'Malcolm McLean ran a trucking company in the United States. He saw that loading and unloading goods piece by piece wasted time and money at the docks. He wondered whether the whole truck trailer could be lifted onto a ship.'),
+        ('The 1956 voyage',
+         "In April 1956 McLean's ship, the Ideal X, sailed from Newark to Houston carrying metal containers. It was a simple test of a big idea. The voyage showed that a standard box could move by sea, road and rail."),
+        ('Standard sizes',
+         'Shipping containers came in standard sizes, such as the 20-foot and 40-foot boxes. Standard sizes let cranes, ships, trucks and trains all work together. A shared standard is worth more than any one clever design.'),
+        ('Ports remade',
+         'Ports were rebuilt around containers, with large cranes and huge yards. Dockworkers needed fewer hands per load, and loading became much faster. Many old docks were left behind as the new system grew.'),
+        ('Costs plunging',
+         'The cost of moving goods by sea fell sharply once containers became common. Cheaper shipping let firms source parts and sell goods across much greater distances. Small changes in cost can reshape what is worth making where.'),
+        ('Global supply chains',
+         'Containers helped create the global supply chains that now link factories, ports and shops around the world. They also made it easier to move goods quickly and in large quantities. A business that depends on such chains must plan for delays in ports and at sea.'),
+    ],
+    "test": [
+        ("What was Malcolm McLean's first business?",
+         [('a', 'A trucking company'), ('b', 'A bakery'), ('c', 'A jewellery shop'), ('d', 'A cinema')],
+         'a'),
+        ('Where did the Ideal X sail in 1956?',
+         [('a', 'From Tokyo to Paris'), ('b', 'From Sydney to Cairo'), ('c', 'From Newark to Houston'), ('d', 'From Rome to Athens')],
+         'c'),
+        ('Why are standard container sizes useful?',
+         [('a', 'They make every box a different colour'), ('b', 'Cranes, ships, trucks and trains can all work together'), ('c', 'They remove the need for ships'), ('d', 'They stop all trade')],
+         'b'),
+        ('What happened to the cost of moving goods by sea?',
+         [('a', 'It doubled every year'), ('b', 'It stayed the same forever'), ('c', 'It became free for everyone'), ('d', 'It fell sharply')],
+         'd'),
+        ('What does the chapter say a business must plan for in a global supply chain?',
+         [('a', 'A ban on all ships'), ('b', 'No change in demand ever'), ('c', 'Delays in ports and at sea'), ('d', 'Only paper shipments')],
+         'c'),
+    ],
+}

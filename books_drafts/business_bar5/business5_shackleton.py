@@ -1,0 +1,37 @@
+"""Shackleton's Leadership: how Ernest Shackleton kept the Endurance crew together through ice, cold and long waiting."""
+CODE = 'business5_shackleton'
+BOOK = {
+    "title": "Shackleton's Leadership",
+    "subtitle": 'Keeping a crew together on the Endurance expedition, and the lessons leaders often draw',
+    "chapters": [
+        ('The Endurance expedition',
+         'In 1914, Ernest Shackleton led the Imperial Trans-Antarctic Expedition aboard the ship Endurance. The ship became trapped in pack ice and was later crushed. The crew were left on the ice with little, far from help.'),
+        ('Keeping the crew together',
+         'Shackleton worked hard to keep the men together as one group. He shared the work, set the tone each day, and made sure no one was left out. Small acts, such as checking on each man, were part of his routine.'),
+        ('Morale',
+         'Morale fell during the long months on the ice. Shackleton kept spirits up with routines, music and games, and kept hope alive by planning the next step. He tried to keep the men focused on what could be done today.'),
+        ('Shared rations',
+         'Food and supplies were shared fairly as the men struggled. Shackleton made sure the crew were treated alike, so that fairness held the group together. Equal treatment mattered as much as the food itself.'),
+        ('Improvising',
+         'When the plan failed, Shackleton adapted. The crew moved to drifting ice, then to boats, and finally to a remote island. Each step needed a new plan, made with the people who had to carry it out.'),
+        ('Lessons often drawn',
+         "Leaders today often point to Shackleton's calm, his care for his people and his willingness to adapt. Remember, though, that the story is one of luck and hard choices, and that the expedition itself did not reach its goal."),
+    ],
+    "test": [
+        ("What was the name of Shackleton's ship?",
+         [('a', 'Victoria'), ('b', 'Titanic'), ('c', 'Beagle'), ('d', 'Endurance')],
+         'd'),
+        ('What happened to the ship?',
+         [('a', 'It sailed home in a week'), ('b', 'It was sold in London'), ('c', 'It became trapped in pack ice and was later crushed'), ('d', 'It sank at the dock')],
+         'c'),
+        ('What did Shackleton do to keep the crew together?',
+         [('a', 'He shared the work and checked on each man'), ('b', 'He sent the men home one by one'), ('c', "He ignored the men's needs"), ('d', 'He split the crew into rivals')],
+         'a'),
+        ('What did Shackleton do when the plan failed?',
+         [('a', 'He blamed the crew'), ('b', 'He gave up and sat down'), ('c', 'He adapted, with a new plan made with the people who had to carry it out'), ('d', 'He sold the boats')],
+         'c'),
+        ('Why does the text say the story is not only about leadership?',
+         [('a', 'The ship was never trapped at all'), ('b', 'It is also a story of luck and hard choices, and the goal was not reached'), ('c', 'The crew reached the South Pole on their first try'), ('d', 'Shackleton wrote a textbook about ice')],
+         'b'),
+    ],
+}

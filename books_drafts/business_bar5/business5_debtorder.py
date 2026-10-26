@@ -1,0 +1,37 @@
+"""Snowball or Avalanche: ordering several debts, the avalanche that saves the most interest, the snowball that builds momentum, and how to pick a plan."""
+CODE = 'business5_debtorder'
+BOOK = {
+    "title": 'Snowball or Avalanche',
+    "subtitle": 'Two ways to order your debts, and how to choose',
+    "chapters": [
+        ('Many debts, one budget',
+         'Many people carry more than one debt, such as a card, a car loan and a student loan. Each has its own rate and balance. A plan to clear them needs a rule for where the spare money goes each month.'),
+        ('The avalanche',
+         'The avalanche method pays the debt with the highest interest rate first, while paying the minimum on the others. Once it is gone, the money rolls to the next highest rate. Over the whole plan, this usually costs the least in interest.'),
+        ('The snowball',
+         'The snowball method pays the smallest balance first, again while paying the minimum on the rest. Clearing a small debt quickly gives a sense of progress. The rolled-over payments then grow like a snowball.'),
+        ('The research',
+         'Some studies suggest that quick early wins help people stick with a debt plan, which supports the snowball. Other studies find that the avalanche saves more interest. The best method is the one a person will keep doing.'),
+        ('A worked comparison',
+         'Imagine two debts, one at a high rate and a small one at a low rate. The avalanche clears the expensive one first and pays less interest in total. The snowball may clear the small one sooner, and the total interest may be a little higher.'),
+        ('A plan to pick',
+         'Choose the method you will actually follow, and write down the order of payments. Keep at least the minimum on every debt so none is missed. If a missed payment carries a late fee, the plan must cover that too.'),
+    ],
+    "test": [
+        ('Which method pays the highest-interest debt first?',
+         [('a', 'The snowball'), ('b', 'A random payment'), ('c', 'The avalanche'), ('d', 'A lottery')],
+         'c'),
+        ('Which method starts with the smallest balance?',
+         [('a', 'The snowball'), ('b', 'The avalanche'), ('c', 'Interest-only payments'), ('d', 'A balloon payment')],
+         'a'),
+        ('Why does the avalanche usually save more interest?',
+         [('a', 'It ignores interest completely'), ('b', 'It raises the rates'), ('c', 'It targets the most expensive debt first'), ('d', 'It pays the smallest balance first')],
+         'c'),
+        ('What should you keep paying on every debt?',
+         [('a', 'Nothing'), ('b', 'At least the minimum on all of them'), ('c', 'Only the largest'), ('d', 'Only the ones you enjoy paying')],
+         'b'),
+        ('How should you choose between the two methods?',
+         [('a', 'Pick the one with the funniest name'), ('b', 'Always pick the most expensive debt'), ('c', 'Copy whatever a friend uses'), ('d', 'Pick the one you will actually stick with')],
+         'd'),
+    ],
+}

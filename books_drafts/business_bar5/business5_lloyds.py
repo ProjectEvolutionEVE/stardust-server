@@ -1,0 +1,37 @@
+"""Lloyd's of London: a coffee house that became an insurance market, the names with unlimited liability, and reform."""
+CODE = 'business5_lloyds'
+BOOK = {
+    "title": "Lloyd's of London",
+    "subtitle": 'From a coffee house to an insurance market, and its reform',
+    "chapters": [
+        ("Edward Lloyd's coffee house",
+         'In the late 1600s Edward Lloyd ran a coffee house in London where sea captains, merchants and shipowners met. Shipping news and insurance deals were agreed there. The coffee house became the start of a market.'),
+        ('Underwriters',
+         "Underwriters are people who agree to take on a risk for a fee, and they write their names under the policy. At Lloyd's, individual underwriters wrote risks for ships and cargo. Each name on a policy showed who was taking the risk."),
+        ('Names with unlimited liability',
+         'For a long time, the people who backed the market, called Names, were personally liable for their share of losses, without any limit. A Name could lose a home or savings if the claims were large enough. Unlimited liability is a strong reminder that risk is real.'),
+        ('The asbestos losses',
+         'In the 1980s and 1990s, claims for illnesses linked to asbestos hit the market hard. Many Names suffered large losses, and some were ruined. The long tail of such claims showed how slow losses can be to appear.'),
+        ('Reform',
+         "Lloyd's changed its rules to allow corporate capital and to limit the personal liability of Names. The market was rebuilt with stronger capital and clearer rules. Reform can protect the people who depend on a system."),
+        ('The market today',
+         "Lloyd's of London still operates as an insurance market, where many firms share risks. It insures unusual and large risks around the world. A market can change its form and keep its purpose."),
+    ],
+    "test": [
+        ("What was Edward Lloyd's business in London?",
+         [('a', 'A coffee house where shipping and insurance deals were agreed'), ('b', 'A bakery'), ('c', 'A dress shop'), ('d', 'A cinema')],
+         'a'),
+        ('What does an underwriter do?',
+         [('a', 'Designs ships'), ('b', 'Sells coffee beans'), ('c', 'Takes on a risk for a fee'), ('d', 'Paints portraits')],
+         'c'),
+        ("What were Names at Lloyd's personally responsible for?",
+         [('a', 'Only the cost of the coffee'), ('b', 'Their share of losses, without any limit'), ('c', 'The rent of the building only'), ('d', 'Nothing at all')],
+         'b'),
+        ('What caused large losses in the 1980s and 1990s?',
+         [('a', 'A drop in the price of tea'), ('b', 'A shortage of ink'), ('c', 'New trains'), ('d', 'Claims for illnesses linked to asbestos')],
+         'd'),
+        ('What does the chapter say about reform?',
+         [('a', 'It closed the market for ever'), ('b', 'It made every Name pay twice'), ('c', 'It allowed corporate capital and limited the personal liability of Names'), ('d', 'It banned all insurance')],
+         'c'),
+    ],
+}

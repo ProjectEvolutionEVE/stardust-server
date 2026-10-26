@@ -1,0 +1,37 @@
+"""Josiah Wedgwood: a potter's marketing and costing, the Etruria works, division of labour, royal patronage and the Portland vase."""
+CODE = 'business5_wedgwood'
+BOOK = {
+    "title": 'Josiah Wedgwood and His Pottery',
+    "subtitle": 'A potter who understood costs, planning and marketing',
+    "chapters": [
+        ("A potter's workshop",
+         'Josiah Wedgwood was a potter in Staffordshire, England, in the 1700s. He set out to make pottery that was fine, reliable and affordable. He wanted his work to be known widely.'),
+        ('Costing and control',
+         'Wedgwood measured costs closely and tracked where money went. He used careful records to find and fix waste. Knowing your costs is the first step to pricing well.'),
+        ('The Etruria works',
+         'He built a new factory, Etruria, which brought production together in one planned place. Each stage of making pottery was organised and checked. Planned factories can raise quality and speed.'),
+        ('Division of labour',
+         'Wedgwood split production into specialist jobs, so each worker did a simple task well. Division of labour can speed up work and cut mistakes. It also changes the skills that workers need.'),
+        ('Royal patronage',
+         "Queen Charlotte bought his pottery, and it became known as Queen's Ware. A royal name was a powerful sales tool. Endorsement by a famous buyer can help a brand."),
+        ('The Portland vase',
+         'Wedgwood made careful copies of the ancient Portland vase, which showed his skill. Fine copies can build a name for craft. Good marketing often rests on real quality.'),
+    ],
+    "test": [
+        ('Josiah Wedgwood was a maker of what?',
+         [('a', 'Pottery'), ('b', 'Ships'), ('c', 'Cars'), ('d', 'Clocks')],
+         'a'),
+        ('What did Wedgwood use careful records to do?',
+         [('a', 'Hide profits'), ('b', 'Make paintings'), ('c', 'Find and fix waste'), ('d', 'Avoid staff')],
+         'c'),
+        ("What was Queen's Ware named after?",
+         [('a', 'Queen Victoria'), ('b', 'Queen Charlotte'), ('c', 'Queen Anne'), ('d', 'Queen Elizabeth')],
+         'b'),
+        ('What is division of labour?',
+         [('a', 'Sharing profits equally'), ('b', 'Hiring only family'), ('c', 'Working alone'), ('d', 'Splitting work into specialised tasks')],
+         'd'),
+        ("What did Wedgwood's Etruria works bring together?",
+         [('a', 'Workers in different countries'), ('b', 'Stock in a bank'), ('c', 'Production in one planned place'), ('d', 'Shops in the street')],
+         'c'),
+    ],
+}

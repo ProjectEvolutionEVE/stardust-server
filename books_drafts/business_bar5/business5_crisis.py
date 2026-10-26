@@ -1,0 +1,37 @@
+"""Leading Through a Crisis: the first hours, telling the truth, clear orders and rebuilding trust, with Tylenol and BP as lessons."""
+CODE = 'business5_crisis'
+BOOK = {
+    "title": 'Leading Through a Crisis',
+    "subtitle": 'The first hours, telling the truth, clear orders and rebuilding trust',
+    "chapters": [
+        ('The first hours',
+         'The first hours of a crisis matter most. Leaders must find out what has happened, protect people, and set up a clear way of working. Waiting for every fact before acting can make the damage worse.'),
+        ('Telling the truth',
+         'In a crisis, people want to know what is known, what is not known, and what is being done. Honest, early updates build trust. Silence or spin often causes more harm than the event itself.'),
+        ('Tylenol, 1982',
+         'In 1982, several people died in Chicago after taking Tylenol capsules that had been poisoned. Johnson and Johnson pulled the product from shelves quickly and put safety first. Its openness is often cited as a model of crisis response.'),
+        ('BP, 2010',
+         "In 2010, the Deepwater Horizon rig in the Gulf of Mexico exploded and caused a large oil spill. BP's early statements were criticised as unclear and too slow to match the scale of the disaster. Many people took this as a lesson in the cost of poor communication."),
+        ('Calm, clear orders',
+         'A crisis calls for short, clear orders. Each person should know what to do, who to report to, and when the next update will come. Calm leaders help people think clearly under strain.'),
+        ('Rebuilding trust',
+         'After the first response, the work of rebuilding trust begins. Leaders must keep their promises, admit errors, and show the changes that have been made. Trust is slow to build and quick to lose.'),
+    ],
+    "test": [
+        ('Which two cases does the chapter use as lessons?',
+         [('a', 'Kodak and Nokia'), ('b', 'Tylenol and BP'), ('c', 'Ford and Apple'), ('d', 'Shell and Dell')],
+         'b'),
+        ('What did Johnson and Johnson do after the 1982 Tylenol deaths?',
+         [('a', 'Hid the poisoning for a year'), ('b', 'Raised the price of the product'), ('c', 'Blamed the customers'), ('d', 'Pulled the product from shelves quickly and put safety first')],
+         'd'),
+        ('What does the text say about waiting for every fact before acting?',
+         [('a', 'It makes the crisis shorter'), ('b', 'It is always the best choice'), ('c', 'It can make the damage worse'), ('d', 'It is required by law')],
+         'c'),
+        ('What makes a good crisis order?',
+         [('a', 'It is short and clear, so each person knows what to do'), ('b', 'It is long and full of jargon'), ('c', 'It is never written down'), ('d', 'It changes every minute with no reason')],
+         'a'),
+        ('What does the text say about trust after a crisis?',
+         [('a', 'It cannot be affected by leaders'), ('b', 'It is quick to build and never lost'), ('c', 'It is slow to build and quick to lose'), ('d', 'It is set by the weather')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Peter Lynch and Investing in What You Know: the Magellan fund, categories of stocks, the two-minute story, mistakes to avoid and the amateur's edge."""
+CODE = 'business5_lynch'
+BOOK = {
+    "title": 'Peter Lynch and Investing in What You Know',
+    "subtitle": "Fidelity's Magellan fund, and the everyday edge of the ordinary investor",
+    "chapters": [
+        ("Fidelity's Magellan fund",
+         'Peter Lynch ran the Magellan fund at Fidelity from 1977 to 1990. Its results were among the strongest of any large fund in that period, and it grew very large.'),
+        ('Categories of stocks',
+         'Lynch sorted companies into groups such as slow growers, stalwarts, fast growers, cyclicals, turnarounds and asset plays. Each group needs different expectations, so the right way to judge a company depends on the group it belongs to.'),
+        ('The two-minute story',
+         'Lynch said an investor should be able to explain in two minutes why they own a stock and what could go wrong. If the story is hard to tell, the investor may not understand the business well enough.'),
+        ('Investing in what you know',
+         "Ordinary people often notice products and trends in daily life before professionals do. Lynch saw this as a possible edge, provided the observation is then checked against the company's figures."),
+        ('Mistakes to avoid',
+         'Lynch warned against overpaying, against companies that spread into unrelated fields, and against selling winners too early. He also stressed that owning a stock is no substitute for knowing the business.'),
+        ("The amateur's edge",
+         'Lynch argued that small investors have real advantages: they can act on local knowledge and need not follow the crowd. The point is to do the homework, not to chase tips.'),
+    ],
+    "test": [
+        ('Which fund did Peter Lynch run from 1977 to 1990?',
+         [('a', 'Berkshire Hathaway'), ('b', 'Bridgewater'), ('c', 'The Quantum Fund'), ('d', 'Magellan at Fidelity')],
+         'd'),
+        ('What is the two-minute story?',
+         [('a', 'A television advert'), ('b', "A stock's price chart"), ('c', 'An explanation of why you own a stock and what could go wrong'), ('d', "A broker's phone call")],
+         'c'),
+        ("Which of these is one of Lynch's categories?",
+         [('a', 'Stalwarts'), ('b', 'Ghost companies'), ('c', 'Lottery stocks'), ('d', 'Hidden giants')],
+         'a'),
+        ('What did Lynch warn against?',
+         [('a', 'Knowing the business'), ('b', 'Doing any homework'), ('c', 'Overpaying and spreading into unrelated fields'), ('d', 'Checking the numbers')],
+         'c'),
+        ('Why might ordinary people have an edge?',
+         [('a', 'They have secret data'), ('b', 'They often notice products and trends in daily life first'), ('c', 'They trade faster than computers'), ('d', 'They never make mistakes')],
+         'b'),
+    ],
+}

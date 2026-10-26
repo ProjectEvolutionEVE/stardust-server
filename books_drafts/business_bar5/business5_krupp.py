@@ -1,0 +1,37 @@
+"""Krupp: steel and cannon from Essen, a family firm through two world wars, a forced labour trial and a merger."""
+CODE = 'business5_krupp'
+BOOK = {
+    "title": 'Krupp',
+    "subtitle": 'Steel, a family firm, two world wars, and a merger',
+    "chapters": [
+        ('Steel and cannon',
+         "The Krupp company was founded in Essen in 1811 and became known for high-quality steel. Its steel was used for tools, rails and cannon. Strong materials can make a firm central to a country's economy."),
+        ('The family firm',
+         'For generations the company was run by members of the Krupp family. Family leadership gave it long-term plans and a strong identity. A family firm must also plan for succession and for outside scrutiny.'),
+        ('Two world wars',
+         "Krupp's factories supplied weapons in both world wars, and the company grew in size during them. War work brought large profits and large risks. Business that depends on the state can be hit hard when the state changes."),
+        ('Trials and forced labour',
+         "After the Second World War, members of the family and the firm's leaders faced trial at Nuremberg. The trial examined the use of forced labour in the company's plants. The case showed that businesses are accountable for how they treat the people who work for them."),
+        ('Reorganisation',
+         'The company was rebuilt after the war and changed its structure many times. Its businesses were regrouped and sold or merged as markets shifted. Reorganisation is a tool for survival, if it is done with a clear purpose.'),
+        ('The merger',
+         'In 1999 Krupp merged with Thyssen to form ThyssenKrupp. The merger brought together two steel and industrial groups. A merger should be judged by whether it makes both sides stronger for their customers.'),
+    ],
+    "test": [
+        ('In what city was the Krupp company founded?',
+         [('a', 'Paris'), ('b', 'Essen'), ('c', 'Rome'), ('d', 'Lisbon')],
+         'b'),
+        ('What was the company known for?',
+         [('a', 'Wooden toys'), ('b', 'Glass windows'), ('c', 'Perfume'), ('d', 'High-quality steel')],
+         'd'),
+        ("Where did members of the family and the firm's leaders face trial after the Second World War?",
+         [('a', 'Vienna'), ('b', 'Venice'), ('c', 'Nuremberg'), ('d', 'Warsaw')],
+         'c'),
+        ('In what year did Krupp merge with Thyssen?',
+         [('a', '1999'), ('b', '1811'), ('c', '1945'), ('d', '1967')],
+         'a'),
+        ('What does the chapter say businesses are accountable for?',
+         [('a', 'The weather in Essen'), ('b', 'The colour of their chimneys'), ('c', 'How they treat the people who work for them'), ('d', 'Nothing at all')],
+         'c'),
+    ],
+}

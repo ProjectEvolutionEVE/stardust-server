@@ -1,0 +1,37 @@
+"""Employee Ownership: staff own part or all of a firm through trusts, cooperatives or plans, and share its results."""
+CODE = 'business5_esop'
+BOOK = {
+    "title": 'Employee Ownership',
+    "subtitle": 'Staff who own the firm: ESOPs, the John Lewis Partnership and shared profit',
+    "chapters": [
+        ('Owners who work there',
+         'Employee ownership means the staff own part or all of the firm they work for. It can take several forms, such as a trust, a cooperative or a share plan. The idea is that those who build the firm also share in what it earns.'),
+        ('ESOPs',
+         'In the United States, many firms use an employee stock ownership plan, or ESOP. The firm sets up a trust that holds shares for staff, who receive them over time, often on leaving. The plan can help staff build savings for retirement.'),
+        ('The John Lewis Partnership',
+         'The John Lewis Partnership in Britain is owned by a trust for its staff. John Spedan Lewis set up the structure in 1929. Staff are called partners, and they share a part of the profit each year.'),
+        ('Mondragon in context',
+         'The Mondragon group of cooperatives in the Basque region of Spain grew from the 1950s. Its workers own and run their cooperatives together. It shows that a large group of firms can be run by its own staff.'),
+        ('Shared profit and productivity',
+         'Research on employee ownership is mixed, but many studies link it with higher productivity and loyalty. The effects depend on how the ownership is set up, how much voice staff have, and how clearly the gains are shared.'),
+        ('Risks',
+         "Employee ownership carries risks. A firm that holds too much of its staff's savings in its own shares can put those savings at risk if the firm does badly. Staff need clear information and advice before they commit."),
+    ],
+    "test": [
+        ('What does employee ownership mean?',
+         [('a', 'Staff sell all their work to others'), ('b', 'The owner lives in the staff room'), ('c', 'Staff rent their desks from the boss'), ('d', 'Staff own part or all of the firm they work for')],
+         'd'),
+        ('What does ESOP stand for?',
+         [('a', 'Early sales of old products'), ('b', 'External shares of operating profit'), ('c', 'Employee stock ownership plan'), ('d', 'Each son or ordered purchase')],
+         'c'),
+        ('Who set up the structure of the John Lewis Partnership in 1929?',
+         [('a', 'John Spedan Lewis'), ('b', 'Igor Ansoff'), ('c', 'Clayton Christensen'), ('d', 'Robert Cooper')],
+         'a'),
+        ('Where is the Mondragon group of cooperatives?',
+         [('a', 'The Canadian Arctic'), ('b', 'The Atacama Desert'), ('c', 'The Basque region of Spain'), ('d', 'The Sahara')],
+         'c'),
+        ('What is a risk of employee ownership?',
+         [('a', 'Having a vote on the office paint'), ('b', "Holding too much of staff savings in the firm's own shares"), ('c', 'Having too much spare time'), ('d', 'Having to pay tax on lunch')],
+         'b'),
+    ],
+}

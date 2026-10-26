@@ -1,0 +1,37 @@
+"""The Economics of Space Launch: cost per kilogram, the Shuttle's promise, reusable rockets, commercial crews and the new demand."""
+CODE = 'business5_launchcosts'
+BOOK = {
+    "title": 'The Economics of Space Launch',
+    "subtitle": 'Cost per kilogram, reusable rockets, commercial crews and the new demand',
+    "chapters": [
+        ('Cost per kilogram',
+         'The cost of launch is often compared by the price of putting one kilogram into orbit. Early rockets were expensive and often used only once. Lowering that cost has been the main goal of launch companies.'),
+        ("The Shuttle's promise",
+         'The Space Shuttle was designed to make spaceflight routine and cheaper, with reusable orbiters. In practice its costs stayed high, and it flew fewer times than planned. Its story is a lesson in how promises of cheapness can fail.'),
+        ('Reusable rockets',
+         'Reusable rockets bring a first-stage booster back to land for another flight. The first landing of a booster from an orbital flight came in December 2015, a major step. Reuse spreads the cost of a rocket over many launches.'),
+        ('Commercial crews',
+         'NASA began buying crew services from private companies in the 2010s, so that companies could carry astronauts to orbit. The model lets government be a customer, not the only builder. Commercial crew flights began in 2020.'),
+        ('Satellite markets',
+         'Lower launch prices make satellites cheaper to put into orbit. Companies now launch large groups of small satellites for communications and imaging. Demand for launches grows as the cost falls.'),
+        ('Falling prices and new demand',
+         'Lower prices can open markets that were never worth the cost before. This is a loop: cheaper launches bring new customers, and new customers help pay for more launches. Business plans in space depend on this loop.'),
+    ],
+    "test": [
+        ('What is the usual way to compare launch costs?',
+         [('a', 'Price per colour of rocket'), ('b', "Price per crew member's shoe"), ('c', 'Price per kilogram put into orbit'), ('d', 'Price per day of the week')],
+         'c'),
+        ('What was the Space Shuttle designed to be?',
+         [('a', 'Disposable'), ('b', 'Reusable, to make spaceflight cheaper'), ('c', 'A boat'), ('d', 'Free to fly')],
+         'b'),
+        ('In what year did a rocket booster first land for reuse after an orbital flight?',
+         [('a', '1969'), ('b', '1998'), ('c', '2020'), ('d', '2015')],
+         'd'),
+        ('What did NASA begin buying from private companies?',
+         [('a', 'Moon rocks'), ('b', 'Old satellites'), ('c', 'Crew services to carry astronauts'), ('d', 'Shuttle parts')],
+         'c'),
+        ('What loop do lower launch prices create?',
+         [('a', 'Cheaper launches bring new customers, who help pay for more launches'), ('b', 'Prices rise with every launch'), ('c', 'No one can afford satellites'), ('d', 'Rockets never fly again')],
+         'a'),
+    ],
+}

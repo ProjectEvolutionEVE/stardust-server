@@ -1,0 +1,37 @@
+"""Bear Stearns: a long-lived broker, mortgage funds that failed in 2007, the March 2008 run and the rescue by JPMorgan."""
+CODE = 'business5_bearstearns'
+BOOK = {
+    "title": 'Bear Stearns',
+    "subtitle": 'A long-lived broker, mortgage funds, a run, and an early warning',
+    "chapters": [
+        ("A broker's long history",
+         'Bear Stearns was a Wall Street securities firm with a long history, dating back to the nineteenth century. It built a reputation for trading and for serving clients. Long records do not make a firm immune to new risks.'),
+        ('Mortgage funds',
+         'In 2007 two of its hedge funds, which held risky mortgage bonds, lost most of their value. Investors had been told the funds were safe enough. When risky assets are hidden inside complex products, losses can spread without warning.'),
+        ('The March 2008 run',
+         'In March 2008 clients and lenders pulled their money and their business from Bear Stearns very quickly. The firm could not borrow the cash it needed to keep running. A run on a firm that relies on short-term borrowing can happen in days.'),
+        ('The rescue by JPMorgan',
+         'With help from the Federal Reserve, JPMorgan Chase agreed to buy Bear Stearns. The price was low at first and was later raised. The rescue was meant to stop wider damage to the financial system.'),
+        ("The Fed's role",
+         "The Federal Reserve backed a large group of the firm's assets to make the deal possible. Central banks can step in when a failure could spread to the wider economy. Support of this kind comes with a cost and a debate."),
+        ('Early warning',
+         "The signs were there in the funds' losses and in the firm's heavy use of borrowed money. A leader should ask what happens if lenders stop lending. Early warnings are worth acting on before the run begins."),
+    ],
+    "test": [
+        ('What kind of firm was Bear Stearns?',
+         [('a', 'A chain of bakeries'), ('b', 'A toy company'), ('c', 'A shipping line'), ('d', 'A securities firm on Wall Street')],
+         'd'),
+        ('What happened to two of its hedge funds in 2007?',
+         [('a', 'They doubled in value overnight'), ('b', 'They moved to another country'), ('c', 'They lost most of their value on risky mortgage bonds'), ('d', 'They became a charity')],
+         'c'),
+        ('Which bank agreed to buy Bear Stearns with help from the Federal Reserve?',
+         [('a', 'JPMorgan Chase'), ('b', 'A coffee chain'), ('c', 'A toy maker'), ('d', 'A car company')],
+         'a'),
+        ('Why can a run on a firm happen so quickly?',
+         [('a', 'The firm closes every weekend'), ('b', 'Its offices are too far apart'), ('c', 'Lenders and clients pull money fast if they lose faith'), ('d', 'Its staff are on holiday')],
+         'c'),
+        ('What does the chapter say a leader should ask?',
+         [('a', 'Which colour the logo should be'), ('b', 'What happens if lenders stop lending'), ('c', 'How many lunches to buy'), ('d', 'Whether the firm should ever borrow')],
+         'b'),
+    ],
+}

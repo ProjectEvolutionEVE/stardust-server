@@ -1,0 +1,37 @@
+"""Groupthink and How to Avoid It: Irving Janis's idea that close groups can make poor decisions, with the Bay of Pigs and Challenger as cases."""
+CODE = 'business5_groupthink'
+BOOK = {
+    "title": 'Groupthink and How to Avoid It',
+    "subtitle": 'When a close group makes poor decisions, and how to keep it honest',
+    "chapters": [
+        ('What groupthink is',
+         'Groupthink is the tendency of a close group to seek agreement so strongly that it makes poor decisions. The psychologist Irving Janis described it in 1972. Members may stop questioning, and doubts are kept quiet.'),
+        ('The Bay of Pigs',
+         "In 1961, a United States plan to invade Cuba at the Bay of Pigs failed quickly. Janis studied the advisers' meetings and found they had avoided hard questions. Many doubts were not raised, and the group grew more confident than the facts allowed."),
+        ('Symptoms',
+         'Janis listed signs of groupthink. These include a belief that the group cannot be wrong, pressure on anyone who disagrees, and a shared sense that outsiders are weak or hostile. Each sign makes an honest review harder.'),
+        ("Devil's advocate",
+         "One remedy is to assign someone the role of devil's advocate, whose job is to argue against the plan. The role must be real, not for show. Leaders should listen to the challenge and show that dissent is welcome."),
+        ('Outside views',
+         "Bringing in outside views helps. Outsiders are less tied to the group's plan and can see the risks more clearly. Ask outsiders to review a decision before it is final."),
+        ('Challenger as a case',
+         'In 1986, the space shuttle Challenger broke apart after launch, and the disaster is often studied as a case of group pressure. Engineers had raised concerns, but the concerns were not heard fully. Good decisions need a space where doubts can be said aloud.'),
+    ],
+    "test": [
+        ('Who described groupthink in 1972?',
+         [('a', 'Eric Ries'), ('b', 'Henry Mintzberg'), ('c', 'Irving Janis'), ('d', 'Igor Ansoff')],
+         'c'),
+        ('What was the Bay of Pigs used to show?',
+         [('a', 'How to build a ship'), ('b', 'How a group can avoid hard questions and grow over-confident'), ('c', 'How to sell bread'), ('d', 'How to read a balance sheet')],
+         'b'),
+        ("What is a devil's advocate's job?",
+         [('a', 'To book the room'), ('b', 'To agree with everyone'), ('c', 'To take the minutes only'), ('d', 'To argue against the plan, for real')],
+         'd'),
+        ('Which of these is a symptom of groupthink?',
+         [('a', 'Welcoming every challenge'), ('b', 'Asking outsiders to review'), ('c', 'Pressure on anyone who disagrees'), ('d', 'Writing down doubts')],
+         'c'),
+        ('What does the text say a good decision needs?',
+         [('a', 'A space where doubts can be said aloud'), ('b', 'A decision made in silence'), ('c', 'A group that never asks questions'), ('d', "Only one person's view")],
+         'a'),
+    ],
+}

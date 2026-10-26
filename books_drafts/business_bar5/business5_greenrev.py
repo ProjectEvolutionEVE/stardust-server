@@ -1,0 +1,37 @@
+"""The Green Revolution: Norman Borlaug's wheat, high-yield seeds, the costs and critics, and food prices after."""
+CODE = 'business5_greenrev'
+BOOK = {
+    "title": 'The Green Revolution',
+    "subtitle": "Norman Borlaug's wheat, high-yield seeds, and the costs and critics",
+    "chapters": [
+        ('A hungry century',
+         'In the middle of the twentieth century, many countries struggled to grow enough food for growing populations. Crops were often low-yield and hard to protect from disease. Scientists looked for seeds that could grow more grain on the same land.'),
+        ("Borlaug's wheat",
+         'Norman Borlaug, an American agronomist, bred short, strong wheat varieties that could carry heavy grain without falling over. He worked in Mexico from the 1940s, and his wheat raised yields a great deal. He received the Nobel Peace Prize in 1970.'),
+        ('High-yield seeds, water and fertiliser',
+         'The new seeds worked best with more fertiliser, irrigation, and pest control. Farmers had to buy these inputs, which meant cash and credit. Yield gains depended on the whole package, not on seed alone.'),
+        ('India and Mexico',
+         'India adopted high-yield wheat and rice in the late 1960s, and by the 1970s it had far more grain than before. Mexico saw large gains in wheat production as well. Both countries show the benefits of research, public investment, and support for farmers.'),
+        ('Costs and critics',
+         'The new farming needed water, chemicals, and machinery, which some small farmers could not afford. Critics said the gains helped large farms more than small ones, and they worried about soil and water. Supporters answered that without the gains, far more land would have been ploughed and more forest lost.'),
+        ('Food prices after',
+         'Higher yields helped keep food prices lower than they would otherwise have been, which helped many poor families. The story has a lesson for business: new technology pays off most when it reaches many users and is paired with what it needs. Prices, costs, and fairness all matter.'),
+    ],
+    "test": [
+        ('Who is most associated with the Green Revolution wheat?',
+         [('a', 'Norman Borlaug'), ('b', 'Theodore Vail'), ('c', 'Samuel Insull'), ('d', 'Claude Hopkins')],
+         'a'),
+        ('In what year did Borlaug receive the Nobel Peace Prize?',
+         [('a', '1948'), ('b', '1984'), ('c', '1970'), ('d', '1995')],
+         'c'),
+        ('What did high-yield seeds usually need to work best?',
+         [('a', 'No water at all'), ('b', 'More fertiliser, water and pest control'), ('c', 'Only a single field'), ('d', 'Less sunlight')],
+         'b'),
+        ('Which two countries are named as examples in this book?',
+         [('a', 'Japan and Chile'), ('b', 'Norway and Egypt'), ('c', 'Canada and Peru'), ('d', 'India and Mexico')],
+         'd'),
+        ('What was one main criticism of the Green Revolution?',
+         [('a', 'It made seeds too cheap'), ('b', 'It banned fertilisers'), ('c', 'It favoured farms that could afford the inputs'), ('d', 'It ended all farming')],
+         'c'),
+    ],
+}

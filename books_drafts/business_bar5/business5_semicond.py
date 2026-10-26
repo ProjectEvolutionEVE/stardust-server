@@ -1,0 +1,37 @@
+"""The Semiconductor Industry: transistors, fabs, Moore's law, the foundry model and supply chains."""
+CODE = 'business5_semicond'
+BOOK = {
+    "title": 'The Semiconductor Industry',
+    "subtitle": "Transistors, fabs, Moore's law and the chips behind everything",
+    "chapters": [
+        ('The transistor',
+         'In 1947 scientists at Bell Labs demonstrated the first working transistor. A transistor can switch or amplify an electric signal using a small piece of semiconductor material. Its invention made smaller and cheaper electronics possible.'),
+        ('Fairchild and the spin-offs',
+         'In 1957 a group of engineers left Shockley Semiconductor to found Fairchild Semiconductor. Many of them later left Fairchild too, starting companies of their own. This pattern of spin-offs helped build a whole region of chip firms.'),
+        ("Moore's law",
+         'In 1965 Gordon Moore noticed that the number of components on a chip was doubling at a steady pace. He later revised the pace, and the idea became a rule of thumb for the industry. It set goals for research and for the cost of each new chip generation.'),
+        ('The fab cost wall',
+         'A modern chip factory, called a fab, can cost many billions of dollars to build and equip. Only a few firms can pay for the newest factories. This high cost has made the industry concentrated in a small number of companies.'),
+        ('The foundry model',
+         'In 1987 Morris Chang founded TSMC, the Taiwan Semiconductor Manufacturing Company, to make chips designed by other firms. This foundry model let designers focus on design without owning a factory. It now sits at the centre of many supply chains.'),
+        ('Supply chains and geography',
+         'Chips pass through many countries, from design and materials to assembly and testing. A shortage in one place can slow many industries at once. Businesses now think hard about where their chips come from.'),
+    ],
+    "test": [
+        ('In what year was the first working transistor demonstrated at Bell Labs?',
+         [('a', '1947'), ('b', '1921'), ('c', '1965'), ('d', '1987')],
+         'a'),
+        ('What is a fab?',
+         [('a', 'A type of chip design'), ('b', 'A research prize'), ('c', 'A chip factory'), ('d', 'A software language')],
+         'c'),
+        ("What did Moore's law describe?",
+         [('a', 'The price of electricity'), ('b', 'A steady doubling of components on chips'), ('c', 'A rule about ship routes'), ('d', 'The size of phone screens')],
+         'b'),
+        ('What is a foundry model?',
+         [('a', 'Designing chips without ever making them'), ('b', 'Selling phones door to door'), ('c', 'Owning every mine'), ('d', 'Making chips designed by other companies')],
+         'd'),
+        ('Why does a chip shortage matter beyond the chip industry?',
+         [('a', 'Chips are only used in toys'), ('b', 'Chips can be eaten'), ('c', 'Many industries depend on chips, so a shortage slows them'), ('d', 'Chips are free to make')],
+         'c'),
+    ],
+}

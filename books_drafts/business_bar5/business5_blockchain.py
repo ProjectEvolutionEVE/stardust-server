@@ -1,0 +1,37 @@
+"""Blockchains and Digital Currencies: a shared ledger, mining and proof of work, Bitcoin's design, volatility, scams, and regulation."""
+CODE = 'business5_blockchain'
+BOOK = {
+    "title": 'Blockchains and Digital Currencies',
+    "subtitle": 'A shared ledger, how Bitcoin works, and the risks to watch',
+    "chapters": [
+        ('A shared ledger',
+         'A blockchain is a record of transactions shared across many computers. Each group of transactions is added to a chain of earlier groups, and copies are kept by many participants. Changing an old record would require changing every copy that follows it.'),
+        ('Mining and proof of work',
+         'In Bitcoin, computers called miners compete to add the next group of transactions. They must solve a hard puzzle that takes a great deal of computing effort. This is called proof of work, and the winner is rewarded with new coins.'),
+        ("Bitcoin's design",
+         'Bitcoin was described in a paper published in 2008 under the name Satoshi Nakamoto. Its design gives a fixed upper limit on the total number of coins. It aimed to let people send money without a central bank or a bank in the middle.'),
+        ('Volatility',
+         'The prices of digital currencies have often swung sharply. A coin can gain or lose a large share of its value in a short time. This makes them risky to hold, and very hard to use as a steady store of value.'),
+        ('Scams and failures',
+         "Many people have lost money to fake schemes, hacks of trading platforms, and collapses of poorly run businesses. Some of the largest failures involved exchanges that did not keep customers' coins safe. Careful checks matter before anyone trusts an unknown platform."),
+        ('What regulators watch',
+         "Regulators watch for fraud, money laundering, unfair marketing and the safety of customers' funds. Rules differ widely between countries, and they are still changing. Anyone thinking about digital currencies should learn the rules where they live."),
+    ],
+    "test": [
+        ('What is a blockchain?',
+         [('a', 'A chain for bicycles'), ('b', 'A line of shops'), ('c', 'A record of transactions shared across many computers'), ('d', 'A metal necklace')],
+         'c'),
+        ('What is proof of work?',
+         [('a', 'Showing a boss your desk'), ('b', 'Solving a hard puzzle that takes real computing effort'), ('c', 'Writing a poem about coins'), ('d', 'Buying a ticket to a concert')],
+         'b'),
+        ('Who is credited with the 2008 Bitcoin paper?',
+         [('a', 'The Queen of England'), ('b', 'A famous cook in Paris'), ('c', 'An astronaut from Mars'), ('d', 'Satoshi Nakamoto, a name used by the author')],
+         'd'),
+        ('Why have digital currency prices been risky?',
+         [('a', 'They never change'), ('b', 'They are fixed by law at one coin per year'), ('c', 'They have often swung sharply in value'), ('d', 'They are paid in bread')],
+         'c'),
+        ('What is a common danger with digital currency platforms?',
+         [('a', 'Scams, hacks, and failures that can cost customers their money'), ('b', 'Platforms that give free money to everyone'), ('c', 'Platforms that only sell umbrellas'), ('d', 'Platforms that close on Sundays')],
+         'a'),
+    ],
+}

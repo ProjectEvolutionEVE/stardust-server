@@ -1,0 +1,37 @@
+"""Soichiro Honda: from a workshop in Hamamatsu and piston rings, to motorbikes, the Super Cub, and cars."""
+CODE = 'business5_honda'
+BOOK = {
+    "title": 'Soichiro Honda and the Company He Built',
+    "subtitle": 'From a small workshop to motorbikes and cars',
+    "chapters": [
+        ('A workshop in Hamamatsu',
+         'Soichiro Honda began with a small workshop in Hamamatsu, Japan. He was an engineer who loved making things and fixing machines. The workshop was the start of a famous company.'),
+        ('Piston rings',
+         'His first business made piston rings, the parts that seal the cylinder of an engine. Early attempts were not good enough, and he worked hard to improve them. Persistence is a theme of his story.'),
+        ('Motorbikes',
+         'After the war he began making small motorised bicycles and then motorbikes. Simple, reliable engines helped his machines sell to people who needed cheap transport. Affordable transport created demand.'),
+        ('The Super Cub',
+         'The Super Cub, launched in 1958, was an easy-to-ride small motorbike. It sold in very large numbers around the world. It is among the best-selling motor vehicles ever made.'),
+        ('Into cars',
+         'Honda later moved into cars, building small models and then larger ones. The move took the company into a very different market. Each step built on the skills learned before it.'),
+        ('Rule-breaking engineering',
+         'Honda was known for trying new ideas and not following old ways. He encouraged young engineers to test and question. Good engineering often starts by asking why things are done in a set way.'),
+    ],
+    "test": [
+        ("Soichiro Honda's first workshop was in which town?",
+         [('a', 'Tokyo'), ('b', 'Hamamatsu'), ('c', 'Osaka'), ('d', 'Sapporo')],
+         'b'),
+        ("What was one of Honda's first products?",
+         [('a', 'Ships'), ('b', 'Pianos'), ('c', 'Radios'), ('d', 'Piston rings')],
+         'd'),
+        ('Which small motorbike sold in huge numbers from 1958?',
+         [('a', 'Vespa'), ('b', 'Harley'), ('c', 'Super Cub'), ('d', 'Triumph')],
+         'c'),
+        ('Honda later moved into which larger market?',
+         [('a', 'Cars'), ('b', 'Trains'), ('c', 'Ships'), ('d', 'Airports')],
+         'a'),
+        ('What did Honda encourage in his engineers?',
+         [('a', 'Copying every rival'), ('b', 'Following the rules without question'), ('c', 'Testing ideas and questioning old ways'), ('d', 'Avoiding all risk')],
+         'c'),
+    ],
+}

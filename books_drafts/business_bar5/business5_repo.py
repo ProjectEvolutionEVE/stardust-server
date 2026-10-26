@@ -1,0 +1,37 @@
+"""The Repo Market: short-term borrowing against collateral, the haircut, and the runs that have shaken it."""
+CODE = 'business5_repo'
+BOOK = {
+    "title": 'The Repo Market',
+    "subtitle": 'Cash against collateral, overnight, and why the market matters',
+    "chapters": [
+        ('Cash against collateral',
+         'A repurchase agreement, or repo, is a loan that is secured by something valuable. One party sells securities, such as government bonds, and agrees to buy them back a short time later at a slightly higher price. The difference is the interest on the loan.'),
+        ('The haircut',
+         'The lender does not usually lend the full value of the collateral. The gap between the value of the collateral and the amount lent is the haircut. A bigger haircut protects the lender if the collateral falls in value.'),
+        ('Overnight funding',
+         'Many repos are very short, sometimes just overnight. Banks, funds and dealers use them to fund their daily needs. Because so much money changes hands this way, the repo market is one of the main plumbing systems of finance.'),
+        ('The 2008 run on repo',
+         'In 2008, lenders became unwilling to take some kinds of collateral, or demanded much larger haircuts. Firms that relied on short-term repo found it hard to renew their funding. The fear spread quickly, and several large firms failed or needed rescue.'),
+        ('The 2019 spike',
+         'In September 2019 the overnight rate in the repo market jumped sharply for a few days. Cash was briefly scarce, and the central bank stepped in with its own lending to calm the market. The episode showed how quickly short-term funding can tighten.'),
+        ('Why it matters',
+         'Most people never see the repo market, but it affects the cost of borrowing across the economy. When it works well, banks and funds can meet their daily needs. When it seizes up, the trouble can reach ordinary savers and borrowers.'),
+    ],
+    "test": [
+        ('What is collateral in a repo?',
+         [('a', 'A type of cake'), ('b', 'A bus ticket'), ('c', 'Something valuable that secures the loan'), ('d', 'A promise made by a neighbour')],
+         'c'),
+        ('What is a haircut?',
+         [('a', "The gap between the collateral's value and the amount lent"), ('b', 'A visit to a barber'), ('c', 'A fee for a bank card'), ('d', 'A change in the interest rate for holidays')],
+         'a'),
+        ('Why are many repos very short?',
+         [('a', 'Repos are banned for longer periods'), ('b', 'Short loans are paid in gold'), ('c', 'Banks and funds use them to meet daily funding needs'), ('d', 'Long loans are free')],
+         'c'),
+        ('What happened in 2008 to the repo market?',
+         [('a', 'It doubled in size overnight'), ('b', 'Lenders stopped accepting some collateral, and funding dried up'), ('c', 'It became a school'), ('d', 'It was paid in stamps')],
+         'b'),
+        ('What happened to the overnight repo rate in September 2019?',
+         [('a', 'It fell to zero for a year'), ('b', 'It was printed on a banknote'), ('c', 'It stopped being measured'), ('d', 'It jumped sharply for a few days as cash was briefly scarce')],
+         'd'),
+    ],
+}

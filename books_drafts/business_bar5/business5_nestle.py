@@ -1,0 +1,37 @@
+"""Nestle and the Infant Formula Boycott: a Swiss food firm, the 1970s campaign over marketing, the codes and the recovery."""
+CODE = 'business5_nestle'
+BOOK = {
+    "title": 'Nestle and the Infant Formula Boycott',
+    "subtitle": 'Marketing ethics, a boycott, and the rules that followed',
+    "chapters": [
+        ("Henri Nestle's flour",
+         'Henri Nestle, a pharmacist in Switzerland, created a flour-based food product in 1867. The company grew from that start into one of the largest food firms in the world. Its roots show how a single good product can build a large company.'),
+        ('Milk and chocolate',
+         'Over time the company added milk products and chocolate to its range. Growth came through many brands and many countries. Diversification spreads risk, but it also makes the company harder to manage.'),
+        ('The 1970s campaign',
+         'In the 1970s campaigners criticised how some food firms marketed their products in poorer countries. They argued that aggressive advertising and sales staff could discourage breastfeeding and mislead families. The debate raised hard questions about marketing ethics.'),
+        ('Marketing codes',
+         'In 1981 the World Health Organization adopted an international code on marketing of such products. The code set limits on advertising and promotion. Industry codes help define what fair marketing means, and firms must live by them.'),
+        ('The boycott',
+         'A boycott was called in several countries against the company. Public pressure grew, and the firm faced a difficult reputational test. A boycott shows that customers can judge a company by how it sells, not only by what it sells.'),
+        ("The brand's recovery",
+         'The company changed its marketing practices and worked to meet the code. Recovery takes time and proof of change, not just words. A company that wants trust back must show its actions match its promises.'),
+    ],
+    "test": [
+        ('Who created the flour-based food product in 1867?',
+         [('a', 'Jacob Davis'), ('b', 'Isaac Singer'), ('c', 'Henri Nestle'), ('d', 'Ole Kirk Christiansen')],
+         'c'),
+        ('What did the 1970s campaign criticise?',
+         [('a', 'The price of bread'), ('b', 'How some food firms marketed their products'), ('c', 'The colour of packaging'), ('d', 'The shape of trucks')],
+         'b'),
+        ('In what year did the World Health Organization adopt its marketing code?',
+         [('a', '1867'), ('b', '1953'), ('c', '1999'), ('d', '1981')],
+         'd'),
+        ('What does the chapter say a company must do to win back trust?',
+         [('a', 'Change its name each year'), ('b', 'Stop talking to customers'), ('c', 'Show that its actions match its promises'), ('d', 'Move its head office every decade')],
+         'c'),
+        ('What did a boycott show, according to the chapter?',
+         [('a', 'Customers can judge a company by how it sells'), ('b', 'Customers never care about ethics'), ('c', 'Boycotts always fail'), ('d', 'Companies cannot be criticised')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Joint Ventures and Strategic Alliances: two firms share risk and skills, the partner must fit, and many ventures end early."""
+CODE = 'business5_alliances'
+BOOK = {
+    "title": 'Joint Ventures and Strategic Alliances',
+    "subtitle": 'Sharing risk and skills with a partner, and why many ventures fail',
+    "chapters": [
+        ('Working together',
+         'A joint venture is a new business owned by two or more firms that share its costs and gains. A strategic alliance is a looser link, such as a shared project or a supply deal, with each firm staying separate.'),
+        ('Sharing risk',
+         'Partners share the cost and the risk of a new market or a big investment. A firm can enter a country with a local partner who knows the rules and customers. Each side brings what the other lacks.'),
+        ('The right partner',
+         'A good partner fits in strategy, culture and skill. Ask what each side brings, what each side wants, and whether their goals stay aligned over time. A partner who wants something different will cause trouble.'),
+        ('Governance',
+         'Partners need clear rules on who decides what, how profits are shared and how disputes are settled. A written agreement helps, but trust and regular meetings matter more. Weak governance is a common source of trouble.'),
+        ('NUMMI',
+         'In 1984, Toyota and General Motors set up a joint venture called NUMMI in Fremont, California. It ran until 2010. Many observers saw it as a useful model of how two firms with different methods could learn from each other.'),
+        ('Why many fail',
+         'Many ventures end early. The partners may change strategy, disagree on control, or find that the original goal no longer fits. Plan an exit at the start, so that ending the venture is a planned step, not a crisis.'),
+    ],
+    "test": [
+        ('What is a joint venture?',
+         [('a', 'A single firm buying a rival'), ('b', 'A court case between two firms'), ('c', 'A bank loan to one person'), ('d', 'A new business owned by two or more firms that share its costs and gains')],
+         'd'),
+        ('Why might a firm take a local partner into a new country?',
+         [('a', 'Partners cost nothing to keep'), ('b', 'The law forbids any other option in every country'), ('c', 'The partner knows the rules and customers'), ('d', 'Local partners never charge money')],
+         'c'),
+        ('What is the main test of a good partner?',
+         [('a', 'Fit in strategy, culture and skill'), ('b', 'Having the same logo'), ('c', 'Being the largest firm in the world'), ('d', 'Living on the same street')],
+         'a'),
+        ('Which two firms formed the NUMMI venture in Fremont?',
+         [('a', 'Shell and Dell'), ('b', 'Foxconn and Pampers'), ('c', 'Toyota and General Motors'), ('d', 'IDEO and Enron')],
+         'c'),
+        ('What does the text advise a firm to plan at the start of a venture?',
+         [('a', 'Never to talk about the end'), ('b', 'An exit, so that ending it is a planned step'), ('c', 'A permanent link with no review'), ('d', 'No written rules at all')],
+         'b'),
+    ],
+}

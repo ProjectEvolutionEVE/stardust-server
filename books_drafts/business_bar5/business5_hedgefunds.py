@@ -1,0 +1,37 @@
+"""Hedge Funds: Alfred Winslow Jones in 1949, the fee model, the main strategies, lockups, and Soros against the pound."""
+CODE = 'business5_hedgefunds'
+BOOK = {
+    "title": 'Hedge Funds',
+    "subtitle": 'From a 1949 experiment to the fee model and its strategies',
+    "chapters": [
+        ('Alfred Winslow Jones in 1949',
+         'Alfred Winslow Jones is often credited with starting the first hedge fund in 1949. He bought some shares he expected to rise and sold others short, so that part of the market risk was offset. Being long and short at once was the core of his idea.'),
+        ('Two and twenty',
+         'Hedge funds are often described as charging two and twenty. That means a yearly management fee of about two percent of assets, plus about twenty percent of the profits. The performance fee rewards managers when they do well, but the fees are paid whether or not the fund beats the market.'),
+        ('Strategies',
+         'Hedge funds use many strategies. Some trade on company news, some bet on mergers, some trade on prices across different markets, and some use borrowing to amplify returns. Each strategy carries its own risks, and results vary widely.'),
+        ('Investors and lockups',
+         'Investors often must agree to leave their money in a fund for a set period, called a lockup. The lockup lets managers invest without sudden withdrawals. It also means investors may not get their money back when they need it.'),
+        ('Soros against the pound',
+         "In 1992 George Soros's fund bet heavily that the British pound would have to leave the European exchange rate system. The pound was forced out, and the fund made a large profit. The episode made Soros famous in finance."),
+        ('The record',
+         'Hedge funds have had strong years and weak ones. Their results, after fees, have often been lower than a plain index fund over long periods. Anyone thinking of investing should weigh the fees, the lockups and the risks.'),
+    ],
+    "test": [
+        ('Who is often credited with starting the first hedge fund in 1949?',
+         [('a', 'Alfred Winslow Jones'), ('b', 'Benjamin Franklin'), ('c', 'Henry Ford'), ('d', 'Marie Curie')],
+         'a'),
+        ('What does "two and twenty" describe?',
+         [('a', 'Two years in a bank and twenty clients'), ('b', 'A rate of twenty percent tax on shares'), ('c', 'About two percent management fee and about twenty percent of profits'), ('d', 'Two bags of coins')],
+         'c'),
+        ('What is a lockup?',
+         [('a', 'A lock on a bank vault door'), ('b', 'A period when investors agree to leave their money in the fund'), ('c', 'A type of share certificate'), ('d', 'A key for a car')],
+         'b'),
+        ("What did Soros's fund bet on in 1992?",
+         [('a', 'That bread prices would double'), ('b', 'That it would sell a football club'), ('c', 'That the sun would set late'), ('d', 'That the British pound would be forced out of the European exchange rate system')],
+         'd'),
+        ('Why do hedge fund fees matter to investors?',
+         [('a', 'They are paid only by the government'), ('b', 'They are always refunded'), ('c', 'They are paid whether or not the fund beats the market'), ('d', 'They are paid in shoes')],
+         'c'),
+    ],
+}

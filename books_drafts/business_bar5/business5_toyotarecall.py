@@ -1,0 +1,37 @@
+"""Toyota's Recall Crisis: sticky pedals, a string of recalls, and what the way a company responds does to its name."""
+CODE = 'business5_toyotarecall'
+BOOK = {
+    "title": "Toyota's Recall Crisis",
+    "subtitle": 'Sticky pedals, recalls, and a reputation for quality tested in public',
+    "chapters": [
+        ('A quality name',
+         'For decades Toyota built a name for well-made, reliable cars. Its production system was studied by businesses around the world. A good name is a valuable asset, and it can be lost faster than it was built.'),
+        ('Sticky pedals',
+         'Around 2009 and 2010, drivers in several countries reported that accelerator pedals could stick or catch. Some of the complaints were linked to floor mats and to the pedal design. The problem raised fears about safety on the road.'),
+        ('A string of recalls',
+         'Toyota recalled millions of vehicles across several years and in many countries. Each recall was a separate event, and the stream of them kept the story in the news. Repeated bad news makes people doubt that a company is in control.'),
+        ('Response in the public eye',
+         "The company's chief executive, Akio Toyoda, apologised and went before lawmakers in the United States in 2010. Some critics felt the first responses were slow or unclear. How a company speaks in a crisis matters as much as what it fixes."),
+        ('The later reforms',
+         'Toyota later paid penalties and improved its safety processes and its communication with customers. Investigations into the cause of the sudden acceleration were disputed for years. Reforms take time, and they must be seen to work.'),
+        ('Crisis communication',
+         'In a crisis, tell people what you know, say clearly what you do not know yet, and say when you will know more. Admit mistakes early, and keep promises about timing. Silence or spin lets rumours fill the gap.'),
+    ],
+    "test": [
+        ('What was the main concern in the sticky pedal story?',
+         [('a', 'The cars were too expensive'), ('b', 'Accelerator pedals could stick or catch, raising safety fears'), ('c', 'The seats were uncomfortable'), ('d', 'The radio stopped working')],
+         'b'),
+        ("Why does a string of recalls hurt a company's name?",
+         [('a', "It makes the company's shares go up"), ('b', 'It lowers the cost of parts'), ('c', 'It means the cars are now faster'), ('d', 'It keeps bad news in the public eye and makes people doubt control')],
+         'd'),
+        ("What does the chapter say about a company's good name?",
+         [('a', 'It cannot be damaged once earned'), ('b', 'It only matters to the marketing team'), ('c', 'It can be lost faster than it was built'), ('d', 'It is the same as profit')],
+         'c'),
+        ('Which is good crisis communication, according to the chapter?',
+         [('a', 'Saying what is known, what is not, and when more will be known'), ('b', 'Silence until the story goes away'), ('c', 'Blaming drivers for the problem'), ('d', "Spinning every fact in the company's favour")],
+         'a'),
+        ("What did the company's chief executive do in 2010?",
+         [('a', 'He resigned from the company that day'), ('b', 'He sold the car brand'), ('c', 'He apologised and went before US lawmakers'), ('d', 'He refused to comment for a year')],
+         'c'),
+    ],
+}

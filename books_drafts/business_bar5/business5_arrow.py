@@ -1,0 +1,37 @@
+"""Arrow's Impossibility Theorem: voting paradoxes, Condorcet cycles, the 1951 result, fairness conditions, ways around it and use in organisations."""
+CODE = 'business5_arrow'
+BOOK = {
+    "title": "Arrow's Impossibility Theorem",
+    "subtitle": 'Voting paradoxes, Condorcet cycles and why no perfect voting rule exists',
+    "chapters": [
+        ('Voting paradoxes',
+         'Three voters can each rank three options and still produce a circle. Suppose voter A ranks X above Y above Z, voter B ranks Y above Z above X, and voter C ranks Z above X above Y. Two of the three then prefer X to Y, Y to Z, and Z to X, so majority preferences loop round.'),
+        ('Condorcet cycles',
+         'The Marquis de Condorcet noticed this problem in the 1780s. Majority preferences can form a loop, so there may be no clear winner, whatever order the votes are taken in.'),
+        ('The 1951 result',
+         "Kenneth Arrow proved in 1951 that no ranking method can turn individual rankings into one social ranking while also meeting a few reasonable fairness conditions. This is known as Arrow's impossibility theorem."),
+        ('Fairness conditions',
+         "The conditions include: every voter's ranking counts, if everyone prefers one option the group does too, and an option that is not in the running should not change the result. Some conditions also rule out a single dictator. No system meets all of them without exception."),
+        ('Ways around it',
+         'A voting system can relax one condition, use scores rather than rankings, or accept limits on what it can do. Each choice gives something up, so the real question becomes which compromise to accept.'),
+        ('Use in organisations',
+         'Committees and companies face the same problem when they rank projects. Agenda order and the procedure used often decide the outcome, so the rules of voting shape results as much as the votes themselves.'),
+    ],
+    "test": [
+        ('Who first noticed that majority voting can produce cycles?',
+         [('a', 'Adam Smith'), ('b', 'The Marquis de Condorcet'), ('c', 'Karl Marx'), ('d', 'Alfred Marshall')],
+         'b'),
+        ('In what year did Arrow prove his impossibility theorem?',
+         [('a', '1851'), ('b', '1915'), ('c', '1990'), ('d', '1951')],
+         'd'),
+        ('What does a Condorcet cycle produce?',
+         [('a', 'A unanimous winner'), ('b', 'A stable overall ranking'), ('c', 'A loop with no clear winner'), ('d', 'A guaranteed majority in every round')],
+         'c'),
+        ('Which fairness condition says that if everyone prefers one option, the group does too?',
+         [('a', 'Unanimity, meaning a shared preference is respected'), ('b', 'Independence of irrelevant alternatives'), ('c', 'Non-dictatorship'), ('d', 'Unlimited turnout')],
+         'a'),
+        ('What does the chapter say about organisations ranking projects?',
+         [('a', 'Procedure never matters'), ('b', 'Votes always settle things alone'), ('c', 'The rules of the vote shape the result as much as the votes do'), ('d', 'Projects are never ranked')],
+         'c'),
+    ],
+}

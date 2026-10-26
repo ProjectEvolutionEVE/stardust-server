@@ -1,0 +1,37 @@
+"""Negotiating Your Pay: researching the range, timing, anchors, the total package, responding to counters, and the lifetime cost of not asking."""
+CODE = 'business5_salarynego'
+BOOK = {
+    "title": 'Negotiating Your Pay',
+    "subtitle": 'Asking for fair pay, and making the case with facts',
+    "chapters": [
+        ('Research the range',
+         'Before a pay talk, find out what similar jobs pay in your area and field. Public salary surveys, job listings and professional groups are useful sources. A figure backed by the market is easier to defend than a wish.'),
+        ('Timing',
+         'The best moments to ask are usually when a job is offered, at a review, or after you have taken on new responsibilities. Asking when the firm is in a crisis is harder. Choose a time when the employer is most able to say yes.'),
+        ('Anchors',
+         'An anchor is the first number put on the table, and it shapes the rest of the talk. Asking for a figure with a clear reason, a little above your target, gives room to move. A vague or very low opening can cost you.'),
+        ('The total package',
+         'Pay is only part of the deal. Bonuses, pension contributions, holiday time, training and flexibility can be worth as much as salary. Compare the whole package with other offers before deciding.'),
+        ('Counters',
+         'A counter-offer is a reply that moves the figure, often to a lower level than you asked. Respond calmly, explain your reasons and ask what is possible. Keep the discussion on facts, not feelings.'),
+        ('The lifetime cost of not asking',
+         'A small gap in pay can compound over many years, because raises and pensions are often based on the current salary. Not asking for a fair rate can cost far more over a career than the single negotiation would have. Asking politely is a normal and sensible part of working life.'),
+    ],
+    "test": [
+        ('Why research pay ranges before a pay talk?',
+         [('a', 'To tell your boss a joke'), ('b', 'To get a free desk'), ('c', 'To avoid all taxes'), ('d', 'So your ask is based on what the market pays')],
+         'd'),
+        ('What is an anchor in a negotiation?',
+         [('a', 'A boat part'), ('b', 'A type of bank'), ('c', 'The first number put on the table, which shapes the discussion'), ('d', 'A weather term')],
+         'c'),
+        ('Why look at the total package, not just salary?',
+         [('a', 'Benefits, leave and other terms can matter as much as salary'), ('b', 'Pay is the only thing that counts'), ('c', 'Benefits are banned'), ('d', 'Leave is illegal')],
+         'a'),
+        ('Why does not asking cost money over time?',
+         [('a', 'It does not affect money at all'), ('b', 'Employers reward silence with more'), ('c', 'A small gap in pay can compound over many years'), ('d', 'Pay never rises')],
+         'c'),
+        ('What is a good response to a counter-offer?',
+         [('a', 'Shout'), ('b', 'Stay calm, explain your reasons and ask what is possible'), ('c', 'Walk out at once without a word'), ('d', 'Accept without thinking')],
+         'b'),
+    ],
+}

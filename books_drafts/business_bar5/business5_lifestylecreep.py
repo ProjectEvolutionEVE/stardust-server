@@ -1,0 +1,37 @@
+"""Lifestyle Creep: spending that rises with pay, the treadmill of wants, saving the raise first, Easterlin's finding, fixed costs, and setting a ceiling."""
+CODE = 'business5_lifestylecreep'
+BOOK = {
+    "title": 'Lifestyle Creep',
+    "subtitle": 'How rising pay can quietly fail to build savings',
+    "chapters": [
+        ('Pay rises, spending rises',
+         'When income goes up, spending often goes up with it, usually a little at a time. Lifestyle creep describes this slow rise in everyday costs. The result is that a bigger pay cheque may leave savings no bigger than before.'),
+        ('The treadmill',
+         'Economists talk about the hedonic treadmill: people adapt to better things, so the new level soon feels normal and new wants appear. Once a bigger car or a nicer flat is normal, going back feels like a loss. The treadmill keeps moving unless someone steps off it on purpose.'),
+        ('Save the raise first',
+         'A simple habit is to save part of each raise before it is spent. Moving the saving into an automatic transfer on payday makes it easier to keep. Living on the old income while the new one builds savings is a strong defence against creep.'),
+        ("Easterlin's finding",
+         'In 1974 the economist Richard Easterlin reported that, within a country over time, rising national income did not always bring rising happiness. This is often called the Easterlin paradox. The finding suggests that comparison with others and with past habits matters a great deal.'),
+        ('Fixed costs that lock in',
+         'Some costs are hard to cut once they start, such as rent on a long lease, a car on a long finance deal, or a gym membership. These fixed costs lock in a higher lifestyle. Before agreeing to one, check how it would feel to pay it for years.'),
+        ('Setting a ceiling',
+         'A ceiling is a set limit on spending that you choose in advance. Write down a monthly spending limit and check it against your bank records. Revisit the limit when pay rises, and decide the new level on purpose.'),
+    ],
+    "test": [
+        ('What is lifestyle creep?',
+         [('a', 'Spending rising with income, so savings do not grow'), ('b', 'Hair growing longer'), ('c', 'A type of dance'), ('d', 'A sports injury')],
+         'a'),
+        ('Which habit helps protect against lifestyle creep?',
+         [('a', 'Spending the whole raise at once'), ('b', 'Ignoring your pay'), ('c', 'Saving part of each raise before spending it'), ('d', 'Buying the biggest house you can')],
+         'c'),
+        ('What are fixed costs that lock in?',
+         [('a', 'Free gifts'), ('b', 'Costs like rent or contracts that are hard to cut once started'), ('c', 'Lunch at work'), ('d', 'Holidays once a year')],
+         'b'),
+        ('What did Richard Easterlin report in 1974?',
+         [('a', 'Happiness always doubles with income'), ('b', 'Money has no effect on anything'), ('c', 'Happiness is fixed at birth'), ('d', 'Within a country over time, rising income did not always bring rising happiness')],
+         'd'),
+        ('What is a practical way to set a ceiling?',
+         [('a', 'Never look at the bills'), ('b', 'Spend on everything at once'), ('c', 'Write down a monthly spending limit and check it'), ('d', 'Ignore your bank account')],
+         'c'),
+    ],
+}

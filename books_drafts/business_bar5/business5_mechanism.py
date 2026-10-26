@@ -1,0 +1,37 @@
+"""Mechanism Design: rules that get honest answers, Hurwicz, Maskin and Myerson, incentives to reveal, the revelation principle and where it is used."""
+CODE = 'business5_mechanism'
+BOOK = {
+    "title": 'Mechanism Design',
+    "subtitle": 'Designing rules that get honest answers from people who act in their own interest',
+    "chapters": [
+        ('Designing the rules',
+         'Mechanism design works backwards. Instead of asking how people behave in a given game, it asks which rules would produce a result we want, given that people act in their own interest.'),
+        ('Honest answers',
+         'When people hold private information, they may hide it. A good mechanism gives them a reason to report honestly, for example by making honesty the best choice for them.'),
+        ('Hurwicz, Maskin and Myerson',
+         'Leonid Hurwicz, Eric Maskin and Roger Myerson shared the 2007 Nobel Prize in Economics for founding this field. Hurwicz began much of the early work.'),
+        ('Incentives to reveal',
+         'A mechanism can ask each person to reveal their preferences, then set outcomes accordingly. The second-price auction is a simple example, where an honest bid is the best choice.'),
+        ('The revelation principle',
+         'Many outcomes that a complicated set of rules can reach can also be reached by a simpler mechanism in which people answer honestly. This simplifies analysis, though real rules still need practical care.'),
+        ('Where it is used',
+         "Mechanism design shapes auctions, spectrum sales, school choice systems and public purchasing. Designers use it to reach good outcomes even when they cannot see everyone's private information."),
+    ],
+    "test": [
+        ('What does mechanism design ask?',
+         [('a', 'How to ban all trade'), ('b', 'How to set one price for everything'), ('c', 'Which rules would produce a wanted result when people act in their own interest'), ('d', 'How to avoid every auction')],
+         'c'),
+        ('What problem arises when people hold private information?',
+         [('a', 'They may hide it, so the rules must give them a reason to be honest'), ('b', 'Their information is always public'), ('c', 'They always tell the truth'), ('d', 'Nothing changes at all')],
+         'a'),
+        ('Which three economists shared the 2007 Nobel Prize for mechanism design?',
+         [('a', 'Gary Becker, Robert Lucas and Edmund Phelps'), ('b', 'Ronald Coase, Oliver Williamson and Elinor Ostrom'), ('c', 'Leonid Hurwicz, Eric Maskin and Roger Myerson'), ('d', 'Kenneth Arrow, Gerard Debreu and John Hicks')],
+         'c'),
+        ('Which example shows that the truthful bid is the best choice?',
+         [('a', 'A first-price auction, where you pay your own bid'), ('b', 'A second-price auction'), ('c', 'A raffle'), ('d', 'A fixed tax')],
+         'b'),
+        ('What does the revelation principle suggest?',
+         [('a', 'Complicated rules are always better'), ('b', 'Honesty is never possible'), ('c', 'Mechanisms cannot be analysed'), ('d', 'Many outcomes reachable by complex rules can also be reached by simple truthful mechanisms')],
+         'd'),
+    ],
+}

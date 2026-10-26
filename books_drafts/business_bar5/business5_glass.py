@@ -1,0 +1,37 @@
+"""Glass-Steagall and Banking Separation: the 1933 wall between commercial and investment banking, deposit insurance, the 1999 repeal, the debate, and the Volcker rule."""
+CODE = 'business5_glass'
+BOOK = {
+    "title": 'Glass-Steagall and Banking Separation',
+    "subtitle": 'A wall between everyday banking and risky trading, and its later removal',
+    "chapters": [
+        ('A wall between banks',
+         'For much of the twentieth century, US law kept commercial banking, which takes deposits and makes loans, apart from investment banking, which underwrites and trades securities. The idea was to keep savings away from speculative risk. This separation is often called Glass-Steagall.'),
+        ('The 1933 act',
+         'The Banking Act of 1933 split commercial from investment banking, in the wake of bank failures during the Great Depression. It set the framework that lasted for decades. Its name comes from its two sponsors, Senator Carter Glass and Representative Henry Steagall.'),
+        ('Deposit insurance',
+         'The same 1933 reforms created the Federal Deposit Insurance Corporation, or FDIC, to insure bank deposits. Insurance reassures savers that their money is protected up to a set limit, even if a bank fails. It remains one of the main pillars of banking safety.'),
+        ('The 1999 repeal',
+         'The Gramm-Leach-Bliley Act of 1999 removed the main separation, allowing banks, securities firms and insurers to combine. Supporters said it let firms compete globally. It is the change most often cited in debates about the financial system.'),
+        ('The debate',
+         'Some people blame the 1999 repeal for risks that built up before the 2008 financial crisis. Others point to lending standards, housing and other causes. Experts disagree about how much the repeal contributed, so the question remains open.'),
+        ('The Volcker rule again',
+         'The Dodd-Frank Act of 2010 included the Volcker rule, which restricts banks from certain kinds of proprietary trading and from owning some private funds. It revived part of the old idea of keeping risky trading away from the core of banking. The rule has been changed over time.'),
+    ],
+    "test": [
+        ('What did Glass-Steagall separate?',
+         [('a', 'Men from women'), ('b', 'Trains from roads'), ('c', 'The rich from the poor'), ('d', 'Commercial banking from investment banking')],
+         'd'),
+        ('Which agency was created in 1933 to insure bank deposits?',
+         [('a', 'NASA'), ('b', 'The IRS'), ('c', 'The FDIC'), ('d', 'The FBI')],
+         'c'),
+        ('When was the main separation repealed?',
+         [('a', '1999'), ('b', '1929'), ('c', '1933'), ('d', '2020')],
+         'a'),
+        ('Which 2010 rule limits some trading by banks?',
+         [('a', 'The Mint rule'), ('b', 'The Silver rule'), ('c', 'The Volcker rule'), ('d', 'The Cloud rule')],
+         'c'),
+        ('Why do some people debate the role of the 1999 repeal in the 2008 crisis?',
+         [('a', 'It caused the Moon landing'), ('b', 'Experts disagree on how much it contributed'), ('c', 'It was about cars'), ('d', 'It lowered taxes to zero')],
+         'b'),
+    ],
+}

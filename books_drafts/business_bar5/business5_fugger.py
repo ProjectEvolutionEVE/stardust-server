@@ -1,0 +1,37 @@
+"""Jakob Fugger of Augsburg: mines, loans to emperors, the Fuggerei housing, indulgences, and the value of good accounts."""
+CODE = 'business5_fugger'
+BOOK = {
+    "title": 'Jakob Fugger of Augsburg',
+    "subtitle": 'A merchant banker of the early 1500s and his far-reaching business',
+    "chapters": [
+        ('A merchant of Augsburg',
+         'Jakob Fugger was a merchant banker based in the German city of Augsburg. His family business grew across Europe. He became one of the richest people of his time.'),
+        ('Mines and metals',
+         'The Fuggers invested in mines for silver and copper. Metals were valuable and in high demand. Owning a source of raw material can give a firm strength.'),
+        ('Loans to rulers',
+         'The Fuggers lent large sums to rulers, including the Habsburg emperors. Lending to rulers could bring large returns and large risks. Power and debt often go together.'),
+        ('The Fuggerei',
+         'Jakob Fugger founded the Fuggerei, a group of homes for poor residents of Augsburg. It still houses people today and is one of the oldest social housing schemes still in use. Wealth can be used to house people in need.'),
+        ('Indulgences',
+         'The Fuggers helped finance a church campaign of indulgence sales. This link later drew criticism. Business and religion can become tangled, and that can cost a reputation.'),
+        ('Keeping accounts',
+         'The firm kept detailed written accounts of its far-flung business. Good records show where money was made and where it was lost. Clear records are the backbone of any large business.'),
+    ],
+    "test": [
+        ("Which German city was the base of Jakob Fugger's business?",
+         [('a', 'Augsburg'), ('b', 'Berlin'), ('c', 'Munich'), ('d', 'Hamburg')],
+         'a'),
+        ('What did the Fuggers invest in that gave them metals?',
+         [('a', 'Ships'), ('b', 'Farms'), ('c', 'Mines'), ('d', 'Bakeries')],
+         'c'),
+        ('What is the Fuggerei?',
+         [('a', 'A fort'), ('b', 'Homes for poor residents of Augsburg'), ('c', 'A shipyard'), ('d', 'A royal palace')],
+         'b'),
+        ('Who did the Fuggers lend large sums to?',
+         [('a', 'Their staff'), ('b', 'Local farmers only'), ('c', 'Pirates'), ('d', 'Rulers, including Habsburg emperors')],
+         'd'),
+        ('Why keep detailed written accounts?',
+         [('a', 'To hide money from the government'), ('b', 'For decoration'), ('c', 'So the firm can see where money was made and lost'), ('d', 'To avoid paying staff')],
+         'c'),
+    ],
+}

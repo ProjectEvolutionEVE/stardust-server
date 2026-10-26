@@ -1,0 +1,37 @@
+"""Design Thinking: five steps to understand people, frame a problem, try ideas as prototypes and learn from testing."""
+CODE = 'business5_designthinking'
+BOOK = {
+    "title": 'Design Thinking',
+    "subtitle": "Empathise, define, ideate, prototype, test: a cycle for solving people's problems",
+    "chapters": [
+        ('A way of working',
+         'Design thinking is a set of steps for solving problems that people face. It grew from the design field and was taken up widely by firms such as IDEO and by university design schools. It starts with the people who will use the result.'),
+        ('Empathise',
+         "The first step is to understand the people involved. Designers watch them, listen to them and try the task themselves. The aim is to see the problem from their side, not from the team's."),
+        ('Define',
+         'Next, the team writes the problem in a clear sentence, based on what it learned. A good problem statement names a person, a need and a reason. This keeps the team from solving the wrong problem.'),
+        ('Ideate and prototype',
+         'In ideation, the team makes as many ideas as it can, without judging them too early. Then it builds prototypes, which are rough, cheap models of the best ideas. A prototype can be a drawing, a cardboard model or a role play.'),
+        ('Test',
+         'The team shows the prototypes to real users and watches what happens. The results show what works and what does not. The cycle then repeats, with each round sharper than the last.'),
+        ("IDEO's shopping cart",
+         "In a well-known 1999 television feature, IDEO's team redesigned a shopping cart in a few days. They watched shoppers, built quick models and tested them in a store. The example is often used to show the method in action."),
+    ],
+    "test": [
+        ('What are the five steps of design thinking?',
+         [('a', 'Hire, fire, pay, retire, report'), ('b', 'Buy, sell, store, ship, count'), ('c', 'Plan, wait, repeat, stop, sign'), ('d', 'Empathise, define, ideate, prototype, test')],
+         'd'),
+        ('What is the first step?',
+         [('a', 'Test'), ('b', 'Define'), ('c', 'Empathise'), ('d', 'Prototype')],
+         'c'),
+        ('What is a prototype?',
+         [('a', 'A rough, cheap model of an idea'), ('b', 'A finished product sold to the public'), ('c', "A company's annual report"), ('d', 'A rule book for staff')],
+         'a'),
+        ('Why does the problem statement matter?',
+         [('a', "It sets the team's salaries"), ('b', 'It replaces the testing step'), ('c', 'It keeps the team from solving the wrong problem'), ('d', 'It is needed only for law')],
+         'c'),
+        ('What should happen to judgement during ideation?',
+         [('a', 'Judge every idea at once'), ('b', 'Delay judging, so there are more ideas'), ('c', 'Ban all ideas'), ('d', 'Ask a lawyer about each one')],
+         'b'),
+    ],
+}

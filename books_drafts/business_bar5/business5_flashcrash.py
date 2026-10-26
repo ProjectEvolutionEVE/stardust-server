@@ -1,0 +1,37 @@
+"""The Flash Crash of 2010: a large sell order, vanishing liquidity, the rebound, the official report, and the new limit rules."""
+CODE = 'business5_flashcrash'
+BOOK = {
+    "title": 'The Flash Crash of 2010',
+    "subtitle": 'Minutes of chaos on 6 May 2010, and the rules it led to',
+    "chapters": [
+        ('6 May 2010',
+         'On 6 May 2010, US stock prices fell sharply and then recovered within minutes. Some shares traded at extraordinary prices for a short time. The episode became known as the Flash Crash.'),
+        ('A large sell order',
+         'The trigger was a very large sell order for futures contracts, placed through an automated program. It was sold quickly, and the speed of the selling pushed other traders to act in the same direction.'),
+        ('Liquidity vanishes',
+         'Many market makers and buyers stepped back at the same moment. With fewer buyers, prices fell faster, and trades happened at prices far from the normal level. For a short time, the market lacked the buyers it needed.'),
+        ('The rebound',
+         'Prices recovered quickly, and most of the fall was reversed within a short period. Many trades made in the worst minutes were later cancelled by exchanges. The speed of the rebound surprised many observers.'),
+        ('The report',
+         'Regulators studied the event and published reports on what had happened. They found that a large automated sale, combined with fast trading and thin buying, had driven the sharp fall. The reports pointed to the need for better safeguards.'),
+        ('New limit rules',
+         'Exchanges introduced limit up and limit down bands for many shares. These bands pause trading if a price moves too far, too fast. The change was designed to stop a short burst of panic from turning into a crash.'),
+    ],
+    "test": [
+        ('When did the Flash Crash happen?',
+         [('a', '1 April 1900'), ('b', '6 May 2010'), ('c', '14 February 1950'), ('d', '31 December 1975')],
+         'b'),
+        ('What was the trigger for the Flash Crash?',
+         [('a', 'A holiday in London'), ('b', 'A new brand of coffee'), ('c', 'A storm in the Atlantic'), ('d', 'A very large automated sell order for futures')],
+         'd'),
+        ('What does "liquidity vanishes" mean?',
+         [('a', 'Everyone began to drink water'), ('b', 'Trading became free'), ('c', 'Buyers stepped back, so there were too few trades to support prices'), ('d', 'Shares turned into liquid')],
+         'c'),
+        ('What happened to prices after the fall?',
+         [('a', 'Most of the fall was reversed within a short period'), ('b', 'They stayed at zero for a decade'), ('c', 'They doubled every hour'), ('d', 'They were printed on paper')],
+         'a'),
+        ('What do limit up and limit down bands do?',
+         [('a', 'Set the height of stock market buildings'), ('b', 'Guarantee every price will rise'), ('c', 'Pause trading when a price moves too far, too fast'), ('d', 'Stop all sales for a year')],
+         'c'),
+    ],
+}

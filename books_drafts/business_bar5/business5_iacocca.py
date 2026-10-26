@@ -1,0 +1,37 @@
+"""Lee Iacocca and Chrysler: Ford's Mustang, the firing, Chrysler's brink, the government loan guarantee, and the minivan."""
+CODE = 'business5_iacocca'
+BOOK = {
+    "title": 'Lee Iacocca and Chrysler',
+    "subtitle": "A car executive's rise, fall and comeback",
+    "chapters": [
+        ('Success at Ford',
+         'Lee Iacocca rose through Ford and became famous for the Mustang. The sporty car sold very well and made his name. Success at one company does not guarantee a place at the top.'),
+        ('Fired in 1978',
+         "Iacocca left Ford in 1978, after a clash with the company's leader, Henry Ford II. Losing that job was a painful setback. He then took on a much harder task at Chrysler."),
+        ('Chrysler on the brink',
+         'When Iacocca joined Chrysler, the company was close to failure. It had lost money for years and was short of cash. Its survival was in real doubt.'),
+        ('The loan guarantee',
+         'In 1979 the US government agreed to guarantee loans to Chrysler, so the firm could borrow to keep going. Iacocca pushed for cost cuts, new models and a strict plan. Government help came with hard conditions.'),
+        ('The minivan',
+         'In the 1980s Chrysler helped start a new kind of vehicle, the minivan, which families found practical. It was a product that met a real need. Listening to customers can open a new market.'),
+        ('Paying it back',
+         'Chrysler repaid the government loan early, ahead of schedule. The comeback was widely seen as a turning point for the firm. A business can recover when leaders make hard choices and keep to a plan.'),
+    ],
+    "test": [
+        ('Lee Iacocca is famous for which Ford car?',
+         [('a', 'Beetle'), ('b', 'Corvette'), ('c', 'Mustang'), ('d', 'Model T')],
+         'c'),
+        ('Who fired Iacocca from Ford in 1978?',
+         [('a', 'Thomas Edison'), ('b', 'Henry Ford II'), ('c', 'Walt Disney'), ('d', 'Ross Perot')],
+         'b'),
+        ('What did the US government give Chrysler in 1979?',
+         [('a', 'A ban on rival cars'), ('b', 'A new factory in Ohio'), ('c', 'Ten years of free tax'), ('d', 'Loan guarantees')],
+         'd'),
+        ('Which vehicle did Chrysler help launch in the 1980s?',
+         [('a', 'Submarine'), ('b', 'Tractor'), ('c', 'Minivan'), ('d', 'Motorcycle')],
+         'c'),
+        ('How did Chrysler repay the government loan?',
+         [('a', 'It repaid early, ahead of schedule'), ('b', 'It never did'), ('c', 'Only after fifty years'), ('d', 'By selling cars to the government')],
+         'a'),
+    ],
+}

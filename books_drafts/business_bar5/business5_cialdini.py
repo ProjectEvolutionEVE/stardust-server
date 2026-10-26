@@ -1,0 +1,37 @@
+"""Persuasion and Cialdini's Principles: six ways people are moved to say yes, and how to use them honestly."""
+CODE = 'business5_cialdini'
+BOOK = {
+    "title": "Persuasion and Cialdini's Principles",
+    "subtitle": 'Six principles of influence, and how to use them honestly',
+    "chapters": [
+        ("Robert Cialdini's research",
+         'Robert Cialdini is a psychologist who studied why people say yes. His 1984 book Influence describes six principles that often move people. He spent years in real settings, such as sales floors, to see them at work.'),
+        ('Reciprocity',
+         'People tend to repay a kindness. A small gift or favour can make someone more willing to return the favour later. Used honestly, reciprocity builds goodwill. Used falsely, it becomes pressure.'),
+        ('Commitment and consistency',
+         'People like to act in line with what they have already said or done. A small first commitment can lead to a larger one. Clear, public commitments are especially strong.'),
+        ('Social proof',
+         'People look to others when they are unsure. Reviews, ratings and reports of what others chose all act as social proof. Be honest about the proof you show: it must be real.'),
+        ('Authority, liking and scarcity',
+         'People tend to trust experts and to say yes to people they like. Scarcity makes things seem more valuable when they are hard to get. Each principle works best when it is real and not used to mislead.'),
+        ('Using them honestly',
+         'The principles can be used well or badly. A firm that uses them to inform and help earns trust. A firm that uses them to trick people loses it. Ask whether the customer would still say yes if they knew exactly what was happening.'),
+    ],
+    "test": [
+        ('What book by Cialdini described six principles of influence?',
+         [('a', 'Endurance'), ('b', 'The Art of War'), ('c', 'Influence'), ('d', 'The Lean Startup')],
+         'c'),
+        ('Which principle describes repaying a kindness?',
+         [('a', 'Scarcity'), ('b', 'Reciprocity'), ('c', 'Authority'), ('d', 'Liking')],
+         'b'),
+        ('What does social proof rely on?',
+         [('a', 'Long contracts only'), ('b', 'Secret deals'), ('c', 'Loud voices alone'), ('d', 'What others choose and approve of')],
+         'd'),
+        ('Why does the text say scarcity works?',
+         [('a', 'Things are always free'), ('b', 'Things never change price'), ('c', 'Things seem more valuable when they are hard to get'), ('d', 'Things can always be copied for nothing')],
+         'c'),
+        ('What is the honest test the text suggests?',
+         [('a', 'Would the customer still say yes if they knew exactly what was happening?'), ('b', 'Did the customer forget the offer?'), ('c', 'Did we make the customer feel confused?'), ('d', 'Did the customer sign in a hurry?')],
+         'a'),
+    ],
+}

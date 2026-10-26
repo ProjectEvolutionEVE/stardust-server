@@ -1,0 +1,37 @@
+"""Accounting for Pensions: the promise to retirees, the liability and discount rates, actuarial gains and losses, funded status and the balance sheet effect."""
+CODE = 'business5_pensionacct'
+BOOK = {
+    "title": 'Accounting for Pensions',
+    "subtitle": 'Promises made today that are paid out decades later',
+    "chapters": [
+        ('A promise to retirees',
+         'Some employers promise a set pension to staff when they retire. The promise may be paid for by money set aside in a plan. The company carries the risk if the plan does not hold enough to pay what was promised.'),
+        ('The liability',
+         'The pension liability is the present value of the future pension payments the company has promised, based on estimates of how long people will live and how much they will earn. Because the payments are far off, the figure depends heavily on the assumptions. Small changes can move it a great deal.'),
+        ('Discount rates',
+         'The discount rate is used to turn future payments into a value today. When the discount rate falls, the present value of the liability rises. A lower rate makes future promises look more expensive to pay for now.'),
+        ('Actuarial gains and losses',
+         'Actuarial gains and losses arise when real results differ from the assumptions used. A plan may do better or worse than expected on investments, or its members may live longer than predicted. These differences are recorded separately from normal profit.'),
+        ('Funded status',
+         'Funded status compares the assets held in the plan with the pension liability. A plan is underfunded when the assets fall short of the liability. Readers look at funded status to judge the size of the gap.'),
+        ('The balance sheet effect',
+         'The liability appears on the balance sheet, and changes in it can hit equity and other comprehensive income. An underfunded plan may require the company to put in more money over time. This can strain cash, so it matters to investors and lenders.'),
+    ],
+    "test": [
+        ('What is a defined benefit pension promise?',
+         [('a', 'A guaranteed amount paid to retirees'), ('b', 'A free coffee at work'), ('c', 'A cash prize'), ('d', 'A loan to staff')],
+         'a'),
+        ('What happens to a pension liability when the discount rate falls?',
+         [('a', 'It falls'), ('b', 'It disappears'), ('c', 'It rises'), ('d', 'Nothing changes')],
+         'c'),
+        ('What is funded status?',
+         [('a', 'How many staff there are'), ('b', "Whether the plan's assets cover the pension liability"), ('c', "The company's logo"), ('d', 'Tax returns')],
+         'b'),
+        ('What is an actuarial gain or loss?',
+         [('a', 'A bank fee'), ('b', 'A type of lottery'), ('c', 'A stock dividend'), ('d', 'A difference between actual results and the assumptions used')],
+         'd'),
+        ('What may happen to a company when its pension plan is underfunded?',
+         [('a', 'It gets free money'), ('b', 'It loses its logo'), ('c', 'It may need to put in more money to cover the gap'), ('d', 'It must stop selling')],
+         'c'),
+    ],
+}

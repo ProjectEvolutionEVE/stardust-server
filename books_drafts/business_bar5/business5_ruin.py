@@ -1,0 +1,37 @@
+"""Gambler's Ruin: random walks with a boundary, a worked chance of ruin, why edge is not enough, bankroll size, the casino model and lessons for risk."""
+CODE = 'business5_ruin'
+BOOK = {
+    "title": "Gambler's Ruin",
+    "subtitle": 'Random walks with a boundary, a worked chance of ruin, and why edge is not enough',
+    "chapters": [
+        ('A walk with two walls',
+         'Imagine a player who wins or loses one unit on each bet. The bankroll wanders up and down like a walk. The game ends when the bankroll reaches zero, which is ruin, or a target, which is success.'),
+        ('A worked chance',
+         'Take a fair coin game where you start with 10 and stop at 20. Each win or loss is one unit. Because the game is fair, the chance of reaching 20 before 0 is 10 in 20, which is one half. So your chance of ruin is also one half.'),
+        ('Why edge is not enough',
+         'Even with a slight edge, a player with a small bankroll can still go broke. The edge helps in the long run, but short runs can be harsh. Variation is the enemy of a small bankroll.'),
+        ('Bankroll size',
+         'A larger bankroll gives more room to survive a bad run. For the same game, a bigger starting stake lowers the chance of ruin. Size the bankroll to the risks, not to hope.'),
+        ('The casino business model',
+         'A casino has a small edge on every game, and it plays millions of bets. Its bankroll is huge, so its risk of ruin is very low. A gambler, by contrast, plays with a small bankroll against that same edge.'),
+        ('Lessons for risk of ruin',
+         'In business, the same logic applies: a firm that bets all its cash on one idea can fail even when the idea is good. Survival comes first, because a firm that is ruined cannot benefit from later wins. Keep a reserve, and never risk everything on one outcome.'),
+    ],
+    "test": [
+        ("What ends a gambler's random walk?",
+         [('a', 'The weather'), ('b', 'A new coin'), ('c', 'Reaching zero (ruin) or a target'), ('d', 'The dealer going home')],
+         'c'),
+        ('In a fair game starting with 10 and aiming for 20, what is the chance of reaching 20 first?',
+         [('a', 'One tenth'), ('b', 'One half'), ('c', 'Nine tenths'), ('d', 'Zero')],
+         'b'),
+        ('Why is edge not always enough?',
+         [('a', 'Edges are always negative'), ('b', 'Casinos never lose'), ('c', 'Edges cannot be measured'), ('d', 'Short runs can be harsh for a small bankroll')],
+         'd'),
+        ('What helps lower the chance of ruin?',
+         [('a', 'A smaller bankroll'), ('b', 'Betting everything at once'), ('c', 'A larger bankroll'), ('d', 'Ignoring losses')],
+         'c'),
+        ('Why does a casino have a very low chance of ruin?',
+         [('a', 'It has a small edge and a huge bankroll over millions of bets'), ('b', 'It never plays'), ('c', 'It only takes cash'), ('d', 'It stops after one bet')],
+         'a'),
+    ],
+}

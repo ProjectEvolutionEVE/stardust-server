@@ -1,0 +1,37 @@
+"""Market Structure and Dark Pools: where trades happen, the order types used, and the rules for fair execution."""
+CODE = 'business5_structure'
+BOOK = {
+    "title": 'Market Structure and Dark Pools',
+    "subtitle": 'Exchanges, off-exchange venues, order types and the rules for fair prices',
+    "chapters": [
+        ('Many places to trade',
+         'Shares are not traded in just one place. Exchanges are the public venues where prices are shown. Alongside them are many off-exchange venues, so the same stock can trade in dozens of places at once.'),
+        ('Order types',
+         'A market order buys or sells at the best price available now, and fills quickly. A limit order sets the highest price you will pay or the lowest you will accept. It may wait, or never fill, but it protects your price.'),
+        ('Dark pools',
+         'A dark pool is a private trading venue where orders are not shown to the public before they are matched. Large investors use dark pools to buy or sell big amounts without moving the price. Critics say they reduce the information available to everyone else.'),
+        ('Best execution',
+         "A broker has a duty to seek the best execution for a client. That means looking for the best price and the fastest, most reliable result, not simply the broker's own convenience. Brokers must be able to explain how they route orders."),
+        ('Fragmentation',
+         'When trading is split across many venues, it is called fragmentation. It can make it harder to see the true price, and it creates chances for faster traders to profit from small differences between venues.'),
+        ('The Reg NMS rules',
+         'In the United States, a set of rules called Regulation NMS, adopted in 2005, links the markets together. It requires brokers to avoid trades at prices worse than the best available elsewhere, and it sets rules for how quotes are shown.'),
+    ],
+    "test": [
+        ('What is an exchange?',
+         [('a', 'A type of bank card'), ('b', 'A tax office'), ('c', 'A public venue where prices are shown'), ('d', 'A kind of lamp')],
+         'c'),
+        ('What does a limit order do?',
+         [('a', 'Guarantees the market will rise'), ('b', 'Sets the highest price to pay or the lowest to accept'), ('c', 'Closes an account'), ('d', 'Cancels a tax')],
+         'b'),
+        ('What is a dark pool?',
+         [('a', 'A swimming pool at night'), ('b', 'A public exchange floor'), ('c', 'A type of share certificate'), ('d', 'A private venue where orders are matched without being shown first')],
+         'd'),
+        ('What does best execution require of a broker?',
+         [('a', "Always choosing the broker's own profit first"), ('b', 'Never trading'), ('c', 'Seeking the best price and reliable result for the client'), ('d', 'Trading only on Fridays')],
+         'c'),
+        ('What is fragmentation?',
+         [('a', 'Trading split across many venues'), ('b', 'Breaking a computer into parts'), ('c', 'A share being cut in half'), ('d', 'A fall in the number of traders')],
+         'a'),
+    ],
+}

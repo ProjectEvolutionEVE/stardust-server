@@ -1,0 +1,37 @@
+"""Walt Disney: early failures, Mickey Mouse, a costly gamble on a feature cartoon, and parks and television."""
+CODE = 'business5_disney'
+BOOK = {
+    "title": 'Walt Disney and the Company He Built',
+    "subtitle": 'Setbacks, a famous mouse and a risky film that paid off',
+    "chapters": [
+        ('Early setbacks',
+         "Walt Disney's first animation company, in Kansas City, went bankrupt in the 1920s. He moved to Hollywood and started again with much less money. Early failure taught him to keep going."),
+        ('Mickey Mouse',
+         'Mickey Mouse became his most famous character in 1928, in a cartoon with synchronised sound. The character became a symbol of the company. A single strong character can carry a whole business.'),
+        ('The gamble on Snow White',
+         "Snow White and the Seven Dwarfs, released in 1937, was Disney's first full-length animated feature. Many in the film trade doubted that audiences would sit through a long cartoon. It was costly and risky, and it paid off well."),
+        ('Merchandising',
+         'Mickey and his friends appeared on toys, clothes and books. This sold the characters far beyond the cinema. Earning money from a character in many forms is called merchandising.'),
+        ('Disneyland and television',
+         'Disneyland opened in Anaheim, California, in 1955. Disney also made television shows that promoted the parks and the films. The company grew across several kinds of entertainment.'),
+        ('Borrowing and risk',
+         'Disney often borrowed money to make big projects. Borrowing can build a business quickly, but it adds risk if the work does not sell. Study the balance between debt and risk in any business.'),
+    ],
+    "test": [
+        ('Which character made Walt Disney famous in 1928?',
+         [('a', 'Donald Duck'), ('b', 'Goofy'), ('c', 'Mickey Mouse'), ('d', 'Bugs Bunny')],
+         'c'),
+        ("Which film was Disney's first full-length animated feature?",
+         [('a', 'Bambi'), ('b', 'Snow White and the Seven Dwarfs'), ('c', 'Dumbo'), ('d', 'Pinocchio')],
+         'b'),
+        ('Where did Disneyland open?',
+         [('a', 'Orlando'), ('b', 'Paris'), ('c', 'Tokyo'), ('d', 'Anaheim, California')],
+         'd'),
+        ("What happened to Disney's first animation company in Kansas City?",
+         [('a', 'It made him rich'), ('b', 'It was sold to the army'), ('c', 'It went bankrupt'), ('d', 'It was never built')],
+         'c'),
+        ('What is merchandising?',
+         [('a', 'Selling characters on toys, clothes and books'), ('b', 'Selling houses'), ('c', 'Building ships'), ('d', 'Hiring actors')],
+         'a'),
+    ],
+}

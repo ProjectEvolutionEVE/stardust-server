@@ -1,0 +1,37 @@
+"""Search and Matching in Labour Markets: job hunting as search, vacancies and the unemployed, the Diamond, Mortensen and Pissarides work, the Beveridge curve, frictions and policy."""
+CODE = 'business5_searchunemp'
+BOOK = {
+    "title": 'Search and Matching in Labour Markets',
+    "subtitle": 'Why jobs and workers take time to find each other, and what that means for policy',
+    "chapters": [
+        ('Job hunting as search',
+         'Finding a job takes time. Workers search for offers, and firms search for workers. Both sides spend time and money looking, so matching is never instant.'),
+        ('Vacancies and the unemployed',
+         'Even with many open vacancies and many unemployed people, both sides still need time to find each other. A matching function describes how many matches a labour market produces in a given period.'),
+        ('Diamond, Mortensen and Pissarides',
+         'Peter Diamond, Dale Mortensen and Christopher Pissarides shared the 2010 Nobel Prize in Economics for their work on markets with search frictions. Their models explain why unemployment can persist even when jobs exist.'),
+        ('The Beveridge curve',
+         'Plotting vacancies against unemployment usually gives a downward slope: more vacancies tend to go with fewer unemployed people. A shift in the curve can show that matching has become harder.'),
+        ('Frictions',
+         'Frictions include a lack of information, mismatched skills and the cost of moving. Some unemployment is a normal part of a market in which people and jobs take time to meet.'),
+        ('Policy',
+         'Policy affects search. Better job-matching services, retraining and help with moving can shorten searches. Benefit design matters for the same reason, so economists debate how benefits are built, not only whether they exist.'),
+    ],
+    "test": [
+        ('What is search in a labour market?',
+         [('a', 'A type of computer program'), ('b', 'Workers and firms spending time and effort to find each other'), ('c', 'A ban on hiring'), ('d', 'Random selection by lottery')],
+         'b'),
+        ('Which three economists shared the 2010 Nobel Prize?',
+         [('a', 'Arrow, Debreu and Hicks'), ('b', 'Becker, Lucas and Phelps'), ('c', 'Hurwicz, Maskin and Myerson'), ('d', 'Diamond, Mortensen and Pissarides')],
+         'd'),
+        ('What does the Beveridge curve usually show?',
+         [('a', 'More vacancies with more unemployed, always'), ('b', 'No link at all'), ('c', 'More vacancies usually go with fewer unemployed people'), ('d', 'Wages rise with unemployment')],
+         'c'),
+        ('Which of these is an example of a friction?',
+         [('a', 'Lack of information about jobs and workers'), ('b', 'Perfect knowledge of every vacancy'), ('c', 'Instant matching of every worker'), ('d', 'No costs of moving anywhere')],
+         'a'),
+        ('What can shorten job searches?',
+         [('a', 'Closing all job boards'), ('b', 'Removing every match'), ('c', 'Better job-matching services and retraining'), ('d', 'Banning new jobs')],
+         'c'),
+    ],
+}

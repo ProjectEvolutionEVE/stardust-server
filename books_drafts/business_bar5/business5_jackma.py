@@ -1,0 +1,37 @@
+"""Jack Ma and Alibaba: an English teacher's start, trade for small firms, Taobao against eBay, Alipay, the 2014 listing and the 2020 turn."""
+CODE = 'business5_jackma'
+BOOK = {
+    "title": 'Jack Ma and Alibaba',
+    "subtitle": 'A marketplace built for small firms, and the rules that followed',
+    "chapters": [
+        ('An English teacher',
+         'Jack Ma worked as an English teacher in Hangzhou, China, before he started a business. He understood what small firms needed to find buyers. Teaching skills can help in business too.'),
+        ('Trade for small firms',
+         'In 1999 he founded Alibaba as an online marketplace where small businesses could find buyers. It let firms trade across the country and beyond. A good platform connects buyers and sellers.'),
+        ('Taobao against eBay',
+         'In 2003 Alibaba launched Taobao, a shopping site that competed with eBay in China. Taobao grew quickly. Competition can push a company to offer more to its customers.'),
+        ('Alipay',
+         'Alibaba set up Alipay, a payment service, to make buyers and sellers trust each other. Safe payments help online trade work. Trust is the basis of any online market.'),
+        ('The 2014 listing',
+         'In 2014 Alibaba listed its shares in New York, in one of the largest share sales ever. Going public raises money, and it also brings public scrutiny. Every listed firm answers to its shareholders.'),
+        ('The late-2020 turn',
+         "In late 2020 regulators halted the planned listing of Ant Group, an affiliate of Alibaba, after remarks by Jack Ma criticised financial regulation. Tighter rules followed for the sector. A company's fortunes depend on the rules it works under."),
+    ],
+    "test": [
+        ('What job did Jack Ma have before founding Alibaba?',
+         [('a', 'English teacher'), ('b', 'Doctor'), ('c', 'Pilot'), ('d', 'Farmer')],
+         'a'),
+        ('Which rival did Taobao compete with in China?',
+         [('a', 'Tesco'), ('b', 'Google'), ('c', 'eBay'), ('d', 'Walmart')],
+         'c'),
+        ('What is Alipay?',
+         [('a', 'A car part'), ('b', 'A payment service'), ('c', 'A type of tea'), ('d', 'A shipping route')],
+         'b'),
+        ('In which city did Alibaba list its shares in 2014?',
+         [('a', 'London'), ('b', 'Shanghai'), ('c', 'Tokyo'), ('d', 'New York')],
+         'd'),
+        ("What was Alibaba's early goal?",
+         [('a', 'A car builder'), ('b', 'A mine operator'), ('c', 'An online marketplace for small businesses to find buyers'), ('d', 'A film studio')],
+         'c'),
+    ],
+}

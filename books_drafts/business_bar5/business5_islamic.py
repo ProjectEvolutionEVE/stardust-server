@@ -1,0 +1,37 @@
+"""Islamic Finance: no fixed interest, profit sharing, murabaha, sukuk, ethical screens, and growth around the world."""
+CODE = 'business5_islamic'
+BOOK = {
+    "title": 'Islamic Finance',
+    "subtitle": 'Finance without fixed interest, shared profits, and growth worldwide',
+    "chapters": [
+        ('No fixed interest',
+         'Islamic finance follows Sharia principles, which prohibit charging fixed interest on loans. Instead, returns come from shared profit, from trade, or from the use of assets. The approach changes how money is lent and invested.'),
+        ('Profit sharing',
+         'In a profit-sharing arrangement, the bank and the business owner share the profits of a venture. Losses are also shared, in agreed ways. The two sides succeed or struggle together, rather than the lender collecting a fixed sum.'),
+        ('Murabaha',
+         'Murabaha is a cost-plus sale. The bank buys an asset, such as a house or equipment, and sells it to the customer at a known markup. The customer pays in instalments. The markup is agreed in advance and is clear from the start.'),
+        ('Sukuk',
+         'Sukuk are certificates that are often described as Islamic bonds. Each one represents a share in an asset or a project, and returns come from its income rather than from a fixed interest rate. They are traded and used by governments and companies.'),
+        ('Ethical screens',
+         'Islamic finance also avoids investments in certain activities, such as alcohol, gambling and some other businesses. Funds apply screens to choose companies that meet these standards. Many investors who are not Muslim also use ethical screens.'),
+        ('Growth worldwide',
+         'Islamic finance has grown into a global industry, with banks and funds in many countries. Its products are now common in parts of Asia, the Middle East and Europe. Its growth shows that a finance system can be built on different principles.'),
+    ],
+    "test": [
+        ('What does Islamic finance generally prohibit on loans?',
+         [('a', 'Using banks at all'), ('b', 'Saving any money'), ('c', 'Paying bills'), ('d', 'Charging fixed interest')],
+         'd'),
+        ('What is profit sharing?',
+         [('a', 'A lender collects a fixed sum no matter what'), ('b', 'Two shops sharing a shop sign'), ('c', 'A bank and a business owner share the profits and losses of a venture'), ('d', 'Dividing a pizza between friends')],
+         'c'),
+        ('What is murabaha?',
+         [('a', 'A cost-plus sale with a markup agreed in advance'), ('b', 'A type of ship'), ('c', 'A form of football'), ('d', 'A kind of tea')],
+         'a'),
+        ('What are sukuk?',
+         [('a', 'Traditional clothes'), ('b', 'Bank cards with pictures'), ('c', 'Certificates representing a share in an asset or project, often called Islamic bonds'), ('d', 'Small boats')],
+         'c'),
+        ('What do ethical screens do?',
+         [('a', 'Make every company buy shares in every other company'), ('b', 'Avoid investments in certain activities such as alcohol and gambling'), ('c', 'Block all sunlight'), ('d', 'Guarantee profits for everyone')],
+         'b'),
+    ],
+}

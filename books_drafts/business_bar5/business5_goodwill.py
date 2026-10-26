@@ -1,0 +1,37 @@
+"""Goodwill and Intangible Assets: what a company pays above book value, how brands and patents count, and why write-downs happen."""
+CODE = 'business5_goodwill'
+BOOK = {
+    "title": 'Goodwill and Intangible Assets',
+    "subtitle": 'Paying for what cannot be touched, and what happens when it loses value',
+    "chapters": [
+        ('Paying above book value',
+         "When one company buys another, it often pays more than the value of the things it can list one by one. The extra is not a mistake. It reflects the buyer's view of the future earnings, the customers and the know-how it gets with the deal."),
+        ('What goodwill is',
+         "Goodwill is the gap between the price paid for a business and the fair value of the identifiable assets and debts taken over. It is recorded only when a business is bought. A firm's own reputation, built over time, does not appear as goodwill on its books."),
+        ('Brands and patents',
+         'Some intangible assets can be identified and valued separately, such as patents, software and brand names. They are recorded apart from goodwill. Some are spread out over time as they are used up, and others are checked each year instead.'),
+        ('Impairment tests',
+         'Goodwill is not spread out over time in the same way as a machine. Instead, the business tests each year whether it is still worth at least what the accounts say. If it is worth less, the difference is written off as an impairment loss.'),
+        ('Write-downs such as AOL Time Warner',
+         'In 2002 the merged media company AOL Time Warner wrote down tens of billions of dollars of goodwill, after the value paid for the merger proved too high. Large write-downs like this show that the price paid for a business can turn out to be a poor bet.'),
+        ('Valuing the unseen',
+         'Intangible values are hard to measure, and estimates can be optimistic. A reader should ask what the buyer expected and whether the business is delivering it. Large goodwill on a balance sheet is a claim about the future, and it is worth checking.'),
+    ],
+    "test": [
+        ('What is goodwill?',
+         [('a', 'A cash reserve held by a bank'), ('b', 'A tax on profits'), ('c', 'The amount paid above the fair value of the net assets bought'), ('d', 'Stock held for sale')],
+         'c'),
+        ('What does an impairment test check?',
+         [('a', 'The colour of the company logo'), ('b', 'Whether goodwill is worth less than the amount the accounts show'), ('c', 'Whether staff are happy at work'), ('d', 'The rate of tax paid')],
+         'b'),
+        ('Which of these is an example of an intangible asset?',
+         [('a', 'Cash'), ('b', 'A delivery van'), ('c', 'Stock on the shelves'), ('d', 'A patent')],
+         'd'),
+        ('What happened to AOL Time Warner in 2002?',
+         [('a', 'It doubled its dividend'), ('b', 'It was bought by a bank'), ('c', 'It wrote down tens of billions of dollars of goodwill'), ('d', 'It closed all of its newspapers')],
+         'c'),
+        ('Why should a reader be careful with large goodwill?',
+         [('a', 'It reflects a price paid for the future, which may not hold up if the business underperforms'), ('b', 'It is always held as cash'), ('c', 'It is taxed twice'), ('d', "It lowers the company's debt")],
+         'a'),
+    ],
+}

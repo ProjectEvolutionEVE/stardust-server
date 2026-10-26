@@ -1,0 +1,37 @@
+"""Konosuke Matsushita: the founder of Panasonic, with the dam idea, the water philosophy and a long view on staff."""
+CODE = 'business5_matsushita'
+BOOK = {
+    "title": 'Konosuke Matsushita and the Company He Founded',
+    "subtitle": 'Dams, water and a long view of people',
+    "chapters": [
+        ('From small beginnings',
+         'Konosuke Matsushita started his company in Osaka with simple electrical goods. Among his early products were an electric socket and a bicycle lamp. He began with small, useful things that people needed.'),
+        ('The dam idea',
+         'Matsushita compared a business to a dam. A dam stores water so the flow stays steady in dry and wet times. He argued that a firm should keep reserves so it can keep going through hard years.'),
+        ('A philosophy of water',
+         'He liked the image of water, which takes the shape of its container and keeps moving. He taught staff to be flexible and steady in their work. Water became a symbol of his approach to business.'),
+        ('Staff and loyalty',
+         'Matsushita is linked with lifetime employment, where many staff expected to stay with one firm for most of their working lives. The practice gave people security and built loyalty. Such systems also carry costs, which later firms had to weigh.'),
+        ('The firm today',
+         'His company is now known as Panasonic. Its history runs from those first small products to large electronics and appliance businesses. A firm can outlast its founder if it keeps a clear purpose.'),
+        ('Lessons',
+         "Matsushita's story shows the value of steady reserves, the courage to start small, and care for staff. Read it as history, and see which of his ideas still fit a modern business."),
+    ],
+    "test": [
+        ("Which of these was one of Matsushita's early products?",
+         [('a', 'A steam engine'), ('b', 'A bicycle lamp'), ('c', 'A car'), ('d', 'A telephone exchange')],
+         'b'),
+        ('What did Matsushita compare a well-run business to?',
+         [('a', 'A kite'), ('b', 'A train timetable'), ('c', 'A tree in a park'), ('d', 'A dam that stores water')],
+         'd'),
+        ('Which image did Matsushita often use in his teaching?',
+         [('a', 'Fire'), ('b', 'Stone'), ('c', 'Water'), ('d', 'Gold')],
+         'c'),
+        ('What is the company best known as today?',
+         [('a', 'Panasonic'), ('b', 'Toyota'), ('c', 'Nikon'), ('d', 'Canon')],
+         'a'),
+        ('What does lifetime employment mean?',
+         [('a', 'Staff are paid for life after they leave'), ('b', 'Staff are hired for one day'), ('c', 'Staff expect to stay with one firm for most of their working lives'), ('d', 'Staff are banned from changing jobs')],
+         'c'),
+    ],
+}

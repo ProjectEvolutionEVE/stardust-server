@@ -1,0 +1,37 @@
+"""The Resource-Based View: a firm keeps an edge only when it owns resources that are valuable, rare, hard to copy and hard to replace."""
+CODE = 'business5_rbv'
+BOOK = {
+    "title": 'The Resource-Based View',
+    "subtitle": "Why some firms keep an edge: Barney's VRIN test and the capabilities behind it",
+    "chapters": [
+        ('A different question',
+         "Most strategy asks what a firm should do in its market. The resource-based view asks what the firm has inside it. Jay Barney's 1991 work made the point that a firm's own resources can be the source of lasting advantage."),
+        ('Valuable',
+         'A resource is valuable when it helps the firm do something useful, such as serve customers better or cut costs. A resource that does nothing for the business is not an advantage, however unusual it is.'),
+        ('Rare, and hard to imitate',
+         'A valuable resource is only a lasting edge if few others have it. If rivals can easily copy it, the edge soon goes. Some resources are hard to imitate because they depend on history, culture or a web of relationships.'),
+        ('Non-substitutable',
+         "A resource also needs no ready replacement. If rivals can reach the same result another way, the advantage fades. Barney's four tests are often called VRIN: valuable, rare, inimitable and non-substitutable."),
+        ('Capabilities against assets',
+         'Assets are things a firm owns, such as a building or a patent. Capabilities are the skills of putting assets to work together. Often the capability is the harder thing to copy, because it lives in people and routines.'),
+        ('Using the test',
+         "Take your firm's strongest point and run it through the four tests. If it fails any one of them, it is less of a lasting edge than it seems. Then ask what would make it harder to copy, and what would make it last."),
+    ],
+    "test": [
+        ('What does the resource-based view ask a firm to look at first?',
+         [('a', 'The weather'), ('b', 'Only its advertising'), ('c', 'Its inner resources'), ('d', 'The price of its shares')],
+         'c'),
+        ('What does VRIN stand for?',
+         [('a', 'Valuable, rare, inimitable, non-substitutable'), ('b', 'Varied, reliable, independent, new'), ('c', 'Visible, regulated, insured, national'), ('d', 'Verified, risky, internal, numbered')],
+         'a'),
+        ('Why is a rare resource not enough on its own?',
+         [('a', 'Rare things are always illegal'), ('b', 'Rare things cost nothing'), ('c', 'It must also be valuable, and hard for rivals to imitate or replace'), ('d', 'Rare things are always small')],
+         'c'),
+        ('What is the difference between an asset and a capability?',
+         [('a', 'An asset is for sale; a capability is not'), ('b', 'An asset is a thing owned; a capability is the skill of using assets together'), ('c', 'An asset is a skill; a capability is a building'), ('d', 'There is no difference')],
+         'b'),
+        ('Why are capabilities often harder to copy than assets?',
+         [('a', 'They are always stored in a vault'), ('b', 'They are sold in shops'), ('c', 'They expire after one year'), ('d', 'They live in people and routines')],
+         'd'),
+    ],
+}

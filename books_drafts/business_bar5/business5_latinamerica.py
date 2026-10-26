@@ -1,0 +1,37 @@
+"""The Latin American Debt Crisis: cheap loans in the 1970s, Mexico in 1982, the lost decade, the Brady plan, and the human cost."""
+CODE = 'business5_latinamerica'
+BOOK = {
+    "title": 'The Latin American Debt Crisis',
+    "subtitle": 'Cheap loans, Mexico in 1982, the lost decade, and the cost to ordinary people',
+    "chapters": [
+        ('Cheap loans in the 1970s',
+         'In the 1970s banks had large amounts of money to lend, and many countries in Latin America borrowed heavily. Interest rates were low, and the loans seemed affordable. Many governments spent the money on large projects.'),
+        ('Mexico in 1982',
+         'In August 1982 Mexico announced that it could no longer meet its debt payments. Interest rates had risen sharply, and the country could not refinance its loans. Other countries in the region soon faced the same problem.'),
+        ('The lost decade',
+         'The 1980s became known as the lost decade. Incomes fell, investment stalled, and living standards dropped in many countries. Governments cut spending, and the debt burden remained a heavy weight for years.'),
+        ('The Brady Plan',
+         'In 1989 the United States proposed a plan named after Treasury Secretary Nicholas Brady. Banks agreed to reduce and restructure their loans, and the debts were exchanged for new bonds with stronger backing. The plan helped many countries return to markets.'),
+        ('Reform',
+         'Many countries opened their economies, sold state companies, and tried to control inflation. Some reforms were successful, while others were controversial. The changes shaped the region for many years.'),
+        ('Effects on ordinary people',
+         'The crisis fell hardest on ordinary families. Wages fell, jobs were lost, and public services were cut. The human cost of the debt crisis is a lasting part of its story, and a reason to be careful about borrowing in foreign money.'),
+    ],
+    "test": [
+        ('Why did Latin American countries borrow heavily in the 1970s?',
+         [('a', 'Banks had large amounts of money to lend at low rates'), ('b', 'Loans were given away for free'), ('c', 'They had no need for money'), ('d', 'Banks were not allowed to lend')],
+         'a'),
+        ('What did Mexico announce in August 1982?',
+         [('a', 'It would stop all trade with its neighbours'), ('b', 'It would print new gold coins'), ('c', 'It could no longer meet its debt payments'), ('d', 'It would close its schools for a year')],
+         'c'),
+        ('What is the lost decade?',
+         [('a', 'A decade when nothing was ever lost'), ('b', 'The 1980s, when incomes fell and investment stalled in many countries'), ('c', 'A famous music festival'), ('d', 'A period of record tourism')],
+         'b'),
+        ('What did the Brady Plan do?',
+         [('a', 'Banned all loans to the region'), ('b', 'Gave every family a car'), ('c', 'Moved the capital cities to the coast'), ('d', 'Reduced and restructured bank loans into new bonds with stronger backing')],
+         'd'),
+        ('Who bore the hardest effects of the crisis?',
+         [('a', 'Only the largest banks in Europe'), ('b', 'Only tourists'), ('c', 'Ordinary families, through lower wages, lost jobs and cut services'), ('d', 'Nobody at all')],
+         'c'),
+    ],
+}

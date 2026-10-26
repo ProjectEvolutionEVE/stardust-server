@@ -1,0 +1,37 @@
+"""Jack Welch and General Electric: number one or two, delayering, Six Sigma, stack ranking, and the later reappraisal."""
+CODE = 'business5_welch'
+BOOK = {
+    "title": 'Jack Welch and General Electric',
+    "subtitle": 'Leading a giant company through change, and the debate it left',
+    "chapters": [
+        ('Becoming chief executive',
+         'Jack Welch became chief executive of General Electric in 1981. He inherited a large company with many layers of management. He set out to change how it worked from top to bottom.'),
+        ('Number one or number two',
+         "Welch's rule was that each GE business should be first or second in its market. Businesses that were not should be fixed, sold or closed. The rule forced the company to focus on what it did best."),
+        ('Delayering',
+         'Delayering means removing layers of management, so that decisions move faster. Welch believed that many layers slowed a company and hid problems. Fewer layers can make a firm quicker to act.'),
+        ('Six Sigma',
+         'Six Sigma is a method for finding and cutting defects and variation in a process. GE adopted it widely in the 1990s. It is a way of measuring quality with numbers and then improving it step by step.'),
+        ('Stack ranking',
+         'Stack ranking means ranking staff in order at review time and acting on the results. Those at the bottom could be moved out. The practice was powerful and also widely criticised for its effects on teamwork.'),
+        ('The later reappraisal',
+         "Many business writers later questioned Welch's methods, including stack ranking, and some firms dropped the practice. In 2009 Welch himself called a narrow focus on short-term shareholder value 'the dumbest idea in the world'. Judge a leader's record over the long run, not only in one year."),
+    ],
+    "test": [
+        ('In what year did Jack Welch become chief executive of General Electric?',
+         [('a', '1961'), ('b', '1971'), ('c', '1981'), ('d', '1991')],
+         'c'),
+        ("Welch's rule was to be first or second in each market. What did he do with businesses that were not?",
+         [('a', 'Keep them unchanged'), ('b', 'Sell, fix or close them'), ('c', 'Move them to the army'), ('d', 'Hand them to staff')],
+         'b'),
+        ('What is Six Sigma?',
+         [('a', 'A design for buildings'), ('b', 'A type of music'), ('c', 'A pilot training course'), ('d', 'A method for cutting defects and variation in a process')],
+         'd'),
+        ('What does stack ranking mean?',
+         [('a', 'Ranking products by colour'), ('b', 'Stacking boxes in a warehouse'), ('c', 'Ranking staff in order and acting on those at the bottom'), ('d', 'Rating customers by postcode')],
+         'c'),
+        ('What is delayering?',
+         [('a', 'Reducing the number of management levels'), ('b', 'Adding new floors to offices'), ('c', 'Painting in layers'), ('d', 'Giving more managers titles')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Electrifying a Nation: utilities, falling prices, regulated monopolies, rural electrification and the grid."""
+CODE = 'business5_electricity'
+BOOK = {
+    "title": 'Electrifying a Nation',
+    "subtitle": 'Utilities, falling prices, regulated monopolies and the grid',
+    "chapters": [
+        ('Power for sale',
+         'In the 1880s, electric companies began selling light and power to homes and factories. Early systems were small and local, often serving one district of a city. Selling power meant building wires, plants, and a customer base at the same time.'),
+        ('Samuel Insull',
+         'Samuel Insull ran electric companies in Chicago and built a large empire of utilities across the country. He argued that selling more power to more customers spread the cost of each plant over more sales, which could lower prices. Insull showed how size could bring cheaper bills.'),
+        ('Falling prices',
+         'As generating plants grew bigger and more efficient, the price of electricity fell over the early twentieth century. Cheaper power made electric lights, motors, and appliances worth buying. More use then spread the costs across more customers.'),
+        ('Regulated monopolies',
+         'Electric service works best as one set of wires on each street, so most places ended up with a single company. Governments accepted this natural monopoly, but set rules for its prices and profits. In return the company had a guaranteed market and a fair return.'),
+        ('Rural electrification and the holding company',
+         "Many farms had no power until the Rural Electrification Act of 1936 helped bring lines to them. Insull's empire was built through holding companies, which owned other companies through layers of ownership. When the Depression hit in the early 1930s, that structure collapsed and cost many investors dearly."),
+        ('The grid today',
+         "Today's power grid links plants, lines, and homes across whole regions. Supply and demand must be kept in balance at every moment. The lesson of the early industry is that a network can be a huge public good, and that rules, prices, and investment must all work together."),
+    ],
+    "test": [
+        ('What was the main effect of building bigger, more efficient power plants?',
+         [('a', 'Power became more expensive'), ('b', 'Farms lost their lines'), ('c', 'Electricity became cheaper over time'), ('d', 'Customers stopped buying appliances')],
+         'c'),
+        ('Why did most towns end up with a single electric company?',
+         [('a', 'Each city had only one plant ever built'), ('b', 'Two sets of wires on every street would be wasteful'), ('c', 'Customers were not allowed to buy electricity'), ('d', 'Insull owned every company in the country')],
+         'b'),
+        ('What did the Rural Electrification Act of 1936 help to do?',
+         [('a', 'Close all city plants'), ('b', 'Ban holding companies'), ('c', 'Raise the price of appliances'), ('d', 'Bring power lines to many farms')],
+         'd'),
+        ('What happened to the layered holding companies in the Depression?',
+         [('a', 'They made electricity prices fall'), ('b', 'They were banned in 1900'), ('c', 'They collapsed and cost investors dearly'), ('d', 'They had no investors at all')],
+         'c'),
+        ('Why are the prices of electric power often regulated?',
+         [('a', 'Because one company faces little competition, so rules protect customers'), ('b', 'To make the company bigger'), ('c', 'So that lights stay on at night only'), ('d', 'To stop power from being sold')],
+         'a'),
+    ],
+}

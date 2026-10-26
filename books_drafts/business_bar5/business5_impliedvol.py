@@ -1,0 +1,37 @@
+"""Volatility and Implied Volatility: how big the swings are, what prices say about them, and how people trade them."""
+CODE = 'business5_impliedvol'
+BOOK = {
+    "title": 'Volatility and Implied Volatility',
+    "subtitle": 'Measuring swings, reading them from prices, and trading them',
+    "chapters": [
+        ('Measuring swings',
+         'Volatility is a measure of how much a price moves up and down over time. A stock that moves a little each day has low volatility. One that jumps around has high volatility. It is usually stated as an annual percentage.'),
+        ('Historical volatility',
+         'Historical volatility is calculated from past prices. You take the daily moves, measure how spread out they are, and scale the result to a year. It tells you what has happened, not what will happen.'),
+        ('Implied volatility',
+         'Implied volatility is the volatility that makes an option formula match the price in the market. Because option prices reflect what buyers expect, implied volatility is a forecast that the market has already built into the price.'),
+        ('The volatility smile',
+         'If options were priced with one volatility, the implied volatility would be the same for every strike. In practice it is higher for options far above or below the current price. When plotted, this shape looks like a smile, and it shows that traders pay extra for protection against extreme moves.'),
+        ('Volatility clusters',
+         'Calm periods tend to follow calm periods, and turbulent periods tend to follow turbulent ones. This is called volatility clustering. It means a big move today makes a big move tomorrow more likely, which is useful when judging risk.'),
+        ('Trading volatility',
+         'Some traders bet directly on volatility rather than on the direction of prices. They can buy or sell options, or contracts linked to volatility, to express a view. These trades can make money, but they can also lose a great deal if the market surprises them.'),
+    ],
+    "test": [
+        ('What does volatility measure?',
+         [('a', 'How many people own a stock'), ('b', "The company's profit"), ('c', 'How much a price moves up and down over time'), ('d', 'The weight of a share certificate')],
+         'c'),
+        ('How is historical volatility calculated?',
+         [('a', 'From past prices'), ('b', 'From the weather'), ('c', 'From the number of employees'), ('d', 'From the colour of the chart')],
+         'a'),
+        ('What is implied volatility?',
+         [('a', 'The fee a broker charges'), ('b', 'The average price of the last year'), ('c', 'The volatility that makes an option formula match the market price'), ('d', 'The number of shares in issue')],
+         'c'),
+        ('What does the volatility smile show?',
+         [('a', 'Volatility is always the same'), ('b', 'Traders pay more for options far from the current price than a single volatility would suggest'), ('c', 'Prices never move'), ('d', 'Options are free on Fridays')],
+         'b'),
+        ('What is volatility clustering?',
+         [('a', 'Shares of a company being sold in one place'), ('b', 'A rule that bans trading'), ('c', 'A way to pay interest'), ('d', 'Big moves tend to be followed by more big moves, and calm by calm')],
+         'd'),
+    ],
+}

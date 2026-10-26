@@ -1,0 +1,37 @@
+"""Junk Bonds and Michael Milken: high-yield debt, Drexel's market, takeovers, the 1990 collapse, and what followed."""
+CODE = 'business5_junk'
+BOOK = {
+    "title": 'Junk Bonds and Michael Milken',
+    "subtitle": 'High-yield debt, the takeover boom, and a collapse that changed the market',
+    "chapters": [
+        ('High-yield debt',
+         'Junk bonds are bonds issued by companies with weaker credit ratings. They pay higher interest to make up for the greater risk of default. The name is blunt, but the idea is simple: more risk, more return.'),
+        ("Drexel's market",
+         'In the 1970s and 1980s, the investment bank Drexel Burnham Lambert built a large market for these bonds. Michael Milken led the group that sold them. Drexel made high-yield debt a major source of money for companies that could not borrow cheaply otherwise.'),
+        ('Takeovers',
+         "Junk bonds helped finance many takeovers, where one company or investor bought another. Buyers could borrow against the target's future cash flow. The boom in such deals reshaped many industries."),
+        ('The insider trading case',
+         'Milken and others were investigated for securities fraud, including insider trading. In 1990 Milken pleaded guilty to charges and was sentenced to prison. His case became one of the best-known securities cases of its time.'),
+        ('The 1990 collapse',
+         'Drexel was weakened by the investigations and by heavy losses in its own holdings. It filed for bankruptcy in 1990. The collapse ended one of the largest junk bond markets of the era and hurt many investors and companies.'),
+        ('The market after',
+         'After the collapse, the high-yield market slowly rebuilt itself with more careful lending and more investors. Junk bonds are still an important part of finance today. The story is a reminder that high returns usually come with real risk.'),
+    ],
+    "test": [
+        ('What does a junk bond pay to make up for its extra risk?',
+         [('a', 'A free holiday'), ('b', 'A box of chocolates'), ('c', 'No interest at all'), ('d', 'Higher interest')],
+         'd'),
+        ('Which investment bank built a large market for junk bonds in the 1970s and 1980s?',
+         [('a', 'A village bakery'), ('b', 'A school library'), ('c', 'Drexel Burnham Lambert'), ('d', 'A bus company')],
+         'c'),
+        ('What were junk bonds often used to finance?',
+         [('a', 'Takeovers of other companies'), ('b', 'Birthday parties'), ('c', 'Paintings of animals'), ('d', 'Weather balloons')],
+         'a'),
+        ('What happened to Michael Milken in 1990?',
+         [('a', 'He was given an award for kindness'), ('b', 'He retired to a farm for life'), ('c', 'He pleaded guilty to charges and was sentenced to prison'), ('d', 'He won a national election')],
+         'c'),
+        ('What happened to Drexel in 1990?',
+         [('a', 'It doubled in size'), ('b', 'It filed for bankruptcy'), ('c', 'It moved to a ship'), ('d', 'It became a school')],
+         'b'),
+    ],
+}

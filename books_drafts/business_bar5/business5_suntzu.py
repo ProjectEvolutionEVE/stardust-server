@@ -1,0 +1,37 @@
+"""Sun Tzu and Strategy: lessons from The Art of War, and the cautions to keep in mind when borrowing from war into business."""
+CODE = 'business5_suntzu'
+BOOK = {
+    "title": 'Sun Tzu and Strategy',
+    "subtitle": 'Lessons from The Art of War, and why business should borrow them with care',
+    "chapters": [
+        ('The Art of War',
+         'The Art of War is a short Chinese military text, traditionally linked to the general Sun Tzu and written many centuries ago. Its thirteen chapters cover planning, terrain, timing and the handling of armies. Business readers have found it useful for more than a hundred years.'),
+        ('Know yourself and your rival',
+         'A well-known line in the book says that one who knows both themselves and their enemy will not be in danger in a hundred battles. In business, this means being honest about your own strengths and weaknesses, and studying your rivals as closely as you study your plans.'),
+        ('Winning without fighting',
+         'Sun Tzu praised the leader who wins without fighting. The best outcome is the one where the rival gives up before a clash. In business, this can mean building such a strong position that a rival chooses not to compete.'),
+        ('Deception and speed',
+         'The book treats deception and speed as tools of war. A plan can hide its aim, and a fast move can catch a slow rival off guard. In business, these ideas are best read as a lesson in clear thinking and quick action, not in lying to customers.'),
+        ('The cautions',
+         'The book also warns against long wars, costly campaigns and leaders who act from anger. Business that borrows military ideas can forget that customers are not enemies. Ideas drawn from war need to be checked against the real facts of a market.'),
+        ('Using the book well',
+         'Read the book for its questions, not for slogans. Ask what you know about yourself, what you know about rivals, and whether a move is needed at all. Then test each idea against the market you actually serve.'),
+    ],
+    "test": [
+        ('What is The Art of War?',
+         [('a', 'A modern software manual'), ('b', 'A book of cooking recipes'), ('c', 'A short Chinese military text'), ('d', 'A treaty between two banks')],
+         'c'),
+        ('What does the line about knowing yourself and your enemy suggest?',
+         [('a', 'Be honest about your own strengths and study your rivals'), ('b', 'Ignore your rivals'), ('c', "Copy every rival's plan"), ('d', 'Avoid all planning')],
+         'a'),
+        ('What does Sun Tzu praise in a leader?',
+         [('a', 'Starting the most wars'), ('b', 'Acting in anger'), ('c', 'Winning without fighting'), ('d', 'Spending the most money')],
+         'c'),
+        ('Which two ideas does the book treat as tools of war?',
+         [('a', 'Long delay and rest'), ('b', 'Deception and speed'), ('c', 'Gold and silver'), ('d', 'Songs and poems')],
+         'b'),
+        ('What caution does the text give to business readers?',
+         [('a', 'Military ideas always work in business'), ('b', 'Never study rivals'), ('c', 'Always fight every rival at once'), ('d', 'Customers are not enemies, so check military ideas against the real market')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Rubber Boom: wild Amazon rubber, Manaus, Wickham's seeds, Malayan plantations, Ford's Fordlandia and synthetic rubber."""
+CODE = 'business5_rubber'
+BOOK = {
+    "title": 'The Rubber Boom',
+    "subtitle": "Wild rubber, Manaus, Wickham's seeds, plantations, and Fordlandia",
+    "chapters": [
+        ('Wild rubber',
+         "The Amazon's rubber trees were tapped for latex by workers who moved through the forest. Rubber was used for waterproof coats, tyres, and many new machines. Demand grew quickly in the late 1800s."),
+        ('Manaus',
+         'The city of Manaus grew rich during the rubber boom, and it built grand buildings, including an opera house. Its wealth rested on wild rubber gathered in harsh conditions. The boom faded when cheaper plantation rubber arrived from Asia.'),
+        ("Wickham's seeds",
+         "In 1876 Henry Wickham carried rubber seeds out of Brazil. The seeds were grown in British colonial gardens and then sent to plantations in Malaya and Southeast Asia. This ended the Amazon's control of the trade."),
+        ('Plantations in Malaya',
+         'Rubber trees grown on plantations in Malaya and nearby places proved cheaper than wild rubber. Plantations could plant trees in rows, tap them efficiently, and manage costs. Their growth moved the centre of the trade to Asia.'),
+        ("Ford's Fordlandia",
+         'Henry Ford tried to grow his own rubber in Brazil at a settlement called Fordlandia, from the late 1920s. The plan failed, in part because of a leaf blight and poor planning. It is a famous lesson in trying to buy your way into a supply chain without local knowledge.'),
+        ('Synthetic rubber',
+         'Chemists developed synthetic rubber, which became important in the twentieth century, especially in wartime. Synthetic rubber gave makers a substitute when natural rubber was scarce. Natural and synthetic rubber now compete in the market.'),
+    ],
+    "test": [
+        ('Who carried rubber seeds out of Brazil in 1876?',
+         [('a', 'Henry Wickham'), ('b', 'Samuel Insull'), ('c', 'Lin Zexu'), ('d', 'Norman Borlaug')],
+         'a'),
+        ('Which city grew rich in the rubber boom and built an opera house?',
+         [('a', 'Venice'), ('b', 'Johannesburg'), ('c', 'Manaus'), ('d', 'Canton')],
+         'c'),
+        ("What was Henry Ford's rubber settlement in Brazil called?",
+         [('a', 'Banda'), ('b', 'Fordlandia'), ('c', 'Lancashire'), ('d', 'Witwatersrand')],
+         'b'),
+        ('Why did plantation rubber beat wild rubber on price?',
+         [('a', 'Wild trees were banned'), ('b', 'Plantations used no workers'), ('c', 'Rubber was given away'), ('d', 'Trees were grown in rows and tapped efficiently')],
+         'd'),
+        ('What did synthetic rubber offer?',
+         [('a', 'A rubber that never breaks'), ('b', 'A return to wild rubber'), ('c', 'A substitute when natural rubber was scarce'), ('d', 'Free tyres for all')],
+         'c'),
+    ],
+}

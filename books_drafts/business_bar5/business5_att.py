@@ -1,0 +1,37 @@
+"""AT&T and the Telephone Monopoly: Bell's patent, universal service, Bell Labs, the 1984 breakup, and the phone market after."""
+CODE = 'business5_att'
+BOOK = {
+    "title": 'AT&T and the Telephone Monopoly',
+    "subtitle": "From Bell's patent to a breakup and a new phone market",
+    "chapters": [
+        ('A patent and a company',
+         'Alexander Graham Bell received his telephone patent in 1876. The Bell companies grew quickly, and by the early 1900s AT&T, the American Telephone and Telegraph Company, was the main long-distance business in the country. Owning the wires and the switches gave it great power over who could make a call and at what price.'),
+        ('Universal service',
+         'Theodore Vail, who led AT&T in the early 1900s, promoted the idea of universal service: one system that reaches every home and connects with every other. The company argued that one network was more useful than many small ones that could not talk to each other. The idea drew both praise and criticism, because one firm also faced little competition.'),
+        ('Bell Labs',
+         'Bell Labs was founded in 1925 as a research arm shared by AT&T and Western Electric. Its scientists worked on telephones, radio, and later the transistor. A company that can afford long research can pay off over many years.'),
+        ('Regulation and the monopoly',
+         'For most of the twentieth century, the government let AT&T run as a regulated monopoly. Regulators set the prices the company could charge, in return for a guaranteed business. Monopoly made the network reliable, but it left little room for rival phone makers and services.'),
+        ('The 1984 breakup',
+         'A settlement with the US government led to the company being split. On January 1, 1984, local phone service went to seven regional companies, often called the Baby Bells, while long distance stayed with AT&T. Competition in long distance and equipment grew after that.'),
+        ('The phone market after',
+         'Once the network was split, new firms could compete to sell phones, long distance, and later mobile service. The lesson is that a natural monopoly may need rules, and that rules can open a market to new ideas. Today most of what a phone does is built on software.'),
+    ],
+    "test": [
+        ('In what year did Alexander Graham Bell receive his telephone patent?',
+         [('a', '1904'), ('b', '1925'), ('c', '1984'), ('d', '1876')],
+         'd'),
+        ('Which AT&T leader promoted the idea of universal service?',
+         [('a', 'Samuel Insull'), ('b', 'Clarence Saunders'), ('c', 'Theodore Vail'), ('d', 'Henry Wickham')],
+         'c'),
+        ('What was Bell Labs?',
+         [('a', 'A research arm shared by AT&T and Western Electric'), ('b', 'A government agency that set phone prices'), ('c', 'A retail chain of telephone shops'), ('d', 'A company that laid undersea cables only')],
+         'a'),
+        ("In what year did AT&T's breakup take effect?",
+         [('a', '1962'), ('b', '1978'), ('c', '1984'), ('d', '1982')],
+         'c'),
+        ('What did the 1984 breakup do?',
+         [('a', 'It ended all long-distance calls'), ('b', 'It split local service into regional companies and kept long distance with AT&T'), ('c', 'It merged AT&T with Bell Labs'), ('d', 'It banned mobile phones')],
+         'b'),
+    ],
+}

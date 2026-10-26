@@ -1,0 +1,37 @@
+"""Survivorship Bias: Abraham Wald and the planes, funds that closed, successful founders, hidden denominators and how to correct for them."""
+CODE = 'business5_survivorship'
+BOOK = {
+    "title": 'Survivorship Bias',
+    "subtitle": 'Abraham Wald and the planes, funds that closed, successful founders and hidden denominators',
+    "chapters": [
+        ('The planes that came back',
+         'During the Second World War, the US military studied the bullet holes in planes that had returned from missions. Abraham Wald, a statistician, pointed out the flaw: the planes that did not return were missing from the data. The places with no holes on the returning planes were the places that most needed armour.'),
+        ('Funds that closed',
+         'Investment funds that performed badly often close or merge, and then drop out of the lists. A list of the surviving funds can look better than the whole industry really was. The missing funds are part of the lesson.'),
+        ('Successful founders',
+         'Stories of successful founders are everywhere, and they are told by the winners. The many who tried and failed rarely write books. Judging a strategy by its survivors overstates its chances.'),
+        ('Hidden denominators',
+         'A success rate needs a denominator: the total number who tried. If the failures are hidden, the rate looks too high. Always ask how many started, not only how many finished well.'),
+        ('How to correct',
+         'To correct for survivorship bias, include the dropped cases in the data. Follow the whole group from the start, not only the members still around at the end. Ask who is missing from the sample.'),
+        ('Reading success stories',
+         'When you read a success story, ask what happened to people who used the same plan and did not succeed. Look for the denominator, the base rate, and the timeline. A good story can still be a poor guide.'),
+    ],
+    "test": [
+        ('What did Abraham Wald point out about the planes?',
+         [('a', 'They were too slow'), ('b', 'The planes that did not return were missing from the data'), ('c', 'They were made of paper'), ('d', 'They never flew')],
+         'b'),
+        ('What is survivorship bias?',
+         [('a', 'A bias towards new cars'), ('b', 'A dislike of surviving'), ('c', 'A type of weather'), ('d', 'Judging a group only by the members that remained')],
+         'd'),
+        ('What is a denominator in a success rate?',
+         [('a', 'The colour of a graph'), ('b', 'The name of a bank'), ('c', 'The total number who tried'), ('d', 'A kind of insurance')],
+         'c'),
+        ('What helps correct survivorship bias?',
+         [('a', 'Including the dropped cases from the start'), ('b', 'Reading only the winners'), ('c', 'Ignoring the failures'), ('d', 'Stopping the study early')],
+         'a'),
+        ('What should you ask when reading a success story?',
+         [('a', 'What colour is the book?'), ('b', 'How long is the title?'), ('c', 'What happened to those with the same plan who did not succeed?'), ('d', 'Who printed it?')],
+         'c'),
+    ],
+}

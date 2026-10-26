@@ -1,0 +1,37 @@
+"""The Coffee and Cocoa Commodity Chains: farm to cup, price swings, the 1989 collapse of the coffee agreement, fair trade labels, roasters' margins and climate risk."""
+CODE = 'business5_coffee'
+BOOK = {
+    "title": 'The Coffee and Cocoa Commodity Chains',
+    "subtitle": 'From farm to cup: price swings, the 1989 collapse, fair trade labels and climate risk',
+    "chapters": [
+        ('From farm to cup',
+         'A cup of coffee passes through many hands: growers, collectors, exporters, importers, roasters, and shops. Cocoa for chocolate follows a similar path. Each step takes a share of the final price.'),
+        ('Price swings',
+         'Coffee and cocoa prices can move sharply, because weather, disease, and harvests change from year to year. A bad harvest can push prices up, and a good one can push them down. Farmers often bear the greatest risk.'),
+        ('The 1989 collapse',
+         'For decades, the International Coffee Agreement set export quotas to support prices. In 1989 the quota system ended, and prices fell sharply. Many growers were hit hard, and the episode is still discussed today.'),
+        ('Fair trade labels',
+         'Fair trade labels promise that growers receive a minimum price and an extra premium. Buyers pay more for certified beans, and some of the money goes into local projects. Critics argue about how much of the premium reaches the farm, and labels vary.'),
+        ("Roasters' margins",
+         'Roasters and shops often earn a larger share of the price than the farmer does. Their profit depends on brand, quality, and how fast they sell. Understanding the margins helps explain why a cup costs what it does.'),
+        ('Climate risk',
+         'Coffee and cocoa grow in narrow bands of climate. Rising heat and changing rain can shrink the areas where they grow well and reduce yields. Businesses in the chain now plan for climate risk, through diversification and long-term contracts.'),
+    ],
+    "test": [
+        ('What does each step in a commodity chain do to the price?',
+         [('a', 'Sets the weather'), ('b', 'Removes all costs'), ('c', 'Stops the trade'), ('d', 'Takes a share of the final price')],
+         'd'),
+        ('What did the International Coffee Agreement do?',
+         [('a', 'Banned coffee'), ('b', 'Set the price of tea'), ('c', 'Set export quotas to support prices'), ('d', 'Built coffee shops')],
+         'c'),
+        ('What happened to coffee prices after the quota system ended in 1989?',
+         [('a', 'They fell sharply'), ('b', 'They rose sharply'), ('c', 'They stayed exactly the same'), ('d', 'They doubled')],
+         'a'),
+        ('What do fair trade labels promise?',
+         [('a', 'Free coffee for all'), ('b', 'No taxes at all'), ('c', 'A minimum price and an extra premium to growers'), ('d', 'That the beans come from one country')],
+         'c'),
+        ('What is one way businesses plan for climate risk?',
+         [('a', 'Ignoring the weather'), ('b', 'Diversification and long-term contracts'), ('c', 'Stopping all farming'), ('d', 'Buying only from cities')],
+         'b'),
+    ],
+}
