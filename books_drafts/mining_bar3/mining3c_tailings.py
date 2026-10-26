@@ -1,0 +1,37 @@
+"""Tailings: Keeping the Waste Safe (bar 3, Metallurgist, part C): the ground rock left after the metal is taken out, and how it is stored safely."""
+CODE = "mining3c_tailings"
+BOOK = {
+    "title": "Tailings",
+    "subtitle": "The leftover ground rock, and how it is kept safe",
+    "chapters": [
+        ("What is left over",
+         "After the metal is taken out, the rest of the ground rock is called tailings. Tailings are a slurry of fine sand and water. A large mine can produce many millions of tonnes of tailings each year."),
+        ("Storing the slurry",
+         "Tailings are often pumped into a storage facility, usually a dam built across a valley or a ringed pond. Where possible, the water is recovered and used again in the plant."),
+        ("Dams that must hold",
+         "A tailings dam is a serious structure. Its wall must stay firm through floods, earthquakes and heavy rain, for as long as the waste is kept. Engineers design spillways so that extra water has a safe route out."),
+        ("Why dams fail",
+         "Some tailings dams have failed, sending mud across valleys and harming people and wildlife. Failures usually come from weak foundations, too much water, or poor checking. Modern dams are watched with sensors and regular inspections."),
+        ("Dry stacking",
+         "Some mines now dry their tailings and stack them like soil. This needs less water, and the stack is less likely to flow. Tailings can also hold metals that a later process may recover."),
+        ("The money of a safe dam",
+         "Building and inspecting a tailings dam costs money for the whole life of a mine, and often after it closes. Planners include these costs early, because a failed dam costs far more than a careful one."),
+    ],
+    "test": [
+        ("What are tailings?",
+         [("a", "The best ore"), ("b", "The leftover ground rock after the metal is taken out"), ("c", "Fuel for trucks"), ("d", "Water from rain")],
+         "b"),
+        ("Why do tailings dams need spillways?",
+         [("a", "To catch fish"), ("b", "To make the dam taller"), ("c", "To sell water"), ("d", "To give extra water a safe route out")],
+         "d"),
+        ("What is dry stacking?",
+         [("a", "Storing tailings as a dry pile, like soil"), ("b", "Freezing tailings"), ("c", "Sending tailings into space"), ("d", "Burning tailings")],
+         "a"),
+        ("What usually causes tailings dam failures?",
+         [("a", "Sunshine"), ("b", "Bright paint"), ("c", "Weak foundations, too much water or poor checking"), ("d", "Quiet nights")],
+         "c"),
+        ("Why do planners put dam costs into the budget from the first day?",
+         [("a", "Dams are not needed"), ("b", "A failed dam costs far more than a careful one"), ("c", "Dams make money"), ("d", "Dams are free to build")],
+         "b"),
+    ],
+}

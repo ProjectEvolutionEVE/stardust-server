@@ -1,0 +1,37 @@
+"""Ice in the Dark (bar 3, Metallurgist, part C): cold traps, shadowed craters and the places in the solar system where water ice hides."""
+CODE = "mining3c_cold_traps"
+BOOK = {
+    "title": "Ice in the Dark",
+    "subtitle": "Cold traps, shadowed craters and where water ice hides",
+    "chapters": [
+        ("Water where it is cold",
+         "Water ice lasts for a very long time where sunlight never reaches it. Such places are called cold traps. On the Moon, some craters near the poles lie in permanent shadow, and their floors stay far colder than most of the surface."),
+        ("The evidence from the Moon",
+         "In 2009, a spacecraft was sent to crash into a shadowed crater on purpose. The impact kicked up a plume, and instruments in the spacecraft found water ice in the debris. Other missions had already hinted at ice in the polar shadows."),
+        ("Mars",
+         "Mars has ice at both poles. Its north cap is mostly water ice. Water ice also lies beneath a seasonal cover of frozen carbon dioxide."),
+        ("Comets",
+         "Comets are often called dirty snowballs, made of ice, dust and rock. As a comet nears the Sun, its ice turns straight into gas, and that gas pushes out the dust to form the familiar tail."),
+        ("Digging in the dark",
+         "Ice in shadow is hard to reach, and working there needs light and power. Mining it means keeping it frozen, because warming it can turn it into gas and lose it. Shadowed ice is also rarely one solid block."),
+        ("Money for cold ground",
+         "Heaters, insulation and power all cost money. Before a dig, planners add up what it costs to keep ice frozen and to carry it away. Cheap ice in a bad place can turn out expensive."),
+    ],
+    "test": [
+        ("What is a cold trap?",
+         [("a", "A pit where rain collects"), ("b", "A cave with hot springs"), ("c", "A type of drill bit"), ("d", "A place that stays very cold and keeps ice")],
+         "d"),
+        ("What is special about the floors of some polar craters on the Moon?",
+         [("a", "They are always in sunlight"), ("b", "They are made of salt"), ("c", "They are hot"), ("d", "They are permanently in shadow")],
+         "d"),
+        ("What did a 2009 spacecraft impact in a shadowed lunar crater find?",
+         [("a", "Gold"), ("b", "Oil"), ("c", "Water ice in the debris"), ("d", "Living plants")],
+         "c"),
+        ("What does a comet's ice do as the comet nears the Sun?",
+         [("a", "It turns to gas and pushes out a tail"), ("b", "It turns to metal"), ("c", "It freezes solid"), ("d", "It melts into salt")],
+         "a"),
+        ("Why is mining shadowed ice hard?",
+         [("a", "It is always too warm to touch"), ("b", "It floats away"), ("c", "It is made of metal"), ("d", "It needs power and heat control to stay frozen")],
+         "d"),
+    ],
+}

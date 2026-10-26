@@ -1,0 +1,37 @@
+"""Airline Deregulation: the 1978 act, fare competition, hub-and-spoke routes, mergers, fees, safety and the debate that followed."""
+CODE = 'business5_airderegulation'
+BOOK = {
+    "title": 'Airline Deregulation',
+    "subtitle": 'The 1978 act, fare competition, hub-and-spoke routes, mergers and the debate that followed',
+    "chapters": [
+        ('Before 1978',
+         'Before 1978 the US government set airline routes and fares. Airlines competed on service and comfort rather than on price. Entry into the market was tightly limited.'),
+        ('The 1978 act',
+         'The Airline Deregulation Act of 1978 ended most government control of routes and fares. Airlines were free to choose where to fly and what to charge. It was one of the first big deregulations of the modern era.'),
+        ('Fare competition',
+         'Once fares were free, airlines competed hard on price, and many cheaper fares appeared. Many more travellers could afford to fly. The effect on fares was widely judged to be large.'),
+        ('Hub-and-spoke',
+         'Many airlines adopted hub-and-spoke systems, routing flights through central hubs rather than point to point. Hubs let airlines connect many cities efficiently. Some passengers pay more when one carrier dominates a hub.'),
+        ('Mergers',
+         'Over time many airlines merged, and a smaller number of carriers came to control much of the market. Mergers can cut costs and extend networks, but they can also reduce competition. Regulators weigh both effects.'),
+        ('Fees, safety and service',
+         'Airlines later added fees for bags, seats, and changes, which changed the total price of a ticket. Debates continue about safety, service, and whether competition has delivered what was promised. Good analysis looks at total cost, not just the headline fare.'),
+    ],
+    "test": [
+        ('In what year did the Airline Deregulation Act pass?',
+         [('a', '1948'), ('b', '1978'), ('c', '1964'), ('d', '1992')],
+         'b'),
+        ('What did deregulation free airlines to do?',
+         [('a', 'Fly for free'), ('b', 'Ignore passengers'), ('c', 'Build railways'), ('d', 'Choose their routes and fares')],
+         'd'),
+        ('What is a hub-and-spoke system?',
+         [('a', 'Flights only between two cities'), ('b', 'Bicycle routes'), ('c', 'Routing flights through central hubs'), ('d', 'Trains around a lake')],
+         'c'),
+        ('Why did airline mergers matter for competition?',
+         [('a', 'They can reduce competition while cutting costs'), ('b', 'They always lower fares'), ('c', 'They ban hubs'), ('d', 'They end all flights')],
+         'a'),
+        ('Why look at the total price of a ticket?',
+         [('a', 'Because fares are always the same'), ('b', 'Because fees are banned'), ('c', 'Because added fees can change the real cost'), ('d', 'Because the government sets the bag prices')],
+         'c'),
+    ],
+}

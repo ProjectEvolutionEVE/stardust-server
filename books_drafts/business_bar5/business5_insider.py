@@ -1,0 +1,37 @@
+"""Insider Trading: material nonpublic information, who the law reaches, tippers and tippees, two famous cases, the debate over bans, and compliance."""
+CODE = 'business5_insider'
+BOOK = {
+    "title": 'Insider Trading',
+    "subtitle": 'Trading on information the public does not yet have',
+    "chapters": [
+        ('Information others do not have',
+         "Some people learn things about a company before the public does, such as a coming merger or poor results. Trading on that knowledge can make money at other people's expense. Most markets treat this as unfair and, in many countries, as a crime."),
+        ('Material nonpublic information',
+         'Information is material if a reasonable investor would likely consider it important to a decision. It is nonpublic if it has not been shared with the market. Trading while holding such information is the core of the offence in US law.'),
+        ('Who the law reaches',
+         'The law reaches company insiders, such as officers and directors, who owe duties to shareholders. It also reaches outsiders who get the information and trade on it, if they knew or should have known it was improperly shared. The rules cover more than the people inside the company.'),
+        ('Tippers and tippees',
+         'A tipper is the person who gives inside information, often for a personal benefit. A tippee is the person who receives it and trades. Both can be liable, depending on what they knew and why the information was shared.'),
+        ('Two famous cases',
+         'Raj Rajaratnam was convicted in 2011 of running an insider trading ring. Martha Stewart was convicted in 2004 of lying to investigators about a stock sale, not of insider trading itself. Both cases showed how seriously the authorities pursue such conduct.'),
+        ('The case for and against bans',
+         'Supporters say bans protect fairness and public trust in markets. Critics argue that trading on information can help prices reflect the truth faster. The debate continues, but the law in most major markets still forbids trading on material inside information.'),
+    ],
+    "test": [
+        ('What is material nonpublic information?',
+         [('a', 'A story in a public newspaper'), ('b', 'A bank statement'), ('c', 'Information that would likely affect an investment decision and is not yet public'), ('d', 'A weather report')],
+         'c'),
+        ('What is a tippee?',
+         [('a', 'The person who gives the information'), ('b', 'The person who receives a tip and trades on it'), ('c', 'A regulator'), ('d', 'The host of a shareholder meeting')],
+         'b'),
+        ('What was Raj Rajaratnam convicted of in 2011?',
+         [('a', 'Stealing a car'), ('b', 'Forging a painting'), ('c', 'A tax on coffee'), ('d', 'Insider trading')],
+         'd'),
+        ('What was Martha Stewart convicted of in 2004?',
+         [('a', 'Insider trading in a tip'), ('b', 'Fraud by a bank'), ('c', 'Lying to investigators about a stock sale'), ('d', 'Speeding')],
+         'c'),
+        ('What is a common compliance tool for firms?',
+         [('a', 'Trading blackout periods for staff who may hold inside information'), ('b', 'Free office snacks'), ('c', 'Mandatory holidays on Mondays'), ('d', 'Fancy logos')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Earnings Management: smoothing, cookie-jar reserves, big baths and meeting the forecast, and where legal judgement ends and fraud begins."""
+CODE = 'business5_earningsmgmt'
+BOOK = {
+    "title": 'Earnings Management',
+    "subtitle": 'Shaping the reported profit, and the line that must not be crossed',
+    "chapters": [
+        ('Managing the number',
+         'Managers have room to choose how to report results. Many choices are legal and sensible, such as when to recognise a sale. The trouble starts when choices are made to present a picture that does not match reality.'),
+        ('Smoothing',
+         'Smoothing moves income between years so that profit looks steady. A strong year may be partly held back, and a weak year may be helped along. Investors often like steady results, which is why this tempts managers.'),
+        ('Cookie-jar reserves',
+         "A cookie-jar reserve is an extra provision set aside in a good year and released in a bad one. It hides the swings from readers. Such reserves are restricted under today's rules, because they can hide the real trend."),
+        ('Big baths',
+         'A big bath is a large one-off write-off taken in a bad year. The loss looks heavy, but future years look better by comparison. Readers should ask whether a write-off is truly one-off or a way of clearing the decks.'),
+        ('Meeting the forecast',
+         'Analysts publish estimates of what a company will earn. Small adjustments can help a firm just reach those estimates, which avoids an unwelcome surprise. A firm that always lands exactly on forecast is worth a second look.'),
+        ('The line to fraud',
+         'Judgement within the rules is part of accounting. It turns into fraud when figures are false or misleading and the truth is hidden from readers. The test is whether the numbers are honest and disclosed, not whether they look neat.'),
+    ],
+    "test": [
+        ('What is smoothing?',
+         [('a', 'Painting the office walls'), ('b', 'Lowering all prices in the shop'), ('c', 'Hiring more staff'), ('d', 'Moving income between years so that profit looks steady')],
+         'd'),
+        ('What is a cookie-jar reserve?',
+         [('a', 'A bonus paid to staff'), ('b', 'A bank account for office snacks'), ('c', 'Extra provisions set aside in good years and released later'), ('d', 'A cash prize')],
+         'c'),
+        ('What is a big bath?',
+         [('a', 'A large one-off write-off in a bad year, so that later years look better'), ('b', 'A large dividend paid to shareholders'), ('c', 'A tax refund'), ('d', 'A cash loan')],
+         'a'),
+        ('What is a common goal of meeting the forecast?',
+         [('a', 'To avoid all audits'), ('b', "To hide the company's name"), ('c', "To avoid market surprises by just reaching analysts' estimates"), ('d', 'To lower taxes always')],
+         'c'),
+        ('What is the key test for when judgement becomes fraud?',
+         [('a', 'The size of the office'), ('b', 'Whether the numbers are false or misleading, and hidden from readers'), ('c', 'Whether the chief executive smiles'), ('d', 'The number of staff')],
+         'b'),
+    ],
+}

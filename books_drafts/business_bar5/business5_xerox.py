@@ -1,0 +1,37 @@
+"""Xerox PARC: a research lab that invented the modern desktop, and the lesson about turning ideas into products."""
+CODE = 'business5_xerox'
+BOOK = {
+    "title": 'Xerox PARC',
+    "subtitle": 'A research lab, a graphical interface, and the gap between an idea and a product',
+    "chapters": [
+        ('The copier firm',
+         'Xerox became famous for its copiers, which made the photocopier an everyday tool. The company was rich and successful, and it looked for new markets for its strength. It set up a research centre in Palo Alto, California, to look further ahead.'),
+        ('The research lab',
+         'The Palo Alto Research Center, known as PARC, opened in 1970. It gathered talented researchers who worked on computers, networks and new ways for people to use them. Its ideas reached far beyond the copier business.'),
+        ('The mouse and the graphical interface',
+         'PARC developed the Alto computer, which used a mouse, windows and icons on a screen. These ideas laid the groundwork for the personal computers that followed. Many of the features people now use every day began in that lab.'),
+        ('Failure to commercialise',
+         'Xerox sold its own computers, such as the Star, but they were expensive and did not sell well. The company struggled to turn the research into products that customers would buy in large numbers. Having a great idea is not the same as having a business.'),
+        ("Apple's visit",
+         'In 1979 Steve Jobs visited PARC and saw the graphical interface. Apple later built the Lisa and then the Macintosh, which brought those ideas to a mass market. The lesson is that the owner of an idea must be ready to act on it.'),
+        ('The lesson on ideas',
+         'Ideas create value only when someone builds, prices and sells them well. A company can have the best research in the world and still lose if it cannot commercialise. Link research to a clear path to customers.'),
+    ],
+    "test": [
+        ('What was Xerox famous for before its research work?',
+         [('a', 'Cars'), ('b', 'Ships'), ('c', 'Copiers'), ('d', 'Bread')],
+         'c'),
+        ('What was the name of the Xerox research centre in Palo Alto?',
+         [('a', 'ALTO'), ('b', 'PARC'), ('c', 'STAR'), ('d', 'LISA')],
+         'b'),
+        ('Which ideas came out of the PARC research?',
+         [('a', 'A new kind of paper'), ('b', 'A hand-held calculator'), ('c', 'A way to brew coffee'), ('d', 'A mouse, windows and icons on a screen')],
+         'd'),
+        ('Who visited PARC in 1979 and saw the graphical interface?',
+         [('a', 'Bill Gates'), ('b', 'Henry Ford'), ('c', 'Steve Jobs'), ('d', 'Isaac Singer')],
+         'c'),
+        ('What does the chapter say an idea needs to create value?',
+         [('a', 'Someone to build, price and sell it well'), ('b', 'Only a patent on paper'), ('c', 'A location in California only'), ('d', 'No need for customers')],
+         'a'),
+    ],
+}

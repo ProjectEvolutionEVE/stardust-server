@@ -1,0 +1,37 @@
+"""Forensic Accounting: how investigators look for fraud, from the fraud triangle to red flags, Benford's law and the Beneish score."""
+CODE = 'business5_forensic'
+BOOK = {
+    "title": 'Forensic Accounting',
+    "subtitle": 'Finding fraud in the numbers, and how it has been caught',
+    "chapters": [
+        ('Following the money',
+         'Forensic accountants trace how money moves to find out what really happened. Their work is less about checking one total and more about testing whether the pieces fit together. A mismatch between records is often the first clue.'),
+        ('The fraud triangle',
+         'The fraud triangle names three conditions that often appear together: pressure, opportunity and rationalisation. Someone may feel pressed to hit a target, may see a gap in controls, and may tell themselves that the act is justified. Removing any one of these makes fraud harder.'),
+        ('Red flags',
+         'Red flags are signs worth a closer look, not proof of fraud. Examples include cash flow far below reported profit, sales that grow fast while the market is flat, and many deals with related parties. Each one has innocent explanations, so the pattern matters more than any single sign.'),
+        ("Benford's law",
+         "In many real sets of numbers, the digit 1 comes first about 30 percent of the time, and larger first digits come up less often. Benford's law gives the expected pattern. Large departures from it can point an investigator towards records worth checking, although they prove nothing alone."),
+        ('The Beneish score',
+         'The Beneish score combines eight financial ratios into one figure that may flag earnings manipulation. Messod Beneish published it in 1999. It is a screening tool, so a high score starts an inquiry rather than ending one.'),
+        ('Famous detections',
+         "Many frauds are found by tips, audits and odd patterns, not by a single clever test. A warning about Bernie Madoff's firm was sent to regulators in the years before his Ponzi scheme was exposed in 2008, and it was not acted on. Good investigators keep their eyes open and follow up every warning."),
+    ],
+    "test": [
+        ('What are the three parts of the fraud triangle?',
+         [('a', 'Cash, debt and equity'), ('b', 'Audit, tax and law'), ('c', 'Greed, luck and time'), ('d', 'Pressure, opportunity and rationalisation')],
+         'd'),
+        ("Benford's law predicts that the digit 1 comes first in about what share of many real sets of numbers?",
+         [('a', 'Around 10 percent'), ('b', 'Around 50 percent'), ('c', 'Around 30 percent'), ('d', 'Never')],
+         'c'),
+        ('Which of these is a red flag worth a closer look?',
+         [('a', 'Cash flow far below reported profit'), ('b', 'A new colour for the office'), ('c', 'A steady, unremarkable dividend'), ('d', 'Clean bank reconciliations')],
+         'a'),
+        ('What does the Beneish score use?',
+         [('a', 'Staff surveys'), ('b', 'The price of coffee'), ('c', 'Eight financial ratios combined to flag likely manipulation'), ('d', 'Marketing budgets')],
+         'c'),
+        ('Which warning was ignored for years before the Bernie Madoff Ponzi scheme was exposed?',
+         [('a', 'A tax rebate'), ('b', 'A warning sent to regulators about his firm'), ('c', 'A weather report'), ('d', 'A stock split')],
+         'b'),
+    ],
+}

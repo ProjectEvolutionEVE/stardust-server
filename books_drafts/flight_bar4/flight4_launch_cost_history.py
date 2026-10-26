@@ -1,0 +1,37 @@
+"""A history of launch cost: cost per kilogram from the Saturn V to today's new rockets, and what drives the price."""
+CODE = "flight4_launch_cost_history"
+BOOK = {
+    "title": "A Hundred Years of Launch Cost",
+    "subtitle": "Cost per kilogram in orbit, and what has pushed it down",
+    "chapters": [
+        ("The measure that matters",
+         "The price of a launch is usually compared by cost per kilogram put into orbit. Dividing the total cost by the weight lifted makes very different rockets easy to compare. A cheap rocket that lifts very little can still be expensive per kilogram."),
+        ("The Saturn V era",
+         "The Saturn V carried the Apollo astronauts to the Moon in the 1960s and 1970s. It was built for a single national goal and was very expensive per kilogram. Its success showed what a large rocket could do, but it was not built to be cheap."),
+        ("The Shuttle",
+         "The Space Shuttle flew from 1981 to 2011. It was meant to make spaceflight routine and cheaper, and it could be reused. In practice, each flight needed a great deal of inspection and refurbishment, so the cost per kilogram stayed high."),
+        ("Reuse and new entrants",
+         "Since the 2000s, several companies have built rockets whose first stages can land and fly again. Reuse spreads the cost of building a rocket over many flights. New entrants have pushed prices down, and the competition itself has made others look for savings."),
+        ("What drives the price",
+         "The price per kilogram depends on how many flights a rocket makes, how often its parts can be reused, and how much it costs to keep the factories and teams running. Spreading fixed costs over more flights is one of the strongest forces on price."),
+        ("What it means for players",
+         "A history of launch cost teaches a simple lesson: volume and reuse lower the price. Any ship or station that plans to lift cargo should check the cost per kilogram, not only the sticker price of one launch."),
+    ],
+    "test": [
+        ("How is launch cost usually compared between rockets?",
+         [("a", "By the colour of the rocket"), ("b", "By the number of windows"), ("c", "By the length of the countdown"), ("d", "By the cost per kilogram put into orbit")],
+         "d"),
+        ("What was the Saturn V built to do?",
+         [("a", "Carry the Apollo astronauts to the Moon"), ("b", "Serve as a cheap cargo ship"), ("c", "Build a station in the ocean"), ("d", "Carry tourists to the Sun")],
+         "a"),
+        ("Why did the Shuttle's cost per kilogram stay high?",
+         [("a", "It flew too often"), ("b", "It needed a great deal of inspection and refurbishment for each flight"), ("c", "It carried no cargo"), ("d", "It was never launched")],
+         "b"),
+        ("How does reuse lower the price of a launch?",
+         [("a", "It makes the rocket heavier"), ("b", "It removes the need for fuel"), ("c", "It spreads the cost of building the rocket over many flights"), ("d", "It stops all inspections")],
+         "c"),
+        ("What drives the price per kilogram most strongly?",
+         [("a", "The paint colour"), ("b", "The name of the rocket"), ("c", "The weather in the launch town"), ("d", "The number of flights, reuse and the fixed cost of the factories and teams")],
+         "d"),
+    ],
+}

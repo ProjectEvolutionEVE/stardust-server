@@ -1,0 +1,37 @@
+"""Lease or buy: total cost, flexibility, interest, residual value, break-even, and the aviation examples."""
+CODE = "flight4_lease_buy"
+BOOK = {
+    "title": "Lease or Buy",
+    "subtitle": "How to compare owning a craft with paying to use one",
+    "chapters": [
+        ("What a lease is",
+         "A lease lets you use an asset, such as a craft or a building, for a set time in return for regular payments. You do not own it at the end, unless the lease says so. Buying means paying for the asset now or borrowing to pay for it, and then owning it."),
+        ("Total cost",
+         "Compare the total cost over the whole time you will use the asset, not only the monthly payment. A cheap lease payment can hide a large final cost, and a purchase can look dear until you count what it is worth at the end."),
+        ("Flexibility",
+         "A lease can be easier to end, to change or to swap for a newer model. Owning ties you to the asset, but it can be worth more if you need it for many years. Think about how your plans might change before you sign."),
+        ("Interest and residual value",
+         "Buying with a loan costs interest, which is the price of borrowing. Residual value is what the asset is still worth when its use ends. A craft that holds its value well makes buying more attractive, because you keep most of its worth."),
+        ("Break-even",
+         "Find the point where the total cost of leasing equals the total cost of buying. If you expect to use the asset longer than that point, buying may be cheaper. If you expect to use it briefly, leasing may be the wiser choice."),
+        ("Lessons from aviation",
+         "Airlines lease many of their aircraft, because it lets them change fleets as demand changes and spend their money on flights. Owning gives control and possible gains, but leasing gives flexibility. Each suits a different business."),
+    ],
+    "test": [
+        ("What does a lease give you?",
+         [("a", "Ownership at once"), ("b", "A free craft"), ("c", "The use of an asset for a set time in return for regular payments"), ("d", "A guaranteed profit")],
+         "c"),
+        ("Why compare the total cost over the whole time of use?",
+         [("a", "Because monthly payments are always the same"), ("b", "Because leases cannot be counted"), ("c", "Because buying is always cheaper"), ("d", "Because a cheap payment can hide a large final cost")],
+         "d"),
+        ("What is residual value?",
+         [("a", "What the asset is still worth when its use ends"), ("b", "The interest on a loan"), ("c", "The fee for ending a lease early"), ("d", "The number of years a loan lasts")],
+         "a"),
+        ("When might buying be cheaper than leasing?",
+         [("a", "When the asset will be used for one day only"), ("b", "When you plan to use the asset for longer than the break-even point"), ("c", "When the asset will never be used"), ("d", "When no payments are made")],
+         "b"),
+        ("Why do airlines often lease their aircraft?",
+         [("a", "Because aircraft cannot be owned"), ("b", "Because owning aircraft is against the law"), ("c", "Because leasing lets them change fleets as demand changes"), ("d", "Because aircraft never lose value")],
+         "c"),
+    ],
+}

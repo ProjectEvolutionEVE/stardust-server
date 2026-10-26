@@ -1,0 +1,37 @@
+"""Simpson's Paradox: a trend that reverses when groups are combined, the Berkeley admissions study, grouping effects, confounders and what to ask."""
+CODE = 'business5_simpson'
+BOOK = {
+    "title": "Simpson's Paradox",
+    "subtitle": 'Berkeley admissions, trends that reverse, grouping effects, confounders, and the question to ask',
+    "chapters": [
+        ('A trend that flips',
+         "Simpson's paradox happens when a trend seen in several groups reverses when the groups are combined. Each group can show one pattern, while the total shows the opposite. The effect can surprise even careful analysts."),
+        ('Berkeley admissions',
+         'In 1973 a study of graduate admissions at the University of California, Berkeley, found a higher admission rate for men overall. Looking at individual departments, however, women were often admitted at equal or higher rates. The difference came largely from which departments women applied to.'),
+        ('Grouping effects',
+         'The result depends on how the groups are formed. Combining groups of different sizes can change the overall rate. The choice of grouping can tell very different stories from the same data.'),
+        ('Confounders again',
+         'A confounder is a hidden factor that affects both the groups and the outcome. In the Berkeley case, the department acted as a confounder, linking where people applied to their chance of admission. Finding confounders is key to reading the data.'),
+        ('A business example',
+         'A company might find that a new product sells better in each region, yet worse overall, because the regions differ in size and mix. Sales may look good in each shop and poor across the chain. The fix is to ask what was combined and why.'),
+        ('Asking what was combined',
+         'When a total seems to contradict its parts, ask what was combined, and whether the groups are comparable. Look at the breakdown before trusting the summary. A careful reader keeps both views in mind.'),
+    ],
+    "test": [
+        ("What does Simpson's paradox describe?",
+         [('a', 'A trend in one group only'), ('b', 'A trend reversing when groups are combined'), ('c', 'A chart with no axes'), ('d', 'A shortage of data')],
+         'b'),
+        ('In which city was the 1973 admissions study?',
+         [('a', 'Chicago'), ('b', 'Paris'), ('c', 'Lagos'), ('d', 'Berkeley')],
+         'd'),
+        ('What is a confounder?',
+         [('a', 'A chart colour'), ('b', 'A type of survey'), ('c', 'A hidden factor that affects both the groups and the outcome'), ('d', 'A total that never changes')],
+         'c'),
+        ('What should a good reader ask when a total contradicts its parts?',
+         [('a', 'What was combined, and are the groups comparable?'), ('b', 'Is it a holiday?'), ('c', 'Who designed the chart font?'), ('d', 'How many pages are there?')],
+         'a'),
+        ('Why might a product look good in each shop but poor overall?',
+         [('a', 'Shops always sell the same things'), ('b', 'Totals are always right'), ('c', 'Shops differ in size and mix'), ('d', 'Products cannot be measured')],
+         'c'),
+    ],
+}

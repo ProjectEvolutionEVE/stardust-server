@@ -1,0 +1,37 @@
+"""Ingvar Kamprad and IKEA: a mail-order start, flat-pack furniture, low prices by design, and frugality as policy."""
+CODE = 'business5_kamprad'
+BOOK = {
+    "title": 'Ingvar Kamprad and IKEA',
+    "subtitle": 'Flat-pack furniture, low prices and a thrifty founder',
+    "chapters": [
+        ('A mail-order start',
+         'Ingvar Kamprad started his business in Sweden by selling small goods by mail. He later added furniture to the range. Mail order taught him to reach customers who were far from his shop.'),
+        ('Flat-pack',
+         'IKEA is known for flat-pack furniture that customers carry home and put together themselves. Flat packs cost less to ship and store. The idea lowered prices as well as transport costs.'),
+        ('Low prices by design',
+         'IKEA designs products to be simple and cheap to make from the start. The price is set early, not added at the end. Good design can keep costs down for everyone.'),
+        ('The catalogue',
+         'The IKEA catalogue showed customers the whole range and gave them ideas for their homes. It drove sales and built the brand. A catalogue can be a shop window for customers who live far away.'),
+        ('Ownership structure',
+         'IKEA is owned through a set of foundations rather than in the usual way. The structure keeps control of the business in one place over many years. Ownership is itself a business decision with long effects.'),
+        ('Frugality as policy',
+         'Kamprad was known for thrift and for cutting costs that did not add value. He treated saving money as a rule for the whole company, not a mood of the day. Careful spending can be a strength in business.'),
+    ],
+    "test": [
+        ('What did Kamprad first sell by mail?',
+         [('a', 'Small goods'), ('b', 'Cars'), ('c', 'Houses'), ('d', 'Boats')],
+         'a'),
+        ('What is flat-pack furniture?',
+         [('a', 'Furniture sold already built and very heavy'), ('b', 'Furniture made of stone'), ('c', 'Furniture sold in pieces that the customer assembles at home'), ('d', 'Folding chairs for offices')],
+         'c'),
+        ('How did the IKEA catalogue help the business?',
+         [('a', 'It sold the stores'), ('b', 'It showed the range and reached customers far away'), ('c', 'It replaced the stores'), ('d', 'It cost customers money')],
+         'b'),
+        ('What does low prices by design mean?',
+         [('a', 'Prices are cut at random'), ('b', 'Prices are fixed by the government'), ('c', 'Staff choose the prices'), ('d', 'Prices are set low by building simple, cheap products from the start')],
+         'd'),
+        ('What is frugality?',
+         [('a', 'Spending freely'), ('b', 'Hiding money'), ('c', 'Being careful and thrifty with money'), ('d', 'Borrowing money from banks')],
+         'c'),
+    ],
+}

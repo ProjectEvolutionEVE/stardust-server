@@ -1,0 +1,37 @@
+"""Open Innovation: firms can bring ideas in from outside and send their own out, instead of relying only on their own research."""
+CODE = 'business5_openinnov'
+BOOK = {
+    "title": 'Open Innovation',
+    "subtitle": "Bringing ideas in and sending them out: Chesbrough's model and its risks",
+    "chapters": [
+        ("Henry Chesbrough's idea",
+         'In 2003, Henry Chesbrough described open innovation. He argued that firms should use ideas from outside as well as their own research. Many firms had kept research tightly inside, and he saw that this was becoming less effective.'),
+        ('Licensing in and out',
+         'A firm can license in an idea from another firm, or license out one of its own ideas that it does not use. Both moves can bring in money and value. The idea is that no firm can hold every good idea itself.'),
+        ('Connect and Develop',
+         'In 2000, Procter and Gamble set up a programme called Connect and Develop. It invited ideas from outside inventors and firms. Its aim was to find good products more quickly, with less cost, by working with others.'),
+        ('Partnerships with universities',
+         'Firms often work with universities on early research. A university brings deep knowledge and students, and a firm brings market knowledge and funding. Both sides need clear agreements about who owns what.'),
+        ('Keeping a core',
+         'Open innovation does not mean giving everything away. A firm must keep a core of ideas that give it an advantage, and be clear about which parts are shared. Some ideas stay closed for good reason.'),
+        ('The risk of leakage',
+         'Sharing ideas can let rivals learn too much. Leakage can cost a firm its edge if its partners are careless or disloyal. Protect the parts that matter most, and share only what the partnership needs.'),
+    ],
+    "test": [
+        ('Who described open innovation, and when?',
+         [('a', 'Adam Smith, in 1776'), ('b', 'Pierre Wack, in 1980'), ('c', 'Eric Ries, in 1950'), ('d', 'Henry Chesbrough, in 2003')],
+         'd'),
+        ('What is one way a firm can license out an idea?',
+         [('a', 'Hide it in a drawer forever'), ('b', 'Burn the idea'), ('c', 'License an unused idea of its own to another firm'), ('d', 'Sell its staff')],
+         'c'),
+        ('What was Connect and Develop?',
+         [('a', 'A Procter and Gamble programme that invited outside ideas'), ('b', 'A bank loan scheme'), ('c', 'A ship route in the Pacific'), ('d', 'A rule for office hours')],
+         'a'),
+        ('Why does open innovation still keep a core?',
+         [('a', 'Because partners cannot be trusted at all'), ('b', 'Because all ideas must be secret'), ('c', 'To keep the ideas that give the firm its edge'), ('d', 'Because outside ideas are always useless')],
+         'c'),
+        ('What is leakage, in this idea?',
+         [('a', 'A water pipe in the office'), ('b', "Sharing too much so rivals gain the firm's edge"), ('c', 'A fall in the price of shares'), ('d', 'A delay in a product launch')],
+         'b'),
+    ],
+}

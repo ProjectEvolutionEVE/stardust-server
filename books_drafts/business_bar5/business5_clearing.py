@@ -1,0 +1,37 @@
+"""Clearing Houses and Settlement: why a trade is not final until it is cleared, and how a central counterparty protects everyone."""
+CODE = 'business5_clearing'
+BOOK = {
+    "title": 'Clearing Houses and Settlement',
+    "subtitle": 'Why a trade is not final until it is cleared and settled',
+    "chapters": [
+        ('A trade is not the end',
+         'When you buy a share, the trade is agreed in seconds, but the exchange of money and shares happens later. Between the agreement and the exchange, both sides carry a risk that the other will not pay. Clearing and settlement manage that gap.'),
+        ('The central counterparty',
+         'A central counterparty, or clearing house, steps between the buyer and the seller. It becomes the buyer to every seller and the seller to every buyer. If one side fails, the clearing house still owes the other side, which protects the market.'),
+        ('Netting',
+         'Many trades between the same firms can be netted together. Instead of paying every trade separately, each firm pays or receives only the net amount at the end. Netting cuts the amount of money and shares that need to move, and it cuts the risk.'),
+        ('Settlement cycles',
+         'Settlement is the final transfer of shares and money. The time between the trade and the settlement is the settlement cycle. In the United States it has been shortened over the years, and it is now one business day after the trade.'),
+        ('When a firm defaults',
+         'If a member firm fails to pay, the clearing house uses its margin and a shared fund of contributions from members to cover the loss. Rules set out who pays first and how the losses are shared. The aim is to keep the market running.'),
+        ('The 2008 reforms',
+         'The financial crisis showed that many derivative trades were not cleared centrally. Afterwards, many countries required standard derivatives to be cleared through central counterparties. This moved a great deal of risk into a few carefully watched places.'),
+    ],
+    "test": [
+        ('Why is a trade not final straight away?',
+         [('a', 'Trades are always cancelled'), ('b', 'Money and shares are exchanged later, so each side carries a risk'), ('c', 'Exchanges close at noon'), ('d', 'Shares cannot be sold')],
+         'b'),
+        ('What does a central counterparty do?',
+         [('a', 'Sells food in the market'), ('b', 'Prints shares for the company'), ('c', 'Takes holidays for traders'), ('d', "Steps between buyer and seller, becoming each side's counterparty")],
+         'd'),
+        ('What is netting?',
+         [('a', 'Fishing for shares'), ('b', 'Tying trades together with string'), ('c', 'Combining trades so only the net amount has to move'), ('d', 'Doubling every payment')],
+         'c'),
+        ('What is the settlement cycle?',
+         [('a', 'The time between the trade and the final transfer'), ('b', 'The daily opening bell'), ('c', "The company's birthday"), ('d', 'A type of share price')],
+         'a'),
+        ('What did the 2008 reforms do to many standard derivatives?',
+         [('a', 'Banned them in every country'), ('b', 'Turned them into cash prizes'), ('c', 'Required them to be cleared through central counterparties'), ('d', 'Made them free to trade with no record')],
+         'c'),
+    ],
+}

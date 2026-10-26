@@ -1,0 +1,37 @@
+"""Risk and return: why risky things pay more, spreads, the equity premium in words, expected value and avoiding ruin."""
+CODE = "flight4_risk_return"
+BOOK = {
+    "title": "Risk and Return",
+    "subtitle": "Why bigger rewards usually come with bigger chances of loss",
+    "chapters": [
+        ("Why risk is paid",
+         "If an investment were both safe and high paying, everyone would buy it and its price would rise until the reward fell. So returns that are higher usually come with a higher chance of losing money. Investors ask to be paid for taking that chance."),
+        ("Spreads",
+         "A spread is the extra return an investment pays above a safe benchmark, to make up for its extra risk. A loan to a shaky borrower pays a higher rate than a loan to a very safe one, and the difference is the spread."),
+        ("The equity premium in words",
+         "Over long periods, shares in companies have usually returned more than safe savings or government bonds. That extra return is called the equity premium. It is a reward for holding something that can swing up and down sharply in the short term."),
+        ("Expected value",
+         "Expected value is the average outcome you would get if you could repeat a gamble many times. It is found by multiplying each outcome by its chance and adding them up. A bet with a positive expected value can still lose on any one try."),
+        ("Avoiding ruin",
+         "Even a good bet can wipe you out if you risk everything on it. Keeping a buffer and never betting more than you can afford to lose lets you survive the bad runs. Staying in the game matters more than any single win."),
+        ("Sizing a bet",
+         "The size of a bet should depend on how likely a loss is and how much you can afford to lose. A small, sensible position leaves room to be wrong and still carry on."),
+    ],
+    "test": [
+        ("Why do higher-return investments usually carry more risk?",
+         [("a", "Because the government makes them risky"), ("b", "Because they are always fake"), ("c", "Because otherwise everyone would buy them until the reward fell"), ("d", "Because they are never sold")],
+         "c"),
+        ("What is a spread?",
+         [("a", "A type of sandwich"), ("b", "A tax on profits"), ("c", "A bank account with no interest"), ("d", "The extra return above a safe benchmark, to pay for extra risk")],
+         "d"),
+        ("What is the equity premium?",
+         [("a", "The extra return shares have usually paid over safe savings and bonds for holding riskier assets"), ("b", "A fee for opening an account"), ("c", "A bonus paid to the bank"), ("d", "A guarantee that shares never fall")],
+         "a"),
+        ("What is expected value?",
+         [("a", "The best single outcome you could ever get"), ("b", "The average outcome over many repeats, found by weighting each result by its chance"), ("c", "The price of a bet"), ("d", "The number of bets you can place")],
+         "b"),
+        ("Why should you never risk everything on one bet?",
+         [("a", "Because bets are always fair"), ("b", "Because a bet cannot have a good outcome"), ("c", "Because a single loss can wipe you out before a good bet pays"), ("d", "Because the law sets the bet size")],
+         "c"),
+    ],
+}

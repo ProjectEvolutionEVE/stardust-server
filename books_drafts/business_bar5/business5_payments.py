@@ -1,0 +1,37 @@
+"""How Payments Move: cash, cheques, card networks, clearing banks, instant payments, and the fees along the way."""
+CODE = 'business5_payments'
+BOOK = {
+    "title": 'How Payments Move',
+    "subtitle": 'From a coin in your hand to a card tap, and the fees along the way',
+    "chapters": [
+        ('Cash',
+         'Cash is the simplest payment. Money passes from hand to hand, and it settles at once. Cash needs no account and leaves no record, which is why it is still widely used for small purchases.'),
+        ('Cheques',
+         'A cheque is a written order to a bank to pay a sum to the person named on it. It passes through several banks before the money moves, which can take days. Many countries are moving away from cheques toward faster methods.'),
+        ('Card networks',
+         "A card payment involves several parties. The customer, the shop, the shop's bank and the customer's bank all play a part, and a card network such as Visa or Mastercard links them. The network routes the message and sets the rules."),
+        ('Clearing banks',
+         'Behind the scenes, banks settle payments with one another through clearing systems. Each bank records what it owes and is owed, and the net amounts are paid at set times. Clearing is slower than the tap at the till, but it keeps the system safe.'),
+        ('Instant payments',
+         'Many countries now offer instant payment systems that move money in seconds, at any hour. These systems let people pay friends and businesses quickly. They are changing what people expect from their banks.'),
+        ('Fees along the way',
+         'Each step in a payment can carry a fee. A shop pays a percentage to accept cards, and banks may charge for transfers or currency exchange. Knowing where fees come from helps people choose the cheapest method for each job.'),
+    ],
+    "test": [
+        ('What makes cash different from most other payments?',
+         [('a', 'It must be sent by post'), ('b', 'It always takes a week'), ('c', 'It settles at once and needs no account'), ('d', 'It can only be used on Sundays')],
+         'c'),
+        ('What is a cheque?',
+         [('a', 'A written order to a bank to pay a sum to the person named'), ('b', 'A type of ticket for a train'), ('c', 'A coin with a hole in it'), ('d', 'A map of a river')],
+         'a'),
+        ('What is the role of a card network such as Visa or Mastercard?',
+         [('a', 'It sells cups of tea'), ('b', 'It prints the cards for the government only'), ('c', 'It links the shop, the banks and the customer, routing the payment'), ('d', 'It owns every shop in the world')],
+         'c'),
+        ('What does a clearing bank system do?',
+         [('a', 'It paints the banks blue'), ('b', 'It records what each bank owes and is owed, and settles the net amounts'), ('c', 'It hands out free cash on the street'), ('d', 'It closes all banks at noon')],
+         'b'),
+        ('What is an instant payment system?',
+         [('a', 'A system that works only in the morning'), ('b', 'A system that sends letters'), ('c', 'A system for buying old cars'), ('d', 'A system that moves money in seconds, at any hour')],
+         'd'),
+    ],
+}

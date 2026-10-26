@@ -1,0 +1,37 @@
+"""Matrix and Network Organisations: two bosses, project against function, the costs of coordination, and networks of firms."""
+CODE = 'business5_matrix'
+BOOK = {
+    "title": 'Matrix and Network Organisations',
+    "subtitle": 'Two bosses, shared projects, and the coordination costs that come with them',
+    "chapters": [
+        ('A grid of bosses',
+         'In a matrix organisation, staff report along two lines at once. One line is by function, such as engineering or finance. The other is by project or product. The grid lets a firm use its specialists across many projects.'),
+        ('Project against function',
+         "A project manager may lead a team for a launch, while the function still manages the people's skills and careers. The balance of power between the two lines is a key design choice. Unclear balance causes confusion."),
+        ('Coordination costs',
+         'Matrix structures need many meetings, shared plans and agreed decisions. These coordination costs can slow the work and frustrate staff. Firms must decide when the benefits outweigh the extra effort.'),
+        ('Making it work',
+         'A matrix works best when roles are clear, both bosses agree on priorities, and conflicts have a known route to resolution. Training helps people work across lines. Good communication matters more than the chart.'),
+        ('Networks of firms',
+         'A network organisation is a group of firms that work together, each doing what it does best, often without common ownership. Such networks can be flexible, but they need trust and good coordination to hold together.'),
+        ('Choosing a shape',
+         'Ask whether your work needs many specialists shared across changing projects. If it does, a matrix or network may help. If work is simple and stable, the extra layers may cost more than they gain.'),
+    ],
+    "test": [
+        ('What does a matrix organisation give staff?',
+         [('a', 'No manager at all'), ('b', 'Only one task each year'), ('c', 'Two reporting lines at once'), ('d', 'A private office for life')],
+         'c'),
+        ('What are the two lines in a matrix?',
+         [('a', 'Profit and loss'), ('b', 'Function, and project or product'), ('c', 'Morning and afternoon'), ('d', 'Staff and customers')],
+         'b'),
+        ('What is a coordination cost?',
+         [('a', 'The cost of a single manager'), ('b', 'The price of coffee in the office'), ('c', 'The fee for a bank account'), ('d', 'The extra meetings and agreed decisions a shared structure needs')],
+         'd'),
+        ('What helps a matrix work best?',
+         [('a', 'Two bosses who never speak'), ('b', 'Changing roles every hour'), ('c', 'Clear roles and agreed priorities between the two bosses'), ('d', 'No written rules')],
+         'c'),
+        ('What is a network organisation?',
+         [('a', 'A group of firms working together, each doing what it does best'), ('b', 'A single firm with one office'), ('c', 'A computer that stores staff files'), ('d', 'A club for managers')],
+         'a'),
+    ],
+}

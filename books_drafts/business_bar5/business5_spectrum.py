@@ -1,0 +1,37 @@
+"""Radio Spectrum and the Telecom Industry: licences for airwaves, the 1990s auctions, towers, mobile standards and the price of data."""
+CODE = 'business5_spectrum'
+BOOK = {
+    "title": 'Radio Spectrum and the Telecom Industry',
+    "subtitle": 'Licences for airwaves, auctions, towers, mobile standards and data prices',
+    "chapters": [
+        ('Airwaves are limited',
+         'Radio waves carry phone calls, television, and wireless internet through the air. Only so many signals can be sent in one place without interfering with each other. Because the airwaves are limited, governments control who may use which band.'),
+        ('Licences',
+         'Governments grant licences that let companies use particular bands in particular places. A licence can be valuable, because it gives its owner the right to build a service. For the business, the licence works much like property.'),
+        ('The 1990s auctions',
+         'In the United States, the Federal Communications Commission began auctioning licences in 1994. Auctions let the market set a price, and they raised large sums for the government. They also changed who could enter the market.'),
+        ('Carriers and towers',
+         "Mobile carriers build networks of towers, cables, and equipment on top of their licences. Towers are costly to build, and sharing them can cut costs. A carrier's network is as valuable as its reach and reliability."),
+        ('Mobile standards',
+         "Mobile phones work with agreed technical standards, which let devices and networks talk to each other. Standards grew over generations, from early voice systems to today's data networks. Choosing a standard can itself be a business battle."),
+        ('Net neutrality and the price of data',
+         'Debates over net neutrality ask whether networks may treat some data differently from other data. The price of data is another question, since networks must recover their costs. Businesses and regulators still argue about what fair access means.'),
+    ],
+    "test": [
+        ('Why are radio airwaves controlled by governments?',
+         [('a', 'Radio waves are free for everyone'), ('b', 'The airwaves are unlimited'), ('c', 'The airwaves are limited and signals must not interfere'), ('d', 'Radio waves cannot be used')],
+         'c'),
+        ('In what year did the FCC begin auctioning licences?',
+         [('a', '1994'), ('b', '1984'), ('c', '1974'), ('d', '2004')],
+         'a'),
+        ('What does a licence give its owner?',
+         [('a', 'Ownership of the sky'), ('b', 'Free airtime forever'), ('c', 'The right to use a particular band in a particular place'), ('d', 'A ban on all rivals')],
+         'c'),
+        ("Why are towers a key part of a carrier's business?",
+         [('a', 'They are radio studios'), ('b', 'They are costly, and sharing them can cut costs'), ('c', 'They are government offices'), ('d', 'They are phone shops')],
+         'b'),
+        ('What do mobile standards let devices and networks do?',
+         [('a', 'Ignore each other'), ('b', 'Set prices for the Sun'), ('c', 'Replace towers entirely'), ('d', 'Talk to each other')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Tata Group: Jamsetji Tata's textile mills, steel and hotels, the charitable trusts that own much of it, and ethics as a brand."""
+CODE = 'business5_tata'
+BOOK = {
+    "title": 'The Tata Group',
+    "subtitle": 'Industry in India, owned for public purposes',
+    "chapters": [
+        ('Jamsetji Tata',
+         'Jamsetji Tata founded a group of businesses in India in the late 1800s. He first built in textiles, then in hotels and steel. He hoped his firms would help build a modern nation.'),
+        ('Steel and hotels',
+         "The group built a large steel works at Jamshedpur and the Taj Mahal Palace hotel in Mumbai. These projects showed the group's ambition. Large projects can shape a whole region."),
+        ('Trusts that own the group',
+         'Much of the Tata group is owned by charitable trusts, which hold shares for public purposes. The trusts use a share of the profits for causes such as education and health. Ownership can be used to serve a purpose beyond profit.'),
+        ("Ratan Tata's era",
+         'Ratan Tata led the group from 1991 to 2012 and expanded it across the world. His time as chairman is remembered for both growth and new partnerships. Leadership succession can shape a family-linked firm for decades.'),
+        ('Jaguar Land Rover',
+         "In 2008 Tata bought the British car makers Jaguar and Land Rover from Ford. It was a bold purchase that changed the group's reach. Big acquisitions carry risk and need careful management."),
+        ('Ethics as a brand',
+         'The group is known for a reputation for honest dealing and public service. Reputation builds trust with customers, staff and governments. Trust is slow to earn and quick to lose.'),
+    ],
+    "test": [
+        ('Which industry did Jamsetji Tata first build in?',
+         [('a', 'Ships'), ('b', 'Coal'), ('c', 'Textiles'), ('d', 'Airlines')],
+         'c'),
+        ('Where is the Taj Mahal Palace hotel?',
+         [('a', 'Delhi'), ('b', 'Mumbai'), ('c', 'Kolkata'), ('d', 'Chennai')],
+         'b'),
+        ('What kind of owner holds much of the Tata group?',
+         [('a', 'The government'), ('b', 'Foreign banks'), ('c', 'Staff members'), ('d', 'Charitable trusts')],
+         'd'),
+        ('Which British car makers did Tata buy in 2008?',
+         [('a', 'Rolls-Royce'), ('b', 'MG and Austin'), ('c', 'Jaguar and Land Rover'), ('d', 'Bentley and Lotus')],
+         'c'),
+        ("Why does trust matter to a business like Tata's?",
+         [('a', 'It builds with customers, staff and governments'), ('b', 'It is only a slogan'), ('c', 'It removes the need for accounts'), ('d', 'It lowers all taxes')],
+         'a'),
+    ],
+}

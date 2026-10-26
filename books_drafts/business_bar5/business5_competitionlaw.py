@@ -1,0 +1,37 @@
+"""Competition Law in Europe: Articles 101 and 102, cartels, abuse of dominance, merger review, fines, and the Microsoft and Google cases."""
+CODE = 'business5_competitionlaw'
+BOOK = {
+    "title": 'Competition Law in Europe',
+    "subtitle": 'Keeping markets open so that rivals can compete',
+    "chapters": [
+        ('Fair markets in Europe',
+         'Competition law stops firms from agreeing to harm customers or from using their power to shut out rivals. In the European Union the core rules are in Articles 101 and 102 of the Treaty on the Functioning of the European Union. They apply to firms in every member state.'),
+        ('Article 101 and cartels',
+         'Article 101 bans agreements between firms that restrict competition, such as price fixing, sharing markets and rigging bids. Secret deals among rivals are called cartels, and they are among the most serious breaches. Cartel members can face heavy fines.'),
+        ('Article 102 and abuse',
+         'Article 102 deals with the abuse of a dominant position. A firm with a strong market share may not use that power unfairly, for example by charging unfair prices or tying products to lock in customers. Being dominant is not illegal in itself; abusing it is.'),
+        ('Merger review',
+         'Large mergers are reviewed before they go ahead. The European Commission can block a merger that would harm competition, or approve it with conditions, such as selling part of the business. The aim is to keep markets competitive after the deal.'),
+        ('Fines',
+         'The Commission can fine companies up to 10 percent of their total worldwide turnover for serious breaches. The fine is meant to deter, so large firms can face very large bills. Companies may appeal to the courts.'),
+        ('The Microsoft and Google cases',
+         'In 2004 the Commission fined Microsoft for abusing its dominant position in computer operating systems. Later, Google was fined in 2017 over its shopping search results, and again in 2018 over the Android system. These cases show how competition law applies to technology markets.'),
+    ],
+    "test": [
+        ('What does Article 101 mainly target?',
+         [('a', 'Holiday planning'), ('b', 'Football kits'), ('c', 'Cartels and anti-competitive agreements'), ('d', 'Sun cream')],
+         'c'),
+        ('What is a cartel?',
+         [('a', 'Rivals secretly fixing prices or sharing markets'), ('b', 'A brand of car'), ('c', 'Sharing a pizza'), ('d', 'A type of pension')],
+         'a'),
+        ('What does Article 102 deal with?',
+         [('a', 'Taxes on sugar'), ('b', 'Pensions'), ('c', 'The abuse of a dominant position'), ('d', 'Passports')],
+         'c'),
+        ('What is the maximum EU antitrust fine for a serious breach, as a share of turnover?',
+         [('a', '1 percent'), ('b', '10 percent'), ('c', '50 percent'), ('d', '100 percent')],
+         'b'),
+        ('Which firm was fined by the EU in 2004 for abusing its dominant position?',
+         [('a', 'A bakery'), ('b', 'A brewery'), ('c', 'A bank'), ('d', 'Microsoft')],
+         'd'),
+    ],
+}

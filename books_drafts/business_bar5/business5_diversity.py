@@ -1,0 +1,37 @@
+"""Diverse Teams and Decisions: research on mixed groups, the Hong and Page model, conflict and gain, and the limits of the evidence."""
+CODE = 'business5_diversity'
+BOOK = {
+    "title": 'Diverse Teams and Decisions',
+    "subtitle": 'What research says about mixed groups, and where the evidence is still limited',
+    "chapters": [
+        ('A question of evidence',
+         'Many firms now ask how diverse teams perform. The research is rich but mixed, and results depend on the task, the setting and how well the team works together. Good conclusions come from careful study, not slogans.'),
+        ('Diverse problem solvers',
+         'In 2004, Lu Hong and Scott Page published a model in the Proceedings of the National Academy of Sciences. It suggested that a group of diverse problem solvers can sometimes outperform a group of the very best individuals on certain tasks. Scott Page later explored these ideas in his 2007 book The Difference.'),
+        ('Conflict and gain',
+         'Diversity can bring both gain and conflict. Different views can improve ideas, but they can also slow agreement and cause friction. Teams that manage conflict well are more likely to gain from their mix.'),
+        ('Inclusion',
+         'Having diverse members is not enough. People must feel able to speak, be heard and have their ideas used. Inclusion is what turns a mixed group into a team that benefits from its differences.'),
+        ('Hiring changes',
+         'Some firms change hiring to widen their pool of candidates. They may use structured interviews and clear criteria, so that judgement is fair. Such changes are often tested over time to see whether they work.'),
+        ('Limits of the evidence',
+         'Many studies are small or short, and it is hard to show cause and effect. Results in one country or industry may not hold in another. Read claims with care, and ask what a study can and cannot show.'),
+    ],
+    "test": [
+        ('What does the research on diverse teams show, according to the text?',
+         [('a', 'A single clear answer in every case'), ('b', 'Mixed results that depend on the task and the setting'), ('c', 'That diversity never matters'), ('d', 'That teams should never be mixed')],
+         'b'),
+        ('Who published the 2004 model of diverse problem solvers?',
+         [('a', 'Gary Klein and Irving Janis'), ('b', 'Milton Friedman and Eric Ries'), ('c', 'Joan Woodward and Robert Cooper'), ('d', 'Lu Hong and Scott Page')],
+         'd'),
+        ('What does diversity need, beyond having diverse members?',
+         [('a', 'Silence in meetings'), ('b', 'A single shared opinion'), ('c', 'Inclusion, so people speak, are heard and are used'), ('d', 'Identical backgrounds')],
+         'c'),
+        ('What does the text say diversity can cause?',
+         [('a', 'Both gain and conflict'), ('b', 'Only conflict'), ('c', 'Only gain, never conflict'), ('d', 'Nothing at all')],
+         'a'),
+        ('What limit of the evidence does the text name?',
+         [('a', 'All studies are perfect'), ('b', 'Studies never use numbers'), ('c', 'Many studies are small or short, and cause is hard to prove'), ('d', 'Studies are all written by one firm')],
+         'c'),
+    ],
+}

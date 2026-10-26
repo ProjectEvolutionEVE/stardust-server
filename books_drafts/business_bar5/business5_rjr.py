@@ -1,0 +1,37 @@
+"""The RJR Nabisco Buyout: the 1988 bidding war, KKR's win, the aftermath, and what it showed about deals."""
+CODE = 'business5_rjr'
+BOOK = {
+    "title": 'The RJR Nabisco Buyout',
+    "subtitle": 'The 1988 bidding war, its winner, and what it taught the market',
+    "chapters": [
+        ('The 1988 bidding war',
+         'In 1988 the food and tobacco company RJR Nabisco was put up for a leveraged buyout. Its own managers made a bid, and several private equity firms joined a fierce contest for the company. The bidding rose again and again over several weeks.'),
+        ('Barbarians at the Gate',
+         'The contest was later told in the book Barbarians at the Gate, which became famous as a portrait of greed and power in corporate finance. The book helped make the deal a symbol of the 1980s. Its story still shapes how people see buyouts.'),
+        ('KKR wins',
+         'The firm Kohlberg Kravis Roberts, known as KKR, won the contest. It agreed to buy the company for a very large sum, one of the biggest buyouts of its time. The final price was far above the first offers.'),
+        ('The price',
+         'The deal was paid for mostly with borrowed money, so the company took on a heavy load of debt. The price made the buyers pay more than many expected. Winning the auction meant accepting a risky structure.'),
+        ('The aftermath',
+         'In the years after the deal, the company sold parts of its business and cut costs. Its debt remained a long-term burden, and the company was later split up and its businesses sold in parts. The buyout became a lesson in how hard it is to repay huge loans.'),
+        ('What it showed',
+         'The deal showed how far buyers would go to win a company, and how much debt could be used to pay for it. It also showed that a high price is not the same as a good investment. Buyers and sellers have both learned from it since.'),
+    ],
+    "test": [
+        ('In what year was RJR Nabisco put up for a leveraged buyout?',
+         [('a', '1776'), ('b', '1988'), ('c', '1930'), ('d', '2015')],
+         'b'),
+        ('What is the book Barbarians at the Gate about?',
+         [('a', 'A cookbook for bakers'), ('b', 'A guide to birdwatching'), ('c', 'A history of kingdoms in Asia'), ('d', 'The bidding war for RJR Nabisco')],
+         'd'),
+        ('Which firm won the contest for RJR Nabisco?',
+         [('a', 'A bakery in Ohio'), ('b', 'The national postal service'), ('c', 'KKR, Kohlberg Kravis Roberts'), ('d', 'A school board')],
+         'c'),
+        ('How was the RJR Nabisco deal mostly paid for?',
+         [('a', 'With borrowed money'), ('b', 'With gold bars only'), ('c', 'With free shares from the government'), ('d', 'With donations from customers')],
+         'a'),
+        ('What did the deal show about price?',
+         [('a', 'Price never matters in a sale'), ('b', 'The highest bid always wins a good investment'), ('c', 'A high price is not the same as a good investment'), ('d', 'Prices are set by the weather')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Impossible Trinity: fixed exchange rates, free capital and independent policy, Mundell and Fleming, historical cases, the euro and choosing a regime."""
+CODE = 'business5_trilemma'
+BOOK = {
+    "title": 'The Impossible Trinity',
+    "subtitle": 'Why a country can have only two of three: a fixed rate, free capital and its own policy',
+    "chapters": [
+        ('Three goals',
+         'A country may want a fixed exchange rate, free movement of money across its borders, and its own interest rate policy. The Impossible Trinity says it can have only two of the three.'),
+        ('Mundell and Fleming',
+         'Robert Mundell and Marcus Fleming developed this logic in the early 1960s. Mundell received the Nobel Prize in Economics in 1999.'),
+        ('Fixed rate and free capital',
+         'If a country fixes its exchange rate and lets money flow freely, its interest rates must follow those of the currency it is pegged to. It gives up control of its own rates in order to keep the peg.'),
+        ('Historical cases',
+         'The gold standard before 1914 linked many currencies with free capital flows, and countries gave up independent rates. After 1944, under the Bretton Woods system, many countries controlled capital flows so that they could keep their own policy.'),
+        ('The euro',
+         'Members of the euro area share one currency and one central bank. They gave up their own currencies and monetary policy in return for a single currency across the area.'),
+        ('Choosing a regime',
+         'Each country chooses which corner of the triangle to keep. Some choose floating rates with free capital and their own policy, while others prefer a fixed peg or capital controls. The choice reflects trade links, debt and political goals.'),
+    ],
+    "test": [
+        ('What does the Impossible Trinity say?',
+         [('a', 'A country can have only two of three: fixed rates, free capital flows and independent monetary policy'), ('b', 'All three are always possible'), ('c', 'Only trade matters'), ('d', 'Gold must be kept at home')],
+         'a'),
+        ('Who developed this logic in the early 1960s?',
+         [('a', 'Adam Smith and David Ricardo'), ('b', 'Milton Friedman and Anna Schwartz'), ('c', 'Robert Mundell and Marcus Fleming'), ('d', 'Keynes and Hayek')],
+         'c'),
+        ('What must a country give up if it fixes its rate and allows free capital flows?',
+         [('a', 'The ability to print unlimited money'), ('b', 'Control of its own interest rates'), ('c', 'All foreign trade'), ('d', 'Its currency altogether')],
+         'b'),
+        ('What did members of the euro area give up?',
+         [('a', 'Their schools'), ('b', 'Their national anthems'), ('c', 'Their parliaments'), ('d', 'Their own currencies and monetary policy')],
+         'd'),
+        ('What did many countries do under the Bretton Woods system?',
+         [('a', 'Let capital flow with no limits'), ('b', 'Abolish all currencies'), ('c', 'Control capital flows to keep their own policy'), ('d', 'Use only silver')],
+         'c'),
+    ],
+}

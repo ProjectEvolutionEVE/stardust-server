@@ -1,0 +1,37 @@
+"""The Lean Startup: test ideas with a minimum viable product, learn from real customers, and pivot when the evidence says so."""
+CODE = 'business5_leanstartup'
+BOOK = {
+    "title": 'The Lean Startup',
+    "subtitle": 'Build, measure, learn: testing ideas with real customers before going all in',
+    "chapters": [
+        ('Eric Ries and the new method',
+         'Eric Ries wrote The Lean Startup in 2011, drawing on his work with young companies in the United States. He argued that a new firm should test its ideas quickly and cheaply, rather than spend years building a product no one wants.'),
+        ('The minimum viable product',
+         'A minimum viable product is the simplest version of a product that lets you learn from real customers. It may be a simple page, a sample, or a rough first model. The aim is to test one key idea, not to finish the whole product.'),
+        ('Build, measure, learn',
+         'The method runs in a loop. You build the smallest test, measure how customers respond, and learn what it means. Then you decide whether to keep going, change direction or stop.'),
+        ('Pivots',
+         'A pivot is a change of direction based on what you learned. A firm may keep its goal but change its product, its customers or its way of selling. Pivoting is not failure when it follows real evidence.'),
+        ('Validated learning',
+         'Validated learning means knowing something because you tested it. Opinions, hopes and clever plans are not enough. Each test should be designed so that its result could prove the idea wrong.'),
+        ('Vanity metrics',
+         'Some numbers look good but tell you little, such as total downloads with no one using the product again. Ries called these vanity metrics. Choose measures that show real customer behaviour, such as repeat use or money paid.'),
+    ],
+    "test": [
+        ('Who wrote The Lean Startup?',
+         [('a', 'Pierre Wack'), ('b', 'Igor Ansoff'), ('c', 'Henry Mintzberg'), ('d', 'Eric Ries')],
+         'd'),
+        ('What is a minimum viable product?',
+         [('a', 'The cheapest possible office'), ('b', 'A finished, fully polished product'), ('c', 'The simplest version that lets you learn from real customers'), ('d', 'A product with no customers')],
+         'c'),
+        ('What are the three steps of the loop?',
+         [('a', 'Build, measure, learn'), ('b', 'Guess, hide, quit'), ('c', 'Hire, pay, sell'), ('d', 'Plan, wait, report')],
+         'a'),
+        ('What is a pivot?',
+         [('a', 'A fixed rule that never changes'), ('b', 'A weekly sales meeting'), ('c', 'A change of direction based on what you learned'), ('d', 'A type of bank loan')],
+         'c'),
+        ('What does Ries call numbers that look good but tell you little?',
+         [('a', 'Pivot points'), ('b', 'Vanity metrics'), ('c', 'Validated learning'), ('d', 'Minimum products')],
+         'b'),
+    ],
+}

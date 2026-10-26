@@ -1,0 +1,37 @@
+"""Organisational Structures and Configurations: five basic shapes of organisation and how each fits its task."""
+CODE = 'business5_mintzbergconfig'
+BOOK = {
+    "title": 'Organisational Structures and Configurations',
+    "subtitle": 'Five basic shapes of organisation, and how to match the form to the task',
+    "chapters": [
+        ('Shape follows work',
+         "Henry Mintzberg argued that an organisation's shape depends on the work it does and the people who do it. A design that suits a factory will often fail in a research lab. The right question is not which structure is best, but which structure fits the task."),
+        ('The simple structure',
+         'A simple structure has a strong leader at the top and very little formal rule. Small firms and start-ups often work this way. It is quick to act, but it depends on one person, and it can break down as the firm grows.'),
+        ('The machine bureaucracy',
+         'A machine bureaucracy runs on rules, routines and a clear chain of command. Think of a large factory or a national postal service. It works well when tasks are routine and predictable, and it struggles with sudden change.'),
+        ('The professional bureaucracy and the divisional form',
+         'A professional bureaucracy is run by skilled experts, such as doctors or lawyers, who work mostly on their own. A divisional form splits a large firm into semi-separate divisions, each with its own products and markets, under a central head office.'),
+        ('Adhocracy',
+         'An adhocracy is a flexible team built for new problems. People gather around a project, then regroup when it ends. Film studios and some engineering firms often work this way. It is creative, but it can be slow to make plans and costly to run.'),
+        ('Matching form to task',
+         'Each shape has strengths and costs. Ask what the work needs: speed, skill, scale, or creativity. Then pick the shape that gives it, and expect to change the shape when the work changes.'),
+    ],
+    "test": [
+        ("According to Mintzberg, what should decide an organisation's shape?",
+         [('a', 'The size of the head office'), ('b', 'The colour of its logo'), ('c', 'Which country it was founded in'), ('d', 'The work it does and the people who do it')],
+         'd'),
+        ('Which structure depends on a strong leader and very little formal rule?',
+         [('a', 'Machine bureaucracy'), ('b', 'Adhocracy'), ('c', 'Simple structure'), ('d', 'Divisional form')],
+         'c'),
+        ('Which structure suits a factory with routine, predictable work?',
+         [('a', 'Machine bureaucracy'), ('b', 'Adhocracy'), ('c', 'Simple structure'), ('d', 'Professional bureaucracy')],
+         'a'),
+        ('What is an adhocracy?',
+         [('a', 'A council of old rules'), ('b', 'A chain of separate factories'), ('c', 'A flexible team built around a new problem'), ('d', "A single owner's shop")],
+         'c'),
+        ('What is a divisional form?',
+         [('a', 'A one-person firm'), ('b', 'A firm split into semi-separate divisions under a central head office'), ('c', 'A group of doctors working alone'), ('d', 'A team of film crews')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Non-GAAP Measures: EBITDA, adjusted earnings and other figures outside the accounting standards, and how to read them with care."""
+CODE = 'business5_nongaap'
+BOOK = {
+    "title": 'Non-GAAP Measures',
+    "subtitle": 'Figures outside the standard rules, and how to read them with care',
+    "chapters": [
+        ('Numbers outside the rules',
+         "Companies often report measures that the accounting standards do not define, called non-GAAP or alternative measures. They are not wrong in themselves. They are a company's own view of its performance, so the reader must judge them."),
+        ('EBITDA',
+         'EBITDA stands for earnings before interest, tax, depreciation and amortisation. It shows the profit from running the business before paying for debt, tax and the wear on assets. It is useful, but it leaves out real costs that a business must pay.'),
+        ('Adjusted earnings',
+         'Adjusted earnings are profit with some items removed, such as one-off costs. The company says these items do not show the underlying performance. The adjustments are set by the company, so they need checking.'),
+        ('Why firms report them',
+         'Firms report these figures to show what they say is the core business. Sometimes that is helpful, because a single bad year can be explained. Sometimes it flatters, because the chosen measure makes the results look better than the standard ones.'),
+        ('Common add-backs',
+         'A common add-back is restructuring cost, which is put back into profit as if it were unusual. But restructuring often happens year after year. A cost that keeps coming back is part of the normal business, and a careful reader will question it.'),
+        ('Reading with care',
+         'Look for the reconciliation that links the non-standard figure back to the official profit. Check which items have been removed, and whether they recur. Read the standard figures first, then the adjusted ones, and compare the two.'),
+    ],
+    "test": [
+        ('What does EBITDA stand for?',
+         [('a', 'Equity bonds and total debt'), ('b', 'Extra bonus and tax dues'), ('c', 'Earnings before interest, tax, depreciation and amortisation'), ('d', 'Earnings beyond the gross dividend')],
+         'c'),
+        ('Which of these is a non-GAAP measure?',
+         [('a', 'Cash on hand'), ('b', 'Adjusted earnings'), ('c', 'Net income under the standard rules'), ('d', 'Total assets')],
+         'b'),
+        ('Why do companies show non-GAAP numbers?',
+         [('a', 'To break the law'), ('b', 'Because the standards forbid profit'), ('c', 'To avoid tax entirely'), ('d', 'To show what they say is the underlying performance')],
+         'd'),
+        ('Which of these is a common add-back?',
+         [('a', 'Customer complaints'), ('b', 'Staff birthdays'), ('c', 'Restructuring costs'), ('d', 'Weekly lunches')],
+         'c'),
+        ('What should a careful reader do with non-GAAP figures?',
+         [('a', 'Check the reconciliation to the official numbers, and ask whether the one-off items keep recurring'), ('b', 'Ignore the standard figure'), ('c', 'Trust them fully'), ('d', 'Look only at the logo')],
+         'a'),
+    ],
+}

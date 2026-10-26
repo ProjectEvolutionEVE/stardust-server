@@ -1,0 +1,37 @@
+"""The body in microgravity: fluid shift, bone and muscle loss, the twin study, exercise and recovery."""
+CODE = "flight4_microgravity_body"
+BOOK = {
+    "title": "The Body in Microgravity",
+    "subtitle": "What weightlessness does to the human body, and how crews fight back",
+    "chapters": [
+        ("Fluid shift",
+         "Without gravity pulling fluid down into the legs, body fluid moves up toward the head. Faces can look puffy, and legs can feel thin. The body adjusts over days, but the shift can cause dizziness and headaches at first."),
+        ("Bone loss",
+         "Bones carry weight on Earth, and they stay strong by being loaded. In weightlessness, bone is lost, most of it in the hips and legs. Crews lose bone at a rate that must be watched on long flights."),
+        ("Muscle",
+         "Muscles that hold the body upright on Earth weaken quickly without gravity. Crews can lose strength and endurance unless they keep moving and training. Muscle loss matters for work on arrival and on the surface of a planet."),
+        ("The twin study",
+         "NASA's Twins Study followed astronaut Scott Kelly during a year in space and his twin brother Mark on Earth. Researchers compared many measures, and found changes in gene activity, bone, blood and the immune system, many of which eased after his return."),
+        ("Exercise",
+         "Crews exercise every day in orbit, using machines that give resistance, such as treadmills and cycles with straps that pull the body down. Regular exercise slows bone and muscle loss, and it helps the crew stay fit for their work."),
+        ("Recovery",
+         "After landing, the body needs time to readjust to gravity. Strength, balance and bone health return over weeks to months, and some changes take longer. Careful rehabilitation shortens the recovery."),
+    ],
+    "test": [
+        ("What is fluid shift in weightlessness?",
+         [("a", "Fluid moves up toward the head"), ("b", "Fluid turns to ice"), ("c", "Fluid stops moving"), ("d", "Fluid is never used")],
+         "a"),
+        ("Where is bone lost most in weightlessness?",
+         [("a", "Only in the fingers"), ("b", "Most of it in the hips and legs"), ("c", "In the ears"), ("d", "It is not lost")],
+         "b"),
+        ("What did NASA's Twins Study compare?",
+         [("a", "Two cars on a road"), ("b", "Two planets"), ("c", "An astronaut in space with his twin on Earth"), ("d", "Two rockets")],
+         "c"),
+        ("Why do crews exercise every day in orbit?",
+         [("a", "To make themselves heavier"), ("b", "To warm the capsule"), ("c", "To stop the engines"), ("d", "To slow bone and muscle loss")],
+         "d"),
+        ("How long does recovery take after landing?",
+         [("a", "Strength and bone health return over weeks to months"), ("b", "It is instant"), ("c", "It never happens"), ("d", "It takes one hour exactly")],
+         "a"),
+    ],
+}

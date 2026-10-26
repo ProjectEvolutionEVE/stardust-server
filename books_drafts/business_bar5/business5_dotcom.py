@@ -1,0 +1,37 @@
+"""The Dot-Com Bubble: internet stocks, eyeballs against earnings, the IPO rush, the 2000 peak, Pets.com, and what survived."""
+CODE = 'business5_dotcom'
+BOOK = {
+    "title": 'The Dot-Com Bubble',
+    "subtitle": 'Internet stocks, a rush to list, the 2000 peak, and what survived the fall',
+    "chapters": [
+        ('Internet stocks',
+         'In the late 1990s, investors became excited about the internet. Shares of companies linked to the web rose quickly, and many new firms were formed to take advantage. Some of these ideas were sound, and many were not.'),
+        ('Eyeballs against earnings',
+         'Many investors valued internet firms by how many visitors they attracted, sometimes called eyeballs. Profits were often ignored or far away. For a time, the number of visitors seemed to matter more than whether the business made money.'),
+        ('The IPO rush',
+         'Companies rushed to sell shares to the public in initial public offerings, or IPOs. Many firms listed soon after they were founded, and first-day gains were often large. The rush made it easy to raise money, even for weak plans.'),
+        ('The 2000 peak',
+         'The NASDAQ index reached its peak in March 2000. After that, prices fell sharply over the following two years, and many internet firms lost most of their value. The fall wiped out a large amount of wealth.'),
+        ('Pets.com',
+         'Pets.com was a well-known online pet supply store that went public in February 2000. It spent heavily on advertising, including a famous sock puppet, and sold goods at a loss. The company closed in late 2000, and it became a symbol of the bubble.'),
+        ('What survived',
+         'Many firms failed, but some strong companies survived and grew. Their survival showed that a good idea needs a sound business behind it. The bubble taught investors to ask how a company earns money, not only how many people it reaches.'),
+    ],
+    "test": [
+        ('What were many investors in the late 1990s excited about?',
+         [('a', 'Ancient coins'), ('b', 'Horse racing'), ('c', 'The internet'), ('d', 'Long-distance walking')],
+         'c'),
+        ('What did some investors use as a measure instead of profits?',
+         [('a', 'The number of visitors, sometimes called eyeballs'), ('b', 'The weight of the office chairs'), ('c', 'The colour of the logo'), ('d', 'The number of pencils')],
+         'a'),
+        ('What is an IPO?',
+         [('a', 'A type of internet cable'), ('b', 'A bank holiday'), ('c', 'An initial public offering, when a company first sells shares to the public'), ('d', 'A software bug')],
+         'c'),
+        ('When did the NASDAQ index reach its peak?',
+         [('a', 'June 1950'), ('b', 'March 2000'), ('c', 'May 1700'), ('d', 'December 1900')],
+         'b'),
+        ('What was Pets.com a symbol of?',
+         [('a', 'A new kind of bank'), ('b', 'A royal wedding'), ('c', 'A national park'), ('d', 'The bubble, after it spent heavily and then closed')],
+         'd'),
+    ],
+}

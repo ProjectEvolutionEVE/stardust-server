@@ -1,0 +1,37 @@
+"""Nike and Outsourcing: a running shoe firm that designs at home and makes abroad, and the code of conduct it had to write."""
+CODE = 'business5_nike'
+BOOK = {
+    "title": 'Nike and Outsourcing',
+    "subtitle": 'Designing at home, making abroad, and the factory question',
+    "chapters": [
+        ('Blue Ribbon Sports',
+         "Nike began in 1964 as Blue Ribbon Sports, a company that sold running shoes made in Japan. Phil Knight and the coach Bill Bowerman were its founders. The brand grew from runners' needs and their feedback."),
+        ('Waffle soles',
+         'Bowerman poured rubber into a waffle iron in the early 1970s to make a lighter, grippier shoe sole. The waffle sole became an early hit. Small product ideas, tested by real athletes, can change a whole company.'),
+        ('Designing at home, making abroad',
+         "Nike designs its shoes in its home base and has its products made by factories in other countries. Making goods where labour and materials are cheaper lowers cost and lets a brand grow quickly. The model also spreads the company's risk across many suppliers."),
+        ('The Jordan deal',
+         'In 1984 Nike signed the young basketball star Michael Jordan and launched the Air Jordan line. The line became one of the most successful sports brands ever. A star partnership is a powerful tool when the product and story fit.'),
+        ('Factory protests',
+         "In the 1990s, reports of low wages and harsh conditions in some overseas factories led to protests and boycotts. Nike faced criticism from campaigners and the press. Outsourcing moves a company's reputation along with its production."),
+        ('A code of conduct',
+         'Nike responded by setting a code of conduct for its suppliers and by auditing factories. Such codes are only as strong as the checks behind them. Responsible sourcing is a lasting test for any company that makes its goods abroad.'),
+    ],
+    "test": [
+        ("What was Nike's first name?",
+         [('a', 'Blue Ribbon Sports'), ('b', 'Red Shoe Company'), ('c', 'Green Track Ltd'), ('d', 'Silver Stride Inc')],
+         'a'),
+        ('What was special about the waffle sole?',
+         [('a', 'It was made from gold'), ('b', 'It was designed for swimming'), ('c', 'It was made with a waffle iron and was light and grippy'), ('d', 'It glowed in the dark')],
+         'c'),
+        ('What is the basic outsourcing model Nike uses?',
+         [('a', 'Make everything in one factory'), ('b', 'Design at home and make the goods in other countries'), ('c', 'Sell only used shoes'), ('d', 'Ship only from one port')],
+         'b'),
+        ('What did Nike sign in 1984 that became a famous line?',
+         [('a', 'A chain of gyms'), ('b', 'A newspaper'), ('c', 'A shipping fleet'), ('d', 'A famous basketball star, Michael Jordan')],
+         'd'),
+        ('What did Nike write in response to factory criticism?',
+         [('a', 'A plan to close all factories at once'), ('b', 'A new uniform for its managers'), ('c', 'A code of conduct for suppliers, backed by audits'), ('d', 'A rule that suppliers must be family-run')],
+         'c'),
+    ],
+}

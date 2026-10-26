@@ -1,0 +1,37 @@
+"""The Black-Scholes Formula: the famous price for an option, and what it assumes."""
+CODE = 'business5_blackscholes'
+BOOK = {
+    "title": 'The Black-Scholes Formula',
+    "subtitle": 'The famous option price, its inputs, and the ideas behind it',
+    "chapters": [
+        ('Two economists and a paper',
+         'In 1973 Fischer Black and Myron Scholes published a paper on pricing options. Robert Merton, another economist, built on the same work at about the same time. Scholes and Merton later shared a Nobel Prize in economics, and Black had died before the prize was given. Their formula became the standard way to price many options.'),
+        ('The five inputs',
+         'The formula takes the current stock price, the strike price of the option, the time left until it expires, the risk-free interest rate, and the volatility of the stock. Put those numbers in and the formula gives a fair price for a call option. Most of the inputs can be read from the market. Volatility is the one that has to be estimated.'),
+        ('The big idea: no free money',
+         'The key idea is that you can copy an option by holding the stock and borrowing money, and adjusting the mix as prices move. If two things pay the same, they should cost the same. Otherwise a trader could buy the cheaper one, sell the dearer one, and make a profit with no risk. The formula is the price that stops this from happening.'),
+        ('What the formula gives',
+         'The formula gives a theoretical price, not a guarantee. It tells you what an option should be worth if the assumptions hold. Traders often run the formula backwards: they take the market price and find the volatility that matches it. That number is called the implied volatility.'),
+        ('Where the assumptions break',
+         'The formula assumes prices move smoothly, that volatility stays the same, and that markets never jump. Real markets do jump, and volatility changes. After the 1987 crash, traders began to pay more for protection against big falls than the simple formula said they should. Today the formula is a starting point, not the final word.'),
+        ('Why it still matters',
+         'Even with its flaws, the formula is a common language. Traders quote options in volatility terms because the formula made that habit universal. It teaches a lesson every saver should know: a price depends on the risks someone is willing to carry, not only on the price today.'),
+    ],
+    "test": [
+        ('Who shared the Nobel Prize in economics for this work?',
+         [('a', 'Scholes and Merton'), ('b', 'Black and Keynes'), ('c', 'Cox and Ross'), ('d', 'Buffett and Graham')],
+         'a'),
+        ('Which of these is NOT one of the five main inputs to the formula?',
+         [('a', 'The strike price'), ('b', 'The time until expiry'), ('c', 'The number of employees at the company'), ('d', 'The risk-free interest rate')],
+         'c'),
+        ('What is the main idea behind the formula?',
+         [('a', 'Prices always rise over time'), ('b', 'Two things that pay the same should cost the same, or a risk-free profit exists'), ('c', 'Options are always worth nothing at expiry'), ('d', 'Companies should never borrow')],
+         'b'),
+        ('What is implied volatility?',
+         [('a', 'The number of trades in a day'), ('b', 'The fee a broker charges'), ('c', 'The total value of a company'), ('d', 'The volatility that makes the formula match the market price')],
+         'd'),
+        ('Which assumption often fails in real markets?',
+         [('a', 'Interest rates are paid in gold'), ('b', 'Options always expire on a Monday'), ('c', 'Prices never jump'), ('d', 'It is always fixed at zero')],
+         'c'),
+    ],
+}

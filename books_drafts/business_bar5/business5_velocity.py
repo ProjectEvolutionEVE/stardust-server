@@ -1,0 +1,37 @@
+"""The Quantity Theory and Velocity of Money: MV = PT, Fisher and Friedman, changes in velocity, the broken link and central banks today."""
+CODE = 'business5_velocity'
+BOOK = {
+    "title": 'The Quantity Theory and Velocity of Money',
+    "subtitle": 'MV = PT, how money changes hands, and why the link to prices can loosen',
+    "chapters": [
+        ('MV = PT',
+         'The equation of exchange says that the money supply times velocity equals the price level times the number of transactions. Irving Fisher popularised it in the early twentieth century. It is an identity, so both sides match by definition.'),
+        ('Fisher and Friedman',
+         "Fisher's quantity theory argued that, if velocity and output were stable, more money would mean higher prices. Milton Friedman later argued that sustained inflation is a monetary phenomenon."),
+        ('Changes in velocity',
+         'Velocity is how fast money changes hands. It is not constant. People hold more money in some periods and spend it faster in others, so velocity moves with habits, technology and confidence.'),
+        ('Money and prices',
+         'Over long periods, sustained growth in money tends to lead to higher inflation. In the short run, shifts in velocity and changes in output can blur the link.'),
+        ('The broken link',
+         'In many rich countries from the 1980s onward, the link between money growth and inflation weakened. Velocity shifted, and the simple rule did not predict prices well.'),
+        ('Central banks today',
+         'Most central banks now focus on inflation and interest rates rather than targeting money growth directly. Money still matters, but the link is looser than the early quantity theory assumed.'),
+    ],
+    "test": [
+        ('What does MV = PT state?',
+         [('a', 'Profit equals tax'), ('b', 'Wages equal rents'), ('c', 'Demand equals supply in every market'), ('d', 'The money supply times velocity equals the price level times transactions')],
+         'd'),
+        ('Who popularised the equation of exchange in the early twentieth century?',
+         [('a', 'Karl Marx'), ('b', 'Friedrich Hayek'), ('c', 'Irving Fisher'), ('d', 'John Maynard Keynes')],
+         'c'),
+        ('What is the velocity of money?',
+         [('a', 'How fast money changes hands'), ('b', 'The speed of a printing press'), ('c', 'The amount of gold in a vault'), ('d', 'The value of a single note')],
+         'a'),
+        ('What weakened in many rich countries from the 1980s onward?',
+         [('a', 'All taxes'), ('b', 'Every bank'), ('c', 'The link between money growth and inflation'), ('d', 'Interest on savings')],
+         'c'),
+        ('What do most central banks focus on today?',
+         [('a', 'Gold reserves only'), ('b', 'Inflation and interest rates rather than money growth directly'), ('c', 'Fixing every wage'), ('d', 'Money growth targets exclusively')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Tesla: from the Roadster to the Model 3, battery costs, production ramps, direct sales, charging and regulatory credits."""
+CODE = 'business5_tesla'
+BOOK = {
+    "title": 'Tesla',
+    "subtitle": 'From the Roadster to mass production, and the business behind it',
+    "chapters": [
+        ('From Roadster to Model 3',
+         'Tesla began with the Roadster, a sports car first sold in 2008, built on a battery-powered design. Later it launched the Model 3, a smaller and cheaper car aimed at a wide market. Starting with a niche product can fund a path to mass production.'),
+        ('Battery costs',
+         'Batteries are one of the largest costs in an electric car. Falling battery prices made electric cars cheaper over time. A business that depends on a costly part must watch the price of that part closely.'),
+        ('Production ramps',
+         'Scaling up production is hard, and Tesla struggled to build the Model 3 at the planned speed in 2017 and 2018. Factories need skilled staff, tested processes and steady supply. Growth in volume can be slower than the plan on paper.'),
+        ('Direct sales',
+         'Tesla sells its cars directly to customers through its own stores and website, not through independent dealers in many places. Direct sales give the company control of prices and customer contact. Each sales model brings its own rules and costs.'),
+        ('The charging network',
+         'Tesla built its own network of fast chargers, called Superchargers, along major routes. A reliable network makes electric cars easier to use on long journeys. Infrastructure can be a competitive edge when rivals lack it.'),
+        ('Regulatory credits',
+         'Governments in some places require carmakers to sell a share of low-emission vehicles. Companies that fall short can buy credits from firms that exceed the target. Tesla earned significant income from selling such credits for several years. Revenue from rules can be a useful bridge, but it is not the same as selling products people want.'),
+    ],
+    "test": [
+        ("What was Tesla's first car?",
+         [('a', 'The Model T'), ('b', 'The Beetle'), ('c', 'The Mini'), ('d', 'The Roadster')],
+         'd'),
+        ('In what year was the Roadster first sold?',
+         [('a', '1908'), ('b', '1958'), ('c', '2008'), ('d', '1998')],
+         'c'),
+        ("What did Tesla's own fast chargers along major routes form?",
+         [('a', 'A charging network called Superchargers'), ('b', 'A chain of coffee shops'), ('c', 'A railway'), ('d', 'A bakery')],
+         'a'),
+        ('What did the chapter say about falling battery prices?',
+         [('a', 'They made cars heavier'), ('b', 'They stopped all car sales'), ('c', 'They made electric cars cheaper over time'), ('d', 'They had no effect ever')],
+         'c'),
+        ("What are regulatory credits, in the chapter's words?",
+         [('a', 'Free petrol for drivers'), ('b', 'Credits firms can buy from others when they fall short of a low-emission target'), ('c', 'Discounts at the car park'), ('d', 'Loans from the Queen')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Anxiety and Depression: two common conditions, how they feel, and the help that works."""
+CODE = "medicine3c_anxiety_depression"
+BOOK = {
+    "title": "Anxiety and Depression: Conditions and Treatment",
+    "subtitle": "Two common conditions, how they feel, and the help that works",
+    "chapters": [
+        ("Common and treatable",
+         "Anxiety and depression are common medical conditions, not signs of weak character. Many people who ask for help get better, often through a mix of support, talking therapy and, where a doctor advises it, medicine."),
+        ("Anxiety",
+         "Anxiety is a strong or constant worry that is out of proportion to the situation. It can bring a racing heart, a tight chest, restlessness and poor sleep. A little anxiety is a healthy alarm, but it becomes a problem when it lasts and stops daily life from working."),
+        ("Depression",
+         "Depression is a low mood that lasts most of the day, on most days, for two weeks or more. It can bring a loss of interest in things once enjoyed, tiredness, changes in sleep and appetite, and harsh thoughts about oneself. It is more than a bad week."),
+        ("Talking therapies",
+         "Talking therapies, such as cognitive behavioural therapy, help people notice unhelpful patterns of thought and change how they respond to them. For many people these are a first choice of treatment, and they teach skills that last."),
+        ("Medicines and their role",
+         "For some people, a doctor may prescribe medicine. A clinician chooses it, checks how it suits the person, and watches for side effects. Never stop or change a medicine without speaking to the clinician who prescribed it."),
+        ("Support from others",
+         "Friends, peers and trained helpers can make a real difference. Small steps help: regular sleep, gentle movement, time in daylight and keeping in touch with people. If someone talks about harming themselves, get trained help at once."),
+    ],
+    "test": [
+        ("Which statement about anxiety and depression is true?",
+         [("a", "They are signs of weak character"), ("b", "They cannot be treated"), ("c", "They are common medical conditions that can be treated"), ("d", "They always go away with no help at all")],
+         "c"),
+        ("How long must low mood last before it may be depression?",
+         [("a", "About two weeks or more"), ("b", "One afternoon"), ("c", "A single day"), ("d", "One hour")],
+         "a"),
+        ("Which of these is a sign of depression?",
+         [("a", "Extra energy most days"), ("b", "A heartbeat that is slow on purpose"), ("c", "Enjoying every activity more than before"), ("d", "Losing interest in things once enjoyed")],
+         "d"),
+        ("What is cognitive behavioural therapy?",
+         [("a", "A medicine taken with food"), ("b", "A talking therapy that helps change unhelpful thought patterns"), ("c", "A type of exercise machine"), ("d", "A surgical procedure")],
+         "b"),
+        ("Who should decide on, and watch over, any medicine for these conditions?",
+         [("a", "A trained clinician who checks for side effects"), ("b", "The patient alone, from memory"), ("c", "A friend"), ("d", "The label on the box alone")],
+         "a"),
+    ],
+}

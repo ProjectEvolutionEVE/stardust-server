@@ -1,0 +1,37 @@
+"""Keeping time: atomic clocks, UTC, leap seconds, GPS timing, the relativity effect on clocks and ship clocks."""
+CODE = "flight4_time"
+BOOK = {
+    "title": "Keeping Time",
+    "subtitle": "Why exact clocks matter for navigation, communication and science",
+    "chapters": [
+        ("Atomic clocks",
+         "An atomic clock counts the vibrations of atoms, such as caesium, which vibrate at an extremely steady rate. These clocks are so accurate that they lose only a tiny fraction of a second over many years."),
+        ("UTC",
+         "Coordinated Universal Time, or UTC, is the standard time that the world's labs agree on. It is kept by atomic clocks and is the basis of time zones, flights and the internet."),
+        ("Leap seconds",
+         "Earth's spin is not perfectly steady, so UTC is occasionally adjusted with a leap second to keep it close to the Sun's position in the sky. Leap seconds have been added since 1972, though the practice is now being reviewed."),
+        ("GPS timing",
+         "GPS satellites carry atomic clocks, and a receiver works out its position by measuring the time signals take to arrive. An error of a millionth of a second would throw a position off by hundreds of metres, so timing is central."),
+        ("The relativity effect",
+         "Clocks run at different rates depending on speed and gravity. GPS satellites tick slightly faster than clocks on the ground because they are higher and move differently, and their clocks are corrected to match."),
+        ("Ship clocks",
+         "A ship or station keeps its own clock, synchronised with UTC. Exact time lets crews match their logs, time manoeuvres and handle signals from other craft. Without a shared time, coordination quickly falls apart."),
+    ],
+    "test": [
+        ("What does an atomic clock count?",
+         [("a", "The number of cars passing a road"), ("b", "The number of days in a year"), ("c", "The number of stars"), ("d", "The vibrations of atoms")],
+         "d"),
+        ("What is UTC?",
+         [("a", "The standard time that the world's labs agree on"), ("b", "A type of rocket"), ("c", "A city in Europe"), ("d", "A kind of spacecraft")],
+         "a"),
+        ("Why are leap seconds added occasionally?",
+         [("a", "To make the day longer for fun"), ("b", "To keep UTC close to the Sun's position, since Earth's spin is not perfectly steady"), ("c", "To stop satellites working"), ("d", "To pay the labs")],
+         "b"),
+        ("Why does GPS need very exact timing?",
+         [("a", "Because GPS has no position at all"), ("b", "Because clocks do not matter"), ("c", "Because a tiny timing error would throw a position off by hundreds of metres"), ("d", "Because satellites are slow")],
+         "c"),
+        ("What is the relativity effect on GPS clocks?",
+         [("a", "They stop at night"), ("b", "They run backward"), ("c", "They are made of wood"), ("d", "Their clocks are corrected because of speed and gravity")],
+         "d"),
+    ],
+}

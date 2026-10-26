@@ -1,0 +1,37 @@
+"""London's Big Bang: the 1986 reforms that moved London from the old floor to screens and foreign firms."""
+CODE = 'business5_bigbang'
+BOOK = {
+    "title": "London's Big Bang",
+    "subtitle": "The 1986 reforms, screen trading, and London's rise as a financial centre",
+    "chapters": [
+        ('The old London floor',
+         'Before 1986, the London Stock Exchange ran in a traditional way. Stockbrokers found buyers and sellers, and market makers called jobbers held stock and set prices. Membership was limited, and commissions were fixed.'),
+        ('The 1986 reforms',
+         'On 27 October 1986 a set of changes known as Big Bang took effect. Fixed commissions ended, and the old split between brokers and jobbers was removed. Firms could own more than one kind of business under one roof.'),
+        ('Screen trading',
+         'Trading moved away from the floor and onto computer screens. Prices were shown electronically, and dealers quoted prices from their desks. The change made trading faster and reached more buyers and sellers.'),
+        ('Foreign entrants',
+         "The reforms let foreign banks and securities firms buy into London's market. Many large firms from abroad set up in the city, bringing capital, staff and new skills. London quickly grew into one of the world's main financial centres."),
+        ('Canary Wharf',
+         'As financial firms grew, they needed modern offices. Canary Wharf, a former docklands area east of the old City, was developed into a large business district from the 1980s onward. It became a symbol of the new London finance.'),
+        ("London's role today",
+         "London remains one of the largest financial centres in the world. Its success after Big Bang shows how rules, technology and openness to new firms can reshape a city's whole economy."),
+    ],
+    "test": [
+        ('What were jobbers in the old London market?',
+         [('a', 'Market makers who held stock and set prices'), ('b', 'Sellers of fruit'), ('c', 'Clerks in the post office'), ('d', 'Tourist guides')],
+         'a'),
+        ('When did Big Bang take effect?',
+         [('a', '1 January 1900'), ('b', '4 July 1776'), ('c', '27 October 1986'), ('d', '15 May 1950')],
+         'c'),
+        ('What was one main result of the reforms?',
+         [('a', 'Trading was banned'), ('b', 'Fixed commissions ended'), ('c', 'The city moved to the sea'), ('d', 'Shares were paid in bread')],
+         'b'),
+        ('What did the reforms allow foreign firms to do?',
+         [('a', 'Own the Tower of London'), ('b', 'Print the currency'), ('c', 'Set the weather'), ('d', "Buy into London's market")],
+         'd'),
+        ('What was Canary Wharf?',
+         [('a', 'A wine bar'), ('b', 'A royal palace'), ('c', 'A former docklands area developed into a business district'), ('d', 'A football ground')],
+         'c'),
+    ],
+}

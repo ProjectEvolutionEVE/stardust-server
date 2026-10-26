@@ -1,0 +1,37 @@
+"""Randomised Trials in Development: Banerjee, Duflo and Kremer, the deworming and bed-net studies, scaling up, criticisms and the 2019 Nobel."""
+CODE = 'business5_rct'
+BOOK = {
+    "title": 'Randomised Trials in Development',
+    "subtitle": 'Testing what really helps poor communities, and the limits of the method',
+    "chapters": [
+        ('Testing a programme',
+         'A randomised trial assigns people by chance to receive a programme or not. Comparing the two groups shows the effect of the programme, separate from other causes.'),
+        ('Banerjee, Duflo and Kremer',
+         'Abhijit Banerjee, Esther Duflo and Michael Kremer shared the 2019 Nobel Prize in Economics for using randomised trials to fight global poverty.'),
+        ('Deworming',
+         'Studies in Kenya by Edward Miguel and Michael Kremer examined school-based deworming and found gains in school attendance. Later analysis has debated how large those gains were, so the results are still argued over.'),
+        ('Bed nets',
+         'Trials have looked at how families can get insecticide-treated bed nets. Price matters: a trial found that even a small charge can cut how many families take up nets.'),
+        ('Scale',
+         'A programme that works in a small trial may work differently when a government runs it across a whole country. Scaling up needs the same care as the original test.'),
+        ('Criticisms',
+         'Critics say results from one place may not carry over to another, and that trials can miss wider effects. Supporters reply that trials answer specific questions and improve the evidence on which decisions rest.'),
+    ],
+    "test": [
+        ('What is a randomised trial?',
+         [('a', 'Assigning people by chance to a programme or not'), ('b', 'Choosing favourites'), ('c', 'Asking only experts'), ('d', 'Using a lottery to hand out prizes')],
+         'a'),
+        ('What did the 2019 Nobel Prize recognise for Banerjee, Duflo and Kremer?',
+         [('a', 'A peace settlement'), ('b', 'Medicine, for a vaccine'), ('c', 'Economics, for fighting global poverty through randomised trials'), ('d', 'Literature')],
+         'c'),
+        ('What did the Kenya deworming studies examine?',
+         [('a', 'Farm machinery'), ('b', 'School-based deworming and school attendance'), ('c', 'Tax rates in London'), ('d', 'Gold prices')],
+         'b'),
+        ('What did trials find about bed nets and price?',
+         [('a', 'Price never matters'), ('b', 'Free nets always fail'), ('c', 'Bed nets are never used'), ('d', 'A small price can cut how many families take up nets')],
+         'd'),
+        ('What is a common criticism of randomised trials?',
+         [('a', 'They are always cheap'), ('b', 'They never test anything'), ('c', 'Results from one place may not carry over elsewhere'), ('d', 'They prove every claim')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Diffusion of Innovations: how new ideas spread through people in five groups, and what speeds their adoption."""
+CODE = 'business5_diffusion'
+BOOK = {
+    "title": 'The Diffusion of Innovations',
+    "subtitle": 'How new ideas spread, from innovators to laggards, and how to plan a launch',
+    "chapters": [
+        ('Everett Rogers',
+         'In 1962, the researcher Everett Rogers published a study of how new ideas spread through a society. He found that adoption follows a pattern across a group of people. Some adopt early, and some hold back for a long time.'),
+        ('The five groups',
+         'Rogers named five groups. Innovators are the first, and they are few. Early adopters follow, then the early majority, the late majority, and finally the laggards. Each group has its own habits and reasons for choosing.'),
+        ('The S-curve',
+         'When the number of adopters is plotted over time, it often forms an S-curve. Growth is slow at first, then speeds up as the middle groups join, and levels off as the laggards come in. Many launches are judged too early, while the curve is still low.'),
+        ('The Iowa corn study',
+         'In the 1940s, the researchers Bryce Ryan and Neal Gross studied Iowa farmers who adopted a hybrid seed corn. Their work is often cited as an early example of the S-curve. Farmers adopted the seed at different times, mostly by talking with neighbours.'),
+        ('Five traits that speed adoption',
+         "Rogers said an idea spreads faster when it has a clear advantage over the old way, fits with people's values, is simple to use, can be tried first, and its results can be seen. A launch can be planned around these five traits."),
+        ('Planning a launch',
+         'Start with the innovators and early adopters, and make it easy for them to try the idea. Use their stories to reach the early majority. Write down which of the five traits your idea has, and which it lacks, and work on the gaps.'),
+    ],
+    "test": [
+        ('In what year did Everett Rogers publish his study of diffusion?',
+         [('a', '1962'), ('b', '1905'), ('c', '1997'), ('d', '2011')],
+         'a'),
+        ("Which group comes first in Rogers' five groups?",
+         [('a', 'Laggards'), ('b', 'Early majority'), ('c', 'Innovators'), ('d', 'Late majority')],
+         'c'),
+        ('What shape do adoption numbers often form over time?',
+         [('a', 'A straight line down'), ('b', 'An S-curve'), ('c', 'A perfect circle'), ('d', 'A flat line')],
+         'b'),
+        ('What was studied in the Iowa example?',
+         [('a', 'Bank loans to factories'), ('b', 'Ship routes across the ocean'), ('c', 'Lighting in offices'), ('d', 'Farmers adopting a hybrid seed corn')],
+         'd'),
+        ('Which of these is NOT one of the five traits that speed adoption?',
+         [('a', 'A clear advantage over the old way'), ('b', 'Being easy to try first'), ('c', 'Being hard to understand'), ('d', 'Results that can be seen')],
+         'c'),
+    ],
+}

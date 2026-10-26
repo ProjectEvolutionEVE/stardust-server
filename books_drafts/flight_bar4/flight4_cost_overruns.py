@@ -1,0 +1,37 @@
+"""Why projects overrun: optimism bias, growing scope, the cost of the James Webb telescope, and the Sydney Opera House lesson."""
+CODE = "flight4_cost_overruns"
+BOOK = {
+    "title": "Why Projects Overrun",
+    "subtitle": "Optimism, growing scope and the costs that creep in",
+    "chapters": [
+        ("Optimism bias",
+         "People tend to believe their own project will go more smoothly than others. This is called optimism bias. It leads teams to guess low costs and short times at the start, before any problems have appeared."),
+        ("Scope that grows",
+         "Scope is what a project is meant to deliver. Ideas for extra features, new requirements and changes in plan add cost one at a time. Each addition may look small, but together they can double a budget."),
+        ("The James Webb telescope",
+         "The James Webb Space Telescope was launched in 2021, many years after its first plans. Its cost grew from about one billion dollars to around ten billion. Delays, technical problems and new work all added to the bill, and the lesson is still studied."),
+        ("The Sydney Opera House",
+         "The Sydney Opera House was designed in the 1950s and opened in 1973. Its cost rose many times above the first estimate, and the project ran for years longer than planned. It is often used as a warning about early estimates that are too low."),
+        ("Reserves and control",
+         "Good projects hold a reserve of money and time for the unexpected, and they track spending against the plan each month. Control means someone decides when a change is worth its cost. Without it, small changes quietly become large ones."),
+        ("What to do",
+         "Plan with honest estimates, check them against past projects, name the scope clearly, and watch for change. A project that is honest about its risks early is more likely to finish near its budget."),
+    ],
+    "test": [
+        ("What is optimism bias?",
+         [("a", "Believing that a project will be cheaper than any other"), ("b", "A love of sunshine"), ("c", "A rule that all projects must succeed"), ("d", "The tendency to expect your own project to go more smoothly than others")],
+         "d"),
+        ("How does scope growth add cost?",
+         [("a", "Each small addition adds cost, and together they can double a budget"), ("b", "It never does"), ("c", "It only changes the colour of the design"), ("d", "It removes the need for testing")],
+         "a"),
+        ("What is the lesson of the James Webb telescope's cost?",
+         [("a", "Telescopes should never be built"), ("b", "Delays and new work can add large costs over time"), ("c", "The cost never changed"), ("d", "Costs are always paid by the Sun")],
+         "b"),
+        ("Why is the Sydney Opera House used as a warning?",
+         [("a", "It was finished the first year"), ("b", "It was never built"), ("c", "Its cost rose many times above the first estimate"), ("d", "It cost nothing")],
+         "c"),
+        ("What does a project reserve do?",
+         [("a", "It doubles the scope"), ("b", "It removes the need for a plan"), ("c", "It hides spending from the owners"), ("d", "It pays for the unexpected and gives room when things go wrong")],
+         "d"),
+    ],
+}

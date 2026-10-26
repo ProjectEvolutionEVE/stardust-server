@@ -1,0 +1,37 @@
+"""Theranos: a promise of blood tests from a finger prick, secrecy, and the lessons of due diligence."""
+CODE = 'business5_theranos'
+BOOK = {
+    "title": 'Theranos',
+    "subtitle": 'A blood-test promise, secrecy, and the lessons of due diligence',
+    "chapters": [
+        ('A blood-test promise',
+         'Theranos was founded in 2003 with the promise of running many blood tests from a few drops of blood. It claimed its device could work from a finger prick. The idea was attractive, because it could make testing faster and cheaper.'),
+        ('Secrecy',
+         'The company kept its technology largely hidden from outside experts. It was slow to share data that would have tested its claims. Secrecy can protect a real invention, but it can also hide a lack of proof.'),
+        ('Investors and directors',
+         'The company drew well-known investors and board members who gave it credibility. Their names attracted more money and partners. Famous backers do not replace checking the facts yourself.'),
+        ('The Wall Street Journal report',
+         'In 2015 a newspaper investigation reported doubts about the accuracy of the tests and the way they were run. Former staff spoke about problems. Journalism and whistleblowers can expose a gap between a promise and reality.'),
+        ('The trial',
+         "The company's founder was later tried and convicted of fraud for misleading investors and patients. The case showed that false claims about a product can be a crime. Leaders are responsible for what they tell others."),
+        ('Due diligence lessons',
+         'Due diligence means checking a claim before you rely on it. Ask for independent proof, test the numbers, and listen to people who disagree. A bold promise needs stronger evidence, not weaker.'),
+    ],
+    "test": [
+        ('In what year was Theranos founded?',
+         [('a', '1985'), ('b', '2019'), ('c', '2003'), ('d', '1970')],
+         'c'),
+        ('What did Theranos claim its device could do from a finger prick?',
+         [('a', 'Run many blood tests'), ('b', 'Fly a drone'), ('c', 'Cook a meal'), ('d', 'Print money')],
+         'a'),
+        ('What did the 2015 newspaper report raise doubts about?',
+         [('a', 'The price of coffee'), ('b', 'The weather in California'), ('c', 'The accuracy of the tests and how they were run'), ('d', "The company's logo")],
+         'c'),
+        ('What does due diligence mean?',
+         [('a', 'Paying the largest bonus'), ('b', 'Checking a claim before you rely on it'), ('c', 'Hiding a product until it sells'), ('d', 'Signing papers quickly')],
+         'b'),
+        ('What did the chapter say about famous investors and board members?',
+         [('a', 'They always prove a product works'), ('b', 'They are not allowed to invest'), ('c', 'They are only for charities'), ('d', 'They do not replace checking the facts yourself')],
+         'd'),
+    ],
+}

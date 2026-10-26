@@ -1,0 +1,37 @@
+"""John Templeton: a 1939 purchase of low-priced shares, global investing, a set of sixteen rules, and philanthropy. History only, not financial advice."""
+CODE = 'business5_templeton'
+BOOK = {
+    "title": 'John Templeton and His Ideas',
+    "subtitle": "A history of one investor's ideas. This is education, not financial advice",
+    "chapters": [
+        ('The 1939 purchase',
+         'John Templeton is known for a 1939 purchase of shares in many companies whose prices had fallen very low. He bought across a long list, betting that many would recover. The story is often told as an example of contrarian thinking.'),
+        ('Maximum pessimism',
+         'Templeton is quoted as saying that the time of maximum pessimism is the best time to buy. Many people find that hard to act on in a panic. This is a historical saying, not financial advice.'),
+        ('Global investing',
+         'Templeton was an early believer in investing across many countries, not only at home. Spreading money across countries can soften the effect of trouble in one place. Lessons like this are general education.'),
+        ('The Templeton fund',
+         'He ran a mutual fund that invested around the world. A fund lets many people pool their money and share the same holdings. Funds charge fees, and how they work is worth understanding before anyone chooses one.'),
+        ('Sixteen rules',
+         'Templeton wrote a set of sixteen rules for successful investing. The rules stress patience, humility and learning from mistakes. Read them as a historical set of ideas, and weigh them with your own judgment.'),
+        ('Philanthropy',
+         'Templeton gave much of his wealth to charity and set up foundations for research. The Templeton Prize is awarded for progress in spiritual matters. A fortune can be used to pursue ideas the owner cares about.'),
+    ],
+    "test": [
+        ('In what year did Templeton make his well-known purchase of many low-priced shares?',
+         [('a', '1919'), ('b', '1939'), ('c', '1959'), ('d', '1979')],
+         'b'),
+        ('What is a contrarian approach?',
+         [('a', 'Following the crowd every time'), ('b', 'Never investing'), ('c', 'Only buying gold'), ('d', 'Buying when others are fearful and selling when others are greedy')],
+         'd'),
+        ('What did Templeton stress as a global investor?',
+         [('a', 'Investing only at home'), ('b', 'Keeping all money in cash'), ('c', 'Spreading money across many countries'), ('d', 'Buying one company only')],
+         'c'),
+        ('How many rules did Templeton write for successful investing?',
+         [('a', 'Sixteen'), ('b', 'Five'), ('c', 'Forty'), ('d', 'One hundred')],
+         'a'),
+        ('What is the Templeton Prize awarded for?',
+         [('a', 'The best car design'), ('b', 'Sports records'), ('c', 'Progress in spiritual matters'), ('d', 'Fast trains')],
+         'c'),
+    ],
+}

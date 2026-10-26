@@ -1,0 +1,37 @@
+"""Cotton and the Industrial Revolution: spinning machines, Lancashire mills, American plantations, the Cotton Famine and global supply."""
+CODE = 'business5_cotton'
+BOOK = {
+    "title": 'Cotton and the Industrial Revolution',
+    "subtitle": 'Spinning machines, Lancashire mills, American plantations, and the Cotton Famine',
+    "chapters": [
+        ('Spinning machines',
+         'In the late 1700s, inventors such as Richard Arkwright and James Hargreaves built machines that spun cotton into thread much faster than hand workers could. The machines needed a steady supply of raw cotton and a place to run. Factories grew up around them.'),
+        ('Lancashire mills',
+         'The mills of Lancashire in north-west England became the heart of the cotton trade. Towns grew up around the mills, with workers and their families living close by. The region became famous for its cloth.'),
+        ('American plantations',
+         'Much of the raw cotton came from plantations in the American South, where it was grown and harvested by enslaved people. This system made cheap cotton possible, and it was a brutal part of the trade. The trade tied America, Britain, and the textile towns together.'),
+        ('The Cotton Famine',
+         'When the American Civil War began in 1861, the blockade of Southern ports cut the flow of raw cotton to Britain. Mills in Lancashire had to shut or cut their hours, and many workers lost their jobs. Historians call this period the Cotton Famine.'),
+        ('Global supply',
+         'Over time, cotton was grown in other places too, including India and Egypt. A single supplier can be squeezed by war, weather, or politics. A spread of suppliers makes an industry more resilient.'),
+        ('Wages and trade',
+         'Cheap cloth reached more people and changed what they could buy. Trade rules, wages, and working conditions were argued over for generations. The story shows that a clothing cost is never just a price: it is also labour, land, and trade.'),
+    ],
+    "test": [
+        ('What did the new spinning machines do?',
+         [('a', 'Grew cotton in fields'), ('b', 'Sold clothes in shops'), ('c', 'Printed newspapers'), ('d', 'Spun cotton into thread much faster than hand workers')],
+         'd'),
+        ('Where were the Lancashire mills?',
+         [('a', 'Ireland'), ('b', 'Southern France'), ('c', 'North-west England'), ('d', 'Bavaria')],
+         'c'),
+        ('Which war led to the Cotton Famine?',
+         [('a', 'The American Civil War'), ('b', 'The Crimean War'), ('c', 'The First World War'), ('d', 'The Napoleonic Wars')],
+         'a'),
+        ('Where did much of the raw cotton for Lancashire mills come from?',
+         [('a', 'Farmers in Lancashire'), ('b', 'Chinese traders'), ('c', 'Enslaved people on American plantations'), ('d', 'Mill owners in Scotland')],
+         'c'),
+        ('Why is a spread of suppliers useful?',
+         [('a', 'It keeps prices from ever changing'), ('b', 'One supplier can be squeezed by war, weather or politics'), ('c', 'It stops machines from running'), ('d', 'It makes wages fall')],
+         'b'),
+    ],
+}

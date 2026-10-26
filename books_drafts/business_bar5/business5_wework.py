@@ -1,0 +1,37 @@
+"""WeWork: leasing office space and reselling it as a community, a huge valuation, a failed listing and a reset."""
+CODE = 'business5_wework'
+BOOK = {
+    "title": 'WeWork',
+    "subtitle": 'Leasing and subleasing, a bold valuation, and a reset',
+    "chapters": [
+        ('Leasing and subleasing',
+         'WeWork rented large office buildings on long leases, then divided them into desks and offices and rented them out in shorter terms. This is called subleasing. The model could grow fast, but it depended on the company paying its long leases while earning from short ones.'),
+        ('The valuation',
+         'By 2019 private investors valued WeWork at tens of billions of dollars, far more than its revenue would suggest. A valuation is an opinion about future value, not cash in the bank. High valuations can make growth feel safer than it is.'),
+        ('The failed 2019 listing',
+         'WeWork filed to sell shares to the public in 2019, but the offering was withdrawn after investors raised concerns. The filing revealed large losses and unusual governance. Public markets ask hard questions, and a company must answer them.'),
+        ('Governance concerns',
+         "Questions were raised about the founder's control of the company and about deals with his related businesses. Good governance means clear rules, independent checks and fair dealing. Weak governance can hide real problems from owners."),
+        ('The reset',
+         'The founder stepped down in 2019, and the company later restructured its leases and costs. A reset can save a business, but it also shows the cost of the earlier choices. Leaders must plan for a downturn before it arrives.'),
+        ('Real-estate risk',
+         'Renting long and selling short creates a mismatch that can turn quickly. If customers stop renting, the long leases remain to be paid. Any business that carries fixed costs needs cash to cover them in a slow period.'),
+    ],
+    "test": [
+        ("What does subleasing mean in WeWork's model?",
+         [('a', 'Selling office furniture'), ('b', 'Building new towns'), ('c', 'Hiring cleaners'), ('d', 'Renting space on long leases and renting it out again in shorter terms')],
+         'd'),
+        ('What is a valuation?',
+         [('a', "A count of the company's desks"), ('b', 'A tax on rent'), ('c', "An opinion about a company's future value, not cash in the bank"), ('d', 'A list of staff names')],
+         'c'),
+        ('What happened to the 2019 share sale?',
+         [('a', 'It was withdrawn after investors raised concerns'), ('b', 'It raised ten times the planned money overnight'), ('c', 'It was given to employees for free'), ('d', 'It was moved to another country')],
+         'a'),
+        ('What risk does the chapter describe in renting long and selling short?',
+         [('a', 'The office chairs break too often'), ('b', 'The rent is always paid early'), ('c', 'A mismatch that can turn quickly if customers stop renting'), ('d', 'No risk exists at all')],
+         'c'),
+        ('What does good governance mean?',
+         [('a', 'One person controls every decision'), ('b', 'Clear rules, independent checks and fair dealing'), ('c', 'No records kept at all'), ('d', 'Hidden deals with related firms')],
+         'b'),
+    ],
+}

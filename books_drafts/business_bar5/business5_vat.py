@@ -1,0 +1,37 @@
+"""Value-Added Tax: how tax is collected at each stage of supply, credits for business inputs, its French origin, and carousel fraud."""
+CODE = 'business5_vat'
+BOOK = {
+    "title": 'Value-Added Tax',
+    "subtitle": 'Tax collected in steps along the supply chain',
+    "chapters": [
+        ('Tax at every stage',
+         'Value-added tax is charged each time goods or services pass along the supply chain. Each business adds its own value and charges tax on it. The tax is collected in small steps, rather than in one payment at the shop.'),
+        ('Credits for inputs',
+         'A business can usually reclaim the VAT it paid on its own purchases, such as materials and equipment. It pays to the tax authority only the tax on its sales minus the tax on its purchases. In the end, the tax falls on the final sale.'),
+        ('France in 1954',
+         "The VAT system was first introduced in France in 1954, after a long debate among tax officials. Many countries adopted it in the decades that followed. Most of the world's tax systems that cover consumption now use some form of it."),
+        ('Compared with sales tax',
+         'A single sales tax is charged once, at the final sale to the customer. VAT is charged at each stage, but credits stop the tax piling up. Both reach the consumer, but VAT gives the tax authority a trail of invoices to check.'),
+        ('Carousel fraud',
+         'Carousel fraud involves goods passed between traders across borders, where the tax is claimed back but never paid to the state. The company then vanishes, and the chain repeats. Authorities have tightened checks to stop it, because it costs governments large sums.'),
+        ('Who bears it',
+         'Businesses collect and pay VAT, but in most cases the final consumer bears the cost in the price. Some goods and services are exempt or charged at lower rates. The rules differ from one country to another.'),
+    ],
+    "test": [
+        ('Who ultimately pays VAT in most cases?',
+         [('a', 'The government itself'), ('b', "The shop's bank"), ('c', 'The consumer at the final sale'), ('d', 'Nobody pays it')],
+         'c'),
+        ('What is an input credit?',
+         [('a', 'A bank loan'), ('b', 'Tax paid on business purchases that can be reclaimed'), ('c', 'A discount for staff'), ('d', 'A fine')],
+         'b'),
+        ('In which country was VAT first introduced?',
+         [('a', 'Britain'), ('b', 'The United States'), ('c', 'Japan'), ('d', 'France')],
+         'd'),
+        ('What is carousel fraud?',
+         [('a', 'A tourist ride'), ('b', 'Sales in circles on a stage'), ('c', 'Goods passed between traders, where VAT is claimed but never paid to the state'), ('d', 'A fair')],
+         'c'),
+        ('How does VAT differ from a single sales tax?',
+         [('a', 'It is collected in stages along the supply chain'), ('b', 'It is paid only by farmers'), ('c', 'It is paid once to a bank'), ('d', 'It has no rates at all')],
+         'a'),
+    ],
+}

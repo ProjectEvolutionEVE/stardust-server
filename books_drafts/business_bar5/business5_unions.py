@@ -1,0 +1,37 @@
+"""Labour Unions and Collective Bargaining: from guilds to unions, the bargain, the wage premium, strikes, right-to-work laws and change."""
+CODE = 'business5_unions'
+BOOK = {
+    "title": 'Labour Unions and Collective Bargaining',
+    "subtitle": 'From guilds to modern unions, and the bargain between workers and employers',
+    "chapters": [
+        ('From guilds to unions',
+         'Medieval guilds set standards and rules for crafts. As factories grew, workers formed unions to bargain together for better pay and safer conditions.'),
+        ('The bargain',
+         'Collective bargaining means that workers, through a union, negotiate pay and conditions with an employer. One worker alone has little bargaining power, but a group can speak with a stronger voice.'),
+        ('The wage premium',
+         'Studies often find that union members earn more, on average, than similar workers who are not members. Economists debate how much of this gap comes from the union and how much from other differences between workers and jobs.'),
+        ('Strikes',
+         'A strike is a withdrawal of labour to press a demand. It can win concessions, but it costs workers lost pay and can cost firms output and customers.'),
+        ('Right-to-work laws',
+         "In the United States, right-to-work laws let workers in a unionised workplace decide not to pay union dues. Supporters say this protects choice. Critics say it weakens the unions' funding."),
+        ('Decline and change',
+         'Union membership has fallen in many rich countries since the middle of the twentieth century. Unions are adapting by organising new sectors and bargaining in new ways.'),
+    ],
+    "test": [
+        ('What did medieval guilds do?',
+         [('a', 'Fix the price of coal'), ('b', 'Run national banks'), ('c', 'Set standards and rules for crafts'), ('d', 'Ban all trade')],
+         'c'),
+        ('What is collective bargaining?',
+         [('a', 'Workers, through a union, negotiating pay and conditions with an employer'), ('b', 'One worker negotiating alone'), ('c', 'Government setting every wage'), ('d', 'A court ruling on tax')],
+         'a'),
+        ('What does a strike do?',
+         [('a', 'Ends all work forever'), ('b', 'Lowers prices in shops'), ('c', 'Withdraws labour to press a demand'), ('d', 'Increases the number of managers')],
+         'c'),
+        ('What do right-to-work laws allow?',
+         [('a', 'Forced union membership'), ('b', 'Workers in unionised workplaces to decide not to pay union dues'), ('c', 'Strikes without notice'), ('d', 'Unions to set taxes')],
+         'b'),
+        ("What do studies often find about union members' pay?",
+         [('a', 'They earn less than everyone else'), ('b', 'They earn exactly the same in every case'), ('c', 'Higher pay only in government jobs'), ('d', 'They earn more on average than similar non-members')],
+         'd'),
+    ],
+}

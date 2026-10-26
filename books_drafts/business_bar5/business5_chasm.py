@@ -1,0 +1,37 @@
+"""Crossing the Chasm: the gap between early adopters and the mainstream majority, and how to win a beachhead first."""
+CODE = 'business5_chasm'
+BOOK = {
+    "title": 'Crossing the Chasm',
+    "subtitle": 'The gap between early adopters and the mainstream, and how to cross it',
+    "chapters": [
+        ("Geoffrey Moore's gap",
+         'In 1991, Geoffrey Moore wrote about a gap that many new technology products fall into. Early adopters buy a new product because they love the idea. The mainstream majority waits, and needs different reasons before it buys.'),
+        ('Why the gap is hard',
+         'Early adopters forgive flaws and enjoy trying things. The majority wants something that works fully, fits its routines and has been proven by others. A product that pleases the first group may still fail with the second.'),
+        ('The beachhead',
+         'Moore advised firms to pick one small, specific market and dominate it first. This is the beachhead. Winning it gives a firm the reference and the cash to move on to the next market.'),
+        ('The whole product',
+         'A product for the mainstream must be a whole product. It needs the core item plus the services, support and partners that make it work in real life. Early adopters may build these themselves, but the majority will not.'),
+        ('Reference customers',
+         'The mainstream trusts what others like it have done. A reference customer is a respected firm that has used the product and will say so. Each reference makes the next sale easier.'),
+        ('The bowling alley',
+         'Moore described the next step as a bowling alley. You knock down one market, and the pins next to it fall in turn. Choose each new market so that its buyers talk to, and copy, the ones you have already won.'),
+    ],
+    "test": [
+        ('In what year did Geoffrey Moore write about the chasm?',
+         [('a', '1875'), ('b', '1962'), ('c', '1991'), ('d', '2003')],
+         'c'),
+        ('What is the chasm between?',
+         [('a', 'Early adopters and the mainstream majority'), ('b', 'Two rival banks'), ('c', 'Two countries'), ('d', 'Staff and managers')],
+         'a'),
+        ("What is a beachhead, in Moore's idea?",
+         [('a', 'A sandy holiday resort'), ('b', 'A list of all customers'), ('c', 'One small, specific market to dominate first'), ('d', 'A factory on the coast')],
+         'c'),
+        ('What is a whole product?',
+         [('a', 'A product with no support'), ('b', 'The core item plus the services and support that make it work'), ('c', 'A product sold in bulk'), ('d', 'A product made by a single worker')],
+         'b'),
+        ('What do reference customers give a firm?',
+         [('a', 'A guarantee against all losses'), ('b', 'Free products forever'), ('c', 'A legal right to the market'), ('d', 'Trust, since the mainstream listens to what others like it did')],
+         'd'),
+    ],
+}

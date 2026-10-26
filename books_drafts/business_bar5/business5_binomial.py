@@ -1,0 +1,37 @@
+"""The Binomial Option Model: pricing an option step by step on a tree of possible prices."""
+CODE = 'business5_binomial'
+BOOK = {
+    "title": 'The Binomial Option Model',
+    "subtitle": 'A tree of prices, step by step, and how it matches the formula',
+    "chapters": [
+        ('A tree of prices',
+         'The binomial model imagines a stock price that, in each short step of time, can only go up or down. Draw every step and you get a branching tree of possible prices. At the end of the tree you know what the option pays in each case.'),
+        ('Up and down steps',
+         'Each step multiplies the price by one factor for an up move and by another for a down move. The two factors are chosen so the tree matches how much the stock tends to swing. Many small steps make the tree look much like a smooth price path.'),
+        ('Replicating with stock and cash',
+         'At each point in the tree you can hold some shares and some cash so that your total value matches the option in both the up and down case. This copy is called a replicating portfolio. Since the copy and the option pay the same, they must cost the same today.'),
+        ('Working backwards',
+         'You start at the end of the tree, where the option value is known, and work back one step at a time. At each step you take the average of the two later values, weighted by the chances of the moves, and discount it by the interest rate. The answer at the start is the option price today.'),
+        ('American options',
+         'Some options can be used at any time before they expire. These are called American options. The tree handles them easily: at each point, the option is worth the larger of exercising now or waiting. A formula like Black-Scholes cannot do this directly.'),
+        ('Matching the formula',
+         'If you make the steps smaller and smaller, the binomial price approaches the Black-Scholes price for a European option. Two very different methods arrive at the same answer. That agreement is one reason both are trusted.'),
+    ],
+    "test": [
+        ('What does each step of the binomial tree allow the price to do?',
+         [('a', 'Stay exactly the same forever'), ('b', 'Double every time'), ('c', 'Vanish'), ('d', 'Go up or go down')],
+         'd'),
+        ('What is a replicating portfolio?',
+         [('a', 'A list of all options ever sold'), ('b', 'A bank account with no interest'), ('c', 'A copy of the option made from shares and cash that pays the same'), ('d', 'A printed copy of the rules')],
+         'c'),
+        ("In which direction do you work through the tree to find today's price?",
+         [('a', 'Backwards from the end to the start'), ('b', 'Forwards from the start to the end'), ('c', 'Sideways across the branches'), ('d', 'Randomly')],
+         'a'),
+        ('What makes an American option different from a European one?',
+         [('a', 'It is always paid in gold'), ('b', 'It has no strike price'), ('c', 'It can be used at any time before it expires'), ('d', 'It is only sold on Sundays')],
+         'c'),
+        ('What happens to the binomial price as the steps get smaller?',
+         [('a', 'It becomes random'), ('b', 'It approaches the Black-Scholes price'), ('c', 'It becomes zero'), ('d', 'It doubles')],
+         'b'),
+    ],
+}

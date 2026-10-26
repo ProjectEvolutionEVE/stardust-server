@@ -1,0 +1,37 @@
+"""High-Frequency Trading: speed as an edge, market making by machine, and the debate it started."""
+CODE = 'business5_hft'
+BOOK = {
+    "title": 'High-Frequency Trading',
+    "subtitle": 'Speed as an edge, machines that trade in microseconds, and the debate',
+    "chapters": [
+        ('Speed as an edge',
+         'High-frequency trading uses computers to trade very fast, often holding positions for only seconds or less. For these firms, being a fraction of a second faster than rivals can be worth a lot. Speed is the main edge.'),
+        ('Co-location',
+         "Some firms rent space in the same building as an exchange's computers, so their orders travel a shorter distance. This is called co-location. Each saved metre of cable is a tiny gain, and the gains add up over many trades."),
+        ('Market making by machine',
+         'Many high-frequency firms act as market makers. They stand ready to buy and sell, and earn a small gap between the two prices on many trades. Their quotes help other traders find a buyer or seller quickly.'),
+        ('The latency race',
+         'Firms have spent large sums on faster networks, shorter cables and faster chips. This race for speed means that a new advantage can be wiped out within months. Only firms with deep pockets can keep up.'),
+        ('Benefits and fears',
+         'Supporters say high-frequency firms add trading volume and narrow the gap between buy and sell prices, which lowers costs for ordinary investors. Critics fear that speed can make markets fragile, especially when machines all react to the same signal at once.'),
+        ('Rules that followed',
+         'After the 2010 Flash Crash, regulators added new limits on how quickly prices could move, and new rules for how trading firms manage their access to markets. The rules are still argued over, and the debate about speed continues.'),
+    ],
+    "test": [
+        ('What is the main edge of high-frequency trading?',
+         [('a', 'Owning the most land'), ('b', 'Long holidays'), ('c', 'Speed'), ('d', 'Large printed brochures')],
+         'c'),
+        ('What is co-location?',
+         [('a', 'Two people sharing one desk'), ('b', 'Placing computers in the same building as an exchange to cut the distance orders travel'), ('c', 'A kind of bank loan'), ('d', 'A holiday for traders')],
+         'b'),
+        ('How do market makers earn money?',
+         [('a', 'By charging a monthly fee to each member of staff'), ('b', 'By owning gold bars'), ('c', 'By selling newspapers'), ('d', 'From the small gap between buy and sell prices across many trades')],
+         'd'),
+        ('What is a benefit often claimed for high-frequency trading?',
+         [('a', 'It stops all trading'), ('b', 'It makes prices fixed'), ('c', 'It can narrow the gap between buy and sell prices'), ('d', 'It removes all risk')],
+         'c'),
+        ('Which event led to new rules on how quickly prices can move?',
+         [('a', 'The 2010 Flash Crash'), ('b', 'The invention of the telephone'), ('c', 'The first Olympic Games'), ('d', 'A harvest festival')],
+         'a'),
+    ],
+}

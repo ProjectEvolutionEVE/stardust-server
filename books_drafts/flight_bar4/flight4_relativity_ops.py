@@ -1,0 +1,37 @@
+"""Relativity in real operations: time dilation, GPS corrections, Mercury's orbit, speed limits, small scales and rocket speeds."""
+CODE = "flight4_relativity_ops"
+BOOK = {
+    "title": "Relativity in Real Operations",
+    "subtitle": "Where Einstein's ideas touch everyday spaceflight",
+    "chapters": [
+        ("Time dilation",
+         "Einstein's relativity says that moving clocks run slower than clocks at rest, and that stronger gravity slows them too. The effect is tiny at everyday speeds, but it is real and it can be measured with precise clocks."),
+        ("GPS corrections",
+         "GPS satellites move fast and sit high above Earth, so their clocks run at a different rate from those on the ground. Engineers correct for both effects. Without the corrections, GPS positions would drift by many kilometres each day."),
+        ("Mercury's orbit",
+         "For a long time, the slow turn of Mercury's orbit did not match Newton's laws. Einstein's general relativity explained the extra shift exactly. It was one of the early proofs that his theory was right."),
+        ("Speed limits",
+         "Nothing with mass can reach the speed of light, which is about 300,000 kilometres a second. Near that speed, time, length and mass change in ways that matter. No spacecraft is close to this limit."),
+        ("Small scales",
+         "At the speeds craft fly, relativity changes things by very small amounts. Navigation, timing and orbit prediction usually need only small corrections, which are well understood and built into the software."),
+        ("Rocket speeds",
+         "A rocket speeding up to a few kilometres a second is far too slow for relativity to change its flight in any large way. Its engineers use the simpler Newtonian rules for almost all of its planning, adding relativity only where precision requires it."),
+    ],
+    "test": [
+        ("What does time dilation say about moving clocks?",
+         [("a", "They run slower than clocks at rest"), ("b", "They run faster"), ("c", "They stop completely"), ("d", "They never change")],
+         "a"),
+        ("Why must GPS clocks be corrected?",
+         [("a", "Because they are painted"), ("b", "Because their speed and height change how fast they run"), ("c", "Because they run on magnets"), ("d", "Because GPS has no clocks")],
+         "b"),
+        ("What did general relativity explain about Mercury?",
+         [("a", "Why it has no air"), ("b", "Why it is a moon"), ("c", "Why its orbit's slow turn needed an extra shift"), ("d", "Why it is painted grey")],
+         "c"),
+        ("What is the speed of light, roughly?",
+         [("a", "300 kilometres an hour"), ("b", "30 kilometres a second"), ("c", "3 metres a second"), ("d", "300,000 kilometres a second")],
+         "d"),
+        ("Why do rocket engineers mostly use simple rules at everyday speeds?",
+         [("a", "Because relativity changes a rocket's flight only by very small amounts at these speeds"), ("b", "Because relativity is forbidden"), ("c", "Because rockets go faster than light"), ("d", "Because Newton's laws are wrong")],
+         "a"),
+    ],
+}

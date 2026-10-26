@@ -1,0 +1,37 @@
+"""Mentoring and Coaching: the difference between a mentor, a coach and a sponsor, and how to set up useful relationships."""
+CODE = 'business5_mentor'
+BOOK = {
+    "title": 'Mentoring and Coaching',
+    "subtitle": 'Mentor, coach and sponsor: what each does, and how to grow the next leaders',
+    "chapters": [
+        ('Three helpers',
+         'A mentor shares experience and advice over a long period. A coach works on a specific skill or goal, often for a shorter time. A sponsor uses their standing to open doors for someone. Each helps in a different way, and a person can have all three.'),
+        ('Setting up a relationship',
+         'The best relationships have clear aims, agreed meeting times and an honest sense of what each side expects. Both people should be free to end the arrangement if it stops working. Trust grows when the aims stay clear.'),
+        ('Useful questions',
+         'A good mentor asks questions more often than giving answers. Questions such as what you tried, what you learned and what you would do differently help people think for themselves. Listening closely is the main skill.'),
+        ('Feedback to give',
+         'Useful feedback is specific, kind and about actions, not character. Describe what you saw, what it caused and what could be done next time. Ask the other person how they saw it too.'),
+        ("A sponsor's role",
+         'A sponsor speaks up for someone in rooms they cannot enter. They may put a name forward for a role or a project. Sponsors take a risk too, so the trust must be real.'),
+        ('Growing the next leaders',
+         'Leaders grow the next generation by making time for it. Share your own mistakes, and celebrate the growth of those you help. The best mentors are glad when their protégés surpass them.'),
+    ],
+    "test": [
+        ('What does a mentor mainly do?',
+         [('a', 'Shares experience and advice over time'), ('b', 'Signs the company accounts'), ('c', "Sells the firm's products"), ('d', 'Writes the building rules')],
+         'a'),
+        ('What does a sponsor do?',
+         [('a', 'Repairs the office roof'), ('b', 'Grades exams'), ('c', 'Uses their standing to open doors for someone'), ('d', 'Hides information from staff')],
+         'c'),
+        ('What kind of feedback is most useful?',
+         [('a', 'Vague and about character'), ('b', 'Specific, kind and about actions'), ('c', 'Given once a decade'), ('d', 'Shouted across a room')],
+         'b'),
+        ('What is the main skill a good mentor needs?',
+         [('a', 'Writing in a secret code'), ('b', 'Talking without stopping'), ('c', 'Never asking anything'), ('d', 'Listening closely and asking good questions')],
+         'd'),
+        ('What should a good mentoring relationship have?',
+         [('a', 'No aims at all'), ('b', 'Payment in advance only'), ('c', 'Clear aims and the freedom to end it if it stops working'), ('d', 'Secret rules')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Quartz That Keeps Time (bar 3, Metallurgist, part C): quartz, the plentiful silica ore, and its odd trick of making a voltage when squeezed, which keeps clocks steady."""
+CODE = "mining3c_quartz_clock"
+BOOK = {
+    "title": "Quartz That Keeps Time",
+    "subtitle": "The plentiful silica ore, and the trick that keeps clocks steady",
+    "chapters": [
+        ("Silica in many forms",
+         "Quartz is silicon dioxide. It is common, hard and easy to find, and it is the source of silicon and of glass. Its crystal also has a special trick that makes it useful in clocks and radios."),
+        ("Squeeze it and it makes a voltage",
+         "Quartz is piezoelectric. When a crystal is squeezed or bent, it builds a small electric voltage across it. The reverse is true too: apply a voltage and the crystal changes shape a little."),
+        ("Crystals that tick",
+         "A quartz crystal cut to the right size vibrates at a steady frequency when a voltage is applied to it. Many quartz watches use a crystal that vibrates 32,768 times each second. A small chip counts those vibrations to keep time."),
+        ("Why quartz",
+         "The crystal must be cut and mounted with great care. Quartz keeps a steady frequency over a useful range of temperatures, and it is cheap and plentiful. Other materials have piezoelectric effects too, but few match quartz for cost and steadiness."),
+        ("Grown crystals",
+         "Natural quartz can have flaws and tiny inclusions. Makers can grow large, pure quartz crystals in a laboratory, which gives more reliable parts for clocks and radios."),
+        ("Money in a steady part",
+         "A small crystal costs little. Yet a clock that drifts can cost far more in missed appointments, wrong records and replacements. A cheap, steady part is often the best buy."),
+    ],
+    "test": [
+        ("What is quartz, chemically?",
+         [("a", "Silicon dioxide"), ("b", "Iron oxide"), ("c", "Carbon"), ("d", "Sodium chloride")],
+         "a"),
+        ("What is piezoelectricity?",
+         [("a", "A glow from heat"), ("b", "Rust on iron"), ("c", "A voltage made when a crystal is squeezed or bent"), ("d", "A magnet made of stone")],
+         "c"),
+        ("What frequency does a typical quartz watch crystal vibrate at?",
+         [("a", "Once a day"), ("b", "32,768 times a second"), ("c", "Once a year"), ("d", "10 times a second")],
+         "b"),
+        ("What does the small chip do with the crystal's vibrations?",
+         [("a", "Melts the crystal"), ("b", "Paints the dial"), ("c", "Counts the beats to keep time"), ("d", "Stores water")],
+         "c"),
+        ("Why do labs grow quartz crystals for clocks and radios?",
+         [("a", "They are cheaper than sand"), ("b", "Natural quartz cannot be cut"), ("c", "They glow in the dark"), ("d", "They can be pure and reliable")],
+         "d"),
+    ],
+}

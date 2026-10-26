@@ -1,0 +1,37 @@
+"""Employment Law Basics: at-will and contract employment, wages and overtime, discrimination law, safety duties, termination and records."""
+CODE = 'business5_employmentlaw'
+BOOK = {
+    "title": 'Employment Law Basics',
+    "subtitle": 'The rules that shape work, pay and leaving a job',
+    "chapters": [
+        ('The job contract',
+         'Every job rests on an agreement between employer and worker, even when it is not written down. The agreement sets the pay, the hours and the duties. Laws add minimum protections that a contract cannot take away.'),
+        ('At-will and contract',
+         'In the United States, many jobs are at-will, which means either side may end the job at any time, for any lawful reason. Elsewhere, many jobs come with a contract that sets notice periods and grounds for dismissal. The details depend on where the work is done.'),
+        ('Wages and hours',
+         'Most places set a minimum wage and rules on working time. Overtime rules require extra pay for hours above a set limit. Employers must follow these rules even when a worker agrees to something else.'),
+        ('Discrimination law',
+         'Discrimination laws protect people from being treated worse because of protected characteristics, such as race or sex. The rules cover hiring, pay, promotion and dismissal. Many countries also protect against harassment at work.'),
+        ('Safety rules',
+         'Employers must provide a safe workplace, with proper equipment, training and procedures. Safety rules exist because the cost of an accident falls heavily on the worker. Breaking them can bring fines and liability.'),
+        ('Termination and paperwork',
+         'When a job ends, the employer must follow the proper steps, which may include written notice and final pay. Firms must keep records of pay, hours and contracts. These records prove what was paid and show that the law was followed.'),
+    ],
+    "test": [
+        ('What does at-will employment mean in the United States?',
+         [('a', 'Staff must work forever'), ('b', 'Either side may end the job at any time, within legal limits'), ('c', 'Pay is fixed by the sun'), ('d', 'Employers can never dismiss anyone')],
+         'b'),
+        ('What are overtime rules about?',
+         [('a', 'Free sweets at work'), ('b', 'The colour of holidays'), ('c', 'Spare keys'), ('d', 'Extra pay for hours above a set limit')],
+         'd'),
+        ('What is the purpose of workplace safety rules?',
+         [('a', 'To ban lunch breaks'), ('b', 'To stop all work'), ('c', 'To make the workplace safe for staff'), ('d', 'To hide the machines')],
+         'c'),
+        ('Why must firms keep records of pay and hours?',
+         [('a', 'To prove what was paid and check the law is met'), ('b', 'To lose them'), ('c', 'To make paper planes'), ('d', 'As a hobby')],
+         'a'),
+        ('Which of these is a protected characteristic in many discrimination laws?',
+         [('a', 'Favourite colour'), ('b', 'Shoe size'), ('c', 'Race'), ('d', 'Hair length')],
+         'c'),
+    ],
+}

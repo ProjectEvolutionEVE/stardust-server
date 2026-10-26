@@ -1,0 +1,37 @@
+"""Chester Barnard and The Functions of the Executive: the telephone executive, cooperation, and what a manager really does."""
+CODE = 'business5_barnard'
+BOOK = {
+    "title": 'Chester Barnard and The Functions of the Executive',
+    "subtitle": 'A telephone executive on cooperation, authority and the work of leading',
+    "chapters": [
+        ('The telephone executive',
+         'Chester Barnard ran a large telephone company in New Jersey. He saw every day how a big organisation depends on many people working together. His 1938 book drew on that practical experience.'),
+        ('Cooperation',
+         'Barnard said an organisation exists only when people are willing to cooperate toward a shared purpose. Pay and orders alone do not make people cooperate. Willingness to work together is what keeps a group going.'),
+        ('The zone of indifference',
+         'Barnard described a zone of indifference: the range of orders a person accepts without asking why. Orders inside that zone are followed easily. Orders far outside it are questioned, refused or ignored.'),
+        ('Informal organisation',
+         'Alongside the official charts there is an informal organisation of friendships, habits and small groups. It can help work get done, or it can slow it down. A good executive learns to notice it and work with it.'),
+        ('Authority from below',
+         'Barnard argued that authority depends on acceptance. An order has authority only if the person receiving it is willing to obey. A title gives a manager the right to command, but people decide whether to follow.'),
+        ("The executive's role",
+         'Barnard said the main work of an executive is to keep communication working, to win the services of people, and to set a clear purpose. The executive does not have to do every job personally. The job is to keep the whole system working together.'),
+    ],
+    "test": [
+        ('Chester Barnard ran which kind of company for many years?',
+         [('a', 'A car maker'), ('b', 'A railway'), ('c', 'A telephone company'), ('d', 'A coal mine')],
+         'c'),
+        ('What is the zone of indifference?',
+         [('a', 'A safe area for storing papers'), ('b', 'The range of orders a person accepts without question'), ('c', 'A part of a factory with no windows'), ('d', 'A rule about lunch breaks')],
+         'b'),
+        ("According to Barnard, where does an order's authority come from?",
+         [('a', "The owner's title alone"), ('b', 'The law alone'), ('c', 'The wages paid to the worker'), ('d', 'The willingness of the person receiving it to accept it')],
+         'd'),
+        ('What is an informal organisation?',
+         [('a', 'A company with no written rules'), ('b', 'A government office'), ('c', 'Friendships and small groups that work alongside the formal structure'), ('d', 'A club for retired staff')],
+         'c'),
+        ("Which is one of the main jobs of an executive, in Barnard's view?",
+         [('a', 'To keep communication working and set a clear purpose'), ('b', 'To do every task personally'), ('c', 'To avoid all communication'), ('d', 'To avoid making any decisions')],
+         'a'),
+    ],
+}

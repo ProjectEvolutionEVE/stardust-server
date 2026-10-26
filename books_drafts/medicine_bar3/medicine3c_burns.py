@@ -1,0 +1,37 @@
+"""Burns: cooling, covering and judging depth, and knowing when a burn needs a specialist."""
+CODE = "medicine3c_burns"
+BOOK = {
+    "title": "Burns: Cooling, Covering and Judging Depth",
+    "subtitle": "What a burn looks like, how to cool it, and when it needs a specialist",
+    "chapters": [
+        ("Heat damages the skin",
+         "A burn is damage to the skin, and sometimes the tissue beneath it. Hot liquids, steam, flame, hot surfaces, chemicals and electricity can all cause one. The skin is the body's outer wall, so every burn also puts the body at risk of infection."),
+        ("Three depths",
+         "A superficial burn is red and painful, like a mild sunburn. A partial-thickness burn forms blisters and is very painful, with a wet look. A full-thickness burn can look white, dark or charred, and may feel numb because its nerve endings have been destroyed."),
+        ("Cool it with running water",
+         "Hold the burn under cool, running water for about 20 minutes, starting as soon as you can. Cooling stops the heat from going deeper into the tissue and eases the pain. Use cool water, not ice."),
+        ("What not to do",
+         "Do not put ice, butter, oil or toothpaste on a burn. Do not pop blisters. Gently remove rings and tight clothing near the burn before the area swells, unless they are stuck to the skin."),
+        ("Cover it loosely",
+         "Cover the burn with cling film or a clean, non-fluffy dressing, laid on loosely. The cover keeps germs out and protects the area from air moving across it. Do not wrap it tightly."),
+        ("Get help for serious burns",
+         "Get trained help quickly for a burn that is large or deep, or that is on the face, hands, feet or over a joint. Burns caused by electricity or chemicals also need a trained carer. A fire on board is always a serious emergency."),
+    ],
+    "test": [
+        ("Which of these can cause a burn?",
+         [("a", "A cool breeze"), ("b", "A hot liquid"), ("c", "A soft cushion"), ("d", "Clean water at room temperature")],
+         "b"),
+        ("What does a partial-thickness burn usually look like?",
+         [("a", "Pale and numb"), ("b", "Dry and brown only"), ("c", "Hairless and cold"), ("d", "Red, with blisters and very painful")],
+         "d"),
+        ("For how long should a burn be cooled under cool running water?",
+         [("a", "About 20 minutes"), ("b", "Only a few seconds"), ("c", "Until the next shift begins"), ("d", "Until the pain has stopped completely")],
+         "a"),
+        ("Which of these should you NOT put on a burn?",
+         [("a", "Cool running water"), ("b", "Cling film"), ("c", "Ice"), ("d", "A clean, non-fluffy dressing")],
+         "c"),
+        ("Why might a full-thickness burn feel numb?",
+         [("a", "Its nerve endings have been destroyed"), ("b", "It has been wrapped in cling film"), ("c", "The blood in it has gone cold"), ("d", "It has been cooled for too long")],
+         "a"),
+    ],
+}

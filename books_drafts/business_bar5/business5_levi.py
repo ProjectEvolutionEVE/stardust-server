@@ -1,0 +1,37 @@
+"""Levi Strauss: gold rush supplies, riveted trousers and the 1873 patent, from workwear to fashion, and family control."""
+CODE = 'business5_levi'
+BOOK = {
+    "title": 'Levi Strauss',
+    "subtitle": 'Gold rush supplies, riveted trousers, and changing with the times',
+    "chapters": [
+        ('Gold rush supplies',
+         'Levi Strauss moved to San Francisco in 1853, during the gold rush, and sold dry goods to miners and merchants. Demand for hard-wearing cloth was strong. A business that serves a boom can grow fast, but it must plan for the bust.'),
+        ('Riveted trousers',
+         'Jacob Davis, a tailor, began putting metal rivets at the stress points of work trousers to stop them tearing. Davis and Strauss worked together on the idea. The rivets made the trousers last much longer in hard work.'),
+        ('The 1873 patent',
+         'In 1873 the two men were granted a patent for the riveted work trousers. The patent protected their design for a time. The product became the forerunner of the blue jeans that later spread across the world.'),
+        ('From workwear to fashion',
+         'Over the decades jeans moved from workwear into everyday clothing and then into fashion. The brand had to adapt to new tastes, new fabrics and new shops. A product can change its meaning as much as its shape.'),
+        ('Family control',
+         "The company has long been controlled by members of the Haas family, descendants of the founder's family. Family control can give steady long-term thinking. It also brings questions about succession and outside views."),
+        ('Changing with trends',
+         "Trends can make a brand popular and then move on. Levi's kept its core product while updating its styles and its marketing. A lasting brand balances a strong core with fresh choices."),
+    ],
+    "test": [
+        ('What did Levi Strauss sell during the gold rush?',
+         [('a', 'Gold bars'), ('b', 'Dry goods to miners and merchants'), ('c', 'Boats'), ('d', 'Piano music')],
+         'b'),
+        ('What did Jacob Davis add to the trousers?',
+         [('a', 'A built-in radio'), ('b', 'Wheels'), ('c', 'A glass window'), ('d', 'Metal rivets at the stress points')],
+         'd'),
+        ('In what year was the riveted trouser patent granted?',
+         [('a', '1921'), ('b', '1999'), ('c', '1873'), ('d', '1845')],
+         'c'),
+        ('Which family has long controlled the company?',
+         [('a', 'The Haas family'), ('b', 'The Gutenberg family'), ('c', 'The Medici family'), ('d', 'The Tudor family')],
+         'a'),
+        ('What does the chapter say a lasting brand should balance?',
+         [('a', 'A single product forever'), ('b', 'Low quality with high prices'), ('c', 'A strong core with fresh choices'), ('d', 'No marketing at all')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""New Coke: a famous 1985 change to a famous recipe, the backlash that followed, and what taste tests missed."""
+CODE = 'business5_newcoke'
+BOOK = {
+    "title": 'New Coke',
+    "subtitle": 'A recipe change, a backlash, and what taste tests missed',
+    "chapters": [
+        ('The Pepsi Challenge',
+         "In the 1970s and early 1980s, Pepsi ran blind taste tests in which many people picked its sweeter drink over Coca-Cola. The Pepsi Challenge hurt Coca-Cola's pride and its sales in some markets. Coca-Cola decided it had to respond."),
+        ('The 1985 change',
+         'In April 1985 Coca-Cola launched a new, sweeter recipe called New Coke. The company had run large taste tests before the launch and the results looked good. Yet the change was made to a product people had loved for generations.'),
+        ('The backlash',
+         'Many customers were angry. Letters, phone calls and protests poured in, and some people hoarded the old drink. The public felt that a part of their everyday life had been taken away. The company had tested taste, but not attachment.'),
+        ('The return of Classic',
+         'In July 1985, less than three months later, Coca-Cola brought back the original recipe as Coca-Cola Classic. New Coke stayed on sale for a time alongside it. The reversal was quick, and the brand recovered.'),
+        ('What the tests missed',
+         'Taste tests measure a sip, not a whole can. They do not measure memory, habit or identity. A product can win every blind test and still lose the feelings that people attach to it.'),
+        ('The sales outcome',
+         "The episode is still studied in business schools. Coca-Cola's sales did recover, and the company later treated the story as a lesson in listening to customers. Research tells you what people do, and it may miss what they care about."),
+    ],
+    "test": [
+        ('What was the Pepsi Challenge?',
+         [('a', 'A race between delivery trucks'), ('b', 'Blind taste tests in which many people preferred Pepsi'), ('c', 'A contest for bottle designers'), ('d', 'A sports sponsorship')],
+         'b'),
+        ('In what year did New Coke launch?',
+         [('a', '1975'), ('b', '1995'), ('c', '1965'), ('d', '1985')],
+         'd'),
+        ('What did the taste tests miss, according to the chapter?',
+         [('a', 'The number of bottles sold'), ('b', 'The price of sugar'), ('c', 'Memory, habit and the feelings people attach to a product'), ('d', 'The colour of the label')],
+         'c'),
+        ('How long was it before the original recipe returned as Coca-Cola Classic?',
+         [('a', 'About three months'), ('b', 'About ten years'), ('c', 'About one week'), ('d', 'About two years')],
+         'a'),
+        ('What is the lesson the chapter draws from the story?',
+         [('a', 'Taste always decides everything'), ('b', 'Never change a recipe for any reason'), ('c', 'Research tells you what people do, but may miss what they care about'), ('d', 'Blind tests are always wrong')],
+         'c'),
+    ],
+}

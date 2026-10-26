@@ -1,0 +1,37 @@
+"""Endowments and the Yale Model: university funds, the spending rule, David Swensen, alternative assets, illiquidity, and the copycats."""
+CODE = 'business5_yale'
+BOOK = {
+    "title": 'Endowments and the Yale Model',
+    "subtitle": 'University savings, the spending rule, and the approach that spread',
+    "chapters": [
+        ("Universities' funds",
+         'An endowment is a fund that a university invests to pay for its work over many years. Gifts from alumni and others add to it. The income from the fund helps pay for scholarships, research and teaching, while the fund itself is kept for the future.'),
+        ('The spending rule',
+         'Most endowments follow a spending rule that takes a set share of the fund each year, often around five percent of its value on average. The rule keeps the money growing for future generations while still paying for present needs.'),
+        ('David Swensen',
+         "David Swensen became Yale's chief investment officer in 1985 and led its endowment for over twenty years, until his death in 2021. He built a portfolio that moved well beyond ordinary shares and bonds. His ideas became widely studied."),
+        ('Alternative assets',
+         'The Yale model put large amounts into alternative assets such as private equity, venture capital, real estate and natural resources. These assets were expected to earn more over the long run than traditional holdings. They also took many years to pay off.'),
+        ('Illiquidity',
+         'Many alternative assets are illiquid, which means they cannot be sold quickly without a loss. A fund that holds many of them must plan ahead for cash needs. Illiquidity is a real cost that a long-term investor has to accept.'),
+        ('The copycats',
+         'Many other universities, foundations and pension funds copied the Yale model. Not all of them had the same skill or the same patience. The model shows both the power of long-term thinking and the risk of copying a strategy without understanding it.'),
+    ],
+    "test": [
+        ('What is an endowment?',
+         [('a', 'A type of university desk'), ('b', 'A fund a university invests to pay for its work over many years'), ('c', 'A bus pass for students'), ('d', 'A sports prize')],
+         'b'),
+        ('What does a typical spending rule aim to do?',
+         [('a', 'Spend the whole fund in one year'), ('b', 'Never spend any money'), ('c', 'Spend only on paint'), ('d', 'Take a set share each year while keeping the fund growing')],
+         'd'),
+        ("When did David Swensen become Yale's chief investment officer?",
+         [('a', '1900'), ('b', '1750'), ('c', '1985'), ('d', '2020')],
+         'c'),
+        ('What are alternative assets?',
+         [('a', 'Holdings such as private equity, venture capital, real estate and natural resources'), ('b', 'Loose change in a jar'), ('c', 'Cars that have been used before'), ('d', 'Plants for a garden')],
+         'a'),
+        ('What does illiquid mean?',
+         [('a', 'It is always sold on the first day'), ('b', 'It is made of water'), ('c', 'It cannot be sold quickly without a loss'), ('d', 'It is paid in coins only')],
+         'c'),
+    ],
+}

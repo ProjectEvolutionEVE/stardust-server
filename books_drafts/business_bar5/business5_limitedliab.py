@@ -1,0 +1,37 @@
+"""The Corporation and Limited Liability: how companies are formed, the 1855 British act, separate legal personality, piercing the veil and LLCs."""
+CODE = 'business5_limitedliab'
+BOOK = {
+    "title": 'The Corporation and Limited Liability',
+    "subtitle": 'Why a company can be sued instead of its owners, and where that shield ends',
+    "chapters": [
+        ('From charter to registration',
+         'Companies once needed a special charter from a crown or parliament to exist. Over time, laws allowed anyone to register a company that met set rules. This made forming a business quick and open to many people.'),
+        ('The 1855 act',
+         'In Britain, the Limited Liability Act of 1855 allowed companies to register with limited liability without special approval. Shareholders could lose what they had invested, but no more. The idea spread to many other countries.'),
+        ('A separate legal person',
+         'A company is a separate legal person. It can own property, sign contracts and be sued in its own name. Its debts are its own debts, not the debts of the people who own its shares.'),
+        ('Piercing the veil',
+         "Limited liability is not absolute. A court may disregard the company's separateness where it has been abused, for example to commit fraud or to hide a sham. This is called piercing the corporate veil, and it is used only in serious cases."),
+        ('LLCs',
+         'A limited liability company, or LLC, is a common business form in the United States, set up under state law. It gives its owners a shield similar to a corporation, often with simpler rules and tax treatment. The details differ from state to state.'),
+        ('The effect on investing',
+         "Because shareholders risk only what they invested, people can buy shares without taking on the company's debts. This makes it easier to raise money for large projects. The trade-off is that creditors can be left with less protection, which is why lenders often ask for personal guarantees."),
+    ],
+    "test": [
+        ('What does limited liability protect shareholders from?',
+         [('a', 'Paying any tax at all'), ('b', 'Losing more than they invested'), ('c', 'Having to work'), ('d', 'Holding meetings')],
+         'b'),
+        ('What does piercing the corporate veil mean?',
+         [('a', "Painting a company's offices"), ('b', 'A bank cutting a hole in a wall'), ('c', 'Selling shares on the market'), ('d', "A court disregards the company's separateness where it has been abused")],
+         'd'),
+        ('What did the 1855 act in Britain allow?',
+         [('a', 'Slavery'), ('b', 'Free trade in beer'), ('c', 'Registration of companies with limited liability, without special approval'), ('d', 'Wartime rationing')],
+         'c'),
+        ('What is a separate legal person?',
+         [('a', 'A company that can own property and sign contracts in its own name'), ('b', 'A human clone'), ('c', 'A type of tax'), ('d', 'A passport')],
+         'a'),
+        ('What is an LLC?',
+         [('a', 'A large loan'), ('b', 'A law court'), ('c', 'A limited liability company, a common business form in the United States'), ('d', 'A lunch club')],
+         'c'),
+    ],
+}

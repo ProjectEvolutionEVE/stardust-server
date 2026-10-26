@@ -1,0 +1,37 @@
+"""Sensitivity Analysis and Scenarios: changing one input at a time, tornado charts, best, base and worst cases, break-even estimates, stress tests and communicating ranges."""
+CODE = 'business5_sensitivity'
+BOOK = {
+    "title": 'Sensitivity Analysis and Scenarios',
+    "subtitle": 'Change one input at a time, tornado charts, best, base and worst cases, and stress tests',
+    "chapters": [
+        ('Change one input',
+         'A sensitivity analysis asks how much an answer changes when one input changes. Start with a model, then vary one number at a time and watch the result. It shows which inputs matter most.'),
+        ('Tornado charts',
+         "A tornado chart lists each input as a bar, with the widest bars at the top. Each bar shows how far the result moves across the input's likely range. It makes the biggest risks easy to see at a glance."),
+        ('Best, base and worst',
+         'A scenario analysis sets out a best case, a base case, and a worst case. Each uses a consistent set of assumptions. Decision-makers can see the range rather than one number.'),
+        ('Break-even estimates',
+         'A break-even estimate asks how far sales can fall before the business loses money. Knowing the break-even point helps set a safe level of spending. Even rough estimates can warn of trouble.'),
+        ('Stress tests',
+         'A stress test asks what happens in an extreme but possible case, such as a sudden drop in demand. It shows whether the business can survive the shock. Banks and insurers use stress tests widely.'),
+        ('Communicating ranges',
+         'Good analysis gives a range, not false certainty. It explains which assumptions drive the answer and why. Honest ranges help people decide with their eyes open.'),
+    ],
+    "test": [
+        ('What does sensitivity analysis test?',
+         [('a', 'The colour of the chart'), ('b', 'How much the result changes when one input changes'), ('c', 'The number of pages'), ('d', 'The weather in July')],
+         'b'),
+        ('What does a tornado chart show?',
+         [('a', 'The date of a storm'), ('b', 'The number of staff'), ('c', 'A map of cities'), ('d', 'Which inputs matter most, with the widest bars at the top')],
+         'd'),
+        ('What are the three cases in a scenario analysis?',
+         [('a', 'Red, blue and green'), ('b', 'Small, medium and large'), ('c', 'Best, base and worst'), ('d', 'Yes, no and maybe')],
+         'c'),
+        ('What does a break-even estimate show?',
+         [('a', 'How far sales can fall before losses start'), ('b', 'How tall a building is'), ('c', 'The price of gold'), ('d', 'The weather')],
+         'a'),
+        ('What is a stress test?',
+         [('a', 'A physical fitness test'), ('b', 'A test of chart colours'), ('c', 'A test of an extreme but possible case'), ('d', 'A ban on forecasts')],
+         'c'),
+    ],
+}

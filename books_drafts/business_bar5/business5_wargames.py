@@ -1,0 +1,37 @@
+"""War Games and Red Teams in Business: testing a plan by playing out rivals' moves, and learning from surprises before they happen."""
+CODE = 'business5_wargames'
+BOOK = {
+    "title": 'War Games and Red Teams in Business',
+    "subtitle": "Playing out rivals' moves before they happen, and what a red team finds",
+    "chapters": [
+        ('Playing the rival',
+         'A business war game is a practice run of a strategy. Players take the roles of rivals, customers and regulators, and make moves in turn. The point is to see how the plan holds up when others push back.'),
+        ('Military roots',
+         "War games have a long history in armed forces, where officers have used maps, models and role play to test plans. The Prussian army's Kriegsspiel, from the 1800s, is one early example. Businesses later borrowed the method."),
+        ('The red team',
+         'A red team is a group whose job is to attack a plan or argue against it. It thinks like a rival and looks for the weak points. Good red teams are given freedom to say unwelcome things without penalty.'),
+        ('Surprise findings',
+         'War games often turn up surprises. A rival may respond in a way no one expected, or a small change may trigger a large chain of events. These surprises are the main reason to run the game.'),
+        ('Keeping it honest',
+         "A war game can fail if the players are chosen only from those who already agree with the plan. It can also fail if the umpire favours the team's own strategy. Choose players with different views and a fair referee."),
+        ('What to do with the lessons',
+         'Write down the surprises, and decide which change each one should cause. Update the plan, then run the game again later, because rivals and markets keep changing. A lesson that never reaches the plan is wasted.'),
+    ],
+    "test": [
+        ('What is a business war game?',
+         [('a', 'A court case over a patent'), ('b', 'A real fight between two firms'), ('c', 'A practice run of a strategy, with players taking the roles of others'), ('d', 'A computer game for staff fun only')],
+         'c'),
+        ("Which early army game is mentioned as an example of the method's roots?",
+         [('a', 'Kriegsspiel'), ('b', 'Monopoly'), ('c', 'Chess tournaments'), ('d', 'Football leagues')],
+         'a'),
+        ('What is the job of a red team?',
+         [('a', 'To approve every plan without question'), ('b', 'To sell the product to customers'), ('c', 'To attack a plan and find its weak points'), ('d', 'To keep the accounts')],
+         'c'),
+        ('Why do war games often pay off?',
+         [('a', 'They replace the need for customers'), ('b', 'They turn up surprises before the real market does'), ('c', 'They always guarantee a win'), ('d', 'They cost nothing to run')],
+         'b'),
+        ('What helps keep a war game honest?',
+         [('a', 'Keeping the rivals out of the room'), ('b', 'Only players who already agree with the plan'), ('c', "A referee who favours the team's plan"), ('d', 'Players with different views and a fair referee')],
+         'd'),
+    ],
+}

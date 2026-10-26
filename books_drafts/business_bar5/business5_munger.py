@@ -1,0 +1,37 @@
+"""Charlie Munger and Mental Models: a latticework of ideas, inversion, incentives, the psychology of misjudgment, Wesco and the Daily Journal, and patience."""
+CODE = 'business5_munger'
+BOOK = {
+    "title": 'Charlie Munger and Mental Models',
+    "subtitle": 'A latticework of ideas from many fields, and the discipline of waiting',
+    "chapters": [
+        ('A latticework of ideas',
+         'Charlie Munger argued that a sound thinker needs a latticework of mental models drawn from many fields, such as psychology, economics, biology and physics. A few big ideas, used together, work better than one discipline alone.'),
+        ('Inversion',
+         'Munger liked to think backwards: ask what would cause a failure, then avoid it. He credited the mathematician Jacobi with the habit of solving problems in reverse.'),
+        ('Incentives',
+         'Munger stressed that incentives shape behaviour, often more than intentions do. A person paid for one result will tend to work toward it, sometimes at the expense of what was really wanted.'),
+        ('The psychology of misjudgment',
+         'Munger listed many biases that lead people to misjudge, such as overconfidence, following the crowd and seeing what they want to see. Knowing them helps people avoid expensive errors.'),
+        ('Wesco and the Daily Journal',
+         'Munger ran Wesco Financial, a company partly owned by Berkshire Hathaway, and later served as chairman of the Daily Journal Corporation, a publishing company.'),
+        ('Patience',
+         'Munger preached patience, long time horizons and staying out of bad deals. He said that the best investment is often to wait for the right opportunity.'),
+    ],
+    "test": [
+        ('What is a latticework of mental models?',
+         [('a', 'A wooden fence'), ('b', 'A single formula'), ('c', 'Ideas from many fields used together'), ('d', 'A bank loan')],
+         'c'),
+        ('What is inversion?',
+         [('a', 'Working backwards by asking what would cause failure'), ('b', 'Turning a company upside down'), ('c', 'Reversing debts'), ('d', 'Trading at night')],
+         'a'),
+        ('What did Munger stress as the strongest shaper of behaviour?',
+         [('a', 'Weather'), ('b', 'The colour of the office'), ('c', 'Incentives'), ('d', 'Luck alone')],
+         'c'),
+        ('Which mathematician did Munger credit with the habit of working backwards?',
+         [('a', 'Euclid'), ('b', 'Jacobi'), ('c', 'Newton'), ('d', 'Pythagoras')],
+         'b'),
+        ('What did Munger preach?',
+         [('a', 'Constant trading'), ('b', 'Borrowing to the limit'), ('c', 'Ignoring costs'), ('d', 'Patience and long time horizons')],
+         'd'),
+    ],
+}

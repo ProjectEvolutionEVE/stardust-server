@@ -1,0 +1,37 @@
+"""Jeff Bezos and Amazon: an online bookstore, the 1997 letter, long-term thinking, Prime, AWS and the flywheel."""
+CODE = 'business5_bezos'
+BOOK = {
+    "title": 'Jeff Bezos and Amazon',
+    "subtitle": 'From an online bookstore to a company that runs on long-term thinking',
+    "chapters": [
+        ('An online bookstore',
+         'Amazon began as an online seller of books. It used the internet to reach customers who could not easily visit a shop. A small start can point to a much larger market.'),
+        ('The 1997 letter',
+         'Bezos wrote a letter to shareholders in 1997 that stressed long-term thinking over quick profits. He said the company would invest for growth and judge itself over years. The letter became a model for how leaders explain their goals.'),
+        ('Prime and logistics',
+         'Amazon built large systems for storing and shipping goods, and later offered Prime, a paid membership with faster delivery and other perks. Running logistics well is a hard and costly job. Good service can keep customers coming back.'),
+        ('Amazon Web Services',
+         "Amazon Web Services, or AWS, sells computing power and storage over the internet to other firms. It turned some of the company's own technical skills into a business that serves many others. Good internal tools can become products."),
+        ('The flywheel',
+         "The flywheel is an idea of Bezos's: a cycle where each part makes the next part stronger. Lower prices can bring more customers, which can bring more sellers and better data. Each turn of the wheel makes the next one easier."),
+        ('Lessons from the record',
+         "Amazon's story shows the value of patience, customer focus and building systems that others can use. It also shows how a company can spend heavily for years before it earns. Learn from its path, but remember that each business is different."),
+    ],
+    "test": [
+        ('Amazon began as an online seller of which product?',
+         [('a', 'Cars'), ('b', 'Bread'), ('c', 'Books'), ('d', 'Phones')],
+         'c'),
+        ("What was the main message of Bezos's 1997 letter to shareholders?",
+         [('a', 'Long-term thinking'), ('b', 'Quick profits'), ('c', 'Shutting the company'), ('d', 'Cutting prices forever')],
+         'a'),
+        ('What does AWS stand for?',
+         [('a', 'Automatic Warehouse System'), ('b', 'Area Wide Shipping'), ('c', 'Amazon Web Services'), ('d', 'Amazon Wide Store')],
+         'c'),
+        ('What is Amazon Prime?',
+         [('a', 'A bank'), ('b', 'A paid membership with faster delivery and other perks'), ('c', 'A phone brand'), ('d', 'A type of warehouse')],
+         'b'),
+        ('What is the Amazon flywheel?',
+         [('a', 'A large spinning wheel in a warehouse'), ('b', 'A tax on books'), ('c', 'A machine that packs boxes'), ('d', 'A cycle where each part makes the next part stronger')],
+         'd'),
+    ],
+}

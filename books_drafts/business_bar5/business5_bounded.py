@@ -1,0 +1,37 @@
+"""Bounded Rationality and Herbert Simon: limits of mind, satisficing, rules of thumb, organisations as deciders, early artificial problem solving and the 1978 Nobel."""
+CODE = 'business5_bounded'
+BOOK = {
+    "title": 'Bounded Rationality and Herbert Simon',
+    "subtitle": 'Limits of mind, satisficing, rules of thumb and how organisations decide',
+    "chapters": [
+        ('Limits of mind',
+         'Herbert Simon argued that people have limited information, limited time and limited mental power. They cannot calculate the best choice in every case, so they make decisions that are good enough.'),
+        ('Satisficing',
+         'Satisficing means choosing the first option that meets a set standard. Simon coined the word, and he showed that it often beats endless searching for a perfect answer.'),
+        ('Rules of thumb',
+         'People rely on simple rules, such as buying from a trusted brand or keeping to a set budget. These shortcuts save effort and often work well, though they can also mislead.'),
+        ('Organisations as deciders',
+         'Firms and public bodies decide through procedures, roles and routines. Simon saw organisations as systems that handle limited attention better than any single mind could.'),
+        ('Early artificial problem solving',
+         'In the 1950s Simon worked with Allen Newell on artificial intelligence. Their programs solved problems by searching and using rules of thumb, which were early steps in the field.'),
+        ('His Nobel',
+         'Herbert Simon received the 1978 Nobel Prize in Economics for his research on decision-making in organisations. His ideas remain central to behavioural economics.'),
+    ],
+    "test": [
+        ('What does bounded rationality say about people?',
+         [('a', 'They have limited information, time and mental power'), ('b', 'They have unlimited time and perfect information'), ('c', 'They always calculate the best choice'), ('d', 'They never make decisions')],
+         'a'),
+        ('What is satisficing?',
+         [('a', 'Choosing the most expensive option always'), ('b', 'Refusing to choose at all'), ('c', 'Choosing the first option that meets a set standard'), ('d', 'Letting a coin decide')],
+         'c'),
+        ('What prize did Herbert Simon receive in 1978?',
+         [('a', 'The Nobel Peace Prize'), ('b', 'The Nobel Prize in Economics'), ('c', 'The Pulitzer Prize'), ('d', 'The Fields Medal')],
+         'b'),
+        ('Why do people use rules of thumb?',
+         [('a', 'They never work'), ('b', 'They make every choice perfect'), ('c', 'They are required by law'), ('d', 'They save effort and often work well, though they can mislead')],
+         'd'),
+        ('With whom did Simon do early work in artificial intelligence?',
+         [('a', 'Adam Smith'), ('b', 'Friedrich Hayek'), ('c', 'Allen Newell'), ('d', 'Karl Polanyi')],
+         'c'),
+    ],
+}

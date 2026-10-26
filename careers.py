@@ -101,6 +101,13 @@ async def all_careers(conn, pid):
     return {"careers": [ladder(c["code"], best, s) for c in CAREERS], "uniform": worn, "thresholds": THRESHOLDS}
 
 
+async def skill(conn, pid, career):
+    """The skill bonus (a fraction, e.g. 0.11) for a job of this career: it counts only while that uniform is worn
+    (rule 32). Mining makes collecting faster; flight stretches fuel (Eric 10-26)."""
+    w = await worn(conn, pid)
+    return w["skill_pct"] / 100.0 if w["code"] == career else 0.0
+
+
 async def worn(conn, pid):
     """The worn uniform's career (None for the Trainee's plain uniform), with its title, bars and skill."""
     code = await conn.fetchval("SELECT uniform FROM players WHERE id=$1", pid)

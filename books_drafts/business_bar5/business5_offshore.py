@@ -1,0 +1,37 @@
+"""Outsourcing and Offshoring: why firms hand work to others or move it abroad, the hidden costs, and the case for bringing it back."""
+CODE = 'business5_offshore'
+BOOK = {
+    "title": 'Outsourcing and Offshoring',
+    "subtitle": 'Why firms hand work to others or move it abroad, and what it really costs',
+    "chapters": [
+        ('Outsourcing and offshoring',
+         'Outsourcing means paying another firm to do work a company used to do itself. Offshoring means moving that work to another country. The two often go together, but they are not the same thing.'),
+        ('Why firms do it',
+         'The main reasons are lower labour costs, access to special skills, and the chance to focus on the core business. A firm may also gain speed, because a specialist partner can often scale up quickly.'),
+        ('Hidden costs',
+         'Savings on paper can be eaten up by hidden costs. These include managing the partner, travel, longer delivery times, and the time spent fixing problems. Extra checks and contracts add cost too.'),
+        ('Quality control',
+         'When work is far away, quality can slip if standards are unclear. A firm must write clear specifications, inspect output and keep close contact with the partner. Quality problems can damage a brand that took years to build.'),
+        ('The Dell and Foxconn case',
+         'Many computer makers, including Dell, have relied on contract manufacturers such as Foxconn to build products in China. The model lets the brand focus on design and sales. It also shows how deeply a firm can depend on one partner.'),
+        ('Reshoring',
+         'Some firms have brought work back home, a move called reshoring. They cite quality, speed, risk and changing costs as reasons. The choice depends on the full cost, not just the wage bill.'),
+    ],
+    "test": [
+        ('What is outsourcing?',
+         [('a', 'Selling shares to staff'), ('b', 'Buying a new office building'), ('c', 'Paying another firm to do work the company used to do itself'), ('d', 'Closing a factory for good')],
+         'c'),
+        ('What is offshoring?',
+         [('a', 'Moving work to another country'), ('b', 'Moving work onto a ship at sea only'), ('c', 'Moving work to a higher floor'), ('d', 'Moving work into the head office')],
+         'a'),
+        ('Which is named as a hidden cost?',
+         [('a', 'The price of paper clips'), ('b', 'Free office coffee'), ('c', 'Managing the partner and fixing problems'), ('d', 'Lower wages for the owner')],
+         'c'),
+        ('What is reshoring?',
+         [('a', 'Selling the brand'), ('b', 'Bringing work back home'), ('c', 'Moving work to a new planet'), ('d', 'Doubling the number of shifts')],
+         'b'),
+        ('What does the text say a firm should judge offshoring by?',
+         [('a', "The colour of the partner's logo"), ('b', 'Only the number of flights taken'), ('c', 'Whether the work is noisy'), ('d', 'The full cost, not just the wage bill')],
+         'd'),
+    ],
+}

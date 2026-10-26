@@ -1,0 +1,37 @@
+"""Mercury, the innermost world: its size and orbit, MESSENGER, heat and cold, polar ice, its shrinking, and lessons for flight."""
+CODE = "flight4_mercury"
+BOOK = {
+    "title": "Mercury, the Innermost World",
+    "subtitle": "The smallest planet, closest to the Sun, with ice in the dark",
+    "chapters": [
+        ("Size and orbit",
+         "Mercury is the smallest planet and the closest to the Sun. It orbits the Sun in about 88 Earth days, and it is only a little larger than Earth's Moon. Its orbit is quite stretched out, so its distance from the Sun changes a lot."),
+        ("MESSENGER",
+         "NASA's MESSENGER spacecraft flew past Mercury several times, then went into orbit in 2011 and ran until 2015. It mapped most of the surface and showed a planet with many wrinkles, craters and a large iron core."),
+        ("Heat and cold",
+         "Mercury has almost no air to hold heat, so its days are very hot and its nights very cold. The sunlit side can get hot enough to melt lead, while the dark side falls to very low temperatures. The extremes are hard on any machine."),
+        ("Polar ice",
+         "Deep craters near the poles never see direct sunlight, so their floors stay very cold. Radar studies found bright patches there that are believed to be water ice. It is a surprise to find ice on a world so close to the Sun."),
+        ("Shrinking",
+         "As Mercury's interior cooled over billions of years, it shrank a little. This shrinking pushed the surface into long cliffs and wrinkles that still show today. Those wrinkles are a record of the planet's cooling history."),
+        ("Lessons for flight",
+         "Mercury teaches that heat and cold can be extreme within a short distance. A craft that goes near the Sun must shade its sensitive parts and manage heat carefully, while keeping any cold parts warm enough to work."),
+    ],
+    "test": [
+        ("Why is Mercury's surface so hot in the day and cold at night?",
+         [("a", "It has a thick blanket of cloud"), ("b", "It has almost no air to hold heat"), ("c", "It is wrapped in ice"), ("d", "It spins very slowly around the Sun")],
+         "b"),
+        ("What did MESSENGER do at Mercury?",
+         [("a", "It landed people on the surface"), ("b", "It made Mercury a moon"), ("c", "It went into orbit and mapped most of the surface until 2015"), ("d", "It brought rock samples back to Earth")],
+         "c"),
+        ("Why is there ice in some Mercury craters?",
+         [("a", "Ice falls from the Moon"), ("b", "Rain freezes there"), ("c", "Volcanoes make ice"), ("d", "The Sun never shines on their floors, so they stay very cold")],
+         "d"),
+        ("What caused Mercury's wrinkles and cliffs?",
+         [("a", "Its interior cooled and shrank over billions of years"), ("b", "Asteroids hit it in pieces"), ("c", "Rivers carved them"), ("d", "It was painted by spacecraft")],
+         "a"),
+        ("What does Mercury teach about flying near the Sun?",
+         [("a", "Heat never matters near the Sun"), ("b", "Heat can be extreme within a short distance, so sensitive parts must be shaded and managed"), ("c", "Cold never matters anywhere"), ("d", "Craft cannot survive any distance from Earth")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Inflation: rising prices, real against nominal, purchasing power, the effect on savings and loans, and planning for it."""
+CODE = "flight4_inflation"
+BOOK = {
+    "title": "Inflation",
+    "subtitle": "Why prices rise and what that does to money over time",
+    "chapters": [
+        ("Prices rising",
+         "Inflation is a general rise in prices over time. The same basket of goods costs more each year, so each credit buys a little less. Moderate inflation is normal in most economies, but high or unstable inflation makes planning hard."),
+        ("Real against nominal",
+         "A nominal amount is the number on the statement. A real amount is that number adjusted for inflation. If savings earn 3 percent and prices rise 3 percent, the nominal balance grows but the real value does not."),
+        ("Purchasing power",
+         "Purchasing power is how much a sum can buy. Inflation erodes it quietly. A pile of money kept under a bed loses purchasing power every year that prices climb, even though the number of credits never changes."),
+        ("The effect on savings and loans",
+         "Savings lose value when interest is lower than inflation. A fixed-rate loan can become cheaper in real terms when prices rise, because the payments stay the same while money becomes less valuable. Both effects matter when you plan."),
+        ("Planning for inflation",
+         "Plan with real figures as well as nominal ones. Ask whether your savings grow faster than prices, and what your costs will be in a few years. A plan that ignores inflation will underestimate what the future will need."),
+        ("A simple habit",
+         "Each year, compare what you earned and saved with what things cost. If your money is falling behind, change the plan before the gap grows too large."),
+    ],
+    "test": [
+        ("What is inflation?",
+         [("a", "A fall in prices across the economy"), ("b", "A general rise in prices over time, so each credit buys less"), ("c", "The interest paid on a loan"), ("d", "A type of ship engine")],
+         "b"),
+        ("What is a real amount?",
+         [("a", "The number on the statement with no adjustment"), ("b", "The amount of a fine"), ("c", "The amount adjusted for inflation, showing what it can really buy"), ("d", "A sum that is paid in gold")],
+         "c"),
+        ("What happens to money kept under a bed when prices rise?",
+         [("a", "It grows by itself"), ("b", "It is taken by the bank"), ("c", "It doubles every year"), ("d", "It loses purchasing power, even though the number of credits does not change")],
+         "d"),
+        ("Why can a fixed-rate loan become cheaper in real terms when prices rise?",
+         [("a", "Because the payments stay the same while money becomes less valuable"), ("b", "Because the loan is cancelled"), ("c", "Because interest falls to zero"), ("d", "Because prices fall")],
+         "a"),
+        ("Why is it important to plan with real figures?",
+         [("a", "Because nominal figures are always wrong"), ("b", "Because a plan that ignores inflation underestimates what the future will need"), ("c", "Because real figures are easier to write"), ("d", "Because inflation never happens")],
+         "b"),
+    ],
+}

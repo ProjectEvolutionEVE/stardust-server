@@ -721,8 +721,13 @@ async def main():
     l = await ladder("flight")
     check("all bar-2 books perfect: bar 2 GOLD, Senior Pilot, skill 11 + 6.6",
           l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
-    check("bar 3 has fewer books written than its 65 threshold: it can't be earned yet, and says so",
-          not l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Not open yet" in l["bars"][2]["note"])
+    check("bar 3's 45 books are written: it is open, not yet earned, and lists what's left",
+          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Pass every book" in l["bars"][2]["note"])
+    fb = CAR.books_by_bar("flight")
+    want = {4: 120, 5: 325}
+    check("bars 4 and 5: open once all their books are written, otherwise 'Not open yet'; never earned out of turn",
+          all(not l["bars"][n - 1]["earned"] and (l["bars"][n - 1]["can_earn"] if len(fb.get(n, [])) >= want[n]
+              else "Not open yet" in l["bars"][n - 1]["note"]) for n in (4, 5)))
     nv = CAR.books_by_bar("navigation")
     for b in nv[2]:
         await take(b)
@@ -749,6 +754,11 @@ async def main():
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "navigation"})
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()
     check("in the quarters: change to Navigation, addressed as Senior Navigator", r.status == 200 and me["rank"] == "Senior Navigator")
+    async with cl.app["pool"].acquire() as c:
+        cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")
+        sk_nav, sk_min = await CAR.skill(c, cpid, "navigation"), await CAR.skill(c, cpid, "mining")
+    check("a skill counts only while its uniform is worn: Navigation's counts, Mining's is 0",
+          abs(sk_nav - me["career"]["skill_pct"] / 100) < 1e-9 and sk_nav > 0 and sk_min == 0)
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "pirate"})
     r2 = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": None})
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()

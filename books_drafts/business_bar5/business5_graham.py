@@ -1,0 +1,37 @@
+"""Benjamin Graham and Value Investing: Security Analysis in 1934, intrinsic value, margin of safety, Mr. Market, the defensive investor and his students."""
+CODE = 'business5_graham'
+BOOK = {
+    "title": 'Benjamin Graham and Value Investing',
+    "subtitle": 'Intrinsic value, the margin of safety and the patient investor',
+    "chapters": [
+        ('Security Analysis',
+         'Benjamin Graham and David Dodd published Security Analysis in 1934. It set out a careful method for valuing shares and bonds from their facts, rather than from rumour, and it became a classic of the field.'),
+        ('Intrinsic value',
+         'Graham argued that every business has an underlying value, based on its assets, earnings and prospects. Market prices can differ from that value, sometimes by a wide margin, for a time.'),
+        ('Margin of safety',
+         "A margin of safety means buying well below the estimated value. The gap protects the investor if the estimate is wrong or bad luck strikes. It is a central idea of Graham's approach."),
+        ('Mr. Market',
+         'In The Intelligent Investor (1949), Graham described the market as a moody partner who offers to buy or sell at a different price every day. The investor may use those offers, but need not obey them.'),
+        ('The defensive investor',
+         "Graham's book gave advice for ordinary investors who wanted a sound and steady approach. It stressed diversification, quality and a fair price. He set this apart from the enterprising investor, who puts in more time and effort."),
+        ('His students',
+         "Warren Buffett studied under Graham at Columbia and later worked for him. Buffett often credited Graham's ideas as the foundation of his own approach."),
+    ],
+    "test": [
+        ('When was Security Analysis published?',
+         [('a', '1964'), ('b', '1934'), ('c', '1904'), ('d', '1994')],
+         'b'),
+        ('What is a margin of safety?',
+         [('a', 'Paying above the value'), ('b', 'Holding cash in a box'), ('c', 'Borrowing at high rates'), ('d', 'Buying well below estimated value')],
+         'd'),
+        ('How does Graham describe Mr. Market?',
+         [('a', 'A banker'), ('b', 'A government minister'), ('c', 'A moody partner who offers a different price every day'), ('d', 'A tax collector')],
+         'c'),
+        ('Which investor studied under Graham at Columbia?',
+         [('a', 'Warren Buffett'), ('b', 'Alan Turing'), ('c', 'Henry Ford'), ('d', 'Adam Smith')],
+         'a'),
+        ('What is intrinsic value?',
+         [('a', 'The price on the screen right now'), ('b', 'The tax on profits'), ('c', 'The underlying value of a business, based on its assets, earnings and prospects'), ('d', 'The value printed on a share certificate')],
+         'c'),
+    ],
+}

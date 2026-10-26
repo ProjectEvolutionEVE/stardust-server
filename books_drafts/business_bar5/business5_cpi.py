@@ -1,0 +1,37 @@
+"""How Price Indexes Are Built: the basket, weights, substitution and quality, the Boskin report, chaining and why your own inflation differs."""
+CODE = 'business5_cpi'
+BOOK = {
+    "title": 'How Price Indexes Are Built',
+    "subtitle": 'The basket, weights, substitution and quality, the Boskin report, and why your inflation differs',
+    "chapters": [
+        ('The basket',
+         'A price index tracks the cost of a fixed basket of goods and services over time. Statisticians pick a basket that represents what a typical household buys. The index then shows how much that basket costs now compared with a base period.'),
+        ('Weights',
+         'Not all items count equally. Each item in the basket gets a weight, based on how much of the household budget it takes. A rise in rent counts for more than a rise in a small treat, because rent takes a larger share of spending.'),
+        ('Substitution and quality',
+         'When the price of one item rises, people often switch to a cheaper one, and a fixed basket can miss this. Quality also changes, so a new phone may cost more but do more. Statisticians adjust for these changes, but the adjustments are hard to get right.'),
+        ('The Boskin report',
+         'In 1996 the Boskin Commission, a US advisory panel, argued that the consumer price index overstated inflation. Its report led to changes in how the index handled substitution and quality. The debate about the right measure continues.'),
+        ('Chaining',
+         'Chain-weighting updates the basket and weights from one period to the next, rather than keeping them fixed. This lets the index follow changing spending habits. The linked periods are joined together to make one long series.'),
+        ('Why your inflation differs',
+         'The official index is an average for a typical household, so your own inflation may be higher or lower. If you spend more on rent, food, or healthcare, your costs may rise faster than the index. Knowing your own basket helps you plan your budget.'),
+    ],
+    "test": [
+        ('What does a price index track?',
+         [('a', 'The weather'), ('b', 'The height of buildings'), ('c', 'The cost of a fixed basket over time'), ('d', 'The number of shops')],
+         'c'),
+        ('What is a weight in a price index?',
+         [('a', 'How heavy an item is'), ('b', 'How much of the household budget the item takes'), ('c', 'The shelf height'), ('d', "The shop's rent")],
+         'b'),
+        ('What is substitution?',
+         [('a', 'A new job'), ('b', "A teacher's replacement"), ('c', 'Changing a currency'), ('d', 'Switching to a cheaper item when prices rise')],
+         'd'),
+        ('Which 1996 commission argued that the consumer price index overstated inflation?',
+         [('a', 'The Dawes Commission'), ('b', 'The Warren Commission'), ('c', 'The Boskin Commission'), ('d', 'The Keynes Commission')],
+         'c'),
+        ('Why might your personal inflation differ from the official index?',
+         [('a', 'Your spending may differ from the typical household basket'), ('b', 'The index is random'), ('c', 'You never buy anything'), ('d', 'Inflation is the same for everyone')],
+         'a'),
+    ],
+}

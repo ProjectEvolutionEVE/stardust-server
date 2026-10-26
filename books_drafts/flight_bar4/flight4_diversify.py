@@ -1,0 +1,37 @@
+"""Diversification: eggs in baskets, correlation, a cargo example, the limits of spreading and a sensible mix."""
+CODE = "flight4_diversify"
+BOOK = {
+    "title": "Diversification",
+    "subtitle": "Spreading your risk so one bad result does not sink everything",
+    "chapters": [
+        ("Eggs in baskets",
+         "The old saying warns against keeping all your eggs in one basket. If one basket is dropped, every egg breaks. Spreading the eggs across several baskets means one fall loses only part of the total."),
+        ("Correlation",
+         "Correlation describes how closely two things move together. Two investments that rise and fall at the same time are highly correlated, and holding both adds little protection. Diversification works best when the parts do not move in step."),
+        ("A cargo example",
+         "Imagine a ship carrying goods that could each be lost in a storm. Filling the hold with one kind of cargo risks everything on one danger. Splitting the cargo across several sections means one bad event damages only a part, and the rest still reaches port."),
+        ("The limits",
+         "Diversification cannot remove risk that hits everything at once. In a serious crisis, many prices can fall together, so the correlation between them rises. Spreading helps most against risks that affect one part at a time."),
+        ("The cost of spreading",
+         "Holding many things costs more in fees, time and attention, and it can dilute the gains from your best choices. Diversification is a trade: it gives up some chance of the very best result to avoid the very worst."),
+        ("A sensible mix",
+         "A sensible mix depends on your goals, how long you can wait and how much loss you can bear. A plan with a few different kinds of holding, reviewed now and then, is a simple and sturdy approach for most people."),
+    ],
+    "test": [
+        ("What does the saying about eggs and baskets warn against?",
+         [("a", "Buying eggs in bulk"), ("b", "Eating too many eggs"), ("c", "Using baskets to carry water"), ("d", "Keeping everything in one place where one fall loses it all")],
+         "d"),
+        ("What does correlation describe?",
+         [("a", "How closely two things move together"), ("b", "How much a thing costs"), ("c", "How heavy an object is"), ("d", "How many years a thing lasts")],
+         "a"),
+        ("What is a limit of diversification?",
+         [("a", "It removes all risk"), ("b", "It cannot remove risk that hits everything at once, such as a serious crisis"), ("c", "It only works for ships"), ("d", "It makes losses larger")],
+         "b"),
+        ("What is a cost of spreading your holdings?",
+         [("a", "It is free in every case"), ("b", "It makes the storm stronger"), ("c", "It adds fees and attention, and can dilute the gains from the best choices"), ("d", "It stops all trading")],
+         "c"),
+        ("Why does splitting a ship's cargo help?",
+         [("a", "The ship sinks faster"), ("b", "The cargo weighs more"), ("c", "The ship needs no crew"), ("d", "One bad event then damages only a part, and the rest can still arrive")],
+         "d"),
+    ],
+}

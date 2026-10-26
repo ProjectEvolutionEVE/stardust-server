@@ -1,0 +1,37 @@
+"""Credit and borrowing for a ship: how lenders judge, collateral, interest and term, debt ratios, covenants and avoiding trouble."""
+CODE = "flight4_credit"
+BOOK = {
+    "title": "Credit and Borrowing for a Ship",
+    "subtitle": "How lenders judge a borrower and how to keep debt manageable",
+    "chapters": [
+        ("How lenders judge",
+         "Lenders look at character, capacity, capital, collateral and conditions. Character is the track record of paying on time. Capacity is whether the income can cover the payments. Capital is what the borrower has put in, and conditions are the state of the market and the purpose of the loan."),
+        ("Collateral",
+         "Collateral is an asset that the lender can take if the loan is not repaid. A ship or a craft can serve as collateral. Good collateral lowers the risk for the lender and often lowers the interest the borrower pays."),
+        ("Interest and term",
+         "The interest rate is the price of borrowing. The term is how long the loan runs. A longer term lowers each payment but usually costs more interest in total, so the two must be weighed together."),
+        ("Debt ratios",
+         "A debt ratio compares what you owe with what you earn. A common check is the share of monthly income that goes to debt payments. A high ratio leaves little room for a bad month and is a warning sign for both borrower and lender."),
+        ("Covenants",
+         "A covenant is a promise written into a loan agreement. It might require the borrower to keep a minimum cash balance, or to avoid taking on more debt without permission. Breaking a covenant can let the lender call in the loan early."),
+        ("Avoiding trouble",
+         "Borrow only for something that will pay its own way, keep a cash buffer, pay early when you can, and read every covenant before signing. Trouble with debt usually starts with a missed payment that was not planned for."),
+    ],
+    "test": [
+        ("Which of these is one of the five things lenders look at?",
+         [("a", "Capacity, whether income can cover the payments"), ("b", "The colour of the borrower's car"), ("c", "The borrower's favourite food"), ("d", "The weather on the day of signing")],
+         "a"),
+        ("What is collateral?",
+         [("a", "A fee paid to the lender at the start"), ("b", "An asset the lender can take if the loan is not repaid"), ("c", "The interest rate"), ("d", "A promise to pay early")],
+         "b"),
+        ("Why does a longer loan term often cost more in total?",
+         [("a", "Because longer loans have no interest"), ("b", "Because lenders never allow longer terms"), ("c", "Because interest is charged over more years, though each payment is smaller"), ("d", "Because the payment grows each year by law")],
+         "c"),
+        ("What does a high debt ratio warn of?",
+         [("a", "A guaranteed profit"), ("b", "An early repayment"), ("c", "That the loan is free"), ("d", "Very little room for a bad month")],
+         "d"),
+        ("What is a covenant?",
+         [("a", "A promise written into a loan agreement, such as keeping a minimum cash balance"), ("b", "A gift from the lender"), ("c", "A map of the ship"), ("d", "A type of interest rate")],
+         "a"),
+    ],
+}

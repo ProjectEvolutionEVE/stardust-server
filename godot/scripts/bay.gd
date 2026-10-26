@@ -181,7 +181,8 @@ func _fuel_tick(dt: float, now: float) -> void:
 			flight_secs = 0.0
 			Api.call_api("POST", "/api/dfg/craft/flight", {"seconds": secs})
 		var flying: bool = not warp.is_empty() or vel.length() > 0.5
-		fuel = maxf(0.0, fuel - dt / 3600.0 * 100.0 / (FUEL_FLY_H if flying else FUEL_IDLE_H))
+		var stretch := 1.0 + Session.skill("flight")   # the Flight uniform stretches fuel (Eric 10-26)
+		fuel = maxf(0.0, fuel - dt / 3600.0 * 100.0 / ((FUEL_FLY_H if flying else FUEL_IDLE_H) * stretch))
 		for mark in [25, 10]:
 			if fuel <= mark and fuel_warned > mark:
 				fuel_warned = mark
@@ -785,7 +786,7 @@ func _scan_return(f: Dictionary, me: Array, fwd: Vector3) -> float:
 		return 0.0
 	var sv := Solar.vec(Solar.sub(f.center, me))
 	var d := maxf(0.0, sv.length() - f.rad)
-	var R: float = SCAN_RANGE[f.size]
+	var R: float = SCAN_RANGE[f.size] * (1.0 + Session.skill("flight"))   # a Flight uniform hears fields from farther (Eric 10-26)
 	if d > R:
 		return 0.0
 	var ang := sv.angle_to(fwd)
@@ -993,10 +994,11 @@ func start_warp(d: Dictionary) -> void:
 	if docked and not Session.me.get("skills", {}).get("fly", false):    # warping out of the bay is flying too
 		_say("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly.", true)
 		return
-	if fuel < FUEL_WARP:
+	var warp_cost := FUEL_WARP / (1.0 + Session.skill("flight"))
+	if fuel < warp_cost:
 		_say("Not enough fuel to warp. Fly home, or wait for a tow.")
 		return
-	fuel -= FUEL_WARP
+	fuel -= warp_cost
 	var to := _dest_point(d)
 	var from := _me()
 	var dist := Solar.length(Solar.sub(to, from))

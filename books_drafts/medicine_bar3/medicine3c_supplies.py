@@ -1,0 +1,37 @@
+"""Stocking a Medical Store: what to keep, how long it lasts, and what it really costs to keep it ready."""
+CODE = "medicine3c_supplies"
+BOOK = {
+    "title": "Stocking a Medical Store: Supplies and Cost",
+    "subtitle": "What to keep, how long it lasts, and what it really costs to keep it ready",
+    "chapters": [
+        ("Keep what you will use",
+         "A medical store holds what the crew is likely to need, from dressings and gloves to splints and the cleaning supplies that go with them. A store full of rarely used items has no room left for the things that matter most."),
+        ("Nothing is unlimited",
+         "Every place that holds goods has a fixed size. Each item stored takes up space and weight that could hold something else, so every item must earn its place on the shelf."),
+        ("Expiry dates",
+         "Sterile packs, dressings and medicines all carry expiry dates. Check them at regular times and use the oldest stock first, a practice called first in, first out. An expired item is a cost that delivers nothing."),
+        ("Track what is used",
+         "A simple log of what was used, when and by whom shows what needs restocking. It also shows the true cost of the store, because each used item must be replaced at some point."),
+        ("Cost per use",
+         "To see the true cost of an item, divide its price by the number of times it can be used. A cheap item that is used once can cost more than a dearer one that lasts for many uses. Compare items by cost per use, not by the price tag alone."),
+        ("Budget the restock",
+         "Set a yearly budget for restocking, and keep a reserve for surprise needs. Buying in bulk can lower the price of each item, but it ties up money and risks waste if the stock expires before it is used."),
+    ],
+    "test": [
+        ("What should a medical store hold?",
+         [("a", "Everything the market sells"), ("b", "What the crew is likely to need"), ("c", "Only the items that look good"), ("d", "Whatever is left over from last year")],
+         "b"),
+        ("Why does every stored item matter?",
+         [("a", "Because space and weight are limited"), ("b", "Because items can feel lonely"), ("c", "Because the market requires it"), ("d", "Because of the colour of the packaging")],
+         "a"),
+        ("What does first in, first out mean?",
+         [("a", "The newest item is used first"), ("b", "Items are sold by weight"), ("c", "The oldest item is used first"), ("d", "Only one item is ever kept")],
+         "c"),
+        ("How do you find the true cost per use of an item?",
+         [("a", "Multiply the price by ten"), ("b", "Ignore the price altogether"), ("c", "Count the number of boxes"), ("d", "Divide the cost by the number of times it can be used")],
+         "d"),
+        ("What is one risk of buying a large stock of an item?",
+         [("a", "It always lowers the cost"), ("b", "Items may expire before they are used"), ("c", "It frees up space in the store"), ("d", "It stops the crew from using anything")],
+         "b"),
+    ],
+}

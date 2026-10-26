@@ -1,0 +1,37 @@
+"""Telemedicine: what a consultation by video or voice can do, what it cannot, and how to keep it safe."""
+CODE = "medicine3c_telemedicine"
+BOOK = {
+    "title": "Telemedicine: Care at a Distance",
+    "subtitle": "What a consultation by video or voice can do, what it cannot, and how to keep it safe",
+    "chapters": [
+        ("A doctor who is not in the room",
+         "Telemedicine means giving care or advice at a distance, usually by video, by phone or through written messages. It can save travel and time, and it puts an expert in touch with someone who is far from help."),
+        ("What it does well",
+         "Many questions can be settled by talking. A remote carer can review symptoms, look at a wound through a camera, go over test results and plan the next check. A remote expert can also guide a local carer through the next step."),
+        ("What it cannot do",
+         "A camera cannot feel a swollen belly, hear a chest through a stethoscope or take a blood sample. When a hands-on examination matters, the person must be seen in person. A remote consult is a tool, not a replacement for every kind of care."),
+        ("Delays and dropouts",
+         "Connections can lag or cut out. When the other end is far away, replies can take many minutes to arrive. Keep calls short, agree on exactly what is being asked, and write the answer down."),
+        ("Privacy and consent",
+         "Health details are private. Use only a secure link, tell the person what is being recorded, and ask before sharing their details with anyone else. A consult should only go ahead once the person has agreed to it."),
+        ("Keeping the record",
+         "The remote carer and the local carer should both have the same notes: what was seen, what was advised, and when to check again. A consult with no written record is hard to follow up, and easy to forget."),
+    ],
+    "test": [
+        ("What is telemedicine?",
+         [("a", "Medicine learned from written books only"), ("b", "Giving care or advice at a distance, often by video or phone"), ("c", "Surgery carried out only by robots"), ("d", "A kind of medicine for plants")],
+         "b"),
+        ("Which task can telemedicine often help with?",
+         [("a", "Feeling a swollen belly"), ("b", "Taking a blood sample"), ("c", "Listening to a chest through a stethoscope"), ("d", "Reviewing symptoms and planning the next check")],
+         "d"),
+        ("What can a camera-based consult NOT do well?",
+         [("a", "Describe a rash"), ("b", "Look at a wound"), ("c", "Feel for a swelling or hear the chest directly"), ("d", "Review written test results")],
+         "c"),
+        ("What should every remote consult leave behind?",
+         [("a", "A written record of what was advised and when to check again"), ("b", "A pet placed nearby"), ("c", "A loud speaker"), ("d", "Nothing at all")],
+         "a"),
+        ("Before sharing a patient's details, what must you do?",
+         [("a", "Post them where everyone can see"), ("b", "Tell the patient and ask for their consent"), ("c", "Send them to a friend"), ("d", "Write them on the wall")],
+         "b"),
+    ],
+}

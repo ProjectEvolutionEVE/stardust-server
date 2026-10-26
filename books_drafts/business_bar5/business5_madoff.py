@@ -1,0 +1,37 @@
+"""Bernie Madoff's Fraud: a trusted broker with steady returns, the doubters who were ignored, and the red flags to know."""
+CODE = 'business5_madoff'
+BOOK = {
+    "title": "Bernie Madoff's Fraud",
+    "subtitle": 'A trusted broker, steady returns, and the red flags',
+    "chapters": [
+        ('The trusted broker',
+         'Bernie Madoff was a well-known figure in the stock market for decades and ran a respected firm. Many people trusted him with their savings. Reputation is a powerful tool for a fraud, because people stop asking questions.'),
+        ('Steady returns',
+         "Madoff's investors were promised steady, good returns in good years and bad. Such smooth results looked too good to be true to some people. Real investments rise and fall, so smooth returns are a warning sign."),
+        ('The investigators who doubted',
+         'Some analysts and investigators raised doubts about the numbers for years. One of them, Harry Markopolos, warned regulators in detail. The warnings were not acted on in time, and the fraud continued.'),
+        ('The 2008 confession',
+         'In December 2008 Madoff confessed to his sons and then to the authorities that his business was a fraud. He had been paying early investors with money from new ones. This kind of scheme is called a Ponzi scheme.'),
+        ('Losses to charities',
+         'Many charities and foundations lost money in the fraud, along with individuals and families. The losses were very large. A fraud can reach far beyond the people who signed up first.'),
+        ('Red flags to know',
+         'Watch for returns that are steady in every market, a strategy that is hard to explain, a manager who holds the records alone, and pressure to invest quickly. Ask who checks the books, and who holds the money. Red flags are cheap to spot and expensive to ignore.'),
+    ],
+    "test": [
+        ('What did Madoff promise his investors?',
+         [('a', 'Free holidays every year'), ('b', 'Gold bars in the post'), ('c', 'Steady, good returns in good years and bad'), ('d', 'A seat in a sports team')],
+         'c'),
+        ('What is a Ponzi scheme?',
+         [('a', 'Paying early investors with money from new ones'), ('b', 'A type of airline ticket'), ('c', 'A rule about lunch breaks'), ('d', 'A tax on rain')],
+         'a'),
+        ('When did Madoff confess?',
+         [('a', 'June 1960'), ('b', 'March 1990'), ('c', 'December 2008'), ('d', 'November 2015')],
+         'c'),
+        ('Which of these is a red flag, according to the chapter?',
+         [('a', 'A clear written strategy'), ('b', 'Returns that are steady in every market'), ('c', 'Independent checks on the books'), ('d', 'Several banks holding the money')],
+         'b'),
+        ('Who were among the victims?',
+         [('a', 'Only the government'), ('b', 'No one at all'), ('c', 'Only the investigators'), ('d', 'Charities, foundations and individuals')],
+         'd'),
+    ],
+}

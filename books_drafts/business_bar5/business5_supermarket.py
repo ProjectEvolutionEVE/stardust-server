@@ -1,0 +1,37 @@
+"""The Supermarket Revolution: Piggly Wiggly and self-service, thin margins, the barcode, private labels and consolidation."""
+CODE = 'business5_supermarket'
+BOOK = {
+    "title": 'The Supermarket Revolution',
+    "subtitle": 'Self-service, thin margins, the barcode, and private labels',
+    "chapters": [
+        ('Piggly Wiggly',
+         'In 1916 Clarence Saunders opened the Piggly Wiggly store in Memphis, Tennessee. Shoppers picked goods from shelves themselves and paid at the front. This self-service model was a new idea, and it spread quickly.'),
+        ('Self-service',
+         'Before this, clerks fetched goods from behind counters for each customer. Self-service let stores carry many more items, and it cut the number of staff needed to serve people. It changed the pace and size of shopping.'),
+        ('Thin margins',
+         'Grocery stores usually earn only a small profit on each item sold. Their success depends on selling large volumes quickly. Efficiency in stock, staffing, and delivery matters a great deal.'),
+        ('The barcode',
+         'In 1974 a pack of chewing gum was scanned with a barcode at a supermarket in Troy, Ohio, the first such sale of its kind. Scanning let stores track sales and stock as they happened. The barcode made checkout faster and inventory more accurate.'),
+        ('Private labels',
+         'Supermarkets often sell their own store brands, called private labels. These products can be cheaper for the shopper and earn a higher margin for the store. They also give shoppers a choice beside national brands.'),
+        ('Consolidation',
+         'Over time, a few large chains came to dominate many local markets. Bigger buyers can ask suppliers for lower prices. Scale and data can turn thin margins into a strong business.'),
+    ],
+    "test": [
+        ('In what year did Piggly Wiggly open with self-service?',
+         [('a', '1916'), ('b', '1874'), ('c', '1948'), ('d', '1974')],
+         'a'),
+        ('What was the first barcode scan at a supermarket in 1974?',
+         [('a', 'A loaf of bread'), ('b', 'A gallon of milk'), ('c', 'A pack of chewing gum'), ('d', 'A bottle of tea')],
+         'c'),
+        ('Why do grocery stores rely on high sales volume?',
+         [('a', 'They sell expensive items only'), ('b', 'Profit per item is small, so large sales matter'), ('c', 'Each item carries a large profit'), ('d', 'Their margins are wide')],
+         'b'),
+        ('What are private labels?',
+         [('a', 'Products no shop sells'), ('b', 'Secret recipes'), ('c', 'Radio shows'), ('d', "Store-brand goods sold under the shop's own name")],
+         'd'),
+        ('What does consolidation tend to give large buyers?',
+         [('a', 'Smaller stores'), ('b', 'Higher costs'), ('c', 'Power to ask suppliers for lower prices'), ('d', 'Fewer scanners')],
+         'c'),
+    ],
+}

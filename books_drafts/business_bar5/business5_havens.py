@@ -1,0 +1,37 @@
+"""Tax Havens and Offshore Finance: why places with low tax and high secrecy attract money, shell companies, the Panama Papers, and the difference between avoidance and evasion."""
+CODE = 'business5_havens'
+BOOK = {
+    "title": 'Tax Havens and Offshore Finance',
+    "subtitle": 'Low tax, low disclosure, and who pays the difference',
+    "chapters": [
+        ('What a haven offers',
+         'A tax haven is a place that charges little or no tax on money held or earned there, and often keeps ownership private. People and companies use these places to hold assets. The attraction is low tax combined with limited reporting.'),
+        ('Secrecy and low rates',
+         'Secrecy makes it hard for tax authorities to see who owns what. Low rates reduce the tax due on profits booked there. Together they draw in money that would otherwise be taxed in the countries where the business is actually done.'),
+        ('Shell companies',
+         'A shell company is a legal entity with no real operations of its own. It may hold assets, sign contracts or move money on paper, but it has few or no real staff. Shell companies are not illegal in themselves, but they are often used to hide who benefits.'),
+        ('The Panama Papers',
+         'In 2016 a large leak of records from a Panamanian law firm exposed how many wealthy people and companies used offshore structures. The leak showed how common these arrangements were, and it led to new investigations and reforms in many countries.'),
+        ('Avoidance against evasion',
+         'Tax avoidance is arranging affairs within the law to pay less tax. Tax evasion is illegally hiding income or assets to avoid tax. The line is clear in law, even though the planning that sits near it can be controversial.'),
+        ('Reform and cost',
+         'Countries now share bank and tax information automatically, which has reduced secrecy. Lost tax revenue is a real cost, and poorer nations can lose the most, because they rely on tax to fund schools and roads. Reform aims to make the shifting of profit harder.'),
+    ],
+    "test": [
+        ('What is a shell company?',
+         [('a', 'A seashell shop'), ('b', 'A bank vault'), ('c', 'A type of bond'), ('d', 'A legal entity with no real operations of its own, used to hold assets or move money')],
+         'd'),
+        ('What did the Panama Papers reveal?',
+         [('a', 'A new currency'), ('b', 'A football transfer'), ('c', 'Records of offshore arrangements from a Panamanian law firm'), ('d', 'A weather map')],
+         'c'),
+        ('What is the difference between tax avoidance and tax evasion?',
+         [('a', 'Avoidance is legal planning, while evasion is illegally hiding income'), ('b', 'They are exactly the same thing'), ('c', 'Evasion is legal'), ('d', 'Avoidance is a crime')],
+         'a'),
+        ('What is a main cost of tax havens to other nations?',
+         [('a', 'Higher rainfall'), ('b', 'Fewer ships at sea'), ('c', 'Lost tax revenue'), ('d', 'Too many roads')],
+         'c'),
+        ('What has helped reduce secrecy in recent years?',
+         [('a', 'Banning all companies'), ('b', 'Automatic exchange of account information between tax authorities'), ('c', 'Closing all banks'), ('d', 'Printing more cash')],
+         'b'),
+    ],
+}

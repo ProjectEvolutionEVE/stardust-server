@@ -32,6 +32,20 @@ func clear() -> void:
 
 ## Where a signed-in player goes next: setup until their name and language are chosen, then their quarters; or their
 ## cockpit, if they signed out there (Eric 10-24).
+## The skill bonus (a fraction) for a job of this career, counted only while its uniform is worn (rule 32):
+## mining collects faster, flight stretches fuel (Eric 10-26).
+func skill(career: String) -> float:
+	var c: Dictionary = me.get("career", {}) if me.get("career") is Dictionary else {}
+	return float(c.get("skill_pct", 0.0)) / 100.0 if c.get("code") == career else 0.0
+
+
+## A Science uniform with its fifth bar in gold lets the miner pick which raw material to collect (Eric 10-26).
+func can_pick_material() -> bool:
+	var c: Dictionary = me.get("career", {}) if me.get("career") is Dictionary else {}
+	var bars: Array = c.get("bars", [])
+	return c.get("code") == "science" and bars.size() >= 5 and bars[4] is Dictionary and bars[4].get("medal") == "gold"
+
+
 func next_scene() -> String:
 	if me.get("needs_setup", true):
 		return "res://scenes/setup.tscn"

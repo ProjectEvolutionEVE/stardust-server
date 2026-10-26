@@ -1,0 +1,37 @@
+"""The Spice Trade: pepper and cloves, the Venice and Arab routes, the Portuguese sea route, the Dutch monopoly and how prices fell."""
+CODE = 'business5_spice'
+BOOK = {
+    "title": 'The Spice Trade',
+    "subtitle": 'Pepper and cloves, the sea route, and the Dutch monopoly',
+    "chapters": [
+        ('Spices worth a fortune',
+         'In medieval Europe, pepper, cloves, nutmeg, and cinnamon were prized for flavour, medicine, and preserving food. In some markets they were worth their weight in silver. Spice trade was among the most profitable business of its time.'),
+        ('Venice and the Arab route',
+         'Spices came overland and by sea, through Arab traders, to ports such as Venice. Venetian merchants controlled a great deal of the European trade. Every middleman along the way took a profit.'),
+        ('The Portuguese sea route',
+         'In 1498 Vasco da Gama reached India by sea around Africa. This route let Portugal buy spices without paying the middlemen of the old land routes. Portugal built trading posts across the Indian Ocean.'),
+        ('The Dutch monopoly',
+         'The Dutch East India Company, the VOC, sought control over the spice islands. It tried to limit the growing of cloves and nutmeg to places it controlled. A monopoly lets a seller keep prices high by controlling supply.'),
+        ('The Banda Islands',
+         'The Banda Islands were, at that time, the only home of the nutmeg tree. The Dutch took control of them in 1621 with great violence against the local people. The episode shows how a supply monopoly was enforced by force.'),
+        ('How prices fell',
+         'When spice trees were grown in other places, the monopoly lost its grip. Prices fell as supply spread, and spices became cheap enough for ordinary households. Monopolies tend to weaken when rivals find a way to produce the same good.'),
+    ],
+    "test": [
+        ('What did Vasco da Gama do in 1498?',
+         [('a', 'Reached India by sea around Africa'), ('b', 'Founded the VOC'), ('c', 'Opened the Silk Road'), ('d', 'Invented pepper')],
+         'a'),
+        ('Which city was a key European port for spices?',
+         [('a', 'Manaus'), ('b', "Sutter's Mill"), ('c', 'Venice'), ('d', 'Kyoto')],
+         'c'),
+        ('What did the VOC try to do with spices?',
+         [('a', 'Make spices free'), ('b', 'Control growing and keep prices high'), ('c', 'Stop all sea trade'), ('d', 'Ban pepper in Europe')],
+         'b'),
+        ('What were the Banda Islands known for?',
+         [('a', 'Gold mines'), ('b', 'Rubber trees'), ('c', 'Cotton mills'), ('d', 'Being the home of the nutmeg tree')],
+         'd'),
+        ('What tends to weaken a monopoly over a good?',
+         [('a', 'A ban on trade'), ('b', 'Raising prices even higher'), ('c', 'Rivals who can produce the same good elsewhere'), ('d', 'Keeping supply secret')],
+         'c'),
+    ],
+}

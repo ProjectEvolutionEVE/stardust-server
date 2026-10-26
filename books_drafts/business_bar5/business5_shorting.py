@@ -1,0 +1,37 @@
+"""Short Selling: borrowing shares to sell now and buy back later, with its risks and its famous episodes."""
+CODE = 'business5_shorting'
+BOOK = {
+    "title": 'Short Selling',
+    "subtitle": 'Borrow, sell, buy back: the bet on a falling price and its dangers',
+    "chapters": [
+        ('Borrow, sell, buy back',
+         "Short selling means selling shares you do not own. You borrow the shares from someone who holds them, sell them at today's price, and later buy them back to return to the lender. If the price fell in between, you keep the difference."),
+        ('The cost of borrowing',
+         'Lending shares is not free. The short seller usually pays a fee to borrow, and sometimes must pay the lender any dividends the shares pay in the meantime. For shares that are hard to borrow, the fee can be high.'),
+        ('Losses can grow without limit',
+         'When you buy a share, the most you can lose is what you paid. When you short a share, the price can keep rising, and there is no ceiling on how high it can go. That is why short selling carries a risk that many ordinary investments do not.'),
+        ('Short squeezes',
+         'A short squeeze happens when a rising price forces short sellers to buy back shares to limit their losses. Their buying pushes the price higher still, which forces more of them to buy. The spiral can be fast and painful for those on the wrong side.'),
+        ('Volkswagen in 2008',
+         "In October 2008 Porsche revealed it held a large part of Volkswagen's shares, and little was free to borrow. Short sellers who had bet against the company had to buy back shares. For a short time Volkswagen became one of the most valuable companies in the world."),
+        ('The debate over bans',
+         'Some regulators have temporarily banned short selling during panics, to stop prices falling further. Others argue that short sellers help find problems in companies early. The debate continues, and the rules differ from country to country.'),
+    ],
+    "test": [
+        ('What is the first step in a short sale?',
+         [('a', 'Borrow shares and sell them'), ('b', 'Buy shares you own'), ('c', 'Pay the company a gift'), ('d', 'Close a bank account')],
+         'a'),
+        ('What is a cost of short selling that a normal buyer does not face?',
+         [('a', 'Paying a tax on the colour of the shares'), ('b', 'Needing a licence to walk'), ('c', 'Paying a fee to borrow the shares'), ('d', 'Waiting a year before buying')],
+         'c'),
+        ('Why can losses on a short sale grow without limit?',
+         [('a', 'The lender pays the losses'), ('b', 'The price of a share has no ceiling, so it can keep rising'), ('c', 'Shares cannot rise'), ('d', 'Short sellers are always insured')],
+         'b'),
+        ('What is a short squeeze?',
+         [('a', 'A fall in the number of shares issued'), ('b', 'A bank merger'), ('c', 'A new tax on dividends'), ('d', 'Short sellers forced to buy back, which pushes the price higher')],
+         'd'),
+        ('What happened to Volkswagen in October 2008?',
+         [('a', 'It went bankrupt overnight'), ('b', 'It stopped making cars'), ('c', 'Porsche held most of its shares, and short sellers had to buy back'), ('d', 'It was sold to a bakery')],
+         'c'),
+    ],
+}

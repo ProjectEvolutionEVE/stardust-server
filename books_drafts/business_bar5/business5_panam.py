@@ -1,0 +1,37 @@
+"""Pan Am: an ocean-flying pioneer that led the jet age, bet on the 747 and was undone by fuel prices and competition."""
+CODE = 'business5_panam'
+BOOK = {
+    "title": 'Pan Am',
+    "subtitle": 'Ocean flights, the jet age, a big bet, and the end in 1991',
+    "chapters": [
+        ('Juan Trippe and ocean flights',
+         'Pan American Airways was founded in 1927 under the leadership of Juan Trippe. The airline pushed to fly across oceans, reaching places that had been hard to reach by ship. It became a symbol of global travel.'),
+        ('The jet age',
+         'Pan Am was one of the first airlines to bring jet airliners into service in the late 1950s. Jets were faster, quieter and more comfortable than piston planes. Being first with new technology can give a big lead.'),
+        ('The 747 bet',
+         'Pan Am ordered large numbers of the Boeing 747, which entered service in 1970. The plane was a bold bet on large, long-distance flights. A big bet on one aircraft type can pay off, but it also commits a lot of money in advance.'),
+        ('The fuel shock',
+         'The oil price shocks of the 1970s pushed up the cost of flying sharply. Pan Am had large costs and a heavy spread of routes. High fuel prices made many of its flights hard to pay for.'),
+        ('Competition',
+         'Other airlines grew, and some were more efficient or more flexible. New rivals in the United States changed the market after it was deregulated. Staying ahead requires cost control as well as a famous name.'),
+        ('The end in 1991',
+         'Pan Am ceased operations in December 1991. A famous name had not been enough to save it. Brands must be backed by sound finances and steady management.'),
+    ],
+    "test": [
+        ('In what year was Pan American Airways founded?',
+         [('a', '1927'), ('b', '1970'), ('c', '1991'), ('d', '1958')],
+         'a'),
+        ("Which aircraft was Pan Am's big bet?",
+         [('a', 'The Ford Model T'), ('b', 'The Concorde'), ('c', 'The Boeing 747'), ('d', 'The Wright Flyer')],
+         'c'),
+        ("What hurt Pan Am's costs in the 1970s?",
+         [('a', 'A flood of free fuel'), ('b', 'Oil price shocks'), ('c', 'Too few passengers ever'), ('d', 'A ban on jets')],
+         'b'),
+        ('When did Pan Am cease operations?',
+         [('a', 'March 1950'), ('b', 'July 1975'), ('c', 'June 2001'), ('d', 'December 1991')],
+         'd'),
+        ('What does the chapter say a famous name cannot do alone?',
+         [('a', 'Attract any passengers at all'), ('b', 'Fly across oceans'), ('c', 'Save a company without sound finances and steady management'), ('d', 'Keep planes in the air')],
+         'c'),
+    ],
+}

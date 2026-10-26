@@ -1,0 +1,37 @@
+"""Borrowing for Education: why costs have risen, federal against private loans, income-based repayment, the return on a degree, interest while studying and limits on borrowing."""
+CODE = 'business5_studentloans'
+BOOK = {
+    "title": 'Borrowing for Education',
+    "subtitle": 'Paying for learning now, and repaying it later',
+    "chapters": [
+        ('Paying for learning',
+         'Education can be one of the best investments a person makes, but it often has to be paid for up front. Many students borrow to cover fees and living costs. The loan then becomes a debt that must be repaid after study ends.'),
+        ('Why costs have risen',
+         'In many countries, the cost of higher education has risen over time, and more people now borrow to pay for it. Causes include rising fees, more students and the need for more years of training. Borrowing lets students study now and pay later.'),
+        ('Federal and private loans',
+         'In the United States, federal student loans often have fixed interest rates and protections such as income-based repayment and deferment. Private loans come from banks and lenders, and their terms vary widely. Federal loans are usually the first choice to compare.'),
+        ('Income-based repayment',
+         "Some repayment plans set the monthly payment as a share of the borrower's income. If income is low, payments may be small, and any balance left after a set period may be forgiven under some plans. The rules change over time, so check the current terms."),
+        ('The return on a degree',
+         'On average, people with degrees earn more over their working lives than those without. The gain varies a great deal by subject, by institution and by job. A debt is worth it when the expected earnings are large enough to repay it comfortably.'),
+        ('Interest while studying',
+         'Interest may build up on a loan while the borrower is still studying, and that unpaid interest can be added to the balance. This makes the debt grow before repayment starts. Paying some interest during study can keep the total down.'),
+    ],
+    "test": [
+        ('What is a typical difference between US federal and private student loans?',
+         [('a', 'Private loans are always free'), ('b', 'Federal loans often have fixed rates and protections'), ('c', 'Federal loans cannot be repaid'), ('d', 'They are identical in every way')],
+         'b'),
+        ('What is income-based repayment?',
+         [('a', 'Paying with coins'), ('b', 'Paying in advance for future income'), ('c', 'Fixed payments to shops'), ('d', 'Payments set as a share of income in some plans')],
+         'd'),
+        ('On average, what does a degree tend to bring?',
+         [('a', 'Guaranteed wealth for everyone'), ('b', 'No change in pay'), ('c', 'Higher earnings on average, though it varies by subject'), ('d', 'Lower pay always')],
+         'c'),
+        ('What can happen to interest while a borrower is still studying?',
+         [('a', 'It may build up on the loan balance'), ('b', 'It is paid by the sun'), ('c', 'It becomes a gift'), ('d', 'It disappears')],
+         'a'),
+        ('Why do limits on borrowing matter?',
+         [('a', 'They make the debt free'), ('b', 'They ban education'), ('c', 'They help keep debt in line with what a student can reasonably repay'), ('d', 'They are a fine')],
+         'c'),
+    ],
+}

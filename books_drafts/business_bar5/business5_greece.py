@@ -1,0 +1,37 @@
+"""The Greek Debt Crisis: euro membership, hidden deficits, the 2010 bailouts, austerity, and lessons for shared currencies."""
+CODE = 'business5_greece'
+BOOK = {
+    "title": 'The Greek Debt Crisis',
+    "subtitle": 'Euro membership, hidden deficits, bailouts, and the lessons learned',
+    "chapters": [
+        ('Euro membership',
+         'Greece joined the euro in 2001, and the euro coins and notes came into use in 2002. Membership brought lower borrowing costs, which made it easy for the government to borrow heavily. For a time, the loans seemed cheap and safe.'),
+        ('Hidden deficits',
+         "Over the years, official figures understated the true size of Greece's budget deficit. When the true numbers came out in 2009 and 2010, markets lost confidence. Investors began to demand much higher interest to lend to Greece."),
+        ('The 2010 bailouts',
+         'In 2010 Greece could no longer borrow on normal terms, and the European partners and the International Monetary Fund agreed to rescue loans. The first bailout was followed by others in later years. Each one came with conditions.'),
+        ('Austerity',
+         'The conditions required deep spending cuts and tax rises. Unemployment rose sharply, and many families and businesses suffered for years. Supporters said the cuts were necessary, while critics argued they made the recession worse.'),
+        ('The debt deal',
+         'After long talks, a deal in 2018 ended the final bailout programme. The debt was reshaped, and some payments were lengthened. The country began to borrow in markets again, though its debt remained high.'),
+        ('Lessons for a shared currency',
+         'Greece showed that countries sharing one currency cannot devalue to fix their own problems. Honest statistics, sound budgets and strong institutions matter. The crisis changed how the euro area is governed and monitored.'),
+    ],
+    "test": [
+        ('In what year did Greece join the euro?',
+         [('a', '1950'), ('b', '1820'), ('c', '1995'), ('d', '2001')],
+         'd'),
+        ('What went wrong with the figures before the crisis?',
+         [('a', 'Figures were printed in gold ink'), ('b', 'The numbers were always too high to be real'), ('c', 'The official budget deficit had been understated'), ('d', 'Figures were never collected')],
+         'c'),
+        ('What were the bailout conditions mainly about?',
+         [('a', 'Deep spending cuts and tax rises'), ('b', 'Free holidays for citizens'), ('c', 'Building a new capital city'), ('d', 'Banning all money')],
+         'a'),
+        ('What did the 2018 deal do?',
+         [('a', 'It closed every bank'), ('b', 'It gave Greece a new currency made of wood'), ('c', 'It ended the final bailout programme and reshaped the debt'), ('d', 'It doubled the debt overnight')],
+         'c'),
+        ('Why could Greece not simply devalue its currency to fix its problems?',
+         [('a', 'The euro is a type of cloud'), ('b', 'It shared the euro with other countries, so it could not devalue alone'), ('c', 'Greece has no currency at all'), ('d', 'Devaluation is banned in the sea')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Mintzberg's Ten Managerial Roles: what managers really do, shown in three groups of roles."""
+CODE = 'business5_mintzbergroles'
+BOOK = {
+    "title": "Mintzberg's Ten Managerial Roles",
+    "subtitle": 'What managers really do all day, and the ten roles behind it',
+    "chapters": [
+        ('The Nature of Managerial Work',
+         'In 1973 the researcher Henry Mintzberg followed working managers around with a notepad. He found their days were short, varied and broken up by interruptions. Many of the textbook pictures of a manager as a calm planner did not match what he saw.'),
+        ('Interpersonal roles',
+         "Three roles come from a manager's formal position. As a figurehead, the manager greets visitors and performs ceremonial duties. As a leader, the manager motivates and guides the people in the team. As a liaison, the manager builds contacts outside the chain of command."),
+        ('Informational roles',
+         'Three roles come from being the place where information meets. As a monitor, the manager scans for changes inside and outside the unit. As a disseminator, the manager passes useful facts on to the team. As a spokesperson, the manager speaks for the unit to people above and outside it.'),
+        ('Decision roles',
+         'Four roles are about choices. As an entrepreneur, the manager starts projects that improve the unit. As a disturbance handler, the manager deals with crises and surprises. As a resource allocator, the manager decides who gets time, money and people. As a negotiator, the manager makes deals with others.'),
+        ('Why the list matters',
+         'The roles are linked, and a manager cannot play only one of them. Information from the monitor role feeds the decisions. A good manager shifts between the ten roles many times in a single hour.'),
+        ('Using the list',
+         'Ask which role a task belongs to, and you will often see a gap. A manager who only leads but never monitors may miss trouble until it is large. Use the ten roles to check your own week and see where your time really goes.'),
+    ],
+    "test": [
+        ('How many managerial roles did Mintzberg describe?',
+         [('a', 'Five'), ('b', 'Twelve'), ('c', 'Ten'), ('d', 'Three')],
+         'c'),
+        ('Which group holds the figurehead, leader and liaison roles?',
+         [('a', 'Interpersonal roles'), ('b', 'Decision roles'), ('c', 'Informational roles'), ('d', 'Financial roles')],
+         'a'),
+        ('What does a resource allocator do?',
+         [('a', 'Greets visitors at events'), ('b', 'Scans the market for news'), ('c', 'Decides who gets time, money and people'), ('d', 'Writes the company accounts')],
+         'c'),
+        ("What did Mintzberg find about how managers' days looked?",
+         [('a', 'Calm, planned and orderly'), ('b', 'Short, varied and often interrupted'), ('c', 'Mostly spent alone at a desk'), ('d', 'The same every hour')],
+         'b'),
+        ('Why is it a problem for a manager to play only one role?',
+         [('a', 'The law requires all ten roles'), ('b', 'Other managers will take the rest'), ('c', 'Ten roles must be played at once'), ('d', 'The roles are linked, so a gap in one shows up in the others')],
+         'd'),
+    ],
+}

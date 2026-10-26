@@ -1,0 +1,37 @@
+"""Water That Leaves a Mine (bar 3, Metallurgist, part C): acid drainage from sulfide rock, why it harms rivers, and how mines stop it or treat it."""
+CODE = "mining3c_drainage"
+BOOK = {
+    "title": "Water That Leaves a Mine",
+    "subtitle": "Acid drainage from sulfide rock, and how mines stop it or treat it",
+    "chapters": [
+        ("Rain finds the rock",
+         "Rain and groundwater pass through a mine and its waste heaps. Where the rock holds sulfide minerals, that water can pick up acid and metals. Good planning keeps the water from reaching rivers unchecked."),
+        ("Sulfides and air",
+         "Sulfide minerals such as galena and sphalerite react with air and water once they are broken open. The reaction can make sulfuric acid, and the acid draws out lead, zinc and other metals. This is called acid mine drainage."),
+        ("Where it does harm",
+         "Acid drainage can kill fish and plants and make water unfit to drink. Some old mines still leak it for decades after they close. The damage can last for generations."),
+        ("Stopping it early",
+         "Planners keep the most reactive waste away from air and water, under layers that seal it, or mix it with material that absorbs acid. They build ditches and ponds to catch water before it leaves the site."),
+        ("Treating the water",
+         "When drainage cannot be stopped, it is treated. Lime is added to raise the pH, which makes the metals settle out as solids. Treatment needs power, chemicals and staff for as long as the water keeps flowing."),
+        ("The long bill",
+         "Treatment can be one of the largest costs of a mine after it closes. Prevention during the working years usually costs much less. Planners add treatment costs to the budget from the first day."),
+    ],
+    "test": [
+        ("What is acid mine drainage?",
+         [("a", "Clean water from a spring"), ("b", "Acidic water with dissolved metals from broken sulfide rock"), ("c", "Oil in a pipe"), ("d", "Rain on a road")],
+         "b"),
+        ("Which sulfide mineral is the main ore of zinc?",
+         [("a", "Galena"), ("b", "Sphalerite"), ("c", "Molybdenite"), ("d", "Chalcopyrite")],
+         "b"),
+        ("How is acid drainage usually treated?",
+         [("a", "Lime is added to raise the pH"), ("b", "Sugar is added"), ("c", "It is boiled away"), ("d", "It is frozen solid")],
+         "a"),
+        ("Why can water treatment be a long cost after a mine closes?",
+         [("a", "Banks forbid rain"), ("b", "The water is always hot"), ("c", "The water keeps flowing for as long as the rock keeps reacting"), ("d", "The ore grows back")],
+         "c"),
+        ("What is a good way to stop acid drainage early?",
+         [("a", "Leave reactive waste in the open air"), ("b", "Pour salt on it"), ("c", "Burn the waste"), ("d", "Keep reactive waste away from air and water")],
+         "d"),
+    ],
+}

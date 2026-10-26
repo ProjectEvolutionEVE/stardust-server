@@ -1,0 +1,37 @@
+"""Mansa Musa and the gold of Mali: the 1324 pilgrimage, Timbuktu, trans-Saharan trade, and how empires build wealth."""
+CODE = 'business5_mansamusa'
+BOOK = {
+    "title": 'Mansa Musa and the Gold of Mali',
+    "subtitle": 'A ruler, a pilgrimage and the trade that made an empire rich',
+    "chapters": [
+        ('A famous pilgrimage',
+         'In 1324 Mansa Musa, ruler of the Mali empire in West Africa, made a pilgrimage to Mecca. He travelled with a large group and a great deal of gold. The journey was talked about across the Islamic world.'),
+        ('The gold',
+         'Mali was rich in gold, and its trade made the empire wealthy. Gold was used for trade, gifts and display. Wealth from one resource can shape a whole state.'),
+        ('Gold in Cairo',
+         'Chroniclers wrote that the gold he gave away in Cairo lowered its price there for years. Historians discuss how far this was true. Treat it as a reported effect, not a precise figure.'),
+        ('Timbuktu',
+         "Mansa Musa's empire included the trading city of Timbuktu, a centre of scholarship and trade. Its teaching and manuscripts drew scholars from afar. Trade and learning often grow together."),
+        ('Trans-Saharan trade',
+         'Caravans crossed the Sahara carrying gold, salt, books and goods. The routes linked West Africa with North Africa and beyond. Long trade routes depended on trust, camels and knowledge of water and weather.'),
+        ('The wealth of empires',
+         'Empires gain by taxing and controlling trade. Their wealth can also fall when a trade route or a source of metal changes hands. Look at the whole system, not one ruler alone.'),
+    ],
+    "test": [
+        ("In what year did Mansa Musa's famous pilgrimage take place?",
+         [('a', '1124'), ('b', '1324'), ('c', '1224'), ('d', '1424')],
+         'b'),
+        ('What was Mali rich in that drove its trade?',
+         [('a', 'Coal'), ('b', 'Oil'), ('c', 'Silk'), ('d', 'Gold')],
+         'd'),
+        ('What was Timbuktu?',
+         [('a', 'A seaside port in Europe'), ('b', 'A desert fort'), ('c', 'A trading city and centre of scholarship'), ('d', 'A mountain range')],
+         'c'),
+        ('What were caravans on the trans-Saharan routes carrying?',
+         [('a', 'Gold, salt and books'), ('b', 'Snow'), ('c', 'Ships'), ('d', 'Oil pipes')],
+         'a'),
+        ('What did chroniclers say about the gold given away in Cairo?',
+         [('a', 'It made Cairo a poorer city'), ('b', 'It was returned to Mali'), ('c', "It lowered gold's price there for years"), ('d', 'It bought an army')],
+         'c'),
+    ],
+}

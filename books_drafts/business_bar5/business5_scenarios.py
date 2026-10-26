@@ -1,0 +1,37 @@
+"""Scenario Planning at Shell: planning with stories of several possible futures, and the oil shock that the method helped Shell face."""
+CODE = 'business5_scenarios'
+BOOK = {
+    "title": 'Scenario Planning at Shell',
+    "subtitle": "Stories of the future, and how Pierre Wack's method helped Shell prepare",
+    "chapters": [
+        ('A different kind of plan',
+         'Most plans assume one future and then add a little growth. Scenario planning builds several stories of how the world might go, each one plausible. The aim is not to predict the right story, but to prepare for more than one.'),
+        ('Pierre Wack at Shell',
+         'In the early 1970s, the planner Pierre Wack led a team at the oil company Shell. He asked managers to imagine different futures for the oil market, rather than to trust one forecast. The team wrote the stories down and tested strategy against each.'),
+        ('The oil shock',
+         "In 1973, oil producers raised their prices sharply, and the shock hit the world economy. Shell's scenarios had explored that kind of sudden change, so its managers were readier to act than many rivals. This is why the story is often told in business schools."),
+        ('Driving forces',
+         'A good scenario starts with the forces that move a situation, such as prices, politics, technology and public opinion. Planners ask which forces are certain and which are uncertain. The uncertain ones shape the stories.'),
+        ('Testing strategy',
+         'Once the stories are written, a plan is tested against each one. A strategy that works in only one story is risky. A strategy that holds up in most stories is more robust, and planners can spot the signs that point to each future.'),
+        ('Limits',
+         'Scenarios cannot cover everything, and they can be costly to build. Stories can also be taken too seriously, and people can ignore a scenario that does not match their hopes. Use them to widen thinking, not to fix one answer.'),
+    ],
+    "test": [
+        ('What is the main aim of scenario planning?',
+         [('a', 'To prepare for several plausible futures'), ('b', 'To predict one correct future'), ('c', 'To avoid all change'), ('d', 'To set prices for a year')],
+         'a'),
+        ('Who led the scenario work at Shell in the early 1970s?',
+         [('a', 'Igor Ansoff'), ('b', 'Henry Mintzberg'), ('c', 'Pierre Wack'), ('d', 'Eric Ries')],
+         'c'),
+        ("What event made Shell's scenario work famous?",
+         [('a', 'A new computer in 1990'), ('b', 'A rise in oil prices in 1973'), ('c', 'A flood at a refinery in 1900'), ('d', 'A merger with a bank in 2010')],
+         'b'),
+        ('What do planners usually start with when building a scenario?',
+         [('a', 'The office layout'), ('b', 'The staff holidays'), ('c', "The company's logo"), ('d', 'The driving forces')],
+         'd'),
+        ('Why is a strategy that works in only one story considered risky?',
+         [('a', 'One story is always false'), ('b', 'Stories cannot be written down'), ('c', 'The future may be a different story'), ('d', 'Strategies must always be secret')],
+         'c'),
+    ],
+}

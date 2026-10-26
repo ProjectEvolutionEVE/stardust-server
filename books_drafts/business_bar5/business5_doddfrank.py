@@ -1,0 +1,37 @@
+"""The Dodd-Frank Act: the 2010 response to the financial crisis, the consumer bureau, derivatives clearing, too big to fail, resolution plans and later changes."""
+CODE = 'business5_doddfrank'
+BOOK = {
+    "title": 'The Dodd-Frank Act',
+    "subtitle": 'The 2010 response to the financial crisis',
+    "chapters": [
+        ('The response to 2008',
+         'The financial crisis of 2008 exposed weak rules, risky lending and large firms whose failure threatened the whole system. Congress responded in 2010 with the Dodd-Frank Wall Street Reform and Consumer Protection Act. It was a long and far-reaching law.'),
+        ('The consumer bureau',
+         'The act created the Consumer Financial Protection Bureau to protect people using financial products, such as mortgages, loans and cards. The bureau can write rules and enforce them against firms that mislead or treat customers unfairly.'),
+        ('Derivatives clearing',
+         "Many derivatives, which are contracts whose value depends on something else, must now be traded through central clearing houses. Clearing reduces the risk that one firm's failure spreads to others. Standard trades are reported so that regulators can see the market."),
+        ('Too big to fail',
+         'Some firms were seen as too big to fail, because their collapse could harm the whole economy. The act set tougher capital and oversight rules for the largest banks. The aim was to make such firms less likely to need rescue.'),
+        ('Resolution plans',
+         'Large firms must prepare resolution plans, sometimes called living wills, that show how they could be wound down in an orderly way. The plans aim to avoid a taxpayer bailout. Regulators review them and can require changes.'),
+        ('Later changes',
+         'Parts of the act have been changed since 2010. In 2018 Congress eased some rules for smaller and mid-sized banks, arguing the burden was too heavy. Debate continues about the right balance between safety and the cost of rules.'),
+    ],
+    "test": [
+        ('In what year was the Dodd-Frank Act passed?',
+         [('a', '2008'), ('b', '2014'), ('c', '2001'), ('d', '2010')],
+         'd'),
+        ('Which agency did the act create to protect consumers of financial products?',
+         [('a', 'The Coin Bureau'), ('b', 'The Credit Tax Service'), ('c', 'The Consumer Financial Protection Bureau'), ('d', 'The Ministry of Loans')],
+         'c'),
+        ('What do resolution plans show?',
+         [('a', 'How a large bank could be wound down without a taxpayer bailout'), ('b', 'Holiday plans for staff'), ('c', 'How to set salaries'), ('d', 'How to lower interest rates')],
+         'a'),
+        ('What did the act require for many derivatives?',
+         [('a', 'Being burned'), ('b', 'Being hidden from regulators'), ('c', 'Clearing through central clearing houses'), ('d', 'Being sold in shops')],
+         'c'),
+        ('Why are large banks described as too big to fail?',
+         [('a', 'They are too small to matter'), ('b', 'Their collapse could harm the whole economy, so governments may feel forced to rescue them'), ('c', 'They pay no tax'), ('d', 'They are banned from lending')],
+         'b'),
+    ],
+}

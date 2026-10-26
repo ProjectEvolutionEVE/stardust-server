@@ -1,0 +1,37 @@
+"""Contingency Theory: there is no one best way to organise, and the right design depends on the setting."""
+CODE = 'business5_contingency'
+BOOK = {
+    "title": 'Contingency Theory',
+    "subtitle": 'No one best way to run an organisation: the right design depends on the setting',
+    "chapters": [
+        ('No one best way',
+         'For a long time, managers looked for one best way to organise a firm. Contingency theory took a different view. It says the right design depends on the situation, and no single model fits every case.'),
+        ("Woodward's technology study",
+         'In the 1950s, the researcher Joan Woodward studied about a hundred firms in south Essex. She sorted them by how they made things: single batches, mass production, or continuous process. The firms that did best had structures that fitted their technology.'),
+        ('Burns and Stalker',
+         'In 1961, Tom Burns and George Stalker studied British firms facing change. They described two styles. A mechanistic firm has strict roles and clear rules. An organic firm is loose, with shared tasks and open talk.'),
+        ('Fit with the environment',
+         'Stable markets tend to suit mechanistic designs, with rules and routine. Fast-changing markets tend to suit organic designs that can adapt. A mismatch between the design and the setting often costs a firm dearly.'),
+        ('Several factors at once',
+         'Later researchers looked at size, technology, the environment and strategy together. The idea is that a good design is a good fit across all of these, not just one of them.'),
+        ('Using the idea in practice',
+         'Before you copy a model from another firm, ask whether your setting is the same. A model that works in a bank may fail in a small workshop. Test the design against your own situation, and change it when the situation changes.'),
+    ],
+    "test": [
+        ('What is the core idea of contingency theory?',
+         [('a', 'There is one best way to organise'), ('b', 'Rules are always bad'), ('c', 'The right design depends on the situation'), ('d', 'Size never matters')],
+         'c'),
+        ('What did Joan Woodward study?',
+         [('a', 'Advertising in newspapers'), ('b', "How firms' technology affected their structure"), ('c', 'The price of shares'), ('d', 'The salaries of chief executives')],
+         'b'),
+        ('What is a mechanistic firm, in the Burns and Stalker terms?',
+         [('a', 'A loose firm with shared tasks'), ('b', 'A firm that makes machines only'), ('c', 'A firm with no managers'), ('d', 'A firm with strict roles and clear rules')],
+         'd'),
+        ('Which kind of design suits a fast-changing market?',
+         [('a', 'A strict mechanistic design'), ('b', 'No design at all'), ('c', 'An organic design that can adapt'), ('d', 'A design copied from the past')],
+         'c'),
+        ('Why should you test a model from another firm against your own setting?',
+         [('a', 'Because a model that works in one setting may fail in another'), ('b', 'Because copying is against the law'), ('c', 'Because every model is identical'), ('d', 'Because only large firms can use models')],
+         'a'),
+    ],
+}

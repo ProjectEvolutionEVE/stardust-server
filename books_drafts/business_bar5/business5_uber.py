@@ -1,0 +1,37 @@
+"""Uber and the Ride Market: from black cars to app rides, surge pricing, driver pay, regulation fights and losses."""
+CODE = 'business5_uber'
+BOOK = {
+    "title": 'Uber and the Ride Market',
+    "subtitle": 'Black cars to app rides, surge pricing, and the gig economy',
+    "chapters": [
+        ('Black cars to app rides',
+         'Uber began in 2009 as a way to book a black car through a phone app. In 2010 it started offering rides in San Francisco. The app made it easy to match a driver and a rider quickly.'),
+        ('Surge pricing',
+         "Uber's surge pricing raises fares when demand is high and drivers are few. Higher prices can bring more drivers out, and they can make a ride more expensive at peak times. Pricing is a signal, and a company must explain it clearly."),
+        ('Driver pay',
+         "Drivers in the gig economy are often treated as independent contractors. Their pay depends on rides, fares and the company's rules. Fair pay and clear rules are a constant debate in ride-hailing."),
+        ('Regulation fights',
+         'Cities and countries have fought Uber over licences, insurance, safety and the status of drivers. In California a 2020 ballot measure, known as Proposition 22, set a special rule for app drivers. Rules change as markets grow, and a business must engage with them.'),
+        ('Losses',
+         'For many years Uber lost large sums of money as it expanded and subsidised rides. Investors accepted losses in return for growth. A company that loses money on each ride must show a path to making profit.'),
+        ('The gig economy',
+         'Ride-hailing is part of a wider gig economy, where people earn from short jobs found through apps. The model offers flexibility and risk for workers. A leader must weigh flexibility against security for those who do the work.'),
+    ],
+    "test": [
+        ('In what year did Uber begin?',
+         [('a', '1985'), ('b', '2009'), ('c', '1970'), ('d', '2019')],
+         'b'),
+        ('What does surge pricing do?',
+         [('a', 'Makes every ride free'), ('b', 'Lowers fares at rush hour only'), ('c', 'Sets the same fare for all distances'), ('d', 'Raises fares when demand is high and drivers are few')],
+         'd'),
+        ('What did the 2020 ballot measure in California set for app drivers?',
+         [('a', 'A ban on all cars'), ('b', 'A tax on bicycles'), ('c', 'A special rule known as Proposition 22'), ('d', 'A new national currency')],
+         'c'),
+        ("What does the chapter say about Uber's early years?",
+         [('a', 'It lost large sums while growing'), ('b', 'It made huge profits from day one'), ('c', 'It never had any drivers'), ('d', 'It only sold bicycles')],
+         'a'),
+        ('What is the gig economy?',
+         [('a', 'A type of music festival'), ('b', 'A bank for farmers'), ('c', 'Work found through apps in short jobs'), ('d', 'A museum of cars')],
+         'c'),
+    ],
+}

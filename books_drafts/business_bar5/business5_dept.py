@@ -1,0 +1,37 @@
+"""The Department Store: the Bon Marche, fixed prices, Wanamaker and Macy's, sales and returns, credit and delivery, and the decline of the mall."""
+CODE = 'business5_dept'
+BOOK = {
+    "title": 'The Department Store',
+    "subtitle": 'Fixed prices, sales, credit and delivery, and the decline of the mall',
+    "chapters": [
+        ('A new kind of shop',
+         'In the 1800s, department stores began to gather many kinds of goods under one roof. They sold clothes, furniture, and household goods, and they offered a pleasant place to browse. Shopping became a leisure activity as well as a chore.'),
+        ('Le Bon Marche',
+         'The Bon Marche in Paris, run by Aristide Boucicaut, is often called the first modern department store. It used fixed prices, so every customer paid the same. It sold goods in large quantities at small margins per item.'),
+        ("Wanamaker and Macy's",
+         'John Wanamaker in Philadelphia and R. H. Macy in New York became famous for their stores. They advertised heavily and used new ideas in displays and services. Their stores grew into major institutions of American retail.'),
+        ('Sales and returns',
+         'Department stores made sales, clearance events, and generous return policies part of the shopping habit. These tactics brought customers in, and they also raised costs. Every return is a cost the store must absorb.'),
+        ('Credit and delivery',
+         'Many department stores offered charge accounts and home delivery, which made large purchases easier. Credit and delivery added staff, risk, and expense. Stores had to balance convenience against the cost of providing it.'),
+        ('The decline of the mall',
+         "In later decades, many department stores struggled as shopping moved to malls, discount chains, and online stores. Some closed, and others merged. A store's real value lies in what it gives customers that others cannot."),
+    ],
+    "test": [
+        ('What is the Bon Marche often called?',
+         [('a', 'The first supermarket'), ('b', 'The first modern department store'), ('c', 'The first shopping mall'), ('d', 'The first radio station')],
+         'b'),
+        ('What did the Bon Marche use to set its prices?',
+         [('a', 'Haggling at each sale'), ('b', 'Auctions'), ('c', 'Random prices'), ('d', 'Fixed prices')],
+         'd'),
+        ('Which two stores are named as famous examples?',
+         [('a', 'Piggly Wiggly and Marsh'), ('b', 'Ford and Wickham'), ('c', "Wanamaker and Macy's"), ('d', 'Sutter and Brannan')],
+         'c'),
+        ('What is one cost of generous return policies?',
+         [('a', 'Each return is a cost the store must absorb'), ('b', 'It makes shops smaller'), ('c', 'It removes the need for staff'), ('d', 'It stops all sales')],
+         'a'),
+        ('What did many department stores struggle with in later decades?',
+         [('a', 'Too few shoppers in Paris'), ('b', 'Rising interest in tea'), ('c', 'Shopping moving to malls, discount chains and online'), ('d', 'A ban on advertising')],
+         'c'),
+    ],
+}

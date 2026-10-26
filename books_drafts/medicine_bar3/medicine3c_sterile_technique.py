@@ -1,0 +1,37 @@
+"""Clean Tools and Sterile Technique: keeping instruments and the work area free of germs before care begins."""
+CODE = "medicine3c_sterile_technique"
+BOOK = {
+    "title": "Clean Tools and Sterile Technique",
+    "subtitle": "Keeping instruments and the work area free of germs before care begins",
+    "chapters": [
+        ("Clean, disinfected, sterile",
+         "Cleaning removes dirt and visible matter. Disinfection kills most germs on a surface. Sterilisation kills every microbe, including the tough spores that survive ordinary disinfection. Each step does more than the one before it, and each has its place."),
+        ("Steam under pressure",
+         "An autoclave sterilises reusable instruments with pressurised steam, which becomes hot enough to destroy spores. Heat-sensitive items cannot go in an autoclave and need other methods. Every load must be checked to show it has been treated properly."),
+        ("Keeping sterile things sterile",
+         "A sterile item stays sterile only while its packet is sealed and whole. A packet that is wet, torn or opened early should be thrown away. Touch only the sterile surface, and set up the sterile field just before the work begins."),
+        ("Gloves and masks",
+         "Gloves protect both the carer and the patient. Change gloves between patients, and after touching anything dirty. Masks and eye protection block splashes, and gloves are removed without touching their outer surface."),
+        ("Single-use is safest",
+         "Items used only once, such as needles and sealed dressings, avoid the risk of cleaning something badly. Single-use stock costs more per item, so a clinic weighs that cost against the risk of re-using an item that is not fully sterilised."),
+        ("A habit, not a one-off",
+         "Sterile technique works only when it is done every time, even for a quick job. Check each seal before it is opened and count the instruments before and after use. A small skipped step is how infections begin."),
+    ],
+    "test": [
+        ("Which process kills all microbes, including spores?",
+         [("a", "Sterilisation"), ("b", "Cleaning"), ("c", "Wiping down"), ("d", "Airing")],
+         "a"),
+        ("What does an autoclave use to sterilise instruments?",
+         [("a", "Cold water"), ("b", "Ultraviolet light only"), ("c", "Dry sand"), ("d", "Pressurised steam")],
+         "d"),
+        ("When is a sterile packet no longer sterile?",
+         [("a", "When it is kept in a cupboard"), ("b", "When its seal is torn or it is wet"), ("c", "When it has a label on it"), ("d", "When it is moved to another shelf")],
+         "b"),
+        ("Why should gloves be changed between patients?",
+         [("a", "To look tidy"), ("b", "To save the gloves for the next day"), ("c", "To stop germs passing from one person to another"), ("d", "Because gloves go off")],
+         "c"),
+        ("What is the main benefit of single-use items?",
+         [("a", "They never cost any money"), ("b", "They last longer than reusable items"), ("c", "They can be used without any care at all"), ("d", "They avoid the risk of incomplete cleaning")],
+         "d"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Linear Programming: constraints and an objective, the feasible region, Dantzig's simplex method, shadow prices, the diet problem and production planning."""
+CODE = 'business5_linprog'
+BOOK = {
+    "title": 'Linear Programming',
+    "subtitle": 'Constraints and an objective, the simplex method, shadow prices and planning',
+    "chapters": [
+        ('Best use of limited resources',
+         'Linear programming finds the best outcome when a goal, such as profit, must be reached within limits, such as time, labour, and materials. The goal is written as a straight-line formula. The limits are written as straight-line inequalities.'),
+        ('The feasible region',
+         'Together the limits form a shape called the feasible region, which contains every mix that is allowed. The best answer always sits at a corner of that shape. The search is for the corner that scores best.'),
+        ("Dantzig's simplex",
+         'In 1947 George Dantzig developed the simplex method, a way to move from corner to corner until the best one is found. It is still widely used in business and logistics. Computers now solve problems with very many variables.'),
+        ('Shadow prices',
+         'A shadow price shows how much the goal would improve if one more unit of a limited resource were available. It tells managers where extra capacity is most valuable. It is also called a dual value.'),
+        ('The diet problem',
+         'George Stigler posed a diet problem in 1945: choose the cheapest foods that meet nutrient needs. Linear programming can solve problems of this kind quickly. The question showed the power of the method.'),
+        ('Production planning',
+         'Factories use linear programming to decide how much of each product to make. The method weighs machine time, labour, and materials against profit. A good plan uses the limits wisely, and shadow prices show which limit is holding back profit.'),
+    ],
+    "test": [
+        ('What is the feasible region?',
+         [('a', 'A map of rivers'), ('b', 'A type of ship'), ('c', 'The shape of all mixes that meet the limits'), ('d', 'A tax form')],
+         'c'),
+        ('Where does the best answer sit?',
+         [('a', 'At a corner of the shape'), ('b', 'In the middle of the shape'), ('c', 'Outside the shape'), ('d', 'At the centre of the Earth')],
+         'a'),
+        ('Who developed the simplex method?',
+         [('a', 'Samuel Insull'), ('b', 'Lin Zexu'), ('c', 'George Dantzig'), ('d', 'Gordon Moore')],
+         'c'),
+        ('What does a shadow price show?',
+         [('a', 'The price of shadows'), ('b', 'How much the goal improves with one more unit of a limited resource'), ('c', 'The colour of the chart'), ('d', 'The tax on products')],
+         'b'),
+        ('What was the diet problem about?',
+         [('a', 'Choosing the most expensive food'), ('b', 'Ending hunger by law'), ('c', 'Selling diets to shops'), ('d', 'Finding the cheapest foods that meet nutrient needs')],
+         'd'),
+    ],
+}

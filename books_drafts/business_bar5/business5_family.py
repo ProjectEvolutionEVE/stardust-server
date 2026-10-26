@@ -1,0 +1,37 @@
+"""Running a Family Business: the three overlapping circles of family, ownership and business, and the rules that keep them fair."""
+CODE = 'business5_family'
+BOOK = {
+    "title": 'Running a Family Business',
+    "subtitle": 'Three overlapping circles, succession, fair pay and shared rules across generations',
+    "chapters": [
+        ('Three circles',
+         'A common model of family business shows three overlapping circles: family, ownership and the business itself. A person may sit in one, two or all three circles. Each circle brings different loyalties, and the overlaps often cause the most trouble.'),
+        ('Succession in detail',
+         'Passing the firm to the next generation is one of the hardest tasks. It takes years of planning, training and honest talks. A successor who is not ready, or who was never asked, can put the whole firm at risk.'),
+        ('Fairness in pay',
+         'Family members often feel that pay should be fair, not just generous. A clear pay policy, based on role and results, helps. Hidden or unequal pay is a common source of resentment in family firms.'),
+        ('Outside managers',
+         'Many family firms bring in managers from outside the family. Outsiders can bring skills and an impartial view. They must have real authority, or they will leave and take their skills with them.'),
+        ('Shared rules',
+         'A family business benefits from written rules on who may work in the firm, how shares pass, and how disputes are settled. A family agreement, agreed while everyone is calm, is far easier than rules written in a crisis.'),
+        ('Firms that lasted',
+         'Some family firms have lasted for centuries. Kongō Gumi, a Japanese temple builder, traced its roots back more than fourteen hundred years before it became part of another company. Such firms often value patience, careful succession and a long view of the work.'),
+    ],
+    "test": [
+        ('What do the three circles in the family business model show?',
+         [('a', 'Land, labour and money'), ('b', 'Sales, costs and profit'), ('c', 'Staff, customers and suppliers'), ('d', 'Family, ownership and the business')],
+         'd'),
+        ('What is one of the hardest tasks in a family firm?',
+         [('a', 'Choosing the colour of the office walls'), ('b', 'Paying the electricity bill'), ('c', 'Passing the firm to the next generation'), ('d', 'Taking holidays')],
+         'c'),
+        ('What helps family members feel that pay is fair?',
+         [('a', 'A clear pay policy based on role and results'), ('b', 'Having no policy at all'), ('c', 'Secret pay that no one can see'), ('d', 'Paying only the oldest manager')],
+         'a'),
+        ('Why must outside managers have real authority?',
+         [('a', 'Because the law says so in every country'), ('b', 'Because family members must leave'), ('c', 'Or they will leave and take their skills with them'), ('d', 'Because outsiders never make mistakes')],
+         'c'),
+        ('When is the best time to agree a family agreement, according to the text?',
+         [('a', 'Never, because rules are bad'), ('b', 'While everyone is calm, not in a crisis'), ('c', 'Only during a crisis'), ('d', 'Only after the business is sold')],
+         'b'),
+    ],
+}

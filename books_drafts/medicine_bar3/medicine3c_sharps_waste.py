@@ -1,0 +1,37 @@
+"""Sharps and Medical Waste: handling needles, blades and dressings so no one is hurt and the ship stays clean."""
+CODE = "medicine3c_sharps_waste"
+BOOK = {
+    "title": "Sharps and Medical Waste",
+    "subtitle": "Handling needles, blades and used dressings so no one is hurt",
+    "chapters": [
+        ("Sharps are a hazard",
+         "Needles, scalpel blades and broken glass can cut or pierce the skin. A sharp that has touched blood can carry germs into the body of whoever is stuck. Treat every sharp as dangerous, even when it looks clean."),
+        ("Never recap by hand",
+         "Putting a cap back on a used needle is a common way to stick yourself. Drop the used needle straight into the sharps container without bending it or capping it."),
+        ("The sharps container",
+         "Sharps go into a rigid, puncture-proof container and nothing else. Never reach into it or force things in. Seal it once it reaches its fill line, and never leave it open on a shelf."),
+        ("Sorting waste",
+         "Waste is sorted by risk. Ordinary waste, infectious waste in marked bags, and sharps each have their own container, so nobody has to guess what is inside. Mixing them creates a danger for everyone who handles the bin later."),
+        ("Storing and removing",
+         "Waste is kept sealed and in a safe place until it can be removed. Liquids and sharps are never tipped down a drain. Each container is labelled so that the next person knows at once what it holds."),
+        ("If you are stuck",
+         "Wash the area at once with soap and running water, and do not squeeze the wound. Tell the carer in charge straight away, and get it checked. Write down the time, the sharp involved and what was done, in the health record."),
+    ],
+    "test": [
+        ("Why should a used needle not be bent or recapped?",
+         [("a", "It keeps the needle sharp"), ("b", "It makes the needle easier to recycle"), ("c", "It is a common way to stick yourself"), ("d", "It stops the needle from drying out")],
+         "c"),
+        ("What should a sharps container be?",
+         [("a", "A soft cloth bag"), ("b", "A rigid, puncture-proof container"), ("c", "A paper box"), ("d", "An open bucket")],
+         "b"),
+        ("How should medical waste be sorted?",
+         [("a", "By its risk, with each kind in its own container"), ("b", "All in one bag"), ("c", "By the colour of its wrapper"), ("d", "By its weight")],
+         "a"),
+        ("What should you do first after a needlestick injury?",
+         [("a", "Squeeze the wound hard to get the blood out"), ("b", "Ignore it if it looks small"), ("c", "Hide it from the crew"), ("d", "Wash the area with soap and running water, then report it")],
+         "d"),
+        ("Why is it important to write down a needlestick injury?",
+         [("a", "To decorate the record"), ("b", "To fill the filing cabinet"), ("c", "So the carer can check whether follow-up is needed"), ("d", "To keep the sharp in the record")],
+         "c"),
+    ],
+}

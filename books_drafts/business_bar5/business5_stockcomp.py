@@ -1,0 +1,37 @@
+"""Stock-Based Compensation: options and restricted shares, vesting, expense recognition, dilution, and the dot-com debate over counting options as a cost."""
+CODE = 'business5_stockcomp'
+BOOK = {
+    "title": 'Stock-Based Compensation',
+    "subtitle": 'Paying staff in shares, and what that really costs',
+    "chapters": [
+        ('Pay in shares',
+         "Many companies pay staff partly in shares or share options, rather than only in cash. This ties pay to the company's share price and can conserve cash. It also means the cost falls partly on existing shareholders."),
+        ('Options and restricted shares',
+         'A stock option gives the holder the right, but not the obligation, to buy shares at a set price later. Restricted shares are actual shares given to the employee, subject to conditions. Both are common forms of share-based pay.'),
+        ('Vesting',
+         'Vesting is the process of earning the right to shares or options over time. A typical plan vests in stages, so that staff who leave early keep little or nothing. Vesting rules encourage people to stay.'),
+        ('Expense recognition',
+         'The cost of share-based pay is recorded as an expense in profit, spread over the vesting period. The amount is based on the fair value of the award when it is granted. This makes the cost visible, even though no cash changes hands at the time.'),
+        ('Dilution',
+         'Dilution happens when new shares are issued, for example when options are exercised. Each existing share then represents a smaller part of the company. Readers should look at how many shares may be created by existing awards.'),
+        ('The dot-com debate',
+         'In the 1990s and 2000s, many people argued that stock options should not be counted as an expense. Others argued that they were a real cost to shareholders. Accounting rules were later changed to require the expense to be recorded, which settled the question.'),
+    ],
+    "test": [
+        ('What is vesting?',
+         [('a', 'Earning the right to shares or options over time'), ('b', 'Buying a waistcoat'), ('c', 'Paying cash to the company'), ('d', 'Being dismissed')],
+         'a'),
+        ('What is a stock option?',
+         [('a', 'A tax'), ('b', 'A bank account'), ('c', 'The right, but not the obligation, to buy shares at a set price'), ('d', 'A holiday')],
+         'c'),
+        ('What does dilution mean?',
+         [('a', 'Shares become bigger'), ('b', 'Existing shares become a smaller part of the company'), ('c', 'Shares turn into cash'), ('d', 'A dinner for staff')],
+         'b'),
+        ('How is share-based pay usually recorded?',
+         [('a', 'As a fine'), ('b', 'Never'), ('c', 'Only as a gift to the bank'), ('d', 'As an expense in profit over the vesting period')],
+         'd'),
+        ('What was the dot-com debate about?',
+         [('a', 'Whether to build websites in red'), ('b', 'Whether staff may use phones'), ('c', 'Whether stock options should be counted as an expense'), ('d', 'Whether to ban computers')],
+         'c'),
+    ],
+}

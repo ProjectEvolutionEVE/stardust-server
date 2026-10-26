@@ -1,0 +1,37 @@
+"""The Pareto Principle and Power Laws: the eighty-twenty idea, Pareto's income study, fat tails, Zipf's law, firm sizes and use and abuse."""
+CODE = 'business5_pareto'
+BOOK = {
+    "title": 'The Pareto Principle and Power Laws',
+    "subtitle": "Eighty-twenty, Pareto's income study, fat tails, Zipf's law, and their use and abuse",
+    "chapters": [
+        ('The eighty-twenty idea',
+         'The Pareto principle says a small share of causes often produces a large share of results. A common version says that twenty percent of inputs produce eighty percent of outputs. It is a useful rule of thumb, not a law of nature.'),
+        ("Pareto's income study",
+         'Vilfredo Pareto, an Italian economist, noticed in the 1890s that a small share of people held most of the land and wealth. He published the pattern in his economics writings in 1896. The observation led to the wider idea of power laws in many fields.'),
+        ('Fat tails',
+         'A fat tail means extreme events are more likely than a normal bell curve would suggest. In such distributions, a few very large values can dominate the total. Planning around the average misses these outliers.'),
+        ("Zipf's law",
+         "Zipf's law says the second most common word appears about half as often as the most common, the third about a third as often, and so on. The pattern shows up in city sizes and word counts. It is another example of a power law."),
+        ('Firm sizes',
+         'Many firms are small, and a few are very large. The sizes of firms often follow a skewed pattern rather than a bell curve. This is one reason a handful of companies can capture most of a market.'),
+        ('Use and abuse',
+         'Eighty-twenty is useful for focusing effort, such as finding the few customers who bring most of the revenue. It is abused when people claim exact numbers from loose data. Use it to ask good questions, not to end the analysis.'),
+    ],
+    "test": [
+        ('What does the Pareto principle say?',
+         [('a', 'Every cause is equal'), ('b', 'Results are random'), ('c', 'A small share of causes often produces a large share of results'), ('d', 'Causes never matter')],
+         'c'),
+        ('What did Vilfredo Pareto notice?',
+         [('a', 'Trains are slow'), ('b', 'A small share of people held most of the wealth'), ('c', 'The sun moves'), ('d', 'Bees fly in circles')],
+         'b'),
+        ('What is a fat tail?',
+         [('a', 'A type of bird'), ('b', 'A short line on a chart'), ('c', 'A bell curve with no ends'), ('d', 'Extreme events more likely than a normal bell curve suggests')],
+         'd'),
+        ("What does Zipf's law describe?",
+         [('a', 'The weather'), ('b', 'The price of tea'), ('c', 'The second most common word appears about half as often as the most common'), ('d', 'The speed of light')],
+         'c'),
+        ('What is a misuse of the eighty-twenty idea?',
+         [('a', 'Claiming exact numbers from loose data'), ('b', 'Using it to focus effort'), ('c', 'Finding key customers'), ('d', 'Asking good questions')],
+         'a'),
+    ],
+}

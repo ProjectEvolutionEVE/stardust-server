@@ -1,0 +1,37 @@
+"""Wells Fargo's Fake Accounts: sales targets, accounts opened without consent, and the trust that was lost."""
+CODE = 'business5_wellsfargo'
+BOOK = {
+    "title": "Wells Fargo's Fake Accounts",
+    "subtitle": 'Sales targets, accounts without consent, and trust lost',
+    "chapters": [
+        ('Sales targets',
+         'Wells Fargo set high sales goals for its branch staff, such as the number of accounts each customer should hold. Targets are useful when they point to real customer needs. When they become the main measure, they can push people to cut corners.'),
+        ('Accounts opened without consent',
+         "Some employees opened accounts and cards in customers' names without their permission. Some even moved money between accounts to meet goals. This was not a few rogue acts, but a pattern that grew over years."),
+        ('The 2016 fine',
+         "In 2016 regulators fined the bank heavily and ordered it to pay compensation to customers. The chief executive stepped down that year. The bank's name was damaged, and the story stayed in the news for a long time."),
+        ('Leaders leave',
+         'Senior leaders who had encouraged the goals faced criticism, and some were later banned or fined. A company can be hurt when the people at the top set the tone and then look away. Accountability has to reach the top.'),
+        ('Pay and pressure',
+         'Pay plans rewarded sales counts, and branch managers felt pressure to hit numbers. Staff who refused were sometimes fired. Pressure that rises from the top shows up at the counter, and a business must watch for it.'),
+        ('Trust lost',
+         'Trust is the basis of banking. Customers who feel tricked are slow to return, and it takes years to regain their confidence. Good targets help customers, and bad targets quietly break trust.'),
+    ],
+    "test": [
+        ('What did Wells Fargo set for its branch staff that sometimes went wrong?',
+         [('a', 'Free holidays'), ('b', 'Sales goals, such as accounts per customer'), ('c', 'Tests in music'), ('d', 'Rules about colour schemes')],
+         'b'),
+        ('What was the problem with some of the accounts?',
+         [('a', 'They were all paid for in gold'), ('b', 'They were only for staff'), ('c', 'They were too large to manage'), ('d', "They were opened without the customer's consent")],
+         'd'),
+        ('What happened to the chief executive in 2016?',
+         [('a', 'He was promoted to the board'), ('b', 'He moved to a new city'), ('c', 'He stepped down'), ('d', 'He started a bank')],
+         'c'),
+        ('Why does the chapter say targets can be dangerous?',
+         [('a', 'When they become the main measure they can push people to cut corners'), ('b', 'They always make customers richer'), ('c', 'They make pay fall'), ('d', 'They are illegal everywhere')],
+         'a'),
+        ('What does the chapter call the basis of banking?',
+         [('a', 'Gold'), ('b', 'Paper'), ('c', 'Trust'), ('d', 'Fast trains')],
+         'c'),
+    ],
+}

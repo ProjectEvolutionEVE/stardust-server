@@ -1,0 +1,37 @@
+"""Rent-Seeking: Tullock and Krueger, lobbying for privilege, tariffs and licences, the cost of the contest, taxi medallions and reform."""
+CODE = 'business5_rentseeking'
+BOOK = {
+    "title": 'Rent-Seeking',
+    "subtitle": 'Privilege, lobbying, the cost of the contest and the case for reform',
+    "chapters": [
+        ('What rent means',
+         'In economics, a rent is income gained not by making something new but by controlling a privilege. A firm with a protected market can earn more than competition would ever allow it to keep.'),
+        ('Tullock and Krueger',
+         "Gordon Tullock and Anne Krueger showed that rents attract effort. People spend time and money to win or keep privileges. Krueger's 1974 paper gave the idea its name: rent-seeking."),
+        ('Lobbying for privilege',
+         'Lobbying, legal battles and campaigning can all be ways to seek rent. Tariffs, import quotas and licences can create valuable privileges, and then people fight over who gets them.'),
+        ('The cost of the contest',
+         'The money and effort spent winning a privilege produce nothing new for society. The total cost of the contest can be larger than the rent it is fighting over.'),
+        ('Taxi medallions',
+         "In New York City, a limited number of taxi medallions was needed to run a cab. Their scarcity kept the medallion's price high for decades. When ride-hailing apps arrived, many medallion holders lost much of their value."),
+        ('Reform',
+         'Reducing rents means cutting privileges: lowering tariffs, opening up licences and making rules clear. Reform is hard, because the people who gain from a privilege are often few, organised and determined.'),
+    ],
+    "test": [
+        ('In economics, what is a rent?',
+         [('a', 'A payment for a flat'), ('b', 'A fee for a bank loan'), ('c', 'The cost of an office'), ('d', 'Income from a privilege, not from creating something new')],
+         'd'),
+        ('Which economists are linked with the idea of rent-seeking?',
+         [('a', 'Adam Smith and David Ricardo'), ('b', 'John Maynard Keynes and Irving Fisher'), ('c', 'Gordon Tullock and Anne Krueger'), ('d', 'Karl Marx and Friedrich Engels')],
+         'c'),
+        ('Which policy can create a valuable privilege?',
+         [('a', 'A tariff that keeps out imports'), ('b', 'Lower tariffs for everyone'), ('c', 'Open competition for every licence'), ('d', 'Publishing every rule')],
+         'a'),
+        ('Why is rent-seeking costly to society?',
+         [('a', 'It creates new goods'), ('b', 'It lowers all prices'), ('c', 'The effort and money spent on the contest produce nothing new'), ('d', 'It always pays for schools')],
+         'c'),
+        ('What does the New York taxi medallion example show?',
+         [('a', 'Licences are always worthless'), ('b', 'A scarce licence can hold high value until new technology changes the market'), ('c', 'Taxis never need permission to run'), ('d', 'Medallions were given free to everyone')],
+         'b'),
+    ],
+}

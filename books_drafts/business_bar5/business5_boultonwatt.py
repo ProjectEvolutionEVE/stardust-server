@@ -1,0 +1,37 @@
+"""Boulton and Watt: the steam engine partnership, patents, a royalty by fuel saved, the Soho works, and the lessons for licensing."""
+CODE = 'business5_boultonwatt'
+BOOK = {
+    "title": 'Boulton and Watt',
+    "subtitle": 'A partnership that turned an engine into a business',
+    "chapters": [
+        ('A partnership',
+         'Matthew Boulton, a manufacturer in Birmingham, and James Watt, the engineer, formed a partnership in 1775. Boulton brought business skill and workshops. Watt brought an improved steam engine. Partnerships can join different skills.'),
+        ('The steam engine',
+         "Watt's improved steam engine used much less coal than earlier engines. Saving fuel was a big selling point. Efficiency can be sold as a benefit."),
+        ('Patents',
+         'Watt held patents that protected his design for a long time. A patent gives an inventor a legal right to control the use of an idea for a set period. Protecting an idea can pay off.'),
+        ('A royalty by fuel saved',
+         'Instead of a single price, the partners often charged a royalty, a share of the benefit based on the fuel an engine saved. The customer paid in line with the value gained. Pricing by value is a powerful idea.'),
+        ('The Soho works',
+         "Boulton's Soho Manufactory in Birmingham made parts and engines on a large scale. It used machines to make parts that fitted together accurately. Standard parts make mass production possible."),
+        ('Lessons for licensing',
+         "Licensing lets others use your idea for a fee. The partners' royalty and patents show both the value and the risk of licensing. Protect the idea, and agree fair terms."),
+    ],
+    "test": [
+        ('Which two men formed the partnership in 1775?',
+         [('a', 'Ford and Edison'), ('b', 'Gates and Allen'), ('c', 'Boulton and Watt'), ('d', 'Marx and Engels')],
+         'c'),
+        ("What did Watt's improved engine save?",
+         [('a', 'Fuel'), ('b', 'Water'), ('c', 'Paint'), ('d', 'Time for staff')],
+         'a'),
+        ('What is a patent?',
+         [('a', 'A type of steel'), ('b', 'A kind of paint'), ('c', 'A legal right to control use of an idea for a set time'), ('d', 'A tax on wages')],
+         'c'),
+        ('What is a royalty?',
+         [('a', 'A fixed wage'), ('b', 'A share of income paid for using an idea'), ('c', 'A loan from a bank'), ('d', 'A fine for late work')],
+         'b'),
+        ('Where was the Soho Manufactory?',
+         [('a', 'London'), ('b', 'Bristol'), ('c', 'Manchester'), ('d', 'Birmingham')],
+         'd'),
+    ],
+}

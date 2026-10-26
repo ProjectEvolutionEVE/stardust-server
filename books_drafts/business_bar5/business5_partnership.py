@@ -1,0 +1,37 @@
+"""Partnerships: general and limited partners, the shared liability of general partners, partnership agreements, professional firms, and dissolution."""
+CODE = 'business5_partnership'
+BOOK = {
+    "title": 'Partnerships',
+    "subtitle": 'Sharing the work, the profit and the risk',
+    "chapters": [
+        ('Sharing the work and the risk',
+         'A partnership is a business owned by two or more people who share its profits and its losses. It is simple to set up and gives its owners a say in how it is run. The trade-off is that the owners often face more personal risk than shareholders in a company.'),
+        ('General partners',
+         "A general partner runs the business and carries unlimited liability for its debts. If the firm cannot pay, creditors may reach the partner's personal assets. This is why general partners usually take an active part in management."),
+        ('Limited partners',
+         'A limited partner invests money but usually does not manage the business. Their liability is generally limited to the amount they have put in. Many investment funds are set up this way, with a general partner running the fund.'),
+        ('The partnership agreement',
+         'A partnership agreement sets out how profits are shared, what each partner does, how decisions are made and how a partner may leave. Without one, the default rules of the law apply, which may not suit the partners. Written agreements prevent many later disputes.'),
+        ('Professional firms',
+         "Many law and accounting firms are partnerships, where the partners do the work and share in the profit. This suits businesses where the people are the product. Partners often rely on their reputation, so the firm's name is valuable."),
+        ('Dissolving, and compared with companies',
+         'A partnership may end when a partner leaves, dies or agrees to stop. Some agreements let the firm carry on with the remaining partners. Compared with a company, a partnership is usually easier to form but less protected for its owners.'),
+    ],
+    "test": [
+        ('What do general partners usually have?',
+         [('a', 'Limited liability'), ('b', 'No duties at all'), ('c', 'Only voting rights'), ('d', "Unlimited liability for the firm's debts")],
+         'd'),
+        ('What is a limited partner usually liable for?',
+         [('a', 'Everything the firm owes'), ('b', 'Nothing ever'), ('c', 'Only up to the amount they invested'), ('d', "The firm's coffee bill")],
+         'c'),
+        ('What should a partnership agreement set out?',
+         [('a', 'Profit shares, roles and how partners may leave'), ('b', 'The colour of the sign'), ('c', 'Office locations only'), ('d', 'Holidays only')],
+         'a'),
+        ('Why are many professional firms set up as partnerships?',
+         [('a', 'They have no clients'), ('b', 'Tax is banned for them'), ('c', 'The partners do the work and share in the profits'), ('d', 'The partners are robots')],
+         'c'),
+        ('What can happen to a partnership when a partner leaves?',
+         [('a', 'It turns into a bank'), ('b', 'It may dissolve or be reshaped, depending on the agreement'), ('c', 'It is always fined'), ('d', 'Nothing ever happens')],
+         'b'),
+    ],
+}

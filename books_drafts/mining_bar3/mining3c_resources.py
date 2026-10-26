@@ -1,0 +1,37 @@
+"""Resources and Reserves (bar 3, Metallurgist, part C): how sure a team is about the ore it has found, and when ore counts as something a mine can plan on."""
+CODE = "mining3c_resources"
+BOOK = {
+    "title": "Resources and Reserves",
+    "subtitle": "How sure we are of the ore, and when a mine can count on it",
+    "chapters": [
+        ("Found is not the same as minable",
+         "A geologist can be sure that rock holds metal and still not know how much there is, or how rich it is. Teams use careful words for this. A resource is ore that has been estimated but not yet planned for mining. A reserve is the part that a mine can actually plan to dig and sell."),
+        ("Three levels of confidence",
+         "Measured resources come from many close samples, so their error is small. Indicated resources have wider gaps between samples, so the error is bigger. Inferred resources are a rough guess from only a few holes. Every report labels each level."),
+        ("From resource to reserve",
+         "To become a reserve, ore must be measured or indicated, and it must pass the tests for mining, processing, cost and law. A rich body that cannot be reached at a fair cost stays a resource. A report that names reserves must also say what it assumed."),
+        ("Why the numbers move",
+         "New drill holes often change the estimate. When the grade or the amount shifts, the reserve can grow or shrink. Good teams update their numbers each year and say plainly when a change happens."),
+        ("Money and honesty",
+         "Banks and investors lend against reserves, not against hopes. Calling a resource a reserve can lead people to lose a fortune. The rule is simple: say how sure you are, every time."),
+        ("Count what is really there",
+         "A careful miner does the same with any field. Count what is really there, and promise only what the hold can carry. Money follows the true numbers, not the hoped-for ones."),
+    ],
+    "test": [
+        ("What is a reserve?",
+         [("a", "A metal bar kept in a vault"), ("b", "The part of ore that a mine can plan to dig and sell"), ("c", "Any rock that contains some metal"), ("d", "A spare drill bit")],
+         "b"),
+        ("Which level of confidence has the smallest error?",
+         [("a", "Inferred"), ("b", "Indicated"), ("c", "Measured"), ("d", "Guessed from a rumour")],
+         "c"),
+        ("Why are inferred resources left out of a mine plan?",
+         [("a", "They are always the richest ore"), ("b", "They are too shiny to store"), ("c", "The law forbids any ore"), ("d", "They come from only a few holes, so they may be wrong")],
+         "d"),
+        ("What can keep a resource from becoming a reserve?",
+         [("a", "Failing the tests for mining, processing, cost or law"), ("b", "Its colour"), ("c", "Being near water"), ("d", "Having too many drill holes")],
+         "a"),
+        ("What happens to an estimate when new drill holes show different results?",
+         [("a", "It never changes"), ("b", "It can grow or shrink"), ("c", "It is always thrown away"), ("d", "It becomes a fact")],
+         "b"),
+    ],
+}

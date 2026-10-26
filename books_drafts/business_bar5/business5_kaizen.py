@@ -1,0 +1,37 @@
+"""Kaizen and Continuous Improvement: small, steady changes made by everyone, and how they add up over time."""
+CODE = 'business5_kaizen'
+BOOK = {
+    "title": 'Kaizen and Continuous Improvement',
+    "subtitle": 'Small, steady changes made by everyone, and how they add up',
+    "chapters": [
+        ('Change for the better',
+         'Kaizen is a Japanese word that means change for the better. It describes the habit of making many small improvements, rather than waiting for one large project. Its ideas grew up in Japanese factories after the Second World War.'),
+        ('Ideas from the shop floor',
+         'Kaizen asks everyone to speak up about a problem they see. Toyota is well known for its suggestion system, in which workers send in small ideas and many of them are used. The idea is that people closest to the work know best where it can improve.'),
+        ('Standard work',
+         'Before an improvement can be kept, the current way of working needs to be written down. This is the standard. Once a better method is found, the standard is updated, so the gain does not slip away.'),
+        ('PDCA as a habit',
+         'The plan, do, check, act cycle, often linked to W. Edwards Deming, fits kaizen well. A team plans a small change, tries it, checks the result and acts on what it learned. Then the cycle starts again.'),
+        ('Measuring',
+         'Improvement needs measures. A team tracks a simple number, such as time taken or errors found, before and after each change. Without a measure, it is hard to tell whether a change helped.'),
+        ('Keeping it going',
+         'The hard part of kaizen is keeping it alive. Leaders need to ask about ideas, thank people for them and act on them quickly. When the team sees its ideas used, the habit lasts.'),
+    ],
+    "test": [
+        ('What does kaizen mean?',
+         [('a', 'Stop and wait'), ('b', 'Large sudden change'), ('c', 'Change for the better'), ('d', 'Sell everything')],
+         'c'),
+        ('Which company is well known for its kaizen-style suggestion system?',
+         [('a', 'Toyota'), ('b', 'Shell'), ('c', 'Pampers'), ('d', 'Enron')],
+         'a'),
+        ('What is standard work?',
+         [('a', 'A rule that nothing may change'), ('b', 'A fixed salary'), ('c', 'A written method, updated when a better one is found'), ('d', 'A dress code')],
+         'c'),
+        ('What does the plan, do, check, act cycle do?',
+         [('a', 'Ends a project after one try'), ('b', 'Tests small changes and learns from each result'), ('c', 'Stops all changes'), ('d', 'Replaces the team')],
+         'b'),
+        ('Why does a team need a measure for each change?',
+         [('a', 'So the rules stay the same'), ('b', 'So it can hide mistakes'), ('c', 'So no one speaks up'), ('d', 'So it can tell whether the change helped')],
+         'd'),
+    ],
+}

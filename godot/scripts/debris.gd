@@ -178,7 +178,7 @@ void fragment() {
 	rock_mat = ShaderMaterial.new()
 	rock_mat.shader = sh
 	rock_mat.set_shader_parameter("tex", tex)
-	rock_mat.set_shader_parameter("fog_density", FOG)
+	rock_mat.set_shader_parameter("fog_density", FOG / (1.0 + Session.skill("flight")))   # a Flight uniform sees debris sooner (Eric 10-26)
 	dust_mat = StandardMaterial3D.new()
 	dust_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	dust_mat.use_point_size = true

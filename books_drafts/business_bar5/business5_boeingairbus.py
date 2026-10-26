@@ -1,0 +1,37 @@
+"""Airbus and Boeing: government launch aid, the long trade dispute, and a duopoly that makes the costs of new planes huge."""
+CODE = 'business5_boeingairbus'
+BOOK = {
+    "title": 'Airbus and Boeing',
+    "subtitle": 'Launch aid, a long trade dispute, and a duopoly in big jets',
+    "chapters": [
+        ('Government launch aid',
+         'Airbus was formed in Europe in the 1970s with help from several governments. Launch aid lowered the risk for a company building a new aircraft. Governments and firms both saw the value of a strong plane maker at home.'),
+        ('The 747 and the A380',
+         "Boeing's 747 opened the age of very large long-distance jets, and Airbus later built the giant A380. The A380 was an ambitious bet on a huge plane for the busiest routes. Large aircraft need large markets to pay back their costs."),
+        ('The long dispute at the trade body',
+         'For many years the two firms and their governments disputed aid to each other at the World Trade Organization. Each side said the other received unfair support. The fight ran for well over a decade, and the rulings were complex.'),
+        ('Engines and orders',
+         'Aircraft are sold with engines from separate makers, and airlines place large orders years in advance. Winning an order can lock in sales for a decade. Engine partners and order books shape who wins.'),
+        ('A duopoly',
+         'For large passenger jets, two makers have dominated the market for decades. That is a duopoly, a market with only two big sellers. Competition can be fierce, but the barriers to entry are very high.'),
+        ('The cost of new planes',
+         'A new aircraft can cost many billions of dollars to design and certify, and it takes years to make a return. Every new model is a long-term bet on demand. Plan for long lead times, and never assume a big project will pay back quickly.'),
+    ],
+    "test": [
+        ('Why did governments support Airbus with launch aid?',
+         [('a', 'To close all airports'), ('b', 'To lower the risk of building a new aircraft'), ('c', 'To stop airlines flying'), ('d', 'To make planes out of paper')],
+         'b'),
+        ('Which Boeing jet opened the age of very large long-distance jets?',
+         [('a', 'The Model T'), ('b', 'The Concorde'), ('c', 'The Mini'), ('d', 'The 747')],
+         'd'),
+        ('Where did the aid dispute between the two firms take place?',
+         [('a', 'At a football stadium'), ('b', 'In a school'), ('c', 'At the World Trade Organization'), ('d', 'On a cruise ship')],
+         'c'),
+        ('What is a duopoly?',
+         [('a', 'A market with only two big sellers'), ('b', 'A market with two thousand sellers'), ('c', 'A market with no sellers'), ('d', 'A market for two kinds of tea')],
+         'a'),
+        ('Why does the chapter say a new aircraft is a long-term bet?',
+         [('a', 'It is always sold the same day'), ('b', 'It never needs fuel'), ('c', 'It costs billions and takes years to earn a return'), ('d', 'It only flies on Sundays')],
+         'c'),
+    ],
+}

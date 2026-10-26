@@ -1,0 +1,37 @@
+"""Revenue Recognition: when a sale counts as income, the five-step model, long contracts, channel stuffing and how to read a note."""
+CODE = 'business5_revrec'
+BOOK = {
+    "title": 'Revenue Recognition',
+    "subtitle": 'When a sale counts as income: the five-step model, long contracts and the traps to avoid',
+    "chapters": [
+        ('When a sale counts',
+         'Revenue recognition is the rule for when a firm records money from a sale as income. A firm may be paid before, during or after it delivers. The timing matters, because it shows how the business is really doing.'),
+        ('Delivery and performance',
+         'Under the modern rules, a firm records revenue when it satisfies a promise to a customer, usually by delivering the goods or service. Payment in advance does not by itself mean the sale has been earned.'),
+        ('The five-step model',
+         'The international and US standards use a five-step model. A firm identifies the contract, identifies the separate promises, sets the price, allocates the price to each promise, and recognises revenue as each promise is met. The model is used worldwide in similar form.'),
+        ('Long contracts',
+         'Long contracts, such as multi-year software deals, can be hard to time. Revenue may come in stages over the life of the contract. Accountants must judge how much of the work is done at each point.'),
+        ('Channel stuffing',
+         'Channel stuffing is a bad practice in which a firm pushes more product into its distribution channel than customers really need, often near the end of a period. It inflates sales for a short time and often causes trouble later. It is a warning sign for investors.'),
+        ('Reading a note',
+         "A company's financial notes explain how it recognises revenue. Read them to see whether sales are timed fairly and whether any unusual arrangements are described. Compare the notes over several years before you judge a firm."),
+    ],
+    "test": [
+        ('What does revenue recognition decide?',
+         [('a', 'The colour of the invoice'), ('b', 'The number of staff in the office'), ('c', 'When a firm records money from a sale as income'), ('d', "The price of the firm's shares tomorrow")],
+         'c'),
+        ('How many steps are in the five-step model?',
+         [('a', 'Three'), ('b', 'Five'), ('c', 'Seven'), ('d', 'Ten')],
+         'b'),
+        ('What does the model ask a firm to do with the price?',
+         [('a', 'Hide it in a drawer'), ('b', 'Give it all to the bank on day one'), ('c', 'Double it each year'), ('d', 'Allocate it to each promise to the customer')],
+         'd'),
+        ('What is channel stuffing?',
+         [('a', 'Buying a new computer'), ('b', 'Filling a bath with water'), ('c', 'Pushing more product into the channel than customers really need'), ('d', 'Packing goods into a lorry')],
+         'c'),
+        ('Why is payment in advance not enough by itself to count as earned revenue?',
+         [('a', 'Because the firm has not yet met its promise to the customer'), ('b', 'Because all money is illegal'), ('c', 'Because advance payments are always returned'), ('d', 'Because customers never pay in advance')],
+         'a'),
+    ],
+}

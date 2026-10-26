@@ -1,0 +1,37 @@
+"""Japan's Lost Decades: the 1980s asset bubble, the 1990 collapse, zombie banks, deflation, and the policies tried."""
+CODE = 'business5_japan'
+BOOK = {
+    "title": "Japan's Lost Decades",
+    "subtitle": 'The bubble of the 1980s, the long slump that followed, and the policies tried',
+    "chapters": [
+        ('The 1980s asset bubble',
+         'In the late 1980s, prices of shares and land in Japan rose to very high levels. Banks lent freely against property, and many people believed prices would keep climbing. The bubble inflated far beyond what the economy could support.'),
+        ('The 1990 collapse',
+         'Prices began to fall in 1990. The Nikkei share index, which had peaked at the end of 1989, lost much of its value over the next years. Land values also fell, and many loans became hard to repay.'),
+        ('Zombie banks',
+         'Banks that had made bad loans often kept them on their books rather than admit losses. Firms that could not repay were kept alive by continued lending. These weak firms and banks became known as zombies, because they did not truly recover.'),
+        ('Deflation',
+         'For many years, prices in Japan stayed flat or fell slowly. Deflation made it harder for companies to earn profits and for debts to shrink in real terms. People delayed spending, which kept the economy weak.'),
+        ('Policies tried',
+         'Japan tried many policies over the years. These included cutting interest rates to near zero, large public spending, and later large purchases of bonds by the central bank. Each policy had supporters and critics, and results were mixed.'),
+        ('The long slump',
+         "The slow growth lasted for many years, and it shaped a whole generation of workers and savers. Japan's story shows how a bubble can leave lasting damage, and why banks must deal with bad loans quickly."),
+    ],
+    "test": [
+        ('What happened to asset prices in Japan in the late 1980s?',
+         [('a', 'They fell to zero overnight'), ('b', 'They were fixed by law'), ('c', 'They rose to very high levels in a bubble'), ('d', 'They were printed on paper')],
+         'c'),
+        ('What index had peaked at the end of 1989?',
+         [('a', 'The rainfall index'), ('b', 'The Nikkei share index'), ('c', 'The bread price index'), ('d', 'The chess ranking')],
+         'b'),
+        ('What are zombie banks?',
+         [('a', 'Banks that open only at night for a film'), ('b', 'Banks that sell only horror books'), ('c', 'Banks that have no customers at all'), ('d', 'Banks that keep bad loans and firms alive without a true recovery')],
+         'd'),
+        ('What is deflation?',
+         [('a', 'A rise in the price of every good'), ('b', 'A kind of holiday'), ('c', 'A fall, or long flat period, in general prices'), ('d', 'A type of bridge')],
+         'c'),
+        ('Which policy did Japan try during the slump?',
+         [('a', 'Cutting interest rates to near zero'), ('b', 'Banning all bank accounts'), ('c', 'Closing the stock market for a century'), ('d', 'Moving the country to the sea')],
+         'a'),
+    ],
+}

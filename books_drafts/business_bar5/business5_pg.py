@@ -1,0 +1,37 @@
+"""Procter & Gamble: from candles and soap to a portfolio of brands, and the brand manager idea that spread worldwide."""
+CODE = 'business5_pg'
+BOOK = {
+    "title": 'Procter & Gamble',
+    "subtitle": 'Candles, soap, brand management and a portfolio of household names',
+    "chapters": [
+        ('Candles and soap',
+         'Procter & Gamble began in 1837 in Cincinnati, making candles and soap. The two founders were a candle maker and a soap maker who joined forces. Simple household goods were the start of a business that grew across the world.'),
+        ('Ivory and the claim of purity',
+         'In the 1880s P&G sold Ivory soap, which floated, and advertised it as 99 and 44/100 percent pure. The claim made a plain product stand out. A clear, memorable promise is one of the oldest tools in branding.'),
+        ('Brand management',
+         "Around 1931 P&G began to give each brand its own manager, who was responsible for that brand's sales and profit. The idea spread to many other companies. Each brand having its own owner made decisions sharper and more accountable."),
+        ('Research on consumers',
+         'P&G became known for studying what customers actually did at home. Its research shaped products and their packaging. Listening to real use is a steady source of better ideas than guessing.'),
+        ('Acquisitions',
+         'Over the years P&G grew by buying other companies and their brands. The 2005 purchase of Gillette, the razor maker, was among the largest deals in its history. Buying a brand can be faster than building one, but it must be integrated well.'),
+        ('The portfolio',
+         'A portfolio is the set of brands a company owns. P&G has at times sold weaker brands and kept or grew stronger ones. A balanced portfolio spreads risk and lets the company put effort where it earns the most.'),
+    ],
+    "test": [
+        ('In what year did Procter & Gamble begin?',
+         [('a', '1937'), ('b', '1907'), ('c', '1837'), ('d', '1867')],
+         'c'),
+        ('What was the Ivory soap claim?',
+         [('a', 'It was 99 and 44/100 percent pure'), ('b', 'It cured illness'), ('c', 'It was made of gold'), ('d', 'It never needed water')],
+         'a'),
+        ('What did brand management give each brand?',
+         [('a', 'A new factory every year'), ('b', 'A free holiday'), ('c', 'Its own manager responsible for its sales and profit'), ('d', 'A seat on the board')],
+         'c'),
+        ('What did the 2005 purchase bring into the company?',
+         [('a', 'A chain of cinemas'), ('b', 'The razor maker Gillette'), ('c', 'A coal mine'), ('d', 'A shipping line')],
+         'b'),
+        ("What is a company's portfolio?",
+         [('a', 'Its bank account'), ('b', 'Its list of retired staff'), ('c', 'Its office furniture'), ('d', 'The set of brands it owns')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Siemens: a telegraph start in Berlin, electric trains, a research culture, a bribery case and modern restructuring."""
+CODE = 'business5_siemens'
+BOOK = {
+    "title": 'Siemens',
+    "subtitle": 'Telegraphs, electric trains, research, and a hard lesson on bribery',
+    "chapters": [
+        ('Telegraph in Berlin',
+         'Werner von Siemens and Johann Georg Halske founded their firm in Berlin in 1847 to build telegraph equipment. Telegraphs were the fast communication of their day. A technical founder who solves a real need can build a lasting company.'),
+        ('Electric trains',
+         'In 1879 Siemens showed an electric railway at an exhibition in Berlin, one of the first electric trains to carry passengers. Electric power soon spread to trams, trains and factories. Early bets on new technology can open whole markets.'),
+        ('Research culture',
+         'Siemens built a strong research culture, with labs and engineers working on new technologies over many decades. Research is costly, but it can create products for years to come. A company that invests in research must also turn ideas into sales.'),
+        ('War and rebuilding',
+         'The company faced war, division and rebuilding in the twentieth century. It rebuilt its plants and businesses after each upheaval. Resilience is a skill, built through careful planning and steady investment.'),
+        ('The bribery case',
+         'In the 2000s the company was found to have paid bribes to win contracts in several countries. It paid large fines and reformed its compliance systems. A business that buys deals with bribes will eventually pay for it, in money and in reputation.'),
+        ('Modern restructuring',
+         'Siemens has since restructured, selling or spinning off parts of its business to focus on its core areas. Restructuring can free money and attention. A business should focus on where it has the most advantage.'),
+    ],
+    "test": [
+        ('In what city did Siemens and Halske found their firm?',
+         [('a', 'Paris'), ('b', 'Madrid'), ('c', 'Berlin'), ('d', 'Oslo')],
+         'c'),
+        ('What kind of equipment did the firm first build?',
+         [('a', 'Wooden furniture'), ('b', 'Telegraph equipment'), ('c', 'Cotton shirts'), ('d', 'Bread ovens')],
+         'b'),
+        ('What did Siemens show in 1879 in Berlin?',
+         [('a', 'A steam engine for ships'), ('b', 'A flying machine'), ('c', 'A printing press'), ('d', 'An electric railway')],
+         'd'),
+        ('What was the bribery case about?',
+         [('a', 'Selling bread to schools'), ('b', 'Hiring too many staff'), ('c', 'Paying bribes to win contracts'), ('d', 'Moving the head office')],
+         'c'),
+        ('What does the chapter say a business must do with research?',
+         [('a', 'Turn ideas into sales'), ('b', 'Keep ideas locked in a box'), ('c', 'Stop investing after one year'), ('d', 'Give all ideas away for free')],
+         'a'),
+    ],
+}

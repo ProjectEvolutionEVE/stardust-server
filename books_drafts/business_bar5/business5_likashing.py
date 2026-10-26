@@ -1,0 +1,37 @@
+"""Li Ka-shing: plastic flowers in Hong Kong, property, ports and retail, buying in downturns, and giving back."""
+CODE = 'business5_likashing'
+BOOK = {
+    "title": 'Li Ka-shing and His Group',
+    "subtitle": 'From plastic flowers to a diversified business empire',
+    "chapters": [
+        ('Plastic flowers',
+         'Li Ka-shing started a company in Hong Kong making plastic flowers. He was a young man with little money to spare. Cheap, useful goods can be a start.'),
+        ('Property',
+         'He later built a large property business. Land and buildings became a core part of his wealth. Property is a large business, and its prices can rise and fall sharply.'),
+        ('Ports and retail',
+         'His group moved into ports and shops, including retail chains. Spreading a business across sectors can reduce the risk of depending on one thing. This spreading of risk is called diversification.'),
+        ('The Hutchison group',
+         'The Hutchison Whampoa group grew into a large conglomerate with many businesses in many countries. Such groups are hard to run well. Keeping a clear core business helps.'),
+        ('Buying in hard times',
+         'He is often described as a buyer during slumps. Buying in hard times can also be risky, because prices may keep falling. Treat this as history, not as advice.'),
+        ('Giving',
+         'Li set up a foundation that funds education and health work. Giving can be a long-term commitment to a community. A fortune can serve more than its owner.'),
+    ],
+    "test": [
+        ("What did Li Ka-shing's first company make?",
+         [('a', 'Cars'), ('b', 'Ships'), ('c', 'Plastic flowers'), ('d', 'Printing presses')],
+         'c'),
+        ("In which city did Li's first company begin?",
+         [('a', 'Shanghai'), ('b', 'Hong Kong'), ('c', 'Tokyo'), ('d', 'Singapore')],
+         'b'),
+        ('What is diversification?',
+         [('a', 'Selling only one product'), ('b', 'Closing all shops'), ('c', 'Hiring one supplier'), ('d', 'Spreading a business across different sectors to reduce risk')],
+         'd'),
+        ("What kind of business did Li's group move into?",
+         [('a', 'Mining at sea'), ('b', 'Space flights'), ('c', 'Ports and retail'), ('d', 'Opera houses')],
+         'c'),
+        ('What did Li set up for giving back?',
+         [('a', 'A foundation for education and health'), ('b', 'A bank for cars'), ('c', 'A school for pilots'), ('d', 'A newspaper')],
+         'a'),
+    ],
+}

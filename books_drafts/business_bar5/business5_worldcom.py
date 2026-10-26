@@ -1,0 +1,37 @@
+"""WorldCom: fast acquisitions, expenses hidden as investments, the 2002 discovery and the audit committee's duty."""
+CODE = 'business5_worldcom'
+BOOK = {
+    "title": 'WorldCom',
+    "subtitle": 'Fast acquisitions, hidden expenses, and the audit committee',
+    "chapters": [
+        ('Rapid acquisitions',
+         'WorldCom grew quickly in the 1990s by buying other telephone and internet companies. Each deal made the company larger, and the stock price rose as investors cheered the growth. Growth through acquisition needs careful accounting and sound integration.'),
+        ('Disguising expenses',
+         "Some of the company's running costs were recorded as if they were long-term investments. This made profit look higher than it was. Spreading a cost over time can be proper, but not when the cost is an ordinary bill."),
+        ('The 2002 discovery',
+         "In 2002 an internal audit team found that billions of dollars of costs had been wrongly treated. The discovery led to the company's collapse that year. Internal auditors who raise hard questions are an important safeguard."),
+        ('The biggest filing to that date',
+         'WorldCom filed for bankruptcy in July 2002. At the time it was the largest bankruptcy filing in United States history. The size of the failure showed how far the falsehood had reached.'),
+        ('The jail term',
+         'The former chief executive was convicted of fraud and conspiracy and sentenced to a long prison term. Other finance staff were also charged. Lies in the accounts are crimes, and leaders answer for them personally.'),
+        ('The audit committee',
+         'An audit committee is a group of board members who oversee the accounts and the auditors. Its job is to ask the hard questions, to hear from internal auditors and to act on what it learns. An audit committee that does not ask is not doing its job.'),
+    ],
+    "test": [
+        ('How did WorldCom grow in the 1990s?',
+         [('a', 'Through many acquisitions of other companies'), ('b', 'By selling bread'), ('c', 'By building ships'), ('d', 'By running a zoo')],
+         'a'),
+        ('What did WorldCom do with some running costs?',
+         [('a', 'Gave them away as gifts'), ('b', 'Hid them under a rug'), ('c', 'Recorded them as if they were long-term investments'), ('d', 'Stopped paying them')],
+         'c'),
+        ('When did WorldCom file for bankruptcy?',
+         [('a', 'January 1980'), ('b', 'July 2002'), ('c', 'May 1995'), ('d', 'March 2010')],
+         'b'),
+        ("What is an audit committee's job?",
+         [('a', "To choose the company's logo"), ('b', "To sell the company's cars"), ('c', 'To plan the holiday party'), ('d', 'To oversee the accounts and the auditors and act on what it learns')],
+         'd'),
+        ('What did the discovery in 2002 come from?',
+         [('a', 'A weather report'), ('b', 'A sports match'), ('c', 'An internal audit team'), ('d', 'A radio show')],
+         'c'),
+    ],
+}

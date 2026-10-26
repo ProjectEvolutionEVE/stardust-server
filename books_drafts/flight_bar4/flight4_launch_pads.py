@@ -1,0 +1,37 @@
+"""Launch sites: latitude, range safety, Kennedy, Baikonur, Kourou, sea launch and the weather rules."""
+CODE = "flight4_launch_pads"
+BOOK = {
+    "title": "Launch Sites",
+    "subtitle": "Where rockets go up, and why the place matters",
+    "chapters": [
+        ("Latitude",
+         "Earth spins eastward, so a rocket launched toward the east gets a free boost from the spin. Sites close to the equator get the most boost. This is why many launches go from places near the equator or from sites that can fly east safely."),
+        ("Range safety",
+         "A launch route must keep falling stages and debris away from people. Launch corridors are chosen over empty ocean or sparsely settled land, and a range safety team can end a flight that strays from its path."),
+        ("Kennedy and Baikonur",
+         "Kennedy Space Center in Florida is close to the Atlantic and has launched many crewed missions. Baikonur in Kazakhstan has been used for launches since the 1950s and is the oldest continuously used launch site in the world."),
+        ("Kourou",
+         "The Guiana Space Centre at Kourou, in French Guiana, sits close to the equator. Its location gives rockets extra lift and a safe launch route over the Atlantic. It is used by the European Space Agency and its partners."),
+        ("Sea launch",
+         "A sea launch uses a platform at sea, so that rockets fly from a place where the route is clear and where the launch can move to the best position. Sea launch was used commercially in the 2000s and showed what a moving site can offer."),
+        ("Weather rules",
+         "Launches follow strict weather rules. Winds aloft, lightning, cloud and the state of the sea can all stop a countdown. A launch is held until conditions meet the limits set for safety, however much the schedule is pressing."),
+    ],
+    "test": [
+        ("Why do launches toward the east get a boost?",
+         [("a", "Because the Sun rises in the west"), ("b", "Because rockets fly backward"), ("c", "Because Earth spins eastward"), ("d", "Because the wind always blows east")],
+         "c"),
+        ("What is range safety?",
+         [("a", "A safe place to sleep"), ("b", "A kind of rocket fuel"), ("c", "A rule that rockets must fly slowly"), ("d", "Keeping falling stages and debris away from people")],
+         "d"),
+        ("Which launch site has been used since the 1950s?",
+         [("a", "Baikonur in Kazakhstan"), ("b", "Mount Everest"), ("c", "A lake in Canada"), ("d", "A desert on Mars")],
+         "a"),
+        ("What is special about Kourou's location?",
+         [("a", "It is at the North Pole"), ("b", "It is close to the equator, which gives extra lift"), ("c", "It is in the middle of a desert with no roads"), ("d", "It cannot launch rockets")],
+         "b"),
+        ("What can stop a countdown in its tracks?",
+         [("a", "A cup of tea"), ("b", "A clear blue sky"), ("c", "Winds aloft, lightning, cloud or a rough sea beyond safety limits"), ("d", "A calm day with no wind")],
+         "c"),
+    ],
+}

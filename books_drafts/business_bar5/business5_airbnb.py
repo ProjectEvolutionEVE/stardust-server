@@ -1,0 +1,37 @@
+"""Airbnb: air mattresses in San Francisco, trust built through reviews, a two-sided market, city rules and the 2020 shock."""
+CODE = 'business5_airbnb'
+BOOK = {
+    "title": 'Airbnb',
+    "subtitle": 'Air mattresses, trust through reviews, and a two-sided market',
+    "chapters": [
+        ('Air mattresses in San Francisco',
+         'Airbnb began in 2008 in San Francisco, when its founders rented out air mattresses in their own flat during a busy conference. The idea was to offer a bed and a simple breakfast to visitors who could not find a hotel room. A small idea can grow into a global platform.'),
+        ('Trust through reviews',
+         'Strangers pay each other only if they trust one another. Airbnb built trust with reviews from both guests and hosts, along with ratings and identity checks. Reviews turn a stranger into a known person.'),
+        ('Two sides of the market',
+         'Airbnb serves two groups at once, the people who offer places and the people who want to stay in them. The more hosts it has, the more guests it attracts, and the reverse is also true. Such two-sided markets are powerful, but they need care to keep both sides happy.'),
+        ('City regulation',
+         'Many cities have set rules on short-term rentals, such as limits on how many nights a home can be let. Local laws can change how a platform works in each place. A global business must learn to work with local rules.'),
+        ('The 2020 shock',
+         "When travel stopped in 2020, bookings fell sharply and the company had to cut costs and staff. It later raised money and listed its shares on the stock market in December 2020. A shock can test a business's cash and its plan."),
+        ('How it earns',
+         'Airbnb earns a fee from bookings, paid by guests and by hosts. The fee is a share of each stay, so the company does better when more stays happen. Know how your business earns, and what would make it earn less.'),
+    ],
+    "test": [
+        ('In what city did Airbnb begin?',
+         [('a', 'Paris'), ('b', 'Tokyo'), ('c', 'San Francisco'), ('d', 'Sydney')],
+         'c'),
+        ('What built trust between strangers on Airbnb?',
+         [('a', 'Free coffee'), ('b', 'Reviews and ratings from both guests and hosts'), ('c', 'Paper contracts sent by post'), ('d', 'Uniforms for guests')],
+         'b'),
+        ('What is a two-sided market?',
+         [('a', 'A market with two shops'), ('b', 'A market only open two days a week'), ('c', 'A market for two currencies'), ('d', 'A market serving two groups, such as hosts and guests, at once')],
+         'd'),
+        ('What did many cities do about short-term rentals?',
+         [('a', 'Banned all travel'), ('b', 'Made rentals free by law'), ('c', 'Set rules, such as limits on nights'), ('d', 'Closed all hotels')],
+         'c'),
+        ('How does Airbnb earn money, according to the chapter?',
+         [('a', 'A fee on bookings paid by guests and hosts'), ('b', 'Selling furniture to hosts'), ('c', 'A fixed salary from the city'), ('d', 'Money from the sale of beds')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Black Monday 1987: the 22 percent fall, portfolio insurance, program selling, the Fed's reply, circuit breakers, and the quick recovery."""
+CODE = 'business5_blackmonday'
+BOOK = {
+    "title": 'Black Monday 1987',
+    "subtitle": 'The biggest one-day fall in the Dow, and what the market learned from it',
+    "chapters": [
+        ('The 22 percent fall',
+         'On Monday 19 October 1987 the Dow Jones Industrial Average fell about 22 percent in a single day. It was the largest one-day percentage drop in its history. Markets around the world fell sharply in the same days.'),
+        ('Portfolio insurance',
+         'Some large investors used a strategy called portfolio insurance. It was meant to limit losses by selling index futures as prices fell. When many investors used it at once, the selling fed on itself and pushed prices down further.'),
+        ('Program selling',
+         'Computer-driven program trading sent huge batches of sell orders into the market very quickly. Many traders could not keep up, and buyers stepped back. The flood of automatic selling made the fall worse.'),
+        ("The Fed's reply",
+         'The Federal Reserve, under Chairman Alan Greenspan, made a public statement that it would supply cash to the banking system as needed. It also encouraged banks to keep lending. The statement helped calm nerves and stop the panic from spreading to the banks.'),
+        ('Circuit breakers',
+         'After the crash, exchanges introduced circuit breakers. These are automatic pauses in trading when prices fall by set amounts in a short time. The pauses give traders time to think and reduce the risk of a runaway fall.'),
+        ('The quick recovery',
+         'Although the fall was dramatic, the economy did not suffer a deep recession from it. Stock prices recovered over the following months and years. The crash is remembered as a lesson in how fast fear can spread.'),
+    ],
+    "test": [
+        ('On what date did Black Monday happen?',
+         [('a', '4 July 1776'), ('b', '1 January 2000'), ('c', '19 October 1987'), ('d', '25 December 1950')],
+         'c'),
+        ('What was portfolio insurance meant to do?',
+         [('a', 'Limit losses by selling index futures as prices fell'), ('b', 'Insure houses against fire'), ('c', 'Protect ships from storms'), ('d', 'Pay for holidays')],
+         'a'),
+        ('Who was the Fed Chairman who made the public statement after the crash?',
+         [('a', 'Abraham Lincoln'), ('b', 'Isaac Newton'), ('c', 'Alan Greenspan'), ('d', 'Winston Churchill')],
+         'c'),
+        ('What are circuit breakers?',
+         [('a', 'Electric switches in an office'), ('b', 'Automatic pauses in trading when prices fall sharply in a short time'), ('c', 'Tools for fixing bicycles'), ('d', 'Rules that allow trading only at night')],
+         'b'),
+        ('What was the main effect of Black Monday on the wider economy?',
+         [('a', 'It ended all trade for a century'), ('b', 'It made every shop close'), ('c', "It doubled everyone's wages overnight"), ('d', 'It did not cause a deep recession, and prices recovered over time')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""SWIFT and International Payments: the 1973 network that carries messages, not money, correspondent banks, delays, sanctions, and new systems."""
+CODE = 'business5_swift'
+BOOK = {
+    "title": 'SWIFT and International Payments',
+    "subtitle": 'The network that carries bank messages across borders, and its limits',
+    "chapters": [
+        ('The 1973 network',
+         'SWIFT, the Society for Worldwide Interbank Financial Telecommunication, was founded in 1973. It was set up by a group of banks to send standard messages between them more safely and cheaply than before. It is based in Belgium.'),
+        ('Messages, not money',
+         'SWIFT does not move money itself. It carries secure messages that tell banks to make a payment. The actual money moves through accounts that banks hold with one another. Understanding this helps explain why international payments can be slow.'),
+        ('Correspondent banks',
+         'A bank in one country often has no branch in another. It uses a correspondent bank, a partner bank abroad, to make payments on its behalf. A chain of correspondent banks can carry a single payment, and each one may charge a fee.'),
+        ('Delays and cost',
+         'International payments can take several days and carry several fees. Each bank in the chain may check the payment, and currency exchanges add cost. These factors make cross-border payments slower and dearer than domestic ones.'),
+        ('Sanctions',
+         'Because SWIFT links so many banks, it has been used as a tool in sanctions. In 2022, some Russian banks were removed from the network as part of sanctions linked to the war in Ukraine. The step showed how much global trade depends on the system.'),
+        ('New systems',
+         'Some countries and groups have built alternative payment systems, and new fast payment links are being developed between nations. The goal is to make cross-border payments faster and cheaper, while keeping them safe.'),
+    ],
+    "test": [
+        ('In what year was SWIFT founded?',
+         [('a', '1900'), ('b', '1620'), ('c', '1973'), ('d', '1995')],
+         'c'),
+        ('What does SWIFT actually carry?',
+         [('a', 'Secure messages telling banks to make payments'), ('b', 'Physical bags of coins'), ('c', 'Passengers on trains'), ('d', 'Gold bars for every customer')],
+         'a'),
+        ('What is a correspondent bank?',
+         [('a', 'A bank that writes letters for the newspaper'), ('b', 'A bank that only lends to students'), ('c', "A partner bank abroad that makes payments on another bank's behalf"), ('d', 'A bank in a ship')],
+         'c'),
+        ('Why are international payments often slow and costly?',
+         [('a', 'Money is always carried by pigeons'), ('b', 'Several banks in the chain may check the payment and charge fees'), ('c', 'Banks are closed on every day of the week'), ('d', 'Payments are never allowed to cross borders')],
+         'b'),
+        ('How has SWIFT been used in recent sanctions?',
+         [('a', 'It was used to print sanctions in newspapers'), ('b', 'It was given to a museum'), ('c', 'It was used to pay all taxes'), ('d', 'Some banks were removed from the network as part of sanctions')],
+         'd'),
+    ],
+}

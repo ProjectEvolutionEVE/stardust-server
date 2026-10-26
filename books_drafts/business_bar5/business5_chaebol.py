@@ -1,0 +1,37 @@
+"""The Chaebol of South Korea: Samsung, Hyundai and LG, state support, family control, the export drive and the 1997 crisis."""
+CODE = 'business5_chaebol'
+BOOK = {
+    "title": 'The Chaebol of South Korea',
+    "subtitle": 'Family groups, an export drive, and the crisis of 1997',
+    "chapters": [
+        ('Samsung, Hyundai and LG',
+         'Chaebol are large family-controlled business groups in South Korea. Samsung, Hyundai and LG are among the best-known. Each group spans many industries, from electronics and cars to shipbuilding and finance.'),
+        ('State support',
+         'In the decades after the 1950s, the state helped chosen firms with credit, protection and access to foreign money. Support aimed at building heavy industries and exports. State help can speed growth, but it can also reward favourites.'),
+        ('Family control',
+         'Founding families kept tight control of their groups through holding structures and cross-ownership. Family control gave long-term plans, and also made succession and fairness debates. Governance that depends on one family can be fragile.'),
+        ('The export drive',
+         'South Korean firms sold cars, ships, chips and electronics to the world. Export success built jobs and wealth at great speed. A country can grow fast by making goods that others want to buy.'),
+        ('The 1997 crisis',
+         'In 1997 the Asian financial crisis hit South Korea hard. Many chaebol had borrowed heavily, and some collapsed, while the country turned to the International Monetary Fund for help. Heavy debt is a risk, even for the largest groups.'),
+        ('Reform debates',
+         'After the crisis, the government pushed reforms to make the groups more transparent and to reduce debt. The debate continues about how much control families should keep. Reform is ongoing, and balance matters.'),
+    ],
+    "test": [
+        ('What is a chaebol?',
+         [('a', 'A type of rice dish'), ('b', 'A large family-controlled business group in South Korea'), ('c', 'A dance school'), ('d', 'A river')],
+         'b'),
+        ('Which of these is a well-known chaebol named in the chapter?',
+         [('a', 'Nokia'), ('b', 'Boeing'), ('c', 'Nestle'), ('d', 'Samsung')],
+         'd'),
+        ('In what year did the Asian financial crisis hit South Korea hard?',
+         [('a', '1870'), ('b', '2010'), ('c', '1997'), ('d', '1945')],
+         'c'),
+        ('What had many chaebol done before the crisis?',
+         [('a', 'Borrowed heavily'), ('b', 'Stopped all exports'), ('c', 'Sold their factories for scrap'), ('d', 'Closed their offices')],
+         'a'),
+        ('What did the country turn to for help in the crisis?',
+         [('a', 'A circus company'), ('b', 'A toy maker'), ('c', 'The International Monetary Fund'), ('d', 'A football club')],
+         'c'),
+    ],
+}

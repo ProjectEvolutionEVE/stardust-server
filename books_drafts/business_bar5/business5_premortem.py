@@ -1,0 +1,37 @@
+"""The Pre-Mortem: Gary Klein's method of imagining a project has already failed, then listing the reasons before they happen."""
+CODE = 'business5_premortem'
+BOOK = {
+    "title": 'The Pre-Mortem',
+    "subtitle": 'Imagine the failure first, then find the reasons and plan the fixes',
+    "chapters": [
+        ("Gary Klein's method",
+         'The psychologist Gary Klein described the pre-mortem in a 2007 article. Before a project starts, the team imagines it has already failed badly. Then it works backwards to explain why.'),
+        ('Imagine the failure',
+         'The key move is to assume the failure has happened. This frees people to voice doubts they might otherwise keep quiet. Saying a project has failed is easier than saying it might fail.'),
+        ('List the reasons',
+         'Each person writes down the reasons they think caused the failure. The team collects all the reasons, including the unpleasant ones. Many useful risks come from people who were quiet at the start.'),
+        ('Rank them',
+         'The team ranks the reasons by how likely and how serious each one is. The top few get most of the attention. Ranking stops the team from spending time on minor worries while larger ones go unplanned.'),
+        ('Plan fixes',
+         'For each top reason, the team plans a fix or a check. A fix changes the plan. A check watches for the warning sign. Each fix needs a named owner and a date.'),
+        ('When to use it',
+         'The pre-mortem works best at the start of a project, before money is spent. It is also helpful when a team seems too sure of itself. It does not replace careful planning, but it adds a useful challenge.'),
+    ],
+    "test": [
+        ('Who described the pre-mortem?',
+         [('a', 'Joan Woodward'), ('b', 'Clayton Christensen'), ('c', 'Gary Klein'), ('d', 'Everett Rogers')],
+         'c'),
+        ('What does the team imagine during a pre-mortem?',
+         [('a', 'That the project has already failed'), ('b', 'That the project has already won a prize'), ('c', 'That nothing will ever change'), ('d', 'That the budget is doubled')],
+         'a'),
+        ('Why does the imagined failure help?',
+         [('a', 'It makes the team stop working'), ('b', 'It proves the plan is perfect'), ('c', 'It frees people to voice doubts they might keep quiet'), ('d', 'It cancels all risks')],
+         'c'),
+        ('What should the team do after it lists the reasons?',
+         [('a', 'Ignore the reasons with no owner'), ('b', 'Rank them by likelihood and seriousness'), ('c', 'Burn the list'), ('d', 'Give the list to the press')],
+         'b'),
+        ('When does the text say a pre-mortem works best?',
+         [('a', 'Never, it is useless'), ('b', 'After the project has been sold'), ('c', 'Only in the final week'), ('d', 'At the start, before money is spent')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The VIX Index: the Chicago market's gauge of expected swings, how it is built, and how it is misread."""
+CODE = 'business5_vix'
+BOOK = {
+    "title": 'The VIX Index',
+    "subtitle": 'The fear gauge: how it is built, what it means, and where it goes wrong',
+    "chapters": [
+        ('The fear gauge',
+         'The VIX is an index published by the Chicago Board Options Exchange, usually called Cboe. It is often called the fear gauge because it rises when investors expect big swings in the stock market, and falls when they expect calm.'),
+        ('How it is built',
+         'The VIX is worked out from the prices of many options on the S&P 500, a large index of American companies. It estimates the volatility the market expects over the next 30 days, and it is stated as an annual percentage. You do not need the formula to understand what it is telling you.'),
+        ('What high and low mean',
+         'A high VIX means investors are paying a lot for protection, so they expect large moves. A low VIX means they expect a calm market. Neither one predicts the direction of prices. A high reading can be followed by a rise or a fall.'),
+        ('Spikes in history',
+         'The VIX jumped sharply during the 2008 financial crisis, in February 2018, and in the early months of the COVID-19 pandemic in 2020. Each spike marked a period when fear was running high. Each one also eventually faded.'),
+        ('Products built on it',
+         "Because the VIX is a number, people can trade products linked to it, such as futures and exchange-traded notes. These products do not track the VIX perfectly. Some have lost most of their value in a single bad day, which is a warning to read the product's rules."),
+        ('Common misreadings',
+         'The VIX is not a price you can buy directly. It is not a forecast of exact prices, and it does not tell you that a crash is coming. Treat it as one piece of information about how nervous the market is today.'),
+    ],
+    "test": [
+        ('Who publishes the VIX?',
+         [('a', 'A school in Ohio'), ('b', 'The company that makes cars'), ('c', 'The Chicago Board Options Exchange'), ('d', 'The national post office')],
+         'c'),
+        ('What does the VIX estimate?',
+         [('a', 'The number of companies in the index'), ('b', 'The expected volatility of the S&P 500 over the next 30 days'), ('c', 'The price of oil'), ('d', 'The rainfall in Chicago')],
+         'b'),
+        ('What does a high VIX reading usually mean?',
+         [('a', 'The market will definitely rise'), ('b', 'Interest rates are zero'), ('c', 'Everyone is on holiday'), ('d', 'Investors expect big swings and are paying more for protection')],
+         'd'),
+        ('Which is a common misreading of the VIX?',
+         [('a', 'That it measures expected swings'), ('b', 'That it is built from options prices'), ('c', 'That it predicts the direction of prices'), ('d', 'That it is an annual percentage')],
+         'c'),
+        ('Why can products linked to the VIX lose value fast?',
+         [('a', 'They do not track the VIX perfectly and can change sharply'), ('b', 'The VIX is a bank account'), ('c', 'They are paid in coins'), ('d', 'They can only rise')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""LEGO's Turnaround: a Danish toy firm near collapse, cutting its complexity, and rebuilding around its core brick."""
+CODE = 'business5_lego'
+BOOK = {
+    "title": "LEGO's Turnaround",
+    "subtitle": 'A Danish toy near collapse, and the rebuild around the brick',
+    "chapters": [
+        ('A Danish toy',
+         'LEGO began in 1932 in Billund, Denmark, when Ole Kirk Christiansen started making wooden toys. Its name comes from two Danish words meaning play well. The company grew through toys built on a simple idea of play.'),
+        ('The plastic brick',
+         'After the Second World War LEGO began making plastic bricks. The stud-and-tube design, patented in 1958, let bricks lock together firmly and in endless ways. A small, simple system can last for generations.'),
+        ('The crisis of the early 2000s',
+         'By the early 2000s LEGO had grown into a loss-making business. Sales were falling, and the company was close to bankruptcy in 2003 and 2004. Growth had come at the cost of focus and cash.'),
+        ('Too many lines',
+         'LEGO had launched a huge number of product lines, themes and tie-ins, many of them short-lived. Each one added cost in design, stock and factory time. Complexity quietly eats a business from the inside.'),
+        ('Cutting complexity',
+         'Under a new chief executive who took over in 2004, LEGO cut many lines and focused on its core bricks and strongest themes. It reduced the number of parts and simplified how products were made. Less can mean more, when the less is the right thing.'),
+        ('The rebuild',
+         'The company rebuilt its business around play, its core system and its community of fans. It later grew strongly and reached new markets. A turnaround is often a return to what made the company great in the first place.'),
+    ],
+    "test": [
+        ('In what year did LEGO begin in Billund, Denmark?',
+         [('a', '1932'), ('b', '1958'), ('c', '1899'), ('d', '1975')],
+         'a'),
+        ('What did the 1958 patent cover?',
+         [('a', 'A new kind of wooden train'), ('b', 'A way of printing toy boxes'), ('c', 'The stud-and-tube design of the brick'), ('d', 'A toy car engine')],
+         'c'),
+        ("What caused much of LEGO's trouble in the early 2000s?",
+         [('a', 'Too few bricks in each box'), ('b', 'Too many short-lived product lines and too much cost'), ('c', 'A ban on plastic toys'), ('d', 'Customers who did not like play')],
+         'b'),
+        ('What did LEGO do during its turnaround?',
+         [('a', 'It sold all its bricks to a rival'), ('b', 'It stopped making any new products ever'), ('c', 'It moved its toys to a single shop in the desert'), ('d', 'It cut many lines and focused on the core bricks and strongest themes')],
+         'd'),
+        ('What does the chapter say about complexity in a business?',
+         [('a', 'It makes a business stronger'), ('b', 'It is only a problem for factories'), ('c', 'It quietly eats a business from the inside'), ('d', 'It has no cost')],
+         'c'),
+    ],
+}

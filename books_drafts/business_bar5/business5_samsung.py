@@ -1,0 +1,37 @@
+"""Samsung: dried fish in Daegu, a move into electronics, memory chips, the smartphone race, family control and scale."""
+CODE = 'business5_samsung'
+BOOK = {
+    "title": 'Samsung',
+    "subtitle": 'Dried fish in Daegu, electronics, chips, and scale',
+    "chapters": [
+        ('Dried fish in Daegu',
+         'Samsung began in 1938 in Daegu as a small trading store that sold dried fish, noodles and other goods. The founder built the business by serving local customers and then growing into new trades. A small start can grow into a giant firm over decades.'),
+        ('Electronics',
+         'In 1969 the company set up an electronics business, which later became Samsung Electronics. It made televisions and other goods, and it learned quickly from foreign partners. Moving into a new industry takes skill and patience.'),
+        ('Memory chips',
+         'Samsung became a leader in memory chips, the chips that store data in computers and phones. Chip making needs huge investment and a steady stream of new designs. Leading in a costly industry can give a firm power over prices and supply.'),
+        ('The smartphone race',
+         'Samsung became one of the leading makers of smartphones, competing hard with other brands. It used its chip and screen skills to build its phones. A firm that makes its own key parts can move faster than rivals who must buy them.'),
+        ('Family control',
+         "The Lee family has long been central to the group's control and direction. Family leadership has given the group long plans and bold moves. Succession and fair governance remain important questions for such firms."),
+        ('A lesson in scale',
+         'Scale helps a firm buy in bulk, spread its costs and invest in research. Scale also brings complexity, slower decisions and large risks. The best leaders use scale for an advantage, and keep the business agile enough to change.'),
+    ],
+    "test": [
+        ('What did Samsung first sell in Daegu?',
+         [('a', 'Motor cars'), ('b', 'Aeroplanes'), ('c', 'Dried fish, noodles and other goods'), ('d', 'Gold jewellery')],
+         'c'),
+        ('In what year did Samsung set up its electronics business?',
+         [('a', '1969'), ('b', '1938'), ('c', '1997'), ('d', '1862')],
+         'a'),
+        ('What did Samsung become a leader in?',
+         [('a', 'Wooden furniture'), ('b', 'Bicycle tyres'), ('c', 'Memory chips'), ('d', 'Paper cups')],
+         'c'),
+        ("Which family has long been central to the group's control?",
+         [('a', 'The Haas family'), ('b', 'The Lee family'), ('c', 'The Krupp family'), ('d', 'The Tudor family')],
+         'b'),
+        ('What does the chapter say scale brings besides advantages?',
+         [('a', 'Free money for everyone'), ('b', 'No risk at all'), ('c', 'Shorter working days for ever'), ('d', 'Complexity, slower decisions and large risks')],
+         'd'),
+    ],
+}

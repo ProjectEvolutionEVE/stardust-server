@@ -1,0 +1,37 @@
+"""Sovereign Debt and Default: how nations borrow, who lends, why they default, and how restructurings work."""
+CODE = 'business5_sovdebt'
+BOOK = {
+    "title": 'Sovereign Debt and Default',
+    "subtitle": 'How nations borrow, why they sometimes cannot repay, and how debts are reshaped',
+    "chapters": [
+        ('Nations borrow',
+         'Governments borrow by selling bonds, much like companies do. The money pays for roads, schools, armies and other needs, and it is repaid over time from tax income. Most countries borrow for long periods.'),
+        ('Who lends',
+         "Lenders include investors in the country's own currency, foreign investors, banks, and official lenders such as international institutions. Each group has its own reasons for lending and its own power in a crisis."),
+        ('Why countries default',
+         'A default happens when a government cannot pay its debts on time or in full. Causes include falling tax income, a sudden loss of market access, weak planning, and currency crashes. Some countries default more than once in their history.'),
+        ('Haircuts',
+         'When a debt is restructured, creditors often agree to accept less than the full amount. The reduction in value is called a haircut. A bigger haircut helps the borrower, but it hurts the lenders who take the loss.'),
+        ('The Paris Club',
+         'The Paris Club is an informal group of creditor governments. It meets to agree how official debts owed by poorer countries will be reduced or rescheduled. It was founded in 1956 and works in a clear, structured way.'),
+        ('Restructurings',
+         "A restructuring changes the terms of a debt. It might lengthen the time to repay, lower the interest, or cut the amount owed. Good restructurings aim to restore a country's ability to borrow again, while treating creditors fairly."),
+    ],
+    "test": [
+        ('How do governments usually borrow?',
+         [('a', 'By selling their national parks'), ('b', 'By asking schools for coins'), ('c', 'By printing stamps only'), ('d', 'By selling bonds')],
+         'd'),
+        ('What is a default?',
+         [('a', 'Paying every debt early'), ('b', 'Winning a lottery'), ('c', 'Failing to pay debts on time or in full'), ('d', 'Opening a new museum')],
+         'c'),
+        ('What is a haircut in a debt restructuring?',
+         [('a', 'The reduction in the amount creditors agree to accept'), ('b', 'A visit to the barber for the government'), ('c', 'A tax on hairdressers'), ('d', 'A rule about trains')],
+         'a'),
+        ('What is the Paris Club?',
+         [('a', 'A nightclub in France'), ('b', 'A school for artists'), ('c', 'An informal group of creditor governments that agree debt reductions'), ('d', 'A football team')],
+         'c'),
+        ('What is the aim of a good restructuring?',
+         [('a', 'To stop all borrowing forever'), ('b', "To restore the country's ability to borrow, and treat creditors fairly"), ('c', 'To pay the debt with holidays'), ('d', 'To make the debt double')],
+         'b'),
+    ],
+}

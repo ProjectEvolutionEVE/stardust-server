@@ -1,0 +1,37 @@
+"""Working for Yourself: self-employment tax, estimated payments, deductions, separating accounts, budgeting irregular income, and retirement plans for the self-employed."""
+CODE = 'business5_selfemploy'
+BOOK = {
+    "title": 'Working for Yourself',
+    "subtitle": 'Being your own employer, and the money habits that come with it',
+    "chapters": [
+        ('Being your own employer',
+         'Self-employed people run their own business or work as freelancers, and they are responsible for their own tax and accounts. No employer takes tax from each pay cheque. Good records and regular set-asides make the year much easier.'),
+        ('Self-employment tax',
+         'Many countries add a separate tax on self-employed earnings, which pays into social programmes that an employer would normally fund in part. In the United States, the self-employment tax covers Social Security and Medicare. Rules and rates vary by country.'),
+        ('Estimated payments',
+         'When no employer withholds tax, the self-employed usually make estimated payments through the year. Missing them can bring penalties. Setting aside a share of each payment received is a simple way to be ready.'),
+        ('Deductions',
+         'A deduction is a genuine business cost that reduces taxable profit, such as equipment, software and business travel. Costs must be real, business-related and recorded. Keep receipts and notes, because deductions are checked.'),
+        ('Separating accounts',
+         'Keeping business and personal money in separate accounts makes the records clear. It helps when calculating profit and tax, and it protects personal money from business trouble. Mixing the two makes both harder to manage.'),
+        ('Irregular income budgeting, and retirement plans',
+         'Irregular income is easier to handle by setting aside part of the good months to cover slower ones. Self-employed people can also save for retirement through their own plans, which often offer tax advantages in many countries. Saving steadily through the good and slow months is the goal.'),
+    ],
+    "test": [
+        ('Who usually withholds tax for a self-employed person?',
+         [('a', 'The bank always'), ('b', 'The customer always'), ('c', 'Usually nobody, so they pay estimated tax themselves'), ('d', 'The sun')],
+         'c'),
+        ('What is a deduction?',
+         [('a', 'A genuine business cost that reduces taxable profit'), ('b', 'A fee for a loan'), ('c', 'A sum paid to staff only'), ('d', 'A discount for buying shoes')],
+         'a'),
+        ('Why keep business and personal accounts separate?',
+         [('a', 'It removes tax'), ('b', 'It doubles income'), ('c', 'It makes records clear and helps with tax'), ('d', 'It hides the business')],
+         'c'),
+        ('How should irregular income be handled?',
+         [('a', 'Spend it all at once'), ('b', 'Set aside part of the good months to cover the slow ones'), ('c', 'Ignore it'), ('d', 'Borrow each month')],
+         'b'),
+        ('What is a common use of a retirement plan for the self-employed?',
+         [('a', "Paying for a week's holiday"), ('b', 'Buying a boat'), ('c', 'Paying fines'), ('d', 'Saving for later, often with tax advantages in many places')],
+         'd'),
+    ],
+}

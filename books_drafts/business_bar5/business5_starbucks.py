@@ -1,0 +1,37 @@
+"""Starbucks: a Seattle coffee shop that became a global chain, and the growth that stretched it too far."""
+CODE = 'business5_starbucks'
+BOOK = {
+    "title": 'Starbucks',
+    "subtitle": 'From Seattle beans to a global third place',
+    "chapters": [
+        ('Seattle beans',
+         'Starbucks began in 1971 as a coffee bean shop in Seattle, selling whole beans and equipment. The early company was about quality coffee rather than cafe drinks. Its roots in good beans still shape the brand today.'),
+        ('The Italian idea',
+         'In the 1980s Howard Schultz, who later led the company, saw espresso bars in Italy. He saw that cafes there were places where people met and talked. That idea of a cafe as a home away from home became a central part of the Starbucks story.'),
+        ('The third place',
+         'The company describes its shops as a third place, after home and work. A comfortable place to sit makes a shop a meeting point, not just a place to buy a drink. A business can build loyalty by making a space people want to return to.'),
+        ('Growth and overreach',
+         'Starbucks grew very fast in the 2000s, opening shops in many neighbourhoods and countries. Some shops were close to one another, and the pace strained the service and the experience. Growth that runs ahead of quality can damage the thing that made the brand special.'),
+        ("Schultz's return",
+         'Schultz returned as chief executive in 2008 to bring the company back to its core values. He closed stores for a time to retrain staff, and he focused on the customer experience again. Returning leaders need the courage to undo some of their own earlier choices.'),
+        ('Pricing power and global tastes',
+         'A strong brand can charge more and keep customers loyal. Starbucks adapted its menu to tastes in each country while keeping its core drinks. A global business must balance one clear brand with local differences.'),
+    ],
+    "test": [
+        ('In what city did Starbucks begin?',
+         [('a', 'Portland'), ('b', 'Chicago'), ('c', 'Seattle'), ('d', 'Denver')],
+         'c'),
+        ('What did Howard Schultz see in Italy that shaped the company?',
+         [('a', 'Cafes as places where people met and talked'), ('b', 'A new kind of coffee machine only'), ('c', 'Cheap coffee sold in vending machines'), ('d', 'Tea shops with no seats')],
+         'a'),
+        ('What does the phrase third place mean for Starbucks?',
+         [('a', 'A shop number three in each town'), ('b', 'A type of coffee bean'), ('c', 'A comfortable place between home and work'), ('d', 'A delivery service')],
+         'c'),
+        ('What problem came with the fast growth of the 2000s?',
+         [('a', 'The shops had no coffee'), ('b', 'Growth ran ahead of quality and strained the experience'), ('c', 'The company stopped selling drinks'), ('d', 'Customers stopped drinking coffee')],
+         'b'),
+        ('What did Schultz do when he returned as chief executive in 2008?',
+         [('a', 'He sold the company to a rival'), ('b', 'He moved the head office to Italy'), ('c', 'He removed all seats from the shops'), ('d', 'He closed shops for a time to retrain staff and refocus on the customer')],
+         'd'),
+    ],
+}

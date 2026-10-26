@@ -1,0 +1,37 @@
+"""The Securities Acts and the SEC: the 1933 and 1934 laws, disclosure rather than approval, registration and periodic reports, enforcement, and the first chair."""
+CODE = 'business5_sec'
+BOOK = {
+    "title": 'The Securities Acts and the SEC',
+    "subtitle": 'Telling investors the truth, and the agency that checks',
+    "chapters": [
+        ('A referee for the markets',
+         'After the stock market crash of 1929, the United States built a system of laws to rebuild trust in securities markets. The central idea is that investors should get the facts. The Securities and Exchange Commission, or SEC, was created to enforce the rules.'),
+        ('The 1933 act',
+         'The Securities Act of 1933 governs the sale of new securities to the public. It requires companies to register their offers and to disclose important facts about the business. It targets the first sale of shares, rather than later trading.'),
+        ('The 1934 act',
+         'The Securities Exchange Act of 1934 governs trading in existing securities and the exchanges where they trade. It requires listed companies to file regular reports, and it created the SEC. Its rules cover brokers, dealers and market conduct.'),
+        ('Disclosure, not approval',
+         'The SEC does not decide whether an investment is a good one. Its job is to make sure that the facts are disclosed, so that investors can decide for themselves. A company can be risky and still follow the rules.'),
+        ('Registration and periodic reports',
+         'Listed companies file regular reports, including an annual report and quarterly reports, along with urgent reports when important events happen. These filings are public. They are a main source of information for investors and analysts.'),
+        ('Enforcement',
+         'The SEC can bring civil cases against people and firms that break the securities laws. Remedies can include fines, bans from serving as an officer and orders to stop. Some serious cases are referred for criminal prosecution.'),
+    ],
+    "test": [
+        ('What is the main idea of disclosure in US securities law?',
+         [('a', 'The SEC approves good investments'), ('b', 'Investing is banned'), ('c', 'Government sets all share prices'), ('d', 'Firms must reveal important facts so investors can decide')],
+         'd'),
+        ('Who was the first chair of the SEC?',
+         [('a', 'Winston Churchill'), ('b', 'Andrew Carnegie'), ('c', 'Joseph P. Kennedy'), ('d', 'Thomas Edison')],
+         'c'),
+        ('What is the 1934 act mainly about?',
+         [('a', 'Ongoing trading and periodic reports by listed companies'), ('b', 'The design of coins'), ('c', 'Land reform'), ('d', 'A tax on tobacco')],
+         'a'),
+        ('Does the SEC decide whether a stock is a good buy?',
+         [('a', 'Yes, always'), ('b', 'Only on Tuesdays'), ('c', 'No, it requires disclosure but does not judge the quality of an investment'), ('d', 'Only for banks')],
+         'c'),
+        ('What do many US listed companies file regularly with the SEC?',
+         [('a', 'Recipes'), ('b', 'Annual and quarterly reports'), ('c', 'Menus'), ('d', 'Holiday photos')],
+         'b'),
+    ],
+}

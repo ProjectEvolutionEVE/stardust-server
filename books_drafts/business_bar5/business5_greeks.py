@@ -1,0 +1,37 @@
+"""The Greeks: the measures that show how an option's value moves, and how traders manage a whole book of them."""
+CODE = 'business5_greeks'
+BOOK = {
+    "title": 'The Greeks',
+    "subtitle": 'Delta, gamma, theta, vega and rho, and how they keep a book in check',
+    "chapters": [
+        ('Why measure sensitivity',
+         'An option price moves when many things change. The Greeks are simple measures of how sensitive the price is to each one. They are named after Greek letters, and each one answers a single question about risk.'),
+        ('Delta: the move in the stock',
+         'Delta tells you how much an option price changes when the stock moves by one dollar. A delta of 0.5 means the option gains about 50 cents when the stock rises a dollar. Traders use delta to decide how many shares they need to hold to balance an option.'),
+        ('Gamma and theta',
+         'Gamma tells you how fast delta itself changes as the stock moves. High gamma means your hedge needs adjusting often. Theta measures how much value an option loses each day as it gets closer to expiry, all else equal. Time works against the buyer of most options.'),
+        ('Vega and rho',
+         'Vega measures how much the option price changes when volatility changes by one point. An option is worth more when the market expects big moves, so vega matters a lot around news and events. Rho measures sensitivity to interest rates, and it usually matters least of the common Greeks for short-lived options.'),
+        ('Managing a book of options',
+         'A trader rarely looks at one option. A book is the whole set of positions, and its Greeks add up. The trader can see the total delta, gamma and vega, and adjust with shares or other options to keep the risk within limits. This is called hedging.'),
+        ('What the Greeks cannot do',
+         'The Greeks are measures for small changes. A large sudden move in the stock or in volatility can make them wrong in a hurry. Good risk managers also test what happens in big scenarios, and they never treat a hedge as perfect.'),
+    ],
+    "test": [
+        ('What does delta measure?',
+         [('a', 'The number of days until expiry'), ('b', 'The colour of the option contract'), ('c', 'How much the option price changes when the stock moves by one dollar'), ('d', 'The interest paid on cash')],
+         'c'),
+        ('Which Greek tells you how much value an option loses each day as time passes?',
+         [('a', 'Theta'), ('b', 'Vega'), ('c', 'Rho'), ('d', 'Gamma')],
+         'a'),
+        ('What does vega measure?',
+         [('a', 'The size of the company'), ('b', 'The number of shares traded'), ('c', 'Sensitivity to a change in volatility'), ('d', 'The price of gold')],
+         'c'),
+        ('What is a book of options?',
+         [('a', 'A printed guide to options'), ('b', 'The whole set of positions held, whose Greeks add up'), ('c', 'A bank account for options'), ('d', 'One single option contract')],
+         'b'),
+        ('What is the main limit of the Greeks?',
+         [('a', 'They only work for shares sold in Japan'), ('b', 'They cost nothing to calculate'), ('c', 'They never change'), ('d', 'They measure small changes, and can be wrong after a large sudden move')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Charts That Tell the Truth: Edward Tufte, data ink, misleading axes, scale choices, small multiples and how to check a chart."""
+CODE = 'business5_tufte'
+BOOK = {
+    "title": 'Charts That Tell the Truth',
+    "subtitle": 'Edward Tufte, data ink, misleading axes, small multiples and checking a chart',
+    "chapters": [
+        ('Edward Tufte',
+         'Edward Tufte is a leading writer on how to show data well. His book The Visual Display of Quantitative Information, published in 1983, became a classic. He argues that a chart should make the data clear, not decorate it.'),
+        ('Data ink',
+         "Tufte introduced the idea of data ink: the share of a chart's ink that shows data, as opposed to decoration. A good chart keeps most of its ink on the data. Gridlines, borders, and shadows should earn their place."),
+        ('Misleading axes',
+         'An axis that does not start at zero can make small changes look huge. A chart can look dramatic simply because of how its axes are drawn. Always read the scale before reading the story.'),
+        ('Scale choices',
+         'Choosing a logarithmic scale or a different range changes what the eye sees. Such choices can be honest, but they must be labelled clearly. A hidden scale is a common way to mislead.'),
+        ('Small multiples',
+         'Small multiples are a series of similar small charts placed side by side, each showing one group. They allow easy comparison across groups on the same scale. Many experts find them clearer than one crowded chart.'),
+        ('Checking a chart',
+         'Before trusting a chart, ask what is measured, what the axes are, where the data came from, and what is missing. Check whether the chart answers the question you care about. A chart can still hide the important detail if it is badly chosen.'),
+    ],
+    "test": [
+        ('In what year was The Visual Display of Quantitative Information published?',
+         [('a', '1948'), ('b', '1964'), ('c', '1983'), ('d', '1975')],
+         'c'),
+        ('What is data ink?',
+         [('a', 'Ink used only for decoration'), ('b', 'Ink used to show data rather than decoration'), ('c', 'Blue ink only'), ('d', 'Ink for printing money')],
+         'b'),
+        ('What can an axis that does not start at zero do?',
+         [('a', 'Make the chart smaller'), ('b', 'Remove all the numbers'), ('c', 'Make the data disappear'), ('d', 'Make small changes look huge')],
+         'd'),
+        ('What are small multiples?',
+         [('a', 'Tiny text in one chart'), ('b', 'Coins'), ('c', 'Similar small charts side by side, each showing a group'), ('d', 'Charts with no data')],
+         'c'),
+        ('What should you check before trusting a chart?',
+         [('a', 'What is measured, the axes, and the source'), ('b', "The name of the designer's dog"), ('c', 'Its colour alone'), ('d', 'Whether it has a title in capitals')],
+         'a'),
+    ],
+}

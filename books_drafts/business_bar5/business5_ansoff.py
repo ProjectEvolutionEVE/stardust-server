@@ -1,0 +1,37 @@
+"""The Ansoff Matrix: four ways a firm can grow, by pairing old or new products with old or new markets."""
+CODE = 'business5_ansoff'
+BOOK = {
+    "title": 'The Ansoff Matrix',
+    "subtitle": 'Four growth paths, and how risk rises across them',
+    "chapters": [
+        ('Where can we grow?',
+         'In 1957, Igor Ansoff proposed a simple grid to help managers choose a growth path. It asks two questions: is the product old or new, and is the market old or new? The answers give four paths.'),
+        ('Market penetration',
+         'Market penetration sells more of the existing product to the existing market. It is the least risky path. A firm might win customers from rivals, or get existing customers to buy more often.'),
+        ('Market development',
+         'Market development takes the existing product into a new market. A firm might sell in a new country or reach a new group of customers. The product is known, but the market is new, so the risk is higher.'),
+        ('Product development',
+         'Product development builds a new product for the existing market. Firms that know their customers well often find this path easiest to test. The customers are known, but the product is new.'),
+        ('Diversification',
+         'Diversification is new product and new market at once. It is the riskiest path, because both sides are unknown. It can still pay off, but it asks for more money, more learning and more patience.'),
+        ('Choosing a path',
+         'Start with the lowest-risk path that still grows the firm. Move to riskier paths only when the safer ones have run out. Write down what you know and what you are guessing before you choose.'),
+    ],
+    "test": [
+        ('What two questions make up the Ansoff Matrix?',
+         [('a', 'Old or new product, and old or new market'), ('b', 'Big or small firm, and rich or poor country'), ('c', 'Day or night, and summer or winter'), ('d', 'Staff or owner, and office or home')],
+         'a'),
+        ('Which path sells more of an existing product to an existing market?',
+         [('a', 'Diversification'), ('b', 'Product development'), ('c', 'Market penetration'), ('d', 'Market development')],
+         'c'),
+        ('Which path is the riskiest, because both product and market are new?',
+         [('a', 'Market penetration'), ('b', 'Diversification'), ('c', 'Market development'), ('d', 'Product development')],
+         'b'),
+        ('What is market development?',
+         [('a', 'Building a new product for old customers'), ('b', 'Selling more to old customers'), ('c', 'Closing a market'), ('d', 'Selling an existing product in a new market')],
+         'd'),
+        ('Why does the text suggest starting with the lowest-risk path?',
+         [('a', 'It is the only legal path'), ('b', 'It always earns the most in one year'), ('c', 'It still grows the firm and keeps risk low'), ('d', 'It needs no planning')],
+         'c'),
+    ],
+}

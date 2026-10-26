@@ -1,0 +1,37 @@
+"""The Hudson's Bay Company: a royal charter in 1670, the fur trade and its posts, the Beaver token and a long retail line."""
+CODE = 'business5_hbc'
+BOOK = {
+    "title": "The Hudson's Bay Company",
+    "subtitle": 'A royal charter, the fur trade, and centuries of change',
+    "chapters": [
+        ('The 1670 charter',
+         'In 1670 King Charles II granted a royal charter to a company of English adventurers. The charter gave the company trading rights over a vast area around Hudson Bay. A charter like this was a grant of power as well as a business licence.'),
+        ('The fur trade',
+         'The company built its wealth on the fur trade, trading goods such as metal tools and cloth with Indigenous trappers for furs. Beaver pelts were especially valuable in Europe. Trade depended on relationships that took years to build.'),
+        ('Forts and posts',
+         "The company set up forts and trading posts across the north. These posts were the company's eyes and hands in the field. A network of posts spreads a business's reach, but it also spreads its costs."),
+        ('The Beaver coin',
+         'The company used a beaver as a unit of trade, and in later years it issued the Made Beaver token and note. A token of this kind worked as money inside the trading system. Money is what people agree to accept.'),
+        ('The retail line',
+         'Over the years the company became a retailer, running department stores in Canada under the name The Bay. Selling goods to shoppers in cities was a new business. A company can change what it sells and still keep its name.'),
+        ('Centuries of change',
+         "The company's history spans more than three hundred years. It changed hands, sold land, and reshaped its stores and its focus. A business that lasts for centuries must keep adapting to its markets."),
+    ],
+    "test": [
+        ("In what year was the company's royal charter granted?",
+         [('a', '1800'), ('b', '1900'), ('c', '1670'), ('d', '1500')],
+         'c'),
+        ('What did the company trade for in the fur business?',
+         [('a', 'Furs, from Indigenous trappers, for goods such as tools and cloth'), ('b', 'Gold bars from Spain'), ('c', 'Horses from France'), ('d', 'Wine from Italy')],
+         'a'),
+        ("What was the company's network of forts and posts for?",
+         [('a', 'Building ships in the desert'), ('b', 'Growing vegetables'), ('c', 'Spreading its reach across the north'), ('d', 'Running schools')],
+         'c'),
+        ('What is a token used inside a trading system?',
+         [('a', 'A rare stamp'), ('b', 'A form of money that people agree to accept'), ('c', 'A postal code'), ('d', 'A type of rope')],
+         'b'),
+        ('What later retail name did the company use in Canada?',
+         [('a', 'The Harbour'), ('b', 'The Forest'), ('c', 'The Mountain'), ('d', 'The Bay')],
+         'd'),
+    ],
+}

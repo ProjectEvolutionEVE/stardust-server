@@ -1,0 +1,37 @@
+"""The Sun as a star: fusion, the layers, the eleven-year cycle, the solar wind, flares and our nearest neighbours."""
+CODE = "flight4_sun_star"
+BOOK = {
+    "title": "The Sun as a Star",
+    "subtitle": "Our own star, its fuel, its layers and its moods",
+    "chapters": [
+        ("Fusion",
+         "The Sun is a star that makes energy by fusing hydrogen into helium in its core. Each fusion step releases a little mass as energy, and this is what lights and warms the whole Solar System."),
+        ("Layers",
+         "From the centre outward, the Sun has a core, a radiative zone, a convection zone, the visible surface called the photosphere, a thin layer called the chromosphere, and a hot outer atmosphere called the corona."),
+        ("The eleven-year cycle",
+         "The number of sunspots rises and falls in a cycle of about eleven years. At the peak, the Sun is more active, with more flares and more solar storms. At the low, it is quieter."),
+        ("Solar wind",
+         "The Sun constantly throws out a stream of charged particles called the solar wind. It flows out across the whole Solar System and shapes the space around planets and comets, including the tails of comets."),
+        ("Flares",
+         "A solar flare is a sudden burst of energy from the Sun's surface. Flares can disturb radio signals and power grids on Earth and can affect satellites. Space agencies watch for them closely."),
+        ("Our neighbours",
+         "The nearest star beyond the Sun is Proxima Centauri, about four light-years away. Light from it takes over four years to reach us. Even the nearest star is a very long journey away."),
+    ],
+    "test": [
+        ("What does the Sun fuse in its core?",
+         [("a", "Iron into gold"), ("b", "Water into air"), ("c", "Rock into sand"), ("d", "Hydrogen into helium")],
+         "d"),
+        ("What is the Sun's visible surface called?",
+         [("a", "The photosphere"), ("b", "The corona"), ("c", "The core"), ("d", "The chromosphere")],
+         "a"),
+        ("About how long is one cycle of sunspot activity?",
+         [("a", "About one day"), ("b", "About eleven years"), ("c", "About a thousand years"), ("d", "About one hour")],
+         "b"),
+        ("What is the solar wind?",
+         [("a", "A breeze on the Sun's surface"), ("b", "Gas from Earth"), ("c", "A stream of charged particles flowing out across the Solar System"), ("d", "Air in the Moon's craters")],
+         "c"),
+        ("What is Proxima Centauri?",
+         [("a", "A planet of Jupiter"), ("b", "A comet"), ("c", "A moon of Mars"), ("d", "The nearest star beyond the Sun, about four light-years away")],
+         "d"),
+    ],
+}

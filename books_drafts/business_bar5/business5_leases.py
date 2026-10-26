@@ -1,0 +1,37 @@
+"""Lease Accounting: operating and finance leases, the 2019 rule change, and how to decide between leasing and buying."""
+CODE = 'business5_leases'
+BOOK = {
+    "title": 'Lease Accounting',
+    "subtitle": 'Renting the use of an asset, and how the accounts show it',
+    "chapters": [
+        ('Renting or owning',
+         'A lease lets a business use an asset, such as a building, a truck or a machine, for a set period in return for payments. The business does not own the asset, but it can still use it to earn money. Accounting has to show that use, even when no purchase took place.'),
+        ('Operating and finance leases',
+         'Before 2019, many leases were classed as operating leases. Their costs were charged as rent, and the obligation sat in the notes rather than on the main balance sheet. A finance lease works more like a purchase paid for with borrowed money, and it was shown on the balance sheet.'),
+        ('The 2019 change',
+         "From 2019, the international standard IFRS 16 and the US standard ASC 842 brought most leases onto the balance sheet. The business now shows the right to use the asset and the duty to pay as liabilities. Many firms' reported debts rose as a result, even though little else changed."),
+        ('Right-of-use assets',
+         "A right-of-use asset is the lessee's record of its right to use the leased item for the lease term. It sits on the balance sheet next to a lease liability for the payments still to be made. Both figures are usually recorded at the present value of those payments."),
+        ('Off-balance-sheet history',
+         'For years, large operating lease commitments were easy to miss, because they appeared only in the notes. Analysts had to adjust the accounts themselves to see the real debt. The 2019 change made the picture clearer, so comparisons across years need care.'),
+        ('Lease or buy',
+         'To decide whether to lease or buy, compare the total cost over the life of the asset, including interest, maintenance and what the asset is worth at the end. The cash timing matters too, since leasing spreads payments out. The cheapest choice on paper is not always the best one for a business.'),
+    ],
+    "test": [
+        ('What did the 2019 rule changes mainly do?',
+         [('a', 'They banned leasing altogether'), ('b', 'They lowered the rate on every lease'), ('c', 'They brought most leases onto the balance sheet'), ('d', 'They made leases free for small firms')],
+         'c'),
+        ('What is a right-of-use asset?',
+         [('a', "A lessee's record of the right to use the leased item"), ('b', 'A cash balance held at the bank'), ('c', 'A bank loan taken out for the lease'), ('d', 'A tax credit on rent')],
+         'a'),
+        ('Before 2019, where were most operating lease commitments shown?',
+         [('a', 'On the balance sheet as debt'), ('b', 'In the income statement only'), ('c', 'In the notes, off the main balance sheet'), ('d', 'Nowhere at all')],
+         'c'),
+        ('Why should a business compare the total cost of leasing with buying?',
+         [('a', 'To pick the prettiest building'), ('b', 'To see the total cost over the life of the asset, including financing'), ('c', 'Because leases are always cheaper'), ('d', 'To avoid all taxes')],
+         'b'),
+        ('What is a finance lease, in simple terms?',
+         [('a', 'A lease that can be cancelled at any time for free'), ('b', 'A free loan from the lessor'), ('c', 'A lease with no payments'), ('d', 'A lease that passes most of the risks and rewards of ownership to the lessee, so it works much like a purchase')],
+         'd'),
+    ],
+}

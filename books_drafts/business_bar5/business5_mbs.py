@@ -1,0 +1,37 @@
+"""Mortgage-Backed Securities: pooling home loans, slicing the payments into tranches, and what went wrong in 2008."""
+CODE = 'business5_mbs'
+BOOK = {
+    "title": 'Mortgage-Backed Securities',
+    "subtitle": 'Pooling home loans, slicing the payments, and the lessons of 2008',
+    "chapters": [
+        ('Pooling loans',
+         'A mortgage-backed security is a bond backed by a pool of home loans. A bank that lends to home buyers can sell those loans to investors, who receive the payments from the homeowners. Pooling many loans spreads the risk of any one of them failing.'),
+        ('Pass-through payments',
+         'In the simplest form, the monthly payments from homeowners pass through to the investors, after a small fee. If a homeowner pays early or late, the investors feel that change in their income. These are called pass-through securities.'),
+        ('Tranches',
+         'Many deals slice the pool into layers called tranches. Senior tranches are paid first and carry the least risk. Junior tranches are paid last and take the first losses. Each layer pays a different return for its level of risk.'),
+        ('Prepayment risk',
+         'Homeowners can repay early, for example when they sell or refinance. Investors then get their money back sooner than planned, and must reinvest it at whatever rate is then available. This is called prepayment risk.'),
+        ('Agency and private deals',
+         'Some mortgage securities are guaranteed by government-backed agencies, which lowers the risk of default. Others are created privately, without that guarantee. The privately created deals were riskier, and many were rated more safely than they deserved.'),
+        ('What went wrong',
+         'Before 2008 many loans were made to buyers who could not repay, and the risks were hidden in complex layers. When house prices fell and defaults rose, the value of many securities collapsed. The lesson is that simple loans can become dangerous when they are packaged badly and understood poorly.'),
+    ],
+    "test": [
+        ('What backs a mortgage-backed security?',
+         [('a', 'A pool of rainwater'), ('b', 'A collection of stamps'), ('c', 'A group of ships'), ('d', 'A pool of home loans')],
+         'd'),
+        ("In a pass-through security, what happens to the homeowners' monthly payments?",
+         [('a', 'They are kept by the government forever'), ('b', 'They are burned'), ('c', 'They pass through to investors after a small fee'), ('d', "They are given to the homeowner's neighbours")],
+         'c'),
+        ('Which tranche takes the first losses?',
+         [('a', 'The junior tranche'), ('b', 'The senior tranche'), ('c', 'The tranche for holidays'), ('d', 'The tranche for the government only')],
+         'a'),
+        ('What is prepayment risk?',
+         [('a', 'Paying for a meal in advance'), ('b', 'A tax on prepaid cards'), ('c', 'Homeowners repaying early, so investors get money back sooner than planned'), ('d', 'A fee for opening a bank account')],
+         'c'),
+        ('What was a main cause of the problems in 2008?',
+         [('a', 'Too much rain in London'), ('b', 'Loans made to buyers who could not repay, with risk hidden in complex layers'), ('c', 'A shortage of pencils'), ('d', 'Every homeowner paying early')],
+         'b'),
+    ],
+}

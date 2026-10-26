@@ -1,0 +1,37 @@
+"""Hernando de Soto and Property Rights: dead capital, informal housing, titles and credit, Peru's experiment and the debate."""
+CODE = 'business5_desoto'
+BOOK = {
+    "title": 'Hernando de Soto and Property Rights',
+    "subtitle": "Dead capital, informal housing, titles and credit, and Peru's experiment",
+    "chapters": [
+        ('Dead capital',
+         'Hernando de Soto argued that many poor people own homes and land, but without legal title that property is dead capital. It cannot easily be sold, rented or used to borrow money, so its value stays locked away.'),
+        ('Informal housing',
+         'Much housing in the growing cities of developing countries was built outside the formal legal system. Owners build, live and trade there, but without the paperwork that banks and courts rely on.'),
+        ('Titles and credit',
+         'Clear, registered title lets an owner offer a house as collateral for a loan. A bank lends against property it could claim if the borrower defaults. Without a title, that door stays shut.'),
+        ("Peru's experiment",
+         "In the 1990s Peru set up an agency to formalise urban property rights on a large scale. The programme aimed to turn informal holdings into registered title. It is one of the best-known tests of de Soto's ideas."),
+        ('The results',
+         'Studies of titling programmes find mixed results. Some show gains in investment and access to credit, while others find smaller effects than were hoped for. A title on its own does not guarantee a loan.'),
+        ('The debate',
+         'Critics argue that secure tenure, cheap registration and access to credit matter as much as the title itself. Supporters say formal records are a basic step toward a working market in property. The size of the effect is still debated.'),
+    ],
+    "test": [
+        ('What did de Soto call property without legal title that cannot easily be used?',
+         [('a', 'Shared capital'), ('b', 'Public credit'), ('c', 'Dead capital'), ('d', 'Idle money')],
+         'c'),
+        ('Why can an owner with registered title borrow more easily?',
+         [('a', 'Banks can use the property as collateral against the loan'), ('b', 'The state pays the loan'), ('c', 'The title removes all taxes'), ('d', 'Neighbours guarantee the debt')],
+         'a'),
+        ("Which country's programme is the best-known test of de Soto's ideas in this chapter?",
+         [('a', 'Japan'), ('b', 'Canada'), ('c', 'Peru'), ('d', 'Egypt')],
+         'c'),
+        ('What have studies of titling programmes found?',
+         [('a', 'Titles always raise incomes sharply'), ('b', 'Results are mixed, with smaller effects than hoped for in some cases'), ('c', 'Titles never help'), ('d', 'Only the state benefits')],
+         'b'),
+        ('What do critics say matters beyond titles?',
+         [('a', 'The colour of the paint'), ('b', 'Fewer houses'), ('c', 'Higher interest rates'), ('d', 'Secure tenure, cheap registration and access to credit')],
+         'd'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The History of Advertising: handbills, patent medicines, agencies, radio, television, measurement and digital targeting."""
+CODE = 'business5_advertising'
+BOOK = {
+    "title": 'The History of Advertising',
+    "subtitle": 'From handbills and newspapers to radio, television and targeting',
+    "chapters": [
+        ('Before printing',
+         'Traders have advertised for thousands of years, using signs, criers, and painted walls. Once printing spread, merchants could put their names and prices on handbills and posters. A printed notice could reach far more people than a shout in the street.'),
+        ('Newspapers and patent medicines',
+         'In the 1800s, newspapers filled with ads for shops, services, and products. The patent medicine boom brought bold claims for tonics and pills, many of them useless. Those excesses led, over time, to rules on what an advertisement could say.'),
+        ('Agencies and measurement',
+         'Ad agencies began as brokers who sold newspaper space, and later they wrote the ads too. Claude Hopkins argued in the 1920s that advertising should be tested and measured, like any other business spending. Madison Avenue in New York became the name for the whole industry.'),
+        ('Radio and television',
+         "Radio brought advertising into the home with sponsored shows, and television later added pictures and motion. Ads became part of the family's day and reached large audiences at once. Sponsors paid according to the size of the audience they could reach."),
+        ('Measuring the effect',
+         'Advertisers want to know whether an ad sold anything, and that question has never been easy to answer. Surveys, coupons, and sales records all give clues, but none is perfect. Good marketers test, compare, and keep asking what works.'),
+        ('Targeting online',
+         'Digital ads can be shown to people based on what they searched for, read, or bought. This lets advertisers aim at small groups rather than the whole public. The same tools raise questions about privacy and about how much people really notice.'),
+    ],
+    "test": [
+        ('What was the patent medicine boom known for?',
+         [('a', 'Bold and often useless claims for tonics and pills'), ('b', 'Free government health care'), ('c', 'Ads for ships only'), ('d', 'Radio shows with no sponsors')],
+         'a'),
+        ('Who argued in the 1920s that advertising should be tested and measured?',
+         [('a', 'Theodore Vail'), ('b', 'Norman Borlaug'), ('c', 'Claude Hopkins'), ('d', 'Samuel Insull')],
+         'c'),
+        ('What does Madison Avenue stand for?',
+         [('a', 'A radio station'), ('b', 'The advertising industry in New York'), ('c', 'A patent office'), ('d', 'A type of newspaper')],
+         'b'),
+        ('How did radio sponsors usually pay for their shows?',
+         [('a', 'With free air time'), ('b', 'With government grants only'), ('c', 'By selling the shows themselves'), ('d', 'Through ads that reached the listeners')],
+         'd'),
+        ('What is a main benefit of digital targeting?',
+         [('a', 'Ads cannot be seen'), ('b', 'Ads cost nothing to run ever'), ('c', 'Ads can reach small groups chosen by their interests'), ('d', 'Ads stop being measured')],
+         'c'),
+    ],
+}

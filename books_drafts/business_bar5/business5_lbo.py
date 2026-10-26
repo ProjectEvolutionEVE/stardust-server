@@ -1,0 +1,37 @@
+"""Private Equity and Leveraged Buyouts: buying a company with borrowed money, the sponsor's role, and the criticisms."""
+CODE = 'business5_lbo'
+BOOK = {
+    "title": 'Private Equity and Leveraged Buyouts',
+    "subtitle": 'Buying a company with borrowed money, and what the buyers try to do with it',
+    "chapters": [
+        ('Buying with borrowed money',
+         'A leveraged buyout is the purchase of a company mainly with borrowed money. The buyers put in a smaller share of their own cash, and the company itself is usually used to repay the loans over time. The approach is a form of leverage, like a home loan.'),
+        ('The sponsor',
+         'The buyers are usually a private equity firm, which acts as the sponsor. The firm raises money from investors, buys the company, and takes an active role in running it. It aims to improve the business before selling it on.'),
+        ('Debt paydown',
+         "After the purchase, the company's cash flow is used to pay down the debt. Each repayment raises the owners' share of the company's value. If the debt falls quickly, the buyers gain without needing the whole business to grow."),
+        ('Creating value',
+         'Sponsors try to create value through cost cutting, better management, new markets, or selling parts of the business. Good owners can make a real difference. Poor ones can load a company with debt and leave it weaker.'),
+        ('Exits',
+         'The sponsor eventually exits the investment by selling the company to another buyer, listing it on a stock market, or selling pieces of it. The return depends on the price at exit and how much debt is left. Timing matters a great deal.'),
+        ('The criticisms',
+         'Critics say heavy debt can leave a company fragile, and that job cuts or cost cutting can hurt workers and communities. Supporters reply that buyouts can revive weak firms and return cash to investors. The debate continues, and the details of each deal matter.'),
+    ],
+    "test": [
+        ('What is a leveraged buyout?',
+         [('a', 'Buying a company with only cash in a bag'), ('b', 'Buying a company mainly with borrowed money'), ('c', 'Renting a house to a friend'), ('d', 'Selling a bicycle at a fair')],
+         'b'),
+        ('What is the sponsor in a buyout?',
+         [('a', 'A club member who sponsors a sports team'), ('b', 'The company that prints the loan papers'), ('c', 'The bank clerk on the corner'), ('d', 'The private equity firm that buys and runs the company')],
+         'd'),
+        ("How is the company's cash flow often used after a buyout?",
+         [('a', 'To buy holidays for the buyers'), ('b', 'To pay for printing new banknotes'), ('c', 'To pay down the debt'), ('d', 'To buy paintings')],
+         'c'),
+        ('What is an exit in private equity?',
+         [('a', 'Selling the company or its parts to end the investment'), ('b', 'A door at the back of an office'), ('c', 'A road sign'), ('d', 'The day a company is founded')],
+         'a'),
+        ('What is a common criticism of leveraged buyouts?',
+         [('a', 'They always make companies larger overnight'), ('b', 'They are paid for in sunshine'), ('c', 'Heavy debt can leave a company fragile'), ('d', 'They are illegal in every country')],
+         'c'),
+    ],
+}

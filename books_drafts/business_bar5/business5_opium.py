@@ -1,0 +1,37 @@
+"""The Opium Wars and the Tea Trade: tea for silver, the Company's opium, the 1839 seizure, the treaties and the lasting legacy."""
+CODE = 'business5_opium'
+BOOK = {
+    "title": 'The Opium Wars and the Tea Trade',
+    "subtitle": "Tea for silver, the Company's opium, and the treaties that followed",
+    "chapters": [
+        ('Tea for silver',
+         'Britain developed a great appetite for Chinese tea in the 1700s. China took few British goods in return, so silver flowed from Britain to China to pay for the tea. That imbalance worried British traders.'),
+        ("The Company's opium",
+         'The British East India Company grew opium in India and sold it in China. The opium trade reversed the flow of silver, and many Chinese people became addicted. Chinese officials tried to stop the trade.'),
+        ('The 1839 seizure',
+         'In 1839 the Chinese official Lin Zexu seized and destroyed a large stock of opium at Canton. Britain used the seizure as a reason for war. The conflict is known as the First Opium War.'),
+        ('The treaties',
+         'The First Opium War ended with the Treaty of Nanking in 1842. China opened more ports and ceded Hong Kong Island to Britain. Later treaties, after a second war, opened even more of China to foreign traders.'),
+        ('Hong Kong',
+         "Hong Kong Island became a British colony, and it grew into one of the world's great trading and financial centres. Its growth shows how a port can prosper from a trade that began in conflict. The city remains a major centre of business today."),
+        ('The long legacy',
+         'The opium trade left deep and lasting marks on China and on the history of trade. It shows how profits can be pushed through force, and how much harm a trade can do when it is not checked. For any business, the lesson is to ask who pays the costs.'),
+    ],
+    "test": [
+        ('What did Britain buy in large amounts from China in the 1700s?',
+         [('a', 'Cotton'), ('b', 'Rubber'), ('c', 'Tea'), ('d', 'Gold')],
+         'c'),
+        ('Who seized opium at Canton in 1839?',
+         [('a', 'Lin Zexu'), ('b', 'Theodore Vail'), ('c', 'Samuel Insull'), ('d', 'Sam Brannan')],
+         'a'),
+        ('Which treaty ended the First Opium War?',
+         [('a', 'The Treaty of Versailles'), ('b', 'The Treaty of Tordesillas'), ('c', 'The Treaty of Nanking'), ('d', 'The Treaty of Ghent')],
+         'c'),
+        ('What did China give to Britain in 1842?',
+         [('a', 'Gold mines'), ('b', 'Hong Kong Island'), ('c', 'The Banda Islands'), ('d', 'The Klondike')],
+         'b'),
+        ("What did the Company's opium trade do to the flow of silver?",
+         [('a', 'It stopped the flow'), ('b', 'It moved silver to Lisbon'), ('c', 'It doubled the flow each year'), ('d', 'It reversed the flow, so silver began to leave China')],
+         'd'),
+    ],
+}

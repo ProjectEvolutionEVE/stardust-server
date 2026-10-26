@@ -1,0 +1,37 @@
+"""Quantitative Easing and the Zero Lower Bound: rates near zero, the liquidity trap, central banks buying bonds, Japan in 2001, the US after 2008 and unwinding."""
+CODE = 'business5_qe'
+BOOK = {
+    "title": 'Quantitative Easing and the Zero Lower Bound',
+    "subtitle": 'When interest rates reach zero, and what central banks do next',
+    "chapters": [
+        ('Rates near zero',
+         "When a central bank's policy rate reaches about zero, cutting it further becomes hard. This is the zero lower bound. Rates cannot fall far below zero without causing problems for banks and savers."),
+        ('The liquidity trap',
+         'John Maynard Keynes described a situation in which people hoard cash rather than lend or spend, so cheap money fails to boost the economy. Economists still debate how far this applies today.'),
+        ('Central banks buy bonds',
+         'Quantitative easing means that a central bank buys government bonds, and sometimes other assets. This adds money to the system and pushes long-term rates lower. It is used when short-term rates can no longer fall.'),
+        ('Japan in 2001',
+         'The Bank of Japan began quantitative easing in 2001, when its policy rate was already close to zero. Japan was among the first central banks to use this tool on a large scale.'),
+        ('The United States after 2008',
+         'After 2008 the US Federal Reserve bought large amounts of Treasury and mortgage-backed bonds. Other central banks followed. Studies generally find that it lowered long-term rates, though its effects on growth and inflation are debated.'),
+        ('Unwinding',
+         'Reversing quantitative easing means selling bonds or letting them mature, which removes money from the system. This can be slow and may move markets, so central banks plan it carefully.'),
+    ],
+    "test": [
+        ('What is the zero lower bound?',
+         [('a', 'The highest possible wage'), ('b', 'A law on money printing'), ('c', "The point where policy rates can't fall much below zero"), ('d', "A bank's maximum loan")],
+         'c'),
+        ('What does quantitative easing usually involve?',
+         [('a', 'Raising taxes'), ('b', 'A central bank buying government bonds and other assets'), ('c', 'Selling all gold'), ('d', 'Banning loans')],
+         'b'),
+        ('In what year did the Bank of Japan begin quantitative easing?',
+         [('a', '1971'), ('b', '1930'), ('c', '2015'), ('d', '2001')],
+         'd'),
+        ('What is a liquidity trap, as Keynes described it?',
+         [('a', 'Too many people borrow'), ('b', 'Gold runs out'), ('c', 'People hoard cash, so cheap money fails to boost the economy'), ('d', 'Banks have too much capital')],
+         'c'),
+        ('What does unwinding quantitative easing involve?',
+         [('a', 'Selling bonds or letting them mature'), ('b', 'Printing more money'), ('c', 'Doubling tax rates'), ('d', 'Closing all banks')],
+         'a'),
+    ],
+}

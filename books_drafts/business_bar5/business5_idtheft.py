@@ -1,0 +1,37 @@
+"""Identity Theft and Fraud Protection: how personal data is stolen, credit freezes and alerts, phishing, chargeback rights, recovery steps and protective habits."""
+CODE = 'business5_idtheft'
+BOOK = {
+    "title": 'Identity Theft and Fraud Protection',
+    "subtitle": "How people's details get stolen, and how to stop it",
+    "chapters": [
+        ('How data is stolen',
+         "Personal details are taken in several ways: through data breaches at companies, through phishing messages, through stolen cards and through leaked passwords. A thief who has enough details may open accounts or borrow in another person's name. Early signs often show up in unexpected statements."),
+        ('Freezes and alerts',
+         'A credit freeze stops new credit from being opened in your name until you lift it. A fraud alert tells lenders to take extra checks before approving new credit. Both are free in the United States, and each suits a different level of risk.'),
+        ('Phishing patterns',
+         "Phishing messages try to hurry you into acting, with a fake deadline, a fake bill or a request for a code. The links often lead to copies of real websites. A safe habit is to go to the company's site yourself rather than follow a link in a message."),
+        ('Chargeback rights',
+         'A chargeback is a card dispute that asks the bank to reverse a payment you did not authorise. Card holders have rights to dispute unknown charges, but there are time limits. Report the problem to your card issuer as soon as you notice it.'),
+        ('Recovery steps',
+         'If your identity is stolen, report it to the relevant agencies and to the companies involved. Get a copy of your credit reports and check them for new accounts. Keep records of every call and letter, since recovery can take time.'),
+        ('Habits that protect',
+         'Use a different strong password for each account, and turn on two-factor sign-in wherever it is offered. Never share codes with anyone who contacts you. Check statements and alerts regularly, so that fraud is caught early.'),
+    ],
+    "test": [
+        ('What is phishing?',
+         [('a', 'Fishing for compliments'), ('b', 'Catching fish in a river'), ('c', 'Buying nets'), ('d', 'Tricking people into giving private details, often through fake messages')],
+         'd'),
+        ('What does a credit freeze do?',
+         [('a', 'Freezes your phone'), ('b', 'Stops the rain'), ('c', 'Stops new credit being opened in your name until you lift it'), ('d', 'Pauses sales in a shop')],
+         'c'),
+        ('What is a chargeback?',
+         [('a', 'A card dispute that asks the bank to reverse a payment you did not authorise'), ('b', 'A bank salary'), ('c', 'A holiday fee'), ('d', 'A gift')],
+         'a'),
+        ('Which habit helps protect your accounts?',
+         [('a', 'Reusing one password everywhere'), ('b', 'Sharing codes with strangers'), ('c', 'Turning on two-factor sign-in'), ('d', 'Ignoring your statements')],
+         'c'),
+        ('What is a warning sign in a message?',
+         [('a', 'A polite greeting from a known friend'), ('b', 'A fake urgent demand to act or pay now'), ('c', 'A bank statement you asked for'), ('d', 'Nothing at all')],
+         'b'),
+    ],
+}

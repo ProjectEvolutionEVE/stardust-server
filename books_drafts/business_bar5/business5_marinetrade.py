@@ -1,0 +1,37 @@
+"""Shipping Insurance and Marine Trade: underwriting a voyage, general average, bills of lading, Incoterms, piracy risk and the cost of a voyage."""
+CODE = 'business5_marinetrade'
+BOOK = {
+    "title": 'Shipping Insurance and Marine Trade',
+    "subtitle": 'Underwriting a voyage, general average, bills of lading, Incoterms and the cost of risk',
+    "chapters": [
+        ('Insuring a voyage',
+         'Ships carry goods across oceans, where storms, fire, and piracy are real risks. Marine insurance lets the owner or buyer share those losses with an insurer. Underwriters price the risk by looking at the ship, the cargo, the route, and the season.'),
+        ('General average',
+         'General average is an old principle: if cargo is sacrificed to save a ship, the loss is shared by everyone who gains from the voyage. The rule spreads a sacrifice across all the parties. It has been part of maritime law for centuries.'),
+        ('Bills of lading',
+         'A bill of lading is a document issued by the carrier that records the goods shipped. It serves as a receipt and as proof of ownership for the buyer. Banks often use it when they finance a trade.'),
+        ('Incoterms',
+         'Incoterms are standard trade terms published by the International Chamber of Commerce. They define who pays for shipping and insurance, and when the risk passes from seller to buyer. Clear terms prevent disputes between buyer and seller.'),
+        ('Piracy risk',
+         'Piracy remains a threat on some sea lanes. Shipping lines plan routes, guards, and insurance premiums around that risk. A higher risk raises the cost of the voyage for everyone.'),
+        ('The cost of the voyage',
+         'The total cost of moving goods by sea includes freight, insurance, delays, and the price of risk. A business that understands these costs can price its goods honestly. Shipping is cheap per tonne, but the risks are never zero.'),
+    ],
+    "test": [
+        ('What is general average?',
+         [('a', 'A type of ship'), ('b', 'A weather report'), ('c', 'A cargo tax'), ('d', 'A rule that shares the loss from a sacrifice across all who gain')],
+         'd'),
+        ('What does a bill of lading record?',
+         [('a', "The crew's pay"), ('b', 'The weather at sea'), ('c', 'The goods shipped, serving as a receipt'), ('d', 'The names of ports only')],
+         'c'),
+        ('Who publishes Incoterms?',
+         [('a', 'The International Chamber of Commerce'), ('b', 'The Royal Navy'), ('c', 'A bank in London only'), ('d', 'A film studio')],
+         'a'),
+        ('What does marine insurance let an owner do?',
+         [('a', 'Avoid all risks'), ('b', 'Keep the ship in port'), ('c', 'Share losses with an insurer'), ('d', 'Stop piracy')],
+         'c'),
+        ('What does a higher piracy risk do to the cost of a voyage?',
+         [('a', 'Lowers it'), ('b', 'Raises it for everyone'), ('c', 'Does nothing'), ('d', 'Makes ships free')],
+         'b'),
+    ],
+}

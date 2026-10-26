@@ -1,0 +1,37 @@
+"""Parmalat: an Italian dairy group, a forged bank document, a hole in its accounts, and the 2003 collapse."""
+CODE = 'business5_parmalat'
+BOOK = {
+    "title": 'Parmalat',
+    "subtitle": 'A dairy giant, forged bank papers, and a collapse in 2003',
+    "chapters": [
+        ("Italy's dairy giant",
+         'Parmalat grew from a small Italian dairy into a large food group with brands sold across many countries. Its milk and juice were familiar to families in Italy and abroad. Fast growth can hide weak finances if the books are not checked closely.'),
+        ('The missing money',
+         "Parmalat's accounts showed large amounts of cash that did not exist. When the gap was found, the company could not pay its debts. The hole in its finances was many billions of euros."),
+        ('Forged bank documents',
+         'The company used a forged letter that seemed to come from a large bank, claiming that a huge sum of money sat in an account. The bank had not written it. Forged papers are used to hide losses, and checking with the source is the simple way to catch them.'),
+        ('The 2003 collapse',
+         'In late 2003 Parmalat was unable to repay bonds and fell into insolvency. Investors and savers lost large sums, and the scandal shook confidence in Italian business. The collapse was swift once the lies were exposed.'),
+        ('Auditors',
+         "Auditors are meant to check a company's accounts independently. In Parmalat's case, the checks failed to find the falsehoods in time. An auditor is only useful when it looks at the real evidence, not just the papers it is shown."),
+        ('Governance',
+         "Good governance means a board that asks hard questions and an owner who is honest about the business. Family control with little outside scrutiny can let problems grow. Strong governance is a defence against a company's own mistakes."),
+    ],
+    "test": [
+        ('What kind of business was Parmalat at its heart?',
+         [('a', 'A railway'), ('b', 'A dairy and food group'), ('c', 'A cinema chain'), ('d', 'A gold mine')],
+         'b'),
+        ('What kind of document was used to hide the gap in the accounts?',
+         [('a', 'A wedding invitation'), ('b', 'A map of Rome'), ('c', 'A recipe book'), ('d', 'A forged letter that seemed to come from a bank')],
+         'd'),
+        ('What was the year of the collapse?',
+         [('a', '1975'), ('b', '1990'), ('c', '2003'), ('d', '2012')],
+         'c'),
+        ('What is an auditor meant to do?',
+         [('a', "Check a company's accounts independently"), ('b', 'Design the packaging'), ('c', 'Drive the delivery vans'), ('d', 'Choose the name of the brand')],
+         'a'),
+        ('Why is checking with the source a good way to catch forgeries?',
+         [('a', 'It makes the paper heavier'), ('b', 'It stops the company from paying tax'), ('c', 'It shows whether the claimed bank actually issued the paper'), ('d', 'It moves money to another country')],
+         'c'),
+    ],
+}

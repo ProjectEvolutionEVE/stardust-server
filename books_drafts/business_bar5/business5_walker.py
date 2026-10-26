@@ -1,0 +1,37 @@
+"""Madam C. J. Walker: a hair care business built by sales agents, and how she gave back to her community."""
+CODE = 'business5_walker'
+BOOK = {
+    "title": 'Madam C. J. Walker and Her Company',
+    "subtitle": 'Hair care, sales agents and a business built from nothing',
+    "chapters": [
+        ('Early life',
+         'Sarah Breedlove, later known as Madam C. J. Walker, was born in 1867 in Louisiana to parents who had been enslaved and were then freed. She grew up in hard conditions and worked hard from early on. Her later success started with a problem she knew well.'),
+        ('Hair care products',
+         'Walker developed hair care products aimed at Black women, whose needs were often ignored by the beauty trade. Her products came with a method of care that customers could follow at home. A clear product and a clear promise helped her business stand out.'),
+        ('Sales agents',
+         'Walker trained sales agents, many of them women, to sell her products door to door and in their own communities. The agents earned a living and often built businesses of their own. Her system gave many women an income they could not otherwise have had.'),
+        ('A base in Indianapolis',
+         'Her business grew, and its headquarters and factory were in Indianapolis. It became a large company for its time. Its success showed what a business run by women could achieve.'),
+        ('Giving back',
+         'Walker gave money to schools, churches and causes that helped Black communities. She spoke often about the duty to help others. Her story shows that wealth can serve a community as well as its owner.'),
+        ('A lesson in enterprise',
+         'Her story shows how a clear product, a trained sales team and a strong name can build a business. It is also a reminder that many people start with far less than others. Study it as history, and as a lesson in how a small business can grow.'),
+    ],
+    "test": [
+        ("In which city were Madam C. J. Walker's headquarters and factory?",
+         [('a', 'Chicago'), ('b', 'New York'), ('c', 'Atlanta'), ('d', 'Indianapolis')],
+         'd'),
+        ('What did the company mainly sell?',
+         [('a', 'Cars'), ('b', 'Newspapers'), ('c', 'Hair care products'), ('d', 'Furniture')],
+         'c'),
+        ("Who sold the company's products, many of them women?",
+         [('a', 'Sales agents'), ('b', 'Machines'), ('c', 'Government clerks'), ('d', 'Bank managers')],
+         'a'),
+        ('What did Walker do with much of her wealth?',
+         [('a', 'She hid it'), ('b', 'She spent it all on cars'), ('c', 'She gave it to schools, churches and causes'), ('d', 'She closed the business')],
+         'c'),
+        ("What were Walker's parents?",
+         [('a', 'Rich merchants'), ('b', 'Freed people who had been enslaved'), ('c', 'Royal servants'), ('d', 'Farm owners')],
+         'b'),
+    ],
+}

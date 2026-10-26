@@ -1,0 +1,37 @@
+"""Zara and Fast Fashion: a Spanish retailer that moves from design to shop floor in weeks, and what speed costs."""
+CODE = 'business5_zara'
+BOOK = {
+    "title": 'Zara and Fast Fashion',
+    "subtitle": 'Small batches, quick cycles, and the price of speed',
+    "chapters": [
+        ('Inditex in Spain',
+         'Zara is the best-known brand of Inditex, a group founded in Spain. Its first shop opened in the 1970s in the north-west of the country, and the group grew steadily from there. The company is run from close to where its clothes are designed.'),
+        ('Small batches',
+         'Zara makes clothes in small batches and sends them out fast. A style that sells well can be restocked quickly, and a style that does not sell can be dropped. Small batches reduce the risk of holding stock nobody wants.'),
+        ('From design to shelf',
+         'Zara is known for moving a design from sketch to shop in a few weeks, far quicker than many rivals. The speed comes from short supply chains, close links with factories and a central team that watches sales every day. Speed is a system, not a single trick.'),
+        ('Control of stock',
+         'Central control of stock means the company decides where each item goes and when it is moved. Shops get frequent deliveries, so customers see new things often and come back. Careful control keeps unsold stock low.'),
+        ('Little advertising',
+         'Zara spends little on traditional advertising. Its shops are its advertising, and new arrivals create a reason to visit. A strong product and fast turnover can replace a large advertising budget.'),
+        ('The risk of fast cycles',
+         "Fast cycles carry risks. Quick trends can fade, workers in some supply chains have faced hard conditions, and the pace can wear down the brand's own name for quality. A business that runs fast must watch its costs of speed as closely as its gains."),
+    ],
+    "test": [
+        ('In which country was the Inditex group founded?',
+         [('a', 'Italy'), ('b', 'Portugal'), ('c', 'Spain'), ('d', 'Sweden')],
+         'c'),
+        ('What is the main reason Zara keeps batches small?',
+         [('a', 'To reduce the risk of holding stock nobody wants'), ('b', 'To make clothes cheaper to ship by boat only'), ('c', 'Because the law requires small batches'), ('d', 'To sell clothes only online')],
+         'a'),
+        ('What does central control of stock allow the company to do?',
+         [('a', 'Stop all sales in winter'), ('b', 'Hire more advertisers'), ('c', 'Decide where each item goes and when it is moved'), ('d', 'Cancel every supplier')],
+         'c'),
+        ('Why does Zara spend little on traditional advertising?',
+         [('a', 'Advertising is banned in fashion'), ('b', 'Its shops and new arrivals act as the advertising'), ('c', 'Its clothes sell themselves in every country'), ('d', 'Its owners dislike television')],
+         'b'),
+        ('Which is a risk the chapter gives for fast fashion cycles?',
+         [('a', 'Shops will run out of hangers'), ('b', 'Customers will never return'), ('c', 'Fabric will become free'), ('d', 'Trends can fade quickly and the pace can wear down quality')],
+         'd'),
+    ],
+}

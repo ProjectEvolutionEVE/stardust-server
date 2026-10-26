@@ -1,0 +1,37 @@
+"""Lobbying and Business: how interest groups seek influence on rules, the disclosure rules that apply, regulatory capture and ethical lines."""
+CODE = 'business5_lobbying'
+BOOK = {
+    "title": 'Lobbying and Business',
+    "subtitle": 'How firms and groups seek influence over rules, and where the ethical lines are',
+    "chapters": [
+        ('Interest groups',
+         'Lobbying is the work of trying to influence laws and rules. Firms, unions, charities and other groups all lobby. Each speaks for an interest, and governments hear many voices. Lobbying is a normal part of democratic life.'),
+        ('How influence works',
+         'Lobbyists share information, give evidence, meet officials and prepare briefings. They may run campaigns to build public support. Good influence rests on accurate facts and a clear argument.'),
+        ('Disclosure rules',
+         'Many countries require lobbyists to register and report their activity. In the United States, the Lobbying Disclosure Act of 1995 requires many lobbyists to register and file reports. Disclosure lets the public see who is trying to influence whom.'),
+        ('Regulatory capture',
+         'Regulatory capture happens when a regulator starts to serve the interests of the industry it is meant to supervise. George Stigler wrote about this idea in 1971. It is a warning that rules can be bent by those they govern.'),
+        ('Campaigns',
+         'Campaigns can be useful for public debate, but they can also mislead when they hide who pays for them. Transparent campaigns name their backers and offer evidence. Hidden or astroturf campaigns are a clear ethical problem.'),
+        ('Ethical lines',
+         'Ethical lobbying tells the truth, discloses interests and respects the rules. It avoids bribes, gifts that buy favour, and deals that hide conflicts. A firm that keeps these lines is more likely to earn lasting trust.'),
+    ],
+    "test": [
+        ('What is lobbying?',
+         [('a', 'Printing money'), ('b', 'Selling lobsters at a market'), ('c', 'Trying to influence laws and rules'), ('d', 'Building roads for the state')],
+         'c'),
+        ('What did the Lobbying Disclosure Act of 1995 require in the United States?',
+         [('a', 'That all lobbyists work for free'), ('b', 'Many lobbyists to register and file reports'), ('c', 'That lobbying is banned'), ('d', 'That lobbyists wear badges')],
+         'b'),
+        ('What is regulatory capture?',
+         [('a', 'When a regulator goes on holiday'), ('b', 'When a regulator writes a poem'), ('c', 'When a regulator buys a house'), ('d', 'When a regulator starts to serve the industry it should supervise')],
+         'd'),
+        ('Who wrote about regulatory capture in 1971?',
+         [('a', 'Clayton Christensen'), ('b', 'Henry Mintzberg'), ('c', 'George Stigler'), ('d', 'Eric Ries')],
+         'c'),
+        ('Which of these is an ethical line the text names?',
+         [('a', 'Avoiding bribes and gifts that buy favour'), ('b', 'Ignoring the rules'), ('c', 'Hiding every interest'), ('d', 'Paying officials in secret')],
+         'a'),
+    ],
+}

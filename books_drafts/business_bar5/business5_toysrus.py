@@ -1,0 +1,37 @@
+"""Toys R Us: a category killer that grew big on low prices, then carried heavy debt into the online age."""
+CODE = 'business5_toysrus'
+BOOK = {
+    "title": 'Toys R Us',
+    "subtitle": 'A category killer, heavy debt, and the online age',
+    "chapters": [
+        ('Charles Lazarus and the big store',
+         'Charles Lazarus opened his first toy store in 1948 in Washington, DC. He sold toys in a large, low-cost store and was one of the first to do so at scale. The idea of a big store full of one kind of goods changed toy shopping.'),
+        ('A category killer',
+         'Toys R Us became a category killer, a large store that dominates one type of product so completely that smaller shops cannot compete. Its size let it buy in bulk and keep prices low. Dominance in one niche can be a strong position.'),
+        ('The 2005 buyout',
+         "In 2005 a group of private equity firms bought Toys R Us in a deal worth several billion dollars. The new owners borrowed heavily to pay for it. Debt is a tool, but it must be paid back from the company's earnings."),
+        ('Heavy debt',
+         'The company carried a large debt load for years. Interest payments took money that could have gone into stores and staff. A business that owes more than it can comfortably earn is always at risk in a downturn.'),
+        ('Online rivals',
+         'Online sellers offered wide choice and easy delivery, and parents could compare prices from home. Toys R Us struggled to keep up with online shopping while it paid for its debt. Slow change in a fast market can be fatal.'),
+        ('The 2018 closure',
+         'Toys R Us filed for bankruptcy in 2017 and closed its US stores in 2018. The story is a warning about debt, timing and change. A strong position can be lost when the market moves and a company cannot afford to move with it.'),
+    ],
+    "test": [
+        ('In what year did Charles Lazarus open his first toy store?',
+         [('a', '1972'), ('b', '1999'), ('c', '1930'), ('d', '1948')],
+         'd'),
+        ('What is a category killer?',
+         [('a', 'A store that sells only broken toys'), ('b', 'A shop that closes every winter'), ('c', 'A store that dominates one type of product so completely that rivals struggle'), ('d', 'A cafe inside a toy store')],
+         'c'),
+        ('What did the 2005 buyout add to the company?',
+         [('a', 'Heavy debt'), ('b', 'A chain of banks'), ('c', 'A fleet of ships'), ('d', 'A new country')],
+         'a'),
+        ('What did debt take away from the company, according to the chapter?',
+         [('a', 'Its brand name'), ('b', 'Its toy designers'), ('c', 'Money that could have gone into stores and staff'), ('d', 'Its legal licence')],
+         'c'),
+        ('What warning does the chapter draw from the 2018 closure?',
+         [('a', 'Toys never need to change'), ('b', 'Debt and slow change can destroy even a strong position'), ('c', 'Online shopping always fails'), ('d', 'Big stores are always safe')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Efficiency Wages: pay above the market, Ford's five dollars, shirking, turnover, the effect on unemployment and the limits of the idea."""
+CODE = 'business5_efficiencywage'
+BOOK = {
+    "title": 'Efficiency Wages',
+    "subtitle": 'Why paying more can make workers more productive, and what it does to jobs',
+    "chapters": [
+        ('Pay above the market',
+         'An efficiency wage is set above the level the market would require, because a higher wage makes the job worth more to the worker and so can raise output. Economists have studied this idea for about a century.'),
+        ("Ford's five dollars",
+         'In January 1914 Henry Ford announced a minimum pay of five dollars a day, well above the usual wage at the time, along with a shorter working day. Ford said it cut staff turnover and helped him hire better workers. Historians still debate how much of the gain came from this.'),
+        ('Shirking',
+         'If monitoring workers is costly, some may shirk. In 1984 Carl Shapiro and Joseph Stiglitz showed that a wage above the market rate makes losing a job costly, which gives workers more reason to work hard.'),
+        ('Turnover',
+         'Paying more reduces the cost of replacing staff. Recruiting and training are expensive, and a stable workforce can be more productive as a result.'),
+        ('Effect on unemployment',
+         'If firms pay above the market rate, they may not cut wages when demand falls. Some unemployment can then persist. Fairness and staff morale can also lead firms to keep wages steady.'),
+        ('Limits',
+         'Efficiency wages do not explain every wage pattern. Firms must weigh higher pay against higher costs. The effect appears in some settings, but its size varies a great deal from one to another.'),
+    ],
+    "test": [
+        ('What is an efficiency wage?',
+         [('a', 'A wage set below the market rate'), ('b', 'A wage fixed by law'), ('c', 'A wage set above the market rate to raise productivity'), ('d', 'A tip paid by customers')],
+         'c'),
+        ('What did Henry Ford announce in 1914?',
+         [('a', 'A five-dollar day and a shorter working day'), ('b', 'A ban on cars'), ('c', 'A cap on wages at two dollars'), ('d', 'The end of the assembly line')],
+         'a'),
+        ('Who wrote the 1984 shirking model?',
+         [('a', 'Keynes and Hicks'), ('b', 'Smith and Ricardo'), ('c', 'Carl Shapiro and Joseph Stiglitz'), ('d', 'Marx and Engels')],
+         'c'),
+        ('Why can higher pay reduce turnover costs?',
+         [('a', 'Staff never leave'), ('b', 'Replacing and training staff is expensive'), ('c', 'Pay has no effect on staff'), ('d', 'Workers prefer lower pay')],
+         'b'),
+        ('How can efficiency wages affect unemployment?',
+         [('a', 'By removing all unemployment'), ('b', 'By lowering all wages'), ('c', 'By banning hiring'), ('d', 'By keeping wages above market, some unemployment can persist')],
+         'd'),
+    ],
+}

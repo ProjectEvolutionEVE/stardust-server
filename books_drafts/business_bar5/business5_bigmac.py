@@ -1,0 +1,37 @@
+"""The Big Mac Index and Purchasing Power: the burger index, the law of one price, over- and undervalued currencies, Balassa-Samuelson and the index's limits."""
+CODE = 'business5_bigmac'
+BOOK = {
+    "title": 'The Big Mac Index and Purchasing Power',
+    "subtitle": 'A burger as a rough guide to whether currencies are fairly valued',
+    "chapters": [
+        ('The burger',
+         'In 1986 The Economist began its Big Mac Index. It compares the price of a Big Mac in many countries, converted into dollars, as a simple guide to whether exchange rates are in line.'),
+        ('The law of one price',
+         'The idea is that identical goods should cost about the same everywhere once prices are converted into one currency. If they do not, the exchange rate may be out of line with purchasing power.'),
+        ('Over- and undervalued currencies',
+         "If a Big Mac costs less in dollars in another country than in the United States, that country's currency looks undervalued on this measure. A dearer burger suggests an overvalued currency."),
+        ('Why it works, roughly',
+         'A burger contains local inputs such as labour and rent, which are cheap or dear from place to place. Over long periods exchange rates do tend to move toward purchasing power, so the index is a rough guide.'),
+        ('The Balassa-Samuelson effect',
+         'Richer countries often have higher prices for services. Productivity gains in traded goods push up wages across the economy, which lifts the price of local services. This explains part of why prices differ, even when exchange rates are fair.'),
+        ('Limits',
+         'Taxes, rents, wages and local costs all distort prices. The index is useful for teaching and fun to read, but it is only a rough signal, not a precise measure of value.'),
+    ],
+    "test": [
+        ('When did The Economist start its Big Mac Index?',
+         [('a', '1966'), ('b', '2006'), ('c', '1986'), ('d', '1936')],
+         'c'),
+        ('What is the law of one price?',
+         [('a', 'Each good has one price in its home country'), ('b', 'Identical goods cost about the same everywhere once converted into one currency'), ('c', 'Every price is fixed by law'), ('d', 'One currency is worth one dollar')],
+         'b'),
+        ('If a Big Mac is cheaper in dollars in another country than in the United States, that currency looks what?',
+         [('a', 'Overvalued'), ('b', 'Fixed'), ('c', 'Abolished'), ('d', 'Undervalued')],
+         'd'),
+        ('What does the Balassa-Samuelson effect suggest?',
+         [('a', 'Richer countries have lower service prices'), ('b', 'Burgers cost the same everywhere'), ('c', 'Richer countries often have higher prices for services'), ('d', 'Taxes never affect prices')],
+         'c'),
+        ('What limits the Big Mac Index?',
+         [('a', 'Taxes, rents, wages and local costs distort prices'), ('b', 'Burgers are identical everywhere'), ('c', 'It measures gold'), ('d', 'It includes all goods in a country')],
+         'a'),
+    ],
+}

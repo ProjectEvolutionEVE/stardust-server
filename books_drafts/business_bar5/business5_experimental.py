@@ -1,0 +1,37 @@
+"""Experimental Economics: Vernon Smith's classroom markets, the ultimatum game, public goods games, lab against field and what experiments taught."""
+CODE = 'business5_experimental'
+BOOK = {
+    "title": 'Experimental Economics',
+    "subtitle": 'Testing economic ideas in the lab, and what the results taught',
+    "chapters": [
+        ('Testing in a lab',
+         'Experimental economics tests ideas in controlled settings. Researchers set up games, often with real money, and watch how people choose. It lets them check what economic theory predicts.'),
+        ("Vernon Smith's markets",
+         'From the 1950s, Vernon Smith ran classroom markets in which buyers and sellers traded under set rules. Prices often moved toward the level that supply and demand predict. Smith shared the 2002 Nobel Prize for this work.'),
+        ('The ultimatum game',
+         'One player proposes how to split a sum, and the other accepts or rejects. If the offer is rejected, both get nothing. Simple theory predicts a tiny offer, yet people often offer much more and reject very low offers.'),
+        ('Public goods games',
+         'In games where players can contribute to a shared pot, contributions often start high and fall over repeated rounds. Some players will pay to punish free riders, which changes the outcome.'),
+        ('Lab against field',
+         'Critics ask whether lab results carry over to real life. Lab participants are often students in artificial settings, so researchers test their findings in field studies too.'),
+        ('What experiments taught',
+         'Experiments show that people care about fairness, reciprocity and social norms more than the simplest model suggests. They have not replaced theory, but they have sharpened it.'),
+    ],
+    "test": [
+        ('What does experimental economics do?',
+         [('a', 'Builds rockets'), ('b', 'Prints money'), ('c', 'Tests ideas in controlled settings with real choices'), ('d', 'Replaces all markets')],
+         'c'),
+        ('In the ultimatum game, what happens if the other player rejects the offer?',
+         [('a', 'The proposer keeps everything'), ('b', 'Both players get nothing'), ('c', 'The money goes to charity'), ('d', 'The game restarts with a new sum')],
+         'b'),
+        ('What did Vernon Smith show in his classroom markets?',
+         [('a', 'Prices never change'), ('b', 'Only the teacher sets prices'), ('c', 'Markets always crash'), ('d', 'Prices often move toward levels that supply and demand predict')],
+         'd'),
+        ('What often happens to contributions in repeated public goods games?',
+         [('a', 'They rise without limit'), ('b', 'They are always zero from the start'), ('c', 'They often fall over repeated rounds'), ('d', 'They are fixed by the teacher')],
+         'c'),
+        ('What criticism is often raised against lab experiments?',
+         [('a', 'Results may not carry over to real life'), ('b', 'Experiments cost nothing'), ('c', 'Participants are always experts'), ('d', 'Lab money is legal tender')],
+         'a'),
+    ],
+}

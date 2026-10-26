@@ -1,0 +1,37 @@
+"""Sovereign Wealth Funds: savings from oil and trade, Norway's and Singapore's funds, withdrawal rules, and governance."""
+CODE = 'business5_swf'
+BOOK = {
+    "title": 'Sovereign Wealth Funds',
+    "subtitle": 'How countries save for the future, and how the savings are invested',
+    "chapters": [
+        ('Oil money saved',
+         'A sovereign wealth fund is a pool of investments owned by a government. Many are funded by oil or gas income, or by a large trade surplus. Instead of spending every windfall, a country saves part of it for later years.'),
+        ("Norway's fund",
+         "Norway's Government Pension Fund Global is one of the largest funds in the world. It invests money from Norway's oil income in shares and bonds across many countries. Its growth is a model for many other countries that want to save for the future."),
+        ("Singapore's funds",
+         'Singapore runs several investment vehicles, including GIC and Temasek. They invest in many markets and sectors, and their approach differs from the Norwegian model. Both show how a small trading nation can build large savings.'),
+        ('Rules of withdrawal',
+         "Most funds have rules for how much may be taken out each year. A common rule is to spend only a modest share of the fund's value, so the savings last. Good rules protect the fund from politicians who want to spend it all at once."),
+        ('Investing abroad',
+         'Many funds invest outside their home country to spread risk. This can protect the national economy if prices at home fall. It also gives the country a stake in the growth of other economies.'),
+        ('Governance concerns',
+         'Critics ask whether funds are run openly, whether their managers are accountable, and whether politics affects their choices. Many funds now publish reports and follow clear rules to answer these concerns.'),
+    ],
+    "test": [
+        ('What is a sovereign wealth fund?',
+         [('a', 'A bank for families'), ('b', 'A shop that sells sovereign goods'), ('c', 'A school prize'), ('d', 'A pool of investments owned by a government')],
+         'd'),
+        ('What often funds these funds?',
+         [('a', 'Donations from schoolchildren'), ('b', 'Money found in the sea'), ('c', 'Oil or gas income, or a large trade surplus'), ('d', 'Lottery tickets')],
+         'c'),
+        ("What is Norway's fund called?",
+         [('a', 'The Government Pension Fund Global'), ('b', 'The Royal Bakery Fund'), ('c', 'The Mountain Trust'), ('d', 'The Fishing Club')],
+         'a'),
+        ('Why do many funds have withdrawal rules?',
+         [('a', 'So the money can be eaten'), ('b', 'So the fund can never invest'), ('c', 'So the savings last and are not all spent at once'), ('d', 'So coins can be melted')],
+         'c'),
+        ('What is a main governance concern about these funds?',
+         [('a', 'Whether they sell too much ice cream'), ('b', 'Whether they are run openly and whether politics affects their choices'), ('c', 'Whether they can fly'), ('d', 'Whether they have too many pets')],
+         'b'),
+    ],
+}

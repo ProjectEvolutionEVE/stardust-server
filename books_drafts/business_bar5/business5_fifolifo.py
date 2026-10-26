@@ -1,0 +1,37 @@
+"""Inventory Valuation: FIFO and LIFO. How a business chooses which costs go to sales, and what that does to profit and tax."""
+CODE = 'business5_fifolifo'
+BOOK = {
+    "title": 'Inventory Valuation: FIFO and LIFO',
+    "subtitle": 'Which cost leaves the shelves first, and what it does to profit',
+    "chapters": [
+        ('Why the cost of stock moves',
+         'A shop often buys the same goods at different prices over time. When it sells some of them, it must decide which purchase price counts as the cost of what was sold. The method it picks changes the reported profit, even though the goods and the sales are the same.'),
+        ('First in, first out',
+         'FIFO assumes the oldest stock sells first. Under rising prices, the older and cheaper costs go to cost of sales, so reported profit looks higher. The stock left on the shelf is valued at the newer, dearer prices.'),
+        ('Last in, first out',
+         'LIFO assumes the newest stock sells first. Under rising prices, the newer and dearer costs go to cost of sales, which lowers reported profit. The stock left on the shelf is valued at the older prices, which can look low on the balance sheet.'),
+        ('The tax effect',
+         'Lower reported profit can mean a smaller tax bill in the short run. LIFO is allowed under US accounting rules but is banned under the international IFRS standards. The rules a firm follows depend on where it reports.'),
+        ('Lower of cost or market',
+         'Stock is not carried at more than it is worth. Under the lower of cost or market rule, if the value of stock falls below its cost, the loss is recorded straight away. Prices that fall are not hidden until the goods are sold.'),
+        ('Reading the difference',
+         'Two firms with the same trade can report different profits and stock values just because they use different methods. Read the notes to the accounts, which say which method is used. Compare like with like before you judge which firm is doing better.'),
+    ],
+    "test": [
+        ('Under rising prices, which method usually gives the higher reported profit?',
+         [('a', 'FIFO'), ('b', 'LIFO'), ('c', 'Neither method ever changes profit'), ('d', 'Profit is always the same under both')],
+         'a'),
+        ('What does LIFO assume about the order in which stock sells?',
+         [('a', 'Stock never sells'), ('b', 'The oldest stock sells first'), ('c', 'The newest stock sells first'), ('d', 'Stock sells at random')],
+         'c'),
+        ('Which set of accounting standards does not allow LIFO?',
+         [('a', 'US GAAP'), ('b', 'IFRS'), ('c', 'Both of them'), ('d', 'Neither of them')],
+         'b'),
+        ('What does the lower of cost or market rule mean for stock?',
+         [('a', 'Stock is valued at the higher of its cost or its market value'), ('b', 'Stock is never written down'), ('c', "Stock is valued at last year's price"), ('d', 'Stock is carried at the lower of its cost or market value, so falls are recorded at once')],
+         'd'),
+        ('Why can two firms in the same trade report different profits?',
+         [('a', 'They have different colours on their logos'), ('b', 'The law requires different numbers from each'), ('c', 'They use different stock valuation methods'), ('d', 'One of them has no customers')],
+         'c'),
+    ],
+}

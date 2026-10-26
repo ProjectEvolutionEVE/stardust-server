@@ -1,0 +1,37 @@
+"""Choosing a Bank Account: checking and savings accounts, fees, interest, overdraft rules, credit unions against banks, and deposit insurance limits."""
+CODE = 'business5_banking'
+BOOK = {
+    "title": 'Choosing a Bank Account',
+    "subtitle": 'Where your money sits, and what it costs to keep it there',
+    "chapters": [
+        ('Checking and savings',
+         'A checking account is for everyday spending, paying bills and receiving pay. A savings account is for money you want to keep and grow a little. Many people use both, moving money between them as needed.'),
+        ('Fees',
+         "Accounts can carry monthly fees, fees for using other banks' cash machines, and charges for paper statements or wire transfers. Some fees can be avoided by meeting a minimum balance or using a set number of services. Read the fee schedule before you open an account."),
+        ('Interest',
+         'Savings accounts pay interest, usually expressed as an annual rate. Rates change over time and can differ a lot between banks. Compare the rate and any conditions before choosing where to keep your savings.'),
+        ('Overdraft rules',
+         'An overdraft lets you spend more than your balance, usually with a fee or interest. Some banks only allow overdrafts for debit card payments if you have opted in. Check the rules, because repeated overdrafts can be costly.'),
+        ('Credit unions against banks',
+         'A credit union is a member-owned financial co-operative. Its members are its owners, and it often offers lower fees and better rates on loans and savings. Banks usually have wider branch and app networks, so both have strengths.'),
+        ('Deposit insurance limits',
+         'In the United States, bank deposits are insured by the FDIC up to a set limit per depositor, per bank and per ownership category. Credit unions have a similar insurance scheme through the NCUA. Know the limit so that large balances are not left uninsured.'),
+    ],
+    "test": [
+        ('What is a checking account mainly for?',
+         [('a', 'Everyday spending and payments'), ('b', 'Long-term growth only'), ('c', 'Buying ships'), ('d', 'Storing gold bars')],
+         'a'),
+        ('What is a credit union?',
+         [('a', 'A bank for pets'), ('b', 'A type of loan shark'), ('c', 'A member-owned financial co-operative'), ('d', 'A card brand')],
+         'c'),
+        ('What does an overdraft do?',
+         [('a', 'Adds money for free'), ('b', 'Lets you spend more than your balance, often with a fee'), ('c', 'Closes the account'), ('d', 'Freezes the interest rate')],
+         'b'),
+        ('What does deposit insurance do?',
+         [('a', 'Pays your bills'), ('b', 'Stops the rain'), ('c', 'Lowers taxes'), ('d', 'Protects deposits up to a set limit if a bank fails')],
+         'd'),
+        ('What should you compare when picking a savings account?',
+         [('a', 'The colour of the card'), ('b', "The size of the bank's logo"), ('c', 'The interest rate and the fees'), ('d', 'The name of the branch cat')],
+         'c'),
+    ],
+}

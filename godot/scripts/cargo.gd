@@ -30,6 +30,8 @@ var xfer := {}
 var hold_btn: Button
 var hold_fill: ColorRect
 var collect_btn: Button
+var pick_btn: Button                              # Science, fifth bar gold: choose the material to collect
+var pick := ""                                   # "" = any, nearest first
 var unload_btn: Button
 var cwrap: Control
 var cbar: ColorRect
@@ -129,7 +131,7 @@ func _send_collects() -> void:
 	sending = true
 	while not queue.is_empty():
 		var p: Dictionary = queue.pop_front()
-		var wait := last_sent + 2.2 - Time.get_ticks_msec() / 1000.0
+		var wait := last_sent + 2.2 / (1.0 + Session.skill("mining")) - Time.get_ticks_msec() / 1000.0
 		if wait > 0.0:
 			await get_tree().create_timer(wait).timeout
 		last_sent = Time.get_ticks_msec() / 1000.0
@@ -171,6 +173,8 @@ func _next_piece(f: Dictionary) -> int:
 		var p: Dictionary = f.pieces[i]
 		if p.taken or not shape_fits(p) or not room_for(p):
 			continue
+		if pick != "" and p.mat != pick:
+			continue
 		var d := (p.xf.origin as Vector3).distance_to(me)
 		if d < bd:
 			bd = d
@@ -195,16 +199,20 @@ func start_collect() -> void:
 		bay._say("TOO BIG TO TAKE\nThese pieces won't fit in your hold. Keep searching for a field of smaller debris.")
 		return
 	var i := _next_piece(f)
+	if i < 0 and pick != "":
+		bay._say("NONE LEFT\nNo %s you can take here. Pick another material, or ANY." % bay.debris.material(pick)[1].to_upper())
+		return
 	if i < 0:
 		Voice.say("full")
 		bay._say("HOLD FULL\nNo room left for these pieces. Return to the Starship to unload.")
 		return
-	collecting = {"f": f, "i": i, "t": 0.0, "dur": 2.0 + minf(10.0, f.pieces[i].box * 12.0)}
+	collecting = {"f": f, "i": i, "t": 0.0, "dur": (2.0 + minf(10.0, f.pieces[i].box * 12.0)) / (1.0 + Session.skill("mining"))}
 
 
 func tick(dt: float) -> void:
 	var f = bay.lock.get("field") if bay.lock.get("parked", false) else null
 	collect_btn.visible = f != null and collecting.is_empty() and xfer.is_empty()
+	pick_btn.visible = collect_btn.visible and Session.can_pick_material()
 	cwrap.visible = not collecting.is_empty()
 	unload_btn.visible = bay.docked and not cargo.is_empty() and xfer.is_empty()
 	_xfer_tick(dt)
@@ -278,6 +286,11 @@ func build(root: Control) -> void:
 		bay.sound.ping(660.0)
 		start_collect())
 	root.add_child(collect_btn)
+	pick_btn = bay._hud_button("PICK: ANY", Vector2(256, 1048), Vector2(208, 56), 32, "")
+	pick_btn.add_theme_font_size_override("font_size", 17)
+	pick_btn.visible = false
+	pick_btn.pressed.connect(_cycle_pick)
+	root.add_child(pick_btn)
 	unload_btn = bay._hud_button("UNLOAD", Vector2(256, 1120), Vector2(208, 64), 32, "")
 	unload_btn.add_theme_font_size_override("font_size", 21)
 	unload_btn.visible = false
@@ -640,3 +653,17 @@ func _save_receipt() -> void:
 func close_xfer() -> void:
 	x_panel.visible = false
 	xfer = {}
+
+
+## Step through the materials still in this field (then ANY). Only for a Science uniform with its fifth bar gold.
+func _cycle_pick() -> void:
+	var f = bay.lock.get("field") if bay.lock.get("parked", false) else null
+	if f == null:
+		return
+	var mats: Array = [""]
+	for p in f.pieces:
+		if not p.taken and not mats.has(p.mat):
+			mats.append(p.mat)
+	pick = mats[(mats.find(pick) + 1) % mats.size()]
+	pick_btn.text = "PICK: " + ("ANY" if pick == "" else bay.debris.material(pick)[1].split(" (")[0].to_upper())
+	bay.sound.ping(520.0)

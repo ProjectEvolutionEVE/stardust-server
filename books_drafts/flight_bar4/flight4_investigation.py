@@ -1,0 +1,37 @@
+"""Investigating an accident: keep the evidence, build the timeline, find the causes and follow up."""
+CODE = "flight4_investigation"
+BOOK = {
+    "title": "Investigating an Accident",
+    "subtitle": "Evidence, timelines, causes and the follow-up that prevents a repeat",
+    "chapters": [
+        ("Preserve the evidence first",
+         "The first job after an accident is to keep the evidence safe. Photographs, logs, recordings and the damaged parts themselves can disappear quickly if they are moved or cleaned. Investigators seal the scene and record exactly what was found where."),
+        ("Build the timeline",
+         "Next the investigators put events in order, down to the minute where they can. A clear timeline shows what happened before, during and after the problem. Gaps in the timeline often point to the questions that need answers."),
+        ("Causes and contributing factors",
+         "A cause is the thing that, if changed, would have prevented the accident. A contributing factor made the accident more likely or more severe without being the main trigger. Good investigators separate the two and do not stop at the first cause they find."),
+        ("Interviews",
+         "People who were there hold details that no instrument records. Interviews work best when they are open, calm and focused on what happened, not on who is to blame. A witness who fears punishment may leave out the very facts that matter most."),
+        ("Recommendations",
+         "A useful report ends with recommendations that are specific, practical and sized to the risk. Each one should name who will act and by when. A vague warning like be more careful is not a recommendation."),
+        ("Following up",
+         "A report that sits on a shelf prevents nothing. Good organisations track each recommendation until it is done and check that the change works. Follow-up turns a lesson from one bad day into lasting protection for everyone who comes after."),
+    ],
+    "test": [
+        ("Why are the first pieces of evidence sealed and recorded?",
+         [("a", "So they can be sold"), ("b", "Because they can disappear or change quickly if they are moved or cleaned"), ("c", "To keep the press away"), ("d", "Because evidence is never useful")],
+         "b"),
+        ("What is a contributing factor?",
+         [("a", "The one thing that alone always causes the accident"), ("b", "A person who was blamed"), ("c", "Something that made the accident more likely or more severe without being the main trigger"), ("d", "A record that was lost")],
+         "c"),
+        ("Why do good interviews focus on what happened rather than blame?",
+         [("a", "Because blame is always false"), ("b", "Because interviews are not recorded"), ("c", "Because the law forbids questions"), ("d", "Because people who fear punishment may leave out the facts that matter")],
+         "d"),
+        ("What makes a recommendation useful?",
+         [("a", "It is specific, practical, sized to the risk, and names who acts and by when"), ("b", "It is vague enough to cover everything"), ("c", "It is written after the report is filed"), ("d", "It asks people to be more careful")],
+         "a"),
+        ("Why does follow-up matter after a report is written?",
+         [("a", "Reports are never read"), ("b", "It tracks each recommendation until it is done and checks that the change works"), ("c", "It replaces the need for the timeline"), ("d", "It is only needed for legal cases")],
+         "b"),
+    ],
+}

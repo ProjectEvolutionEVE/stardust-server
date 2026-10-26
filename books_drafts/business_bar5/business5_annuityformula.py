@@ -1,0 +1,37 @@
+"""Present Value of a Stream of Payments: level payments, the annuity formula, perpetuities, growing streams and a loan seen backwards."""
+CODE = 'business5_annuityformula'
+BOOK = {
+    "title": 'Present Value of a Stream of Payments',
+    "subtitle": 'Level payments, the annuity formula, perpetuities, growing streams and a loan seen backwards',
+    "chapters": [
+        ('Money now and later',
+         'A dollar today is worth more than a dollar promised next year, because money can earn interest. To compare a stream of future payments, we discount each one back to today. The total of those discounted amounts is the present value.'),
+        ('Level payments and the formula',
+         'An annuity pays the same amount at regular intervals for a set number of periods. For a payment P per period, n periods, and rate r per period, the present value is P times one minus one over (1 plus r) to the power n, all divided by r. The formula saves adding every payment separately.'),
+        ('Perpetuities',
+         'A perpetuity pays forever. Its present value is the payment divided by the rate. It is a useful limit case, and it is easy to calculate.'),
+        ('Growing streams',
+         'A growing stream pays more each period by a fixed growth rate. If the rate is higher than the growth rate, its present value is the first payment divided by the difference between the two. This formula is widely used to value businesses and land.'),
+        ('A loan seen backwards',
+         'A loan is an annuity seen from the other side: the amount borrowed equals the present value of the repayments. Working this out tells you the payment for a given loan. It also shows how much interest you pay over the life of the loan.'),
+        ('Checking your work',
+         'Spreadsheets have built-in present value functions, which can check your work. Test a simple case first, such as one payment, to make sure the formula is right. Checking the result against a second method is good practice.'),
+    ],
+    "test": [
+        ('Why is money today worth more than the same money later?',
+         [('a', 'Money never changes'), ('b', 'Coins get heavier'), ('c', 'Money can earn interest'), ('d', 'Banks print less')],
+         'c'),
+        ('What does an annuity pay?',
+         [('a', 'The same amount at regular intervals for a set number of periods'), ('b', 'Random amounts'), ('c', 'Only once'), ('d', 'Only in summer')],
+         'a'),
+        ('What is the present value of a perpetuity?',
+         [('a', 'The payment times the rate'), ('b', 'The payment plus the rate'), ('c', 'The payment divided by the rate'), ('d', 'The payment squared')],
+         'c'),
+        ('In a loan seen as an annuity, what equals the present value of the repayments?',
+         [('a', 'The interest rate'), ('b', 'The amount borrowed'), ('c', 'The number of letters in the agreement'), ('d', "The bank's name")],
+         'b'),
+        ('What is a good check on a present value calculation?',
+         [('a', 'Guess the answer'), ('b', 'Ignore the rate'), ('c', 'Use the colour of the cell'), ('d', 'Test a simple case, like one payment, and compare with a second method')],
+         'd'),
+    ],
+}
