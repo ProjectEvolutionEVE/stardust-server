@@ -17,13 +17,12 @@ and most of their moons have been destroyed by something no one understands, and
 silent and unarmed, is sifting through the debris. The crew rebuild, study, and look for answers, and the New Earth
 waits on the other side.
 
-**Inara.** A real person (her story is told in the novel): an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
+**Inara.** The lead character of the novel *Stardust - Inara*: an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
 an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 12 languages, including Arabic.
 
-**The full story** is a novel, *Stardust - Inara*, offered in the game in text and as an audiobook. A short
-illustrated, voiced slideshow tells the backstory before a new player's first launch. An Arabic edition of the novel
-and slideshow is planned, as a thank-you to the UAE, the jam's host country.
+**The story before the game** is the novel *Stardust - Inara*: it ends where the game begins. It is offered in the game in text and as an audiobook. A short
+illustrated, voiced slideshow tells the backstory before a new player's first launch.
 
 - **Genre:** space life sim, mining and economy, with careers you learn through a shipboard library.
 - **Platform:** mobile first (Godot 4; iOS and Android), then PC (Steam) and the web.
