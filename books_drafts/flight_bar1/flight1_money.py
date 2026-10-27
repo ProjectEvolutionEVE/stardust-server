@@ -5,7 +5,7 @@ BOOK = {
     "subtitle": "The cost of flying, saving for a ship, borrowing wisely and a repair fund",
     "chapters": [
         ('What flying really costs',
-         'Every flight costs more than fuel. Your time is the first cost: a long run keeps you from other work. Your body pays too, because each of your three bars drains about 2.2 points an hour while you are awake, and your bed is the fastest way to win them back. Your craft wears out like any machine, so it needs upkeep, which is called maintenance: checking and servicing it before it breaks.'),
+         'Every flight costs more than fuel. Your time is the first cost: a long run keeps you from other work. Your body pays too, because your three bars drain about 2.2 points an hour on average while you are awake, and your bed is the fastest way to win them back. Your craft wears out like any machine, so it needs upkeep, which is called maintenance: checking and servicing it before it breaks.'),
         ('Income minus costs',
          'Budgeting comes down to one simple sum: what comes in, minus what goes out. Income is what you earn from trades, auctions and the Bank\'s desks. Costs include fuel, food, maintenance and the weekly payments on any loan. Every transfer gives you a receipt in your filing cabinet, so you can check where the money really went.'),
         ('Needs and wants',
@@ -18,7 +18,7 @@ BOOK = {
          'Paying a loan off early saves interest, because the early payoff is only what you still owe plus the interest up to that day. A missed payment brings a late fee, and your credit standing with the Bank falls, which makes the next loan harder to get. An emergency fund is money kept aside for surprises, such as a broken part, so a repair does not force you to borrow at a high rate.'),
     ],
     "test": [
-        ('What is the simplest way to see whether your money is growing?',
+        ('What is the simplest way to see whether you made a profit?',
          [('a', 'Count how many trips you took'), ('b', 'Add your income and your costs together'), ('c', 'Take your costs away from your income'), ('d', 'Look only at the credits you hold today')], 'c'),
         ('What happens if you close a term deposit before its term ends?',
          [('a', 'You get your money back but lose the interest it would have earned'), ('b', 'You earn double interest for closing early'), ('c', 'You lose the whole deposit'), ('d', 'Nothing changes, because the two kinds of deposit are the same')], 'a'),

@@ -9,7 +9,7 @@ BOOK = {
         ("A worked example",
          "Say a copy costs 14 credits and sells for 20. The profit is 6 credits. The margin is 6 out of 20, which is 30%. The markup is 6 out of 14, which is about 43%. The same profit gives two different percentages, so always say which one you mean."),
         ("The floor is a cost check",
-         "A floor price is the least an item can sell for on the Starship market, so it is also the lowest price you can set for a copy. Before you set one, compare it with the cost per copy. A floor under your cost means a sale would lose money."),
+         "In a blueprint auction, the floor is the lowest price you set for your copies, the least a bid can be. It is not the market floor of an item. Before you set one, compare it with the cost per copy. A floor under your cost means a sale would lose money."),
         ("Break-even",
          "The break-even price is the price at which you get back exactly what you spent. For a copy, that is its cost per copy. Every credit above it is profit, and every credit below it is a loss."),
         ("Selling below cost",

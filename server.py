@@ -669,8 +669,9 @@ async def lib_shelves(request):
 
 async def lib_book(request):
     async with request.app["pool"].acquire() as conn:
-        await _player(conn, request)
-    b = LIB.book(request.match_info["code"])
+        pid = await _player(conn, request)
+        lang = await conn.fetchval("SELECT language FROM players WHERE id=$1", pid)
+    b = LIB.book(request.match_info["code"], lang)
     if not b:
         return _json({"error": "That book is still being written."}, 404)
     return _json(b)
@@ -706,15 +707,17 @@ async def lib_return(request):
 
 async def lib_test(request):
     async with request.app["pool"].acquire() as conn:
-        await _player(conn, request)
-    return _json(LIB.questions(request.match_info["code"]))
+        pid = await _player(conn, request)
+        lang = await conn.fetchval("SELECT language FROM players WHERE id=$1", pid)
+    return _json(LIB.questions(request.match_info["code"], lang))
 
 
 async def lib_mark(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
-        return _json(await LIB.mark(conn, pid, b.get("book"), b.get("answers")))
+        lang = await conn.fetchval("SELECT language FROM players WHERE id=$1", pid)
+        return _json(await LIB.mark(conn, pid, b.get("book"), b.get("answers"), lang))
 
 
 async def lib_certificates(request):

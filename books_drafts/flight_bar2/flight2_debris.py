@@ -5,7 +5,7 @@ BOOK = {
     "subtitle": "Field sizes, where the autopilot parks you, and working a field safely",
     "chapters": [
         ("Four sizes of field",
-         "Fields come in four sizes: large, field, small and tiny. A bigger field holds more pieces, so it is worth more time. A tiny field has only a few pieces, and it is quiet to find."),
+         "Fields come in four sizes: large, medium, small and tiny. A bigger field holds more pieces, so it is worth more time. A tiny field has only a few pieces, and it is quiet to find."),
         ("Pieces have real sizes",
          "Every piece is a rock with a real size and shape, and bigger pieces fill more of your hold. A field usually mixes large and small rocks. Check the hold bar before you start, so you know how much room you have left."),
         ("Where the autopilot parks you",

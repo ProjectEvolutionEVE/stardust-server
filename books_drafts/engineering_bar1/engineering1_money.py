@@ -9,7 +9,7 @@ BOOK = {
         ('Cost per copy',
          'Add up everything a run costs, then divide by the number of copies. Take a first run of 25 copies. The setup fee is 100, and the copies come to 25 times 10, so the printing alone is 350 credits. That is 14 a copy. Materials and labour for each copy come on top. The setup fee is paid only once, so the bigger the run, the less of it each copy carries.'),
         ('Saving or borrowing',
-         'A production plant costs a lot before it earns anything. You can save up for it, or borrow from the Bank and build now. Saving costs you time, but no interest. Your savings grow at the Bank\'s savings rate, and a term deposit pays more the longer you lock it up. Take a term deposit out early and you give up its interest, so choose the term before you start.'),
+         'A production plant costs a lot before it earns anything. You can save up for it, or borrow from the Bank and build now. Saving costs you time, but you pay no interest. Your savings grow at the Bank\'s savings rate, and a term deposit pays more the longer you lock it up. Take a term deposit out early and you give up its interest, so choose the term before you start.'),
         ('What borrowing really costs',
          'Take a loan of 1,000 credits at 8% a week, paid back over 8 weeks, and each weekly payment is 175 credits. That comes to 1,400 in all, so the loan costs 400 in interest. Interest is charged only on what you still owe, so every payment clears some interest and the rest cuts the debt. Before you sign, the Bank shows you the total cost and what the purchase should earn. Ask one question: will it pay for itself?'),
         ('Payback time',

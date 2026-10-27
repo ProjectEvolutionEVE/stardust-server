@@ -15,7 +15,7 @@ BOOK = {
         ('Checks that stop the drift',
          'Sailors check their position often, using landmarks, soundings, radio beacons and celestial sights. Each good check resets the reckoning from a better position. That stops the errors from growing unchecked.'),
         ('Honest uncertainty',
-         'A good navigator records not only a position but how sure they are of it. A note that says "within five miles" is more useful than a confident dot in the wrong place.'),
+         'A good navigator records not only a position but how sure they are of it. A note that says "within about eight kilometres" is more useful than a confident dot in the wrong place.'),
     ],
     "test": [
         ('A heading out by 1 degree, sailed for 100 km, leaves you about how far off the intended line?',

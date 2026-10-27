@@ -615,6 +615,34 @@ async def main():
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
     check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
           and all("right" not in q for q in j["questions"]))
+    # translated books (rule 41): a temporary Arabic file for a book, written here and removed after
+    import pathlib, shutil
+    en = LB.BOOKS["prospecting"]
+    tdir = pathlib.Path(LB._I18N_DIR) / "zz"; tdir.mkdir(parents=True, exist_ok=True)
+    (tdir / "prospecting.json").write_text(json.dumps({"title": "ZZ-TITLE", "subtitle": "ZZ-SUB",
+        "chapters": [["ZZ-CH", "ZZ-TEXT"]],
+        "test": [["ZZ-Q%d" % i, [[k, "ZZ-" + k] for k, _ in o], a] for i, (_, o, a) in enumerate(en["test"])]}), encoding="utf-8")
+    try:
+        async with cl.app["pool"].acquire() as c:
+            for who, lg in (("zzplayer", "zz"), ("enplayer", "en")):
+                gp = await ST.ensure_player(c, "dev:" + who, who)
+                await c.execute("UPDATE players SET language=$2 WHERE id=$1", gp, lg)
+        HZ, HE = {"X-Dev-Player": "zzplayer"}, {"X-Dev-Player": "enplayer"}
+        j = await (await cl.get("/api/dfg/library/book/prospecting", headers=HZ)).json()
+        jt = await (await cl.get("/api/dfg/library/test/prospecting", headers=HZ)).json()
+        check("a player whose language has a translation reads the translated title, chapters and questions",
+              j["title"] == "ZZ-TITLE" and j["chapters"][0]["title"] == "ZZ-CH" and jt["questions"][0]["question"].startswith("ZZ-Q")
+              and all(o["text"].startswith("ZZ-") for o in jt["questions"][0]["options"]) and "answer" not in json.dumps(jt))
+        ans = {str(i): a for i, (_, _, a) in enumerate(en["test"])}
+        j = await (await cl.post("/api/dfg/library/test", headers=HZ, json={"book": "prospecting", "answers": ans})).json()
+        check("a translated test is still graded on the English answer letters", j["score"] == 5 and j["passed"] and j["title"] == "ZZ-TITLE")
+        j = await (await cl.get("/api/dfg/library/book/prospecting", headers=HE)).json()
+        jt = await (await cl.get("/api/dfg/library/test/prospecting", headers=HE)).json()
+        check("an English player gets the English book", j["title"] == en["title"] and jt["questions"][0]["question"] == en["test"][0][0])
+        j = await (await cl.get("/api/dfg/library/book/trading", headers=HZ)).json()
+        check("a book with no translation falls back to English", j["title"] == LB.BOOKS["trading"]["title"])
+    finally:
+        shutil.rmtree(tdir, ignore_errors=True)
     right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS["prospecting"]["test"])}
     wrong3 = dict(right); wrong3["0"] = "d"; wrong3["1"] = "d"
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": wrong3}); j = await r.json()

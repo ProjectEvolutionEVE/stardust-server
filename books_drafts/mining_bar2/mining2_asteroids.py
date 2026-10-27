@@ -13,7 +13,7 @@ BOOK = {
         ("Metal-rich asteroids",
          "Some asteroids are thought to be mostly metal, perhaps the exposed cores of early worlds. NASA's Psyche mission launched in 2023 and is heading for a metal-rich asteroid called Psyche. Scientists hope it will show what a planetary core looks like."),
         ("Would mining one pay?",
-         "Companies such as Planetary Resources were founded in the 2010s to mine asteroids. As far as published reports show, no asteroid has yet been mined commercially. The hard parts are reaching the rock, sending the metal back, and paying for the trip."),
+         "Companies such as Planetary Resources were founded in 2009 and made public in 2012 to mine asteroids. As far as published reports show, no asteroid has yet been mined commercially. The hard parts are reaching the rock, sending the metal back, and paying for the trip."),
         ("Where research stands",
          "Real asteroid work is at an early stage, and the samples brought home so far have gone to laboratories for study. The ores that matter in our fields are the same metals that scientists look for in space."),
     ],

@@ -11,7 +11,7 @@ BOOK = {
          "Every place that holds goods has a size. Your ship's hold has a size, and so does your own fixed space in the "
          "Starship's cargo hold. Your hangar has a set number of ship slots. Plan your loads around them."),
         ("Size and weight",
-         "Every piece has a real size and a real weight. Weight is size times density, so two pieces the same size can "
+         "Every piece has a real size and a real weight. Its weight comes from its volume times its density, so two pieces the same size can "
          "weigh very different amounts. A piece only goes into your hold if its shape fits and there's room left."),
         ("Unloading",
          "When you unload at the Starship, each piece in your ship's hold goes into your space in the cargo hold, until "

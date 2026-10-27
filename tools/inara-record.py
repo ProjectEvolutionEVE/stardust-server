@@ -97,7 +97,12 @@ def main():
     vid = lily[0]["voice_id"]
     # Never record a language the voice isn't verified for (Eric 10-26, after Lily was recorded in Arabic, which she
     # isn't verified to speak). The master list is docs/voice-models.md.
-    verified = [l.get("language", "") for l in json.loads(call(f"https://api.elevenlabs.io/v1/voices/{vid}", key)).get("verified_languages") or []]
+    try:
+        info = json.loads(call(f"https://api.elevenlabs.io/v1/voices/{vid}", key))
+    except urllib.error.HTTPError as e:
+        sys.exit(f"STOPPED: ElevenLabs can't open voice {vid} ({e.code}: {e.read().decode('utf-8', 'replace')[:200]}). "
+                 "If it's a Voice Library voice, add it to My Voices first. Nothing was recorded or charged.")
+    verified = [l.get("language", "") for l in info.get("verified_languages") or []]
     want = a.lang.split("-")[0].lower()
     if want not in {v.split("-")[0].lower() for v in verified} and not a.force:
         sys.exit(f"STOPPED: {lily[0]['name']} is not verified in '{a.lang}' (verified: {', '.join(verified) or 'none listed'}). "

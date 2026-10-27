@@ -37,11 +37,15 @@ def _catalogue_chapters():
     return out
 
 
-def book(code):
+def book(code, lang=None):
     b = LB.BOOKS.get(code)
     if not b:
         return None
     chapters = _catalogue_chapters() if code == "catalogue" else b["chapters"]
+    tr = LB.translation(lang, code)
+    if tr and code != "catalogue":
+        b = dict(b, title=tr.get("title", b["title"]), subtitle=tr.get("subtitle", b["subtitle"]))
+        chapters = tr["chapters"]
     return {"code": code, "title": b["title"], "subtitle": b["subtitle"], "reference": b.get("reference", False),
             "chapters": [{"title": t, "text": x} for t, x in chapters], "questions": len(b["test"]), "pass_mark": LB.PASS_MARK}
 
@@ -113,20 +117,30 @@ async def give_back(conn, pid, code):
     return {"ok": True}
 
 
-def questions(code):
+def _tr_test(b, code, lang):
+    """The test text to show: the translation when it lines up with the English test, else the English."""
+    tr = LB.translation(lang, code)
+    if tr and len(tr["test"]) == len(b["test"]) and all(
+            [k for k, _ in o] == [k for k, _ in e[1]] and a == e[2] for (_, o, a), e in zip(tr["test"], b["test"])):
+        return tr.get("title", b["title"]), tr["test"]
+    return b["title"], b["test"]
+
+
+def questions(code, lang=None):
     """The test, without the answers. The options come in a fresh order each time."""
     b = LB.BOOKS.get(code)
     if not b or not b["test"]:
         raise ST.Refused("This book has no test.")
     out = []
-    for i, (q, opts, _) in enumerate(b["test"]):
+    title, test = _tr_test(b, code, lang)
+    for i, (q, opts, _) in enumerate(test):
         o = [{"id": k, "text": t} for k, t in opts]
         random.shuffle(o)
         out.append({"id": i, "question": q, "options": o})
-    return {"book": code, "title": b["title"], "questions": out, "pass_mark": LB.PASS_MARK}
+    return {"book": code, "title": title, "questions": out, "pass_mark": LB.PASS_MARK}
 
 
-async def mark(conn, pid, code, answers):
+async def mark(conn, pid, code, answers, lang=None):
     """Mark a test. answers = {question id: option id}. Returns the score; a pass earns (or keeps) the certificate."""
     b = LB.BOOKS.get(code)
     if not b or not b["test"]:
@@ -134,10 +148,12 @@ async def mark(conn, pid, code, answers):
     if not isinstance(answers, dict):
         raise ST.Refused("Answer the questions first.")
     right, review = 0, []
-    for i, (q, opts, ans) in enumerate(b["test"]):
-        got = answers.get(str(i), answers.get(i))
+    title, shown = _tr_test(b, code, lang)
+    for i, (_, _, ans) in enumerate(b["test"]):
+        got = answers.get(str(i), answers.get(i))  # graded on the English answer letter, which the translation shares
         ok = got == ans
         right += ok
+        q, opts, _a = shown[i]
         review.append({"id": i, "question": q, "right": ok, "answer": dict(opts)[ans]})
     total = len(b["test"])
     passed = right >= LB.PASS_MARK
@@ -146,7 +162,7 @@ async def mark(conn, pid, code, answers):
         await conn.execute("""INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,$2,$3,$4)
                               ON CONFLICT (player_id, book_code) DO UPDATE SET score=GREATEST(library_passes.score, EXCLUDED.score)""",
                            pid, code, right, total)
-    return {"book": code, "title": b["title"], "score": right, "of": total, "passed": passed, "pass_mark": LB.PASS_MARK,
+    return {"book": code, "title": title, "score": right, "of": total, "passed": passed, "pass_mark": LB.PASS_MARK,
             "review": review}
 
 

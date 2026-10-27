@@ -13,7 +13,7 @@ BOOK = {
         ('A worked example: quartz',
          'Take a piece with a scale of 0.2 metres. Its volume is 2.5 times 0.2 times 0.2 times 0.2, which is about 0.020 cubic metres. Quartz weighs 2,650 kilograms per cubic metre, so 0.020 times 2,650 is about 53 kilograms.'),
         ('The same size, very different weight',
-         'Take the same 0.2 metre piece and make it from different materials. As water ice it weighs about 19 kilograms, as quartz about 54, and as native gold about 390. Gold weighs about twenty times as much as ice of the same size.'),
+         'Take the same 0.2 metre piece and make it from different materials. As water ice it weighs about 18 kilograms, as quartz about 53, and as native gold about 386. Gold weighs about twenty times as much as ice of the same size.'),
         ('Why weight matters',
          'Weight and size come from the real densities, and the game never lets you type them in. The market sells ore in lots by weight, so the kilograms you carry are the kilograms you can sell. Check the weight before you decide what to take.'),
     ],
