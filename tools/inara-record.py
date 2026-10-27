@@ -92,7 +92,14 @@ def main():
     kf = os.path.expanduser(a.key_file)
     if not key and os.path.exists(kf):      # the same key file make_intro.py uses
         key = open(kf).read().strip()
-    key = key or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
+    if not key:
+        key = getpass.getpass("ElevenLabs API key (hidden): ").strip()
+        if key and a.key_file != "/dev/null/none":   # keep it so Eric never has to find it again (Eric 10-27)
+            os.makedirs(os.path.dirname(kf) or ".", exist_ok=True)
+            with open(kf, "w") as fh:
+                fh.write(key)
+            os.chmod(kf, 0o600)
+            print(f"Key saved to {kf} (readable only by you). Next time it's used automatically.")
     print(f"Key: ...{key[-4:]}  (match the last 4 against ElevenLabs > API Keys to see which account this is)")
     try:   # show which account this key belongs to, so Eric can confirm it before anything is charged (Eric 10-27)
         sub = json.loads(call("https://api.elevenlabs.io/v1/user/subscription", key))
