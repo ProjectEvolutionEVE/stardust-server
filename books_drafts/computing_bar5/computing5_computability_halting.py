@@ -1,0 +1,52 @@
+"""Computability and the Halting Problem: which questions a computer can answer at all, and the proof that some cannot be answered."""
+CODE = 'computing5_computability_halting'
+BOOK = {'title': 'Computability and the Halting Problem',
+ 'subtitle': 'Which questions a computer can answer at all',
+ 'chapters': [('What computable means',
+               'A problem is computable if some program, given any input, always stops and gives the right answer. Adding two numbers and sorting a list are computable. This '
+               'question is about whether an answer is possible at all, not how fast it comes.'),
+              ('Decision problems',
+               'A decision problem asks for a yes or no answer about an input. Does this program print a word? Does this number have a factor between 2 and 10? Comparing decision '
+               'problems lets us put different questions on the same footing.'),
+              ('The halting problem',
+               'The halting problem asks whether a given program, run on a given input, eventually stops or runs forever. Alan Turing proved in 1936 that no single general '
+               'program can answer this correctly for every program and input. The result is a limit of all computers, not a lack of skill.'),
+              ('The diagonal argument',
+               "Turing's proof starts by assuming a halting checker exists, then builds a program that does the opposite of what the checker predicts about that program itself. "
+               'The contradiction shows the checker cannot exist. A similar diagonal idea was used by Georg Cantor for infinite sets.'),
+              ('Reductions and undecidability',
+               "To show a new problem is undecidable, we reduce the halting problem to it: a solver for the new problem would also solve halting. Rice's theorem says that any "
+               'non-trivial property of what a program does is undecidable in general. Many useful questions about programs fall into this group.'),
+              ('What it means for software',
+               'Undecidability does not stop tools from being useful. It means no automatic checker can be perfect on every program. Real checkers use tests, limits and rules '
+               'that work on many programs but not all, so they should be honest about what they can prove.')],
+ 'test': [('What is the halting problem?',
+           [('a', 'Deciding whether a program stops on a given input'),
+            ('b', 'Making programs run faster'),
+            ('c', 'Counting the bits in a file'),
+            ('d', 'Choosing a programming language')],
+           'a'),
+          ('What did Alan Turing prove about the halting problem?',
+           [('a', 'It can be solved in one second for any program'),
+            ('b', 'It is solved by every compiler'),
+            ('c', 'No single general program can solve it for every program and input'),
+            ('d', 'It applies only to computer hardware')],
+           'c'),
+          ('What is a decision problem?',
+           [('a', 'A problem that asks for a picture'),
+            ('b', 'A problem that asks for a yes or no answer'),
+            ('c', 'A problem with no input'),
+            ('d', 'A problem that always takes a week')],
+           'b'),
+          ("What does Rice's theorem say, in short?",
+           [('a', 'Every program can be checked perfectly'),
+            ('b', 'Programs never stop'),
+            ('c', 'Halting is always easy to check'),
+            ('d', 'Any non-trivial property of what a program does is undecidable in general')],
+           'd'),
+          ('Why should an automatic checker be modest about what it proves?',
+           [('a', 'Because checkers are always slow'),
+            ('b', 'Because checkers cannot read code'),
+            ('c', 'Because no checker can be perfect on every program'),
+            ('d', 'Because the law forbids proofs')],
+           'c')]}

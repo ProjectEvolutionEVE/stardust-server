@@ -1,0 +1,52 @@
+"""Building a Technology Roadmap: themes over features, dependencies, capacity, risk-based sequencing, stakeholder reviews and adjusting without chaos."""
+CODE = 'computing5_tech_roadmap'
+BOOK = {'title': 'Building a Technology Roadmap',
+ 'subtitle': 'Planning the order of technical work, and changing it well',
+ 'chapters': [('Themes over features',
+               'A roadmap built around themes, such as reliability or customer growth, gives teams room to '
+               'choose how to deliver. A list of features alone can lock in details too early.'),
+              ('Dependencies',
+               'Some work must wait for other work to be finished. Mapping dependencies shows the critical '
+               'path and prevents surprises when one late task blocks several others.'),
+              ('Capacity',
+               'A roadmap should match the people and time that actually exist. Promising more than a team '
+               'can deliver is one of the most common causes of missed dates.'),
+              ('Risk-based sequencing',
+               'Put risky, uncertain work early, so that problems appear while there is still time to change '
+               'course. Safe, well-understood work can follow.'),
+              ('Stakeholder reviews',
+               'Regular reviews with the people who depend on the work keep the roadmap honest. Reviews also '
+               'bring out needs that the team could not see on its own.'),
+              ('Adjusting without chaos',
+               'Plans will change. A good roadmap records the reasons for each change and communicates it '
+               'clearly, so that changes build trust rather than confusion.')],
+ 'test': [('What does a roadmap built around themes give teams?',
+           [('a', 'A fixed list of every detail'),
+            ('b', 'No goals at all'),
+            ('c', 'Permission to skip testing'),
+            ('d', 'Room to choose how to deliver')],
+           'd'),
+          ('Why map dependencies?',
+           [('a', 'To hide late tasks'),
+            ('b', 'To count the chairs in the office'),
+            ('c', 'To reveal the critical path and avoid surprises'),
+            ('d', 'To stop all work')],
+           'c'),
+          ('What is a common cause of missed dates?',
+           [('a', 'Working too carefully'),
+            ('b', 'Promising more than a team can deliver'),
+            ('c', 'Keeping plans short'),
+            ('d', 'Having a clear goal')],
+           'b'),
+          ('Why put risky work early?',
+           [('a', 'So problems appear while there is still time to change course'),
+            ('b', 'So risks can never be found'),
+            ('c', 'So the safe work is never done'),
+            ('d', 'So the roadmap is longer')],
+           'a'),
+          ('How should changes to a roadmap be handled?',
+           [('a', 'Made in secret'),
+            ('b', 'Never explained'),
+            ('c', 'Made without telling anyone'),
+            ('d', 'Recorded with reasons and communicated clearly')],
+           'd')]}
