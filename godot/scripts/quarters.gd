@@ -180,7 +180,7 @@ func _uniform_row(code, name: String, sub: String, colour, bars: Array, worn: bo
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	row.add_child(Ui.swatch(colour, 40))
-	var b := Ui.button(("✓ " if worn else "") + name + "  ·  " + sub, false)
+	var b := Ui.button(name + "  ·  " + sub, false)
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.clip_text = true
@@ -188,6 +188,17 @@ func _uniform_row(code, name: String, sub: String, colour, bars: Array, worn: bo
 	b.disabled = worn or not open
 	if not open:
 		b.text = name + "  ·  not studied yet"
+	if worn:   # the uniform being worn: a bold green check and a green-highlighted box (Eric 10-27)
+		b.text = "✔  " + name + "  ·  " + sub + "   (wearing)"
+		var hl := StyleBoxFlat.new()
+		hl.bg_color = Color(Ui.GREEN, 0.18)
+		hl.border_color = Ui.GREEN
+		hl.set_border_width_all(3)
+		hl.set_corner_radius_all(14)
+		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+			b.add_theme_stylebox_override(state, hl)
+		b.add_theme_color_override("font_disabled_color", Ui.GREEN)
+		b.add_theme_color_override("font_color", Ui.GREEN)
 	b.pressed.connect(_wear.bind(code))
 	row.add_child(b)
 	if open and not bars.is_empty():
