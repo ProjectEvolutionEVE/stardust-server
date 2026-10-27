@@ -104,4 +104,4 @@ func _verify() -> void:
 		Session.forget()
 	Session.signed_in(r.data.token, r.data.me)
 	Session.call_on_enter = "wake"
-	get_tree().change_scene_to_file(Session.next_scene())
+	get_tree().change_scene_to_file("res://scenes/intro.tscn")   # the intro plays at every sign-in (Eric 10-27)

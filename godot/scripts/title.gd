@@ -26,7 +26,7 @@ func _launch(go: Button) -> void:
 	if r.ok:
 		Session.me = r.data
 		Session.call_on_enter = "wake"
-		get_tree().change_scene_to_file(Session.next_scene())
+		get_tree().change_scene_to_file("res://scenes/intro.tscn")   # the intro plays at every sign-in (Eric 10-27)
 	elif r.code == 0:   # no answer: keep the sign-in, let the player try again
 		go.text = "Launch"
 		go.disabled = false
