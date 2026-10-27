@@ -40,3 +40,11 @@ hardest lines (round-trip 96.8%-100%, clean tails).
 - Most other differences are the ear, not the voice: English words, numbers, and words run together.
 - Verdict: understandable, but not native-clean. The same pattern as Lily's Tamil in July.
 - Details: `~/Desktop/inara-ar-check/verdict.md` and `report.txt`.
+
+**Sara test (10-27, the same 14 hardest lines, Whisper large-v3 local):** Lily scored better than Sara.
+- **Sara:** more mishearings. Numbers came out garbled (the 1.6 / 1.2 / 1.92 line). ارفع was heard as the feminine
+  ارفعي, and المس as الماس. The English UI words were spelled out.
+- **Lily:** only the name and ship-name variants, plus one vowel.
+- **Note:** the round trip measures how clearly the words come across, not how native the accent is.
+- **Decision for Eric:** keep Lily's Arabic, try another verified Arabic voice, or have a native speaker judge 2-3
+  lines of each (`~/Desktop/inara-ar/raw/` and `~/Desktop/inara-ar-sara/raw/`).
