@@ -1,0 +1,37 @@
+"""Lattice Structures and Cellular Design: strut lattices, unit cells, effective properties, failure modes and printing limits."""
+CODE = "engineering5_lattice_opt"
+BOOK = {
+    "title": "Lattice Structures and Cellular Design",
+    "subtitle": "Strut lattices, unit cells, and how a repeated cell behaves as one material",
+    "chapters": [
+        ("What a lattice is",
+         "A lattice is a network of thin struts joined at nodes, filling a volume with open space. It can be much lighter than a solid block while keeping much of its stiffness. Engineers use lattices where weight matters more than bulk."),
+        ("The unit cell",
+         "A lattice is built by repeating one small pattern, called the unit cell, in each direction. Changing the cell changes the whole material. Designers choose the cell type, the strut thickness and the cell size together."),
+        ("Effective properties",
+         "Because the cell repeats, the whole lattice can be described by effective properties: an average density, stiffness and strength. These are found by testing or by analysing one cell and its neighbours. The lattice is then treated as a single material with those numbers."),
+        ("How lattices fail",
+         "Some lattices bend when loaded, and their struts buckle or hinge. Others stretch along their struts and carry load more evenly. Stretch-dominated cells are usually stiffer and stronger for their weight. Knowing which mode applies tells the designer where a lattice will first give way."),
+        ("Printing limits",
+         "A printer can only make struts above a minimum thickness, and overhanging struts need support or a steep enough angle. Enclosed cells can trap unused powder, which must be able to drain out. Check these limits before the design is final, not after the first print fails."),
+        ("The money side",
+         "Lattices save material, but they can take longer to print and cost more per part to inspect. The saving is real only when the weight saved is worth more than the extra printing time. A good design balances the two."),
+    ],
+    "test": [
+        ("What is a unit cell in a lattice?",
+         [("a", "The small pattern repeated to build the lattice"), ("b", "The whole part, cut into slices"), ("c", "The printer's build plate"), ("d", "A solid block of metal")],
+         "a"),
+        ("What are effective properties of a lattice?",
+         [("a", "The colour and finish of the surface"), ("b", "Average density, stiffness and strength of the whole lattice"), ("c", "The number of printer passes"), ("d", "The price of the powder")],
+         "b"),
+        ("Why does a stretch-dominated lattice often carry load better?",
+         [("a", "It has no struts at all"), ("b", "It is always solid inside"), ("c", "Its struts mostly stretch, so load is shared more evenly"), ("d", "It cannot be printed")],
+         "c"),
+        ("Why must enclosed lattice cells have a way for powder to drain?",
+         [("a", "So the part is heavier"), ("b", "So the paint sticks better"), ("c", "So the cells can be heated"), ("d", "So unused powder does not stay trapped inside")],
+         "d"),
+        ("What do the money side checks weigh against lattice savings?",
+         [("a", "The extra printing time and inspection cost"), ("b", "The colour of the part"), ("c", "The number of designers in the team"), ("d", "The length of the warranty")],
+         "a"),
+    ],
+}

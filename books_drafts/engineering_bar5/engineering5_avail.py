@@ -1,0 +1,37 @@
+"""Availability, Maintainability and Logistics Support: availability formulas, mean time to repair, spares pools and the money side of support costs."""
+CODE = "engineering5_avail"
+BOOK = {
+    "title": "Availability, Maintainability and Logistics Support",
+    "subtitle": "Keeping systems ready to use, with the repair and spares to back them up",
+    "chapters": [
+        ("What availability means",
+         "Availability is the share of time a system is ready to do its job. It depends on how often the system fails and how long it takes to repair. A system that fails rarely and is repaired quickly is highly available."),
+        ("The availability formula",
+         "In its simplest form, inherent availability is the mean time between failures divided by the sum of that time and the mean time to repair. A long time between failures and a short repair time both raise availability."),
+        ("Maintainability and repair time",
+         "Maintainability is how easily a system can be repaired. Good access, clear fault indications and standard parts all shorten the mean time to repair. Design choices made early set much of this."),
+        ("Spares pools",
+         "A spares pool is the stock of parts held ready for repairs. The right size depends on how often each part fails and how quickly it can be restocked. Too few spares lengthen downtime, and too many tie up money."),
+        ("Logistics support",
+         "Logistics support covers the people, tools, documents and supply chain that keep a system running. It plans how parts reach the repair point and how long each step takes. A strong plan keeps the system ready."),
+        ("The money side of support",
+         "Support costs are a large share of the cost of owning a system over its life. Each extra hour of availability has a value to the user. The support plan should weigh that value against the cost of spares and staff."),
+    ],
+    "test": [
+        ("What does availability measure?",
+         [("a", "The share of time a system is ready to do its job"), ("b", "The number of people in the team"), ("c", "The colour of the casing"), ("d", "The length of the cable")],
+         "a"),
+        ("What makes availability go up?",
+         [("a", "More failures"), ("b", "Longer time between failures and shorter repair time"), ("c", "Longer repairs"), ("d", "Fewer spares in stock")],
+         "b"),
+        ("What does maintainability describe?",
+         [("a", "How much a system weighs"), ("b", "How loud the system is"), ("c", "How easily a system can be repaired"), ("d", "How many colours it comes in")],
+         "c"),
+        ("What is a spares pool?",
+         [("a", "A pool for swimming"), ("b", "A bank account"), ("c", "A line of trucks"), ("d", "Stock of parts held ready for repairs")],
+         "d"),
+        ("Why do support costs matter in ownership?",
+         [("a", "They are a large share of the cost of owning a system over its life"), ("b", "They are always zero"), ("c", "They only affect the paint"), ("d", "They are paid only once on day one")],
+         "a"),
+    ],
+}

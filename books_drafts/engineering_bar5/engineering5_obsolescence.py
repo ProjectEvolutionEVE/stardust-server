@@ -1,0 +1,37 @@
+"""Obsolescence Management for Long-Life Products: component end-of-life, last-time buys, redesign costs, forecasting and the money side of spares strategy."""
+CODE = "engineering5_obsolescence"
+BOOK = {
+    "title": "Obsolescence Management for Long-Life Products",
+    "subtitle": "Keeping a product buildable and supported after its parts are no longer made",
+    "chapters": [
+        ("Why parts disappear",
+         "Electronic and other components are made for a limited time, then their makers stop producing them. A product designed to last decades can outlive the parts inside it. Obsolescence management plans for this from the start."),
+        ("End-of-life notices",
+         "Makers usually give a notice before a part is discontinued. The notice sets a last date for orders. Teams track these notices for every part in the design."),
+        ("Last-time buys",
+         "A last-time buy is a large order placed before a part is discontinued, to cover future builds. It buys time but ties up money in stock. The quantity should be based on a forecast of real needs."),
+        ("Redesign",
+         "When a part cannot be bought, the design must be changed to use an available part. Redesign needs testing, approval and sometimes new certification. Its cost can be large, so it is planned early."),
+        ("Forecasting",
+         "A forecast of part availability and product demand guides the decisions. It shows when each part will run out and how many units are needed. Regular reviews keep the forecast current."),
+        ("The money side of spares",
+         "Spares must be kept for customers who still use the product. Stocking too many spares ties up money, and too few leaves customers without support. The spares plan balances these costs with the value of the service."),
+    ],
+    "test": [
+        ("Why do parts become obsolete?",
+         [("a", "Makers stop producing them after a time"), ("b", "Parts get heavier with age"), ("c", "Parts change colour in the sun"), ("d", "Parts are always made forever")],
+         "a"),
+        ("What is a last-time buy?",
+         [("a", "The final sale of a product to a customer"), ("b", "A large order placed before a part is discontinued"), ("c", "A payment on the last day of the month"), ("d", "A test of the last unit")],
+         "b"),
+        ("What does an end-of-life notice set?",
+         [("a", "The name of the designer"), ("b", "The price of the office"), ("c", "A last date for orders"), ("d", "The colour of the box")],
+         "c"),
+        ("Why does a last-time buy tie up money?",
+         [("a", "It is paid back at once"), ("b", "It is always given away free"), ("c", "It does not involve any payment"), ("d", "It is stock bought ahead of need")],
+         "d"),
+        ("What must a spares plan balance?",
+         [("a", "The cost of stock against the value of supporting customers"), ("b", "The colour of spares against the logo"), ("c", "The number of staff against the weather"), ("d", "Nothing, spares cost nothing")],
+         "a"),
+    ],
+}

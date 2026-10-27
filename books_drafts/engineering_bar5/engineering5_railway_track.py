@@ -1,0 +1,37 @@
+"""Railway Track Dynamics and Ballast: track geometry, sleepers, ballast stiffness, dynamic loads and maintenance intervals."""
+CODE = "engineering5_railway_track"
+BOOK = {
+    "title": "Railway Track Dynamics and Ballast",
+    "subtitle": "How a railway track carries moving trains and how it wears over time",
+    "chapters": [
+        ("What the track does",
+         "The track carries the weight of trains and spreads it into the ground. It must also keep the wheels on a smooth, correct path. The rails, sleepers and ballast work together as one system."),
+        ("Track geometry",
+         "Track geometry means the level, alignment and gauge of the rails. Small errors in these settings make the ride rough and wear the wheels faster. Measuring trains are used to find these errors."),
+        ("Sleepers",
+         "Sleepers, also called ties, hold the rails at the correct spacing and transfer load into the ballast. Their condition affects how the track keeps its shape. Worn or cracked sleepers are replaced on a planned cycle."),
+        ("Ballast and stiffness",
+         "Ballast is the crushed stone under the sleepers. It drains water away and holds the track in place. Ballast that is packed well gives a stiff, even support; ballast that has broken down gives a soft spot."),
+        ("Dynamic loads",
+         "A moving train gives the track loads bigger than its static weight, because of bumps, speed and wheel defects. These repeated loads gradually push the track out of shape. Speed limits and inspections manage the risk."),
+        ("Maintenance intervals and money",
+         "Tamping, grinding and ballast renewal are planned at set intervals based on measured condition. Doing the right work at the right time costs less than repairing a failure. Maintenance budgets should follow the measurements."),
+    ],
+    "test": [
+        ("What does track geometry describe?",
+         [("a", "The colour of the signs"), ("b", "The seating in the carriage"), ("c", "The level, alignment and gauge of the rails"), ("d", "The timetable")],
+         "c"),
+        ("What do sleepers do?",
+         [("a", "Carry passengers"), ("b", "Make the train faster"), ("c", "Store water"), ("d", "Hold the rails at the correct spacing and pass load to the ballast")],
+         "d"),
+        ("What does ballast do?",
+         [("a", "Drains water and holds the track in place"), ("b", "Powers the train"), ("c", "Cools the air"), ("d", "Lights the platform")],
+         "a"),
+        ("Why are dynamic loads bigger than static weight?",
+         [("a", "Trains become lighter when moving"), ("b", "Bumps, speed and wheel defects add repeated force"), ("c", "Rails shrink when hot"), ("d", "Sleepers float")],
+         "b"),
+        ("Why is planned maintenance cheaper than repair after failure?",
+         [("a", "Failures are always free"), ("b", "Maintenance adds no value"), ("c", "Work done at the right time avoids larger and costlier failures"), ("d", "Repairs are never needed")],
+         "c"),
+    ],
+}

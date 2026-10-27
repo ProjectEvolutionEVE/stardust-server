@@ -1,0 +1,37 @@
+"""Soil Liquefaction and Ground Motion: cyclic stress ratio, pore pressure build-up, site response, ground improvement and design checks."""
+CODE = "engineering5_liquefaction"
+BOOK = {
+    "title": "Soil Liquefaction and Ground Motion",
+    "subtitle": "How shaking can turn loose wet sand into something that flows",
+    "chapters": [
+        ("What liquefaction is",
+         "Liquefaction happens when loose, water-saturated sand or silt loses its strength during shaking. The soil behaves more like a liquid than a solid. Buildings and roads on it can sink, tilt or crack."),
+        ("Cyclic stress",
+         "Earthquake shaking applies repeated cycles of stress to the ground. Engineers compare the size of these stresses with the soil's resistance, using a cyclic stress ratio. A high ratio means a higher risk."),
+        ("Pore pressure build-up",
+         "Each shaking cycle tries to squeeze the water between soil grains. If the water cannot drain fast enough, its pressure rises. When the pressure matches the weight of the soil above, the grains lose contact and the strength is gone."),
+        ("Site response",
+         "The shape and layers of the ground change how shaking arrives at the surface. Soft layers can make the motion stronger and longer. A site study checks these effects before design."),
+        ("Ground improvement",
+         "Common fixes include densifying loose sand, adding drains so pressure can escape, and mixing in materials that stiffen the soil. The right choice depends on the soil, the depth and the cost."),
+        ("Design checks and the money side",
+         "Designers check liquefaction risk for each project and design the foundations to suit. Ground work is often a large share of cost, so the check is done early. Skipping it can cost far more after a quake."),
+    ],
+    "test": [
+        ("What is liquefaction?",
+         [("a", "Metal melting in a furnace"), ("b", "Soil losing strength and behaving like a liquid during shaking"), ("c", "Rain washing away paint"), ("d", "Sand being dug up")],
+         "b"),
+        ("What builds up in saturated soil during shaking?",
+         [("a", "Dust in the air"), ("b", "Heat in the soil"), ("c", "Pore water pressure"), ("d", "Salt crystals")],
+         "c"),
+        ("What does a high cyclic stress ratio suggest?",
+         [("a", "A stronger foundation"), ("b", "No shaking at all"), ("c", "A cheaper site"), ("d", "A higher risk of liquefaction")],
+         "d"),
+        ("Which is a ground improvement method?",
+         [("a", "Densifying loose sand"), ("b", "Painting the surface"), ("c", "Removing all the water and the soil"), ("d", "Ignoring the layers")],
+         "a"),
+        ("Why is a liquefaction check done early in a project?",
+         [("a", "The check is only needed after a quake"), ("b", "Ground problems can be costly to fix later"), ("c", "Early checks cost more"), ("d", "Soil never changes")],
+         "b"),
+    ],
+}

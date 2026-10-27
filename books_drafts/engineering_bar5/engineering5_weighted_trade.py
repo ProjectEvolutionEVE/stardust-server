@@ -1,0 +1,37 @@
+"""Weighted Trade Studies and Decision Analysis: criteria weights, scoring scales, sensitivity to weights, decision records and bias."""
+CODE = "engineering5_weighted_trade"
+BOOK = {
+    "title": "Weighted Trade Studies and Decision Analysis",
+    "subtitle": "Scoring options against weighted criteria, and checking how sensitive the result is",
+    "chapters": [
+        ("What a trade study does",
+         "A weighted trade study compares options against a set of criteria. Each criterion is given a weight that shows how important it is. The option with the best weighted score is the leading choice."),
+        ("Setting the weights",
+         "Weights should reflect what the customer and the project really need. Agreeing them before the options are scored prevents the result being bent to suit a favourite. The weights are recorded with their reasons."),
+        ("Scoring scales",
+         "Each option is scored on each criterion using a clear scale, such as 1 to 5, with a written meaning for each point. A clear scale keeps scores consistent between reviewers. Vague scales lead to arguments."),
+        ("Sensitivity to weights",
+         "A sensitivity check changes the weights to see whether the winner changes. If a small change flips the result, the choice is close and needs more study. A robust winner stays on top across reasonable weights."),
+        ("Decision records",
+         "The study ends with a written record of the options, weights, scores and the final choice. The record shows why the choice was made. It is kept with the project files."),
+        ("Bias and money",
+         "People tend to favour options they already like, and this can bias the scores. Independent reviewers and a fixed process reduce the bias. Cost is one criterion, and its weight should match how much the budget matters."),
+    ],
+    "test": [
+        ("What does a weighted trade study compare?",
+         [("a", "Staff birthdays"), ("b", "Prices of lunch"), ("c", "Colours of the office"), ("d", "Options against weighted criteria")],
+         "d"),
+        ("What does a criterion weight show?",
+         [("a", "How important that criterion is"), ("b", "The colour of the option"), ("c", "The age of the designer"), ("d", "The distance to the shop")],
+         "a"),
+        ("Why use a clear scoring scale?",
+         [("a", "So scores can be hidden"), ("b", "So scores stay consistent between reviewers"), ("c", "So every option gets the same score"), ("d", "So no one needs to score")],
+         "b"),
+        ("What does a sensitivity check reveal?",
+         [("a", "The temperature of the room"), ("b", "The price of the printer"), ("c", "Whether a small change in weights flips the winner"), ("d", "The name of the project")],
+         "c"),
+        ("What is a common source of bias in trade studies?",
+         [("a", "Using too many criteria"), ("b", "Writing decisions down"), ("c", "Asking independent reviewers"), ("d", "Favouring options people already like")],
+         "d"),
+    ],
+}

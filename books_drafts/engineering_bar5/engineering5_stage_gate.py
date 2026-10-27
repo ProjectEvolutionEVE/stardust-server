@@ -1,0 +1,37 @@
+"""Stage-Gate Product Development: gate criteria, phase reviews, go or kill decisions, portfolio funding and the money side of stopping a project."""
+CODE = "engineering5_stage_gate"
+BOOK = {
+    "title": "Stage-Gate Product Development",
+    "subtitle": "Moving a product idea forward in steps, with a clear decision at each gate",
+    "chapters": [
+        ("What a stage-gate process is",
+         "A stage-gate process breaks product development into stages, with a review gate between each pair. Work moves forward only when the gate is passed. The method keeps spending matched to what has been proven."),
+        ("Gate criteria",
+         "Each gate has a list of criteria written in advance, such as market evidence, technical feasibility and a cost estimate. The criteria are the questions the project must answer. They keep the review fair."),
+        ("Phase reviews",
+         "At each gate, a review team looks at the evidence and the plan. The review asks whether the project still makes sense. Its findings are recorded, and the next stage is planned from them."),
+        ("Go or kill",
+         "The gate ends in a decision: go, hold, or kill. Killing a weak project early is a good result, because it frees money and people for better ideas. A kill decision should be made openly and without blame."),
+        ("Portfolio funding",
+         "A firm usually runs several projects at once. Portfolio funding balances them so the money goes where the best chances are. Projects compete for funds on the strength of their evidence."),
+        ("The money side",
+         "Stopping a project early saves the cost of every later stage. Most of the risk is removed before the big spending begins. A good gate decision is judged by money saved as well as money made."),
+    ],
+    "test": [
+        ("What happens at a stage gate?",
+         [("a", "The product is painted"), ("b", "A review decides whether work moves forward"), ("c", "The staff are paid"), ("d", "The office moves")],
+         "b"),
+        ("Why are gate criteria written in advance?",
+         [("a", "So the criteria can change at the last minute"), ("b", "So no one reads them"), ("c", "So the review is fair and the questions are known"), ("d", "So the project is always passed")],
+         "c"),
+        ("What are the usual outcomes of a gate decision?",
+         [("a", "Paint, print or post"), ("b", "Rent, buy or lease"), ("c", "Hire, fire or relocate"), ("d", "Go, hold or kill")],
+         "d"),
+        ("Why can killing a project early be a good result?",
+         [("a", "It frees money and people for better ideas"), ("b", "It always makes the firm bigger"), ("c", "It never saves money"), ("d", "It is a sign of failure only")],
+         "a"),
+        ("Why is stopping a project early a money decision?",
+         [("a", "It doubles the spending"), ("b", "It avoids the cost of every later stage"), ("c", "It hides the costs"), ("d", "It makes the project more expensive")],
+         "b"),
+    ],
+}

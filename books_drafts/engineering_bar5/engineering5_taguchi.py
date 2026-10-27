@@ -1,0 +1,37 @@
+"""Taguchi Methods for Quality Design: orthogonal arrays, S/N ratios, confirmation runs and the limits of interpretation."""
+CODE = "engineering5_taguchi"
+BOOK = {
+    "title": "Taguchi Methods for Quality Design",
+    "subtitle": "Orthogonal arrays, signal-to-noise ratios and confirmation runs",
+    "chapters": [
+        ("Quality built in",
+         "Taguchi's idea was that quality is designed in, not inspected in at the end. A product should be planned so that it performs well by design. Testing is then used to confirm the plan."),
+        ("Planning the runs",
+         "An orthogonal array lets a team test many factors with a small, balanced set of runs. Each factor appears at each level equally often. This keeps the comparison fair and the work small."),
+        ("Reading the signal-to-noise ratio",
+         "For each run, the signal-to-noise ratio summarises how well the result meets its target and how much it scatters. Choosing the level of each factor with the best ratio tends to give a robust result."),
+        ("Confirmation runs",
+         "After choosing the best settings, the team runs a confirmation test at those settings. The result should match the prediction. If it does not, the plan needs another look before it is trusted."),
+        ("The limits of interpretation",
+         "Some factors interact, and a standard array may mix up their effects. Taguchi methods are a strong guide, not a proof. Experts check interactions and do not treat the table as the final word."),
+        ("The money side",
+         "The method is cheap compared with trial and error, because it finds good settings in fewer runs. Each saved run is money kept. The team should still record what the plan cost and what it saved."),
+    ],
+    "test": [
+        ("What is the main idea behind Taguchi methods?",
+         [("a", "Quality is only checked by customers"), ("b", "Tests are never needed"), ("c", "Quality is designed in, not only inspected at the end"), ("d", "Colour decides quality")],
+         "c"),
+        ("What does an orthogonal array give a team?",
+         [("a", "A single run for every factor"), ("b", "A list of suppliers"), ("c", "A paint colour chart"), ("d", "Many factors tested with a small, balanced set of runs")],
+         "d"),
+        ("What is a confirmation run?",
+         [("a", "A test at the chosen settings to check the prediction"), ("b", "The first random test"), ("c", "A sales call"), ("d", "A safety form")],
+         "a"),
+        ("Why can a standard array be misleading?",
+         [("a", "Arrays never use numbers"), ("b", "Some factors interact and their effects can get mixed up"), ("c", "Arrays only work for food"), ("d", "Arrays are always exact")],
+         "b"),
+        ("Why does the method help the money side?",
+         [("a", "It removes the need for any design"), ("b", "It doubles the test count"), ("c", "It finds good settings in fewer runs"), ("d", "It raises material prices")],
+         "c"),
+    ],
+}

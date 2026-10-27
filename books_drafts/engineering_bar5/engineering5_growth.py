@@ -1,0 +1,37 @@
+"""Reliability Growth Models: Duane plots, failure rate change over test, fix planning and predicted reliability."""
+CODE = "engineering5_growth"
+BOOK = {
+    "title": "Reliability Growth Models",
+    "subtitle": "Tracking how a product gets more reliable as failures are found and fixed",
+    "chapters": [
+        ("Reliability grows with testing",
+         "A new product rarely works as well as it will in the end. As tests reveal failures and the causes are fixed, reliability improves. Reliability growth models describe that improvement with numbers."),
+        ("The Duane plot",
+         "A Duane plot charts the cumulative test time against the cumulative failure rate on logarithmic scales. If growth is steady, the points fall close to a straight line. The slope of that line shows how fast reliability is improving."),
+        ("Failure rate over test",
+         "Early in a test, failures come often. As fixes are made, the failure rate falls. Watching this trend shows whether the fixes are working or whether new problems are appearing."),
+        ("Planning the fixes",
+         "A fix plan lists the failure modes, their causes and the fixes with their dates. Fixes are ranked by how much they would improve reliability. The plan shows when each fix is expected to take effect."),
+        ("Predicting reliability",
+         "Once the trend is known, the model predicts the reliability the product will reach at a set time. The prediction is an estimate, and it should be updated as new data arrives. It is a guide for release decisions."),
+        ("The money side",
+         "Testing and fixing take time and money, and a late fix can be costly. Knowing the expected growth helps set a launch date and a warranty budget. A product released too early may cost more in returns than the delay would have."),
+    ],
+    "test": [
+        ("What do reliability growth models describe?",
+         [("a", "The colour of the test rig"), ("b", "The number of parking spaces"), ("c", "The weather in the lab"), ("d", "How reliability improves as failures are found and fixed")],
+         "d"),
+        ("What does a Duane plot show?",
+         [("a", "Cumulative failure rate against cumulative test time"), ("b", "The office budget by month"), ("c", "The staff holiday list"), ("d", "The price of each part")],
+         "a"),
+        ("What should happen to the failure rate as fixes are made?",
+         [("a", "It should rise without limit"), ("b", "It should fall over time"), ("c", "It should stay exactly the same"), ("d", "It should be ignored")],
+         "b"),
+        ("What does a fix plan show?",
+         [("a", "The menu for the canteen"), ("b", "The seating in a theatre"), ("c", "Failure modes, causes and fixes with their dates"), ("d", "The number of shoes in stock")],
+         "c"),
+        ("Why does predicted reliability help the money side?",
+         [("a", "It removes the need for warranty"), ("b", "It makes returns cost nothing"), ("c", "It has no link to money"), ("d", "It helps set a launch date and a warranty budget")],
+         "d"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Takt Time and Line Pacing: customer demand rate, takt calculation, line balance, buffer sizing and the money side of idle capacity."""
+CODE = "engineering5_takt"
+BOOK = {
+    "title": "Takt Time and Line Pacing",
+    "subtitle": "Matching the pace of a production line to what customers actually want",
+    "chapters": [
+        ("What takt time is",
+         "Takt time is the rate at which a product must be finished to meet customer demand. It is found by dividing the time available for production by the number of units the customer needs in that time. It sets the beat of the line."),
+        ("Calculating takt",
+         "Suppose a line has 480 minutes of available time in a shift and customers need 240 units. The takt time is 2 minutes per unit. Each station should then finish its work within that two-minute beat."),
+        ("Line balance",
+         "Line balance spreads the work evenly across the stations. A station with more work than the takt becomes a bottleneck. A station with less work sits idle for part of each beat."),
+        ("Buffers",
+         "Buffers are small stores of work between stations. They absorb short delays so one slow moment does not stop the whole line. Their size should be as small as the line allows, because stock ties up money."),
+        ("Pacing the line",
+         "A paced line moves to the takt beat, and each station knows when its work is due. Problems show up quickly because the gap is visible. Teams respond at once instead of waiting for the end of the shift."),
+        ("The money side",
+         "Idle capacity is paid for but makes nothing. A line that runs well below takt wastes labour and floor space. Matching the line to demand avoids both overproduction and idle time."),
+    ],
+    "test": [
+        ("What is takt time?",
+         [("a", "The rate at which product must be finished to meet demand"), ("b", "The length of a lunch break"), ("c", "The price of a machine"), ("d", "The colour of a label")],
+         "a"),
+        ("If 480 minutes are available and 240 units are needed, what is takt?",
+         [("a", "1 minute per unit"), ("b", "2 minutes per unit"), ("c", "240 minutes per unit"), ("d", "480 minutes per unit")],
+         "b"),
+        ("What is a bottleneck station?",
+         [("a", "A station with no work"), ("b", "A station that paints parts"), ("c", "A station with more work than the takt allows"), ("d", "A station in the car park")],
+         "c"),
+        ("What does a buffer do on a line?",
+         [("a", "It stops every part for an hour"), ("b", "It makes the parts heavier"), ("c", "It replaces the operators"), ("d", "It absorbs short delays so the whole line keeps moving")],
+         "d"),
+        ("Why is idle capacity a money problem?",
+         [("a", "It is paid for but makes nothing"), ("b", "It earns interest every day"), ("c", "It lowers the cost of parts"), ("d", "It has no cost at all")],
+         "a"),
+    ],
+}

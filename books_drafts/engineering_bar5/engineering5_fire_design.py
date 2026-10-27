@@ -1,0 +1,37 @@
+"""Fire Design of Structural Steel and Concrete: fire resistance ratings, member temperature rise, insulation, performance-based design and the money side of fire protection."""
+CODE = "engineering5_fire_design"
+BOOK = {
+    "title": "Fire Design of Structural Steel and Concrete",
+    "subtitle": "Keeping a building's frame standing long enough for people to escape",
+    "chapters": [
+        ("Why fire design matters",
+         "Fire heats the structure of a building, and heat weakens steel and concrete. The aim of fire design is to keep the structure standing long enough for people to get out and for firefighters to work. It is part of safe building design."),
+        ("Fire resistance ratings",
+         "A fire resistance rating states how many minutes a structural member must keep its strength in a standard fire test. Different parts of a building need different ratings. The rating depends on the use and the height of the building."),
+        ("How members heat up",
+         "A steel member heats quickly because it is thin and conducts heat well. Concrete heats more slowly and holds heat longer. Engineers estimate how fast each member's temperature rises to predict its strength."),
+        ("Insulation",
+         "Structural steel is often protected by fire-resistant coatings, boards or sprays. The insulation slows the heating of the steel. Its thickness is chosen to meet the rating, and it must stay in place."),
+        ("Performance-based design",
+         "Instead of fixed rules, performance-based design uses fire models to show a building will perform safely. It needs careful analysis and checks from a qualified expert. The method allows creative designs that still meet safety goals."),
+        ("The money side",
+         "Fire protection is a real cost, but it is much smaller than the cost of a collapse or lost building. Good design picks the cheapest protection that still meets the rating. The choice should be recorded and checked."),
+    ],
+    "test": [
+        ("What does a fire resistance rating state?",
+         [("a", "How many minutes a member keeps its strength in a standard fire test"), ("b", "The colour of the building"), ("c", "The number of windows"), ("d", "The price of the land")],
+         "a"),
+        ("Why does a thin steel member heat up quickly?",
+         [("a", "It is painted white"), ("b", "It is thin and conducts heat well"), ("c", "It is made of wood"), ("d", "It is always cold")],
+         "b"),
+        ("What does insulation do for steel in a fire?",
+         [("a", "Makes the steel hotter"), ("b", "Removes the need for design"), ("c", "Slows the heating of the steel"), ("d", "Makes the steel lighter")],
+         "c"),
+        ("What is performance-based fire design?",
+         [("a", "Guessing the fire rating"), ("b", "Choosing the cheapest paint"), ("c", "Ignoring fire altogether"), ("d", "Using fire models to show the building performs safely")],
+         "d"),
+        ("Why is fire protection a good money choice?",
+         [("a", "Its cost is much smaller than a collapse or lost building"), ("b", "It costs more than the building"), ("c", "It is never needed"), ("d", "It removes all other costs")],
+         "a"),
+    ],
+}

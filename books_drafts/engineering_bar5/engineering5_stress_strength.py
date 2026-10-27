@@ -1,0 +1,37 @@
+"""Stress-Strength Interference Models: load and strength distributions, overlap, reliability estimates, margin choices and sensitivity to scatter."""
+CODE = "engineering5_stress_strength"
+BOOK = {
+    "title": "Stress-Strength Interference Models",
+    "subtitle": "Estimating failure risk from the overlap of load and strength",
+    "chapters": [
+        ("The basic idea",
+         "A part fails when the load on it is greater than its strength. Both load and strength vary from unit to unit and from use to use. Stress-strength models estimate the chance of failure from the overlap of these two spreads."),
+        ("Load and strength distributions",
+         "The load is described by its typical value and how widely it scatters. The strength is described the same way. Each is found from measurements, tests or standards."),
+        ("Overlap",
+         "Where the two distributions overlap, some loads meet some strengths, and failure becomes possible. A small overlap means a low risk, and a large overlap means a high risk. The overlap is the heart of the analysis."),
+        ("Reliability estimates",
+         "The reliability is the chance that strength stays above load. It is calculated from the two distributions. The answer is a probability, and it should be stated with its assumptions."),
+        ("Margin choices",
+         "Designers add a margin, which increases strength or reduces load, to keep the overlap small. A bigger margin means a safer design, but usually a heavier or costlier one. The margin is chosen to meet the target risk."),
+        ("Sensitivity to scatter and money",
+         "A small change in scatter can change the risk a lot. Reducing scatter, through tighter control of materials or processes, often pays off. Money spent on control is weighed against the cost of failures."),
+    ],
+    "test": [
+        ("When does a part fail in this model?",
+         [("a", "When it is painted"), ("b", "When it is moved"), ("c", "When the load is greater than its strength"), ("d", "When it is sold")],
+         "c"),
+        ("What is the overlap in a stress-strength model?",
+         [("a", "The layers of a paint job"), ("b", "The price of two parts"), ("c", "The overlap of two meetings"), ("d", "Where load and strength distributions meet, so failure is possible")],
+         "d"),
+        ("What is reliability in this model?",
+         [("a", "The chance that strength stays above load"), ("b", "The colour of the part"), ("c", "The speed of the delivery"), ("d", "The number of staff")],
+         "a"),
+        ("What does a design margin do?",
+         [("a", "Makes the overlap bigger"), ("b", "Keeps the overlap small by raising strength or lowering load"), ("c", "Removes the need for testing"), ("d", "Changes the colour of the part")],
+         "b"),
+        ("Why does reducing scatter often pay off?",
+         [("a", "Scatter has no effect on risk"), ("b", "Scatter only affects paint"), ("c", "A small change in scatter can change the risk a lot"), ("d", "Scatter always raises costs")],
+         "c"),
+    ],
+}

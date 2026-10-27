@@ -1,0 +1,37 @@
+"""Quality Function Deployment and the House of Quality: customer needs, technical requirements, correlations, priorities and targets."""
+CODE = "engineering5_qfd"
+BOOK = {
+    "title": "Quality Function Deployment and the House of Quality",
+    "subtitle": "Turning what customers say they want into measurable design targets",
+    "chapters": [
+        ("Starting with the customer",
+         "Quality Function Deployment starts with what customers need, in their own words. These needs are collected from interviews, reviews and complaints. They become the rows of the planning table."),
+        ("Technical requirements",
+         "Each customer need is matched with technical requirements, which are measurable features of the design. A need for quiet operation might become a noise level in decibels. The columns of the table hold these requirements."),
+        ("The relationship matrix",
+         "A relationship matrix marks how strongly each technical requirement affects each customer need. Strong, medium and weak links help show which design choices matter most. The matrix turns opinion into a visible pattern."),
+        ("Correlations and priorities",
+         "The roof of the house shows where technical requirements help or conflict with each other. Priorities are then weighted from the customer importance and the links. These weights guide where the team spends effort."),
+        ("Setting targets",
+         "The last step sets a target value for each technical requirement, with a comparison to competitors. Targets make the design testable. A target nobody can measure is not a target."),
+        ("The money side",
+         "Features customers value most deserve the spending, and features they barely notice can be cut to save cost. The table makes these trade-offs visible before the money is committed."),
+    ],
+    "test": [
+        ("Where does Quality Function Deployment begin?",
+         [("a", "With the price list"), ("b", "With the factory roof"), ("c", "With what customers need"), ("d", "With the accounts")],
+         "c"),
+        ("What are technical requirements in the house of quality?",
+         [("a", "The names of the sales staff"), ("b", "The paint colours offered"), ("c", "The office opening hours"), ("d", "Measurable features of the design")],
+         "d"),
+        ("What does the relationship matrix show?",
+         [("a", "How strongly each technical requirement affects each customer need"), ("b", "The weather on the test day"), ("c", "The number of workers"), ("d", "The age of the building")],
+         "a"),
+        ("Why must a target be measurable?",
+         [("a", "So it can be hung on a wall"), ("b", "So the design can be tested against it"), ("c", "So it costs less to print"), ("d", "So it is never checked")],
+         "b"),
+        ("How does the table help with money?",
+         [("a", "It removes every cost"), ("b", "It sets all prices to zero"), ("c", "It shows which features customers value, so spending can follow them"), ("d", "It replaces the accounts")],
+         "c"),
+    ],
+}

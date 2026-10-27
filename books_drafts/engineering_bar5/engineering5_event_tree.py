@@ -1,0 +1,37 @@
+"""Event Tree Analysis: initiating events, branch probabilities, outcomes, consequence mapping and sensitivity."""
+CODE = "engineering5_event_tree"
+BOOK = {
+    "title": "Event Tree Analysis",
+    "subtitle": "Following one starting event through each safety barrier to its possible outcomes",
+    "chapters": [
+        ("What an event tree shows",
+         "An event tree starts from one initiating event, such as a pump failing. It then branches at each safety barrier, asking whether that barrier works. Each path through the tree ends in an outcome."),
+        ("Initiating events",
+         "The initiating event is the first thing that goes wrong. Its frequency is estimated from data or from similar systems. Every tree starts from a clearly defined event."),
+        ("Branch probabilities",
+         "At each branch, the chance that a barrier works or fails is estimated. Multiplying the probabilities along a path gives the chance of that outcome. The branches add up to the whole range of outcomes."),
+        ("Outcomes",
+         "Each path ends in an outcome, from a minor fault to a serious accident. The tree shows how many paths lead to each outcome. Reviewing the outcomes shows which barriers matter most."),
+        ("Consequence mapping",
+         "Each outcome is linked to its consequences, such as cost, downtime or harm. Consequences are rated so that the outcomes can be compared. This turns the tree into a picture of the risk."),
+        ("Sensitivity and money",
+         "The analysis checks how much the result changes when a probability changes. A key barrier may deserve more investment. Money spent on the barriers the sensitivity check flags as most influential reduces the largest risks."),
+    ],
+    "test": [
+        ("What does an event tree start from?",
+         [("a", "One initiating event"), ("b", "A list of staff names"), ("c", "The price of a bolt"), ("d", "A map of the city")],
+         "a"),
+        ("What happens at each branch of an event tree?",
+         [("a", "The tree is painted"), ("b", "A safety barrier is asked whether it works or fails"), ("c", "The staff take a break"), ("d", "A new product is sold")],
+         "b"),
+        ("How is the chance of one outcome path found?",
+         [("a", "Adding the colours of the branches"), ("b", "Counting the staff"), ("c", "Multiplying the branch probabilities along the path"), ("d", "Guessing the weather")],
+         "c"),
+        ("What does consequence mapping do?",
+         [("a", "Sets the staff rota"), ("b", "Chooses the logo"), ("c", "Writes the invoices"), ("d", "Links each outcome to its cost, downtime or harm")],
+         "d"),
+        ("Why run a sensitivity check?",
+         [("a", "To see which probability changes the result the most"), ("b", "To remove all barriers"), ("c", "To change the initiating event at will"), ("d", "To hide the outcomes")],
+         "a"),
+    ],
+}

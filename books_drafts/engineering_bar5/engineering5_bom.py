@@ -1,0 +1,37 @@
+"""Bill of Materials Structures: multi-level BOMs, part numbers, variant management, costing of BOM lines and data quality with the money side of cost roll-up."""
+CODE = "engineering5_bom"
+BOOK = {
+    "title": "Bill of Materials Structures",
+    "subtitle": "Listing every part a product needs, level by level, and costing the list",
+    "chapters": [
+        ("What a bill of materials is",
+         "A bill of materials, or BOM, is the complete list of parts and materials needed to make a product. It tells the factory what to buy, what to store and what to build. Every department relies on it."),
+        ("Multi-level BOMs",
+         "A multi-level BOM shows the product as a tree. Subassemblies sit inside the top-level product, and their own parts sit below them. This structure matches how the product is actually built."),
+        ("Part numbers",
+         "Each part has a unique part number that never changes meaning. Two different parts must never share a number. Clear numbers prevent mix-ups on the shop floor and in the store."),
+        ("Variants",
+         "A product sold in several versions needs variant management. Common parts are shared, and the differences are listed for each variant. This keeps the list short and the records correct."),
+        ("Costing the lines",
+         "Each line in the BOM has a quantity and a unit cost. The total for a subassembly is found by adding its lines, then rolling up to the top product. Errors in one line carry through to the final cost."),
+        ("Data quality and the money side",
+         "A BOM with wrong quantities or old prices gives a wrong cost. Regular checks keep the data right. Accurate cost roll-up shows the true margin on each product."),
+    ],
+    "test": [
+        ("What is a bill of materials?",
+         [("a", "A bill for electricity"), ("b", "A tax form"), ("c", "A sales invoice to a customer"), ("d", "The complete list of parts and materials a product needs")],
+         "d"),
+        ("What does a multi-level BOM show?",
+         [("a", "The product as a tree of subassemblies and their parts"), ("b", "A single line for the whole firm"), ("c", "The staff rota"), ("d", "The weather")],
+         "a"),
+        ("Why must two different parts never share a part number?",
+         [("a", "So numbers can be sold"), ("b", "To prevent mix-ups in the factory and the store"), ("c", "So numbers cost more"), ("d", "So numbers can be painted")],
+         "b"),
+        ("How is the cost of a subassembly found?",
+         [("a", "By guessing its weight"), ("b", "By counting the windows"), ("c", "By adding up the cost of its BOM lines"), ("d", "By asking the customer")],
+         "c"),
+        ("Why does BOM data quality matter for money?",
+         [("a", "BOM data never affects cost"), ("b", "Old prices always help"), ("c", "Quantities do not matter"), ("d", "Wrong quantities or prices give a wrong product cost and margin")],
+         "d"),
+    ],
+}
