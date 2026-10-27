@@ -691,23 +691,25 @@ async def main():
     check("eight careers, five bars each, thresholds 5/20/65/185/510, career books loaded into the library",
           [c["code"] for c in j["careers"]] == ["flight", "business", "science", "engineering", "mining", "medicine", "computing", "navigation"]
           and all(len(c["bars"]) == 5 for c in j["careers"]) and j["thresholds"] == [5, 20, 65, 185, 510]
-          and len(fl[1]) >= 5 and len(fl[2]) >= 15 and all(LB.BOOKS[b]["bar"] == 1 for b in fl[1]) and j["uniform"] is None)
+          and len(fl[1]) >= 5 and len(fl[2]) >= 15 and all(LB.BOOKS[b].get("bar", 1) == 1 for b in fl[1])
+          and "piloting" in fl[1] and "power" in CAR.books_by_bar("engineering")[1] and j["uniform"] is None)
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()
     check("no bars yet: the title is Trainee and the skill is 0", me["rank"] == "Trainee" and me["career"]["skill_pct"] == 0)
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "flight"})
     check("no Flight pass yet: its uniform isn't in the Closet", r.status == 422)
-    for b in fl[1][:-1]:
+    for b in fl[1][:4]:
         await take(b)
     l = await ladder("flight")
-    check("one bar-1 book not passed: the bar isn't earned", not l["bars"][0]["earned"] and l["bars"][0]["passed"] == len(fl[1]) - 1)
-    t = await take(fl[1][-1], misses=1)
+    check("4 of the 5 books bar 1 needs: the bar isn't earned, and the note says how many are left",
+          not l["bars"][0]["earned"] and l["bars"][0]["passed"] == 4 and "1 more" in l["bars"][0]["note"])
+    t = await take(fl[1][4], misses=1)
     l = await ladder("flight")
-    check("every bar-1 book passed, one with a miss: bar 1 is SILVER, title Pilot, skill +10%",
+    check("the fifth book passed, with a miss: bar 1 is SILVER, title Pilot, skill +10%",
           t["passed"] and t["score"] == 4 and l["bars"][0]["earned"] and l["bars"][0]["medal"] == "silver"
           and l["title"] == "Pilot" and abs(l["skill_pct"] - 10) < 1e-9)
-    await take(fl[1][-1], misses=2)                   # a worse retake never lowers the best score
+    await take(fl[1][4], misses=2)                    # a worse retake never lowers the best score
     l2 = await ladder("flight")
-    await take(fl[1][-1])
+    await take(fl[1][4])
     l = await ladder("flight")
     check("a worse retake keeps silver; a perfect retake turns bar 1 GOLD (+11%)",
           l2["bars"][0]["medal"] == "silver" and l["bars"][0]["medal"] == "gold" and abs(l["skill_pct"] - 11) < 1e-9)
@@ -722,7 +724,7 @@ async def main():
     check("all bar-2 books perfect: bar 2 GOLD, Senior Pilot, skill 11 + 6.6",
           l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
     check("bar 3's 45 books are written: it is open, not yet earned, and lists what's left",
-          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Pass every book" in l["bars"][2]["note"])
+          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "more of this career's books" in l["bars"][2]["note"])
     fb = CAR.books_by_bar("flight")
     want = {4: 120, 5: 325}
     check("bars 4 and 5: open once all their books are written, otherwise 'Not open yet'; never earned out of turn",
@@ -743,7 +745,7 @@ async def main():
     fs = next(c for c in s["careers"] if c["code"] == "flight")
     check("the library has a shelf per career, books tagged by bar, with the ladder",
           len(s["careers"]) == 8 and len([b for b in fs["books"] if b["bar"] <= 2]) == len(fl[1]) + len(fl[2])
-          and all(b["passed"] and b["perfect"] for b in fs["books"] if b["bar"] <= 2)
+          and sum(1 for b in fs["books"] if b["passed"]) == 20 and all(b["perfect"] for b in fs["books"] if b["passed"])
           and fs["bars"][1]["medal"] == "gold" and s["uniform"] == "flight")
     async with cl.app["pool"].acquire() as c:
         cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")

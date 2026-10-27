@@ -37,12 +37,28 @@ BY_CODE = {c["code"]: c for c in CAREERS}
 TRAINEE = "Trainee"
 
 
+# The Library's subject books cross over into careers (Eric 10-27: "books that crossover into multiple careers and also
+# help to earn bars"). Each counts toward bar 1 of every career listed, alongside that career's own bar-1 shelf.
+CROSSOVER = {
+    "prospecting": ["mining", "science"], "mining": ["mining"], "metallurgy": ["mining", "engineering"],
+    "assaying": ["mining", "science"], "refining": ["mining", "science"], "ceramics": ["mining", "engineering"],
+    "drafting": ["engineering"], "blueprint-handbook": ["engineering", "business"], "fabrication": ["engineering"],
+    "electronics": ["engineering", "computing"], "power": ["engineering", "flight"],
+    "trading": ["business"], "commodities": ["business", "mining"], "logistics": ["business", "flight", "navigation"],
+    "contracts": ["business"], "bookkeeping": ["business"], "appraisal": ["business", "mining"],
+    "piloting": ["flight"], "maintenance": ["flight", "engineering"], "life-support": ["medicine", "engineering"],
+    "health": ["medicine"], "botany": ["science", "medicine"],
+}
+
+
 def books_by_bar(career):
-    """{bar: [book codes]} for one career, from the library's career books."""
+    """{bar: [book codes]} for one career: its own career books, plus the subject books that cross over into it."""
     out = {n: [] for n in range(1, len(THRESHOLDS) + 1)}
     for code, b in LB.BOOKS.items():
         if b.get("career") == career and b.get("bar") in out:
             out[b["bar"]].append(code)
+        elif career in CROSSOVER.get(code, []):
+            out[1].append(code)
     return out
 
 
@@ -67,19 +83,20 @@ def ladder(career, best, s):
         passed_total += len(got)
         perfect = sum(1 for b in got if best[b][0] >= best[b][1])
         can = written >= need
-        earned = prev and can and len(got) == len(codes) and passed_total >= need
-        is_gold = earned and perfect == len(codes)
+        # rule 32: a bar is earned by the running total of books passed (5, 20, 65, 185, 510), one bar at a time
+        earned = prev and can and passed_total >= need
+        is_gold = earned and len(got) > 0 and perfect == len(got)
         if earned:
             steps = n
             skill += gold[i] if is_gold else silver[i]
         if earned:
-            note = "Gold: every test perfect." if is_gold else "Silver. Retake a test with a miss to turn it gold."
+            note = "Gold: every test passed for it is perfect." if is_gold else "Silver. Retake a test with a miss to turn it gold."
         elif not can:
             note = f"Not open yet: {written} of the {need} books this bar needs are written."
         elif not prev:
             note = f"Earn the {c['steps'][i - 1]} bar first."
         else:
-            note = f"Pass every book on this shelf: {len(got)} of {len(codes)} passed."
+            note = f"Pass {need - passed_total} more of this career's books to earn this bar ({passed_total} of {need} so far)."
         bars.append({"bar": n, "title": c["steps"][i], "books": len(codes), "passed": len(got), "perfect": perfect,
                      "threshold": need, "can_earn": can, "earned": earned, "medal": ("gold" if is_gold else "silver") if earned else None,
                      "gain_pct": round(gold[i] if is_gold else silver[i], 4), "note": note})
