@@ -23,7 +23,8 @@ MODEL = "eleven_multilingual_v2"
 VOICE_BY_LANG = {"en": "lily", "zh": "lily", "de": "lily", "pl": "lily",
                  "es": "kate 1", "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
                  "ru": "MOgsVr0EwwxqQs5cNDhu",     # Julia
-                 "ja": "0yh9saSHWVy78QG1HfNs"}     # Sumiko Ito - Crisp
+                 "ja": "0yh9saSHWVy78QG1HfNs",     # Sumiko Ito - Crisp
+                 "ar": "XTa3iQyMA6f1qrI4F6kZ"}     # Sara - Soft, Expressive, and Warm (Modern Standard Arabic; Eric 10-27)
 RADIO = ("highpass=f=380,lowpass=f=3200,acompressor=threshold=-18dB:ratio=4:attack=5:release=80[v];"
          "anoisesrc=color=white:amplitude=0.006[n];[v][n]amix=inputs=2:duration=first:dropout_transition=0:normalize=0")
 
@@ -67,6 +68,7 @@ def main():
     ap.add_argument("--voice", help="override the voice: the start of its name in My Voices, or its voice ID. Normally leave it"
                                     " out: each language's voice comes from VOICE_BY_LANG (docs/voice-models.md)")
     ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2")
+    ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
@@ -75,6 +77,8 @@ def main():
     if not a.voice and not a.list:
         sys.exit(f"No voice is chosen for '{a.lang}' yet (docs/voice-models.md). Eric picks one; then add it to VOICE_BY_LANG.")
     L = lines() if a.lang == "en" else json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
+    if a.ids:
+        L = {k: v for k, v in L.items() if k in set(a.ids.split(","))}
     todo = {k: v for k, v in L.items() if not os.path.exists(os.path.join(a.out, "raw", k + ".mp3"))}
     print(f"{len(L)} lines, {sum(map(len, L.values())):,} characters in all; {len(todo)} still to record "
           f"({sum(map(len, todo.values())):,} characters).")
