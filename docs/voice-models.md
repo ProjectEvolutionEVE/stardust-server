@@ -48,3 +48,5 @@ hardest lines (round-trip 96.8%-100%, clean tails).
 - **Note:** the round trip measures how clearly the words come across, not how native the accent is.
 - **Decision for Eric:** keep Lily's Arabic, try another verified Arabic voice, or have a native speaker judge 2-3
   lines of each (`~/Desktop/inara-ar/raw/` and `~/Desktop/inara-ar-sara/raw/`).
+
+**DECIDED (Eric 10-27): Sara is Inara's Arabic voice.** ElevenLabs verifies her in Arabic, so we trust that and spend no more credits on tests. Next: record all 179 lines in Sara and upload them, replacing Lily's.
