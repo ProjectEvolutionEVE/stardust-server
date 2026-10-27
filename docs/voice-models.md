@@ -17,7 +17,7 @@ Keep this file, `VOICE_BY_LANG` and the recording script in step.
 | Kate 1 - Warm, Close and Natural | (by name) | es (Latin American), fr, ko, tr, pt-BR | not yet written down: check in ElevenLabs |
 | Julia (Russian) | `MOgsVr0EwwxqQs5cNDhu` | ru | not yet written down: check in ElevenLabs |
 | Sumiko Ito - Crisp | `0yh9saSHWVy78QG1HfNs` | ja | not yet written down: check in ElevenLabs |
-| Sara - Soft, Expressive, and Warm (chosen by Eric 10-27) | `XTa3iQyMA6f1qrI4F6kZ` | ar | Arabic, Modern Standard (verified badge in the Voice Library) |
+| Sara - Soft, Expressive, and Warm (chosen by Eric 10-27) | by name (library ID `XTa3iQyMA6f1qrI4F6kZ`; a My Voices copy has its own ID) | ar | Arabic, Modern Standard (verified badge in the Voice Library) |
 
 **Arabic (10-26):**
 - The 179 Arabic lines now on the server were recorded in Lily by mistake, and Lily is not verified in Arabic.
