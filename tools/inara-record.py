@@ -88,6 +88,11 @@ def main():
     ff = shutil.which("ffmpeg")
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
     key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
+    try:   # show which account this key belongs to, so Eric can confirm it before anything is charged (Eric 10-27)
+        sub = json.loads(call("https://api.elevenlabs.io/v1/user/subscription", key))
+        print(f"Account: {sub.get('tier', '?')} plan, {sub.get('character_count', 0):,} of {sub.get('character_limit', 0):,} credits used.")
+    except Exception:
+        print("Account: couldn't read the plan for this key.")
     voices = json.loads(call("https://api.elevenlabs.io/v1/voices", key))["voices"]
     lily = [v for v in voices if v["name"].lower().startswith(a.voice.lower()) or v["voice_id"] == a.voice] \
         or ([{"voice_id": a.voice, "name": a.voice}] if re.fullmatch(r"[A-Za-z0-9]{20}", a.voice) else [])   # a voice ID
