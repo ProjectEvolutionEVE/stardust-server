@@ -68,6 +68,7 @@ def main():
     ap.add_argument("--voice", help="override the voice: the start of its name in My Voices, or its voice ID. Normally leave it"
                                     " out: each language's voice comes from VOICE_BY_LANG (docs/voice-models.md)")
     ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2")
+    ap.add_argument("--key-file", default="~/.stardust-elevenlabs-key", help="file holding the API key for the account to use")
     ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
@@ -87,7 +88,12 @@ def main():
         return
     ff = shutil.which("ffmpeg")
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
-    key = os.environ.get("ELEVENLABS_API_KEY") or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
+    key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
+    kf = os.path.expanduser(a.key_file)
+    if not key and os.path.exists(kf):      # the same key file make_intro.py uses
+        key = open(kf).read().strip()
+    key = key or getpass.getpass("ElevenLabs API key (hidden, not saved): ").strip()
+    print(f"Key: ...{key[-4:]}  (match the last 4 against ElevenLabs > API Keys to see which account this is)")
     try:   # show which account this key belongs to, so Eric can confirm it before anything is charged (Eric 10-27)
         sub = json.loads(call("https://api.elevenlabs.io/v1/user/subscription", key))
         print(f"Account: {sub.get('tier', '?')} plan, {sub.get('character_count', 0):,} of {sub.get('character_limit', 0):,} credits used.")
