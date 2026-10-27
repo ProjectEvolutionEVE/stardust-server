@@ -1,0 +1,52 @@
+"""Supply Chain Due Diligence: how buyers check where their metals come from, assess the risks, and act when problems appear."""
+CODE = "mining5_supply_chain_dd"
+BOOK = {'title': 'Supply Chain Due Diligence',
+ 'subtitle': 'Mapping where metal comes from, checking the risks, and acting on what is found',
+ 'chapters': [('Mapping sources',
+               'Due diligence starts with a map of the supply chain, from the mine to the refinery to the '
+               'finished product. Buyers need to know who handles the metal at each step.'),
+              ('Risk assessment',
+               'Each link in the chain is assessed for risks such as human rights abuse, corruption, '
+               'environmental harm or conflict. High-risk links get closer attention.'),
+              ('Audits',
+               'Audits check the facts on the ground, such as mine records, payments and working conditions. '
+               'Independent audits give stronger evidence than self-reports.'),
+              ('Reporting',
+               'Companies publish reports on their supply chain checks. Honest reports say what was found, '
+               'including problems, and what was done about them.'),
+              ('Remediation',
+               'When a problem is found, the company must act. Remediation may mean fixing practices, paying '
+               'compensation or ending a supplier relationship, with a clear plan.'),
+              ('Standards',
+               'The OECD Due Diligence Guidance sets out a common approach to these steps. Using a shared '
+               'standard makes checks easier to compare and trust.')],
+ 'test': [('What does due diligence start with?',
+           [('a', 'A party for suppliers'),
+            ('b', 'A new logo'),
+            ('c', 'A map of the supply chain'),
+            ('d', 'A test of the drill bits')],
+           'c'),
+          ('Why do high-risk links get closer attention?',
+           [('a', 'Problems are more likely there'),
+            ('b', 'They are always cheaper'),
+            ('c', 'They are the smallest'),
+            ('d', 'They are always at sea')],
+           'a'),
+          ('Why are independent audits valued?',
+           [('a', 'They are always cheaper'),
+            ('b', 'They never find problems'),
+            ('c', 'They replace the mine'),
+            ('d', 'They give stronger evidence than self-reports')],
+           'd'),
+          ('What is remediation?',
+           [('a', 'Painting the offices'),
+            ('b', 'Acting to fix a problem that was found'),
+            ('c', 'Raising the metal price'),
+            ('d', 'Hiding the report')],
+           'b'),
+          ('What does the OECD Due Diligence Guidance provide?',
+           [('a', 'A list of gold prices'),
+            ('b', 'A map of the moon'),
+            ('c', 'A common approach to the steps of due diligence'),
+            ('d', 'A recipe for lunch')],
+           'c')]}

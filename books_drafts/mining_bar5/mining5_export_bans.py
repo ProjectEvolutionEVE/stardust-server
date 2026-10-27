@@ -1,0 +1,52 @@
+"""Export Bans and Local Processing Rules: why some countries stop raw ore leaving and require processing at home, and what follows."""
+CODE = "mining5_export_bans"
+BOOK = {'title': 'Export Bans and Local Processing Rules',
+ 'subtitle': 'Why countries keep ore at home, and what that does to investment and trade',
+ 'chapters': [('Resource nationalism',
+               'Resource nationalism is the idea that a country should control and benefit from its own '
+               'minerals. Export bans and local rules are tools of this idea.'),
+              ('Beneficiation rules',
+               'Beneficiation means processing ore before it is exported, for example by smelting it into '
+               'metal. Rules may require some processing to happen inside the country.'),
+              ('Effects',
+               'A ban can add local jobs and processing income, but it may also reduce mine revenue and '
+               'deter investors. The net effect depends on how the rules are designed and enforced.'),
+              ('Investment',
+               'Investors weigh the chance of a rule change. Clear, stable rules, with a plan for building '
+               'processing capacity, make investment more likely.'),
+              ('Examples',
+               'Indonesia banned exports of raw nickel ore in 2020 and required local processing. The policy '
+               'drew new smelter investment and also trade disputes.'),
+              ('Trade',
+               'Export rules can cause disputes between trading partners. Countries usually talk through '
+               'trade bodies before a rule takes effect, to limit surprises.')],
+ 'test': [('What is resource nationalism?',
+           [('a', 'A sport played with ore'),
+            ('b', 'A type of gold coin'),
+            ('c', 'The idea that a country should control and benefit from its minerals'),
+            ('d', 'A system of trucks')],
+           'c'),
+          ('What is beneficiation?',
+           [('a', 'Processing ore before it is exported'),
+            ('b', 'Selling ore cheaply'),
+            ('c', 'Burying the ore'),
+            ('d', 'Painting the ore')],
+           'a'),
+          ('What can an export ban bring?',
+           [('a', 'Guaranteed profits for every mine'),
+            ('b', 'An end to all trade'),
+            ('c', 'Free metal for everyone'),
+            ('d', 'Local processing jobs and income, and possibly fewer investors')],
+           'd'),
+          ('What helps investors decide on a processing rule?',
+           [('a', 'Rules that change every week'),
+            ('b', 'Clear, stable rules with a plan for processing capacity'),
+            ('c', 'No rules at all'),
+            ('d', 'Secret rules')],
+           'b'),
+          ('Which country is given as an example of a raw nickel ore export ban?',
+           [('a', 'Iceland, from 1900'),
+            ('b', 'Peru, from 1800'),
+            ('c', 'Indonesia, from 2020'),
+            ('d', 'Chile, from 2050')],
+           'c')]}
