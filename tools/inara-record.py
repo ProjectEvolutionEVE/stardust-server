@@ -23,8 +23,8 @@ MODEL = "eleven_multilingual_v2"
 VOICE_BY_LANG = {"en": "lily", "zh": "lily", "de": "lily", "pl": "lily",
                  "es": "johanna",                  # Johanna - Podcast Host (Latin American Spanish, verified; Eric 10-28)
                  "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
-                 "ru": "MOgsVr0EwwxqQs5cNDhu",     # Julia
-                 "ja": "0yh9saSHWVy78QG1HfNs",     # Sumiko Ito - Crisp
+                 "ru": "julia",                    # Julia (library ID MOgsVr0EwwxqQs5cNDhu; by name, as a My Voices copy has its own ID)
+                 "ja": "sumiko",                   # Sumiko Ito - Crisp (library ID 0yh9saSHWVy78QG1HfNs)
                  "ar": "sara - soft"}     # Sara - Soft, Expressive, and Warm (Modern Standard Arabic; Eric 10-27)
 RADIO = ("highpass=f=380,lowpass=f=3200,acompressor=threshold=-18dB:ratio=4:attack=5:release=80[v];"
          "anoisesrc=color=white:amplitude=0.006[n];[v][n]amix=inputs=2:duration=first:dropout_transition=0:normalize=0")
