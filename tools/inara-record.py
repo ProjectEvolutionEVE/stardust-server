@@ -72,6 +72,8 @@ def main():
     ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
     ap.add_argument("--yes", action="store_true", help="skip the 'pay for it?' question")
+    ap.add_argument("--new-voice", action="store_true", help="a new voice for this language: record every line again into "
+                    "--out, ignoring the old recordings (they were in another voice)")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
     a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
@@ -91,7 +93,9 @@ def main():
         except Exception: return {}
     main_dir = os.path.expanduser(f"~/Desktop/inara-{a.lang}")
     have = {}
-    for folder in dict.fromkeys([a.out, main_dir]):
+    if a.new_voice and os.path.abspath(os.path.expanduser(a.out)) == os.path.abspath(main_dir):
+        sys.exit(f"With --new-voice, record into a fresh folder (--out ~/Desktop/inara-{a.lang}-new), so the old set stays until the new one is checked.")
+    for folder in ([a.out] if a.new_voice else dict.fromkeys([a.out, main_dir])):
         said = saved_text(folder)
         for k, v in L.items():
             f = os.path.join(folder, "raw", k + ".mp3")
