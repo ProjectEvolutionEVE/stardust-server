@@ -69,7 +69,9 @@ def main():
     ap.add_argument("--voice", help="override the voice: the start of its name in My Voices, or its voice ID. Normally leave it"
                                     " out: each language's voice comes from VOICE_BY_LANG (docs/voice-models.md)")
     ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2")
-    ap.add_argument("--key-file", default="~/.stardust-elevenlabs-key", help="file holding the API key for the account to use")
+    ap.add_argument("--key-file", default="~/.stardust-elevenlabs-sara-key",
+                    help="file holding the API key. Default: Inara's voice account (key ...6e7e, Eric 10-28: it has Lily, Sara and "
+                         "Johanna). ~/.stardust-elevenlabs-key (...dec6) is a different account, not for Inara.")
     ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
     ap.add_argument("--yes", action="store_true", help="skip the 'pay for it?' question")
