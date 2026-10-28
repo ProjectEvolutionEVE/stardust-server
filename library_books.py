@@ -120,7 +120,7 @@ BOOKS = {
             ("Blueprint auctions",
              "Blueprint copies are sold by auction, one copy at a time. Each copy sells 5 minutes after its last top "
              "bid, and every new top bid starts the 5 minutes again. A new bid only has to beat the top bid by 1 credit. "
-             "The winner pays the Starship a 2.5% fee on top of the bid. A copy you buy is yours to build from forever, "
+             "The winner pays the WSC a 2.5% fee on top of the bid. A copy you buy is yours to build from forever, "
              "but it can never be resold: only its designer sells copies."),
         ],
         "test": [
@@ -292,7 +292,7 @@ BOOKS = {
              "• Each copy closes 5 minutes after its last top bid, and every new top bid restarts the 5 minutes. A copy "
              "waits 5 minutes for its first bid.\n"
              "• A bid must be at least the floor, and at least 1 credit over the top bid.\n"
-             "• The winner pays the Starship a 2.5% fee on top (rounded up to whole credits). You receive the full "
+             "• The winner pays the WSC a 2.5% fee on top (rounded up to whole credits). You receive the full "
              "winning bid. The copy goes to the winner's filing cabinet, and you both get a receipt.\n"
              "• If a copy gets no bid at or above the floor, the auction stops and holds. Your unsold copies stay with "
              "you, and you can schedule a new date, with a new floor if you like.\n"
@@ -406,3 +406,29 @@ for _d in sorted((_pl.Path(__file__).parent / "books_drafts").glob("*_bar*")):
         if _mod.CODE in BOOKS:
             raise RuntimeError(f"two books share the code {_mod.CODE}")
         BOOKS[_mod.CODE] = dict(_mod.BOOK, career=_mt[1], bar=int(_mt[2]))
+
+
+# TRANSLATED BOOKS (rule 41): books_i18n/<lang>/<code>.json, the same shape as the English book (title, subtitle,
+# chapters [[title, text]], test [[question, [[letter, option]], answer]]). Letters and answers match English, so
+# grading stays on the English book. A missing file means "fall back to English".
+import json as _json
+_I18N_DIR = _pl.Path(__file__).parent / "books_i18n"
+_I18N = {}
+
+
+def translation(lang, code):
+    """The translated book for (lang, code), or None. A regional code (zh-TW) falls back to its base (zh)."""
+    if not lang or not code or not _re.fullmatch(r"[A-Za-z0-9_-]+", f"{lang}{code}"):
+        return None
+    for lg in dict.fromkeys([lang, lang.split("-")[0]]):
+        key = (lg, code)
+        if key not in _I18N:
+            f = _I18N_DIR / lg / f"{code}.json"
+            try:
+                _I18N[key] = _json.loads(f.read_text(encoding="utf-8")) if f.is_file() else None
+            except (OSError, ValueError):
+                _I18N[key] = None
+        t = _I18N[key]
+        if t and isinstance(t.get("test"), list) and isinstance(t.get("chapters"), list):
+            return t
+    return None

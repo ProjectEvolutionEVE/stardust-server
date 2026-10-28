@@ -1,0 +1,37 @@
+"""Integration Testing Sequences and Fault Injection: integration order, interface checks, fit tests, deliberate fault injection and recording results."""
+CODE = "engineering5_integration"
+BOOK = {
+    "title": "Integration Testing Sequences and Fault Injection",
+    "subtitle": "Joining parts in a planned order and testing what happens when something goes wrong",
+    "chapters": [
+        ("Why integrate in steps",
+         "Integration is the work of joining separate parts into one working system. Joining everything at once makes faults hard to trace. A planned order brings parts together a few at a time, so each fault has a clear suspect."),
+        ("Choosing the order",
+         "The integration order starts with the parts that others depend on, and adds the rest in stages. Each addition is tested before the next is made. The order is written down so the team can follow it again."),
+        ("Interface checks",
+         "Most faults appear where parts meet. An interface check confirms that the signals, sizes and timings agree on each side. Checking the joints first catches many problems early."),
+        ("Fit tests",
+         "A fit test checks that a physical part goes together and clears its neighbours. It catches tolerance problems before the whole system is built. Fit tests are quick and cheap."),
+        ("Injecting faults on purpose",
+         "Fault injection means causing a known failure, such as a dropped signal or a blocked path, to see how the system reacts. The result shows whether the safeguards work. It is far better to learn this in a test than in use."),
+        ("Recording results",
+         "Every test records the setup, the steps and the result. Failures are logged with their cause and the fix. Good records make the next integration faster and show what was proven."),
+    ],
+    "test": [
+        ("Why integrate parts in stages?",
+         [("a", "So testing takes longer for no reason"), ("b", "So each fault has a clear suspect"), ("c", "So parts never meet"), ("d", "So no records are needed")],
+         "b"),
+        ("Where do most faults appear?",
+         [("a", "Only in the paint"), ("b", "In the packaging"), ("c", "Where parts meet, at the interfaces"), ("d", "Nowhere in a system")],
+         "c"),
+        ("What does a fit test check?",
+         [("a", "The taste of the coffee"), ("b", "The language of the manual"), ("c", "The price of the part"), ("d", "That a physical part goes together and clears its neighbours")],
+         "d"),
+        ("What is fault injection?",
+         [("a", "Causing a known failure on purpose to see how the system reacts"), ("b", "Adding ink to a printer"), ("c", "Filling a tank with water"), ("d", "Giving staff extra tasks")],
+         "a"),
+        ("Why record every integration test?",
+         [("a", "So the records can be lost"), ("b", "So the causes and fixes are kept for later work"), ("c", "So no one checks the results"), ("d", "So tests can be skipped")],
+         "b"),
+    ],
+}

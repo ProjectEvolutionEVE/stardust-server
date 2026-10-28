@@ -1,0 +1,37 @@
+"""Process FMEA for Manufacturing: process steps, failure causes, detection ratings, risk priority numbers and actions."""
+CODE = "engineering5_pfmea"
+BOOK = {
+    "title": "Process FMEA for Manufacturing",
+    "subtitle": "Finding how a manufacturing step can fail, and what to do about it",
+    "chapters": [
+        ("What a process FMEA is",
+         "A process FMEA is a structured review of a manufacturing process, step by step. For each step, the team asks how it could fail and what the effect would be. It is done before production starts, while changes are still cheap."),
+        ("Steps, failures and causes",
+         "Each process step is listed with its possible failure modes. For each failure, the team names its causes. Writing causes down makes it clear which problems have a real source."),
+        ("Severity, occurrence and detection",
+         "Each failure is rated from 1 to 10 for severity, how bad the effect is. It is rated for occurrence, how often the cause happens. It is rated for detection, how hard it is to catch before the customer sees it. Higher numbers mean more concern."),
+        ("Risk priority numbers",
+         "The risk priority number is severity times occurrence times detection. It helps rank the failures that need attention first. A high number is a reason to act, not a final verdict."),
+        ("Actions",
+         "For the highest risks, the team chooses actions that reduce severity, occurrence or detection. Each action gets an owner and a date. After the action, the ratings are updated to show the new risk."),
+        ("The money side",
+         "A failure caught at the process step costs far less than one found by a customer. The FMEA shows where spending on checks and fixes pays back most. Scrap, rework and warranty costs should be counted in the decision."),
+    ],
+    "test": [
+        ("What does a process FMEA review?",
+         [("a", "How each manufacturing step could fail"), ("b", "The price of the final sales brochure"), ("c", "The office seating plan"), ("d", "The weather forecast")],
+         "a"),
+        ("What does the detection rating measure?",
+         [("a", "The colour of the part"), ("b", "How hard the failure is to catch before the customer sees it"), ("c", "The weight of the packaging"), ("d", "The number of staff")],
+         "b"),
+        ("How is the risk priority number worked out?",
+         [("a", "Severity plus colour"), ("b", "Cost divided by time"), ("c", "Severity times occurrence times detection"), ("d", "Number of steps minus one")],
+         "c"),
+        ("What should every action have?",
+         [("a", "A secret password"), ("b", "A discount code"), ("c", "No record at all"), ("d", "An owner and a date")],
+         "d"),
+        ("Why is a failure caught in the process cheaper?",
+         [("a", "It avoids scrap, rework and customer warranty costs"), ("b", "It makes the part heavier"), ("c", "It removes the need for any inspection"), ("d", "It raises the price")],
+         "a"),
+    ],
+}

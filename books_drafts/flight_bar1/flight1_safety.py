@@ -5,7 +5,7 @@ BOOK = {
     "subtitle": 'Your three bars, rest in bed or in the cockpit, and staying safe in space',
     "chapters": [
         ('Your three bars',
-         'Your character has three bars, each from 0 to 100: stamina, energy and mental focus. Each one drains while you are awake, by about 2.2 points an hour. A full 16-hour day takes a bar from 100% down to about 65%.'),
+         'Your character has three bars, each from 0 to 100: stamina, energy and mental focus. Together they drain while you are awake, about 2.2 points an hour on average. A full 16-hour day takes a bar from 100% down to about 65%.'),
         ('What the bars mean',
          'At 65% you are at the lowest recommended level. Below that, your abilities begin to decline, and below 50% you can no longer carry out your duties properly. Studying and flying get harder as the bars fall, and the game warns you when you are pushing past healthy limits.'),
         ('Rest in your bed',

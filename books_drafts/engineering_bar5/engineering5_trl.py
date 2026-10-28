@@ -1,0 +1,37 @@
+"""Technology Readiness Levels: readiness scale, demonstration tests, maturity gaps, risk reduction and the money side of funding decisions."""
+CODE = "engineering5_trl"
+BOOK = {
+    "title": "Technology Readiness Levels",
+    "subtitle": "A nine-step scale for how ready a technology is to be used",
+    "chapters": [
+        ("A scale from idea to use",
+         "Technology Readiness Levels rate how mature a technology is, from 1 for basic principles observed to 9 for a system proven in real operation. The scale was first used by NASA and is now common across industry. It gives teams a shared language."),
+        ("Early levels",
+         "The early levels cover the first ideas, the basic principles and a proof of concept in a laboratory. A technology at these levels has shown that it can work, but only in controlled conditions."),
+        ("Demonstration levels",
+         "The middle levels mean the technology has been tested in a relevant environment, and then in a full prototype. Demonstration tests show that it works under realistic conditions. Each level needs evidence, not just a claim."),
+        ("Maturity gaps",
+         "A gap is the distance between the current level and the level needed for use. Gaps are named and given a plan. Closing them is what makes the technology ready."),
+        ("Reducing risk",
+         "Each test that passes lowers the risk of a later failure. Teams should move to the next level only when the current one is proven. Skipping levels usually brings problems later."),
+        ("The money side",
+         "Funders often tie money to a readiness level. A project that reaches a higher level earns the next round of funds. Each step should be budgeted and its cost recorded."),
+    ],
+    "test": [
+        ("What does a Technology Readiness Level describe?",
+         [("a", "The colour of a product"), ("b", "The number of sales staff"), ("c", "How mature a technology is for use"), ("d", "The price of electricity")],
+         "c"),
+        ("What does level 9 mean?",
+         [("a", "A basic idea on paper"), ("b", "A lab proof of concept"), ("c", "An idea that has not been written down"), ("d", "A system proven in real operation")],
+         "d"),
+        ("What is a maturity gap?",
+         [("a", "The distance between the current level and the level needed for use"), ("b", "A hole in the factory floor"), ("c", "A gap in the sales budget"), ("d", "A missing page in a manual")],
+         "a"),
+        ("Why should a team not skip readiness levels?",
+         [("a", "Skipping levels is always faster and safer"), ("b", "Skipping levels usually brings problems later"), ("c", "Levels do not matter at all"), ("d", "Levels are only for paperwork")],
+         "b"),
+        ("Why do funders care about readiness levels?",
+         [("a", "They never pay for development"), ("b", "They only fund food"), ("c", "They often tie money to a readiness level"), ("d", "They fund anything without evidence")],
+         "c"),
+    ],
+}

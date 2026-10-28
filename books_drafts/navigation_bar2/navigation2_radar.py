@@ -9,7 +9,7 @@ BOOK = {
         ('Range from time',
          'Radio waves travel at the speed of light, about 300 million metres every second. An echo that returns after one microsecond has travelled 300 metres out and back. So the object is about 150 metres away. Halve the round trip, then multiply by the speed.'),
         ('Bearing from the aerial',
-         'The aerial points in one direction at a time, and an echo is placed in the direction it was heard. A rotating aerial builds a full picture over one turn. Its bearing is measured from the ship\'s bow, which is why a radar picture is read from the centre outward.'),
+         'The aerial points in one direction at a time, and an echo is placed in the direction it was heard. A rotating aerial builds a full picture over one turn. Its bearing is measured from the ship\'s bow, so each echo\'s direction on the screen matches its real bearing from the ship.'),
         ('The plan-position scope',
          'A plan-position scope puts the radar at the centre and draws each echo at its range and bearing. The sweep refreshes the echoes, and older ones fade. So a moving target leaves a trail of its earlier positions behind it.'),
         ('Strength of an echo',

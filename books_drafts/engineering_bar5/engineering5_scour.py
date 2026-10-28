@@ -1,0 +1,37 @@
+"""Scour at Bridge Piers and Hydraulic Structures: sediment transport, scour holes, countermeasures, monitoring and risk assessment."""
+CODE = "engineering5_scour"
+BOOK = {
+    "title": "Scour at Bridge Piers and Hydraulic Structures",
+    "subtitle": "How flowing water digs away the ground around bridge supports",
+    "chapters": [
+        ("What scour is",
+         "Scour is the removal of soil and sediment by flowing water. At a bridge pier, the flow speeds up and swirls around the base and digs a hole. If the hole gets deep enough, the foundation can lose support."),
+        ("Sediment transport",
+         "Water moves sediment when its flow is strong enough to lift and carry the grains. How much moves depends on the flow speed, the grain size and the depth. Engineers estimate these to predict the scour."),
+        ("Scour holes",
+         "A scour hole grows during floods and may refill or deepen later. Its final depth is what the foundation must be designed for. Floods that last longer usually dig deeper."),
+        ("Countermeasures",
+         "Common protections include riprap, which is a layer of large stones, and concrete or mattress armouring. Some designs also deepen the foundation below the expected scour. The best choice depends on the site and the flow."),
+        ("Monitoring",
+         "Engineers measure the bed level after floods, and use sensors where fitted. Changes show whether the scour is growing. Monitoring turns a guess into a record that can be acted on."),
+        ("Risk and money",
+         "Scour is a leading cause of bridge failure in floods, so it is treated as a serious risk. Checks and protection cost far less than a bridge rebuild or a closure. Risk assessment ranks the bridges so money goes where it is most needed."),
+    ],
+    "test": [
+        ("What is scour?",
+         [("a", "The painting of steel"), ("b", "The cooling of concrete"), ("c", "The removal of soil and sediment by flowing water"), ("d", "The sale of bridge parts")],
+         "c"),
+        ("Why does a bridge pier get scoured?",
+         [("a", "The pier is too hot"), ("b", "The pier is too light"), ("c", "The pier is painted"), ("d", "Flow speeds up and swirls around the base")],
+         "d"),
+        ("What is riprap?",
+         [("a", "A layer of large stones placed to protect the bed"), ("b", "A type of train"), ("c", "A bridge toll"), ("d", "A thin sheet of glass")],
+         "a"),
+        ("Why does monitoring matter after floods?",
+         [("a", "It stops floods from happening"), ("b", "It shows whether the scour is growing"), ("c", "It removes all risk"), ("d", "It is never needed")],
+         "b"),
+        ("Why is scour checking good value?",
+         [("a", "It costs more than a rebuild"), ("b", "It causes more floods"), ("c", "It costs far less than a rebuild or a closure"), ("d", "It has no value")],
+         "c"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""TRIZ: Inventive Problem Solving: contradictions, inventive principles, function analysis, ideality and evolution trends."""
+CODE = "engineering5_triz"
+BOOK = {
+    "title": "TRIZ: Inventive Problem Solving",
+    "subtitle": "Solving design conflicts with patterns that inventors have used before",
+    "chapters": [
+        ("Where TRIZ came from",
+         "TRIZ is a method developed by Genrich Altshuller, who studied many thousands of patent filings. He found that inventions repeat a small set of patterns across fields. TRIZ puts those patterns into a toolkit."),
+        ("Contradictions",
+         "A contradiction is a conflict where improving one feature makes another worse. A stronger part is often heavier, for example. TRIZ treats the conflict as a clue to a new idea, not as a dead end."),
+        ("Inventive principles",
+         "TRIZ lists forty inventive principles, such as splitting an object, nesting one inside another, or using a cheap substitute. Each principle suggests a way to resolve a contradiction. Teams scan the list for ideas that fit their problem."),
+        ("Function analysis and ideality",
+         "Function analysis asks what each part really does, and whether some part could be removed. Ideality is the measure of a system whose useful effect is high and whose cost and harm are low. The aim is to move closer to that ideal."),
+        ("Evolution trends",
+         "Technical systems tend to develop in predictable directions, such as becoming simpler, more controllable or more integrated. Knowing the trend helps a team predict the next step. It also helps them avoid chasing a dead end."),
+        ("The money side",
+         "A solution that removes a part or a cost is often the one that pays back fastest. Simpler designs usually cost less to build, test and maintain. TRIZ helps find those savings early."),
+    ],
+    "test": [
+        ("Who developed the TRIZ method?",
+         [("a", "Genrich Altshuller"), ("b", "Isaac Newton"), ("c", "Marie Curie"), ("d", "Henry Ford")],
+         "a"),
+        ("What is a contradiction in TRIZ?",
+         [("a", "A failed test with no cause"), ("b", "A conflict where improving one feature worsens another"), ("c", "A mistake in a price list"), ("d", "A broken machine part")],
+         "b"),
+        ("How many inventive principles does TRIZ list?",
+         [("a", "Four"), ("b", "Four hundred"), ("c", "Forty"), ("d", "Twelve")],
+         "c"),
+        ("What does ideality measure?",
+         [("a", "How many colours a part has"), ("b", "The number of staff"), ("c", "The length of a manual"), ("d", "Useful effect high while cost and harm are low")],
+         "d"),
+        ("Why does a simpler design help the money side?",
+         [("a", "It usually costs less to build, test and maintain"), ("b", "It always needs more parts"), ("c", "It raises the cost of every test"), ("d", "It removes the need for sales")],
+         "a"),
+    ],
+}

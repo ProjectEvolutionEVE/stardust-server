@@ -1,0 +1,37 @@
+"""Reliability-Centred Maintenance Analysis: functions, failure modes, task selection, decision logic and the money side of maintenance cost."""
+CODE = "engineering5_rcm"
+BOOK = {
+    "title": "Reliability-Centred Maintenance Analysis",
+    "subtitle": "Choosing maintenance tasks by what each failure would really cost",
+    "chapters": [
+        ("What RCM asks",
+         "Reliability-centred maintenance asks what each asset is for, how it can fail, and what should be done to keep it doing its job. It starts from function, not from a fixed schedule. Maintenance is chosen to match real risk."),
+        ("Functions",
+         "The analysis first lists what the asset must do, and the standard it must meet. A pump must deliver a set flow, for example. Each function is written clearly so that failures can be measured against it."),
+        ("Failure modes",
+         "For each function, the team lists the ways it can fail. Each failure mode has an effect, such as lost output or a safety risk. Naming the effect shows how serious each failure is."),
+        ("Task selection",
+         "Each failure mode is matched with a suitable task. Options include regular inspection, scheduled replacement, condition monitoring, or running to failure when the failure is cheap and safe. Not every failure needs a task."),
+        ("Decision logic",
+         "A set of questions sorts each failure into a decision: is it safe, does it affect output, can it be detected in time. The answers lead to the right task. The logic keeps the choices consistent across assets."),
+        ("The money side of maintenance",
+         "Maintenance costs money, and so does a failure that was not prevented. The analysis picks tasks where the saving is larger than the cost. Doing fewer unnecessary tasks often saves as much as doing the right ones."),
+    ],
+    "test": [
+        ("Where does reliability-centred maintenance start?",
+         [("a", "From the colour of the asset"), ("b", "From what each asset is for, its function"), ("c", "From the price list"), ("d", "From the staff roster")],
+         "b"),
+        ("What is a failure mode?",
+         [("a", "A type of paint"), ("b", "A type of invoice"), ("c", "A way a function can fail"), ("d", "A safety helmet")],
+         "c"),
+        ("Which is a possible maintenance task?",
+         [("a", "Changing the office colour"), ("b", "Buying new chairs"), ("c", "Writing a poem"), ("d", "Scheduled replacement")],
+         "d"),
+        ("What does the decision logic do?",
+         [("a", "Sorts each failure into the right task using set questions"), ("b", "Chooses the weather"), ("c", "Sets staff pay"), ("d", "Designs the logo")],
+         "a"),
+        ("Why can doing fewer unnecessary tasks save money?",
+         [("a", "Tasks always make money"), ("b", "Each unneeded task has a cost with no gain"), ("c", "Fewer tasks always cause more failures"), ("d", "Tasks cost nothing")],
+         "b"),
+    ],
+}

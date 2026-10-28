@@ -1,0 +1,37 @@
+"""Design for Assembly Scoring: assembly operations, handling time, insertion scores, theoretical minimum parts and the money side of labour cost."""
+CODE = "engineering5_dfa"
+BOOK = {
+    "title": "Design for Assembly Scoring",
+    "subtitle": "Scoring how easily a product goes together, and cutting the steps that do not add value",
+    "chapters": [
+        ("What DFA scoring measures",
+         "Design for assembly scoring rates a design by how easily its parts can be handled and fitted. Each step is timed and given a score. The score shows where the design is slow or difficult to build."),
+        ("Handling and insertion",
+         "Handling time covers how long it takes to pick up, orient and move a part. Insertion time covers how long it takes to fit it in place. Parts that are hard to grip, or that need turning, add time."),
+        ("The theoretical minimum",
+         "The theoretical minimum number of parts is the fewest a product could have. It asks whether each part must be separate, because it moves, is made of another material, or must be taken apart. Parts that fail these tests are candidates for combining."),
+        ("Improving the design",
+         "Teams simplify the design by combining parts, making parts self-locating and avoiding fasteners where possible. Each change is scored again to show the gain. A good design is easy to build the same way every time."),
+        ("Checking the result",
+         "The new design is tested on the line or in a mock-up. The score should match the real assembly time. A gap between the score and reality means more study is needed."),
+        ("The money side",
+         "Assembly labour is paid per minute on the line, so shorter steps cut cost directly. Fewer parts also means fewer purchase orders and less stock. The savings from the score should be counted against the cost of the redesign."),
+    ],
+    "test": [
+        ("What does a DFA score rate?",
+         [("a", "How well the packaging sells"), ("b", "How many staff the firm has"), ("c", "How often the office is cleaned"), ("d", "How easily a design can be assembled")],
+         "d"),
+        ("What does handling time cover?",
+         [("a", "Picking up, orienting and moving a part"), ("b", "Writing the invoice"), ("c", "Choosing a logo"), ("d", "Driving to work")],
+         "a"),
+        ("What is the theoretical minimum number of parts?",
+         [("a", "The number of parts in the catalogue"), ("b", "The fewest parts a product could have"), ("c", "The price of one part"), ("d", "The weight of a box")],
+         "b"),
+        ("Which change usually improves a DFA score?",
+         [("a", "Adding more fasteners everywhere"), ("b", "Making parts hard to grip"), ("c", "Combining parts that do not need to be separate"), ("d", "Removing all checks")],
+         "c"),
+        ("Why does a shorter assembly step help cost?",
+         [("a", "Labour is paid per part colour"), ("b", "Shorter steps raise the price"), ("c", "Labour never costs anything"), ("d", "Labour is paid per minute on the line")],
+         "d"),
+    ],
+}

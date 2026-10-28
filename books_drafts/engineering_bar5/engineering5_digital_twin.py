@@ -1,0 +1,37 @@
+"""Digital Twins: Models That Track the Machine: sensor-fed models, calibration, prediction, decision use and the money side of data cost."""
+CODE = "engineering5_digital_twin"
+BOOK = {
+    "title": "Digital Twins: Models That Track the Machine",
+    "subtitle": "A computer model fed by real sensors, kept in step with the machine it copies",
+    "chapters": [
+        ("What a digital twin is",
+         "A digital twin is a computer model of a real machine or system, fed with live data from its sensors. It is kept in step with the real thing. The model shows the state of the machine now, not just how it was designed."),
+        ("Sensors and data",
+         "Sensors measure temperature, vibration, pressure and speed, among other things. The data is sent to the model at a set rate. Good sensors and clean data are the foundation of a useful twin."),
+        ("Calibration",
+         "Calibration adjusts the model so its predictions match the real machine. The model is compared with measurements and its settings are tuned. A twin that is not calibrated can mislead its users."),
+        ("Prediction",
+         "A calibrated twin can predict how the machine will behave under new conditions. It can estimate when a part will wear or when a fault may appear. Predictions are only as good as the model and the data behind them."),
+        ("Using the twin for decisions",
+         "The twin supports decisions such as when to service a machine, how to load it, or whether a change is safe to try. A decision should always be checked against the real machine. The model advises, and people decide."),
+        ("The money side of data",
+         "Sensors, data storage and modelling all cost money. The value comes from fewer breakdowns and better use of the machine. A twin should be built only where the saving is larger than its running cost."),
+    ],
+    "test": [
+        ("What is a digital twin?",
+         [("a", "A computer model of a real machine, kept in step with it using live data"), ("b", "A second person who works the same shift"), ("c", "A copy of a printed manual"), ("d", "A spare part in a box")],
+         "a"),
+        ("What does calibration do?",
+         [("a", "Paints the machine"), ("b", "Adjusts the model so its predictions match the real machine"), ("c", "Changes the weather"), ("d", "Sets the staff pay")],
+         "b"),
+        ("Which measurement might a sensor give?",
+         [("a", "The name of the designer"), ("b", "The colour of a poster"), ("c", "Vibration"), ("d", "The price of lunch")],
+         "c"),
+        ("Why is an uncalibrated twin risky?",
+         [("a", "It always gives perfect results"), ("b", "It removes the need for sensors"), ("c", "It makes machines faster"), ("d", "It can mislead its users")],
+         "d"),
+        ("When should a twin be built, money-wise?",
+         [("a", "Where the saving is larger than its running cost"), ("b", "Everywhere, whatever the cost"), ("c", "Only in the staff canteen"), ("d", "Never, because data is free")],
+         "a"),
+    ],
+}

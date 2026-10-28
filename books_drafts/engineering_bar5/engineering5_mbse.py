@@ -1,0 +1,37 @@
+"""Model-Based Systems Engineering with SysML: requirement blocks, behaviour diagrams, allocations, simulations and model governance."""
+CODE = "engineering5_mbse"
+BOOK = {
+    "title": "Model-Based Systems Engineering with SysML",
+    "subtitle": "Describing a system with connected models instead of separate documents",
+    "chapters": [
+        ("What MBSE is",
+         "Model-based systems engineering uses connected diagrams and models as the main record of a system. Instead of many separate documents, one model holds the requirements, structure and behaviour. Changes are made once and checked everywhere."),
+        ("The SysML language",
+         "SysML is a standard modelling language for systems. It has diagrams for structure, behaviour and requirements. Its common vocabulary lets teams in different places read the same model."),
+        ("Requirement blocks",
+         "Requirements are written as blocks in the model and linked to the parts that satisfy them. A link shows which design element meets which need. Gaps appear when a requirement has no satisfying element."),
+        ("Behaviour diagrams",
+         "Behaviour diagrams show how the system responds to events over time, such as a sequence of steps or a set of states. They help find missing cases and conflicts. A clear behaviour model reduces surprises later."),
+        ("Allocations",
+         "An allocation assigns a function or requirement to a physical part or software element. It shows where each job is done. Allocations make the trade-offs between parts easier to see."),
+        ("Model governance and money",
+         "Models need owners, version control and review, just as drawings do. A well-run model saves money by finding conflicts before they reach hardware. The cost of building and keeping the model should be weighed against the rework it prevents."),
+    ],
+    "test": [
+        ("What is model-based systems engineering?",
+         [("a", "Building models out of clay for display"), ("b", "Using connected models as the main record of a system"), ("c", "Designing only for paper"), ("d", "Replacing all engineers with machines")],
+         "b"),
+        ("What is SysML?",
+         [("a", "A type of cooking oil"), ("b", "A brand of paint"), ("c", "A standard modelling language for systems"), ("d", "A mobile phone")],
+         "c"),
+        ("What does an allocation show?",
+         [("a", "The colour of each part"), ("b", "The price of each supplier"), ("c", "The office seating"), ("d", "Which part or element carries out a function or requirement")],
+         "d"),
+        ("What do behaviour diagrams show?",
+         [("a", "How the system responds to events over time"), ("b", "The shape of the building"), ("c", "The name of the client"), ("d", "The weather in the test lab")],
+         "a"),
+        ("Why does model governance matter for money?",
+         [("a", "It makes rework more common"), ("b", "It finds conflicts before they reach hardware, saving rework"), ("c", "It has no link to cost"), ("d", "It only affects printing")],
+         "b"),
+    ],
+}

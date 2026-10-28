@@ -1,0 +1,52 @@
+"""Responsible Mining Standards and Certification: how mines are measured against criteria, how audits and labels work, and what they cannot guarantee."""
+CODE = "mining5_responsible_std"
+BOOK = {'title': 'Responsible Mining Standards and Certification',
+ 'subtitle': 'Measuring mines against shared criteria, and what a certificate really tells a buyer',
+ 'chapters': [('Criteria',
+               'A responsible mining standard sets criteria for environment, labour, community and '
+               'governance. Each criterion describes what a good mine must do, with clear measures.'),
+              ('Audits',
+               'A third-party auditor checks the mine against the criteria, usually on site. The audit '
+               'report states what was met and what needs work.'),
+              ('Labels',
+               'A certified product may carry a label that tells buyers it met the standard. Labels should '
+               'be checked so that buyers know which parts of the chain were certified.'),
+              ('Premiums',
+               'Some certified products sell at a premium, and part of the extra money may go back to miners '
+               'or communities. The rules for these payments should be published.'),
+              ('Limits',
+               'A certificate proves the mine met the standard on the audit day. It does not prove every day '
+               'after. Buyers should understand the scope and the date of a certificate.'),
+              ('Adoption',
+               'Standards spread when buyers ask for them and when they are affordable for small mines. '
+               'Support for smaller producers helps standards reach more of the industry.')],
+ 'test': [('What do responsible mining standards set criteria for?',
+           [('a', "The colour of the mine's office"),
+            ('b', 'The price of petrol'),
+            ('c', 'Environment, labour, community and governance'),
+            ('d', 'The number of football teams')],
+           'c'),
+          ('Who usually carries out a standards audit?',
+           [('a', 'A third-party auditor'),
+            ('b', 'The first person who walks by'),
+            ('c', "The mine's own customers only"),
+            ('d', 'No one')],
+           'a'),
+          ('What does a certificate prove?',
+           [('a', 'The mine will meet it for ever'),
+            ('b', 'The metal is pure gold'),
+            ('c', 'The mine has no staff'),
+            ('d', 'The mine met the standard on the audit day')],
+           'd'),
+          ('What is a premium in this context?',
+           [('a', "A fee for the auditor's car"),
+            ('b', 'Extra price paid for certified products'),
+            ('c', 'A tax on water'),
+            ('d', 'A bonus for winning a race')],
+           'b'),
+          ("Why should buyers understand a label's scope?",
+           [('a', "To pick the label's font"),
+            ('b', 'To count the stickers'),
+            ('c', 'To know which parts of the chain were certified'),
+            ('d', 'To remove the audit')],
+           'c')]}

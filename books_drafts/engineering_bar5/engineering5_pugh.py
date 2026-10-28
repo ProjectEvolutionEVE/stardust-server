@@ -1,0 +1,37 @@
+"""Concept Selection with Pugh Matrices: criteria, datum choice, scoring, iteration and decision records."""
+CODE = "engineering5_pugh"
+BOOK = {
+    "title": "Concept Selection with Pugh Matrices",
+    "subtitle": "Comparing design concepts against a reference, one criterion at a time",
+    "chapters": [
+        ("What a Pugh matrix does",
+         "A Pugh matrix compares several design concepts against each other and against a reference. It is a quick way to choose a concept when there are many options and little time. The matrix keeps the comparison clear."),
+        ("Choosing the criteria",
+         "The team lists the criteria the design must meet, such as cost, weight, ease of use and safety. Each criterion should be something the team can judge. A short, clear list works best."),
+        ("The datum",
+         "One concept is chosen as the datum, the reference against which the others are judged. A better datum gives a more useful comparison. Changing the datum can change the answer, so the choice is recorded."),
+        ("Scoring",
+         "For each criterion, a concept is marked better than, the same as, or worse than the datum. The marks are added to show which concepts are strongest overall. The marks show the shape of the choice, not its exact size."),
+        ("Iterating",
+         "Weak concepts are improved, and new concepts are added. The matrix is run again after each round. Iteration stops when one concept clearly leads and the rest have been tested."),
+        ("Decision records and the money side",
+         "The team writes down why the chosen concept won and what was rejected. The record stops the same debate from starting again. The cost of each concept is one of the criteria, so the money side is part of the choice."),
+    ],
+    "test": [
+        ("What does a Pugh matrix compare?",
+         [("a", "Staff holiday dates"), ("b", "Design concepts against a reference and each other"), ("c", "Colours of a logo"), ("d", "Parking spaces")],
+         "b"),
+        ("What is the datum in a Pugh matrix?",
+         [("a", "The final price"), ("b", "The name of the printer"), ("c", "The reference concept the others are judged against"), ("d", "A type of screw")],
+         "c"),
+        ("Why should the team write a decision record?",
+         [("a", "So the record can be thrown away"), ("b", "So the costs are hidden"), ("c", "So no one reads it"), ("d", "So the reasons for the choice are not lost and the debate is not repeated")],
+         "d"),
+        ("What is an example of a good criterion?",
+         [("a", "Cost, weight or safety"), ("b", "The mood of the team"), ("c", "The name of the designer"), ("d", "Which concept is the nicest colour")],
+         "a"),
+        ("Why is cost one of the criteria?",
+         [("a", "Because cost is never important"), ("b", "So the money side is part of the choice"), ("c", "Because cost is the same for all concepts"), ("d", "Because cost is hidden from the team")],
+         "b"),
+    ],
+}

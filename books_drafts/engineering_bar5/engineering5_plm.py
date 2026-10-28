@@ -1,0 +1,37 @@
+"""Product Lifecycle Management Systems: data models, workflows, access rights, change flows and the money side of rollout."""
+CODE = "engineering5_plm"
+BOOK = {
+    "title": "Product Lifecycle Management Systems",
+    "subtitle": "One shared system that holds a product's data from first idea to retirement",
+    "chapters": [
+        ("What a PLM system is",
+         "A product lifecycle management system is a shared database that holds a product's designs, parts, documents and changes. It gives every team the same current information. The aim is one source of truth."),
+        ("Data models",
+         "A data model defines the types of item the system stores and how they link. A part links to its drawings, its supplier and its bill of materials. A clear model keeps the data consistent."),
+        ("Workflows",
+         "Workflows set the steps a document or change passes through, such as review, approval and release. Each step has an owner and a clear end. Workflows make the process visible."),
+        ("Access rights",
+         "Access rights decide who can view, edit or release each item. Sensitive designs need tighter access. Good rights stop changes being made by the wrong people."),
+        ("Change flows",
+         "A change flow routes an engineering change through impact checks, approval and release. It keeps the records of what changed and why. The system links each change to the parts it affects."),
+        ("The money side of rollout",
+         "Installing a PLM system costs money for software, setup and training, and it takes time for staff to adopt. The benefit comes from fewer errors and faster changes. The rollout plan should show when the savings will arrive."),
+    ],
+    "test": [
+        ("What is a product lifecycle management system?",
+         [("a", "A cooking app"), ("b", "A shared database that holds a product's designs and changes"), ("c", "A type of printer"), ("d", "A game on a phone")],
+         "b"),
+        ("What does a data model define?",
+         [("a", "The colour of the screens"), ("b", "The staff holiday rota"), ("c", "The types of item stored and how they link"), ("d", "The price of the coffee")],
+         "c"),
+        ("What do workflows set?",
+         [("a", "The weather for the test day"), ("b", "The paint for the walls"), ("c", "The name of the building"), ("d", "The steps a document or change passes through")],
+         "d"),
+        ("Why do access rights matter?",
+         [("a", "They decide who can view, edit or release each item"), ("b", "They let everyone change everything"), ("c", "They have no effect"), ("d", "They only affect the printer")],
+         "a"),
+        ("What does rollout cost include?",
+         [("a", "Nothing at all"), ("b", "Software, setup, training and staff time"), ("c", "Only the paper used"), ("d", "Only the office rent")],
+         "b"),
+    ],
+}

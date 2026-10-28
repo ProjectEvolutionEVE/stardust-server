@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleIdentifier</key><string>com.risesolutions.inara-voice-check</string>
+<key>CFBundleName</key><string>Inara Voice Check</string>
+<key>CFBundleExecutable</key><string>stt</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+<key>LSUIElement</key><true/>
+<key>NSSpeechRecognitionUsageDescription</key><string>Checks Inara's recorded lines by transcribing them back to text.</string>
+</dict></plist>

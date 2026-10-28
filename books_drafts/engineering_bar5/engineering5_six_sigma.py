@@ -1,0 +1,37 @@
+"""DMAIC: Six Sigma Projects: define, measure, analyse, improve, control, and choosing projects by the money saved."""
+CODE = "engineering5_six_sigma"
+BOOK = {
+    "title": "DMAIC: Six Sigma Projects",
+    "subtitle": "Define, measure, analyse, improve and control, with projects chosen by the money saved",
+    "chapters": [
+        ("What Six Sigma aims at",
+         "Six Sigma is a method for cutting defects and variation in a process. Its name refers to a very low rate of defects. Projects follow a set path so that results are measured, not guessed."),
+        ("Define and measure",
+         "The define step states the problem, the customer and the goal in plain words. The measure step gathers data on how the process performs today. Without a baseline, no one can prove an improvement."),
+        ("Analyse and improve",
+         "The analyse step looks for the causes that really drive the problem, not just the ones that seem likely. The improve step tests changes on a small scale and keeps the ones that work."),
+        ("Control",
+         "The control step makes the gain last. It sets checks, records and simple rules so the process does not slide back. A fix with no control plan often fades away."),
+        ("Choosing projects",
+         "A good Six Sigma project is one with a clear problem and a value that can be counted. Projects are chosen by the money they save or earn. Small, quick wins can fund larger work."),
+        ("The money side",
+         "Every project should state its cost, its expected saving and when the saving will arrive. Real savings are counted only after the control step shows they have held."),
+    ],
+    "test": [
+        ("What does DMAIC stand for?",
+         [("a", "Design, make, assemble, inspect, check"), ("b", "Draw, model, add, install, close"), ("c", "Data, money, arrange, invest, collect"), ("d", "Define, measure, analyse, improve, control")],
+         "d"),
+        ("Why is a baseline measurement needed?",
+         [("a", "So an improvement can be proved against it"), ("b", "So the team can skip the analysis"), ("c", "So the price rises"), ("d", "So the process stops")],
+         "a"),
+        ("What is the purpose of the control step?",
+         [("a", "To end the project at once"), ("b", "To make the gain last and stop the process sliding back"), ("c", "To hide the data"), ("d", "To buy new machines")],
+         "b"),
+        ("How are Six Sigma projects chosen?",
+         [("a", "By which manager likes them"), ("b", "By the colour of the report"), ("c", "By the money they save or earn"), ("d", "By random choice")],
+         "c"),
+        ("What should a project state about money?",
+         [("a", "Nothing, money is never counted"), ("b", "Only the name of the supplier"), ("c", "The weather on the day"), ("d", "Its cost, its expected saving and when the saving arrives")],
+         "d"),
+    ],
+}

@@ -1,0 +1,52 @@
+"""Augmented Reality Interfaces: overlays on the world, spatial anchors, comfort, interaction models, camera privacy and design guidelines."""
+CODE = 'computing5_ar_interfaces'
+BOOK = {'title': 'Augmented Reality Interfaces',
+ 'subtitle': 'Placing digital information over the real world, safely and comfortably',
+ 'chapters': [('Overlays on the world',
+               'Augmented reality places digital information over the view of the real world. Good overlays '
+               'add meaning without hiding what matters in front of the person.'),
+              ('Spatial anchors',
+               'A spatial anchor fixes a digital object to a place in the real world, so that it stays where '
+               'it was put. Anchors must hold steady as the device moves, or the illusion breaks.'),
+              ('Comfort',
+               'Wearing a headset or holding a device for long periods can cause fatigue and discomfort. '
+               'Designers keep sessions short, avoid rapid motion and offer clear comfort settings.'),
+              ('Interaction models',
+               'People may point, gesture, look or speak to interact in augmented space. Each model has '
+               'strengths and limits, and a design should match the task and the setting.'),
+              ('Camera privacy',
+               'AR devices can record people and places around the user. Clear signs when recording, and '
+               'respect for bystanders, are essential for trust.'),
+              ('Design guidelines',
+               'Design for safety in the real world, keep text readable against varied backgrounds, and test '
+               'in the places where people will really use the system.')],
+ 'test': [('What does augmented reality do?',
+           [('a', 'Places digital information over the view of the real world'),
+            ('b', 'Replaces the whole world with a film'),
+            ('c', 'Turns off all screens'),
+            ('d', 'Prints photographs on paper')],
+           'a'),
+          ('What is a spatial anchor?',
+           [('a', "A ship's anchor made of steel"),
+            ('b', 'A type of camera lens'),
+            ('c', 'A way to fix a digital object to a place in the real world'),
+            ('d', 'A password for a Wi-Fi network')],
+           'c'),
+          ('Why do AR sessions need to be kept short?',
+           [('a', 'Long sessions are always illegal'),
+            ('b', 'Short sessions cost more'),
+            ('c', 'Long sessions remove all detail'),
+            ('d', 'Long sessions can cause fatigue and discomfort')],
+           'd'),
+          ('Why does camera privacy matter in AR?',
+           [('a', 'Cameras cannot record anything'),
+            ('b', 'AR devices can record people and places around the user'),
+            ('c', 'Privacy only concerns printed letters'),
+            ('d', 'Cameras only work at night')],
+           'b'),
+          ('What does the chapter advise about testing AR?',
+           [('a', 'Never test at all'),
+            ('b', 'Test only on a sunny day in an empty field'),
+            ('c', 'Test in the places where people will really use the system'),
+            ('d', 'Test only on paper')],
+           'c')]}

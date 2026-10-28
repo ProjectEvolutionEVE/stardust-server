@@ -1,0 +1,37 @@
+"""Overall Equipment Effectiveness: availability, performance and quality factors, losses, and improvement planning with the money side of lost output."""
+CODE = "engineering5_oee"
+BOOK = {
+    "title": "Overall Equipment Effectiveness",
+    "subtitle": "Measuring how much of a machine's time turns into good output",
+    "chapters": [
+        ("One number for a machine",
+         "Overall equipment effectiveness, or OEE, combines three factors into one measure of how well a machine is used. It shows where time and output are lost. The number is most useful when tracked over time."),
+        ("Availability",
+         "Availability asks what share of planned time the machine was actually running. Breakdowns and waiting for material reduce it. A machine that is not running cannot make anything."),
+        ("Performance",
+         "Performance asks how fast the machine ran compared with its best rate. Slow cycles, small stops and minor jams all reduce it. These losses are often hidden because the machine still appears to be running."),
+        ("Quality",
+         "Quality asks what share of the output was good the first time. Scrap and rework both count as losses. Good parts made in less time are the true output."),
+        ("Finding and planning improvements",
+         "The three factors multiplied together give OEE. The lowest factor is usually the best place to start. Plans should name the loss, the action and the expected gain."),
+        ("The money side",
+         "Lost output is lost money, because the machine's time and running costs are paid either way. A small gain on a busy, expensive machine can be worth a lot. Compare the cost of each fix with the output it returns."),
+    ],
+    "test": [
+        ("What three factors make up OEE?",
+         [("a", "Colour, size and weight"), ("b", "Price, staff and location"), ("c", "Availability, performance and quality"), ("d", "Speed, paint and time")],
+         "c"),
+        ("What does availability measure?",
+         [("a", "The colour of the machine"), ("b", "The number of managers"), ("c", "The price of electricity"), ("d", "The share of planned time the machine was actually running")],
+         "d"),
+        ("Why is a small stop a performance loss?",
+         [("a", "It slows the machine below its best rate"), ("b", "It means the parts are painted"), ("c", "It makes the machine quieter"), ("d", "It adds weight")],
+         "a"),
+        ("What counts as a quality loss?",
+         [("a", "A new paint colour"), ("b", "Scrap and rework"), ("c", "A longer lunch break"), ("d", "A larger office")],
+         "b"),
+        ("Why is lost output a money problem?",
+         [("a", "Machines are free to run"), ("b", "Lost output always lowers tax"), ("c", "The machine time and running costs are paid either way"), ("d", "Money is never involved")],
+         "c"),
+    ],
+}

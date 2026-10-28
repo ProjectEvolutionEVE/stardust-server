@@ -1,0 +1,37 @@
+"""Verification Planning and Test Matrices: verification methods, test levels, coverage, reporting and the money side of test cost."""
+CODE = "engineering5_verification_plan"
+BOOK = {
+    "title": "Verification Planning and Test Matrices",
+    "subtitle": "Deciding how each requirement will be proved, and when",
+    "chapters": [
+        ("What verification is",
+         "Verification checks that a design meets its stated requirements. It asks whether the product was built right. Planning verification early makes sure every requirement has a way to be proved."),
+        ("Verification methods",
+         "Common methods are inspection, analysis, demonstration and test. Each method suits different requirements. A requirement that cannot be measured needs a different method from one that can."),
+        ("Test levels",
+         "Tests are run at several levels: the component, the subsystem and the whole system. Lower-level tests find faults early and cheaply. Higher-level tests show that the parts work together."),
+        ("The test matrix",
+         "A test matrix lists each requirement against the test or method that proves it. Coverage is the share of requirements that have a planned test. A gap in the matrix is a risk that has not been planned for."),
+        ("Reporting results",
+         "Each test produces a recorded result, with the test setup, the data and a pass or fail verdict. Records are kept so that later changes can be checked against them. A test with no record cannot prove anything."),
+        ("The money side",
+         "Testing costs money, in equipment, time and staff. The plan should spend most on the tests that catch the costliest risks. Cutting a test that guards a serious risk is a false saving."),
+    ],
+    "test": [
+        ("What does verification check?",
+         [("a", "The colour of the packaging"), ("b", "The staff birthday list"), ("c", "The price of the office chairs"), ("d", "That a design meets its stated requirements")],
+         "d"),
+        ("Which is one common verification method?",
+         [("a", "Inspection"), ("b", "Guessing"), ("c", "Ignoring"), ("d", "Painting")],
+         "a"),
+        ("What is a test matrix?",
+         [("a", "A grid for seating people"), ("b", "A list of each requirement against the test that proves it"), ("c", "A chart of stock prices"), ("d", "A type of cable")],
+         "b"),
+        ("What does coverage measure?",
+         [("a", "The area of the test room"), ("b", "The number of test engineers"), ("c", "The share of requirements that have a planned test"), ("d", "The weight of the product")],
+         "c"),
+        ("Why is cutting a test that guards a serious risk a false saving?",
+         [("a", "The test was never useful"), ("b", "Testing always costs more than failure"), ("c", "Risk disappears on its own"), ("d", "The risk stays and a later failure costs far more")],
+         "d"),
+    ],
+}

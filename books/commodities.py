@@ -13,9 +13,10 @@ BOOK = {
          "you learn in the library. Every ore piece is pure mineral, so it yields its metal's share by weight and the "
          "rest is slag. Example: 100 kg of chalcopyrite gives 34.6 kg of copper and 65.4 kg of slag."),
         ("What trades today",
-         "The market trades iron ore, copper ore, silver ore, native gold and industrial diamond. Each one trades in "
-         "lots, and one lot is the smallest order: iron and copper ore 100 kg, silver ore 10 kg, gold and diamond 1 kg. "
-         "Goods with wide price swings get bigger minimum orders, so there are no really small orders."),
+         "The market trades every raw material in the Raw Materials Catalogue, from common ores and water ice to rare "
+         "metals. Each one trades in lots, and one lot is the smallest order: common ores 100 kg, scarcer ones such as "
+         "silver ore 10 kg, and precious ones such as gold, platinum and diamond 1 kg. Goods with wide price swings get "
+         "bigger minimum orders, so there are no really small orders."),
         ("Holding a part lot",
          "If you have less than one lot of an ore, it waits in your space in the cargo hold until you collect enough to "
          "make a full lot. That's normal: while supply catches up, waiting buyers bid each other up."),

@@ -1,0 +1,37 @@
+"""Design Structure Matrix: dependency mapping, sequence optimisation, feedback loops and modular decisions."""
+CODE = "engineering5_dsm"
+BOOK = {
+    "title": "Design Structure Matrix",
+    "subtitle": "Mapping which design tasks depend on which, and the best order to do them",
+    "chapters": [
+        ("What a DSM shows",
+         "A design structure matrix is a square table listing the tasks or parts of a project down the side and across the top. A mark shows where one item depends on another. It turns a tangle of links into a picture the team can read."),
+        ("Mapping dependencies",
+         "To build the matrix, the team lists every task or component and asks what each one needs from the others. Each need becomes a mark in the right cell. Reviewing the map often reveals dependencies no one had written down."),
+        ("Sequencing the work",
+         "Tasks can be reordered so that most dependencies point in one direction. This lets work flow forward with fewer restarts. A good order cuts waiting between teams."),
+        ("Feedback loops",
+         "Some dependencies point both ways, forming a feedback loop. Loops force teams to go back and forth, and each pass takes time. Loops should be found, named and managed on purpose."),
+        ("Modular decisions",
+         "Parts with few links between them can be designed as modules that teams work on separately. Clean boundaries make the project easier to split and to change later. The matrix shows where these boundaries can sit."),
+        ("The money side",
+         "Every loop and waiting step adds time, and time costs wages and delays income. A better order often saves weeks at no extra material cost. The time saved should be counted in the project plan."),
+    ],
+    "test": [
+        ("What does a design structure matrix show?",
+         [("a", "The price of each part"), ("b", "How tasks or parts depend on each other"), ("c", "The colours in the product"), ("d", "The staff holiday plan")],
+         "b"),
+        ("What is a feedback loop in a DSM?",
+         [("a", "A loudspeaker on the line"), ("b", "A type of spreadsheet"), ("c", "Dependencies that point both ways, so work goes back and forth"), ("d", "A safety fence")],
+         "c"),
+        ("What does sequencing aim to do?",
+         [("a", "Make every task happen at once"), ("b", "Remove all tasks"), ("c", "Hide the dependencies"), ("d", "Make most dependencies point one way so work flows forward")],
+         "d"),
+        ("Why are modules useful?",
+         [("a", "Parts with few links can be split between teams"), ("b", "Modules stop all design work"), ("c", "Modules are always heavier"), ("d", "Modules cannot be changed")],
+         "a"),
+        ("Why does a loop cost money?",
+         [("a", "Loops produce free material"), ("b", "Each back and forth adds time, which costs wages and delays income"), ("c", "Loops make the project faster"), ("d", "Loops never cost anything")],
+         "b"),
+    ],
+}

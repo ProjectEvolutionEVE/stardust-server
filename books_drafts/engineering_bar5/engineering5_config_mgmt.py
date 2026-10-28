@@ -1,0 +1,37 @@
+"""Configuration Management and Baselines: baselines, change requests, release control, configuration audits and part traceability."""
+CODE = "engineering5_config_mgmt"
+BOOK = {
+    "title": "Configuration Management and Baselines",
+    "subtitle": "Keeping track of exactly which version of a design is in use",
+    "chapters": [
+        ("What configuration management is",
+         "Configuration management keeps a clear record of what the product is, and how it has changed. It answers the question of which version of each part is in use. Without it, teams build from the wrong drawings."),
+        ("Baselines",
+         "A baseline is an agreed snapshot of the design at a set point, such as the end of a review. Later work is measured against the baseline. Changes after a baseline must go through a formal process."),
+        ("Change requests",
+         "Any change to a baseline begins with a written change request. It states the reason, the affected parts and the cost. The request is reviewed and approved before the change is made."),
+        ("Release control",
+         "Release control sets who can issue a drawing or a part for use, and when. Only released items may be built. This stops unapproved versions from reaching the line."),
+        ("Configuration audits",
+         "An audit checks that the product matches its records. It compares the built item against the drawings and the approved changes. Any mismatch is found and corrected before shipping."),
+        ("Traceability and money",
+         "Traceability links each part to its supplier, batch and build record. When a fault appears, the affected units can be found quickly and recalled at lower cost. Good records prevent costly mistakes."),
+    ],
+    "test": [
+        ("What does configuration management keep track of?",
+         [("a", "The office lunch menu"), ("b", "The company's car park"), ("c", "Which version of the design is in use and how it changed"), ("d", "The colour of the logo")],
+         "c"),
+        ("What is a baseline?",
+         [("a", "A type of wall paint"), ("b", "A price list"), ("c", "A safety helmet"), ("d", "An agreed snapshot of the design at a set point")],
+         "d"),
+        ("What must start any change to a baseline?",
+         [("a", "A written change request"), ("b", "A phone call to the warehouse"), ("c", "A rumour on the line"), ("d", "A new logo")],
+         "a"),
+        ("What does a configuration audit do?",
+         [("a", "Counts the chairs in the office"), ("b", "Checks that the built item matches its records"), ("c", "Sets the staff pay"), ("d", "Chooses a new supplier")],
+         "b"),
+        ("How does traceability help with money?",
+         [("a", "It makes recalls more costly"), ("b", "It removes all records"), ("c", "It lets affected units be found quickly and recalled at lower cost"), ("d", "It has no effect on cost")],
+         "c"),
+    ],
+}

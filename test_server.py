@@ -615,6 +615,34 @@ async def main():
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
     check("the test never sends the answers", r.status == 200 and len(j["questions"]) == 5 and "answer" not in json.dumps(j)
           and all("right" not in q for q in j["questions"]))
+    # translated books (rule 41): a temporary Arabic file for a book, written here and removed after
+    import pathlib, shutil
+    en = LB.BOOKS["prospecting"]
+    tdir = pathlib.Path(LB._I18N_DIR) / "zz"; tdir.mkdir(parents=True, exist_ok=True)
+    (tdir / "prospecting.json").write_text(json.dumps({"title": "ZZ-TITLE", "subtitle": "ZZ-SUB",
+        "chapters": [["ZZ-CH", "ZZ-TEXT"]],
+        "test": [["ZZ-Q%d" % i, [[k, "ZZ-" + k] for k, _ in o], a] for i, (_, o, a) in enumerate(en["test"])]}), encoding="utf-8")
+    try:
+        async with cl.app["pool"].acquire() as c:
+            for who, lg in (("zzplayer", "zz"), ("enplayer", "en")):
+                gp = await ST.ensure_player(c, "dev:" + who, who)
+                await c.execute("UPDATE players SET language=$2 WHERE id=$1", gp, lg)
+        HZ, HE = {"X-Dev-Player": "zzplayer"}, {"X-Dev-Player": "enplayer"}
+        j = await (await cl.get("/api/dfg/library/book/prospecting", headers=HZ)).json()
+        jt = await (await cl.get("/api/dfg/library/test/prospecting", headers=HZ)).json()
+        check("a player whose language has a translation reads the translated title, chapters and questions",
+              j["title"] == "ZZ-TITLE" and j["chapters"][0]["title"] == "ZZ-CH" and jt["questions"][0]["question"].startswith("ZZ-Q")
+              and all(o["text"].startswith("ZZ-") for o in jt["questions"][0]["options"]) and "answer" not in json.dumps(jt))
+        ans = {str(i): a for i, (_, _, a) in enumerate(en["test"])}
+        j = await (await cl.post("/api/dfg/library/test", headers=HZ, json={"book": "prospecting", "answers": ans})).json()
+        check("a translated test is still graded on the English answer letters", j["score"] == 5 and j["passed"] and j["title"] == "ZZ-TITLE")
+        j = await (await cl.get("/api/dfg/library/book/prospecting", headers=HE)).json()
+        jt = await (await cl.get("/api/dfg/library/test/prospecting", headers=HE)).json()
+        check("an English player gets the English book", j["title"] == en["title"] and jt["questions"][0]["question"] == en["test"][0][0])
+        j = await (await cl.get("/api/dfg/library/book/trading", headers=HZ)).json()
+        check("a book with no translation falls back to English", j["title"] == LB.BOOKS["trading"]["title"])
+    finally:
+        shutil.rmtree(tdir, ignore_errors=True)
     right = {str(i): a for i, (_, _, a) in enumerate(LB.BOOKS["prospecting"]["test"])}
     wrong3 = dict(right); wrong3["0"] = "d"; wrong3["1"] = "d"
     r = await cl.post("/api/dfg/library/test", headers=HL, json={"book": "prospecting", "answers": wrong3}); j = await r.json()
@@ -691,23 +719,25 @@ async def main():
     check("eight careers, five bars each, thresholds 5/20/65/185/510, career books loaded into the library",
           [c["code"] for c in j["careers"]] == ["flight", "business", "science", "engineering", "mining", "medicine", "computing", "navigation"]
           and all(len(c["bars"]) == 5 for c in j["careers"]) and j["thresholds"] == [5, 20, 65, 185, 510]
-          and len(fl[1]) >= 5 and len(fl[2]) >= 15 and all(LB.BOOKS[b]["bar"] == 1 for b in fl[1]) and j["uniform"] is None)
+          and len(fl[1]) >= 5 and len(fl[2]) >= 15 and all(LB.BOOKS[b].get("bar", 1) == 1 for b in fl[1])
+          and "piloting" in fl[1] and "power" in CAR.books_by_bar("engineering")[1] and j["uniform"] is None)
     me = await (await cl.get("/api/dfg/me", headers=HC)).json()
     check("no bars yet: the title is Trainee and the skill is 0", me["rank"] == "Trainee" and me["career"]["skill_pct"] == 0)
     r = await cl.post("/api/dfg/closet/uniform", headers=HC, json={"career": "flight"})
     check("no Flight pass yet: its uniform isn't in the Closet", r.status == 422)
-    for b in fl[1][:-1]:
+    for b in fl[1][:4]:
         await take(b)
     l = await ladder("flight")
-    check("one bar-1 book not passed: the bar isn't earned", not l["bars"][0]["earned"] and l["bars"][0]["passed"] == len(fl[1]) - 1)
-    t = await take(fl[1][-1], misses=1)
+    check("4 of the 5 books bar 1 needs: the bar isn't earned, and the note says how many are left",
+          not l["bars"][0]["earned"] and l["bars"][0]["passed"] == 4 and "1 more" in l["bars"][0]["note"])
+    t = await take(fl[1][4], misses=1)
     l = await ladder("flight")
-    check("every bar-1 book passed, one with a miss: bar 1 is SILVER, title Pilot, skill +10%",
+    check("the fifth book passed, with a miss: bar 1 is SILVER, title Pilot, skill +10%",
           t["passed"] and t["score"] == 4 and l["bars"][0]["earned"] and l["bars"][0]["medal"] == "silver"
           and l["title"] == "Pilot" and abs(l["skill_pct"] - 10) < 1e-9)
-    await take(fl[1][-1], misses=2)                   # a worse retake never lowers the best score
+    await take(fl[1][4], misses=2)                    # a worse retake never lowers the best score
     l2 = await ladder("flight")
-    await take(fl[1][-1])
+    await take(fl[1][4])
     l = await ladder("flight")
     check("a worse retake keeps silver; a perfect retake turns bar 1 GOLD (+11%)",
           l2["bars"][0]["medal"] == "silver" and l["bars"][0]["medal"] == "gold" and abs(l["skill_pct"] - 11) < 1e-9)
@@ -722,7 +752,7 @@ async def main():
     check("all bar-2 books perfect: bar 2 GOLD, Senior Pilot, skill 11 + 6.6",
           l["bars"][1]["medal"] == "gold" and l["title"] == "Senior Pilot" and abs(l["skill_pct"] - 17.6) < 1e-9)
     check("bar 3's 45 books are written: it is open, not yet earned, and lists what's left",
-          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "Pass every book" in l["bars"][2]["note"])
+          l["bars"][2]["can_earn"] and not l["bars"][2]["earned"] and "more of this career's books" in l["bars"][2]["note"])
     fb = CAR.books_by_bar("flight")
     want = {4: 120, 5: 325}
     check("bars 4 and 5: open once all their books are written, otherwise 'Not open yet'; never earned out of turn",
@@ -743,7 +773,7 @@ async def main():
     fs = next(c for c in s["careers"] if c["code"] == "flight")
     check("the library has a shelf per career, books tagged by bar, with the ladder",
           len(s["careers"]) == 8 and len([b for b in fs["books"] if b["bar"] <= 2]) == len(fl[1]) + len(fl[2])
-          and all(b["passed"] and b["perfect"] for b in fs["books"] if b["bar"] <= 2)
+          and sum(1 for b in fs["books"] if b["passed"]) == 20 and all(b["perfect"] for b in fs["books"] if b["passed"])
           and fs["bars"][1]["medal"] == "gold" and s["uniform"] == "flight")
     async with cl.app["pool"].acquire() as c:
         cpid = await ST.ensure_player(c, "dev:tester-career", "tester-career")
@@ -1063,37 +1093,65 @@ console.log(JSON.stringify(out));"""
     async with cl.app["pool"].acquire() as c:
         await c.execute("UPDATE bank_deposits SET since=since - interval '2 weeks' WHERE kind='savings'")
     r = await cl.get("/api/dfg/bank", headers=BK); j = await r.json()
-    check("savings earn 0.5% a week: 2 weeks on 1,000 is 10", j["savings"]["balance"] == 1010)
+    check("savings earn 4% APR, charged weekly as APR / 52: 2 weeks on 1,000 is 1", j["savings"]["balance"] == 1001 and j["savings"]["apr_pct"] == 4)
     r = await cl.post("/api/dfg/bank/deposit", headers=BK, json={"kind": "term", "amount": 1000, "weeks": 4}); j = await r.json()
     t = j["terms"][0]
-    check("a 4-week term deposit shows what it pays at the end (1.25% a week: 1,050)", t["at_maturity"] == 1050 and not t["matured"])
+    check("a 4-week term deposit shows what it pays at the end (6% APR: 1,004)", t["at_maturity"] == 1004 and t["apr_pct"] == 6 and not t["matured"])
     r = await cl.post("/api/dfg/bank/withdraw", headers=BK, json={"deposit_id": t["id"]}); j = await r.json()
     check("closing a term deposit early gives back only what was put in", j["credits"] == start - 1000)
     r = await cl.post("/api/dfg/bank/withdraw", headers=BK, json={"amount": 5000})
     check("you can't take out more savings than you have", r.status == 422)
+    # loans only in the Business uniform, at an APR set by its bars (Eric 10-27)
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"})
+    check("no loan without the Business uniform on", r.status == 422 and "Business uniform" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET uniform='flight' WHERE player_key LIKE '%saver'")
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"})
+    check("another career's uniform doesn't qualify", r.status == 422)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET uniform='business' WHERE player_key LIKE '%saver'")
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"})
+    check("a Business uniform with no bar yet: earn the first bar first", r.status == 422 and "first Business bar" in (await r.json())["error"])
+    # the bars come from the library; here the worn uniform is stood in for: 3 Business bars, the top one silver, then gold
+    import careers as CRT
+    real_worn = CRT.worn
+    async def bars3(conn, pid, medal="silver"):
+        w = await real_worn(conn, pid)
+        return {**w, "step": 3, "bars": [{"medal": "gold"}, {"medal": "gold"}, {"medal": medal}]} if w["code"] == "business" else w
+    CRT.worn = bars3
     r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"}); q = await r.json()
-    check("a loan quote: approved, 6-12% a week, a weekly payment and the total cost shown first",
-          q["approved"] and 6 <= q["rate_pct"] <= 12 and q["payment"] * 4 == q["total"] and q["cost"] > 0)
-    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "supplies"}); q2 = await r.json()
-    check("borrowing for things that are gone tomorrow costs more", q2["rate_pct"] > q["rate_pct"])
+    check("3 bars: 12% APR, charged weekly as APR / 52, payment and total cost shown first; a silver top bar: a 20% down payment, the Bank lends the other 80%",
+          q["approved"] and q["apr_pct"] == 12 and abs(q["rate_pct"] - 12 / 52) < 1e-5 and q["payment"] * 4 == q["total"]
+          and 0 < q["cost"] < 20 and q["down_payment"] == 160 and q["amount"] == 640 and not q["gold"])
+    CRT.worn = lambda conn, pid: bars3(conn, pid, "gold")
+    r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"}); qg = await r.json()
+    check("a gold top bar waives the down payment: the full amount is lent", qg["approved"] and qg["gold"] and qg["down_payment"] == 0 and qg["amount"] == 800)
+    CRT.worn = bars3
+    check("the APR falls with each Business bar: 16, 14, 12, 10, 8", [j2["rates"]["loan_apr_by_bars"][str(b)] for b in range(1, 6)] == [16, 14, 12, 10, 8]
+          if (j2 := await (await cl.get("/api/dfg/bank", headers=BK)).json()) else False)
     r = await cl.post("/api/dfg/bank/loan/quote", headers=BK, json={"amount": 9_000_000, "weeks": 4, "purpose": "ship"}); q3 = await r.json()
     check("asking for far more than the Bank will lend is turned down, with the reason", not q3["approved"] and "up to" in q3["why"])
     before = (await (await cl.get("/api/dfg/bank", headers=BK)).json())["credits"]
     r = await cl.post("/api/dfg/bank/loan/take", headers=BK, json={"amount": 800, "weeks": 4, "purpose": "equipment"}); j = await r.json()
     ln = j["loans"][0]
-    check("taking the loan pays the credits out", j["credits"] == before + 800 and ln["balance"] == 800 and ln["payment"] == q["payment"])
+    check("taking the loan pays out what the Bank lends (80%)", j["credits"] == before + 640 and ln["balance"] == 640
+          and ln["payment"] == q["payment"])
     async with cl.app["pool"].acquire() as c:
         await c.execute("UPDATE bank_loans SET next_due=now() - interval '1 minute'")
         await LN.tick(c)
     j = await (await cl.get("/api/dfg/bank", headers=BK)).json()
-    check("the weekly payment is taken on its date", j["loans"][0]["payments_made"] == 1 and j["credits"] == before + 800 - q["payment"]
-          and j["loans"][0]["balance"] < 800)
+    check("the weekly payment is taken on its date", j["loans"][0]["payments_made"] == 1 and j["credits"] == before + 640 - q["payment"]
+          and j["loans"][0]["balance"] < 640)
     pay_left = j["loans"][0]["payoff"]
     check("paying off early costs less than the remaining payments", pay_left < q["payment"] * 3)
     r = await cl.post("/api/dfg/bank/loan/pay", headers=BK, json={"loan_id": ln["id"]}); j = await r.json()
     check("paying a loan off early closes it", j["loans"] == [] and j["standing"]["on_time"] == 1)
     # a payment the player can't cover: a late fee and lower standing
     B2 = {"X-Dev-Player": "spender"}
+    await cl.get("/api/dfg/bank", headers=B2)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE players SET uniform='business' WHERE player_key LIKE '%spender'")
+    CRT.worn = lambda conn, pid: bars3(conn, pid, "gold")
     r = await cl.post("/api/dfg/bank/loan/take", headers=B2, json={"amount": 500, "weeks": 2, "purpose": "supplies"})
     async with cl.app["pool"].acquire() as c:
         pid2 = await c.fetchval("SELECT id FROM players WHERE player_key LIKE '%spender'")
@@ -1105,6 +1163,7 @@ console.log(JSON.stringify(out));"""
         await c.execute("UPDATE bank_loans SET next_due=now() - interval '1 minute' WHERE player_id=$1", pid2)
         await LN.tick(c)
     j = await (await cl.get("/api/dfg/bank", headers=B2)).json()
+    CRT.worn = real_worn
     check("a missed payment adds a late fee and lowers the standing", j["loans"][0]["late"] == 1 and j["loans"][0]["balance"] > 500
           and j["standing"]["score"] < 50)
     r = await cl.post("/api/dfg/bank/goal", headers=BK, json={"goal": "ship", "target": 2000}); j = await r.json()

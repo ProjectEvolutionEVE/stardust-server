@@ -1,0 +1,37 @@
+"""Quick Changeover and SMED: internal and external tasks, changeover reduction, standard procedures and the money side of batch sizes."""
+CODE = "engineering5_smed"
+BOOK = {
+    "title": "Quick Changeover and SMED",
+    "subtitle": "Switching a machine from one job to the next in minutes, not hours",
+    "chapters": [
+        ("Why changeovers cost",
+         "A changeover is the work of switching a machine from one product to the next. While it happens, the machine makes nothing. Long changeovers push teams to make big batches, which tie up money in stock."),
+        ("Internal and external tasks",
+         "Internal tasks can only be done while the machine is stopped, such as fitting a die. External tasks can be done while it still runs, such as fetching tools or preheating. Moving external tasks out of the stop is the first step."),
+        ("Reducing the changeover",
+         "Simple methods cut time: standard tool positions, quick-release clamps and clear labels. Each task is timed and checked. The goal is a changeover that is short and the same every time."),
+        ("Standard procedures",
+         "A written, picture-based standard lets any trained operator complete the change the same way. Standards also reveal waste that people had stopped noticing. Review them after each improvement."),
+        ("Batch sizes",
+         "Short changeovers make small batches practical. Smaller batches mean less stock, shorter waits and quicker response to a changing order. Batch size is a choice, not a fixed rule."),
+        ("The money side",
+         "Every hour saved on changeover is an hour of machine time won back. Compare the cost of a fix, such as a quick-release clamp, with the output it frees. Stock held for long batches costs money every week it sits."),
+    ],
+    "test": [
+        ("What is a changeover?",
+         [("a", "Changing the colour of the office walls"), ("b", "A payment to a supplier"), ("c", "A shift in the weather"), ("d", "Switching a machine from one product to the next")],
+         "d"),
+        ("What is an internal task in SMED?",
+         [("a", "A task that can only be done while the machine is stopped"), ("b", "A task done in the accounts office"), ("c", "A task that never affects the machine"), ("d", "A task for the customer")],
+         "a"),
+        ("Why does a long changeover push teams to big batches?",
+         [("a", "Because big batches are always lighter"), ("b", "Because a long stop is spread over more parts"), ("c", "Because batches cost nothing to store"), ("d", "Because customers ask for them")],
+         "b"),
+        ("What is the purpose of a standard procedure?",
+         [("a", "To stop the machine forever"), ("b", "To hide the time taken"), ("c", "So any trained operator does the change the same way"), ("d", "To raise the price")],
+         "c"),
+        ("Why is stock held in big batches a money problem?",
+         [("a", "It makes the stock lighter"), ("b", "It removes all costs"), ("c", "It reduces tax"), ("d", "It ties up money for as long as it sits")],
+         "d"),
+    ],
+}

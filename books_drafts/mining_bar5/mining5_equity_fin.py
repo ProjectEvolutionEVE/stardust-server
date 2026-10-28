@@ -1,0 +1,52 @@
+"""Equity Financing and Dilution: how companies raise money by selling shares, and what that does to existing owners."""
+CODE = "mining5_equity_fin"
+BOOK = {'title': 'Equity Financing and Dilution',
+ 'subtitle': 'Raising money by selling shares, and what it costs existing owners',
+ 'chapters': [('Raising money with shares',
+               'A company can sell new shares to raise money instead of borrowing. The money does not have '
+               'to be repaid. In return, the new owners share in future profits.'),
+              ('Rights issues and placements',
+               'A rights issue offers new shares first to existing owners. A placement sells shares directly '
+               'to chosen investors, often at a small discount. Each route has its own rules and costs.'),
+              ('Share price effects',
+               'New shares can push the share price down if investors expect the money to be spent poorly. A '
+               'well-explained plan can keep the price steady. Markets react quickly to news.'),
+              ('Dilution',
+               'Dilution means each existing share now stands for a smaller part of the company. An owner '
+               'with 10% before a new issue may hold far less afterwards, unless they buy more shares.'),
+              ('Governance',
+               'New investors may ask for board seats or other rights. Clear rules protect all owners, both '
+               'old and new. Good governance keeps trust high.'),
+              ('Investor relations',
+               'Companies explain their plans and results to owners regularly. Honest updates, even when '
+               'news is bad, keep investors informed and reduce surprises.')],
+ 'test': [('What is a key difference between selling shares and borrowing?',
+           [('a', 'Shares must be repaid with interest'),
+            ('b', 'Shares are always free'),
+            ('c', 'Shares do not have to be repaid, but new owners share future profit'),
+            ('d', 'Shares only work for governments')],
+           'c'),
+          ('What is a rights issue?',
+           [('a', 'An offer of new shares first to existing owners'),
+            ('b', 'A law about mine safety'),
+            ('c', 'A fee paid to a bank'),
+            ('d', "A map of the mine's tunnels")],
+           'a'),
+          ('What is dilution?',
+           [('a', 'A cleaning step for ore'),
+            ('b', 'A bigger dividend for everyone'),
+            ('c', 'A fall in the price of gold only'),
+            ('d', 'Each existing share stands for a smaller part of the company')],
+           'd'),
+          ('Why might a share price fall after a new issue?',
+           [('a', 'The mine ran out of light'),
+            ('b', 'Investors expect the money to be spent poorly'),
+            ('c', 'The company bought a new hat'),
+            ('d', 'The sun was up')],
+           'b'),
+          ('What does investor relations mean?',
+           [('a', 'Hiring drivers'),
+            ('b', 'Selling ore to customers'),
+            ('c', 'Explaining plans and results to owners honestly and regularly'),
+            ('d', "Designing the mine's logo")],
+           'c')]}

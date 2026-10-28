@@ -1,0 +1,37 @@
+"""Axiomatic Design: functional requirements, design parameters, the independence axiom, the information axiom and coupling."""
+CODE = "engineering5_axiomatic"
+BOOK = {
+    "title": "Axiomatic Design",
+    "subtitle": "Two simple rules for building a design that is easy to change and to control",
+    "chapters": [
+        ("Functions and parameters",
+         "Axiomatic design separates what a product must do, its functional requirements, from how it does it, its design parameters. Stating the function first keeps the designer open to better solutions. The method is a way of thinking, not a fixed recipe."),
+        ("The independence axiom",
+         "The independence axiom says each function should be controlled by its own design parameter. When one parameter moves two functions at once, the design is coupled. Coupled designs are hard to tune, because each change disturbs the others."),
+        ("Coupling",
+         "A coupled design can often be fixed by changing the parameters or splitting the function. The aim is a diagonal link, one function to one parameter. Good structure makes the rest of the work easier."),
+        ("The information axiom",
+         "The information axiom says the best design is the one with the least information content, meaning the fewest chances of missing its target. A design with a narrow chance of failure is preferred. Simpler, more certain designs usually win."),
+        ("Using the axioms in practice",
+         "Teams apply the axioms early, when changes are cheap. They check each design against both rules and record why a choice was made. The record helps later teams understand the reasons."),
+        ("The money side",
+         "Coupled designs need more testing and rework, which adds cost. A decoupled design with fewer chances of failure saves money in trials and in returns. The axioms give a reason for the cost of getting the structure right first."),
+    ],
+    "test": [
+        ("What is the difference between functional requirements and design parameters?",
+         [("a", "They are the same thing"), ("b", "Parameters are the sales targets"), ("c", "Requirements are the paint colours"), ("d", "Requirements say what must be done, parameters say how it is done")],
+         "d"),
+        ("What does the independence axiom ask for?",
+         [("a", "Each function controlled by its own design parameter"), ("b", "All functions controlled by one part"), ("c", "No functions at all"), ("d", "Parts that never move")],
+         "a"),
+        ("What is coupling in a design?",
+         [("a", "Two parts joined with glue"), ("b", "One parameter moving two functions at once"), ("c", "A type of battery"), ("d", "A customer discount")],
+         "b"),
+        ("What does the information axiom prefer?",
+         [("a", "The most complex design"), ("b", "The design with the most parts"), ("c", "The design with the least chance of missing its target"), ("d", "The design that is never tested")],
+         "c"),
+        ("Why does coupling add to cost?",
+         [("a", "Coupled designs need no tuning"), ("b", "Coupled designs are always cheaper to build"), ("c", "Coupling removes all risk"), ("d", "Coupled designs need more testing and rework")],
+         "d"),
+    ],
+}

@@ -1,0 +1,52 @@
+"""Criticality Assessments: how countries decide which materials are vital to their economy and at risk of supply disruption."""
+CODE = "mining5_criticality"
+BOOK = {'title': 'Criticality Assessments',
+ 'subtitle': 'Deciding which materials matter most and where supply could break',
+ 'chapters': [('Supply risk',
+               'Supply risk is the chance that a material will be hard to get. It rises when production is '
+               'concentrated in a few countries or when mines face political or environmental problems.'),
+              ('Vulnerability',
+               'Vulnerability measures how badly an economy would be hurt if supply stopped. A material used '
+               'in many key industries is more vulnerable than one used rarely.'),
+              ('Substitution',
+               'If a material can easily be replaced, its criticality falls. If no substitute works well, '
+               'the material is more critical.'),
+              ('Importance',
+               'Importance measures how much the material matters to the economy, such as to energy, defence '
+               'or manufacturing. High importance and high supply risk together make a material critical.'),
+              ('Methods',
+               'Assessments combine supply risk, importance and substitution using set scores and weights. '
+               'The method and its data must be published so others can check it.'),
+              ('Lists',
+               'Governments publish lists of critical materials and update them over time. Lists guide '
+               'research, stockpiles and trade policy.')],
+ 'test': [('What is supply risk?',
+           [('a', 'The risk of a sunny day'),
+            ('b', 'The risk of losing a pen'),
+            ('c', 'The chance that a material will be hard to get'),
+            ('d', 'The risk of a bank holiday')],
+           'c'),
+          ('When does a material become more vulnerable?',
+           [('a', 'When many key industries depend on it'),
+            ('b', 'When it is used rarely'),
+            ('c', 'When it is easy to replace'),
+            ('d', 'When it is green')],
+           'a'),
+          ('How does easy substitution affect criticality?',
+           [('a', 'It raises criticality'),
+            ('b', 'It has no effect at all'),
+            ('c', 'It makes the metal disappear'),
+            ('d', 'It lowers criticality')],
+           'd'),
+          ('What makes a material critical?',
+           [('a', 'A bright colour'),
+            ('b', 'High importance and high supply risk together'),
+            ('c', 'A low price alone'),
+            ('d', 'A small weight')],
+           'b'),
+          ('Why must the method of an assessment be published?',
+           [('a', 'So it can be kept secret'),
+            ('b', 'So prices can be fixed'),
+            ('c', 'So others can check it'),
+            ('d', 'So staff can skip it')],
+           'c')]}

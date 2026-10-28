@@ -1,0 +1,37 @@
+"""Degradation Modes and Graceful Failure: partial function loss, fault tolerance classes, degraded modes, warning design and safe shutdown."""
+CODE = "engineering5_graceful"
+BOOK = {
+    "title": "Degradation Modes and Graceful Failure",
+    "subtitle": "Designing a system to lose some function safely, instead of failing all at once",
+    "chapters": [
+        ("Failing well",
+         "A well-designed system does not always fail all at once. It can keep some of its function when a part breaks. Graceful failure means the loss is limited, understood and safe."),
+        ("Partial function loss",
+         "Some faults remove only one function, while the rest keep working. The designer decides which functions must continue and which can stop. This choice is made before the fault happens, not during it."),
+        ("Fault tolerance classes",
+         "Systems are often grouped by how many faults they can survive without losing a critical function. Each class suits a different level of risk. A safety-critical system needs a higher class than a casual device."),
+        ("Degraded modes",
+         "A degraded mode is a planned reduced state, such as slower speed or limited load. The system switches to it on purpose, and the change is tested. Users know what to expect in that mode."),
+        ("Warning design",
+         "A system should tell its users when it has entered a degraded mode. Warnings must be clear, timely and understandable. A warning nobody can read does not help."),
+        ("Safe shutdown and money",
+         "When a fault cannot be carried, the system should shut down in a safe order. Designing for graceful failure costs extra up front, but it prevents damage and lost work. The cost is weighed against the harm it avoids."),
+    ],
+    "test": [
+        ("What does graceful failure mean?",
+         [("a", "Failing in the most dramatic way possible"), ("b", "Never failing at all"), ("c", "Failing only on Sundays"), ("d", "Losing some function in a limited, understood and safe way")],
+         "d"),
+        ("What is a degraded mode?",
+         [("a", "A planned reduced state, such as slower speed"), ("b", "A broken screen with no use"), ("c", "A type of paint"), ("d", "A sale price")],
+         "a"),
+        ("Why are fault tolerance classes useful?",
+         [("a", "They make every system the same"), ("b", "They match the level of tolerance to the level of risk"), ("c", "They remove the need for design"), ("d", "They only affect the colour")],
+         "b"),
+        ("What should a system do when it enters a degraded mode?",
+         [("a", "Hide the change"), ("b", "Switch off the lights only"), ("c", "Warn its users clearly"), ("d", "Ask the weather")],
+         "c"),
+        ("Why does graceful failure help the money side?",
+         [("a", "It always costs nothing to design"), ("b", "It increases damage"), ("c", "It has no effect on cost"), ("d", "It prevents damage and lost work that cost more")],
+         "d"),
+    ],
+}

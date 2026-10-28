@@ -1,5 +1,54 @@
 # Stardust – Terra Deleta: handoff brief for Claude on Eric's iMac
 
+## ★ LATEST (2026-10-27): read this part first
+- **Every ruling** is in CLAUDE.md (rules 1-41).
+- **Every tool and path** is in `~/Quavara/CURRENT.md`.
+- **The full transcript** of the long 10-24 to 10-27 session is archived at
+  `~/Documents/Stardust-archive/session-2026-10-27-godot-app.zip`. Search it with grep; don't read it whole.
+
+**Where things stand:**
+- **Live on main:** the Bank, flight costs, fuel and tow, career ladders, library bars 1-3 for every career, bars 4-5
+  for Flight and Business.
+- **Open PR #27 (`claude/books-bar2`), Eric merges:**
+  - the intro video at every sign-in (Skip, then Launch now);
+  - bars 4-5 for Mining, Engineering and Computing;
+  - the Arabic library, first batch (191 books in `books_i18n/ar/`, served with English fallback);
+  - crossover books, and bars counted per rule 32;
+  - the worn uniform highlighted in green;
+  - voice tools;
+  - rules 14, 15, 32, 40 and 41.
+
+**Next, in order:**
+1. **English bars 4-5 for Medicine, Navigation and Science.** Follow `books_drafts/_tools/README.md`: Haiku planner,
+   about 11 Haiku writers, 6 Haiku checkers writing to one findings file, the lead approves the fixes, and one Sonnet
+   fixer applies them. Then run check45, the tests, and commit.
+   - **Pacing:** wait for the reset past about 55% of the 5-hour window; stop for the week past 90%.
+2. **Arabic library:** bar 3, then bars 4-5. Follow `books_drafts/_tools/translate-brief-ar.md`. Write the currency as
+   أرصدة (one: رصيد).
+3. **Arabic voice, Sara:**
+   - Eric runs the 14-line test: `tools/inara-record.py --lang ar --out ~/Desktop/inara-ar-sara --ids <the 14 IDs in
+     tools/inara-certify.py>`.
+   - Compare her to Lily with `tools/voice-stt/` (local Whisper large-v3).
+   - If she's cleaner, she records the 179 lines and the 4 intro parts. The Arabic intro is then built by
+     `~/Desktop/Stardust-Inara/intro-video/make_intro_video.py`.
+4. **Titles:** CFO or CEO, and Science branch titles, by what the player studied most (rule 32). The books need tagging
+   by focus first.
+5. **Last:** the Arabic audiobook of the novel, only if ElevenLabs credits allow.
+
+**Gotchas:**
+- **macOS wipes `/private/tmp`.** Keep tools and environments in the repo or in `~/.local/share/`. The tests are in
+  `~/.local/share/stardust-test/`.
+- **Writers sharing a folder must never run folder-wide scripts.**
+- **ElevenLabs:**
+  - A Voice Library voice gets a new ID when it's added to My Voices, so find voices by name.
+  - The key decides the account; the recorder prints its last 4 characters.
+- **Godot plays only Ogg Theora video.** The converter is `~/.local/share/stardust-tools/ffmpeg`.
+- **Never assume a default voice or a fact.** Check CLAUDE.md rule 15 and `docs/voice-models.md` first.
+
+---
+
+## (Earlier brief, 10-23)
+
 Written 2026-10-23 by the cloud Claude session, for a Claude Code session running on Eric's iMac.
 Everything below was checked against the repository, the live tests Eric ran today, or Eric's own words.
 Anything **not** checked says so. Read this, then `CLAUDE.md` (the settled rules), before doing anything.

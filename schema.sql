@@ -701,7 +701,7 @@ CREATE TABLE IF NOT EXISTS bank_deposits (
   player_id   BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
   kind        TEXT NOT NULL CHECK (kind IN ('savings','term')),
   principal   BIGINT NOT NULL CHECK (principal >= 0),
-  rate_pct    NUMERIC(6,3) NOT NULL,               -- a week, simple interest
+  rate_pct    NUMERIC(10,6) NOT NULL,              -- a week (APR / 52), simple interest
   term_weeks  INT,                                 -- term deposits only
   opened_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
   since       TIMESTAMPTZ NOT NULL DEFAULT now(),  -- savings: interest counts from here (each change folds it in)
@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS bank_loans (
   player_id     BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
   principal     BIGINT NOT NULL CHECK (principal > 0),
   balance       BIGINT NOT NULL CHECK (balance >= 0),   -- what's still owed, before this week's interest
-  rate_pct      NUMERIC(6,3) NOT NULL,                  -- a week
+  rate_pct      NUMERIC(10,6) NOT NULL,                 -- a week (APR / 52)
   term_weeks    INT NOT NULL,
   payment       BIGINT NOT NULL,                        -- the weekly payment
   purpose       TEXT NOT NULL,
@@ -735,12 +735,18 @@ CREATE TABLE IF NOT EXISTS bank_goals (
   dropped    BOOLEAN NOT NULL DEFAULT false
 );
 INSERT INTO settings(key, value, note) VALUES
-  ('bank_savings_pct',     0.5,  'Bank savings account: interest a week, % (Eric 10-25 rule 36; first setting)'),
-  ('bank_term2_pct',       1.0,  'Term deposit, 2 weeks: interest a week, %'),
-  ('bank_term4_pct',       1.25, 'Term deposit, 4 weeks: interest a week, %'),
-  ('bank_term8_pct',       1.5,  'Term deposit, 8 weeks: interest a week, %'),
-  ('bank_loan_min_pct',    6,    'Loans: interest a week for the strongest record, % (Eric 10-25: 6-12)'),
-  ('bank_loan_max_pct',    12,   'Loans: interest a week for the weakest record, %'),
+  -- Rates are APRs, a year's rate, as in the real world (Eric 10-27): each week charges or pays APR / 52.
+  ('bank_savings_apr',     4,    'Bank savings account: APR, % (Eric 10-27)'),
+  ('bank_term2_apr',       5,    'Term deposit, 2 weeks: APR, %'),
+  ('bank_term4_apr',       6,    'Term deposit, 4 weeks: APR, %'),
+  ('bank_term8_apr',       7,    'Term deposit, 8 weeks: APR, %'),
+  -- Loans only for a player wearing the Business uniform; the APR falls with its bars (Eric 10-27)
+    ('bank_loan_apr_bar1',   16,   'Loans: APR with 1 Business bar, %'),
+  ('bank_loan_apr_bar2',   14,   'Loans: APR with 2 Business bars, %'),
+  ('bank_loan_apr_bar3',   12,   'Loans: APR with 3 Business bars, %'),
+  ('bank_loan_apr_bar4',   10,   'Loans: APR with 4 Business bars, %'),
+  ('bank_loan_apr_bar5',   8,    'Loans: APR with 5 Business bars, %'),
+  ('bank_loan_down_pct',   20,   'Loans: the borrower''s down payment, % of what they ask for; the Bank lends the rest. Waived when the top Business bar is gold (Eric 10-27)'),
   ('bank_loan_min_weeks',  2,    'Loans: shortest term, weeks'),
   ('bank_loan_max_weeks',  12,   'Loans: longest term, weeks'),
   ('bank_loan_base',       1000, 'Loans: what a player with no income yet may borrow (at standing 50)'),
@@ -749,6 +755,12 @@ INSERT INTO settings(key, value, note) VALUES
   ('bank_late_fee_pct',    5,    'Loans: late fee, % of the missed payment, added to what''s owed'),
   ('bank_reserve_pct',     20,   'The Bank keeps this % of what it owes depositors in reserve, never lent (rule 10)')
 ON CONFLICT (key) DO NOTHING;
+DELETE FROM settings WHERE key IN ('bank_savings_pct','bank_term2_pct','bank_term4_pct','bank_term8_pct','bank_loan_min_pct','bank_loan_max_pct');
+-- rate_pct stays the rate charged or paid each week (now APR / 52, so it needs more decimals); apr_pct is the APR shown
+ALTER TABLE bank_deposits ALTER COLUMN rate_pct TYPE NUMERIC(10,6);
+ALTER TABLE bank_loans ALTER COLUMN rate_pct TYPE NUMERIC(10,6);
+ALTER TABLE bank_deposits ADD COLUMN IF NOT EXISTS apr_pct NUMERIC(6,2);
+ALTER TABLE bank_loans ADD COLUMN IF NOT EXISTS apr_pct NUMERIC(6,2);
 INSERT INTO settings(key, value, note) VALUES
   ('tow_fee', 1500, 'Out of fuel in space: the tow back to the Starship costs this many credits, paid to the WSC (rule 38, Eric 10-25; first setting)')
 ON CONFLICT (key) DO NOTHING;

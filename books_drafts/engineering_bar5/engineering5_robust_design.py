@@ -1,0 +1,37 @@
+"""Robust Design and Parameter Design: noise factors, signal-to-noise ratios, orthogonal arrays and designing for insensitivity to variation."""
+CODE = "engineering5_robust_design"
+BOOK = {
+    "title": "Robust Design and Parameter Design",
+    "subtitle": "Designing a product that still works when the real world varies",
+    "chapters": [
+        ("Variation is certain",
+         "No two parts come out exactly alike, and no user treats a product the same way twice. Temperature, wear, dirt and handling all add variation. Robust design accepts this and asks how to make the product insensitive to it."),
+        ("Control factors and noise factors",
+         "Control factors are the settings the designer chooses, such as material thickness or spring rate. Noise factors are the things nobody can fully control, such as ambient temperature or load. The aim is to find control settings where the noise does the least harm."),
+        ("Signal-to-noise ratios",
+         "A signal-to-noise ratio compares the wanted performance with its scatter. A higher ratio means the result stays close to target even when noise changes. Taguchi used three types: smaller is better, larger is better, and nominal is best."),
+        ("Orthogonal arrays",
+         "An orthogonal array is a planned table of test runs that studies several factors at once with few experiments. Each factor is set at its levels in balanced combinations. The results show which factors matter most."),
+        ("Designing for insensitivity",
+         "Once the strong factors are known, pick settings that keep the output steady across the noise range. Often the best choice is not the setting that gives the highest output, but the one that varies least."),
+        ("The money side",
+         "A robust product wastes less, returns less and needs fewer tight tolerances, which cuts cost. Testing takes time and money, so the number of runs should match the value of what is learned."),
+    ],
+    "test": [
+        ("What are noise factors in robust design?",
+         [("a", "Settings the designer chooses freely"), ("b", "Things that vary and cannot be fully controlled"), ("c", "The colour of the product"), ("d", "The name of the test team")],
+         "b"),
+        ("What does a higher signal-to-noise ratio mean?",
+         [("a", "The product is louder"), ("b", "The product costs more"), ("c", "The result stays closer to target despite noise"), ("d", "More runs were done")],
+         "c"),
+        ("What is an orthogonal array?",
+         [("a", "A type of steel beam"), ("b", "A cable for power"), ("c", "A single test on one part"), ("d", "A balanced plan of test runs that studies several factors at once")],
+         "d"),
+        ("Why might the best robust setting not give the highest output?",
+         [("a", "Because the setting that varies least may be better"), ("b", "Because the highest output is always wrong"), ("c", "Because noise has no effect"), ("d", "Because tests cost nothing")],
+         "a"),
+        ("Why does a robust product help the money side?",
+         [("a", "It must be sold at a higher price"), ("b", "It needs fewer returns and fewer tight tolerances"), ("c", "It never needs testing"), ("d", "It uses more materials")],
+         "b"),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Design-to-Cost and Value Engineering: target costs, cost breakdown, function value, cost reduction without loss and the money side of trade-offs."""
+CODE = "engineering5_design_to_cost"
+BOOK = {
+    "title": "Design-to-Cost and Value Engineering",
+    "subtitle": "Setting a price target first, then designing to meet it without losing what matters",
+    "chapters": [
+        ("Starting from a target cost",
+         "Design-to-cost begins with the price the customer will pay, not with the design. From that price the team works back to a target cost. The design must then fit inside the target."),
+        ("Breaking the cost down",
+         "The target is split into the cost of each part, process and step. A cost breakdown shows which items take the largest share. Attention goes first to the items that cost the most."),
+        ("Value of each function",
+         "Value engineering asks what each function is worth to the customer compared with what it costs. A function that costs much and is valued little is a target for change. The aim is value, not the cheapest possible item."),
+        ("Cutting cost without losing function",
+         "Teams look for cheaper materials, simpler shapes and fewer steps that still meet the need. Each idea is checked against the function it must perform. A cut that breaks the function is not a saving."),
+        ("Checking the trade-offs",
+         "Every saving has a cost somewhere else, such as quality, weight or service. Trade-offs are written down and agreed. The customer's view should guide which trade-offs are acceptable."),
+        ("The money side",
+         "Design-to-cost keeps the product competitive at the price the market will pay. Each target met protects margin. Cost work done early saves far more than cost work done after the first build."),
+    ],
+    "test": [
+        ("Where does design-to-cost begin?",
+         [("a", "With the price the customer will pay"), ("b", "With the colour of the box"), ("c", "With the office rota"), ("d", "With a random part")],
+         "a"),
+        ("What does value engineering ask?",
+         [("a", "Which staff member is oldest"), ("b", "What each function is worth compared with what it costs"), ("c", "Where the sales meeting is"), ("d", "What the weather will be")],
+         "b"),
+        ("When is a cut not a real saving?",
+         [("a", "When it uses a cheaper material"), ("b", "When it removes a step"), ("c", "When it breaks the function the customer needs"), ("d", "When it simplifies a shape")],
+         "c"),
+        ("What should guide which trade-offs are acceptable?",
+         [("a", "The first idea anyone had"), ("b", "The loudest opinion in the room"), ("c", "A coin toss"), ("d", "The customer's view of value")],
+         "d"),
+        ("Why is early cost work more valuable?",
+         [("a", "It saves far more than changes made after the first build"), ("b", "It is never needed"), ("c", "It raises the cost of the first build"), ("d", "It only affects packaging")],
+         "a"),
+    ],
+}

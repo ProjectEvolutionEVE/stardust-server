@@ -15,7 +15,7 @@ BOOK = {
         ('Sorting',
          'Sorting puts items in order, such as a list of prices from lowest to highest. A simple method called bubble sort swaps neighbours that are out of order and repeats until nothing moves. Smarter methods handle very large lists far faster.'),
         ('Why order matters',
-         'Binary search only works on a sorted list, and on an unsorted one it can give the wrong answer. The order of steps changes results in general: taking a 10% discount before adding tax is not the same as adding tax first.'),
+         'Binary search only works on a sorted list, and on an unsorted one it can give the wrong answer. The order of steps changes results in general: taking 10 credits off before adding tax is not the same as adding tax first and then taking 10 off.'),
     ],
     "test": [
         ('What is an algorithm?',

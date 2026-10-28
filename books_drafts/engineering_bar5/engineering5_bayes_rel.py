@@ -1,0 +1,37 @@
+"""Bayesian Reliability and Prior Knowledge: priors, updating with test results, zero-failure tests and confidence in reliability."""
+CODE = "engineering5_bayes_rel"
+BOOK = {
+    "title": "Bayesian Reliability and Prior Knowledge",
+    "subtitle": "Combining what was already known with new test results to judge reliability",
+    "chapters": [
+        ("What Bayesian thinking adds",
+         "Bayesian reliability begins with what is already known about a design, such as results from similar products. That knowledge is expressed as a prior. New test results are then combined with the prior to give an updated estimate."),
+        ("Priors",
+         "A prior is a stated belief about reliability before the new test. It should come from real evidence, such as past tests or expert data. A prior that is too strong can hide the new results, so it is chosen with care."),
+        ("Updating with results",
+         "When new test results arrive, the prior is updated to a posterior estimate. More test data usually moves the estimate closer to what the data shows. The result is a range, not a single exact value."),
+        ("Zero-failure tests",
+         "A test with no failures still tells us something, but the amount depends on the number of units and hours tested. Bayesian methods give an honest estimate of reliability even when no failures appear. They do not claim perfection."),
+        ("Confidence in reliability",
+         "The analysis states how confident the team can be that reliability meets a target. A higher required confidence needs more testing. The level chosen should match the risk of failure."),
+        ("The money side",
+         "Testing costs time and money, and prior knowledge can reduce the number of tests needed. The saving must still be backed by evidence. A wrong prior can cost more than the test it saved."),
+    ],
+    "test": [
+        ("What is a prior in Bayesian reliability?",
+         [("a", "A test run after the product ships"), ("b", "A stated belief about reliability before the new test"), ("c", "A type of screw"), ("d", "A sales forecast")],
+         "b"),
+        ("What happens when new test results arrive?",
+         [("a", "The prior is deleted"), ("b", "The product is repainted"), ("c", "The prior is updated to a posterior estimate"), ("d", "Nothing changes at all")],
+         "c"),
+        ("Why can a zero-failure test still tell us something?",
+         [("a", "It proves the product is perfect"), ("b", "It means the test was wrong"), ("c", "It tells us nothing at all"), ("d", "It gives an estimate based on how many units and hours were tested")],
+         "d"),
+        ("What does a confidence level in reliability state?",
+         [("a", "How sure the team can be that reliability meets a target"), ("b", "The colour of the test report"), ("c", "The number of staff in the lab"), ("d", "The shipping date")],
+         "a"),
+        ("Why must a prior be chosen with care?",
+         [("a", "A prior never matters"), ("b", "A prior that is too strong can hide the new results"), ("c", "A prior is always correct"), ("d", "Priors are used only for art")],
+         "b"),
+    ],
+}

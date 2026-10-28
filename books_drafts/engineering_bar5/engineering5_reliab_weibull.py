@@ -1,0 +1,37 @@
+"""Weibull Analysis of Field Failures: shape and scale parameters, probability plots, censored data and field decisions."""
+CODE = "engineering5_reliab_weibull"
+BOOK = {
+    "title": "Weibull Analysis of Field Failures",
+    "subtitle": "Reading the pattern of failures to see whether parts are wearing out, or failing by chance",
+    "chapters": [
+        ("Why the Weibull model",
+         "The Weibull distribution is a common way to describe how long parts last. It fits many kinds of failure, from early breakdowns to wear. It gives engineers a single model to compare products."),
+        ("Shape",
+         "The shape parameter, often written as beta, tells the failure pattern. A shape below one means failures come early, often from defects. A shape of about one means failures happen at random. A shape above one means parts are wearing out."),
+        ("Scale",
+         "The scale parameter, often written as eta, marks the time by which about two thirds of the units have failed. It sets the typical life of the part. Together with shape, it describes the whole pattern."),
+        ("Probability plots",
+         "Failure times are plotted on special paper or software so that a Weibull pattern forms a straight line. The slope gives the shape and the position gives the scale. A curved plot suggests a mix of causes."),
+        ("Censored data",
+         "Some units are still working when a study ends, so their failure times are not known. This is censored data. The analysis uses these units correctly instead of ignoring them, which would bias the result."),
+        ("Field decisions and money",
+         "Field data shows when to act, such as a service interval or a design change. The cost of a warranty claim or a recall is weighed against the cost of prevention. Good decisions follow the data, not the first complaint."),
+    ],
+    "test": [
+        ("What does the Weibull shape parameter describe?",
+         [("a", "The failure pattern, such as early failures or wear-out"), ("b", "The colour of the part"), ("c", "The price per unit"), ("d", "The staff in the factory")],
+         "a"),
+        ("What does a shape above one suggest?",
+         [("a", "Parts never fail"), ("b", "Parts are wearing out"), ("c", "Failures are only caused by the weather"), ("d", "Failures are all random")],
+         "b"),
+        ("What does the scale parameter set?",
+         [("a", "The number of workers"), ("b", "The weight of the packaging"), ("c", "The typical life of the part"), ("d", "The name of the supplier")],
+         "c"),
+        ("What is censored data?",
+         [("a", "Data that has been deleted"), ("b", "Data in another language"), ("c", "Data about the office"), ("d", "Failure times that are not known because units were still working")],
+         "d"),
+        ("Why does a Weibull analysis help money decisions?",
+         [("a", "It shows when to act, weighed against warranty and recall costs"), ("b", "It always raises the price"), ("c", "It removes the need for data"), ("d", "It has no link to cost")],
+         "a"),
+    ],
+}

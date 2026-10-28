@@ -65,7 +65,7 @@ func render(data: Dictionary) -> void:
 			_book_row(b, SKILL_WORD[s[1]])
 	if data.has("careers"):
 		body.add_child(Ui.label("Careers", 30, Ui.GOLD))
-		body.add_child(Ui.label("Pass every book on a bar's shelf to earn that bar. A bar is gold when every test in it is perfect; retake any test to turn silver gold.", 22, Ui.MUTED))
+		body.add_child(Ui.label("Each bar is earned by the number of a career's books you pass: 5, then 20, 65, 185 and 510 in all. Many Library subjects count toward more than one career. A bar is gold when every test that earned it is perfect; retake any test to turn silver gold.", 22, Ui.MUTED))
 		for c in data.careers:
 			_career(c, data.get("uniform") == c.code)
 	for g in data.shelves:

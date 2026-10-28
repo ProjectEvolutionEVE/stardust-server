@@ -1,0 +1,37 @@
+"""Design for Manufacture Rules: part count, tolerances, process limits, tool access and the money side of cost estimates."""
+CODE = "engineering5_dfm"
+BOOK = {
+    "title": "Design for Manufacture Rules",
+    "subtitle": "Designing parts that are cheap and reliable to make",
+    "chapters": [
+        ("Why design for manufacture",
+         "Most of a product's cost is set by its design, long before the factory starts. Design for manufacture checks each part against the way it will be made. Fixing a problem on paper costs little, and fixing it on the line costs a lot."),
+        ("Part count",
+         "Every part needs handling, storing and fitting. Fewer parts usually mean lower cost and fewer places to fail. Combining parts is a common way to simplify a design."),
+        ("Tolerances",
+         "A tolerance is the allowed variation in a dimension. Tighter tolerances cost more to achieve and to check. A designer should set the tightest tolerance the function really needs and no tighter."),
+        ("Process limits",
+         "Each process has limits, such as the smallest hole a drill can make or the thinnest wall a mould can fill. Designs that respect these limits run smoothly. Designs that break them need extra work or fail."),
+        ("Tool access",
+         "A cutting tool, a welder or a hand needs room to reach each feature. Features hidden behind others can be impossible to make. Checking access early avoids redesign later."),
+        ("The money side",
+         "A cost estimate is only as good as the design behind it. Each extra feature, tight tolerance and special process adds to the price. Compare the cost of each choice with the value it brings to the customer."),
+    ],
+    "test": [
+        ("What does design for manufacture check?",
+         [("a", "The colour of the packaging"), ("b", "The staff car park"), ("c", "Each part against the way it will be made"), ("d", "The company logo")],
+         "c"),
+        ("Why are fewer parts usually cheaper?",
+         [("a", "Parts are always free"), ("b", "Fewer parts make the product heavier"), ("c", "Parts never fail"), ("d", "Each part needs handling, storing and fitting")],
+         "d"),
+        ("What is a tolerance?",
+         [("a", "The allowed variation in a dimension"), ("b", "A type of paint"), ("c", "The speed of a conveyor"), ("d", "A payment term")],
+         "a"),
+        ("What should a designer do with tolerances?",
+         [("a", "Make every tolerance as tight as possible"), ("b", "Set the tightest tolerance the function really needs"), ("c", "Ignore tolerances"), ("d", "Leave them to the customer")],
+         "b"),
+        ("Why does tool access matter?",
+         [("a", "Tools never need room"), ("b", "Access only affects the paint"), ("c", "A hidden feature may be impossible to make"), ("d", "Access has no effect on cost")],
+         "c"),
+    ],
+}

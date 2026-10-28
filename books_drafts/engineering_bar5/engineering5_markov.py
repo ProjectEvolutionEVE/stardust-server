@@ -1,0 +1,37 @@
+"""Markov Models for Repairable Systems: states, transition rates, steady-state availability, repair crews and modelling assumptions."""
+CODE = "engineering5_markov"
+BOOK = {
+    "title": "Markov Models for Repairable Systems",
+    "subtitle": "Describing a repairable system as a set of states that it moves between",
+    "chapters": [
+        ("What a Markov model is",
+         "A Markov model describes a system as a set of states, such as working, failed and under repair. The system moves from one state to another at set rates. The model shows how time is spent in each state."),
+        ("States",
+         "Each state is a condition the system can be in. A simple repairable unit has two states: working and failed. More complex systems may have partly working states as well."),
+        ("Transition rates",
+         "Transition rates give how quickly the system moves between states. A failure rate moves the unit from working to failed, and a repair rate moves it back. The rates come from data or from tests."),
+        ("Steady-state availability",
+         "Over a long time, the model settles into steady-state probabilities for each state. The probability of being in the working state is the steady-state availability. This is a useful single figure for comparing designs."),
+        ("Repair crews",
+         "The number of repair crews limits how many failed units can be repaired at once. Adding crews can cut waiting time, but each crew costs money. The model shows how the crew count changes availability."),
+        ("Assumptions and money",
+         "A Markov model assumes the rates stay constant and the states are clear. When these assumptions do not hold, the results can mislead. The model should be checked against real data, and its cost of building weighed against the decisions it supports."),
+    ],
+    "test": [
+        ("What do the states of a Markov model describe?",
+         [("a", "The shape of the building"), ("b", "The price of electricity"), ("c", "Conditions the system can be in, such as working or failed"), ("d", "The name of the designer")],
+         "c"),
+        ("What does a transition rate give?",
+         [("a", "The colour of the states"), ("b", "The size of the team"), ("c", "The number of coffees"), ("d", "How quickly the system moves between states")],
+         "d"),
+        ("What is steady-state availability?",
+         [("a", "The long-run probability of being in the working state"), ("b", "The first day of operation"), ("c", "The number of failed parts in a box"), ("d", "The price per hour")],
+         "a"),
+        ("What do repair crews change in the model?",
+         [("a", "The number of failures ever recorded"), ("b", "How fast failed units are repaired"), ("c", "The colour of the repairs"), ("d", "The author of the report")],
+         "b"),
+        ("Why must the model's assumptions be checked?",
+         [("a", "Assumptions never matter"), ("b", "Assumptions only affect the cover page"), ("c", "If the assumptions fail, the results can mislead"), ("d", "Assumptions are always true")],
+         "c"),
+    ],
+}

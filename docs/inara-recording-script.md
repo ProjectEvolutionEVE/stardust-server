@@ -20,7 +20,7 @@ clears it. No line below says the game's name, so a name change means no re-reco
 - Every line is a **pre-recorded audio file**, recorded once. Never live speech, never live ElevenLabs
   (`stardust-server/CLAUDE.md` rules 14 and 15; spec §9).
 - Her prepared lines are recorded with ElevenLabs in the languages ElevenLabs speaks best (rule 15; ledger v3.9).
-- **Voices by language (Eric, 10-19).** One Inara, voiced per language by the voice that speaks it best:
+- **Voices by language (Eric, 10-19).** One Inara, voiced per language by the voice that speaks it best (master list with verified languages: `docs/voice-models.md`):
   - **Lily - Velvety Actress:** English, Mandarin Chinese (serves Simplified and Traditional), German, Polish.
   - **Kate 1 - Warm, Close and Natural:** Spanish (Latin American), French, Korean, Turkish at her natural settings;
     Brazilian Portuguese too, also at her natural settings (Eric 10-19: tried faster takes, kept the original).

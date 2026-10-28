@@ -174,7 +174,7 @@ func _goals(d: Dictionary) -> void:
 # ── the savings account ──
 func _savings(d: Dictionary) -> void:
 	body.add_child(_heading("SAVINGS ACCOUNT"))
-	body.add_child(Ui.label("Balance %s credits · earns %s%% a week · take it out any time" % [Ui.num(d.savings.balance), str(d.rates.savings_pct)], 22))
+	body.add_child(Ui.label("Balance %s credits · earns %s%% APR · take it out any time" % [Ui.num(d.savings.balance), str(d.rates.savings_apr)], 22))
 	var row := _row(body)
 	var amt := _amount_field()
 	row.add_child(amt)
@@ -192,8 +192,8 @@ func _terms(d: Dictionary) -> void:
 	body.add_child(Ui.label("Lock credits away for a better rate. Take them out before the end and you give up the interest.", 20, Ui.MUTED))
 	for t in d.terms:
 		var when := str(t.matures_at).substr(0, 10)
-		body.add_child(Ui.label("%s credits for %d weeks at %s%% a week → %s at the end (%s)%s" % [Ui.num(t.principal), t.weeks,
-			str(t.rate_pct), Ui.num(t.at_maturity), when, "  ✓ ready" if t.matured else ""], 22, Ui.GREEN if t.matured else Ui.TEXT))
+		body.add_child(Ui.label("%s credits for %d weeks at %s%% APR → %s at the end (%s)%s" % [Ui.num(t.principal), t.weeks,
+			str(t.apr_pct), Ui.num(t.at_maturity), when, "  ✓ ready" if t.matured else ""], 22, Ui.GREEN if t.matured else Ui.TEXT))
 		var close := _small_button("Collect it" if t.matured else "Close early (no interest)")
 		var tid: int = t.id
 		close.pressed.connect(func(): _act("withdraw", {"deposit_id": tid}, "Deposit closed."))
@@ -203,7 +203,7 @@ func _terms(d: Dictionary) -> void:
 	pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var weeks := [2, 4, 8]
 	for w in weeks:
-		pick.add_item("%d weeks · %s%% a week" % [w, str(d.rates.term_pct[str(w)])])
+		pick.add_item("%d weeks · %s%% APR" % [w, str(d.rates.term_apr[str(w)])])
 	row.add_child(pick)
 	var amt := _amount_field()
 	row.add_child(amt)
@@ -219,8 +219,8 @@ func _loans(d: Dictionary) -> void:
 	body.add_child(Ui.label("Your credit standing: %d / 100 (%d payments on time, %d late)" % [st.score, st.on_time, st.late], 22,
 		Ui.GREEN if st.score >= 50 else Ui.GOLD))
 	for l in d.loans:
-		body.add_child(Ui.label("%s: %s credits left · %s a week at %s%% · %d of %d paid · next %s" % [l.purpose, Ui.num(l.balance),
-			Ui.num(l.payment), str(l.rate_pct), l.payments_made, l.weeks, str(l.next_due).substr(0, 10)], 22))
+		body.add_child(Ui.label("%s: %s credits left · %s a week at %s%% APR · %d of %d paid · next %s" % [l.purpose, Ui.num(l.balance),
+			Ui.num(l.payment), str(l.apr_pct), l.payments_made, l.weeks, str(l.next_due).substr(0, 10)], 22))
 		var row := _row(body)
 		var off := _small_button("Pay off now: %s" % Ui.num(l.payoff), true)
 		var lid: int = l.id
@@ -261,7 +261,8 @@ func _loans(d: Dictionary) -> void:
 		if not q.approved:
 			answer.add_child(Ui.label("Not approved. " + str(q.why), 22, Ui.GOLD))
 			return
-		answer.add_child(Ui.label("Approved at %s%% a week: %s credits a week for %d weeks." % [str(q.rate_pct), Ui.num(q.payment), q.weeks], 22, Ui.GREEN))
+		answer.add_child(Ui.label("Approved at %s%% APR (%d Business bars): %s credits a week for %d weeks.%s" % [str(q.apr_pct), q.bars, Ui.num(q.payment), q.weeks,
+			(" Your top bar is gold: the Bank lends the full amount." if q.gold else " The Bank lends %s; your down payment is %s of your own credits. A gold bar waives it." % [Ui.num(q.amount), Ui.num(q.down_payment)])], 22, Ui.GREEN))
 		answer.add_child(Ui.label("You'd repay %s in all: the loan costs you %s credits. Pay it off early and you pay less." % [
 			Ui.num(q.total), Ui.num(q.cost)], 22))
 		var take := _small_button("Take the loan", true)

@@ -1,0 +1,37 @@
+"""Digital Thread Across the Product Life: linked data, requirements to operations, simulation links and data governance."""
+CODE = "engineering5_digital_thread"
+BOOK = {
+    "title": "Digital Thread Across the Product Life",
+    "subtitle": "Linking the data for a product from the first requirement to its daily operation",
+    "chapters": [
+        ("What a digital thread is",
+         "A digital thread is a set of linked data that follows a product through its whole life. It connects the requirements, the design, the tests, the build and the operation. A change in one place can be traced to all the places it touches."),
+        ("From requirements to operation",
+         "The thread starts with the requirements and carries them through each stage. Later teams can see which requirement a feature was built for. Operating data can then be checked against the original goals."),
+        ("Simulation links",
+         "Simulations are linked into the thread so that their inputs and results are recorded. A simulation result is only useful if its settings are known. Links make it clear which model produced which answer."),
+        ("Linked records",
+         "Each record points to the records it depends on. A test result links to the requirement it proves and the design it tested. Following the links shows the full story of a decision."),
+        ("Data governance",
+         "Governance sets who owns each kind of data, how it is named and how long it is kept. It also sets who can change it. Clear rules keep the thread trustworthy."),
+        ("The money side",
+         "A good thread reduces rework, because teams find the source of a problem quickly. It also supports warranty work and future products. The cost of setting it up is recovered through fewer errors."),
+    ],
+    "test": [
+        ("What does a digital thread do?",
+         [("a", "Sends text messages to customers"), ("b", "Cuts metal parts"), ("c", "Paints the office"), ("d", "Links a product's data from requirement to operation")],
+         "d"),
+        ("Why are simulation settings recorded in the thread?",
+         [("a", "A simulation result is only useful when its settings are known"), ("b", "Settings make results random"), ("c", "Settings are never needed"), ("d", "Settings are for decoration")],
+         "a"),
+        ("What does data governance decide?",
+         [("a", "The menu in the canteen"), ("b", "Who owns each kind of data and who can change it"), ("c", "The colour of the cars"), ("d", "The weather report")],
+         "b"),
+        ("Why does a linked record matter?",
+         [("a", "It hides the source of a result"), ("b", "It removes the need for tests"), ("c", "It shows which requirement and design a result belongs to"), ("d", "It only stores photographs")],
+         "c"),
+        ("How does a good thread help money?",
+         [("a", "It doubles the rework"), ("b", "It never affects cost"), ("c", "It only raises prices"), ("d", "It reduces rework and speeds finding the source of problems")],
+         "d"),
+    ],
+}

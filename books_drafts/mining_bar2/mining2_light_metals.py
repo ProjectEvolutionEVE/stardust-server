@@ -11,7 +11,7 @@ BOOK = {
         ("Magnesium from olivine",
          "Magnesium is about two thirds as heavy as aluminium. Olivine, the green mineral in our fields, is its ore. On Earth, much magnesium is taken from sea water and brine."),
         ("Titanium: strong and light",
-         "Titanium is strong for its weight and much lighter than steel. It is used in aircraft parts and in some medical implants. It is made from ilmenite by first turning the ore into a gas-like chemical, then reducing it with magnesium."),
+         "Titanium is strong for its weight and much lighter than steel. It is used in aircraft parts and in some medical implants. It is made from ilmenite by first turning the ore into a liquid chemical, titanium tetrachloride, then reducing it with magnesium."),
         ("Yields in the game",
          "Each ore is pure ore mineral, so the formula gives the share by weight. Bauxite gives 34.59 per cent aluminium, olivine 34.55 per cent magnesium, and ilmenite 31.55 per cent titanium. Ilmenite also gives 36.81 per cent iron."),
         ("Why light metals matter",
