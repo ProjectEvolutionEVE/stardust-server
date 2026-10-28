@@ -21,7 +21,8 @@ MODEL = "eleven_multilingual_v2"
 # Inara's voice per language, hand-picked by Eric 10-19 (docs/voice-models.md is the master list). A language not here
 # has no voice chosen yet, and nothing is recorded for it until Eric picks one.
 VOICE_BY_LANG = {"en": "lily", "zh": "lily", "de": "lily", "pl": "lily",
-                 "es": "kate 1", "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
+                 "es": "johanna",                  # Johanna - Podcast Host (Latin American Spanish, verified; Eric 10-28)
+                 "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
                  "ru": "MOgsVr0EwwxqQs5cNDhu",     # Julia
                  "ja": "0yh9saSHWVy78QG1HfNs",     # Sumiko Ito - Crisp
                  "ar": "sara - soft"}     # Sara - Soft, Expressive, and Warm (Modern Standard Arabic; Eric 10-27)

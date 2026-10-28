@@ -14,7 +14,8 @@ Keep this file, `VOICE_BY_LANG` and the recording script in step.
 | Voice (ElevenLabs) | Voice ID | Inara's languages | Verified languages (ElevenLabs) |
 |---|---|---|---|
 | Lily - Velvety Actress (British) | (by name) | en, zh (Simplified and Traditional), de, pl | English, Italian, German, Chinese, Czech, Dutch, Polish (checked by Eric 10-26) |
-| Kate 1 - Warm, Close and Natural | (by name) | es (Latin American), fr, ko, tr, pt-BR | not yet written down: check in ElevenLabs |
+| Kate 1 - Warm, Close and Natural | (by name) | fr, ko, tr, pt-BR | not yet written down: check in ElevenLabs |
+| Johanna - Podcast Host, bright, warm (chosen by Eric 10-28; the old Spanish set was a male voice) | by name (library ID `c338PHkXJ2cW8fdMPhzP`) | es (Latin American) | Spanish, Latin American (verified badge) |
 | Julia (Russian) | `MOgsVr0EwwxqQs5cNDhu` | ru | not yet written down: check in ElevenLabs |
 | Sumiko Ito - Crisp | `0yh9saSHWVy78QG1HfNs` | ja | not yet written down: check in ElevenLabs |
 | Sara - Soft, Expressive, and Warm (chosen by Eric 10-27) | by name (library ID `XTa3iQyMA6f1qrI4F6kZ`; a My Voices copy has its own ID) | ar | Arabic, Modern Standard (verified badge in the Voice Library) |
