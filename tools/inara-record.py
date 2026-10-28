@@ -78,7 +78,8 @@ def main():
     a.voice = a.voice or VOICE_BY_LANG.get(a.lang)
     if not a.voice and not a.list:
         sys.exit(f"No voice is chosen for '{a.lang}' yet (docs/voice-models.md). Eric picks one; then add it to VOICE_BY_LANG.")
-    L = lines() if a.lang == "en" else json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
+    # Every language, English too, records from docs/inara-lines/<lang>.json: the spoken-words script (Eric 10-27)
+    L = json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
     if a.ids:
         L = {k: v for k, v in L.items() if k in set(a.ids.split(","))}
     # Never pay twice (Eric 10-27, after a whole set was recorded again into a fresh folder): a line counts as recorded
@@ -99,7 +100,7 @@ def main():
     todo = {k: v for k, v in L.items() if k not in have}
     # Voice scripts are spoken words only (Eric 10-27): numbers spelled out, no quotation marks, brackets or other
     # symbols. A TTS voice garbles "1.92" or "65%". Refuse to pay for a line that isn't written out yet.
-    bad = {k: re.findall(r'[0-9%()\[\]{}"“”«»:;/×+=#@&*]', v) for k, v in todo.items()}
+    bad = {k: re.findall(r'[0-9%()\[\]{}"“”«»„:;/×+=#@&*（）：；「」％]', v) for k, v in todo.items()}
     bad = {k: sorted(set(c)) for k, c in bad.items() if c}
     if bad and not a.list:
         for k, c in bad.items(): print(f"  {k}: {' '.join(c)}")
