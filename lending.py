@@ -6,8 +6,12 @@ Credits stay in-game only (rule 2).
     (system:bank), and each deposit is the player's claim on it. Interest is simple, worked out on read from the time.
   · Deposits fund the loans. The Bank lends from its treasury but always keeps a reserve (bank_reserve_pct of what it owes
     depositors), so lending is never unlimited (rule 10). It pays depositors' interest out of what its loans earn.
-  · Only the Bank lends (rule 8). It weighs each application (repayment history, recent income, what's still owed) and sets
-    the rate (bank_loan_min_pct to bank_loan_max_pct a week), the term, the weekly payment and the payment dates.
+  · Every rate is an APR, a year's rate as in the real world (Eric 10-27): each week charges or pays APR / 52.
+  · Only the Bank lends (rule 8), and only to a player wearing the Business uniform (Eric 10-27). The APR falls with that
+    uniform's bars (bank_loan_apr_bar1..5: 16, 14, 12, 10, 8); no bar, no loan. If the top bar is silver, the Bank lends
+    only part of what's asked: the borrower makes a down payment (bank_loan_down_pct) from their own credits, as banks
+    expect. A gold top bar, an exceptional record, waives it: the Bank lends the full amount. The Bank weighs each application (repayment history,
+    recent income, what's still owed) for how much it will lend, and sets the term, the weekly payment and the dates.
   · Paying off early saves interest: the payoff amount is what's left plus interest only up to today. A payment the
     player can't cover brings a late fee (added to what's owed) and lowers their standing; the Bank tries again next day.
   · Savings goals: a goal names what the player is saving for and a target; progress is everything they hold at the Bank.
@@ -36,8 +40,20 @@ async def _s(conn):
     return await ST.settings(conn)
 
 
-def _term_rate(s, weeks):
-    return s[f"bank_term{weeks}_pct"]
+LOAN_CAREERS = ("business",)      # Eric 10-27: only a Business uniform (finance is part of Business) qualifies
+
+
+def _term_apr(s, weeks):
+    return s[f"bank_term{weeks}_apr"]
+
+
+def weekly(apr):
+    """The rate charged or paid each week, %: the APR spread over the 52 weeks of a year."""
+    return round(float(apr) / 52, 6)
+
+
+def _apr(row):
+    return float(row["apr_pct"]) if row["apr_pct"] is not None else round(float(row["rate_pct"]) * 52, 2)
 
 
 def deposit_value(d, s, now=None):
@@ -79,11 +95,11 @@ async def deposit(conn, pid, kind, amount, weeks=None):
                 await conn.execute("UPDATE bank_deposits SET principal=$2, since=now() WHERE id=$1", sv["id"],
                                    deposit_value(sv, s) + amount)
                 return
-            await conn.execute("INSERT INTO bank_deposits(player_id, kind, principal, rate_pct) VALUES($1,'savings',$2,$3)",
-                               pid, amount, s["bank_savings_pct"])
+            await conn.execute("INSERT INTO bank_deposits(player_id, kind, principal, rate_pct, apr_pct) VALUES($1,'savings',$2,$3,$4)",
+                               pid, amount, weekly(s["bank_savings_apr"]), s["bank_savings_apr"])
             return
-        await conn.execute("""INSERT INTO bank_deposits(player_id, kind, principal, rate_pct, term_weeks)
-                              VALUES($1,'term',$2,$3,$4)""", pid, amount, _term_rate(s, weeks), weeks)
+        await conn.execute("""INSERT INTO bank_deposits(player_id, kind, principal, rate_pct, apr_pct, term_weeks)
+                              VALUES($1,'term',$2,$3,$4,$5)""", pid, amount, weekly(_term_apr(s, weeks)), _term_apr(s, weeks), weeks)
 
 
 async def withdraw(conn, pid, amount=None, deposit_id=None):
@@ -150,14 +166,24 @@ async def quote(conn, pid, amount, weeks, purpose):
         raise ST.Refused(f"Loans run from {int(s['bank_loan_min_weeks'])} to {int(s['bank_loan_max_weeks'])} weeks.")
     if not isinstance(amount, int) or amount <= 0:
         raise ST.Refused("Ask for a whole number of credits.")
+    import careers as CR
+    w = await CR.worn(conn, pid)
+    if w["code"] not in LOAN_CAREERS:
+        raise ST.Refused("The Bank lends only to an officer in Business uniform. Put it on in your quarters' Closet first.")
+    bars = min(5, int(w["step"]))
+    if bars < 1:
+        raise ST.Refused("Earn your first Business bar in the library; then the Bank will consider a loan.")
+    apr = float(s[f"bank_loan_apr_bar{bars}"])
+    gold = w["bars"][bars - 1]["medal"] == "gold"
+    import math
+    down = 0 if gold else math.ceil(amount * float(s["bank_loan_down_pct"]) / 100)    # the borrower's own share
+    asked, amount = amount, amount - down
     st, inc = await standing(conn, pid), await income(conn, pid)
     limit = max(0, int(s["bank_loan_base"] + s["bank_loan_income_x"] * inc * st["score"] / 50) - st["owed"])
     room = await lendable(conn, s)
-    risk = 1 - st["score"] / 100
-    if purpose == "supplies":
-        risk = min(1.0, risk + 0.2)        # spent and gone tomorrow: nothing to show for it
-    rate = round(s["bank_loan_min_pct"] + (s["bank_loan_max_pct"] - s["bank_loan_min_pct"]) * risk, 2)
-    out = {"amount": amount, "weeks": weeks, "purpose": purpose, "rate_pct": rate, "standing": st, "income_4w": inc,
+    rate = weekly(apr)
+    out = {"amount": amount, "weeks": weeks, "purpose": purpose, "rate_pct": rate, "apr_pct": apr, "bars": bars, "gold": gold, "asked": asked, "down_payment": down,
+           "standing": st, "income_4w": inc,
            "limit": min(limit, room)}
     if st["score"] < s["bank_loan_min_score"]:
         return {**out, "approved": False, "why": "Your repayment record is too weak right now. Pay what you owe on time to rebuild it."}
@@ -175,10 +201,11 @@ async def take(conn, pid, amount, weeks, purpose):
         q = await quote(conn, pid, amount, weeks, purpose)
         if not q["approved"]:
             raise ST.Refused(q["why"])
-        lid = await conn.fetchval("""INSERT INTO bank_loans(player_id, principal, balance, rate_pct, term_weeks, payment, purpose, next_due)
-                                     VALUES($1,$2,$2,$3,$4,$5,$6, now() + interval '7 days') RETURNING id""",
-                                  pid, amount, q["rate_pct"], weeks, q["payment"], purpose)
-        await ST.transfer(conn, await ST.bank_account(conn), await ST.account_of(conn, pid), amount, "bank_loan", {"loan": lid})
+        acct, tre = await ST.account_of(conn, pid), await ST.bank_account(conn)
+        lid = await conn.fetchval("""INSERT INTO bank_loans(player_id, principal, balance, rate_pct, apr_pct, term_weeks, payment, purpose, next_due)
+                                     VALUES($1,$2,$2,$3,$4,$5,$6,$7, now() + interval '7 days') RETURNING id""",
+                                  pid, q["amount"], q["rate_pct"], q["apr_pct"], weeks, q["payment"], purpose)
+        await ST.transfer(conn, tre, acct, q["amount"], "bank_loan", {"loan": lid})
         return {**q, "loan_id": lid}
 
 
@@ -275,14 +302,14 @@ async def summary(conn, pid):
     s = await _s(conn)
     deps = await _deposits(conn, pid)
     now = _now()
-    savings = next(({"balance": deposit_value(d, s, now), "rate_pct": float(d["rate_pct"])} for d in deps if d["kind"] == "savings"),
-                   {"balance": 0, "rate_pct": s["bank_savings_pct"]})
-    terms = [{"id": d["id"], "principal": d["principal"], "rate_pct": float(d["rate_pct"]), "weeks": d["term_weeks"],
+    savings = next(({"balance": deposit_value(d, s, now), "apr_pct": _apr(d)} for d in deps if d["kind"] == "savings"),
+                   {"balance": 0, "apr_pct": float(s["bank_savings_apr"])})
+    terms = [{"id": d["id"], "principal": d["principal"], "apr_pct": _apr(d), "weeks": d["term_weeks"],
               "matures_at": (d["opened_at"] + timedelta(weeks=d["term_weeks"])).isoformat(),
               "at_maturity": d["principal"] + int(d["principal"] * float(d["rate_pct"]) / 100 * d["term_weeks"]),
               "matured": now >= d["opened_at"] + timedelta(weeks=d["term_weeks"])} for d in deps if d["kind"] == "term"]
     at_bank = savings["balance"] + sum(deposit_value(d, s, now) for d in deps if d["kind"] == "term")
-    loans = [{"id": l["id"], "principal": l["principal"], "balance": int(round(float(l["balance"]))), "rate_pct": float(l["rate_pct"]),
+    loans = [{"id": l["id"], "principal": l["principal"], "balance": int(round(float(l["balance"]))), "apr_pct": _apr(l),
               "weeks": l["term_weeks"], "payment": l["payment"], "payments_made": l["payments_made"], "late": l["late_count"],
               "next_due": l["next_due"].isoformat(), "payoff": payoff_amount(l, now), "purpose": PURPOSES[l["purpose"]]}
              for l in await conn.fetch("SELECT * FROM bank_loans WHERE player_id=$1 AND closed_at IS NULL ORDER BY id", pid)]
@@ -291,7 +318,8 @@ async def summary(conn, pid):
              for g in await conn.fetch("SELECT * FROM bank_goals WHERE player_id=$1 AND done_at IS NULL ORDER BY id", pid)]
     return {"credits": await conn.fetchval("SELECT credits FROM accounts WHERE player_id=$1", pid), "savings": savings,
             "terms": terms, "at_bank": at_bank, "loans": loans, "goals": goals, "standing": await standing(conn, pid),
-            "rates": {"savings_pct": s["bank_savings_pct"], "term_pct": {w: _term_rate(s, w) for w in TERMS},
-                      "loan_min_pct": s["bank_loan_min_pct"], "loan_max_pct": s["bank_loan_max_pct"]},
+            "rates": {"savings_apr": float(s["bank_savings_apr"]), "term_apr": {w: float(_term_apr(s, w)) for w in TERMS},
+                      "loan_apr_by_bars": {b: float(s[f"bank_loan_apr_bar{b}"]) for b in range(1, 6)}, "loan_uniform": "Business",
+                      "loan_down_payment_pct": float(s["bank_loan_down_pct"])},
             "purposes": PURPOSES, "goal_choices": GOALS,
             "loan_weeks": [int(s["bank_loan_min_weeks"]), int(s["bank_loan_max_weeks"])]}
