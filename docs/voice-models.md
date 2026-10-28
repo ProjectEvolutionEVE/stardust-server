@@ -50,3 +50,5 @@ hardest lines (round-trip 96.8%-100%, clean tails).
   lines of each (`~/Desktop/inara-ar/raw/` and `~/Desktop/inara-ar-sara/raw/`).
 
 **DECIDED (Eric 10-27): Sara is Inara's Arabic voice.** ElevenLabs verifies her in Arabic, so we trust that and spend no more credits on tests. Next: record all 179 lines in Sara and upload them, replacing Lily's.
+
+**DONE (10-27 evening): all 179 Arabic lines are recorded in Sara and live on the server** (`~/Desktop/inara-ar`, uploaded with `upload-voice.py --only ar --redo INARA-`; spot-checked byte-for-byte against `/voice/ar/`). A second full Sara take was recorded by mistake into `~/Desktop/inara-ar-sara` (16,218 characters spent again); it is a spare and is not uploaded. Sara's key is saved in `~/.stardust-elevenlabs-sara-key` (chmod 600).
