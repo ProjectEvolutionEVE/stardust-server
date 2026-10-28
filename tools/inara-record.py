@@ -6,7 +6,7 @@ line through ElevenLabs (recorded files only; never live speech for players, rul
   raw/<ID>.mp3    the voice as ElevenLabs made it
   radio/<ID>.mp3  the Tower radio sound, the same method as Signal's: 380-3200 Hz band, compressor, light hiss (needs ffmpeg)
 Lines with a live number in them ({distance}) are skipped: the distance-free versions are recorded instead.
-A line already saved is never recorded again, so a stopped run can simply be started again without paying twice.
+A line already saved with the same words (here or in ~/Desktop/inara-<lang>) is never recorded again; it asks before paying.\nLines must be spoken words only: numbers spelled out, no quotes, brackets or symbols (Eric 10-27).
 The API key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printed or saved.
 
     python3 tools/inara-record.py --list            # count the lines and characters, record nothing
@@ -71,6 +71,7 @@ def main():
     ap.add_argument("--key-file", default="~/.stardust-elevenlabs-key", help="file holding the API key for the account to use")
     ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
+    ap.add_argument("--yes", action="store_true", help="skip the 'pay for it?' question")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
     a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
@@ -80,7 +81,30 @@ def main():
     L = lines() if a.lang == "en" else json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
     if a.ids:
         L = {k: v for k, v in L.items() if k in set(a.ids.split(","))}
-    todo = {k: v for k, v in L.items() if not os.path.exists(os.path.join(a.out, "raw", k + ".mp3"))}
+    # Never pay twice (Eric 10-27, after a whole set was recorded again into a fresh folder): a line counts as recorded
+    # if this folder OR the language's main folder (~/Desktop/inara-<lang>, the set that gets uploaded) already has it
+    # with the SAME words. A line found only in the main folder is copied over, not recorded. A line whose words
+    # changed is recorded again.
+    def saved_text(folder):
+        try: return json.load(open(os.path.join(folder, "lines.json")))
+        except Exception: return {}
+    main_dir = os.path.expanduser(f"~/Desktop/inara-{a.lang}")
+    have = {}
+    for folder in dict.fromkeys([a.out, main_dir]):
+        said = saved_text(folder)
+        for k, v in L.items():
+            f = os.path.join(folder, "raw", k + ".mp3")
+            if k not in have and os.path.exists(f) and said.get(k, v if folder == a.out and not said else None) == v:
+                have[k] = folder
+    todo = {k: v for k, v in L.items() if k not in have}
+    # Voice scripts are spoken words only (Eric 10-27): numbers spelled out, no quotation marks, brackets or other
+    # symbols. A TTS voice garbles "1.92" or "65%". Refuse to pay for a line that isn't written out yet.
+    bad = {k: re.findall(r'[0-9%()\[\]{}"“”«»:;/×+=#@&*]', v) for k, v in todo.items()}
+    bad = {k: sorted(set(c)) for k, c in bad.items() if c}
+    if bad and not a.list:
+        for k, c in bad.items(): print(f"  {k}: {' '.join(c)}")
+        sys.exit(f"STOPPED: {len(bad)} line(s) still have digits or symbols. Spell them out in docs/inara-lines/{a.lang}.json "
+                 "first. Nothing was recorded or charged.")
     print(f"{len(L)} lines, {sum(map(len, L.values())):,} characters in all; {len(todo)} still to record "
           f"({sum(map(len, todo.values())):,} characters).")
     if a.list:
@@ -126,6 +150,15 @@ def main():
         sys.exit(f"STOPPED: {lily[0]['name']} is not verified in '{a.lang}' (verified: {', '.join(verified) or 'none listed'}). "
                  f"Pick a voice verified in it (see docs/voice-models.md). Nothing was recorded or charged.")
     os.makedirs(os.path.join(a.out, "raw"), exist_ok=True); os.makedirs(os.path.join(a.out, "radio"), exist_ok=True)
+    for k, folder in have.items():      # already recorded elsewhere: copy, never pay again
+        if folder != a.out:
+            for sub in ("raw", "radio"):
+                src = os.path.join(folder, sub, k + ".mp3")
+                if os.path.exists(src): shutil.copy2(src, os.path.join(a.out, sub, k + ".mp3"))
+    if todo and not a.yes:
+        if input(f"Record {len(todo)} line(s), {sum(map(len, todo.values())):,} characters, in {lily[0]['name']}? "
+                 "Type yes to pay for it: ").strip().lower() != "yes":
+            sys.exit("Nothing was recorded or charged.")
     for n, (k, text) in enumerate(todo.items(), 1):
         raw = os.path.join(a.out, "raw", k + ".mp3")
         try:
@@ -137,7 +170,7 @@ def main():
     if ff:
         for k in L:
             raw, rad = os.path.join(a.out, "raw", k + ".mp3"), os.path.join(a.out, "radio", k + ".mp3")
-            if os.path.exists(raw) and not os.path.exists(rad):
+            if os.path.exists(raw) and (k in todo or not os.path.exists(rad)):
                 subprocess.run([ff, "-loglevel", "error", "-y", "-i", raw, "-filter_complex", RADIO, rad], check=True)
     json.dump(L, open(os.path.join(a.out, "lines.json"), "w"), indent=1, ensure_ascii=False)
     print(f"Done. Files are in {a.out} (raw/ and radio/), with lines.json listing every line.")
