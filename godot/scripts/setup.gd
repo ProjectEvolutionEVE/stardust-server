@@ -33,8 +33,12 @@ func _ready() -> void:
 		var l: Dictionary = langs[i]
 		lang.add_item("%s %s" % [l.get("flag", ""), l.get("native", l.name)] + ("" if l.supported else " (soon)"))
 		lang.set_item_disabled(i, not l.supported)
-		if l.code == "en":
+		if l.code == Session.pref("lang", "en"):   # the language picked on the sign-in screen
 			lang.select(i)
+	if lang.selected < 0:
+		for i in langs.size():
+			if langs[i].code == "en":
+				lang.select(i)
 
 
 func _save(go: Button) -> void:

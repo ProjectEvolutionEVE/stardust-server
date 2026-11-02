@@ -62,6 +62,11 @@ func picker() -> OptionButton:
 	var o := OptionButton.new()
 	o.custom_minimum_size = Vector2(0, 72)
 	o.add_theme_font_size_override("font_size", 26)
+	o.fit_to_longest_item = false                  # a long item name must not push the screen wider than the phone
+	o.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	var pop := o.get_popup()                       # the list itself: big enough to tap on a phone
+	pop.add_theme_font_size_override("font_size", 30)
+	pop.add_theme_constant_override("v_separation", 22)
 	return o
 
 

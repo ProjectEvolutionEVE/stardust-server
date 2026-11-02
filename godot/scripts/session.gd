@@ -87,3 +87,19 @@ func forget() -> void:
 
 ## Which quarters tab opens next, e.g. "Desk" when coming back from the Market terminal.
 var quarters_tab := ""
+
+
+## The language and country picked on the sign-in screen, kept on this device (not personal: the browser keeps them too).
+const PREFS_PATH := "user://prefs.cfg"
+
+
+func pref(key: String, default: String = "") -> String:
+	var c := ConfigFile.new()
+	return str(c.get_value("signin", key, default)) if c.load(PREFS_PATH) == OK else default
+
+
+func set_pref(key: String, value: String) -> void:
+	var c := ConfigFile.new()
+	c.load(PREFS_PATH)
+	c.set_value("signin", key, value)
+	c.save(PREFS_PATH)
