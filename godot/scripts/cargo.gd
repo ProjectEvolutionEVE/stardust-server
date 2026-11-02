@@ -625,29 +625,16 @@ func receipt_text(rc: Dictionary) -> String:
 	return "\n".join(L)
 
 
-## Save a copy to the player's own device (rule 13): the system's own Save window, so the player picks where.
+## Save a copy to the player's own device (rule 13), in Documents › Stardust Receipts (Ui.save_receipt).
 func _save_receipt() -> void:
 	var rc: Dictionary = xfer.get("receipt", {})
 	if rc.is_empty():
 		return
-	var d := FileDialog.new()
-	d.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-	d.access = FileDialog.ACCESS_FILESYSTEM
-	d.use_native_dialog = true
-	d.current_file = "stardust-receipt-%s.txt" % rc.code
-	d.filters = PackedStringArray(["*.txt ; Receipt"])
-	d.file_selected.connect(func(path: String):
-		var fa := FileAccess.open(path, FileAccess.WRITE)
-		if fa:
-			fa.store_string(receipt_text(rc))
-			fa.close()
-			bay._say("RECEIPT SAVED\n%s is on your device, and in the filing cabinet in your quarters." % rc.code)
+	Ui.save_receipt(self, rc.code, receipt_text(rc), func(path: String):
+		if path != "":
+			bay._say("RECEIPT SAVED\n%s is in %s on your device, and in the filing cabinet in your quarters." % [rc.code, path.get_base_dir().get_file()])
 		else:
-			bay._say("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there.")
-		d.queue_free())
-	d.canceled.connect(func(): d.queue_free())
-	add_child(d)
-	d.popup_centered()
+			bay._say("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there."))
 
 
 func close_xfer() -> void:

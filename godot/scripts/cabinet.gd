@@ -269,30 +269,12 @@ func _receipt(x: Dictionary) -> void:
 		check.text = v.error
 
 
-## Rule 13: the player saves a copy to their own device and chooses where (Eric 10-11: "Save, and let the player choose where").
+## Rule 13: the player saves a copy to their own device, in Documents › Stardust Receipts (Ui.save_receipt).
 func _save(code: String, text: String, msg: Label) -> void:
-	var d := FileDialog.new()
-	d.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-	d.access = FileDialog.ACCESS_FILESYSTEM
-	d.use_native_dialog = true
-	d.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
-	d.current_file = "stardust-receipt-%s.txt" % code
-	d.filters = PackedStringArray(["*.txt ; Receipt"])
-	d.file_selected.connect(func(path: String):
-		write_receipt(path, text, msg)
-		d.queue_free())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered_ratio(0.8)
-
-
-func write_receipt(path: String, text: String, msg: Label) -> void:
-	var f := FileAccess.open(path, FileAccess.WRITE)
-	if f:
-		f.store_string(text)
-		f.close()
-		msg.text = "Saved: " + path.get_file()
-		msg.add_theme_color_override("font_color", Ui.GREEN)
-	else:
-		msg.text = "Couldn't save. Your receipt is still in the receipts log in your quarters. Try again from there."
-		msg.add_theme_color_override("font_color", Ui.GOLD)
+	Ui.save_receipt(self, code, text, func(path: String):
+		if path != "":
+			msg.text = "Saved: %s › %s" % [path.get_base_dir().get_file(), path.get_file()]
+			msg.add_theme_color_override("font_color", Ui.GREEN)
+		else:
+			msg.text = "Couldn't save. Your receipt is still in the receipts log in your quarters. Try again from there."
+			msg.add_theme_color_override("font_color", Ui.GOLD))

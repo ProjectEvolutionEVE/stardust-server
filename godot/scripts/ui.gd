@@ -146,3 +146,45 @@ func swatch(hex, size := 28) -> ColorRect:
 	c.custom_minimum_size = Vector2(size, size)
 	c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	return c
+
+
+## Receipts are documented proof (rule 13; Eric 10-28): every player's saved copies go to their own device's Documents
+## folder, in a folder anyone can recognise, "Stardust Receipts".
+const RECEIPTS_FOLDER := "Stardust Receipts"
+
+
+func receipts_dir() -> String:
+	var dir := OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).path_join(RECEIPTS_FOLDER)
+	DirAccess.make_dir_recursive_absolute(dir)
+	return dir
+
+
+## Save a receipt. On a computer the system's Save window opens in Stardust Receipts (the player may still choose
+## elsewhere); on a phone it's written straight there. `done` gets the saved path, or "" if it couldn't be written.
+func save_receipt(parent: Node, code: String, text: String, done: Callable) -> void:
+	var file := "stardust-receipt-%s.txt" % code
+	if OS.has_feature("mobile"):
+		done.call(_write_receipt(receipts_dir().path_join(file), text))
+		return
+	var d := FileDialog.new()
+	d.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	d.access = FileDialog.ACCESS_FILESYSTEM
+	d.use_native_dialog = true
+	d.current_dir = receipts_dir()
+	d.current_file = file
+	d.filters = PackedStringArray(["*.txt ; Receipt"])
+	d.file_selected.connect(func(path: String):
+		done.call(_write_receipt(path, text))
+		d.queue_free())
+	d.canceled.connect(d.queue_free)
+	parent.add_child(d)
+	d.popup_centered_ratio(0.8)
+
+
+func _write_receipt(path: String, text: String) -> String:
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if not f:
+		return ""
+	f.store_string(text)
+	f.close()
+	return path
