@@ -185,7 +185,9 @@ func _line(x: Dictionary) -> String:
 	match str(x.kind):
 		"trade":
 			var n := int(x.get("lots", 0))
-			return (tr("Market: %s %d lots of %s for %s credits") if n > 1 else tr("Market: %s %d lot of %s for %s credits")) % [x.trade, n, x.item, Ui.num(x.credits)]
+			var key := ("Market: bought %d lot of %s for %s credits" if n == 1 else "Market: bought %d lots of %s for %s credits") if x.trade == "bought" \
+				else ("Market: sold %d lot of %s for %s credits" if n == 1 else "Market: sold %d lots of %s for %s credits")
+			return tr(key) % [n, tr(str(x.item)), Ui.num(x.credits)]
 		"auction":
 			var t := (tr("Auction: won %s (%s) for %s credits") if x.trade == "won" else tr("Auction: sold %s (%s) for %s credits")) % [x.serial, x.item, Ui.num(x.bid)]
 			if x.trade == "won" and x.get("starship_fee"):
