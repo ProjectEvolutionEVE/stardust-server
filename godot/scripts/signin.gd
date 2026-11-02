@@ -7,10 +7,10 @@ var channel := "email"
 var countries: Array = []      # sorted by name, as shown
 var langs: Array = []
 var box: VBoxContainer
-var lang: OptionButton
+var lang: WheelPicker
 var seg: HBoxContainer
 var addr_label: Label
-var region: OptionButton
+var region: WheelPicker
 var address: LineEdit
 var hint: Label
 var code: LineEdit
@@ -24,7 +24,7 @@ func _ready() -> void:
 	box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
 	box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
 	box.add_child(Ui.label("Your language", 22, Ui.MUTED))
-	lang = Ui.picker()
+	lang = Ui.picker("Your language")
 	lang.item_selected.connect(func(i): Session.set_pref("lang", str(langs[i].code)))
 	box.add_child(lang)
 	seg = HBoxContainer.new()
@@ -41,7 +41,7 @@ func _ready() -> void:
 	box.add_child(seg)
 	addr_label = Ui.label("", 22, Ui.MUTED)
 	box.add_child(addr_label)
-	region = Ui.picker()
+	region = Ui.picker("Your country")
 	region.item_selected.connect(func(i): Session.set_pref("region", str(countries[i].iso)))
 	box.add_child(region)
 	address = Ui.field("")
@@ -71,6 +71,8 @@ func _ready() -> void:
 	if r.ok:
 		_fill_languages(r.data.get("languages", []))
 		_fill_countries(r.data.get("countries", []), str(saved.get("region", "")))
+	else:
+		Ui.error(self, r.error + "\nThe language and country lists need the Starship: close the game and open it again.")
 	if not saved.is_empty():
 		keep.button_pressed = true
 		address.text = str(saved.get("address", ""))

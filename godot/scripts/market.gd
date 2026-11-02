@@ -24,7 +24,7 @@ var wallet: Label
 var view_seg: HBoxContainer
 var ore_page: VBoxContainer
 var au_page: VBoxContainer
-var picker: OptionButton
+var picker: WheelPicker
 var board_toggle: Button
 var board_box: VBoxContainer
 var head_name: Label

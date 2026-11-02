@@ -2,9 +2,9 @@ extends Control
 ## First sign-in: a name from the game's lists and a language. Names are never typed (rule 6).
 
 var opts := {}
-var first: OptionButton
-var last: OptionButton
-var lang: OptionButton
+var first: WheelPicker
+var last: WheelPicker
+var lang: WheelPicker
 var langs: Array = []
 
 
@@ -12,9 +12,9 @@ func _ready() -> void:
 	var box := Ui.screen(self)
 	box.add_child(Ui.label("Welcome aboard, Trainee", 40, Ui.GOLD))
 	box.add_child(Ui.label("Choose your name and language.", 24, Ui.MUTED))
-	first = Ui.picker()
-	last = Ui.picker()
-	lang = Ui.picker()
+	first = Ui.picker("First name")
+	last = Ui.picker("Last name")
+	lang = Ui.picker("Your language")
 	for w in [first, last, lang]:
 		box.add_child(w)
 	var go := Ui.button("Report for duty")
