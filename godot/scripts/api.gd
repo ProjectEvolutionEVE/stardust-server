@@ -18,7 +18,7 @@ func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = 
 	var err := http.request(BASE_URL + path, headers, m, JSON.stringify(body) if m == HTTPClient.METHOD_POST else "")
 	if err != OK:
 		http.queue_free()
-		return {"ok": false, "code": 0, "data": {}, "error": "Couldn't start the request. Check your connection."}
+		return {"ok": false, "code": 0, "data": {}, "error": tr("Couldn't start the request. Check your connection.")}
 	var res: Array = await http.request_completed
 	http.queue_free()
 	var result: int = res[0]
@@ -26,12 +26,12 @@ func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = 
 	var parsed: Variant = JSON.parse_string((res[3] as PackedByteArray).get_string_from_utf8())
 	var data: Dictionary = parsed if parsed is Dictionary else {}
 	if result != HTTPRequest.RESULT_SUCCESS:
-		return {"ok": false, "code": 0, "data": {}, "error": "Can't reach the Starship. Check your connection and try again."}
+		return {"ok": false, "code": 0, "data": {}, "error": tr("Can't reach the Starship. Check your connection and try again.")}
 	if code >= 200 and code < 300:
 		return {"ok": true, "code": code, "data": data, "error": ""}
-	var msg := str(data.get("error", data.get("message", "")))
+	var msg := tr(str(data.get("error", data.get("message", ""))))   # the server's fixed messages are in the translation table
 	if msg == "":
-		msg = "Your sign-in has expired. Please sign in again." if code == 401 else "Something went wrong (%d). Please try again." % code
+		msg = tr("Your sign-in has expired. Please sign in again.") if code == 401 else tr("Something went wrong (%d). Please try again.") % code
 	return {"ok": false, "code": code, "data": data, "error": msg}
 
 

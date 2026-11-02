@@ -31,7 +31,7 @@ func _ready() -> void:
 	add_child(player)
 
 	skip = Button.new()
-	skip.text = "Skip ›"
+	skip.text = tr("Skip ›")
 	skip.flat = true
 	skip.add_theme_font_size_override("font_size", 22)
 	skip.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))

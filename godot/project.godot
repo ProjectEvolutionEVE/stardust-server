@@ -33,6 +33,10 @@ window/size/viewport_height=1280
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://i18n/ui.en.translation", "res://i18n/ui.ar.translation", "res://i18n/ui.de.translation", "res://i18n/ui.es.translation", "res://i18n/ui.fr.translation", "res://i18n/ui.ja.translation", "res://i18n/ui.ko.translation", "res://i18n/ui.pl.translation", "res://i18n/ui.pt.translation", "res://i18n/ui.ru.translation", "res://i18n/ui.tr.translation", "res://i18n/ui.zh.translation", "res://i18n/ui.zh_TW.translation")
+
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true

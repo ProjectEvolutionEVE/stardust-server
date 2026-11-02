@@ -120,6 +120,7 @@ class Chooser extends Control:
 
 	func _ready() -> void:
 		size = get_viewport_rect().size          # a CanvasLayer isn't a Control, so fill the screen by hand
+		layout_direction = Control.LAYOUT_DIRECTION_LOCALE
 		get_viewport().size_changed.connect(func(): size = get_viewport_rect().size)
 		var dim := ColorRect.new()
 		dim.color = Color(0, 0, 0, 0.75)
@@ -212,7 +213,7 @@ class Chooser extends Control:
 		list.add_child(_pad())
 		if shown.is_empty():
 			var none := Label.new()
-			none.text = "Nothing matches."
+			none.text = tr("Nothing matches.")
 			none.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			none.add_theme_color_override("font_color", Ui.MUTED)
 			list.add_child(none)

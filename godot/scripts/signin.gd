@@ -27,7 +27,10 @@ func _ready() -> void:
 	box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
 	box.add_child(Ui.label("Your language", 22, Ui.MUTED))
 	lang = Ui.picker("Your language")
-	lang.item_selected.connect(func(i): Session.set_pref("lang", str(langs[i].code)))
+	lang.item_selected.connect(func(i):
+		Session.set_pref("lang", str(langs[i].code))
+		Ui.set_language(str(langs[i].code))
+		get_tree().reload_current_scene())   # the whole page switches to the language at once (Eric 11-02)
 	box.add_child(lang)
 	seg = HBoxContainer.new()
 	seg.add_theme_constant_override("separation", 12)
@@ -51,7 +54,7 @@ func _ready() -> void:
 	hint = Ui.label("", 20, Ui.MUTED)
 	box.add_child(hint)
 	keep = CheckBox.new()
-	keep.text = "Remember my email or phone on this device"
+	keep.text = tr("Remember my email or phone on this device")
 	keep.add_theme_font_size_override("font_size", 22)
 	keep.toggled.connect(func(on): if not on: Session.forget())
 	box.add_child(keep)
@@ -90,7 +93,7 @@ func _ready() -> void:
 func _load_lists() -> void:
 	retry.visible = false
 	if langs.is_empty():
-		status.text = "Contacting the Starship…"
+		status.text = tr("Contacting the Starship…")
 	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false, 45.0)
 	if r.ok:
 		Session.cache_options(r.data)
@@ -98,7 +101,7 @@ func _load_lists() -> void:
 		if langs.is_empty():
 			_fill(r.data)
 	elif langs.is_empty():
-		status.text = "The Starship isn't answering. Check your connection, then try again."
+		status.text = tr("The Starship isn't answering. Check your connection, then try again.")
 		retry.visible = true
 
 
@@ -116,7 +119,7 @@ func _fill_languages(list: Array) -> void:
 		var name := "%s %s" % [l.get("flag", ""), l.get("native", l.name)]
 		if l.get("native", "") != l.get("name", ""):
 			name += " · " + str(l.name)
-		lang.add_item(name + ("" if l.supported else " · coming soon"))
+		lang.add_item(name + ("" if l.supported else " · " + tr("coming soon")))
 		lang.set_item_disabled(i, not l.supported)
 		if l.supported and (l.code == want or (pick < 0 and l.code == "en")):
 			pick = i
@@ -129,7 +132,7 @@ func _fill_languages(list: Array) -> void:
 func _fill_countries(list: Array, saved: String) -> void:
 	countries = list.duplicate()
 	for c in countries:
-		c["name"] = TranslationServer.get_country_name(str(c.iso))
+		c["name"] = tr(TranslationServer.get_country_name(str(c.iso)))   # country names are in the translation table too
 		if c.name == "":
 			c.name = str(c.iso)
 	countries.sort_custom(func(a, b): return str(a.name).naturalnocasecmp_to(str(b.name)) < 0)
@@ -166,16 +169,16 @@ func _on_channel(c: String) -> void:
 			b.add_theme_stylebox_override(st, s)
 		for k in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 			b.add_theme_color_override(k, Ui.BG if on else Ui.GOLD)
-	addr_label.text = "Mobile number" if ph else "Email address"
+	addr_label.text = tr("Mobile number") if ph else tr("Email address")
 	region.visible = ph
 	hint.visible = ph
 	var dial := 1
 	if region.selected >= 0 and not countries.is_empty():
 		dial = int(str(countries[region.selected].dial).trim_prefix("+"))
-	hint.text = "Type it the way it's saved in your phone. Spaces, dashes or a leading %s are all fine." % ("1" if dial == 1 else "0")
+	hint.text = tr("Type it the way it's saved in your phone. Spaces, dashes or a leading %s are all fine.") % ("1" if dial == 1 else "0")
 	address.placeholder_text = "5745550123" if ph else "you@example.com"
 	address.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_PHONE if ph else LineEdit.KEYBOARD_TYPE_EMAIL_ADDRESS
-	send.text = "Text me a code" if ph else "Email me a code"
+	send.text = tr("Text me a code") if ph else tr("Email me a code")
 
 
 func _region() -> String:
@@ -186,10 +189,10 @@ func _region() -> String:
 
 func _send() -> void:
 	if address.text.strip_edges() == "":
-		Ui.error(self, "Enter your " + ("email address." if channel == "email" else "mobile number."))
+		Ui.error(self, "Enter your email address." if channel == "email" else "Enter your mobile number.")
 		return
 	send.disabled = true
-	send.text = "Sending…"
+	send.text = tr("Sending…")
 	var r := await Api.call_api("POST", "/api/dfg/auth/start",
 		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, false, 45.0)
 	_on_channel(channel)
@@ -199,7 +202,7 @@ func _send() -> void:
 		return
 	code.visible = true
 	verify.visible = true
-	send.text = "Send a new code"
+	send.text = tr("Send a new code")
 	code.grab_focus()
 
 
@@ -216,5 +219,10 @@ func _verify() -> void:
 	else:
 		Session.forget()
 	Session.signed_in(r.data.token, r.data.me)
+	var picked := Session.pref("lang", "")
+	if picked != "" and not r.data.me.get("needs_setup", false) and picked != str(r.data.me.get("language", "")):
+		var ch := await Api.call_api("POST", "/api/dfg/me/language", {"language": picked}, true, 45.0)
+		if ch.ok:
+			Session.me = ch.data          # a returning player's account follows the language picked here (Eric 11-02)
 	Session.call_on_enter = "wake"
 	get_tree().change_scene_to_file("res://scenes/intro.tscn")   # the intro plays at every sign-in (Eric 10-27)

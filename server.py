@@ -6,6 +6,7 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
   POST /api/dfg/auth/start      {channel:'sms'|'email', address, region} → a 6-digit code is sent
   POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
   POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
+  POST /api/dfg/me/language     {language} → change the player's language any time (Eric 11-02)
   GET  /api/dfg/me              rank and name, language, location (Private Quarters or Cockpit), body bars and warning, skills
   POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends. With {place:'cockpit',
                                 pos:[x,y,z]} it sleeps in the cockpit out in space instead, and wakes there (Eric 10-24)
@@ -207,6 +208,18 @@ async def me_setup(request):
         if not done:
             raise ST.Refused("Your name is already set.")
         await log_event(conn, pid, "setup", language=lang)
+        return _json(await _me(conn, pid))
+
+
+async def me_language(request):
+    """Change the player's language any time (Eric 11-02: everything written or spoken follows the language picked)."""
+    lang = (await request.json()).get("language")
+    if lang not in LANG_CODES:
+        raise ST.Refused("Choose your language from the list. Languages marked coming soon can't be chosen yet.")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        await conn.execute("UPDATE players SET language=$2 WHERE id=$1", pid, lang)
+        await log_event(conn, pid, "language", language=lang)
         return _json(await _me(conn, pid))
 
 
@@ -792,6 +805,7 @@ def make_app():
     app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
+    app.router.add_post("/api/dfg/me/language", me_language)
     app.router.add_post("/api/dfg/voice/heard", voice_heard)
     app.router.add_get(r"/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.serve)
     app.router.add_put(r"/api/dfg/admin/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.upload)

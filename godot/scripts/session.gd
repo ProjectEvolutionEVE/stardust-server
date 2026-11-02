@@ -5,7 +5,11 @@ extends Node
 const SAVE_PATH := "user://session.dat"
 
 var token := ""
-var me: Dictionary = {}
+var me: Dictionary = {}:
+	set(v):
+		me = v
+		if str(v.get("language", "")) != "":
+			Ui.set_language(str(v.language))   # everything on screen follows the player's language (Eric 11-02)
 
 
 func _ready() -> void:

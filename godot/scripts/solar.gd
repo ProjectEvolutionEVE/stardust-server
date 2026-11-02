@@ -85,7 +85,7 @@ func _init() -> void:
 
 func setup(the_ship: Node3D) -> void:
 	ship = the_ship
-	landmarks.append({"name": "Starship", "node": ship, "pos": [0.0, 0.0, 0.0], "rad": 140.0, "home": true, "color": Color("7fb0ff")})
+	landmarks.append({"name": tr("Starship"), "node": ship, "pos": [0.0, 0.0, 0.0], "rad": 140.0, "home": true, "color": Color("7fb0ff")})
 	light = DirectionalLight3D.new()     # the Sun: the one light
 	light.light_color = Color("fff1dc")
 	add_child(light)
@@ -107,10 +107,10 @@ func setup(the_ship: Node3D) -> void:
 		body.basis = _w2l()             # its poles on the solar system's own axis
 		if g.get("ring", false):
 			body.add_child(_saturn_ring())
-		landmarks.append({"name": g.name, "node": body, "pos": giants_l[i], "rad": g.rad, "far": true, "color": Color("d9a441")})
-	landmarks.append({"name": "Sun", "node": sun, "pos": sun_l, "rad": SUN_R, "far": true, "color": Color("d9a441")})
+		landmarks.append({"name": tr(g.name), "node": body, "pos": giants_l[i], "rad": g.rad, "far": true, "color": Color("d9a441")})
+	landmarks.append({"name": tr("Sun"), "node": sun, "pos": sun_l, "rad": SUN_R, "far": true, "color": Color("d9a441")})
 	_wormhole()
-	landmarks.append({"name": "Wormhole", "node": wormhole, "pos": wh_l, "rad": WORMHOLE_R, "color": Color("b49cff")})
+	landmarks.append({"name": tr("Wormhole"), "node": wormhole, "pos": wh_l, "rad": WORMHOLE_R, "color": Color("b49cff")})
 	_stars()
 
 

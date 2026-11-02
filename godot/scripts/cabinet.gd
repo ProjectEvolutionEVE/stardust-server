@@ -88,11 +88,11 @@ func show_cabinet() -> void:
 	if designs.is_empty():
 		body.add_child(_muted("No blueprints yet. Design one in the drafting room at the Starship Library."))
 	for b in designs:
-		var sub := str(BP_STATUS.get(b.status, b.status))
+		var sub := tr(BP_STATUS[b.status]) if BP_STATUS.has(b.status) else str(b.status)
 		if int(b.get("version", 0)):
-			sub += " · version %d" % int(b.version)
+			sub += " · " + tr("version %d") % int(b.version)
 		if int(b.get("unread", 0)) and b.status == "changes_requested":
-			sub += " · 1 new note"
+			sub += " · " + tr("1 new note")
 		body.add_child(_row("📐 " + str(b.title), sub, ""))
 
 	# every blueprint copy filed here (bought at auction, or printed to sell), grouped by design, each with its serial
@@ -112,8 +112,8 @@ func show_cabinet() -> void:
 			var d: Variant = i.get("details", {})
 			lines.append(str(d.get("serial", "")) if d is Dictionary else "")
 			if i.get("set_aside"):
-				lines[-1] += "  (in an auction)"
-		body.add_child(_fold("📐 %s · %d cop%s" % [str(n).replace("Blueprint · ", ""), its.size(), "ies" if its.size() > 1 else "y"],
+				lines[-1] += "  " + tr("(in an auction)")
+		body.add_child(_fold((tr("📐 %s · %d copies") if its.size() > 1 else tr("📐 %s · %d copy")) % [str(n).replace("Blueprint · ", ""), its.size()],
 			"\n".join(lines)))
 
 	body.add_child(_heading("CERTIFICATES"))
@@ -121,7 +121,7 @@ func show_cabinet() -> void:
 	if certs.is_empty():
 		body.add_child(_muted("None yet. Pass a library book’s test to earn one."))
 	for c in certs:
-		body.add_child(_row("🎓 " + str(c.title), "Passed " + Ui.when(c.passed_at, "date"), str(c.score)))
+		body.add_child(_row("🎓 " + str(c.title), tr("Passed %s") % Ui.when(c.passed_at, "date"), str(c.score)))
 
 	body.add_child(_heading("RECEIPTS LOG"))
 	var list: Array = r.data.get("receipts", [])
@@ -150,7 +150,7 @@ func show_cabinet() -> void:
 		var sub := ""
 		if d is Dictionary and d.has("kg"):
 			sub = _kg(float(d.kg))
-		body.add_child(_row("💎 " + str(v.name) if str(v.item).begins_with("diamond") else str(v.name), sub, "set aside" if v.get("set_aside") else ""))
+		body.add_child(_row("💎 " + str(v.name) if str(v.item).begins_with("diamond") else str(v.name), sub, tr("set aside") if v.get("set_aside") else ""))
 
 
 ## A folder that opens when its title is tapped.
@@ -185,21 +185,21 @@ func _line(x: Dictionary) -> String:
 	match str(x.kind):
 		"trade":
 			var n := int(x.get("lots", 0))
-			return "Market: %s %d lot%s of %s for %s credits" % [x.trade, n, "s" if n > 1 else "", x.item, Ui.num(x.credits)]
+			return (tr("Market: %s %d lots of %s for %s credits") if n > 1 else tr("Market: %s %d lot of %s for %s credits")) % [x.trade, n, x.item, Ui.num(x.credits)]
 		"auction":
-			var t := "Auction: %s %s (%s) for %s credits" % ["won" if x.trade == "won" else "sold", x.serial, x.item, Ui.num(x.bid)]
+			var t := (tr("Auction: won %s (%s) for %s credits") if x.trade == "won" else tr("Auction: sold %s (%s) for %s credits")) % [x.serial, x.item, Ui.num(x.bid)]
 			if x.trade == "won" and x.get("starship_fee"):
-				t += " + %s Starship fee" % Ui.num(x.starship_fee)
+				t += " + " + tr("%s Starship fee") % Ui.num(x.starship_fee)
 			return t
 		"print":
 			var c := int(x.copies)
-			return "Printed %d cop%s of %s, run %s (%s to %s) for %s credits" % [c, "ies" if c > 1 else "y", x.item, str(x.run),
+			return (tr("Printed %d copies of %s, run %s (%s to %s) for %s credits") if c > 1 else tr("Printed %d copy of %s, run %s (%s to %s) for %s credits")) % [c, x.item, str(x.run),
 				x.first, x.last, Ui.num(x.credits)]
 	if x.get("kg") is Dictionary:
 		var parts := []
 		for m in x.kg:
 			parts.append(_mat(m) + " " + _kg(float(x.kg[m])))
-		return "%d pieces: %s" % [int(x.get("pieces", 0)), ", ".join(parts)]
+		return tr("%d pieces: %s") % [int(x.get("pieces", 0)), ", ".join(parts)]
 	return str(x.kind)
 
 
@@ -209,32 +209,32 @@ func _kg(kg: float) -> String:
 
 ## The receipt as text: what's shown here and what "Save a copy" writes (the browser's receiptText, for every kind).
 func _text(x: Dictionary) -> String:
-	var L := ["WORLD SPACE CONSORTIUM", str(x.get("issued_by", "WSC Alexander von Humboldt")), "", "RECEIPT " + str(x.code),
-		"Issued: " + Ui.when(x.issued_at, "full")]
+	var L := [tr("WORLD SPACE CONSORTIUM"), str(x.get("issued_by", "WSC Alexander von Humboldt")), "", tr("RECEIPT %s") % str(x.code),
+		tr("Issued: %s") % Ui.when(x.issued_at, "full")]
 	if x.kind == "unload":
 		var n := int(x.get("pieces", 0))
-		L.append("Transfer: %d piece%s from %s to %s" % [n, "" if n == 1 else "s", x.get("from", "your ship's hold"), x.get("to", "your space in the Starship's cargo hold")])
+		L.append((tr("Transfer: %d piece from %s to %s") if n == 1 else tr("Transfer: %d pieces from %s to %s")) % [n, x.get("from", tr("your ship's hold")), x.get("to", tr("your space in the Starship's cargo hold"))])
 		if int(x.get("left_aboard", 0)):
-			L.append("Left aboard your ship: %d piece%s" % [int(x.left_aboard), "" if int(x.left_aboard) == 1 else "s"])
-		L.append_array(["", "Material                  Weight"])
+			L.append((tr("Left aboard your ship: %d piece") if int(x.left_aboard) == 1 else tr("Left aboard your ship: %d pieces")) % int(x.left_aboard))
+		L.append_array(["", (tr("Material") + "                          ").left(26) + tr("Weight")])
 		for m in x.get("kg", {}):
 			L.append((_mat(m) + "                          ").left(26) + _kg(float(x.kg[m])))
 		for g in x.get("near_flawless_diamonds", []):
-			L.append(("Near-flawless diamond                    ").left(26) + _kg(float(g.kg)) + "  (" + ("lockbox" if g.get("kept_in") == "lockbox" else "Starship cargo hold") + ")")
+			L.append((tr("Near-flawless diamond") + "                    ").left(26) + _kg(float(g.kg)) + "  (" + (tr("lockbox") if g.get("kept_in") == "lockbox" else tr("Starship cargo hold")) + ")")
 		if x.has("space_used_m3"):
-			L.append_array(["", "Your space after: %.3f of %.2f m³ used" % [float(x.space_used_m3), float(x.get("space_total_m3", 0))]])
+			L.append_array(["", tr("Your space after: %.3f of %.2f m³ used") % [float(x.space_used_m3), float(x.get("space_total_m3", 0))]])
 	else:
 		L.append(_line(x))
 		if x.get("average_price_per_lot") != null:
-			L.append("Average price per lot: " + Ui.num(x.average_price_per_lot))
-	L.append_array(["", "Issued by the game server. Anyone can check this code at:", Api.BASE_URL + "/api/dfg/receipt/" + str(x.code), ""])
+			L.append(tr("Average price per lot: %s") % Ui.num(x.average_price_per_lot))
+	L.append_array(["", tr("Issued by the game server. Anyone can check this code at:"), Api.BASE_URL + "/api/dfg/receipt/" + str(x.code), ""])
 	return "\n".join(L)
 
 
 func _receipt(x: Dictionary) -> void:
 	_clear()
 	var text := _text(x)
-	body.add_child(Ui.label("RECEIPT " + str(x.code), 30, Ui.GOLD))
+	body.add_child(Ui.label(tr("RECEIPT %s") % str(x.code), 30, Ui.GOLD))
 	var check := _muted("Checking with the Starship…")
 	body.add_child(check)
 	var paper := PanelContainer.new()
@@ -263,7 +263,7 @@ func _receipt(x: Dictionary) -> void:
 	if not is_instance_valid(check):
 		return
 	if v.ok and v.data.get("valid", false):
-		check.text = "✓ Checked: the game server issued this receipt."
+		check.text = tr("✓ Checked: the game server issued this receipt.")
 		check.add_theme_color_override("font_color", Ui.GREEN)
 	else:
 		check.text = v.error
@@ -273,8 +273,8 @@ func _receipt(x: Dictionary) -> void:
 func _save(code: String, text: String, msg: Label) -> void:
 	Ui.save_receipt(self, code, text, func(path: String):
 		if path != "":
-			msg.text = "Saved: %s › %s" % [path.get_base_dir().get_file(), path.get_file()]
+			msg.text = tr("Saved: %s › %s") % [path.get_base_dir().get_file(), path.get_file()]
 			msg.add_theme_color_override("font_color", Ui.GREEN)
 		else:
-			msg.text = "Couldn't save. Your receipt is still in the receipts log in your quarters. Try again from there."
+			msg.text = tr("Couldn't save. Your receipt is still in the receipts log in your quarters. Try again from there.")
 			msg.add_theme_color_override("font_color", Ui.GOLD))

@@ -183,6 +183,11 @@ async def main():
     check("setup done: 'Trainee Dan McCollough', English", j["title"] == "Trainee Dan McCollough" and j["language"] == "en" and not j["needs_setup"])
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Lu", "last_name": "Chong", "language": "en"})
     check("the name can't be changed again by setup", r.status == 422)
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "ar"}); j = await r.json()
+    check("the language can be changed any time (Eric 11-02)", r.status == 200 and j["language"] == "ar" and j["voice_set"] == "ar")
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "sw"})
+    check("a language marked coming soon can't be chosen", r.status == 422)
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "en"})
     S.AUTH.DEV = False
     r = await cl.get("/api/dfg/ship", headers=T); check("the token works for the game (the new player has a ship)", r.status == 200)
     r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer not-a-real-token"}); check("a made-up token is refused", r.status == 401)

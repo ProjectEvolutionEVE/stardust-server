@@ -155,7 +155,7 @@ func _seg(opts: Array, on_pick: Callable) -> HBoxContainer:
 	h.add_theme_constant_override("separation", 8)
 	for o in opts:
 		var b := Button.new()
-		b.text = o[1]
+		b.text = tr(o[1])
 		b.set_meta("v", o[0])
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.custom_minimum_size = Vector2(0, 56)
@@ -223,14 +223,14 @@ func _lot_kg(it: Dictionary) -> float:
 
 ## "kg" or "100 kg lot": what one price is for.
 func _lot_name(it: Dictionary) -> String:
-	return "kg" if _lot_kg(it) == 1.0 else Ui.num(_lot_kg(it)) + " kg lot"
+	return tr("kg") if _lot_kg(it) == 1.0 else tr("%s kg lot") % Ui.num(_lot_kg(it))
 
 
 func _lots(n: Variant, it: Dictionary) -> String:
 	var q := int(n)
 	if _lot_kg(it) == 1.0:
-		return Ui.num(q) + " kg"
-	return "%s lot%s (%s kg)" % [Ui.num(q), "" if q == 1 else "s", Ui.num(q * _lot_kg(it))]
+		return tr("%s kg") % Ui.num(q)
+	return (tr("%s lot (%s kg)") if q == 1 else tr("%s lots (%s kg)")) % [Ui.num(q), Ui.num(q * _lot_kg(it))]
 
 
 func _build_ore() -> void:
@@ -240,12 +240,12 @@ func _build_ore() -> void:
 	picker = Ui.picker()
 	picker.item_selected.connect(func(i): _pick(str(picker.get_item_metadata(i))))
 	p.add_child(picker)
-	board_toggle = Ui.button("▸ All prices", false)
+	board_toggle = Ui.button("▸ " + tr("All prices"), false)
 	board_toggle.custom_minimum_size = Vector2(0, 56)
 	board_toggle.add_theme_font_size_override("font_size", 22)
 	board_toggle.pressed.connect(func():
 		board_box.visible = not board_box.visible
-		board_toggle.text = ("▾" if board_box.visible else "▸") + " All prices"
+		board_toggle.text = ("▾ " if board_box.visible else "▸ ") + tr("All prices")
 		_render_board())
 	p.add_child(board_toggle)
 	board_box = VBoxContainer.new()
@@ -405,7 +405,7 @@ func _render_board() -> void:
 		b.flat = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.add_theme_font_size_override("font_size", 20)
-		b.text = "%s%s   %s (%s%.2f%%)   bid %s · ask %s" % ["▶ " if it.item == sel else "", it.name, Ui.num(it.last),
+		b.text = tr("%s%s   %s (%s%.2f%%)   bid %s · ask %s") % ["▶ " if it.item == sel else "", it.name, Ui.num(it.last),
 			"+" if ch >= 0 else "", ch, Ui.num(it.bid), Ui.num(it.ask)]
 		var col: Color = Ui.GOLD if it.item == sel else Ui.TEXT
 		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
@@ -418,9 +418,9 @@ func _render_head() -> void:
 	var it := item()
 	var ch := float(it.get("change_24h_pct", 0))
 	head_name.text = str(it.name)
-	head_price.text = "%s   %s%.2f%% in 24 h" % [Ui.num(it.get("last")), "+" if ch >= 0 else "", ch]
+	head_price.text = tr("%s   %s%.2f%% in 24 h") % [Ui.num(it.get("last")), "+" if ch >= 0 else "", ch]
 	head_price.add_theme_color_override("font_color", UP if ch >= 0 else DOWN)
-	head_info.text = "per %s · Bid %s · Ask %s · %s traded in 24 h · floor %s" % [_lot_name(it), Ui.num(it.get("bid")),
+	head_info.text = tr("per %s · Bid %s · Ask %s · %s traded in 24 h · floor %s") % [_lot_name(it), Ui.num(it.get("bid")),
 		Ui.num(it.get("ask")), _lots(it.get("volume_24h", 0), it), Ui.num(it.get("floor"))]
 
 
@@ -433,20 +433,20 @@ func _render_book() -> void:
 	for o in mine.get("orders", []):
 		if o.item == sel:
 			mine_at[o.side + str(int(o.price))] = true
-	book_box.add_child(_row(["PRICE / " + _lot_name(it).to_upper(), "KG" if _lot_kg(it) == 1.0 else "LOTS"], [Ui.MUTED, Ui.MUTED]))
+	book_box.add_child(_row([tr("PRICE / %s") % _lot_name(it).to_upper(), tr("KG") if _lot_kg(it) == 1.0 else tr("LOTS")], [Ui.MUTED, Ui.MUTED]))
 	var asks: Array = book.get("asks", []).duplicate()
 	asks.reverse()
 	if asks.is_empty():
-		book_box.add_child(Ui.label("Nothing for sale right now", 22, Ui.MUTED))
+		book_box.add_child(Ui.label(tr("Nothing for sale right now"), 22, Ui.MUTED))
 	for l in asks:
 		book_box.add_child(_level(l, DOWN, mine_at.has("sell" + str(int(l.price)))))
 	var bids: Array = book.get("bids", [])
 	var spread := ""
 	if not bids.is_empty() and not book.asks.is_empty():
-		spread = "spread " + Ui.num(float(book.asks[0].price) - float(bids[0].price))
-	book_box.add_child(_row(["Last " + Ui.num(it.get("last")), spread], [Ui.GOLD, Ui.MUTED]))
+		spread = tr("spread %s") % Ui.num(float(book.asks[0].price) - float(bids[0].price))
+	book_box.add_child(_row([tr("Last %s") % Ui.num(it.get("last")), spread], [Ui.GOLD, Ui.MUTED]))
 	if bids.is_empty():
-		book_box.add_child(Ui.label("No bids", 22, Ui.MUTED))
+		book_box.add_child(Ui.label(tr("No bids"), 22, Ui.MUTED))
 	for l in bids:
 		book_box.add_child(_level(l, UP, mine_at.has("buy" + str(int(l.price)))))
 
@@ -456,7 +456,7 @@ func _level(l: Dictionary, col: Color, yours: bool) -> Button:
 	var b := Button.new()
 	b.flat = true
 	b.custom_minimum_size = Vector2(0, 44)
-	var r := _row([Ui.num(l.price) + ("   • you" if yours else ""), Ui.num(l.qty)], [col, col])
+	var r := _row([(tr("%s   • you") % Ui.num(l.price)) if yours else Ui.num(l.price), Ui.num(l.qty)], [col, col])
 	r.set_anchors_preset(Control.PRESET_FULL_RECT)
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for c in r.get_children():
@@ -471,10 +471,10 @@ func _level(l: Dictionary, col: Color, yours: bool) -> Button:
 
 func _render_tape() -> void:
 	_clear(tape_box)
-	var tr: Array = book.get("trades", [])
-	if tr.is_empty():
-		tape_box.add_child(Ui.label("No trades yet.", 22, Ui.MUTED))
-	for t in tr.slice(0, 14):
+	var trs: Array = book.get("trades", [])
+	if trs.is_empty():
+		tape_box.add_child(Ui.label(tr("No trades yet."), 22, Ui.MUTED))
+	for t in trs.slice(0, 14):
 		tape_box.add_child(_row([Ui.when(t.at), Ui.num(t.price), _lots(t.qty, item())],
 			[Ui.MUTED, UP if t.side == "buy" else DOWN, Ui.TEXT]))
 
@@ -483,22 +483,22 @@ func _render_mine() -> void:
 	_clear(mine_box)
 	var c := Ui.num(mine.get("credits"))
 	var held := int(mine.get("credits_set_aside", 0))
-	wallet.text = "● OPEN 24/7   ·   Credits " + c + ("  (+%s set aside)" % Ui.num(held) if held else "")
-	mine_box.add_child(_row(["Credits", c + ("\n+%s set aside" % Ui.num(held) if held else "")]))
+	wallet.text = tr("● OPEN 24/7   ·   Credits %s") % c + (("  " + tr("(+%s set aside)") % Ui.num(held)) if held else "")
+	mine_box.add_child(_row([tr("Credits"), c + (("\n" + tr("+%s set aside") % Ui.num(held)) if held else "")]))
 	var hold: Dictionary = mine.get("holdings", {})
 	for code in hold:
 		var h: Dictionary = hold[code]
 		if float(h.kg) >= 1:
 			var t := Ui.num(h.kg) + " kg"
 			if _lot_kg(_info(code)) > 1:
-				t += "\n%s lot%s to trade" % [Ui.num(h.lots), "" if int(h.lots) == 1 else "s"]
+				t += "\n" + (tr("%s lot to trade") if int(h.lots) == 1 else tr("%s lots to trade")) % Ui.num(h.lots)
 			mine_box.add_child(_row([_info(code).name, t]))
 	var orders: Array = mine.get("orders", [])
 	if not orders.is_empty():
-		mine_box.add_child(Ui.label("OPEN ORDERS", 20, Ui.MUTED))
+		mine_box.add_child(Ui.label(tr("OPEN ORDERS"), 20, Ui.MUTED))
 	for o in orders:
 		var h := HBoxContainer.new()
-		var l := Ui.label(("Bid " if o.side == "buy" else "Ask ") + _info(o.item).name + "\n" + _lots(o.remaining, _info(o.item)) + " @ " + Ui.num(o.price), 22,
+		var l := Ui.label((tr("Bid %s") if o.side == "buy" else tr("Ask %s")) % _info(o.item).name + "\n" + tr("%s @ %s") % [_lots(o.remaining, _info(o.item)), Ui.num(o.price)], 22,
 			UP if o.side == "buy" else DOWN)
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(l)
@@ -510,12 +510,12 @@ func _render_mine() -> void:
 		h.add_child(x)
 		mine_box.add_child(h)
 	_clear(hist_box)
-	var tr: Array = mine.get("trades", [])
-	if tr.is_empty():
-		hist_box.add_child(Ui.label("No trades yet.", 22, Ui.MUTED))
-	for t in tr.slice(0, 12):
-		hist_box.add_child(_row([Ui.when(t.at, "short") + "  " + ("Bought " if t.side == "buy" else "Sold ") + _info(t.item).name,
-			_lots(t.qty, _info(t.item)) + " @ " + Ui.num(t.price)], [UP if t.side == "buy" else DOWN, Ui.TEXT]))
+	var trs: Array = mine.get("trades", [])
+	if trs.is_empty():
+		hist_box.add_child(Ui.label(tr("No trades yet."), 22, Ui.MUTED))
+	for t in trs.slice(0, 12):
+		hist_box.add_child(_row([Ui.when(t.at, "short") + "  " + (tr("Bought %s") if t.side == "buy" else tr("Sold %s")) % _info(t.item).name,
+			tr("%s @ %s") % [_lots(t.qty, _info(t.item)), Ui.num(t.price)]], [UP if t.side == "buy" else DOWN, Ui.TEXT]))
 	_render_book()
 
 
@@ -524,7 +524,7 @@ func _cancel(id: int, btn: Button) -> void:
 	var r := await _api("POST", "/api/dfg/market/cancel", {"order_id": id})
 	if leaving:
 		return
-	_say("Order cancelled. What it set aside is back with you." if r.ok else r.error, not r.ok)
+	_say(tr("Order cancelled. What it set aside is back with you.") if r.ok else r.error, not r.ok)
 	refreshing = false
 	_refresh()
 
@@ -559,44 +559,45 @@ func _render_trade() -> void:
 	_seg_set(side_seg, side)
 	_seg_set(type_seg, type)
 	price_in.editable = type == "limit"
-	go.text = ("BUY " if side == "buy" else "SELL ") + str(it.name).to_upper() + (" NOW" if type == "instant" else "")
+	go.text = ((tr("BUY %s NOW") if type == "instant" else tr("BUY %s")) if side == "buy" else (tr("SELL %s NOW") if type == "instant" else tr("SELL %s"))) % str(it.name).to_upper()
 	_paint(go, true, UP if side == "buy" else DOWN)
 	go.custom_minimum_size = Vector2(0, 76)
 	var n := qty_in.text.to_int()
 	var p := price_in.text.to_int()
 	var hold: Dictionary = mine.get("holdings", {}).get(sel, {"lots": 0, "kg": 0})
-	qty_lbl.text = "QUANTITY (kg)" if _lot_kg(it) == 1.0 else "QUANTITY (lots of %s kg)" % Ui.num(_lot_kg(it))
-	price_lbl.text = "PRICE (credits per %s)" % _lot_name(it)
+	qty_lbl.text = tr("QUANTITY (kg)") if _lot_kg(it) == 1.0 else tr("QUANTITY (lots of %s kg)") % Ui.num(_lot_kg(it))
+	price_lbl.text = tr("PRICE (credits per %s)") % _lot_name(it)
 	var t := ""
 	if side == "sell":
-		t = "You have %s kg in your cargo hold" % Ui.num(hold.kg)
 		if _lot_kg(it) > 1:
-			t += ": %s to sell. The smallest order is one lot" % _lots(hold.lots, it)
-		t += ". "
+			t = tr("You have %s kg in your cargo hold: %s to sell. The smallest order is one lot.") % [Ui.num(hold.kg), _lots(hold.lots, it)]
+		else:
+			t = tr("You have %s kg in your cargo hold.") % Ui.num(hold.kg)
+		t += " "
 	elif _lot_kg(it) > 1:
-		t = "Sold in lots of %s kg; one lot is the smallest order. " % Ui.num(_lot_kg(it))
+		t = tr("Sold in lots of %s kg; one lot is the smallest order.") % Ui.num(_lot_kg(it)) + " "
 	if book.is_empty():
 		pass
 	elif type == "instant":
 		var pv := _preview(n)
 		if n <= 0:
-			t += "Enter how many."
+			t += tr("Enter how many.")
 		elif pv.got == 0:
-			t += "Nothing you can buy right now: no one is selling, or not enough credits." if side == "buy" else "No bids right now. Set your price and wait for a buyer."
+			t += tr("Nothing you can buy right now: no one is selling, or not enough credits.") if side == "buy" else tr("No bids right now. Set your price and wait for a buyer.")
 		else:
-			t += "%s %s now at an average of %s each, %s credits in all." % ["Buys" if side == "buy" else "Sells", _lots(pv.got, it),
+			t += (tr("Buys %s now at an average of %s each, %s credits in all.") if side == "buy" else tr("Sells %s now at an average of %s each, %s credits in all.")) % [_lots(pv.got, it),
 				Ui.num(float(pv.cost) / pv.got), Ui.num(pv.cost)]
 			if pv.unfilled:
-				t += " %s can't be filled right now." % _lots(pv.unfilled, it)
+				t += " " + tr("%s can't be filled right now.") % _lots(pv.unfilled, it)
 	else:
 		if n <= 0 or p <= 0:
-			t += "Enter your price and how many."
+			t += tr("Enter your price and how many.")
 		elif p < int(it.get("floor", 0)):
-			t += "The floor for %s is %s. Nothing trades below it." % [it.name, Ui.num(it.floor)]
+			t += tr("The floor for %s is %s. Nothing trades below it.") % [it.name, Ui.num(it.floor)]
 		elif side == "buy":
-			t += "Your bid waits in the queue at %s until a seller meets it. %s credits are set aside now; anything that fills cheaper gives the difference back." % [Ui.num(p), Ui.num(n * p)]
+			t += tr("Your bid waits in the queue at %s until a seller meets it. %s credits are set aside now; anything that fills cheaper gives the difference back.") % [Ui.num(p), Ui.num(n * p)]
 		else:
-			t += "Your ask waits in the queue at %s until a buyer meets it. %s set aside until it sells or you cancel." % [Ui.num(p), _lots(n, it)]
+			t += tr("Your ask waits in the queue at %s until a buyer meets it. %s set aside until it sells or you cancel.") % [Ui.num(p), _lots(n, it)]
 	explain.text = t
 
 
@@ -641,16 +642,16 @@ func _place() -> void:
 			total += int(f.qty) * int(f.price)
 		var t := ""
 		if got:
-			t = "%s %s of %s at an average of %s each (%s credits)." % ["Bought" if side == "buy" else "Sold", _lots(got, it),
+			t = (tr("Bought %s of %s at an average of %s each (%s credits).") if side == "buy" else tr("Sold %s of %s at an average of %s each (%s credits).")) % [_lots(got, it),
 				str(it.name).to_lower(), Ui.num(float(total) / got), Ui.num(total)]
 		if d.order.status == "open":
-			t += " %s waiting in the queue at %s." % [_lots(d.order.remaining, it), Ui.num(price)]
+			t += " " + tr("%s waiting in the queue at %s.") % [_lots(d.order.remaining, it), Ui.num(price)]
 			Voice.say("order")   # Inara: "Your order's in" (only when it waits in the book)
 		if int(d.get("unfilled", 0)):
-			t += " %s couldn't be filled." % _lots(d.unfilled, it)
+			t += " " + tr("%s couldn't be filled.") % _lots(d.unfilled, it)
 		if d.get("receipt") is Dictionary:
-			t += " Receipt %s is in your filing cabinet." % d.receipt.code
-		_say(t.strip_edges() if t.strip_edges() != "" else "Nothing filled.", got == 0 and d.order.status != "open")
+			t += " " + tr("Receipt %s is in your filing cabinet.") % d.receipt.code
+		_say(t.strip_edges() if t.strip_edges() != "" else tr("Nothing filled."), got == 0 and d.order.status != "open")
 	refreshing = false
 	_refresh()
 
@@ -699,7 +700,7 @@ func _fee(n: int) -> int:
 
 func _au_render() -> void:
 	var list: Array = au_data.get("auctions", [])
-	au_empty.text = "No blueprint auctions right now. Designers schedule them from their approved designs in the drafting room."
+	au_empty.text = tr("No blueprint auctions right now. Designers schedule them from their approved designs in the drafting room.")
 	au_empty.visible = list.is_empty()
 	var keep := {}
 	for a in list:
@@ -716,14 +717,14 @@ func _au_render() -> void:
 		_au_update(au_cards[id], a)
 	_clear(au_mine)
 	if au_data.my_bids.is_empty():
-		au_mine.add_child(Ui.label("No bids yet.", 22, Ui.MUTED))
+		au_mine.add_child(Ui.label(tr("No bids yet."), 22, Ui.MUTED))
 	for b in au_data.my_bids:
 		var st: String = b.status
 		au_mine.add_child(_row([str(b.serial) + "\n" + str(b.name), Ui.num(b.bid), st],
 			[Ui.TEXT, Ui.TEXT, UP if st in ["won", "you lead"] else DOWN if st == "outbid" else Ui.MUTED]))
 	_clear(au_recent)
 	if au_data.recent.is_empty():
-		au_recent.add_child(Ui.label("Nothing sold yet.", 22, Ui.MUTED))
+		au_recent.add_child(Ui.label(tr("Nothing sold yet."), 22, Ui.MUTED))
 	for x in au_data.recent:
 		au_recent.add_child(_row([str(x.serial) + "\n" + str(x.name), Ui.num(x.price)]))
 
@@ -784,12 +785,12 @@ func _au_card(a: Dictionary) -> Dictionary:
 	c.running.add_child(c.msg)
 	var about := Ui.label(_design(a.get("design", {})), 20)
 	about.visible = false
-	var tog := Ui.button("▸ About this design", false)
+	var tog := Ui.button("▸ " + tr("About this design"), false)
 	tog.custom_minimum_size = Vector2(0, 52)
 	tog.add_theme_font_size_override("font_size", 20)
 	tog.pressed.connect(func():
 		about.visible = not about.visible
-		tog.text = ("▾" if about.visible else "▸") + " About this design")
+		tog.text = ("▾ " if about.visible else "▸ ") + tr("About this design"))
 	v.add_child(tog)
 	v.add_child(about)
 	c.lot = 0
@@ -802,11 +803,11 @@ func _design(d: Dictionary) -> String:
 	for r in [["What it is and the problem it solves", "problem"], ["What it does", "does"], ["What it fits", "fits"],
 			["What it improves", "improves"], ["How it's built", "how"]]:
 		if d.get(r[1]):
-			out.append(r[0] + ": " + str(d[r[1]]))
+			out.append(tr(r[0]) + ": " + str(d[r[1]]))
 	if d.get("mass_kg"):
-		out.append("Weight %s kg from its materials." % Ui.num(d.mass_kg))
+		out.append(tr("Weight %s kg from its materials.") % Ui.num(d.mass_kg))
 	if d.get("books") is Array and not d.books.is_empty():
-		out.append("Library books it requires: " + ", ".join(d.books))
+		out.append(tr("Library books it requires: %s") % ", ".join(d.books))
 	return "\n\n".join(out)
 
 
@@ -816,19 +817,19 @@ func _au_update(c: Dictionary, a: Dictionary) -> void:
 	c.lot = int(l.lot_id) if l is Dictionary else 0
 	c.auction = a
 	var n := int(a.copies)
-	c.meta.text = "Model %s · %d cop%s · %d sold · floor %s credits%s" % [a.model, n, "ies" if n > 1 else "y", int(a.sold),
-		Ui.num(a.floor), " · your design" if a.yours else ""]
+	c.meta.text = (tr("Model %s · %d copies · %d sold · floor %s credits%s") if n > 1 else tr("Model %s · %d copy · %d sold · floor %s credits%s")) % [a.model, n, int(a.sold),
+		Ui.num(a.floor), (" · " + tr("your design")) if a.yours else ""]
 	c.starts.visible = not running
 	c.running.visible = running
 	if not running:
-		c.starts.text = "Starts " + Ui.when(a.start_at, "short")
+		c.starts.text = tr("Starts %s") % Ui.when(a.start_at, "short")
 		return
 	if c.shown_lot != c.lot:                      # the next copy went up: start its bid box afresh
 		c.shown_lot = c.lot
 		c.typed = false
 		c.msg.text = ""
-	c.copy.text = "Copy %d of %d · %s" % [int(l.copy), n, l.serial]
-	c.top.text = ("Top bid " + Ui.num(l.top_bid)) if l.top_bid else "No bids yet"
+	c.copy.text = tr("Copy %d of %d · %s") % [int(l.copy), n, l.serial]
+	c.top.text = (tr("Top bid %s") % Ui.num(l.top_bid)) if l.top_bid else tr("No bids yet")
 	c.lead.visible = l.you_lead
 	c.own.visible = a.yours
 	c.bidrow.visible = not a.yours and not l.you_lead
@@ -842,7 +843,7 @@ func _au_update(c: Dictionary, a: Dictionary) -> void:
 
 func _au_cost(c: Dictionary) -> void:
 	var n: int = c.amount.text.to_int()
-	c.cost.text = "%s + %s Starship fee = %s credits set aside" % [Ui.num(n), Ui.num(_fee(n)), Ui.num(n + _fee(n))] if n > 0 else ""
+	c.cost.text = tr("%s + %s Starship fee = %s credits set aside") % [Ui.num(n), Ui.num(_fee(n)), Ui.num(n + _fee(n))] if n > 0 else ""
 	c.cost.visible = c.bidrow.visible
 
 
@@ -870,7 +871,7 @@ func _au_bid(c: Dictionary) -> void:
 		return
 	c.bid.disabled = false
 	if r.ok:
-		c.msg.text = "You have the top bid: %s + %s fee set aside. The clock is back to 5 minutes." % [Ui.num(r.data.bid), Ui.num(r.data.fee)]
+		c.msg.text = tr("You have the top bid: %s + %s fee set aside. The clock is back to 5 minutes.") % [Ui.num(r.data.bid), Ui.num(r.data.fee)]
 		c.msg.add_theme_color_override("font_color", UP)
 		c.typed = false
 	else:
@@ -893,7 +894,7 @@ class Chart extends Control:
 		draw_rect(Rect2(Vector2.ZERO, size), Color("0b1020"))
 		var font := ThemeDB.fallback_font
 		if candles.is_empty():
-			draw_string(font, Vector2(20, h / 2), "No trades in this period yet.", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color("7d8aa5"))
+			draw_string(font, Vector2(20, h / 2), tr("No trades in this period yet."), HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color("7d8aa5"))
 			return
 		var axis := 90.0                              # room on the right for the prices
 		var slot := 12.0

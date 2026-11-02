@@ -140,7 +140,7 @@ func _send_collects() -> void:
 		if not r.ok:
 			cargo.erase(p)
 			render_hold()
-			bay._say("NOT COLLECTED\n" + r.error, r.code == 403)   # no Mining pass: the way to the Library
+			bay._say(tr("NOT COLLECTED\n%s") % r.error, r.code == 403)   # no Mining pass: the way to the Library
 			continue
 		var a: Dictionary = r.data.get("aboard", {})
 		if a.get("material", p.mat) != p.mat:          # the server's word
@@ -152,14 +152,14 @@ func _send_collects() -> void:
 			get_tree().create_timer(0.35).timeout.connect(func(): bay.sound.chime())
 			Voice.say("diamond")
 			Voice.story(bay.hud_root, "diamond")
-			bay._say("💎 NEAR-FLAWLESS DIAMOND\nOne in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload.")
+			bay._say(tr("💎 NEAR-FLAWLESS DIAMOND\nOne in a hundred thousand. It stays apart from industrial diamond, and goes to your lockbox when you unload."))
 		elif a.get("noticed", false):                  # lonsdaleite: noticed when collected (not the near-flawless diamond)
 			bay.sound.chime()
 			if p.mat == "brownleeite":
 				get_tree().create_timer(0.35).timeout.connect(func(): bay.sound.chime())
-				bay._say("✦ BROWNLEEITE\nManganese silicide, known from comet dust and never found naturally on Earth. Ultra rare. Read about it in the Starship Library.")
+				bay._say(tr("✦ BROWNLEEITE\nManganese silicide, known from comet dust and never found naturally on Earth. Ultra rare. Read about it in the Starship Library."))
 			else:
-				bay._say("✦ LONSDALEITE\nHexagonal diamond: very rare. It is not ordinary diamond. Read about it in the Starship Library.")
+				bay._say(tr("✦ LONSDALEITE\nHexagonal diamond: very rare. It is not ordinary diamond. Read about it in the Starship Library."))
 		render_hold()
 	sending = false
 
@@ -192,19 +192,19 @@ func start_collect() -> void:
 	if f == null:
 		return
 	if Session.me.get("skills", {}).get("mine", true) == false:   # no Mining pass: the server would refuse every piece
-		bay._say("LIBRARY FIRST\nPass the Mining test before you can mine. Open QUARTERS, then Exit Private Quarters to the Starship Library.", true)
+		bay._say(tr("LIBRARY FIRST\nPass the Mining test before you can mine. Open QUARTERS, then Exit Private Quarters to the Starship Library."), true)
 		return
 	if not f.pieces.any(func(p): return not p.taken and shape_fits(p)):
 		Voice.say("toobig")
-		bay._say("TOO BIG TO TAKE\nThese pieces won't fit in your hold. Keep searching for a field of smaller debris.")
+		bay._say(tr("TOO BIG TO TAKE\nThese pieces won't fit in your hold. Keep searching for a field of smaller debris."))
 		return
 	var i := _next_piece(f)
 	if i < 0 and pick != "":
-		bay._say("NONE LEFT\nNo %s you can take here. Pick another material, or ANY." % bay.debris.material(pick)[1].to_upper())
+		bay._say(tr("NONE LEFT\nNo %s you can take here. Pick another material, or ANY.") % bay.debris.material(pick)[1].to_upper())
 		return
 	if i < 0:
 		Voice.say("full")
-		bay._say("HOLD FULL\nNo room left for these pieces. Return to the Starship to unload.")
+		bay._say(tr("HOLD FULL\nNo room left for these pieces. Return to the Starship to unload."))
 		return
 	collecting = {"f": f, "i": i, "t": 0.0, "dur": (2.0 + minf(10.0, f.pieces[i].box * 12.0)) / (1.0 + Session.skill("mining"))}
 
@@ -246,7 +246,7 @@ func tick(dt: float) -> void:
 		if net:
 			Voice.story(bay.hud_root, "piece")
 	bay.sound.ping(520.0)
-	bay._say("+ %s %s\n%s m · takes %.3f m³ of hold space" % [fmt_kg(p.mass), mat_name(p.mat).to_upper(),
+	bay._say(tr("+ %s %s\n%s m · takes %.3f m³ of hold space") % [fmt_kg(p.mass), mat_name(p.mat).to_upper(),
 		" × ".join(p.dims.map(func(d): return "%.2f" % d)), p.box])
 	collecting = {}
 	render_hold()
@@ -254,7 +254,7 @@ func tick(dt: float) -> void:
 		bay.lock = {}
 		f.cleared = true
 		Voice.say("cleared")
-		bay._say("FIELD CLEARED\nNothing left here. There's more debris all through the ring.")
+		bay._say(tr("FIELD CLEARED\nNothing left here. There's more debris all through the ring."))
 		return
 	start_collect()                              # keep going until full or nothing else fits
 
@@ -322,7 +322,7 @@ func build(root: Control) -> void:
 	hold_text.position = Vector2(24, 80)
 	hold_text.size = Vector2(612, 660)
 	hold_panel.add_child(hold_text)
-	_panel_head(hold_panel, "YOUR HOLD", func(): hold_panel.visible = false)
+	_panel_head(hold_panel, tr("YOUR HOLD"), func(): hold_panel.visible = false)
 	_xfer_panel(root)
 	render_hold()
 
@@ -357,7 +357,7 @@ func render_hold() -> void:
 	if hold_btn == null:
 		return
 	var used := bulk()
-	hold_btn.text = "HOLD %.2f / %.2f m³" % [used, hold.cap]
+	hold_btn.text = tr("HOLD %.2f / %.2f m³") % [used, hold.cap]
 	hold_fill.size.x = 220.0 * clampf(used / hold.cap, 0.0, 1.0)
 	var rows := {}
 	for p in cargo:
@@ -367,17 +367,17 @@ func render_hold() -> void:
 		rows[k].n += 1
 		rows[k].kg += p.mass
 		rows[k].box += p.box
-	var t := "%s: %s m inside (%.2f m³). Used %.2f m³ · %s aboard.\n\n" % [hold.name,
+	var t := tr("%s: %s m inside (%.2f m³). Used %.2f m³ · %s aboard.\n\n") % [tr(hold.name),
 		" × ".join(hold.dims.map(func(d): return "%.1f" % d)), hold.cap, used, fmt_kg(cargo.reduce(func(a, p): return a + p.mass, 0.0))]
 	if cargo.is_empty():
-		t += "Your hold is empty.\n"
+		t += tr("Your hold is empty.") + "\n"
 	for m in bay.debris.MATERIALS.map(func(x): return x[0]) + ["flawless"]:   # the near-flawless diamond is never mixed in
 		if rows.has(m):
-			t += "%s · %d · %s · %.3f m³\n" % ["💎 Near-flawless diamond" if m == "flawless" else mat_name(m), rows[m].n, fmt_kg(rows[m].kg), rows[m].box]
-	t += "\nYOUR SPACE IN THE STARSHIP'S CARGO HOLD\n%.3f of %.2f m³ used.\n" % [store_used(), store.cap]
+			t += "%s · %d · %s · %.3f m³\n" % [tr("💎 Near-flawless diamond") if m == "flawless" else mat_name(m), rows[m].n, fmt_kg(rows[m].kg), rows[m].box]
+	t += tr("\nYOUR SPACE IN THE STARSHIP'S CARGO HOLD\n%.3f of %.2f m³ used.\n") % [store_used(), store.cap]
 	for m in bay.debris.MATERIALS:
 		if store.kg.get(m[0], 0.0) > 0.0:
-			t += "%s · %s · %.3f m³\n" % [m[1], fmt_kg(store.kg[m[0]]), store.kg[m[0]] / float(m[2])]
+			t += "%s · %s · %.3f m³\n" % [tr(m[1]), fmt_kg(store.kg[m[0]]), store.kg[m[0]] / float(m[2])]
 	hold_text.text = t
 
 
@@ -438,7 +438,7 @@ func start_unload() -> void:
 		return
 	xfer = {"t": 0.0, "per": clampf(3.5 / cargo.size(), 0.6, 1.6), "moved": {}, "n": 0, "full": false,
 		"start": cargo.size(), "done": false, "wait": false, "gems": 0}
-	x_title.text = "TRANSFERRING TO THE STARSHIP"
+	x_title.text = tr("TRANSFERRING TO THE STARSHIP")
 	x_title.add_theme_color_override("font_color", bay.HUD_RED)
 	x_sum.text = ""
 	x_rcpt.text = ""
@@ -448,7 +448,7 @@ func start_unload() -> void:
 	if net:   # signed in: the cargo office (the server) does the transfer and issues the receipt; the bars then show it
 		var x := xfer
 		x.wait = true
-		x_now.text = "Contacting the cargo office…"
+		x_now.text = tr("Contacting the cargo office…")
 		_render_xfer(0.0)
 		while sending or not queue.is_empty():   # every collect first
 			await get_tree().process_frame
@@ -483,7 +483,7 @@ func _move() -> void:
 
 
 func _now(p) -> void:
-	x_now.text = "" if p == null else "Moving %s of %s…" % [fmt_kg(p.mass), mat_name(p.mat).to_lower()]
+	x_now.text = "" if p == null else tr("Moving %s of %s…") % [fmt_kg(p.mass), mat_name(p.mat).to_lower()]
 
 
 func _render_xfer(sub: float) -> void:
@@ -495,7 +495,7 @@ func _render_xfer(sub: float) -> void:
 	x_bars[1][0].size.x = 612.0 * clampf(maxf(0.015 if su > 0.0 else 0.0, su / store.cap), 0.0, 1.0)
 	x_bars[1][1].text = "%.3f / %.2f m³" % [su, store.cap]
 	x_bars[2][0].size.x = 612.0 * all / SHIP_HOLD.cap
-	x_bars[2][1].text = "%.1f%% full · %s m³ free" % [100.0 * all / SHIP_HOLD.cap, Solar._commas(roundi(SHIP_HOLD.cap - all))]
+	x_bars[2][1].text = tr("%.1f%% full · %s m³ free") % [100.0 * all / SHIP_HOLD.cap, Solar._commas(roundi(SHIP_HOLD.cap - all))]
 
 
 func _xfer_tick(dt: float) -> void:
@@ -508,10 +508,10 @@ func _xfer_tick(dt: float) -> void:
 				_move()
 			x.full = int(x.server.get("left_aboard", 0)) > 0
 			_finish_xfer(false)
-			bay._say("TRANSFER COMPLETE\n%d %s moved to the Starship. Your receipt is in your quarters." % [x.n, "piece" if x.n == 1 else "pieces"])
+			bay._say((tr("TRANSFER COMPLETE\n%d piece moved to the Starship. Your receipt is in your quarters.") if x.n == 1 else tr("TRANSFER COMPLETE\n%d pieces moved to the Starship. Your receipt is in your quarters.")) % x.n)
 		elif not x.done and not x.wait:
 			_finish_xfer(true)
-			bay._say("TRANSFER STOPPED\n%d of %d pieces moved before you launched; the rest are still in your hold." % [x.n, x.start])
+			bay._say(tr("TRANSFER STOPPED\n%d of %d pieces moved before you launched; the rest are still in your hold.") % [x.n, x.start])
 		close_xfer()
 		return
 	if x.done or x.wait:
@@ -549,29 +549,29 @@ func _finish_xfer(stopped: bool) -> void:
 	_render_xfer(0.0)
 	_now(null)
 	if x.has("error"):
-		x_title.text = "TRANSFER NOT MADE"
-		x_now.text = x.error + " Your cargo is still in your hold."
+		x_title.text = tr("TRANSFER NOT MADE")
+		x_now.text = tr("%s Your cargo is still in your hold.") % x.error
 	elif stopped:
-		x_title.text = "TRANSFER STOPPED"
-		x_now.text = "You launched. %d of %d pieces moved; the rest are still in your hold." % [x.n, x.start]
+		x_title.text = tr("TRANSFER STOPPED")
+		x_now.text = tr("You launched. %d of %d pieces moved; the rest are still in your hold.") % [x.n, x.start]
 	elif x.full:
-		x_title.text = "STARSHIP SPACE FULL"
-		x_now.text = "%d of %d pieces moved. Your space aboard is full, so %d %s in your hold." % [x.n, x.start, cargo.size(),
-			"piece stays" if cargo.size() == 1 else "pieces stay"]
+		x_title.text = tr("STARSHIP SPACE FULL")
+		x_now.text = (tr("%d of %d pieces moved. Your space aboard is full, so %d piece stays in your hold.") if cargo.size() == 1
+			else tr("%d of %d pieces moved. Your space aboard is full, so %d pieces stay in your hold.")) % [x.n, x.start, cargo.size()]
 	else:
-		x_title.text = "TRANSFER COMPLETE"
+		x_title.text = tr("TRANSFER COMPLETE")
 		x_title.add_theme_color_override("font_color", Color("7fe0a8"))
 		Voice.say("unloaded")
 		if x.has("server"):
 			Voice.story(bay.hud_root, "unload")
-		x_now.text = "All %d %s aboard the Starship. Your hold is empty." % [x.n, "piece is" if x.n == 1 else "pieces are"]
+		x_now.text = (tr("All %d piece is aboard the Starship. Your hold is empty.") if x.n == 1 else tr("All %d pieces are aboard the Starship. Your hold is empty.")) % x.n
 		bay.sound.chime()
 	var sum := ""
 	for m in bay.debris.MATERIALS:
 		if x.moved.has(m[0]):
-			sum += "%s · + %s\n" % [m[1], fmt_kg(x.moved[m[0]])]
+			sum += "%s · + %s\n" % [tr(m[1]), fmt_kg(x.moved[m[0]])]
 	if x.gems > 0:
-		sum += "💎 Near-flawless diamond · + %d to your lockbox\n" % x.gems
+		sum += tr("💎 Near-flawless diamond · + %d to your lockbox") % x.gems + "\n"
 	x_sum.text = sum
 	if x.has("server"):
 		_apply_inventory(x.server.get("inventory", {}))   # the server's figures are the truth
@@ -582,10 +582,10 @@ func _finish_xfer(stopped: bool) -> void:
 			else {"code": _receipt_code(), "at": _when(""), "pieces": x.n, "left": cargo.size(),
 			"kg": x.moved, "used": store_used(), "total": store.cap, "server": false}
 		x.receipt = rc
-		x_rcpt.text = "RECEIPT %s · %s\n%d %s from your ship's hold to your space in the Starship's cargo hold%s. Your space after: %.3f of %.2f m³ used.\n%s" % [
-			rc.code, rc.at, rc.pieces, "piece" if rc.pieces == 1 else "pieces", " (%d left aboard)" % rc.left if rc.left else "",
-			rc.used, rc.total, "Issued by the Starship's cargo office (the game server). Anyone can check this code. A copy is in your quarters, in the filing cabinet." if rc.server
-			else "PROTOTYPE RECEIPT: made without a sign-in, so this code cannot be checked."]
+		x_rcpt.text = tr("RECEIPT %s · %s\n%s from your ship's hold to your space in the Starship's cargo hold%s. Your space after: %.3f of %.2f m³ used.\n%s") % [
+			rc.code, rc.at, (tr("%d piece") if rc.pieces == 1 else tr("%d pieces")) % rc.pieces, tr(" (%d left aboard)") % rc.left if rc.left else "",
+			rc.used, rc.total, tr("Issued by the Starship's cargo office (the game server). Anyone can check this code. A copy is in your quarters, in the filing cabinet.") if rc.server
+			else tr("PROTOTYPE RECEIPT: made without a sign-in, so this code cannot be checked.")]
 		x_save.visible = true
 	x_done.visible = true
 
@@ -610,18 +610,18 @@ func _receipt_code() -> String:
 
 
 func receipt_text(rc: Dictionary) -> String:
-	var L := ["WORLD SPACE CONSORTIUM", "WSC Alexander von Humboldt · Cargo office", "", "RECEIPT " + rc.code, "Issued: " + rc.at,
-		"Transfer: %d %s from your ship's hold to your space in the Starship's cargo hold" % [rc.pieces, "piece" if rc.pieces == 1 else "pieces"]]
+	var L := [tr("WORLD SPACE CONSORTIUM"), tr("WSC Alexander von Humboldt · Cargo office"), "", tr("RECEIPT %s") % rc.code, tr("Issued: %s") % rc.at,
+		tr("Transfer: %s from your ship's hold to your space in the Starship's cargo hold") % ((tr("%d piece") if rc.pieces == 1 else tr("%d pieces")) % rc.pieces)]
 	if rc.left:
-		L.append("Left aboard your ship: %d %s" % [rc.left, "piece" if rc.left == 1 else "pieces"])
-	L.append_array(["", "Material                 Weight"])
+		L.append(tr("Left aboard your ship: %s") % ((tr("%d piece") if rc.left == 1 else tr("%d pieces")) % rc.left))
+	L.append_array(["", tr("Material                 Weight")])
 	for m in rc.kg:
 		L.append((mat_name(m) + "                         ").substr(0, 25) + fmt_kg(float(rc.kg[m])))
-	L.append_array(["", "Your space after: %.3f of %.2f m³ used" % [rc.used, rc.total], ""])
+	L.append_array(["", tr("Your space after: %.3f of %.2f m³ used") % [rc.used, rc.total], ""])
 	if rc.server:
-		L.append_array(["Issued by the game server. Anyone can check this code at:", Api.BASE_URL + "/api/dfg/receipt/" + rc.code, ""])
+		L.append_array([tr("Issued by the game server. Anyone can check this code at:"), Api.BASE_URL + "/api/dfg/receipt/" + rc.code, ""])
 	else:
-		L.append_array(["PROTOTYPE RECEIPT: made without a sign-in, so this code cannot be checked.", ""])
+		L.append_array([tr("PROTOTYPE RECEIPT: made without a sign-in, so this code cannot be checked."), ""])
 	return "\n".join(L)
 
 
@@ -632,9 +632,9 @@ func _save_receipt() -> void:
 		return
 	Ui.save_receipt(self, rc.code, receipt_text(rc), func(path: String):
 		if path != "":
-			bay._say("RECEIPT SAVED\n%s is in %s on your device, and in the filing cabinet in your quarters." % [rc.code, path.get_base_dir().get_file()])
+			bay._say(tr("RECEIPT SAVED\n%s is in %s on your device, and in the filing cabinet in your quarters.") % [rc.code, path.get_base_dir().get_file()])
 		else:
-			bay._say("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there."))
+			bay._say(tr("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there.")))
 
 
 func close_xfer() -> void:
@@ -652,5 +652,5 @@ func _cycle_pick() -> void:
 		if not p.taken and not mats.has(p.mat):
 			mats.append(p.mat)
 	pick = mats[(mats.find(pick) + 1) % mats.size()]
-	pick_btn.text = "PICK: " + ("ANY" if pick == "" else bay.debris.material(pick)[1].split(" (")[0].to_upper())
+	pick_btn.text = tr("PICK: %s") % (tr("ANY") if pick == "" else bay.debris.material(pick)[1].split(" (")[0].to_upper())
 	bay.sound.ping(520.0)
