@@ -20,10 +20,11 @@ func _ready() -> void:
 	var go := Ui.button("Report for duty")
 	go.pressed.connect(_save.bind(go))
 	box.add_child(go)
-	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false)
-	if not r.ok:
-		Ui.error(self, r.error)
+	var d := await Session.signup_options()
+	if d.is_empty():
+		Ui.error(self, "The Starship isn't answering. Check your connection, then open the game again.")
 		return
+	var r := {"data": d}
 	for n in r.data.first_names:
 		first.add_item(n)
 	for n in r.data.last_names:

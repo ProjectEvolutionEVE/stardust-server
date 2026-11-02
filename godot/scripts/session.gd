@@ -103,3 +103,30 @@ func set_pref(key: String, value: String) -> void:
 	c.load(PREFS_PATH)
 	c.set_value("signin", key, value)
 	c.save(PREFS_PATH)
+
+
+## The sign-up lists (languages, countries, names) kept on this device, so sign-in fills at once even when the Starship is
+## slow to answer; refreshed from the server each time it does.
+const OPTIONS_PATH := "user://signup-options.json"
+
+
+func cached_options() -> Dictionary:
+	if not FileAccess.file_exists(OPTIONS_PATH):
+		return {}
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(OPTIONS_PATH))
+	return d if d is Dictionary else {}
+
+
+func cache_options(d: Dictionary) -> void:
+	var f := FileAccess.open(OPTIONS_PATH, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify(d))
+
+
+## The lists: from this device at once if kept, else from the server (waiting up to 45 s: it can be slow to wake).
+func signup_options() -> Dictionary:
+	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false, 45.0)
+	if r.ok:
+		cache_options(r.data)
+		return r.data
+	return cached_options()

@@ -7,9 +7,9 @@ const LIVE_URL := "https://game-server-production-9863.up.railway.app"
 var BASE_URL: String = OS.get_environment("STARDUST_API") if OS.is_debug_build() and OS.get_environment("STARDUST_API") != "" else LIVE_URL
 
 
-func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = true) -> Dictionary:
+func call_api(method: String, path: String, body: Dictionary = {}, auth: bool = true, wait := 15.0) -> Dictionary:
 	var http := HTTPRequest.new()
-	http.timeout = 15.0
+	http.timeout = wait
 	add_child(http)
 	var headers := PackedStringArray(["Content-Type: application/json", "Accept: application/json"])
 	if auth and Session.token != "":

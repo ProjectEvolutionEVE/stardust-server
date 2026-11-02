@@ -17,6 +17,8 @@ var code: LineEdit
 var send: Button
 var verify: Button
 var keep: CheckBox
+var status: Label
+var retry: Button
 
 
 func _ready() -> void:
@@ -67,15 +69,42 @@ func _ready() -> void:
 	box.add_child(verify)
 	var saved := Session.remembered()
 	_on_channel(str(saved.get("channel", "email")))
-	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false)
-	if r.ok:
-		_fill_languages(r.data.get("languages", []))
-		_fill_countries(r.data.get("countries", []), str(saved.get("region", "")))
-	else:
-		Ui.error(self, r.error + "\nThe language and country lists need the Starship: close the game and open it again.")
 	if not saved.is_empty():
 		keep.button_pressed = true
 		address.text = str(saved.get("address", ""))
+	status = Ui.label("", 22, Ui.MUTED)
+	box.add_child(status)
+	box.move_child(status, 2)
+	retry = Ui.button("Try again", false)
+	retry.visible = false
+	retry.pressed.connect(_load_lists)
+	box.add_child(retry)
+	box.move_child(retry, 3)
+	var kept := Session.cached_options()      # lists kept on this phone: the screen fills at once
+	if not kept.is_empty():
+		_fill(kept)
+	_load_lists()
+
+
+## Fetch the lists (the server can take a while to wake); say so while waiting, and offer a retry if it doesn't answer.
+func _load_lists() -> void:
+	retry.visible = false
+	if langs.is_empty():
+		status.text = "Contacting the Starship…"
+	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false, 45.0)
+	if r.ok:
+		Session.cache_options(r.data)
+		status.text = ""
+		if langs.is_empty():
+			_fill(r.data)
+	elif langs.is_empty():
+		status.text = "The Starship isn't answering. Check your connection, then try again."
+		retry.visible = true
+
+
+func _fill(d: Dictionary) -> void:
+	_fill_languages(d.get("languages", []))
+	_fill_countries(d.get("countries", []), str(Session.remembered().get("region", "")))
 
 
 func _fill_languages(list: Array) -> void:
@@ -160,8 +189,10 @@ func _send() -> void:
 		Ui.error(self, "Enter your " + ("email address." if channel == "email" else "mobile number."))
 		return
 	send.disabled = true
+	send.text = "Sending…"
 	var r := await Api.call_api("POST", "/api/dfg/auth/start",
-		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, false)
+		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, false, 45.0)
+	_on_channel(channel)
 	send.disabled = false
 	if not r.ok:
 		Ui.error(self, r.error)
@@ -175,7 +206,7 @@ func _send() -> void:
 func _verify() -> void:
 	verify.disabled = true
 	var r := await Api.call_api("POST", "/api/dfg/auth/verify", {"channel": channel,
-		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, false)
+		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, false, 45.0)
 	verify.disabled = false
 	if not r.ok:
 		Ui.error(self, r.error)
