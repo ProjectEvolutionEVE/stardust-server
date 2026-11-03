@@ -188,6 +188,50 @@ async def main():
     r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "sw"})
     check("a language marked coming soon can't be chosen", r.status == 422)
     r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "en"})
+    # ---- one SDID, every way a player signs in (Eric 11-03) ----
+    async def code_for(ch, addr):
+        return (await (await cl.post("/api/dfg/auth/start", json={"channel": ch, "address": addr})).json())["dev_code"]
+    r = await cl.get("/api/dfg/me", headers=T); j = await r.json(); sdid = j["sdid"]
+    check("/me shows the SDID and the sign-ins, masked", sdid.startswith("SD-") and j["sign_ins"] == [{"channel": "sms", "shown": "+1 ••• 0123"}])
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "email", "address": "dan@example.com"}); c1 = (await r.json())["dev_code"]
+    r = await cl.post("/api/dfg/me/contact/verify", headers=T, json={"channel": "email", "address": "dan@example.com", "code": "000000" if c1 != "000000" else "111111"})
+    check("adding an email: a wrong code is refused", r.status == 422)
+    r = await cl.post("/api/dfg/me/contact/verify", headers=T, json={"channel": "email", "address": "dan@example.com", "code": c1}); j = await r.json()
+    check("adding an email from inside the account: the SDID now has both", r.status == 200 and len(j["sign_ins"]) == 2 and j["sign_ins"][1]["shown"] == "d•••@example.com")
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "dan@example.com", "code": await code_for("email", "dan@example.com")}); j = await r.json()
+    check("signing in with the added email opens the same SDID", j["me"]["sdid"] == sdid and not j["new_player"] and j["device_key"])
+    dkey = j["device_key"]
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "sms", "address": PH})
+    check("a sign-in already on the SDID can't be added again", r.status == 422)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "other@example.com", "code": await code_for("email", "other@example.com")})
+    other = await r.json()
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "email", "address": "other@example.com"})
+    check("another player's email can't be added (the crew combines accounts)", r.status == 422 and "own Stardust account" in (await r.json())["error"])
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "third@example.com", "code": await code_for("email", "third@example.com"),
+                                                    "link": True, "device_key": dkey}); j = await r.json()
+    check("a phone that knows the SDID: a new email, 'yes, add it', joins the same SDID", j["linked"] and not j["new_player"] and j["me"]["sdid"] == sdid)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fourth@example.com", "code": await code_for("email", "fourth@example.com"),
+                                                    "device_key": dkey}); fourth = await r.json()
+    check("…and 'no' (or a made-up key) makes a separate account", fourth["new_player"] and fourth["me"]["sdid"] != sdid)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fifth@example.com", "code": await code_for("email", "fifth@example.com"),
+                                                    "link": True, "device_key": "made-up"}); j = await r.json()
+    check("a made-up device key never joins anyone's SDID", j["new_player"] and j["me"]["sdid"] != sdid)
+    r = await cl.get("/api/dfg/admin/account", params={"sdid": sdid})
+    check("the crew's account tool needs the upload key", r.status == 403)
+    os.environ["DFG_UPLOAD_KEY"] = "merge-key"; K = {"X-Upload-Key": "merge-key"}
+    r = await cl.get("/api/dfg/admin/account", params={"channel": "email", "address": "fourth@example.com"}, headers=K); j = await r.json()
+    check("the crew can see what an account holds (tests passed, credits, sign-ins)", r.status == 200 and j["sdid"] == fourth["me"]["sdid"] and "tests_passed" in j)
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"]}); j = await r.json()
+    check("a merge is a dry run unless told otherwise", j.get("dry_run") and j["absorb"]["sign_ins"][0]["address"] == "fourth@example.com")
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"], "dry_run": False}); j = await r.json()
+    check("merging moves the absorbed account's sign-ins to the SDID kept", j.get("merged") and len(j["keep"]["sign_ins"]) == 4)
+    r = await cl.get("/api/dfg/me", headers={"Authorization": "Bearer " + fourth["token"]})
+    check("the absorbed account's old sign-in no longer works", r.status == 401)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fourth@example.com", "code": await code_for("email", "fourth@example.com")}); j = await r.json()
+    check("its email now opens the SDID kept", j["me"]["sdid"] == sdid and not j["new_player"])
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"], "dry_run": False})
+    check("an account already merged can't be merged again", r.status == 404)
+    os.environ.pop("DFG_UPLOAD_KEY", None)
     S.AUTH.DEV = False
     r = await cl.get("/api/dfg/ship", headers=T); check("the token works for the game (the new player has a ship)", r.status == 200)
     r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer not-a-real-token"}); check("a made-up token is refused", r.status == 401)
