@@ -148,12 +148,39 @@ func _read(code: String) -> void:
 		body.add_child(_test_button(code))
 	for ch in b.chapters:
 		body.add_child(Ui.label(ch.title, 28, Ui.GOLD))
-		body.add_child(Ui.label(ch.text, 24))
+		if b.has("groups"):
+			_coloured(ch.text, b.groups)
+		else:
+			body.add_child(Ui.label(ch.text, 24))
 	if int(b.questions) > 0:
 		body.add_child(_test_button(code))
 	var back := Ui.button("Back to the shelves", false)
 	back.pressed.connect(_shelves)
 	body.add_child(back)
+
+
+## The Raw Materials Catalogue's colour chart (Eric 11-03): each kind of component shows its colour, and each material the
+## colours of every kind it serves, like a hazmat chart.
+func _coloured(text: String, groups: Array) -> void:
+	for block in text.split("\n\n"):
+		var cols: Array = []
+		for g in groups:
+			if block.begins_with("■ " + g.name) or ("Kind:" in block and (g.name + " (") in block.split("Kind:")[1].split("\n")[0]):
+				cols.append(g.color)
+		if cols.is_empty():
+			body.add_child(Ui.label(block, 24))
+			continue
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 12)
+		var marks := VBoxContainer.new()
+		marks.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		for c in cols:
+			marks.add_child(Ui.swatch(c, 26))
+		row.add_child(marks)
+		var l := Ui.label(block.trim_prefix("■ "), 24)
+		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(l)
+		body.add_child(row)
 
 
 func _test_button(code: String) -> Button:
