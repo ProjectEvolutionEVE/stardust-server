@@ -16,6 +16,7 @@ diamond 1 kg (item_types.trade_unit). One lot is the smallest order. Quantities 
 never interleave (the market is small; correctness first)."""
 import json
 import store as ST
+import materials_refining as MR
 
 MARKET_LOCK = 7310011            # pg advisory lock: one order at a time across the whole market
 
@@ -241,7 +242,8 @@ async def board(conn):
         base = r["day_ago"] or r["first_today"]
         out.append({"item": r["code"], "name": r["name"], "lot_kg": r["trade_unit"] / ST.G_PER_KG, "bid": r["bid"], "ask": r["ask"], "last": last,
                     "change_24h_pct": round(100.0 * (last - base) / base, 2) if base else 0.0,
-                    "volume_24h": r["volume_24h"], "available": r["available"], "floor": r["floor_price"]})
+                    "volume_24h": r["volume_24h"], "available": r["available"], "floor": r["floor_price"],
+                    "refined": r["code"] in MR.MATERIALS, "groups": MR.COMPONENTS.get(r["code"], [])})
     return out
 
 

@@ -9,6 +9,9 @@ const DOWN := Color("e5605a")
 const PERIODS := [[60, "1 min"], [300, "5 min"], [900, "15 min"], [3600, "1 hour"]]
 
 var items: Array = []
+var groups: Array = []     # the colour chart (Eric 11-03): kinds of component, each with its colour
+var filter := ""           # "" every item, "ore" the raw ores, or a kind of component
+var filter_box: HFlowContainer
 var sel := "iron"
 var side := "buy"
 var type := "instant"
@@ -237,6 +240,10 @@ func _build_ore() -> void:
 	var p := ore_page
 	p.add_child(Ui.label("The Starship bank trades on this market too. It always has a bid, so you can sell even when no other player is buying.", 22, Ui.MUTED))
 	p.add_child(_heading("Market board"))
+	filter_box = HFlowContainer.new()
+	filter_box.add_theme_constant_override("h_separation", 8)
+	filter_box.add_theme_constant_override("v_separation", 8)
+	p.add_child(filter_box)
 	picker = Ui.picker()
 	picker.item_selected.connect(func(i): _pick(str(picker.get_item_metadata(i))))
 	p.add_child(picker)
@@ -353,16 +360,74 @@ func _load_board() -> void:
 		_say(r.error, true)
 		return
 	items = r.data.get("items", [])
-	if picker.item_count != items.size():
-		picker.clear()
-		for i in items.size():
-			picker.add_item(items[i].name)
-			picker.set_item_metadata(i, items[i].item)
-	for i in items.size():
-		if items[i].item == sel:
-			picker.select(i)
+	if groups.is_empty():
+		groups = r.data.get("groups", [])
+		_render_filters()
+	_fill_picker()
 	_render_board()
 	_render_head()
+
+
+## Only the items the filter shows: all, the raw ores, or one kind of component (refined goods, by their colour).
+func _shown() -> Array:
+	var out: Array = []
+	for it in items:
+		if filter == "" or (filter == "ore" and not it.get("refined", false)) or filter in it.get("groups", []):
+			out.append(it)
+	return out
+
+
+func _fill_picker() -> void:
+	var shown := _shown()
+	var same := picker.item_count == shown.size()
+	for i in min(picker.item_count, shown.size()):
+		same = same and str(picker.get_item_metadata(i)) == shown[i].item
+	if not same:
+		picker.clear()
+		for i in shown.size():
+			picker.add_item(shown[i].name)
+			picker.set_item_metadata(i, shown[i].item)
+	for i in shown.size():
+		if shown[i].item == sel:
+			picker.select(i)
+
+
+func _render_filters() -> void:
+	for c in filter_box.get_children():
+		c.queue_free()
+	var opts := [["", tr("All"), null], ["ore", tr("Raw ores"), null]]
+	for g in groups:
+		opts.append([g.code, g.name, g.color])
+	for o in opts:
+		var b := Button.new()
+		b.text = o[1]
+		b.custom_minimum_size = Vector2(0, 52)
+		b.add_theme_font_size_override("font_size", 20)
+		if o[2] != null:
+			b.icon = _dot(str(o[2]))
+		_paint(b, filter == o[0], Color(str(o[2])) if o[2] != null else Ui.GOLD)
+		for st in ["normal", "hover", "pressed", "focus"]:
+			(b.get_theme_stylebox(st) as StyleBoxFlat).content_margin_left = 12
+			(b.get_theme_stylebox(st) as StyleBoxFlat).content_margin_right = 14
+		b.pressed.connect(func():
+			filter = o[0]
+			_render_filters()
+			_fill_picker()
+			var shown := _shown()
+			var has_sel := false
+			for it in shown:
+				has_sel = has_sel or it.item == sel
+			if not shown.is_empty() and not has_sel:
+				_pick(shown[0].item)
+			_render_board())
+		filter_box.add_child(b)
+
+
+## A small colour square for a button.
+func _dot(hex: String) -> ImageTexture:
+	var img := Image.create(22, 22, false, Image.FORMAT_RGBA8)
+	img.fill(Color(hex))
+	return ImageTexture.create_from_image(img)
 
 
 func _load_item() -> void:
@@ -399,9 +464,14 @@ func _render_board() -> void:
 	if not board_box.visible:
 		return
 	_clear(board_box)
-	for it in items:
+	var colour := {}
+	for g in groups:
+		colour[g.code] = g.color
+	for it in _shown():
 		var ch := float(it.get("change_24h_pct", 0))
 		var b := Button.new()
+		if not it.get("groups", []).is_empty():
+			b.icon = _dot(colour.get(it.groups[0], "8a94a6"))
 		b.flat = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.add_theme_font_size_override("font_size", 20)

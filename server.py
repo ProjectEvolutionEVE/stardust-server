@@ -66,6 +66,7 @@ import auth as AUTH
 import body as BODY
 import names as NAMES
 import market as M
+import materials_refining as MR
 import bank as BANK
 import blueprints as BP
 import serials as SER
@@ -574,6 +575,7 @@ async def _startup(app):
     async with app["pool"].acquire() as conn:
         await conn.execute(SCHEMA)
         await LIB.ensure_book_types(conn)                  # each written library book is an item type
+        await MR.ensure_market(conn)                       # refined materials trade on the market (Eric 11-03)
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
     app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
@@ -594,7 +596,8 @@ async def _cleanup(app):
 async def market_board(request):
     async with request.app["pool"].acquire() as conn:
         await _player(conn, request)
-        return _json({"items": await M.board(conn), "note": "The Starship bank trades on this market too."})
+        return _json({"items": await M.board(conn), "groups": list(MR.GROUP.values()),
+                      "note": "The Starship bank trades on this market too."})
 
 
 async def market_item(request):
