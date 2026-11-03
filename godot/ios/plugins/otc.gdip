@@ -1,0 +1,15 @@
+[config]
+name="OneTimeCode"
+binary="otc/otc.a"
+initialization="stardust_otc_init"
+deinitialization="stardust_otc_deinit"
+
+[dependencies]
+linked=[]
+embedded=[]
+system=[]
+capabilities=[]
+files=[]
+linker_flags=["-ObjC"]
+
+[plist]

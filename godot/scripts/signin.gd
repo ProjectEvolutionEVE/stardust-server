@@ -63,7 +63,8 @@ func _ready() -> void:
 	box.add_child(send)
 	code = Ui.field("6-digit code")
 	code.max_length = 6
-	code.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER
+	code.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER   # the number pad: iOS then offers the code from Messages or Mail (ios/plugins/otc)
+	code.text_changed.connect(_on_code)
 	code.visible = false
 	box.add_child(code)
 	verify = Ui.button("Wake up")
@@ -187,7 +188,37 @@ func _region() -> String:
 	return countries[region.selected].iso
 
 
+## Keep only the digits (a pasted "123 456" or "Your code is 123456" still works); once all 6 are in, the keypad goes away.
+func _on_code(t: String) -> void:
+	var digits := ""
+	for ch in t:
+		if ch >= "0" and ch <= "9":
+			digits += ch
+	digits = digits.left(6)
+	if digits != t:
+		code.text = digits
+		code.caret_column = digits.length()
+	if digits.length() == 6:
+		_hide_keypad()
+
+
+func _hide_keypad() -> void:
+	var f := get_viewport().gui_get_focus_owner()
+	if f:
+		f.release_focus()
+	DisplayServer.virtual_keyboard_hide()
+
+
+## A tap anywhere outside the box being typed in puts the keypad away (Eric 11-03).
+func _input(e: InputEvent) -> void:
+	if (e is InputEventScreenTouch or e is InputEventMouseButton) and e.pressed:
+		var f := get_viewport().gui_get_focus_owner()
+		if f is LineEdit and not f.get_global_rect().has_point(e.position):
+			_hide_keypad()
+
+
 func _send() -> void:
+	_hide_keypad()
 	if address.text.strip_edges() == "":
 		Ui.error(self, "Enter your email address." if channel == "email" else "Enter your mobile number.")
 		return
@@ -207,6 +238,7 @@ func _send() -> void:
 
 
 func _verify() -> void:
+	_hide_keypad()
 	verify.disabled = true
 	var r := await Api.call_api("POST", "/api/dfg/auth/verify", {"channel": channel,
 		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, false, 45.0)
