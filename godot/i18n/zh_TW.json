@@ -971,5 +971,8 @@
  "OK": "好",
  "Stay": "留下",
  "Paste": "貼上",
- "Copy the code from your message first, then tap Paste.": "請先複製訊息中的驗證碼，再點「貼上」。"
+ "Copy the code from your message first, then tap Paste.": "請先複製訊息中的驗證碼，再點「貼上」。",
+ "Enter your code": "輸入驗證碼",
+ "Use a different number or email": "使用其他號碼或電子郵件",
+ "We sent a 6-digit code to %s.": "我們已將 6 位驗證碼傳送至 %s。"
 }

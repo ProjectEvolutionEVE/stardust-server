@@ -971,5 +971,8 @@
  "OK": "OK",
  "Stay": "Ficar",
  "Paste": "Colar",
- "Copy the code from your message first, then tap Paste.": "Copie primeiro o código da sua mensagem e depois toque em Colar."
+ "Copy the code from your message first, then tap Paste.": "Copie primeiro o código da sua mensagem e depois toque em Colar.",
+ "Enter your code": "Digite seu código",
+ "Use a different number or email": "Usar outro número ou e-mail",
+ "We sent a 6-digit code to %s.": "Enviamos um código de 6 dígitos para %s."
 }

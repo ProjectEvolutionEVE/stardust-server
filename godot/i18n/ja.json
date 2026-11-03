@@ -971,5 +971,8 @@
  "OK": "OK",
  "Stay": "とどまる",
  "Paste": "貼り付け",
- "Copy the code from your message first, then tap Paste.": "まずメッセージのコードをコピーしてから、貼り付けをタップしてください。"
+ "Copy the code from your message first, then tap Paste.": "まずメッセージのコードをコピーしてから、貼り付けをタップしてください。",
+ "Enter your code": "コードを入力",
+ "Use a different number or email": "別の番号またはメールを使う",
+ "We sent a 6-digit code to %s.": "%s に6桁のコードを送りました。"
 }

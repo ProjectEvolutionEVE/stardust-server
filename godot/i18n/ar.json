@@ -971,5 +971,8 @@
  "OK": "حسناً",
  "Stay": "البقاء",
  "Paste": "لصق",
- "Copy the code from your message first, then tap Paste.": "انسخ الرمز من رسالتك أولاً، ثم اضغط لصق."
+ "Copy the code from your message first, then tap Paste.": "انسخ الرمز من رسالتك أولاً، ثم اضغط لصق.",
+ "Enter your code": "أدخل رمزك",
+ "Use a different number or email": "استخدم رقماً أو بريداً آخر",
+ "We sent a 6-digit code to %s.": "أرسلنا رمزاً من 6 أرقام إلى %s."
 }

@@ -971,5 +971,8 @@
  "OK": "Tamam",
  "Stay": "Kal",
  "Paste": "Yapıştır",
- "Copy the code from your message first, then tap Paste.": "Önce mesajındaki kodu kopyala, sonra Yapıştır'a dokun."
+ "Copy the code from your message first, then tap Paste.": "Önce mesajındaki kodu kopyala, sonra Yapıştır'a dokun.",
+ "Enter your code": "Kodunu gir",
+ "Use a different number or email": "Başka bir numara ya da e-posta kullan",
+ "We sent a 6-digit code to %s.": "%s adresine 6 haneli bir kod gönderdik."
 }

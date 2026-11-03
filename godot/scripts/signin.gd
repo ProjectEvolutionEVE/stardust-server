@@ -17,6 +17,10 @@ var code: LineEdit
 var send: Button
 var verify: Button
 var keep: CheckBox
+var title: Label
+var sent_to: Label
+var again: Button
+var change: Button
 var paste: Button             # one tap fills the code from a copied message, no keypad needed (Eric 11-03)
 var status: Label
 var retry: Button
@@ -28,10 +32,12 @@ func _ready() -> void:
 	box = Ui.screen(self)
 	adding = Session.adding_contact
 	if adding:
-		box.add_child(Ui.label("Add a phone or email", 40, Ui.GOLD))
+		title = Ui.label("Add a phone or email", 40, Ui.GOLD)
+		box.add_child(title)
 		box.add_child(Ui.label("A code proves it's yours. Then either one signs you in to your SDID.", 22, Ui.MUTED))
 	else:
-		box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
+		title = Ui.label("Sign in", 44, Ui.GOLD)
+		box.add_child(title)
 		box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
 	var lang_label := Ui.label("Your language", 22, Ui.MUTED)
 	box.add_child(lang_label)
@@ -101,6 +107,20 @@ func _ready() -> void:
 	verify.visible = false
 	verify.pressed.connect(_verify)
 	box.add_child(verify)
+	# the code step (Eric 11-03: the keypad covered the code box): once a code is sent, only these show, at the top of the
+	# screen, so the keypad can never cover them; as the browser game's "Enter your code" screen
+	sent_to = Ui.label("", 22, Ui.MUTED)
+	sent_to.visible = false
+	box.add_child(sent_to)
+	box.move_child(sent_to, 1)
+	again = Ui.button("Send a new code", false)
+	again.visible = false
+	again.pressed.connect(_send)
+	box.add_child(again)
+	change = Ui.button("Use a different number or email", false)
+	change.visible = false
+	change.pressed.connect(func(): get_tree().reload_current_scene())
+	box.add_child(change)
 	var saved := Session.remembered()
 	if adding:
 		var have := []
@@ -244,7 +264,14 @@ func _on_code(t: String) -> void:
 
 ## Paste: the 6 digits from whatever was copied (the whole message is fine).
 func _paste_code() -> void:
-	_on_code(DisplayServer.clipboard_get())
+	var clip := DisplayServer.clipboard_get()
+	var line := "[otc] Paste button: clipboard has %d characters, %d digits" % [clip.length(), clip.count("0") + clip.count("1") + clip.count("2") + clip.count("3") + clip.count("4") + clip.count("5") + clip.count("6") + clip.count("7") + clip.count("8") + clip.count("9")]
+	printerr(line)
+	var f := FileAccess.open("user://otc-gd-log.txt", FileAccess.READ_WRITE if FileAccess.file_exists("user://otc-gd-log.txt") else FileAccess.WRITE)
+	if f:
+		f.seek_end()
+		f.store_line(Time.get_datetime_string_from_system() + " " + line + " | code box now: " + str(code.text.length()))
+	_on_code(clip)
 	if code.text.length() != 6:
 		Ui.error(self, "Copy the code from your message first, then tap Paste.")
 
@@ -280,9 +307,21 @@ func _send() -> void:
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
+	_code_step(str(r.data.get("to", address.text.strip_edges())))
+
+
+func _code_step(to: String) -> void:
+	for c in box.get_children():
+		c.visible = false
+	title.text = tr("Enter your code")
+	title.visible = true
+	sent_to.text = tr("We sent a 6-digit code to %s.") % to
+	sent_to.visible = true
 	code.get_parent().visible = true
+	code.text = ""
 	verify.visible = true
-	send.text = tr("Send a new code")
+	again.visible = true
+	change.visible = true
 	code.grab_focus()
 
 
