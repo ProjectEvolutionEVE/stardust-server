@@ -28,6 +28,11 @@ VOICE_BY_LANG = {"en": "lily", "zh": "lily", "de": "lily", "pl": "lily",
                  "ru": "julia",                    # Julia (library ID MOgsVr0EwwxqQs5cNDhu; by name, as a My Voices copy has its own ID)
                  "ja": "sumiko",                   # Sumiko Ito - Crisp (library ID 0yh9saSHWVy78QG1HfNs)
                  "ar": "sara - soft"}     # Sara - Soft, Expressive, and Warm (Modern Standard Arabic; Eric 10-27)
+# Indian languages are voiced by Sarvam, not ElevenLabs (Eric 09-30: Bulbul v3 speaker priya, "authoritative, clean and
+# clear"; docs/voice-models.md). The text comes from Claude's translation by the glossary, never Sarvam's translator.
+SARVAM_BY_LANG = {"hi": ("priya", "hi-IN")}
+SARVAM_MODEL = "bulbul:v3"
+SARVAM_KEY_FILE = "~/Quavara/Quavril/tools/.sarvam.env"     # Eric's Sarvam account key (SARVAM_API_KEY=...)
 RADIO = ("highpass=f=380,lowpass=f=3200,acompressor=threshold=-18dB:ratio=4:attack=5:release=80[v];"
          "anoisesrc=color=white:amplitude=0.006[n];[v][n]amix=inputs=2:duration=first:dropout_transition=0:normalize=0")
 
@@ -63,6 +68,16 @@ def call(url, key, body=None):
     return urllib.request.urlopen(req, timeout=120).read()
 
 
+def mark_done(folder, k, text):
+    """Record a line in lines.json the moment its file is saved, so a run cut off midway (a dropped connection, 11-03)
+    never pays for it again. lines.json used to be written only at the end, and a resumed Hindi run re-recorded 108 lines."""
+    p = os.path.join(folder, "lines.json")
+    try: saved = json.load(open(p))
+    except Exception: saved = {}
+    saved[k] = text
+    json.dump(saved, open(p, "w"), indent=1, ensure_ascii=False)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--list", action="store_true")
@@ -82,7 +97,7 @@ def main():
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
     a.out = os.path.expanduser(a.out) if a.out else VP.voice_dir(a.lang)
-    a.voice = a.voice or VOICE_BY_LANG.get(a.lang)
+    a.voice = a.voice or VOICE_BY_LANG.get(a.lang) or (SARVAM_BY_LANG.get(a.lang) or [None])[0]
     if not a.voice and not a.list:
         sys.exit(f"No voice is chosen for '{a.lang}' yet (docs/voice-models.md). Eric picks one; then add it to VOICE_BY_LANG.")
     # Every language, English too, records from docs/inara-lines/<lang>.json: the spoken-words script (Eric 10-27)
@@ -122,6 +137,8 @@ def main():
         return
     ff = shutil.which("ffmpeg")
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
+    if a.lang in SARVAM_BY_LANG:
+        return sarvam(a, L, todo, ff)
     key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     kf = os.path.expanduser(a.key_file)
     if not key and os.path.exists(kf):      # the same key file make_intro.py uses
@@ -176,13 +193,58 @@ def main():
         except urllib.error.HTTPError as e:
             sys.exit(f"Stopped at {k}: ElevenLabs said {e.code} {e.reason}. Everything before it is saved; run again to continue.")
         open(raw, "wb").write(audio)
+        mark_done(a.out, k, text)
         print(f"  {n}/{len(todo)} {k}", flush=True)
     if ff:
         for k in L:
             raw, rad = os.path.join(a.out, "raw", k + ".mp3"), os.path.join(a.out, "radio", k + ".mp3")
             if os.path.exists(raw) and (k in todo or not os.path.exists(rad)):
                 subprocess.run([ff, "-loglevel", "error", "-y", "-i", raw, "-filter_complex", RADIO, rad], check=True)
-    json.dump(L, open(os.path.join(a.out, "lines.json"), "w"), indent=1, ensure_ascii=False)
+    for k in L:
+        if os.path.exists(os.path.join(a.out, "raw", k + ".mp3")): mark_done(a.out, k, L[k])
+    print(f"Done. Files are in {a.out} (raw/ and radio/), with lines.json listing every line.")
+
+
+def sarvam(a, L, todo, ff):
+    """Record with Sarvam (Indian languages). The key comes from SARVAM_API_KEY or SARVAM_KEY_FILE; never printed."""
+    if not ff: sys.exit("ffmpeg is needed to turn Sarvam's audio into mp3. Nothing was recorded or charged.")
+    speaker, code = SARVAM_BY_LANG[a.lang]
+    key = os.environ.get("SARVAM_API_KEY", "").strip()
+    kf = os.path.expanduser(SARVAM_KEY_FILE)
+    if not key and os.path.exists(kf):
+        key = next((l.split("=", 1)[1].strip() for l in open(kf) if l.startswith("SARVAM_API_KEY=")), "")
+    if not key: key = getpass.getpass("Sarvam API key (hidden): ").strip()
+    print(f"Voice: Sarvam {SARVAM_MODEL}, speaker {speaker} ({code})")
+    os.makedirs(os.path.join(a.out, "raw"), exist_ok=True); os.makedirs(os.path.join(a.out, "radio"), exist_ok=True)
+    if todo and not a.yes:
+        if input(f"Record {len(todo)} line(s), {sum(map(len, todo.values())):,} characters, in {speaker}? "
+                 "Type yes to pay for it: ").strip().lower() != "yes":
+            sys.exit("Nothing was recorded or charged.")
+    import base64, tempfile
+    for n, (k, text) in enumerate(todo.items(), 1):
+        req = urllib.request.Request("https://api.sarvam.ai/text-to-speech", data=json.dumps(
+            {"text": text, "target_language_code": code, "speaker": speaker, "model": SARVAM_MODEL}).encode(),
+            headers={"api-subscription-key": key, "Content-Type": "application/json"})
+        try:
+            res = json.load(urllib.request.urlopen(req, timeout=120))
+        except urllib.error.HTTPError as e:
+            sys.exit(f"Stopped at {k}: Sarvam said {e.code} {e.read().decode('utf-8', 'replace')[:200]}. "
+                     "Everything before it is saved; run again to continue.")
+        with tempfile.NamedTemporaryFile(suffix=".wav") as w:
+            w.write(b"".join(base64.b64decode(x) for x in res["audios"])); w.flush()
+            subprocess.run([ff, "-loglevel", "error", "-y", "-i", w.name, "-codec:a", "libmp3lame", "-q:a", "3",
+                            os.path.join(a.out, "raw", k + ".mp3")], check=True)
+        mark_done(a.out, k, text)
+        print(f"  {n}/{len(todo)} {k}", flush=True)
+    for k in L:
+        raw, rad = os.path.join(a.out, "raw", k + ".mp3"), os.path.join(a.out, "radio", k + ".mp3")
+        if os.path.exists(raw) and (k in todo or not os.path.exists(rad)):
+            subprocess.run([ff, "-loglevel", "error", "-y", "-i", raw, "-filter_complex", RADIO, rad], check=True)
+    saved = {}
+    try: saved = json.load(open(os.path.join(a.out, "lines.json")))
+    except Exception: pass
+    saved.update(L)
+    json.dump(saved, open(os.path.join(a.out, "lines.json"), "w"), indent=1, ensure_ascii=False)
     print(f"Done. Files are in {a.out} (raw/ and radio/), with lines.json listing every line.")
 
 

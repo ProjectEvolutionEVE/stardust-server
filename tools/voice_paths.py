@@ -15,7 +15,8 @@ PREFIX = "Stardust-TerraDeleta_Inara_"
 # the voice in each language's folder name (docs/voice-models.md is the master list)
 VOICE_NAME = {"en": "Lily", "zh": "Lily", "de": "Lily", "pl": "Lily",
               "fr": "Kate1", "ko": "Kate1", "tr": "Kate1", "pt-BR": "Kate1",
-              "es": "Johanna", "ru": "Julia", "ja": "SumikoIto", "ar": "Sara"}
+              "es": "Johanna", "ru": "Julia", "ja": "SumikoIto", "ar": "Sara",
+              "hi": "Priya"}
 
 
 def voice_dir(lang):

@@ -8,7 +8,11 @@ def norm(s):
     s = unicodedata.normalize("NFKC", s)
     s = re.sub(r"[ً-ْٰـ‏‎]", "", s)          # vowel marks, tatweel, direction marks
     s = re.sub(r"[إأآٱ]", "ا", s); s = s.replace("ى", "ي").replace("ة", "ه").replace("ؤ", "و").replace("ئ", "ي")
-    s = re.sub(r"[^\w\s]", " ", s)
+    s = s.replace("\u093c", "").replace("\u0901", "\u0902")    # Hindi: nukta dropped, chandrabindu = anusvara (ears differ)
+    s = re.sub("[नमणङञ]\u094d(?=[क-ह])", "\u0902", s)              # लॉन्च = लॉंच: two spellings of one sound
+    for long, short in (("ी", "ि"), ("ई", "इ"), ("ू", "ु"), ("ऊ", "उ")): s = s.replace(long, short)   # long/short vowel spellings
+    # punctuation and symbols become spaces; vowel signs (Hindi matras, category M) stay inside their words
+    s = "".join(" " if unicodedata.category(c)[0] in "PS" else c for c in s)
     return s.lower().split()
 rows = []
 for k, t in script.items():
