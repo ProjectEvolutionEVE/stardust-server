@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "Pazar: %d lot alındı (%s), %s kredi",
  "Market: bought %d lots of %s for %s credits": "Pazar: %d lot alındı (%s), %s kredi",
  "Market: sold %d lot of %s for %s credits": "Pazar: %d lot satıldı (%s), %s kredi",
- "Market: sold %d lots of %s for %s credits": "Pazar: %d lot satıldı (%s), %s kredi"
+ "Market: sold %d lots of %s for %s credits": "Pazar: %d lot satıldı (%s), %s kredi",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "Bir kod senin olduğunu kanıtlar. Sonra ikisinden biriyle SDID'ine giriş yaparsın.",
+ "Add a phone or email": "Telefon ya da e-posta ekle",
+ "Add it": "Ekle",
+ "Add your email too? Then either one signs you in to the same account.": "E-postanı da ekleyelim mi? Böylece ikisinden biriyle aynı hesaba girersin.",
+ "Add your phone too? Then either one signs you in to the same account.": "Telefonunu da ekleyelim mi? Böylece ikisinden biriyle aynı hesaba girersin.",
+ "Back": "Geri",
+ "If this phone or email is new, add it to my account %s": "Bu telefon ya da e-posta yeniyse hesabıma ekle: %s",
+ "Signs in with: %s": "Giriş yolu: %s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "Bu telefonun ya da e-postanın zaten kendi Stardust hesabı var. Mürettebat ikisini birleştirebilir: oyunun sayfasından desteğe yaz.",
+ "That's already one of your sign-ins.": "Bu zaten giriş yollarından biri.",
+ "Those are the same account.": "Bunlar aynı hesap.",
+ "Your SDID": "SDID'in",
+ "Your SDID: %s": "SDID'in: %s"
 }

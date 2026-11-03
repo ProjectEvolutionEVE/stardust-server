@@ -954,5 +954,18 @@
  "Your hangar is full.": "격납고가 가득 찼어요.",
  "Your hold is full.": "화물칸이 가득 찼어요.",
  "Your name is already set.": "이름은 이미 설정돼 있어요.",
- "Your space in the cargo hold doesn't have room for that much.": "화물창의 내 공간에 그만큼의 여유가 없어요."
+ "Your space in the cargo hold doesn't have room for that much.": "화물창의 내 공간에 그만큼의 여유가 없어요.",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "코드로 본인임을 확인합니다. 이후에는 둘 중 어느 것으로든 SDID에 로그인할 수 있습니다.",
+ "Add a phone or email": "전화번호 또는 이메일 추가",
+ "Add it": "추가",
+ "Add your email too? Then either one signs you in to the same account.": "이메일도 추가할까요? 그러면 둘 중 어느 것으로든 같은 계정에 로그인됩니다.",
+ "Add your phone too? Then either one signs you in to the same account.": "전화번호도 추가할까요? 그러면 둘 중 어느 것으로든 같은 계정에 로그인됩니다.",
+ "Back": "뒤로",
+ "If this phone or email is new, add it to my account %s": "이 전화번호나 이메일이 새 것이면 내 계정 %s에 추가",
+ "Signs in with: %s": "로그인 방법: %s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "그 전화번호나 이메일에는 이미 별도의 Stardust 계정이 있습니다. 크루가 두 계정을 합칠 수 있습니다: 게임 페이지에서 지원팀에 문의하세요.",
+ "That's already one of your sign-ins.": "이미 등록된 로그인 방법입니다.",
+ "Those are the same account.": "같은 계정입니다.",
+ "Your SDID": "내 SDID",
+ "Your SDID: %s": "내 SDID: %s"
 }

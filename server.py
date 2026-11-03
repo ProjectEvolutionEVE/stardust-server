@@ -239,8 +239,7 @@ async def contact_start(request):
         if who == pid:
             raise ST.Refused("That's already one of your sign-ins.")
         if who is not None:
-            raise ST.Refused("That phone or email already has its own Stardust account. The crew can combine the two: "
-                             "contact support from the game's page.")
+            raise ST.Refused("That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.")
         return _json(await AUTH.start(conn, channel, b.get("address"), _ip(request), b.get("region")))
 
 

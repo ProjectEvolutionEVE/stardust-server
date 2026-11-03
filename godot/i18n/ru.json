@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "Рынок: куплено партий: %d, %s, за %s кредитов",
  "Market: bought %d lots of %s for %s credits": "Рынок: куплено партий: %d, %s, за %s кредитов",
  "Market: sold %d lot of %s for %s credits": "Рынок: продано партий: %d, %s, за %s кредитов",
- "Market: sold %d lots of %s for %s credits": "Рынок: продано партий: %d, %s, за %s кредитов"
+ "Market: sold %d lots of %s for %s credits": "Рынок: продано партий: %d, %s, за %s кредитов",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "Код подтверждает, что это ваше. Потом любой из них открывает ваш SDID.",
+ "Add a phone or email": "Добавить телефон или почту",
+ "Add it": "Добавить",
+ "Add your email too? Then either one signs you in to the same account.": "Добавить и почту? Тогда любой из них откроет тот же аккаунт.",
+ "Add your phone too? Then either one signs you in to the same account.": "Добавить и телефон? Тогда любой из них откроет тот же аккаунт.",
+ "Back": "Назад",
+ "If this phone or email is new, add it to my account %s": "Если этот телефон или почта новые, добавить их к моему аккаунту %s",
+ "Signs in with: %s": "Вход через: %s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "У этого телефона или почты уже есть свой аккаунт Stardust. Экипаж может объединить их: напишите в поддержку со страницы игры.",
+ "That's already one of your sign-ins.": "Это уже один из ваших способов входа.",
+ "Those are the same account.": "Это один и тот же аккаунт.",
+ "Your SDID": "Ваш SDID",
+ "Your SDID: %s": "Ваш SDID: %s"
 }

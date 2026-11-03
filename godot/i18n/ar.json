@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "السوق: شراء %d دفعة من %s مقابل %s رصيد",
  "Market: bought %d lots of %s for %s credits": "السوق: شراء %d دفعات من %s مقابل %s رصيد",
  "Market: sold %d lot of %s for %s credits": "السوق: بيع %d دفعة من %s مقابل %s رصيد",
- "Market: sold %d lots of %s for %s credits": "السوق: بيع %d دفعات من %s مقابل %s رصيد"
+ "Market: sold %d lots of %s for %s credits": "السوق: بيع %d دفعات من %s مقابل %s رصيد",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "رمز يثبت أنه لك. بعدها يُدخلك أيٌّ منهما إلى معرّف SDID الخاص بك.",
+ "Add a phone or email": "إضافة هاتف أو بريد",
+ "Add it": "أضفه",
+ "Add your email too? Then either one signs you in to the same account.": "هل تضيف بريدك أيضاً؟ عندها يُدخلك أيٌّ منهما إلى الحساب نفسه.",
+ "Add your phone too? Then either one signs you in to the same account.": "هل تضيف هاتفك أيضاً؟ عندها يُدخلك أيٌّ منهما إلى الحساب نفسه.",
+ "Back": "رجوع",
+ "If this phone or email is new, add it to my account %s": "إن كان هذا الهاتف أو البريد جديداً، أضفه إلى حسابي %s",
+ "Signs in with: %s": "يسجّل الدخول بـ: %s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "لهذا الهاتف أو البريد حساب Stardust خاص به. يستطيع الطاقم دمج الحسابين: تواصل مع الدعم من صفحة اللعبة.",
+ "That's already one of your sign-ins.": "هذا من وسائل دخولك بالفعل.",
+ "Those are the same account.": "هذان الحساب نفسه.",
+ "Your SDID": "معرّف SDID الخاص بك",
+ "Your SDID: %s": "معرّف SDID الخاص بك: %s"
 }

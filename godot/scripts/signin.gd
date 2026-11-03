@@ -19,19 +19,29 @@ var verify: Button
 var keep: CheckBox
 var status: Label
 var retry: Button
+var join: CheckBox            # offers to add a new sign-in to the SDID this phone knows (Eric 11-03)
+var adding := false           # adding a phone or email to the signed-in SDID, not signing in
 
 
 func _ready() -> void:
 	box = Ui.screen(self)
-	box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
-	box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
-	box.add_child(Ui.label("Your language", 22, Ui.MUTED))
+	adding = Session.adding_contact
+	if adding:
+		box.add_child(Ui.label("Add a phone or email", 40, Ui.GOLD))
+		box.add_child(Ui.label("A code proves it's yours. Then either one signs you in to your SDID.", 22, Ui.MUTED))
+	else:
+		box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
+		box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
+	var lang_label := Ui.label("Your language", 22, Ui.MUTED)
+	box.add_child(lang_label)
 	lang = Ui.picker("Your language")
 	lang.item_selected.connect(func(i):
 		Session.set_pref("lang", str(langs[i].code))
 		Ui.set_language(str(langs[i].code))
 		get_tree().reload_current_scene())   # the whole page switches to the language at once (Eric 11-02)
 	box.add_child(lang)
+	lang_label.visible = not adding
+	lang.visible = not adding
 	seg = HBoxContainer.new()
 	seg.add_theme_constant_override("separation", 12)
 	for c in [["sms", "📱 Phone"], ["email", "✉️ Email"]]:
@@ -58,6 +68,16 @@ func _ready() -> void:
 	keep.add_theme_font_size_override("font_size", 22)
 	keep.toggled.connect(func(on): if not on: Session.forget())
 	box.add_child(keep)
+	keep.visible = not adding
+	var dev := Session.device()
+	join = CheckBox.new()
+	join.text = tr("If this phone or email is new, add it to my account %s") % str(dev.get("sdid", "")) \
+		+ ("\n" + str(dev.title) if str(dev.get("title", "")) != "" else "")
+	join.add_theme_font_size_override("font_size", 22)
+	join.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	join.button_pressed = true
+	join.visible = not adding and str(dev.get("key", "")) != ""
+	box.add_child(join)
 	send = Ui.button("")
 	send.pressed.connect(_send)
 	box.add_child(send)
@@ -72,6 +92,16 @@ func _ready() -> void:
 	verify.pressed.connect(_verify)
 	box.add_child(verify)
 	var saved := Session.remembered()
+	if adding:
+		var have := []
+		for s in Session.me.get("sign_ins", []):
+			have.append(s.channel)
+		saved = {"channel": "sms" if "email" in have else "email"}   # offer the kind they haven't added yet
+		var back := Ui.button("Back", false)
+		back.pressed.connect(func():
+			Session.adding_contact = false
+			get_tree().change_scene_to_file(Session.after_contact))
+		box.add_child(back)
 	_on_channel(str(saved.get("channel", "email")))
 	if not saved.is_empty():
 		keep.button_pressed = true
@@ -224,8 +254,8 @@ func _send() -> void:
 		return
 	send.disabled = true
 	send.text = tr("Sending…")
-	var r := await Api.call_api("POST", "/api/dfg/auth/start",
-		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, false, 45.0)
+	var r := await Api.call_api("POST", "/api/dfg/me/contact/start" if adding else "/api/dfg/auth/start",
+		{"channel": channel, "address": address.text.strip_edges(), "region": _region()}, adding, 45.0)
 	_on_channel(channel)
 	send.disabled = false
 	if not r.ok:
@@ -240,12 +270,26 @@ func _send() -> void:
 func _verify() -> void:
 	_hide_keypad()
 	verify.disabled = true
+	if adding:
+		var a := await Api.call_api("POST", "/api/dfg/me/contact/verify", {"channel": channel,
+			"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, true, 45.0)
+		verify.disabled = false
+		if not a.ok:
+			Ui.error(self, a.error)
+			return
+		Session.me = a.data
+		Session.adding_contact = false
+		get_tree().change_scene_to_file(Session.after_contact)
+		return
+	var dev := Session.device()
 	var r := await Api.call_api("POST", "/api/dfg/auth/verify", {"channel": channel,
-		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region()}, false, 45.0)
+		"address": address.text.strip_edges(), "code": code.text.strip_edges(), "region": _region(),
+		"device_key": str(dev.get("key", "")), "link": join.visible and join.button_pressed}, false, 45.0)
 	verify.disabled = false
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
+	Session.set_device(str(r.data.get("device_key", "")), str(r.data.me.get("sdid", "")), str(r.data.me.get("title", "")))
 	if keep.button_pressed:
 		Session.remember(channel, address.text.strip_edges(), _region())
 	else:

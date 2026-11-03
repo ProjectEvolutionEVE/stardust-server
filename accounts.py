@@ -43,8 +43,7 @@ async def link(conn, pid, channel, addr):
     if who == pid:
         raise ST.Refused("That's already one of your sign-ins.")
     if who is not None:
-        raise ST.Refused("That phone or email already has its own Stardust account. The crew can combine the two: "
-                         "contact support from the game's page.")
+        raise ST.Refused("That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.")
     await conn.execute("INSERT INTO logins(player_id, channel, address) VALUES($1,$2,$3)", pid, channel, addr)
 
 

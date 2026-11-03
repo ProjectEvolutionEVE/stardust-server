@@ -265,6 +265,19 @@ func _bed(me: Dictionary) -> VBoxContainer:
 		bed.add_child(p)
 	if me.get("warning", "") != "" and me.get("warning") != null:
 		bed.add_child(Ui.label(str(me.warning), 24, Ui.GOLD))
+	# the player's SDID and every way they sign in to it (Eric 11-03)
+	if str(me.get("sdid", "")) != "":
+		bed.add_child(Ui.label(tr("Your SDID: %s") % str(me.sdid), 22, Ui.GOLD))
+		var ways := []
+		for x in me.get("sign_ins", []):
+			ways.append(("📱 " if x.channel == "sms" else "✉️ ") + str(x.shown))
+		bed.add_child(Ui.label(tr("Signs in with: %s") % ", ".join(ways), 20, Ui.MUTED))
+		var add := Ui.button("Add a phone or email", false)
+		add.pressed.connect(func():
+			Session.adding_contact = true
+			Session.after_contact = "res://scenes/quarters.tscn"
+			get_tree().change_scene_to_file("res://scenes/signin.tscn"))
+		bed.add_child(add)
 	var out := Ui.button("Sign out (go to sleep)", false)
 	out.pressed.connect(_sign_out.bind(out))
 	bed.add_child(out)

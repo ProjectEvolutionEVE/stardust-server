@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "Rynek: kupiono %d partię: %s za %s kredytów",
  "Market: bought %d lots of %s for %s credits": "Rynek: kupiono partie (%d): %s za %s kredytów",
  "Market: sold %d lot of %s for %s credits": "Rynek: sprzedano %d partię: %s za %s kredytów",
- "Market: sold %d lots of %s for %s credits": "Rynek: sprzedano partie (%d): %s za %s kredytów"
+ "Market: sold %d lots of %s for %s credits": "Rynek: sprzedano partie (%d): %s za %s kredytów",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "Kod potwierdza, że to twoje. Potem każde z nich loguje cię do twojego SDID.",
+ "Add a phone or email": "Dodaj telefon lub e-mail",
+ "Add it": "Dodaj",
+ "Add your email too? Then either one signs you in to the same account.": "Dodać też e-mail? Wtedy każde z nich zaloguje cię na to samo konto.",
+ "Add your phone too? Then either one signs you in to the same account.": "Dodać też telefon? Wtedy każde z nich zaloguje cię na to samo konto.",
+ "Back": "Wstecz",
+ "If this phone or email is new, add it to my account %s": "Jeśli ten telefon lub e-mail jest nowy, dodaj go do mojego konta %s",
+ "Signs in with: %s": "Logowanie przez: %s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "Ten telefon lub e-mail ma już własne konto Stardust. Załoga może połączyć oba: skontaktuj się z pomocą na stronie gry.",
+ "That's already one of your sign-ins.": "To już jeden z twoich sposobów logowania.",
+ "Those are the same account.": "To jest to samo konto.",
+ "Your SDID": "Twój SDID",
+ "Your SDID: %s": "Twój SDID: %s"
 }

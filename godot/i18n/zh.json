@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "市场：买入 %d 批 %s，%s 积分",
  "Market: bought %d lots of %s for %s credits": "市场：买入 %d 批 %s，%s 积分",
  "Market: sold %d lot of %s for %s credits": "市场：卖出 %d 批 %s，%s 积分",
- "Market: sold %d lots of %s for %s credits": "市场：卖出 %d 批 %s，%s 积分"
+ "Market: sold %d lots of %s for %s credits": "市场：卖出 %d 批 %s，%s 积分",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "验证码证明它属于你。之后任一方式都能登录你的 SDID。",
+ "Add a phone or email": "添加手机或邮箱",
+ "Add it": "添加",
+ "Add your email too? Then either one signs you in to the same account.": "也添加你的邮箱吗？这样任一方式都能登录同一个账号。",
+ "Add your phone too? Then either one signs you in to the same account.": "也添加你的手机吗？这样任一方式都能登录同一个账号。",
+ "Back": "返回",
+ "If this phone or email is new, add it to my account %s": "如果这个手机或邮箱是新的，添加到我的账号 %s",
+ "Signs in with: %s": "登录方式：%s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "这个手机或邮箱已有自己的 Stardust 账号。船员可以合并两个账号：请从游戏页面联系客服。",
+ "That's already one of your sign-ins.": "这已经是你的登录方式之一。",
+ "Those are the same account.": "这是同一个账号。",
+ "Your SDID": "你的 SDID",
+ "Your SDID: %s": "你的 SDID：%s"
 }

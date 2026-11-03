@@ -954,5 +954,18 @@
  "Market: bought %d lot of %s for %s credits": "市場：買入 %d 批 %s，%s 積分",
  "Market: bought %d lots of %s for %s credits": "市場：買入 %d 批 %s，%s 積分",
  "Market: sold %d lot of %s for %s credits": "市場：賣出 %d 批 %s，%s 積分",
- "Market: sold %d lots of %s for %s credits": "市場：賣出 %d 批 %s，%s 積分"
+ "Market: sold %d lots of %s for %s credits": "市場：賣出 %d 批 %s，%s 積分",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "驗證碼證明它屬於你。之後任一方式都能登入你的 SDID。",
+ "Add a phone or email": "新增手機或電子郵件",
+ "Add it": "新增",
+ "Add your email too? Then either one signs you in to the same account.": "也新增你的電子郵件嗎？這樣任一方式都能登入同一個帳號。",
+ "Add your phone too? Then either one signs you in to the same account.": "也新增你的手機嗎？這樣任一方式都能登入同一個帳號。",
+ "Back": "返回",
+ "If this phone or email is new, add it to my account %s": "如果這個手機或電子郵件是新的，新增到我的帳號 %s",
+ "Signs in with: %s": "登入方式：%s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "這個手機或電子郵件已有自己的 Stardust 帳號。船員可以合併兩個帳號：請從遊戲頁面聯絡客服。",
+ "That's already one of your sign-ins.": "這已經是你的登入方式之一。",
+ "Those are the same account.": "這是同一個帳號。",
+ "Your SDID": "你的 SDID",
+ "Your SDID: %s": "你的 SDID：%s"
 }

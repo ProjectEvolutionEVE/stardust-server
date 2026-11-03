@@ -10,6 +10,9 @@ var me: Dictionary = {}:
 		me = v
 		if str(v.get("language", "")) != "":
 			Ui.set_language(str(v.language))   # everything on screen follows the player's language (Eric 11-02)
+		var d := device()
+		if str(v.get("sdid", "")) != "" and d.get("sdid", "") == v.sdid and d.get("title", "") != v.get("title", ""):
+			set_device(str(d.key), str(v.sdid), str(v.get("title", "")))   # keep the phone's "add it to SD-…" line current
 
 
 func _ready() -> void:
@@ -30,6 +33,7 @@ func signed_in(new_token: String, new_me: Dictionary) -> void:
 func clear() -> void:
 	token = ""
 	me = {}
+	adding_contact = false
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(SAVE_PATH)
 
@@ -134,3 +138,25 @@ func signup_options() -> Dictionary:
 		cache_options(r.data)
 		return r.data
 	return cached_options()
+
+
+## The phone remembers the SDID it was last signed in to (Eric 11-03), even after signing out: a key from the server that
+## proves only that, kept encrypted like the sign-in. With it, signing in with a NEW phone or email can join that SDID.
+const DEVICE_PATH := "user://device.dat"
+## Set before opening the sign-in screen to add a phone or email to the signed-in SDID, and where to go afterwards.
+var adding_contact := false
+var after_contact := "res://scenes/quarters.tscn"
+
+
+func device() -> Dictionary:
+	if not FileAccess.file_exists(DEVICE_PATH):
+		return {}
+	var f := FileAccess.open_encrypted_with_pass(DEVICE_PATH, FileAccess.READ, _key())
+	var d: Variant = JSON.parse_string(f.get_as_text()) if f else null
+	return d if d is Dictionary else {}
+
+
+func set_device(key: String, sdid: String, title: String) -> void:
+	var f := FileAccess.open_encrypted_with_pass(DEVICE_PATH, FileAccess.WRITE, _key())
+	if f:
+		f.store_string(JSON.stringify({"key": key, "sdid": sdid, "title": title}))

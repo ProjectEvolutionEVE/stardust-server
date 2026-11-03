@@ -954,5 +954,18 @@
  "Your hangar is full.": "格納庫がいっぱいです。",
  "Your hold is full.": "貨物室がいっぱいです。",
  "Your name is already set.": "名前はすでに設定されています。",
- "Your space in the cargo hold doesn't have room for that much.": "貨物倉のあなたのスペースに、それだけの余裕がありません。"
+ "Your space in the cargo hold doesn't have room for that much.": "貨物倉のあなたのスペースに、それだけの余裕がありません。",
+ "A code proves it's yours. Then either one signs you in to your SDID.": "コードであなたのものだと確認します。その後はどちらでもあなたのSDIDにサインインできます。",
+ "Add a phone or email": "電話番号かメールを追加",
+ "Add it": "追加する",
+ "Add your email too? Then either one signs you in to the same account.": "メールも追加しますか？どちらでも同じアカウントにサインインできます。",
+ "Add your phone too? Then either one signs you in to the same account.": "電話番号も追加しますか？どちらでも同じアカウントにサインインできます。",
+ "Back": "戻る",
+ "If this phone or email is new, add it to my account %s": "この電話番号かメールが新しい場合、アカウント %s に追加する",
+ "Signs in with: %s": "サインイン方法：%s",
+ "That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.": "その電話番号かメールにはすでに別のStardustアカウントがあります。クルーが2つを統合できます：ゲームのページからサポートに連絡してください。",
+ "That's already one of your sign-ins.": "それはすでにあなたのサインイン方法です。",
+ "Those are the same account.": "同じアカウントです。",
+ "Your SDID": "あなたのSDID",
+ "Your SDID: %s": "あなたのSDID：%s"
 }
