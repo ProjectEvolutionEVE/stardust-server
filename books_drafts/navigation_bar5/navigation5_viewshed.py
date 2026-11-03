@@ -1,0 +1,37 @@
+"""Viewsheds and Line of Sight: which parts of the land can be seen from a point, and how that is calculated."""
+CODE = 'navigation5_viewshed'
+BOOK = {
+    "title": 'Viewsheds and Line of Sight',
+    "subtitle": 'Terrain visibility, the algorithm, observer height, radio line of sight, uses, and errors',
+    "chapters": [
+        ('What can be seen',
+         'A viewshed is the area that can be seen from a chosen point. Hills and buildings hide land behind them. A viewshed map shows the visible land in one colour and the hidden land in another.'),
+        ('The algorithm',
+         'To test one target, the computer draws a straight line from the observer to the target. It checks the terrain height at points along that line. If the terrain rises above the line, the target is hidden.'),
+        ('Observer height',
+         'The height of the observer changes what can be seen. A person standing on the ground sees less than someone on a tower. Adding a few metres of height can open up a wide new view.'),
+        ('Radio line of sight',
+         'Radio signals travel in a path that is slightly bent by the air, and they can pass over small obstacles. Engineers design radio links with a clear path above the terrain, and they add a margin for the bending. This makes a viewshed a useful first check.'),
+        ('Uses',
+         'Viewsheds help plan lookout towers, wind farms, radio masts, and scenic routes. They also help decide where a building would be seen from far away. Good planners use them alongside other information.'),
+        ('Errors',
+         'A viewshed is only as good as the terrain data. Coarse grids can miss small ridges, and trees and buildings are often left out. A careful user checks the result on the ground.'),
+    ],
+    "test": [
+        ('What is a viewshed?',
+         [('a', 'The area that can be seen from a chosen point'), ('b', 'A type of fishing net'), ('c', 'A map of underground pipes'), ('d', 'A list of city parks')],
+         'a'),
+        ('How does the algorithm test whether a target is visible?',
+         [('a', 'It checks whether the terrain rises above the line from the observer'), ('b', 'It counts the number of trees'), ('c', "It reads the target's name"), ('d', 'It measures the colour of the sky')],
+         'a'),
+        ('How does observer height affect a viewshed?',
+         [('a', 'A higher observer sees less'), ('b', 'A higher observer can see further'), ('c', 'Height has no effect at all'), ('d', 'Height changes the terrain')],
+         'b'),
+        ('Why do radio links need a clear path above the terrain?',
+         [('a', 'Radio signals run along the ground only'), ('b', 'Radio cannot travel over hills at any height'), ('c', 'Radio signals are made of stone'), ('d', 'Obstacles can block the signal and bending must be allowed for')],
+         'd'),
+        ('What can make a viewshed wrong?',
+         [('a', 'Using a map with a clear title'), ('b', 'Checking the result on the ground'), ('c', 'Setting the observer at a high point'), ('d', 'Coarse terrain data that misses small ridges')],
+         'd'),
+    ],
+}

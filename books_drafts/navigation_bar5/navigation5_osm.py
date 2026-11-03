@@ -1,0 +1,37 @@
+"""OpenStreetMap as Mapping Infrastructure: a shared, editable map database, how it is tagged, and how its community keeps it going."""
+CODE = 'navigation5_osm'
+BOOK = {
+    "title": 'OpenStreetMap as Mapping Infrastructure',
+    "subtitle": 'The database, tagging, editing, quality metrics, the community, and uses',
+    "chapters": [
+        ('A map anyone can edit',
+         'OpenStreetMap is a free map of the world that anyone may edit. It began in 2004 and now holds data on roads, buildings, paths, and many other features. Its database is the basis for many maps and apps.'),
+        ('The database',
+         'OpenStreetMap stores points, lines, and areas, each with a set of tags. A tag is a simple key and value, such as a road type or a shop name. The database keeps the history of every change.'),
+        ('Tagging',
+         'Mappers use shared tagging guides to describe features the same way. Consistent tags let software read the data and draw consistent maps. Mappers often discuss unusual cases on the project forums.'),
+        ('Editing',
+         'Anyone can edit the map through websites and apps. Editors draw features from surveys, aerial imagery, or local knowledge. Careful editing keeps the map accurate and avoids duplicates.'),
+        ('Quality and community',
+         'Quality checks look for missing tags, odd shapes, and conflicting edits. Local mapping groups help fix weak areas and train new mappers. The community keeps the data alive with regular updates.'),
+        ('Uses',
+         'Navigation apps, emergency services, aid groups, and researchers all use the data. Anyone reusing it must follow the open licence and give credit to the contributors. Good use depends on clear credit and careful checking.'),
+    ],
+    "test": [
+        ('When did OpenStreetMap begin?',
+         [('a', 'In 2004'), ('b', 'In 1904'), ('c', 'In 1984'), ('d', 'In 2104')],
+         'a'),
+        ('What is a tag in OpenStreetMap?',
+         [('a', 'A coloured sticker on the paper'), ('b', 'A sound played by the phone'), ('c', 'A bridge over a river'), ('d', 'A simple key and value that describes a feature')],
+         'd'),
+        ('Why do mappers use shared tagging guides?',
+         [('a', 'So features are described the same way'), ('b', 'So the map can be printed in black'), ('c', 'So the database stays empty'), ('d', 'So editors can avoid the internet')],
+         'a'),
+        ('What does a quality check look for?',
+         [('a', 'The favourite colour of the editor'), ('b', 'Missing tags, odd shapes, and conflicting edits'), ('c', 'The weather at the server'), ('d', 'The number of coffee cups')],
+         'b'),
+        ('What must anyone reusing the data do?',
+         [('a', 'Follow the open licence and give credit'), ('b', 'Keep the data secret'), ('c', 'Pay the mapmakers in gold'), ('d', 'Delete the history')],
+         'a'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""The Great Trigonometrical Survey of India: a long British survey that used triangles to map the subcontinent and measure its highest peaks."""
+CODE = 'navigation5_gta_india'
+BOOK = {
+    "title": 'The Great Trigonometrical Survey of India',
+    "subtitle": 'The arc measurement, instruments, peaks and heights, influence, controversy, and legacy',
+    "chapters": [
+        ('A chain of triangles',
+         'The Great Trigonometrical Survey of India began in 1802 and ran for most of the nineteenth century. Surveyors built a network of triangles across the land. Each triangle gave the positions of its corners with high accuracy.'),
+        ('The arc measurement',
+         'The first great task was to measure an arc of the meridian, a long north-south line across the country. Measuring the arc length and the angle change gave a figure for the size of the Earth. This was a way to check and refine existing estimates of the planet.'),
+        ('Instruments',
+         'Surveyors used large theodolites, heavy instruments for measuring angles. They also used long measuring chains and, later, more careful bars. Instruments had to be protected from heat, dust, and the monsoon.'),
+        ('Peaks and heights',
+         'The survey measured the heights of many peaks in the Himalayas. Its work showed that some of the highest mountains on Earth were in this range. The peak later named Everest was one of these measured points.'),
+        ('Influence',
+         'The survey produced accurate maps that served government, trade, and defence for many decades. It trained many Indian and British workers in surveying. Its methods were used in other survey projects around the world.'),
+        ('Controversy and legacy',
+         'The survey was run by a colonial government, and its work served colonial aims. Some of the names it gave to places and peaks have been debated since. Its legacy is both a technical achievement and a reminder of the setting in which it was carried out.'),
+    ],
+    "test": [
+        ('When did the Great Trigonometrical Survey of India begin?',
+         [('a', 'In 1902'), ('b', 'In 1602'), ('c', 'In 1802'), ('d', 'In 1950')],
+         'c'),
+        ('What did the first great task of the survey involve?',
+         [('a', 'Measuring an arc of the meridian'), ('b', 'Painting a map in colour'), ('c', 'Counting the cities'), ('d', 'Building a railway station')],
+         'a'),
+        ('What were the large instruments used for measuring angles called?',
+         [('a', 'Telescopes with no lenses'), ('b', 'Hourglasses'), ('c', 'Theodolites'), ('d', 'Barometers')],
+         'c'),
+        ('The peak later named Everest was one of what?',
+         [('a', 'The cities of the survey'), ('b', 'The ships of the survey'), ('c', 'The engines of the survey'), ('d', 'The measured points of the survey')],
+         'd'),
+        ("What does the survey's legacy include?",
+         [('a', 'Nothing of note at all'), ('b', 'Both a technical achievement and debate about its colonial setting'), ('c', 'Only a single printed map'), ('d', 'A ban on maps of India')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Thermal Infrared Mapping: how sensors read the heat that the ground gives off, and how that becomes a temperature map."""
+CODE = 'navigation5_thermal_mapping'
+BOOK = {
+    "title": 'Thermal Infrared Mapping',
+    "subtitle": 'Emitted radiance, temperature, emissivity, day and night, uses, and errors',
+    "chapters": [
+        ('Heat that you cannot see',
+         'Everything warmer than absolute zero gives off infrared radiation. A thermal sensor measures this heat from space or from the air. The strength of the signal tells how warm the surface is.'),
+        ('Emitted radiance',
+         'The sensor records the radiance, which is the energy the surface gives off in a given direction. Radiance depends on both temperature and the nature of the surface. Converting it to temperature needs extra information.'),
+        ('Temperature and emissivity',
+         'Emissivity is how well a surface gives off heat compared with a perfect emitter. Water and bare soil have different emissivities, so equal temperatures can give different readings. Scientists must estimate emissivity before reporting true temperature.'),
+        ('Day and night',
+         'Surfaces heat up in the day and cool at night. Day images show the sun heating the ground, while night images show the heat that the ground has stored. Comparing the two helps reveal how a material holds heat.'),
+        ('Uses',
+         'Thermal maps help find heat leaks in buildings, track crop water stress, monitor volcanoes, and spot fires. They also help study cities, where dark roads and roofs often run hotter than parks. Each use needs its own careful interpretation.'),
+        ('Errors',
+         'The air between the sensor and the ground absorbs and adds heat. Clouds, dust, and the angle of view can also change the reading. Careful users correct for these effects and state the remaining uncertainty.'),
+    ],
+    "test": [
+        ('What does a thermal sensor measure?',
+         [('a', 'The loudness of sound from the ground'), ('b', 'The sharpness of the sky'), ('c', 'Infrared radiation given off by warm surfaces'), ('d', 'The number of people on the street')],
+         'c'),
+        ('What is emitted radiance?',
+         [('a', 'The shine of a painted wall'), ('b', 'The brightness of the moon'), ('c', 'The energy a surface gives off in a given direction'), ('d', 'The speed of a car')],
+         'c'),
+        ('What is emissivity?',
+         [('a', 'How well a surface gives off heat compared with a perfect emitter'), ('b', 'The number of windows on a building'), ('c', 'The height of the nearest tree'), ('d', 'The colour of the satellite')],
+         'a'),
+        ('Why do dark roads often run hotter in city images?',
+         [('a', 'They are colder than parks'), ('b', 'They reflect all the light away'), ('c', 'They absorb and store more heat from the sun'), ('d', 'They are made of ice')],
+         'c'),
+        ('What can make a thermal reading wrong?',
+         [('a', 'A map that is printed clearly'), ('b', 'Air, clouds, and dust between the sensor and the ground'), ('c', 'A careful correction of the air effect'), ('d', 'Using day images only')],
+         'b'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Airborne Lidar Bathymetry: using green laser pulses from an aircraft to measure the depth of clear shallow water and the seabed beneath it."""
+CODE = 'navigation5_lidar_bathymetry'
+BOOK = {
+    "title": 'Airborne Lidar Bathymetry',
+    "subtitle": 'Green lasers, water depth, refraction, seafloor returns, water clarity, and surveys',
+    "chapters": [
+        ('Lasers that reach the bottom',
+         'Airborne lidar bathymetry uses a laser fired from an aircraft to measure the depth of shallow water. Green light passes through clear water far better than red or infrared light. This lets the laser reach the seabed.'),
+        ('Green lasers',
+         'Green lasers, usually near 532 nanometres, are used because water absorbs green light less than other colours. The laser pulse splits into two returns: one from the water surface and one from the seabed. The gap between them gives the depth.'),
+        ('Water depth and refraction',
+         'Light slows down in water, so the apparent depth is less than the true depth. Surveyors correct for this refraction using a known refractive index of water. Without the correction, depths would be underestimated.'),
+        ('Seafloor returns',
+         'The seabed reflects only part of the pulse, and the return is often weak. Processing software finds the seabed signal among noise, waves, and suspended particles. Hard or dark bottoms may give weaker returns.'),
+        ('Water clarity',
+         'Murky water with much sediment or algae blocks the laser before it reaches the bottom. Surveys are planned for calm, clear days when possible. Clarity sets the maximum depth that can be measured.'),
+        ('Surveys',
+         'Bathymetry surveys map harbours, reefs, and coastal channels, and they update charts for ships. They also support flood modelling and habitat studies. Each survey is checked against ship-based soundings where possible.'),
+    ],
+    "test": [
+        ('Why is green light used in airborne bathymetry?',
+         [('a', 'Green light is the only colour the sky allows'), ('b', 'Green light is always brighter than the sun'), ('c', 'Water absorbs green light less than other colours'), ('d', 'Green light never reflects')],
+         'c'),
+        ('How is the depth found from the laser pulse?',
+         [('a', "From the colour of the pilot's jacket"), ('b', 'From the number of birds overhead'), ('c', 'From the speed of the aircraft only'), ('d', 'From the gap between the water surface return and the seabed return')],
+         'd'),
+        ('Why must refraction be corrected?',
+         [('a', 'Light slows in water, so depths would otherwise be underestimated'), ('b', 'Water makes depths deeper than they are'), ('c', 'Refraction makes the seabed disappear'), ('d', 'Refraction only affects the sky')],
+         'a'),
+        ('What makes a seabed return weak?',
+         [('a', 'A clear sky above the water'), ('b', 'Hard or dark bottoms that reflect less'), ('c', 'A bright sunny morning in the middle of the day'), ('d', 'A chart drawn on paper')],
+         'b'),
+        ('What limits the maximum depth a survey can measure?',
+         [('a', 'The colour of the aircraft'), ('b', 'The number of pilots on board'), ('c', 'Water clarity'), ('d', 'The name of the harbour')],
+         'c'),
+    ],
+}

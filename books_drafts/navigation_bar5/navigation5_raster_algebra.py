@@ -1,0 +1,37 @@
+"""Raster Map Algebra: how grids of map cells are combined, filtered, and summarised by rule."""
+CODE = 'navigation5_raster_algebra'
+BOOK = {
+    "title": 'Raster Map Algebra',
+    "subtitle": 'Cell operations, neighbourhoods, focal functions, zonal statistics, efficiency, and uses',
+    "chapters": [
+        ('A map as a grid',
+         'A raster map is a grid of cells, and each cell holds one value. Heights, temperatures, and land types can all be stored this way. Map algebra is a set of rules for combining these grids.'),
+        ('Cell operations',
+         'A cell operation combines the values in the same position across layers. Adding two rainfall grids gives a total rainfall grid. The result has one value for every cell.'),
+        ('Neighbourhoods',
+         'A neighbourhood is the group of cells around a target cell. A common neighbourhood is the eight cells that touch it. The rule can then look at the values next to each cell, not just the cell itself.'),
+        ('Focal functions',
+         'A focal function gives each cell a value based on its neighbourhood. Smoothing a noisy height grid is a common example. Edge cells need special care because some neighbours are missing.'),
+        ('Zonal statistics',
+         'Zonal statistics summarise values inside a region, such as a county or a lake. The mean height of each county is one example. The region can be a polygon while the values sit on a grid.'),
+        ('Efficiency and uses',
+         'Grid operations can be fast because each cell is handled by the same rule. Large grids need careful memory use. Map algebra is used in planning, flood risk, farming, and habitat studies.'),
+    ],
+    "test": [
+        ('What does a raster map store in each cell?',
+         [('a', 'A full paragraph of text'), ('b', 'One value'), ('c', 'A photograph of the cell'), ('d', 'A list of visitors')],
+         'b'),
+        ('What does a cell operation do?',
+         [('a', 'Deletes the grid'), ('b', 'Combines the values in the same position across layers'), ('c', 'Turns the grid into a sound'), ('d', 'Moves every cell one step north only')],
+         'b'),
+        ('What is a neighbourhood?',
+         [('a', 'A town on the map edge'), ('b', 'A type of projection'), ('c', 'The group of cells around a target cell'), ('d', 'A printing error')],
+         'c'),
+        ('What is a focal function used for in the example of a noisy height grid?',
+         [('a', 'Changing the grid into text'), ('b', 'Removing every cell with a value'), ('c', "Smoothing it using each cell's neighbours"), ('d', 'Printing the grid in colour')],
+         'c'),
+        ('What do zonal statistics summarise?',
+         [('a', 'Values inside a region such as a county'), ('b', 'The price of printing'), ('c', 'The number of users online'), ('d', 'The age of the mapmaker')],
+         'a'),
+    ],
+}

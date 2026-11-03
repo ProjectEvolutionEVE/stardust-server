@@ -1,0 +1,37 @@
+"""Multi-Sensor Image Fusion: combining a sharp black-and-white image with a coloured one to get a picture that is both detailed and true to colour."""
+CODE = 'navigation5_image_fusion'
+BOOK = {
+    "title": 'Multi-Sensor Image Fusion',
+    "subtitle": 'Resolution merges, pansharpening, colour, artefacts, quality, and uses',
+    "chapters": [
+        ('Two pictures, one result',
+         'Many satellites carry two kinds of sensor. One takes a sharp black-and-white image, and another takes a coloured image with coarser detail. Image fusion combines the two to get a picture that is both sharp and coloured.'),
+        ('Resolution merges',
+         'A resolution merge takes the fine detail from the sharp image and adds it to the colour image. The result keeps the colours of the coarse image and the edges of the fine one. The merge must line the two images up exactly.'),
+        ('Pansharpening',
+         'Pansharpening is a common name for this kind of merge, where the sharp image is called the panchromatic band. Several methods exist, such as simple ratio methods and component substitution. Each one trades colour accuracy against sharpness.'),
+        ('Colour',
+         'A good fusion keeps the colours true to the original coloured image. Too much sharpening can change the colour of fields, water, and roofs. Analysts compare the fused result with the original colours to check.'),
+        ('Artefacts',
+         'Fusion can create artefacts, such as false edges or patterns that do not exist on the ground. These come from misalignment or poor methods. Careful analysts look for these effects before using the image.'),
+        ('Quality and uses',
+         'Quality is judged by how well the fused image keeps both detail and colour, and by how well it matches the ground. Fused images help map roads, buildings, crops, and coastlines. The method is especially useful for city planning and disaster response.'),
+    ],
+    "test": [
+        ('What does image fusion combine?',
+         [('a', 'Two maps of the same sea'), ('b', 'A sharp image with a coloured image'), ('c', 'Two lists of place names'), ('d', 'Two sound recordings')],
+         'b'),
+        ('What does a resolution merge add to the colour image?',
+         [('a', 'A frame around the picture'), ('b', 'A new language'), ('c', 'The fine detail from the sharp image'), ('d', "A list of the satellite's owners")],
+         'c'),
+        ('What is the panchromatic band?',
+         [('a', 'The sharp image used in pansharpening'), ('b', 'The name of a city'), ('c', 'A type of satellite engine'), ('d', 'The colour of the sea')],
+         'a'),
+        ('What is an artefact in a fused image?',
+         [('a', 'A false edge or pattern that is not on the ground'), ('b', 'A correct road drawn in full detail'), ('c', 'A colour that matches the field'), ('d', 'A measured height of a hill')],
+         'a'),
+        ('What judges the quality of a fused image?',
+         [('a', 'How large the file is only'), ('b', 'How well it keeps detail and colour and matches the ground'), ('c', 'How many colours the printer has'), ('d', 'How old the satellite is')],
+         'b'),
+    ],
+}

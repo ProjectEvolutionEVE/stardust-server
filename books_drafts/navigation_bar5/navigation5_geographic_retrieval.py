@@ -1,0 +1,37 @@
+"""Geographic Information Retrieval: how search systems understand place names, rank results by location, and handle confusing names."""
+CODE = 'navigation5_geographic_retrieval'
+BOOK = {
+    "title": 'Geographic Information Retrieval',
+    "subtitle": 'Place names, queries, ranking, gazetteers, ambiguity, and evaluation',
+    "chapters": [
+        ('Searching by place',
+         'Geographic information retrieval is the search for documents and data by location. A person may ask for hotels near a lake or news about a river. The system must understand the place part of the question as well as the topic.'),
+        ('Place names',
+         'Place names are written in many forms, and one place can have several names. A system must recognise spelling variants and names in other languages. It also finds the place names hidden in ordinary text.'),
+        ('Queries',
+         'A location query combines a topic with a place or an area. Users may name a town, draw an area on a map, or say near me. The system turns each form into a location it can compare.'),
+        ('Ranking',
+         'Results are ranked by how well they match the topic and how close they are to the place. Ranking may weigh how many times a place is named and how important the place is. Good ranking puts useful results first.'),
+        ('Gazetteers',
+         'A gazetteer is a list of places with their names, types, and coordinates. Well-known examples are used to link names in text to real locations. Gazetteers must be kept up to date as places change their names.'),
+        ('Ambiguity and evaluation',
+         'Many names are shared. Paris can mean the French capital or a town in Texas. Systems use context such as nearby names to choose the right place. Engineers test the system with human judges and compare the results with careful records.'),
+    ],
+    "test": [
+        ('What is geographic information retrieval?',
+         [('a', 'Searching for documents and data by location'), ('b', 'Mining gold from rivers'), ('c', 'Drawing contour lines by hand'), ('d', 'Counting cars at a junction')],
+         'a'),
+        ('Why must a system handle spelling variants of place names?',
+         [('a', 'Place names are always spelled the same'), ('b', 'Spelling changes the coordinates to zero'), ('c', 'One place can be written in several forms'), ('d', 'Variants are banned by law')],
+         'c'),
+        ('What is a gazetteer?',
+         [('a', 'A list of places with names, types, and coordinates'), ('b', 'A type of camera lens'), ('c', 'A printed weather forecast'), ('d', 'A tool for drawing circles')],
+         'a'),
+        ('How does a system handle the name Paris?',
+         [('a', 'It uses nearby context to choose the right place'), ('b', 'It always picks France'), ('c', 'It refuses to answer'), ('d', 'It changes the name to Texas')],
+         'a'),
+        ('How are these systems tested?',
+         [('a', 'By guessing the answers'), ('b', 'With human judges and careful comparison of results'), ('c', 'By printing the results on paper only'), ('d', 'By never checking the results')],
+         'b'),
+    ],
+}

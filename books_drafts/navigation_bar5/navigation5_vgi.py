@@ -1,0 +1,37 @@
+"""Volunteered Geographic Information: maps and data made by ordinary people, and how their quality is checked."""
+CODE = 'navigation5_vgi'
+BOOK = {
+    "title": 'Volunteered Geographic Information',
+    "subtitle": 'Crowdsourced data, quality, contributors, biases, verification, and licences',
+    "chapters": [
+        ('Maps made by many hands',
+         'Volunteered geographic information is location data gathered by ordinary people, often with phones or with a shared map. Geographer Michael Goodchild gave the idea its name in 2007. It has grown into a major source of map data.'),
+        ('Quality',
+         'The quality of crowd data varies. Some contributors are careful and expert, and others make honest mistakes. Good projects set clear standards and show how confident each record is.'),
+        ('Contributors',
+         'Contributors differ in skill, time, and interest. A few people make most of the edits in many projects. Projects that welcome new users keep the data fresh.'),
+        ('Biases',
+         'Crowd data often covers busy places better than quiet ones. Areas with fewer people to contribute may stay thin or out of date. Analysts must check where the gaps are before trusting the map.'),
+        ('Verification',
+         'Projects check new data against other sources, such as aerial photos, official records, or other contributors. Reviews and automatic checks catch many errors. Verification takes effort, so it must be planned.'),
+        ('Licences',
+         'Crowd data is shared under licences that say who may use it and how. A licence can require credit, or require that changes be shared back. Users must follow the licence terms before they reuse the data.'),
+    ],
+    "test": [
+        ('What is volunteered geographic information?',
+         [('a', 'Maps printed by governments only'), ('b', 'Data from the Moon'), ('c', 'Location data gathered by ordinary people'), ('d', 'A type of printer')],
+         'c'),
+        ('Who gave the idea its name in 2007?',
+         [('a', 'Edsger Dijkstra'), ('b', 'Patrick Moran'), ('c', 'Ptolemy'), ('d', 'Michael Goodchild')],
+         'd'),
+        ('What is a common bias in crowd data?',
+         [('a', 'Every place is covered equally'), ('b', 'Busy places tend to be covered better than quiet ones'), ('c', 'Crowd data never has gaps'), ('d', 'Crowd data is always out of date only in winter')],
+         'b'),
+        ('How do projects check new data?',
+         [('a', 'By trusting the first edit always'), ('b', 'By deleting every edit'), ('c', 'By comparing it with other sources and running reviews'), ('d', 'By printing it')],
+         'c'),
+        ('What does a licence tell a user?',
+         [('a', 'The weather for the next week'), ('b', 'The height of the nearest hill'), ('c', 'The number of editors in the world'), ('d', 'Who may use the data and how')],
+         'd'),
+    ],
+}

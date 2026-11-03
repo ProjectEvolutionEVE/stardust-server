@@ -1,0 +1,37 @@
+"""Eratosthenes and the Earth's Size: how a shadow in two cities let an ancient scholar estimate the size of the whole Earth."""
+CODE = 'navigation5_eratosthenes'
+BOOK = {
+    "title": "Eratosthenes and the Earth's Size",
+    "subtitle": 'The shadow at Syene, the angle, the distance, the estimate, sources, and error',
+    "chapters": [
+        ('A well and a shadow',
+         'Eratosthenes was a scholar in Alexandria, in Egypt, around 240 BC. He had heard that at noon on the midsummer day, the sun shone straight down a well in Syene, to the south. In Alexandria, a stick cast a clear shadow at the same moment.'),
+        ('The angle',
+         "Eratosthenes measured the angle of the shadow at Alexandria. It was about one fiftieth of a full turn, or roughly seven degrees. Since the sun's rays were nearly parallel, this angle equalled the difference in latitude between the two cities."),
+        ('The distance',
+         "He needed the distance between the two cities. Travellers' reports gave the distance as about five thousand stadia. A stadion was a unit of length, and its exact size is still debated among historians."),
+        ('The estimate',
+         "Taking the angle as one fiftieth of the circle, the Earth's full circumference came out as about fifty times the distance between the cities. This gave a result of roughly forty to fifty thousand kilometres, depending on the stadion used."),
+        ('Sources',
+         'Our knowledge of his method comes from later writers, such as Cleomedes and Strabo, who described it in their own works. The original text by Eratosthenes has not survived in full. Historians compare these accounts with care.'),
+        ('Error',
+         'The result was close to the modern value of about forty thousand kilometres around the Earth, but the closeness depends on the length of the stadion chosen. Other choices give different answers. The method itself was sound, even when the inputs were rough.'),
+    ],
+    "test": [
+        ('Where was Eratosthenes working when he made his estimate?',
+         [('a', 'Alexandria'), ('b', 'Paris'), ('c', 'Beijing'), ('d', 'London')],
+         'a'),
+        ('What did the sun do at Syene at noon on midsummer day?',
+         [('a', 'Stayed hidden behind a cloud all day'), ('b', 'Rose in the west'), ('c', 'Shone straight down a well'), ('d', 'Made a long shadow to the north')],
+         'c'),
+        ('What was the shadow angle at Alexandria, roughly?',
+         [('a', 'About seventy degrees'), ('b', 'Exactly ninety degrees'), ('c', 'Zero degrees'), ('d', 'About seven degrees')],
+         'd'),
+        ('Why does the result depend on the stadion used?',
+         [('a', 'Because the stadion is a type of ship'), ('b', 'Because the stadion changes colour'), ('c', 'Because the stadion is always exact'), ('d', 'Because the length of a stadion is still debated')],
+         'd'),
+        ('What do we know of his method mostly from?',
+         [('a', 'A modern satellite photo'), ('b', 'A printed atlas from the year 1900'), ('c', 'Later writers such as Cleomedes and Strabo'), ('d', 'A signed letter from Syene')],
+         'c'),
+    ],
+}

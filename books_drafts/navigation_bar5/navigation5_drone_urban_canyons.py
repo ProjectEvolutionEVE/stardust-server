@@ -1,0 +1,37 @@
+"""Drone Navigation in Urban Canyons: flying among tall buildings, where satellite signals bounce and gusts swirl."""
+CODE = 'navigation5_drone_urban_canyons'
+BOOK = {
+    "title": 'Drone Navigation in Urban Canyons',
+    "subtitle": 'Reflected signals, wind, obstacles, sensors, rules, and flight plans',
+    "chapters": [
+        ('A street between tall walls',
+         'An urban canyon is a street lined by tall buildings. The walls block some of the sky and reflect the rest. A drone flying here faces a harder job than one flying over open country.'),
+        ('Reflected satellite signals',
+         'Satellite signals can bounce off glass and steel before they reach the drone. These late signals, called multipath, make the position estimate jump or drift. A receiver that can tell direct signals from reflections gives a steadier answer.'),
+        ('Wind between buildings',
+         'Wind speeds up and swirls in narrow streets. A drone may be pushed sideways or pulled down without warning. Flight controllers need to react quickly and keep the drone steady.'),
+        ('Obstacles and sensors',
+         'Cranes, wires, signs, and other drones can appear suddenly. Cameras, radar, and distance sensors help the drone see them. Each sensor has blind spots, so designers use more than one.'),
+        ('Rules',
+         'Cities and countries set rules for where drones may fly, how high they may go, and who must be told. Pilots must follow these rules and keep their drone in sight or within the rules for beyond-sight flight. The rules change from place to place.'),
+        ('Flight plans',
+         'A flight plan sets the route, the height, the speed, and the safe places to land. Good plans leave room for wind and signal loss. Planners check the plan against maps and recent data before each flight.'),
+    ],
+    "test": [
+        ('What is an urban canyon?',
+         [('a', 'A deep valley of open farmland'), ('b', 'A street lined by tall buildings'), ('c', 'A cave under a city'), ('d', 'A river with high banks')],
+         'b'),
+        ('What is multipath in satellite signals?',
+         [('a', 'A second satellite in the same orbit'), ('b', 'Signals that bounce off buildings before they reach the drone'), ('c', 'A signal sent in several languages'), ('d', 'A clock built into the drone')],
+         'b'),
+        ('Why does wind need care between buildings?',
+         [('a', 'Buildings stop all wind completely'), ('b', 'Wind makes the drone heavier'), ('c', 'Narrow streets can speed up and swirl the wind'), ('d', 'Wind turns off the cameras')],
+         'c'),
+        ('Why do designers use more than one kind of sensor?',
+         [('a', 'One sensor is always broken'), ('b', 'Sensors are needed only for colour'), ('c', 'Sensors make the drone lighter'), ('d', 'Each sensor has blind spots that others can cover')],
+         'd'),
+        ('What should a good flight plan leave room for?',
+         [('a', 'Wind and loss of signal'), ('b', 'Extra passengers in the drone'), ('c', 'A longer flight in the dark'), ('d', 'More paint on the drone')],
+         'a'),
+    ],
+}

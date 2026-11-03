@@ -1,0 +1,37 @@
+"""Swarm Navigation: how many simple robots or craft can find their way together by following local rules."""
+CODE = 'navigation5_swarm_nav'
+BOOK = {
+    "title": 'Swarm Navigation',
+    "subtitle": 'Local rules, coordination, formations, and what happens when parts fail',
+    "chapters": [
+        ('Many simple parts',
+         'A swarm is a group of simple units that work together without a leader giving every order. Each unit follows a few local rules and looks only at its neighbours. Birds in a flock and fish in a school work this way.'),
+        ('Local rules',
+         'Craig Reynolds showed in 1987 that three rules can produce lifelike flocking: keep a small distance from neighbours, match their heading, and move toward the middle of nearby units. Each rule uses only what a unit can sense close by. The group shape then appears on its own.'),
+        ('Coordination and formations',
+         'Swarms can hold a formation by sharing a few facts, such as a common target or a shared sense of direction. The formation can change shape to pass through a gap and then reform. Good coordination keeps the group together without making it rigid.'),
+        ('Communication',
+         'Units can talk to their neighbours by radio, light, or simple signals. Too much traffic slows the whole group down. A good swarm sends only the short messages it needs to stay useful.'),
+        ('When parts fail',
+         'A swarm is strong because no single unit is essential. When one unit fails, its neighbours adjust their paths and carry on. Designers test what happens when many units fail at once, because the group must still reach its goal in a smaller form.'),
+        ('What swarms are used for',
+         'Swarms help with searching large areas, mapping ground that is hard to reach, and spreading out sensors over a wide zone. They can cover ground faster than one large machine. Their real test is whether they still work when the world does not behave as planned.'),
+    ],
+    "test": [
+        ('In a swarm, how do most units decide what to do?',
+         [('a', 'They wait for orders from one leader'), ('b', 'They copy a random unit each second'), ('c', 'They follow simple local rules based on nearby neighbours'), ('d', 'They read a single master map')],
+         'c'),
+        ('What did Craig Reynolds show about flocking in 1987?',
+         [('a', 'Three simple rules can produce flock-like motion'), ('b', 'Birds need a leader to fly in a group'), ('c', 'Flocks can only form in still air'), ('d', 'Flocking needs a central radio tower')],
+         'a'),
+        ('Why must a swarm keep its communication short?',
+         [('a', 'Long messages are banned by law'), ('b', 'Units cannot send any message at all'), ('c', 'Too much traffic slows the whole group down'), ('d', 'Short messages are always more accurate')],
+         'c'),
+        ('What makes a swarm strong when a unit breaks?',
+         [('a', 'One unit is always kept in reserve'), ('b', 'No single unit is essential, so the others adjust'), ('c', 'The broken unit repairs itself at once'), ('d', 'The whole swarm stops and waits')],
+         'b'),
+        ('Which task suits a swarm well?',
+         [('a', 'Holding one exact fixed point forever'), ('b', 'Storing a single large cargo'), ('c', 'Printing a map on paper'), ('d', 'Searching a large area quickly')],
+         'd'),
+    ],
+}

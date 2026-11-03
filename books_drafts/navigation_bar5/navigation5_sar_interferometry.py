@@ -1,0 +1,37 @@
+"""Synthetic Aperture Radar Interferometry: how the phase of two radar images reveals tiny changes in ground height and movement."""
+CODE = 'navigation5_sar_interferometry'
+BOOK = {
+    "title": 'Synthetic Aperture Radar Interferometry',
+    "subtitle": 'Phase differences, baselines, ground motion, phase unwrapping, coherence, and uses',
+    "chapters": [
+        ('Two radar looks at one place',
+         'Synthetic aperture radar, or SAR, takes images from a satellite that flies over the same ground again and again. Each image records the strength and the phase of the returning radar wave. Comparing two images of the same place reveals fine detail about the ground.'),
+        ('Phase differences',
+         'The phase is the position of the wave in its cycle. When the ground moves even a little, the distance to the satellite changes and so does the phase. The difference between two images shows that change as coloured fringes.'),
+        ('Baselines',
+         'The baseline is the distance between the two satellite positions. A longer baseline makes the phase more sensitive to height. Choosing the baseline is a trade-off between sensitivity and how well the two images still match.'),
+        ('Ground motion',
+         'Interferometry can track slow movement such as land sinking over a mining area or swelling near a volcano. Measurements are often accurate to a few millimetres over time. Repeated passes build up a picture of how the land changes.'),
+        ('Phase unwrapping',
+         'The phase repeats every full cycle, so the raw measurement wraps around. Phase unwrapping counts the full cycles between neighbouring points to recover the true change. Errors in unwrapping can create false jumps in the result.'),
+        ('Coherence and uses',
+         'Coherence measures how well the two images match. Vegetation, snow, and changing surfaces lower coherence and make results noisy. Scientists use these measurements to study earthquakes, subsidence, and glaciers.'),
+    ],
+    "test": [
+        ('What does SAR interferometry compare?',
+         [('a', 'The taste of two maps'), ('b', 'The weight of two satellites'), ('c', 'The prices of two cameras'), ('d', 'The phase of two radar images of the same place')],
+         'd'),
+        ('What do coloured fringes in an interferogram show?',
+         [('a', 'The colour of the satellite'), ('b', 'The names of the cities'), ('c', 'Phase differences caused by ground change'), ('d', 'The number of trees')],
+         'c'),
+        ('What is the baseline in this method?',
+         [('a', 'The distance between the two satellite positions'), ('b', 'The height of the ground above the sea'), ('c', 'The time of day of the image'), ('d', 'The size of the radar screen')],
+         'a'),
+        ('What does phase unwrapping do?',
+         [('a', 'Removes all the data'), ('b', 'Paints the image blue'), ('c', 'Counts full cycles to recover the true change'), ('d', 'Turns the satellite off')],
+         'c'),
+        ('What lowers coherence and makes results noisy?',
+         [('a', 'Changing surfaces such as vegetation or snow'), ('b', 'Flat, stable bare rock only'), ('c', 'Two images taken on the same day'), ('d', 'A clear view of the sky')],
+         'a'),
+    ],
+}

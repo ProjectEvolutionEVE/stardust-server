@@ -1,0 +1,37 @@
+"""GPS-Denied Navigation: how a vehicle keeps its bearings when satellite signals are blocked or jammed."""
+CODE = 'navigation5_gps_denied'
+BOOK = {
+    "title": 'GPS-Denied Navigation',
+    "subtitle": 'Inertial and visual methods, time limits, drift, and testing',
+    "chapters": [
+        ('When the signal is gone',
+         'Satellite signals are weak and can be blocked by buildings, tunnels, dense forest, or deliberate jamming. A vehicle that loses them must find its way by other means. Good planning expects this loss and prepares for it.'),
+        ('Inertial navigation',
+         'An inertial unit measures how the vehicle speeds up and turns, then adds those changes up to estimate its position. It needs no outside signal. Small sensor errors grow with time, so the estimate drifts.'),
+        ('Visual methods',
+         'A camera can match what it sees to a known map or to earlier images. Recognising landmarks helps cancel drift. Poor light, fog, or repeating scenery can confuse the match.'),
+        ('Time limits',
+         'Every method has a safe time window. The longer a vehicle relies on inertial sensors alone, the less it can trust its position. Designers set a time limit and plan a safe action when it runs out.'),
+        ('Choices in the field',
+         'The vehicle must choose when to trust a landmark, when to slow down, and when to stop. A careful choice may cost time but keep the vehicle safe. Operators set these choices before the mission starts.'),
+        ('Drift and testing',
+         'Engineers measure drift on long test runs with known routes and check the result against ground truth. They test in the dark, in rain, and over repeating ground. A method that passes only in clear daylight is not ready for real use.'),
+    ],
+    "test": [
+        ('Why does a vehicle lose satellite signals?',
+         [('a', 'They are blocked by buildings, tunnels, or jamming'), ('b', 'Satellites run out of fuel every hour'), ('c', 'Signals are always stronger underground'), ('d', 'The vehicle is painted too brightly')],
+         'a'),
+        ('What does an inertial unit measure?',
+         [('a', 'The colour of the sky'), ('b', 'The sound of nearby traffic'), ('c', 'The number of satellites overhead'), ('d', 'How the vehicle speeds up and turns')],
+         'd'),
+        ('Why does inertial navigation drift over time?',
+         [('a', 'Small sensor errors grow as they are added up'), ('b', 'The Earth stops turning'), ('c', 'Gravity disappears'), ('d', 'The vehicle becomes heavier by the hour')],
+         'a'),
+        ('What can make a visual match go wrong?',
+         [('a', 'Too many landmarks in clear light'), ('b', 'A map with known routes'), ('c', 'Repeating scenery and poor light or fog'), ('d', 'A vehicle that is very still')],
+         'c'),
+        ('What is the purpose of a time limit?',
+         [('a', 'To set the length of the vehicle paint job'), ('b', 'To count how many passengers board'), ('c', 'To turn the lights off'), ('d', 'To know when inertial estimates can no longer be trusted')],
+         'd'),
+    ],
+}

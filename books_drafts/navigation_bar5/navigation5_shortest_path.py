@@ -1,0 +1,37 @@
+"""Shortest Paths on Road Networks: how a road map becomes a graph, and how routing software finds the quickest way."""
+CODE = 'navigation5_shortest_path'
+BOOK = {
+    "title": 'Shortest Paths on Road Networks',
+    "subtitle": "The graph, Dijkstra's method, speed-ups, contraction, real-time routing, and traffic",
+    "chapters": [
+        ('Roads as a graph',
+         'A road network can be written as a graph. Junctions become nodes and road sections become edges. Each edge carries a cost, such as its length or its travel time.'),
+        ("Dijkstra's method",
+         'Edsger Dijkstra published his method for shortest paths in 1959. It starts at one node and always grows the search from the cheapest known point. It finds the shortest route to every other node when all costs are zero or more.'),
+        ('Speed-ups',
+         'Plain Dijkstra can be slow on a whole country. Techniques such as bidirectional search and goal direction explore far fewer nodes. Each technique keeps the answer correct while cutting the work.'),
+        ('Contraction',
+         'Contraction hierarchies rank the nodes by importance and add shortcut edges. A query then climbs up the hierarchy from both ends and meets in the middle. This makes answers very fast after a one-time preparation.'),
+        ('Real-time routing',
+         'A routing service must answer many requests a second. It keeps the preparation in memory and returns a route in a fraction of a second. Good services also update when roads close.'),
+        ('Traffic',
+         'Travel times change with traffic, weather, and time of day. A router can use recent speeds to update edge costs. The fastest route at noon may not be the fastest at rush hour.'),
+    ],
+    "test": [
+        ('How is a road network written as a graph?',
+         [('a', 'Roads are dots and towns are lines'), ('b', 'Every house is an edge'), ('c', 'Junctions are nodes and road sections are edges'), ('d', 'Traffic lights are the only nodes')],
+         'c'),
+        ('In what year did Edsger Dijkstra publish his shortest path method?',
+         [('a', '1859'), ('b', '1995'), ('c', '1700'), ('d', '1959')],
+         'd'),
+        ('What does contraction add to a network?',
+         [('a', 'Extra roads that do not exist'), ('b', 'Colour to each junction'), ('c', 'A new country'), ('d', 'Shortcut edges between ranked nodes')],
+         'd'),
+        ('Why do routing services keep preparation in memory?',
+         [('a', 'So they can forget the roads'), ('b', 'So they use less electricity than a light bulb'), ('c', 'So they can answer requests quickly'), ('d', 'So they can sell the map')],
+         'c'),
+        ('Why can the fastest route change at different times of day?',
+         [('a', 'Traffic changes the travel time along roads'), ('b', 'Roads change length at night'), ('c', "Dijkstra's method stops working at noon"), ('d', 'The map is printed differently')],
+         'a'),
+    ],
+}
