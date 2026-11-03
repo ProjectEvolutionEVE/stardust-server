@@ -15,7 +15,7 @@ with open(out, "a", encoding="utf-8") as fh:
         name = os.path.basename(f)
         if name in done: continue
         t = time.time()
-        segs, _ = m.transcribe(load(f), language=lang, beam_size=5, condition_on_previous_text=False, vad_filter=False)
+        segs, _ = m.transcribe(load(f), language=lang, beam_size=5, condition_on_previous_text=False, vad_filter=os.environ.get("WHISPER_VAD") == "1")   # WHISPER_VAD=1 splits long lines: Devanagari hits the 30-second window's token limit
         text = " ".join(s.text.strip() for s in segs)
         fh.write(f"{name}\t{text}\n"); fh.flush()
         print(f"{name} {time.time()-t:.0f}s", flush=True)
