@@ -11,10 +11,12 @@ The test lines are the hardest in each language: the sounds voice models most of
 English words. A voice must pass these before Inara speaks the language for players. The Groq key (Whisper large-v3,
 the round-trip ear) comes from GROQ_API_KEY or a hidden prompt; it is never printed or saved.
 
-    python3 tools/inara-certify.py --lang ar                         # the recorded set in ~/Desktop/inara-ar/raw
-    python3 tools/inara-certify.py --lang ar --dir ~/Desktop/inara-ar-test/<voice>   # a candidate voice's test takes
+    python3 tools/inara-certify.py --lang ar                         # the recorded set in the Arabic folder (tools/voice_paths.py)
+    python3 tools/inara-certify.py --lang ar --dir <folder of test takes>   # a candidate voice's test takes
 """
 import argparse, getpass, json, os, subprocess, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 GAUNTLET = os.path.expanduser("~/Quavara/Quavril/tools/certify-voice.py")
@@ -28,11 +30,11 @@ HARD = {"ar": ["INARA-WELCOME-001", "INARA-STORY-001", "INARA-FAQ-013", "INARA-F
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", required=True)
-    ap.add_argument("--dir", help="folder of the takes to test (default ~/Desktop/inara-<lang>/raw)")
+    ap.add_argument("--dir", help="folder of the takes to test (default: the language's folder, raw/)")
     a = ap.parse_args()
     if a.lang not in HARD:
         sys.exit(f"No test lines chosen for '{a.lang}' yet.")
-    folder = os.path.expanduser(a.dir or f"~/Desktop/inara-{a.lang}/raw")
+    folder = os.path.expanduser(a.dir) if a.dir else os.path.join(VP.voice_dir(a.lang), "raw")
     text = json.load(open(os.path.join(HERE, "..", "docs", "inara-lines", a.lang + ".json")))
     env = dict(os.environ)
     env["GROQ_API_KEY"] = env.get("GROQ_API_KEY") or getpass.getpass("Groq API key (hidden, not saved): ").strip()

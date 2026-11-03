@@ -38,7 +38,7 @@ python3 tools/upload-voice.py --dry-run
 python3 tools/upload-voice.py
 ```
 
-The first line shows what would be sent; the second sends it. It walks `~/Desktop/inara-<set>/` and sends one
+The first line shows what would be sent; the second sends it. It walks `~/Desktop/Stardust - Terra Deleta/Inara-Voice/Stardust-TerraDeleta_Inara_<set>_<Voice>/` (tools/voice_paths.py) and sends one
 version of each line (Eric's ruling):
 - **radio/** for lines heard in flight: `INARA-TWR-*`, `INARA-RING-*`, `INARA-TOWER-*`
 - **raw/** (plain) for lines aboard the ship: `INARA-STORY-*`, `-WELCOME-*`, `-FAQ-*`, `-MARKET-*`, `-HINT-*`, `-DIRECTION-*`

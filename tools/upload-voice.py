@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Upload Inara's recorded lines from Eric's Mac to the game server's voice volume (Eric 10-20; docs/voice-setup.md).
 
-Walks ~/Desktop/inara-<set>/ (made by tools/inara-record.py) and uploads ONE version of each line, per Eric's ruling:
+Walks each language's folder (tools/voice_paths.py; made by tools/inara-record.py) and uploads ONE version of each line, per Eric's ruling:
   · RADIO version (radio/<ID>.mp3) for lines heard in flight: INARA-TWR-*, INARA-RING-*, INARA-TOWER-*
   · PLAIN version (raw/<ID>.mp3) for lines aboard the ship: INARA-STORY-*, -CALL-*, -WELCOME-*, -FAQ-*, -MARKET-*, -HINT-*, -DIRECTION-*
 A line whose chosen version is missing is skipped and listed (never swapped for the other version).
 Only files the server doesn't have yet are sent, so it is safe to run again. The key is read from ~/.stardust-upload-key
 and is never printed.
 
-    python3 tools/upload-voice.py                       # every language folder on the Desktop
+    python3 tools/upload-voice.py                       # every language folder in Inara-Voice
     python3 tools/upload-voice.py --only de             # one language
     python3 tools/upload-voice.py --dry-run             # show what would be sent
 """
 import argparse, glob, json, os, sys, urllib.request, urllib.error
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 SERVER = "https://game-server-production-9863.up.railway.app"
 SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja", "ar"}
@@ -58,10 +60,9 @@ def main():
     except urllib.error.HTTPError as e:
         sys.exit("The server refused the upload key (HTTP %d). Check it matches DFG_UPLOAD_KEY on Railway." % e.code
                  if e.code == 403 else f"The server answered HTTP {e.code}.")
-    folders = sorted(glob.glob(os.path.expanduser("~/Desktop/inara-*")))
+    folders = VP.language_dirs()
     total_sent = 0
-    for folder in folders:
-        s = os.path.basename(folder)[len("inara-"):]
+    for s, folder in folders.items():
         if s not in SETS or (a.only and s != a.only):
             continue
         ids = {os.path.splitext(os.path.basename(p))[0] for v in ("raw", "radio") for p in glob.glob(os.path.join(folder, v, "*.mp3"))}

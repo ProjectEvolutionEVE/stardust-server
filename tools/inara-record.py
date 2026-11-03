@@ -6,14 +6,16 @@ line through ElevenLabs (recorded files only; never live speech for players, rul
   raw/<ID>.mp3    the voice as ElevenLabs made it
   radio/<ID>.mp3  the Tower radio sound, the same method as Signal's: 380-3200 Hz band, compressor, light hiss (needs ffmpeg)
 Lines with a live number in them ({distance}) are skipped: the distance-free versions are recorded instead.
-A line already saved with the same words (here or in ~/Desktop/inara-<lang>) is never recorded again; it asks before paying.\nLines must be spoken words only: numbers spelled out, no quotes, brackets or symbols (Eric 10-27).
+A line already saved with the same words (here or in the language's folder, tools/voice_paths.py) is never recorded again; it asks before paying.\nLines must be spoken words only: numbers spelled out, no quotes, brackets or symbols (Eric 10-27).
 The API key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printed or saved.
 
     python3 tools/inara-record.py --list            # count the lines and characters, record nothing
-    python3 tools/inara-record.py                   # record everything into ~/Desktop/inara-en
-    python3 tools/inara-record.py --lang de         # German, from docs/inara-lines/de.json, into ~/Desktop/inara-de
+    python3 tools/inara-record.py                   # record everything into the English folder (tools/voice_paths.py)
+    python3 tools/inara-record.py --lang de         # German, from docs/inara-lines/de.json, into the German folder
 """
 import argparse, getpass, json, os, re, shutil, subprocess, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DOCS = [os.path.join(HERE, "..", "docs", f) for f in ("inara-recording-script.md", "inara-tower-dialog.md")]
@@ -79,7 +81,7 @@ def main():
                     "--out, ignoring the old recordings (they were in another voice)")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
-    a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
+    a.out = os.path.expanduser(a.out) if a.out else VP.voice_dir(a.lang)
     a.voice = a.voice or VOICE_BY_LANG.get(a.lang)
     if not a.voice and not a.list:
         sys.exit(f"No voice is chosen for '{a.lang}' yet (docs/voice-models.md). Eric picks one; then add it to VOICE_BY_LANG.")
@@ -88,16 +90,16 @@ def main():
     if a.ids:
         L = {k: v for k, v in L.items() if k in set(a.ids.split(","))}
     # Never pay twice (Eric 10-27, after a whole set was recorded again into a fresh folder): a line counts as recorded
-    # if this folder OR the language's main folder (~/Desktop/inara-<lang>, the set that gets uploaded) already has it
+    # if this folder OR the language's main folder (VP.voice_dir, the set that gets uploaded) already has it
     # with the SAME words. A line found only in the main folder is copied over, not recorded. A line whose words
     # changed is recorded again.
     def saved_text(folder):
         try: return json.load(open(os.path.join(folder, "lines.json")))
         except Exception: return {}
-    main_dir = os.path.expanduser(f"~/Desktop/inara-{a.lang}")
+    main_dir = VP.voice_dir(a.lang)
     have = {}
     if a.new_voice and os.path.abspath(os.path.expanduser(a.out)) == os.path.abspath(main_dir):
-        sys.exit(f"With --new-voice, record into a fresh folder (--out ~/Desktop/inara-{a.lang}-new), so the old set stays until the new one is checked.")
+        sys.exit(f"With --new-voice, record into a fresh folder (--out '{VP.voice_dir(a.lang)}-new'), so the old set stays until the new one is checked.")
     for folder in ([a.out] if a.new_voice else dict.fromkeys([a.out, main_dir])):
         said = saved_text(folder)
         for k, v in L.items():

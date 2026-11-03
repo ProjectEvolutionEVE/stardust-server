@@ -3,11 +3,13 @@
 
 Makes a single RECORDED file through ElevenLabs (allowed: recorded files only, never live speech for players).
 The API key comes from ELEVENLABS_API_KEY, or is typed at a hidden prompt; it is never printed or saved.
-Saves Inara-Lily-sample.mp3 to the Desktop.
+Saves Inara-Lily-sample.mp3 in Inara-Voice/voice-samples (tools/voice_paths.py).
 
     python3 tools/inara-voice-sample.py
 """
 import getpass, json, os, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 LINES = ("Clear of the bow. Good luck out in the rings. "                       # INARA-TWR-004
          "You're aboard an exploratory science and research starship, Trainee. "
@@ -30,6 +32,6 @@ v = lily[0]
 print(f"Using voice: {v['name']}")
 audio = call(f"https://api.elevenlabs.io/v1/text-to-speech/{v['voice_id']}", key,
              {"text": LINES, "model_id": MODEL})
-out = os.path.expanduser("~/Desktop/Inara-Lily-sample.mp3")
+out = os.path.join(VP.ROOT, "voice-samples", "Inara-Lily-sample.mp3"); os.makedirs(os.path.dirname(out), exist_ok=True)
 open(out, "wb").write(audio)
 print(f"Saved {out} ({len(audio):,} bytes). Double-click it to listen.")
