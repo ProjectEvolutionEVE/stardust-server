@@ -241,6 +241,8 @@ func _hide_keypad() -> void:
 
 ## A tap anywhere outside the box being typed in puts the keypad away (Eric 11-03).
 func _input(e: InputEvent) -> void:
+	if e.device == InputEvent.DEVICE_ID_EMULATION:
+		return
 	if (e is InputEventScreenTouch or e is InputEventMouseButton) and e.pressed:
 		var f := get_viewport().gui_get_focus_owner()
 		if f is LineEdit and not f.get_global_rect().has_point(e.position):
