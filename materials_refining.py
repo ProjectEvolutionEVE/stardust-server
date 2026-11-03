@@ -162,8 +162,8 @@ def entry(code):
 
 
 # ── THE COLOUR CHART (Eric 11-03): every material belongs to one or more general kinds of component, each with its colour,
-# like a hazmat chart, so a designer can see at a glance which materials a blueprint will need. The first group listed
-# for a material is its main colour.
+# like a hazmat chart, so a designer can see at a glance which materials a blueprint will need. A material carries the
+# colour of EVERY kind its real uses serve (Eric 11-03), matched to its "Used for" line; the first is its main colour.
 GROUPS = [
     ("structural", "Structural & Frames", "4a90d9", "blue", "hulls, frames, beams, panels, pressure vessels"),
     ("electrical", "Electrical & Electronics", "f5c518", "yellow", "wiring, circuits, contacts, chips, solar cells"),
@@ -181,20 +181,20 @@ COMPONENTS = {
     "mat-iron": ["structural", "magnetic"], "mat-nickel": ["structural", "magnetic", "power"],
     "mat-native-iron-nickel": ["structural"], "mat-cobalt": ["power", "magnetic"], "mat-copper": ["electrical"],
     "mat-aluminium": ["structural", "electrical"], "mat-titanium": ["structural"], "mat-magnesium": ["structural", "chemical"],
-    "mat-zinc": ["structural", "power"], "mat-tin": ["electrical"], "mat-lead": ["shielding", "power"],
-    "mat-chromium": ["structural"], "mat-manganese": ["structural", "power"], "mat-tungsten": ["shielding", "tools"],
-    "mat-molybdenum": ["structural"], "mat-lithium": ["power"], "mat-silver": ["electrical"],
+    "mat-zinc": ["structural", "power"], "mat-tin": ["electrical", "structural"], "mat-lead": ["shielding", "power"],
+    "mat-chromium": ["structural", "tools"], "mat-manganese": ["structural", "power"], "mat-tungsten": ["shielding", "tools", "power"],
+    "mat-molybdenum": ["structural"], "mat-lithium": ["power", "structural"], "mat-silver": ["electrical"],
     "mat-gold": ["electrical", "shielding"], "mat-platinum": ["chemical", "electrical"],
-    "mat-palladium": ["chemical", "electrical"], "mat-iridium": ["shielding"],
+    "mat-palladium": ["chemical", "electrical"], "mat-iridium": ["shielding", "electrical"],
     "mat-silicon": ["electrical", "power", "building"], "mat-carbon": ["chemical", "shielding", "power"],
-    "mat-diamond": ["tools"], "mat-boron": ["shielding", "tools"], "mat-sulfur": ["chemical"],
+    "mat-diamond": ["tools", "electrical"], "mat-boron": ["shielding", "tools", "building"], "mat-sulfur": ["chemical", "power"],
     "mat-phosphorus": ["life", "chemical"], "mat-neodymium": ["magnetic"], "mat-dysprosium": ["magnetic"],
     "mat-water-ice": ["life", "shielding", "power"], "mat-hydrogen": ["power", "chemical"], "mat-oxygen": ["life", "power"],
-    "mat-nitrogen": ["life"], "mat-methane": ["power", "chemical"], "mat-ammonia": ["life", "chemical"],
-    "mat-carbon-dioxide": ["life"], "mat-helium-3": ["power"], "mat-sand": ["building"], "mat-clay": ["building"],
+    "mat-nitrogen": ["life", "chemical"], "mat-methane": ["power", "chemical"], "mat-ammonia": ["life", "chemical"],
+    "mat-carbon-dioxide": ["life", "chemical"], "mat-helium-3": ["power"], "mat-sand": ["building"], "mat-clay": ["building"],
     "mat-limestone": ["building", "chemical"], "mat-basalt": ["building", "structural"], "mat-soil": ["life"],
     "mat-timber-softwood": ["building"], "mat-timber-hardwood": ["building"], "mat-uranium": ["power", "shielding"],
-    "mat-thorium": ["power"],
+    "mat-thorium": ["power", "shielding"],
 }
 
 

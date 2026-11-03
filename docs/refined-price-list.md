@@ -37,31 +37,31 @@ Water ice, basalt, native iron-nickel and industrial diamond are not listed twic
 | Titanium | Structural & Frames | 31.70 | 10 kg | 320 | 160 |
 | Magnesium | Structural & Frames, Chemicals & Catalysts | 8.68 | 10 kg | 87 | 43 |
 | Zinc | Structural & Frames, Power & Fuel | 11.92 | 10 kg | 120 | 60 |
-| Tin | Electrical & Electronics | 40.62 | 10 kg | 410 | 205 |
+| Tin | Electrical & Electronics, Structural & Frames | 40.62 | 10 kg | 410 | 205 |
 | Lead | Heat & Radiation Shielding, Power & Fuel | 9.24 | 10 kg | 92 | 46 |
-| Chromium | Structural & Frames | 17.22 | 10 kg | 170 | 85 |
+| Chromium | Structural & Frames, Cutting & Wear | 17.22 | 10 kg | 170 | 85 |
 | Manganese | Structural & Frames, Power & Fuel | 9.50 | 10 kg | 95 | 47 |
-| Tungsten | Heat & Radiation Shielding, Cutting & Wear | 65.97 | 1 kg | 66 | 33 |
+| Tungsten | Heat & Radiation Shielding, Cutting & Wear, Power & Fuel | 65.97 | 1 kg | 66 | 33 |
 | Molybdenum | Structural & Frames | 80.08 | 1 kg | 80 | 40 |
-| Lithium | Power & Fuel | 536.19 | 1 kg | 540 | 270 |
+| Lithium | Power & Fuel, Structural & Frames | 536.19 | 1 kg | 540 | 270 |
 | Silver | Electrical & Electronics | 68.92 | 1 kg | 69 | 34 |
 | Gold | Electrical & Electronics, Heat & Radiation Shielding | 250.00 | 1 kg | 250 | 125 |
 | Platinum | Chemicals & Catalysts, Electrical & Electronics | 375.00 | 1 kg | 380 | 190 |
 | Palladium | Chemicals & Catalysts, Electrical & Electronics | 375.00 | 1 kg | 380 | 190 |
-| Iridium | Heat & Radiation Shielding | 500.00 | 1 kg | 500 | 250 |
+| Iridium | Heat & Radiation Shielding, Electrical & Electronics | 500.00 | 1 kg | 500 | 250 |
 | Silicon | Electrical & Electronics, Power & Fuel, Building & Ceramics | 4.28 | 100 kg | 430 | 215 |
 | Carbon (graphite) | Chemicals & Catalysts, Heat & Radiation Shielding, Power & Fuel | 3.75 | 100 kg | 380 | 190 |
-| Boron | Heat & Radiation Shielding, Cutting & Wear | 50.00 | 1 kg | 50 | 25 |
-| Sulfur | Chemicals & Catalysts | 1.88 | 100 kg | 190 | 95 |
+| Boron | Heat & Radiation Shielding, Cutting & Wear, Building & Ceramics | 50.00 | 1 kg | 50 | 25 |
+| Sulfur | Chemicals & Catalysts, Power & Fuel | 1.88 | 100 kg | 190 | 95 |
 | Phosphorus | Life Support & Growing, Chemicals & Catalysts | 32.56 | 10 kg | 330 | 165 |
 | Neodymium (rare earth) | Magnets & Motors | 392.41 | 1 kg | 390 | 195 |
 | Dysprosium (rare earth) | Magnets & Motors | 600.00 | 1 kg | 600 | 300 |
 | Hydrogen | Power & Fuel, Chemicals & Catalysts | 7.00 | 10 kg | 70 | 35 |
 | Oxygen | Life Support & Growing, Power & Fuel | 0.90 | 100 kg | 90 | 45 |
-| Nitrogen | Life Support & Growing | 2.00 | 100 kg | 200 | 100 |
+| Nitrogen | Life Support & Growing, Chemicals & Catalysts | 2.00 | 100 kg | 200 | 100 |
 | Methane | Power & Fuel, Chemicals & Catalysts | 3.00 | 100 kg | 300 | 150 |
 | Ammonia | Life Support & Growing, Chemicals & Catalysts | 3.00 | 100 kg | 300 | 150 |
-| Carbon dioxide | Life Support & Growing | 1.00 | 100 kg | 100 | 50 |
+| Carbon dioxide | Life Support & Growing, Chemicals & Catalysts | 1.00 | 100 kg | 100 | 50 |
 | Helium-3 | Power & Fuel | 5,000.00 | 1 kg | 5,000 | 2,500 |
 | Sand (silica sand, bulk) | Building & Ceramics | 0.30 | 100 kg | 30 | 15 |
 | Clay | Building & Ceramics | 0.30 | 100 kg | 30 | 15 |
@@ -70,4 +70,4 @@ Water ice, basalt, native iron-nickel and industrial diamond are not listed twic
 | Timber - softwood (Douglas-fir) | Building & Ceramics | 2.00 | 100 kg | 200 | 100 |
 | Timber - hardwood (white oak) | Building & Ceramics | 4.00 | 100 kg | 400 | 200 |
 | Uranium | Power & Fuel, Heat & Radiation Shielding | 113.44 | 1 kg | 110 | 55 |
-| Thorium | Power & Fuel | 100.00 | 1 kg | 100 | 50 |
+| Thorium | Power & Fuel, Heat & Radiation Shielding | 100.00 | 1 kg | 100 | 50 |

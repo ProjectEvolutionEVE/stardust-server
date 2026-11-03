@@ -425,8 +425,15 @@ func _render_filters() -> void:
 
 ## A small colour square for a button.
 func _dot(hex: String) -> ImageTexture:
-	var img := Image.create(22, 22, false, Image.FORMAT_RGBA8)
-	img.fill(Color(hex))
+	return _dots([hex])
+
+
+## Colour squares side by side, one per kind of component (like a hazmat label).
+func _dots(hexes: Array) -> ImageTexture:
+	var img := Image.create(hexes.size() * 26 - 4, 22, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for i in hexes.size():
+		img.fill_rect(Rect2i(i * 26, 0, 22, 22), Color(str(hexes[i])))
 	return ImageTexture.create_from_image(img)
 
 
@@ -470,8 +477,11 @@ func _render_board() -> void:
 	for it in _shown():
 		var ch := float(it.get("change_24h_pct", 0))
 		var b := Button.new()
-		if not it.get("groups", []).is_empty():
-			b.icon = _dot(colour.get(it.groups[0], "8a94a6"))
+		if not it.get("groups", []).is_empty():           # every colour the material carries, main colour first
+			var hexes: Array = []
+			for g in it.groups:
+				hexes.append(colour.get(g, "8a94a6"))
+			b.icon = _dots(hexes)
 		b.flat = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.add_theme_font_size_override("font_size", 20)
