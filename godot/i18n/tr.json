@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "Önce mesajındaki kodu kopyala, sonra Yapıştır'a dokun.",
  "Enter your code": "Kodunu gir",
  "Use a different number or email": "Başka bir numara ya da e-posta kullan",
- "We sent a 6-digit code to %s.": "%s adresine 6 haneli bir kod gönderdik."
+ "We sent a 6-digit code to %s.": "%s adresine 6 haneli bir kod gönderdik.",
+ "All": "Tümü",
+ "Raw ores": "Ham cevherler",
+ "Kind:": "Tür:",
+ "Structural & Frames": "Yapı ve Çerçeveler",
+ "Electrical & Electronics": "Elektrik ve Elektronik",
+ "Power & Fuel": "Güç ve Yakıt",
+ "Magnets & Motors": "Mıknatıslar ve Motorlar",
+ "Heat & Radiation Shielding": "Isı ve Radyasyon Kalkanı",
+ "Life Support & Growing": "Yaşam Desteği ve Yetiştirme",
+ "Chemicals & Catalysts": "Kimyasallar ve Katalizörler",
+ "Building & Ceramics": "İnşaat ve Seramik",
+ "Cutting & Wear": "Kesme ve Aşınma"
 }

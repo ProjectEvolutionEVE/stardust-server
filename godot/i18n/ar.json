@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "انسخ الرمز من رسالتك أولاً، ثم اضغط لصق.",
  "Enter your code": "أدخل رمزك",
  "Use a different number or email": "استخدم رقماً أو بريداً آخر",
- "We sent a 6-digit code to %s.": "أرسلنا رمزاً من 6 أرقام إلى %s."
+ "We sent a 6-digit code to %s.": "أرسلنا رمزاً من 6 أرقام إلى %s.",
+ "All": "الكل",
+ "Raw ores": "الخامات الخام",
+ "Kind:": "النوع:",
+ "Structural & Frames": "الهياكل والإطارات",
+ "Electrical & Electronics": "الكهرباء والإلكترونيات",
+ "Power & Fuel": "الطاقة والوقود",
+ "Magnets & Motors": "المغناطيسات والمحركات",
+ "Heat & Radiation Shielding": "الدروع الحرارية والإشعاعية",
+ "Life Support & Growing": "دعم الحياة والزراعة",
+ "Chemicals & Catalysts": "المواد الكيميائية والمحفزات",
+ "Building & Ceramics": "البناء والسيراميك",
+ "Cutting & Wear": "القطع ومقاومة التآكل"
 }

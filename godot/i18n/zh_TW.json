@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "請先複製訊息中的驗證碼，再點「貼上」。",
  "Enter your code": "輸入驗證碼",
  "Use a different number or email": "使用其他號碼或電子郵件",
- "We sent a 6-digit code to %s.": "我們已將 6 位驗證碼傳送至 %s。"
+ "We sent a 6-digit code to %s.": "我們已將 6 位驗證碼傳送至 %s。",
+ "All": "全部",
+ "Raw ores": "原礦",
+ "Kind:": "類別：",
+ "Structural & Frames": "結構與框架",
+ "Electrical & Electronics": "電氣與電子",
+ "Power & Fuel": "動力與燃料",
+ "Magnets & Motors": "磁體與馬達",
+ "Heat & Radiation Shielding": "隔熱與輻射屏蔽",
+ "Life Support & Growing": "維生與種植",
+ "Chemicals & Catalysts": "化學品與催化劑",
+ "Building & Ceramics": "建築與陶瓷",
+ "Cutting & Wear": "切削與耐磨"
 }

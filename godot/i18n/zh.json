@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "请先复制消息中的验证码，再点“粘贴”。",
  "Enter your code": "输入验证码",
  "Use a different number or email": "使用其他号码或邮箱",
- "We sent a 6-digit code to %s.": "我们已将 6 位验证码发送至 %s。"
+ "We sent a 6-digit code to %s.": "我们已将 6 位验证码发送至 %s。",
+ "All": "全部",
+ "Raw ores": "原矿",
+ "Kind:": "类别：",
+ "Structural & Frames": "结构与框架",
+ "Electrical & Electronics": "电气与电子",
+ "Power & Fuel": "动力与燃料",
+ "Magnets & Motors": "磁体与电机",
+ "Heat & Radiation Shielding": "隔热与辐射屏蔽",
+ "Life Support & Growing": "生命保障与种植",
+ "Chemicals & Catalysts": "化学品与催化剂",
+ "Building & Ceramics": "建筑与陶瓷",
+ "Cutting & Wear": "切削与耐磨"
 }

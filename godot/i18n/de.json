@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "Kopiere zuerst den Code aus deiner Nachricht, dann tippe auf Einfügen.",
  "Enter your code": "Gib deinen Code ein",
  "Use a different number or email": "Andere Nummer oder E-Mail verwenden",
- "We sent a 6-digit code to %s.": "Wir haben einen 6-stelligen Code an %s gesendet."
+ "We sent a 6-digit code to %s.": "Wir haben einen 6-stelligen Code an %s gesendet.",
+ "All": "Alle",
+ "Raw ores": "Roherze",
+ "Kind:": "Art:",
+ "Structural & Frames": "Struktur & Rahmen",
+ "Electrical & Electronics": "Elektrik & Elektronik",
+ "Power & Fuel": "Energie & Treibstoff",
+ "Magnets & Motors": "Magnete & Motoren",
+ "Heat & Radiation Shielding": "Hitze- & Strahlenschutz",
+ "Life Support & Growing": "Lebenserhaltung & Anbau",
+ "Chemicals & Catalysts": "Chemikalien & Katalysatoren",
+ "Building & Ceramics": "Bau & Keramik",
+ "Cutting & Wear": "Schneiden & Verschleiß"
 }

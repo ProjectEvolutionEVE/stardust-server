@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "Сначала скопируйте код из сообщения, затем нажмите «Вставить».",
  "Enter your code": "Введите код",
  "Use a different number or email": "Другой номер или почта",
- "We sent a 6-digit code to %s.": "Мы отправили 6-значный код на %s."
+ "We sent a 6-digit code to %s.": "Мы отправили 6-значный код на %s.",
+ "All": "Все",
+ "Raw ores": "Сырая руда",
+ "Kind:": "Вид:",
+ "Structural & Frames": "Конструкции и каркасы",
+ "Electrical & Electronics": "Электрика и электроника",
+ "Power & Fuel": "Энергия и топливо",
+ "Magnets & Motors": "Магниты и двигатели",
+ "Heat & Radiation Shielding": "Тепловая и радиационная защита",
+ "Life Support & Growing": "Жизнеобеспечение и выращивание",
+ "Chemicals & Catalysts": "Химикаты и катализаторы",
+ "Building & Ceramics": "Строительство и керамика",
+ "Cutting & Wear": "Резка и износ"
 }
