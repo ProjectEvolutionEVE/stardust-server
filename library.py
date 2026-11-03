@@ -12,6 +12,7 @@ import store as ST
 import blueprints as BP
 import library_books as LB
 import minerals as MN
+import materials_refining as MR
 import archives as AR
 import careers as CAR
 
@@ -21,12 +22,16 @@ def _catalogue_chapters():
     for m in BP.MATERIALS.values():
         by.setdefault(m["category"], []).append(m)
     out = [("About this catalogue",
-            "Every raw material in the game, in the refined or working form designers build with, with its real density in "
-            "kilograms per cubic metre. Weight on the blueprint form is worked out from these. Some values are still being "
-            "checked against more sources.")]
+            "Every raw material in the game, in the refined or working form designers build with. For each: its real "
+            "density in kilograms per cubic metre (weight on the blueprint form is worked out from these); where it comes "
+            "from, with the share of each debris-field ore that smelting turns into it; how it is smelted or refined; and "
+            "what it is used for in the real world. What you build from them aboard is yours to design. Some values are "
+            "still being checked against more sources.")]
     for cat, ms in by.items():
-        out.append((cat[:1].upper() + cat[1:], "\n".join(
-            f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "") for m in ms)))
+        # each material's entry (Eric 11-03): density, where it comes from, how it's made, what it's for (materials_refining.py)
+        out.append((cat[:1].upper() + cat[1:], "\n\n".join(
+            f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "")
+            + "\n   Where from: {}\n   How it's made: {}\n   Used for: {}".format(*MR.entry(m["code"])) for m in ms)))
     # the minerals as they are found in the debris fields (minerals.py, Eric 10-19), with what smelting yields (rule 27)
     for tier, title in ((1, "In the debris fields: common rock, metal and ice"), (2, "In the debris fields: ores"),
                         (3, "In the debris fields: shock and space minerals")):

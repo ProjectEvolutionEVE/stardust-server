@@ -659,6 +659,10 @@ async def main():
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
     check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
           r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
+    _cat = "\n".join(c["text"] for c in j["chapters"])
+    check("every catalogue material says where it comes from, how it's smelted or refined, and what it's used for",
+          all(_cat.count(k) == 46 for k in ("Where from:", "How it's made:", "Used for:"))
+          and "Copper ore (chalcopyrite) CuFeS₂, 34.63%" in _cat and "Hall-Héroult" in _cat)
     r = await cl.get("/api/dfg/library/book/farming", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
