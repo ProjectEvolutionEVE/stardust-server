@@ -12,7 +12,7 @@ var me: Dictionary = {}:
 			Ui.set_language(str(v.language))   # everything on screen follows the player's language (Eric 11-02)
 		var d := device()
 		if str(v.get("sdid", "")) != "" and d.get("sdid", "") == v.sdid and d.get("title", "") != v.get("title", ""):
-			set_device(str(d.key), str(v.sdid), str(v.get("title", "")))   # keep the phone's "add it to SD-…" line current
+			set_device(str(d.key), str(v.sdid), str(v.get("title", "")))   # keep the name on the phone's join offer current
 
 
 func _ready() -> void:
