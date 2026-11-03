@@ -969,5 +969,10 @@
  "Your SDID": "你的 SDID",
  "Your SDID: %s": "你的 SDID：%s",
  "OK": "好",
- "Stay": "留下"
+ "Stay": "留下",
+ "Paste": "粘贴",
+ "Copy the code from your message first, then tap Paste.": "请先复制消息中的验证码，再点“粘贴”。",
+ "Enter your code": "输入验证码",
+ "Use a different number or email": "使用其他号码或邮箱",
+ "We sent a 6-digit code to %s.": "我们已将 6 位验证码发送至 %s。"
 }

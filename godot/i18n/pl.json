@@ -969,5 +969,10 @@
  "Your SDID": "Twój SDID",
  "Your SDID: %s": "Twój SDID: %s",
  "OK": "OK",
- "Stay": "Zostań"
+ "Stay": "Zostań",
+ "Paste": "Wklej",
+ "Copy the code from your message first, then tap Paste.": "Najpierw skopiuj kod z wiadomości, potem dotknij Wklej.",
+ "Enter your code": "Wpisz kod",
+ "Use a different number or email": "Użyj innego numeru lub e-maila",
+ "We sent a 6-digit code to %s.": "Wysłaliśmy 6-cyfrowy kod na %s."
 }

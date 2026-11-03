@@ -23,13 +23,14 @@ def call(method, path, key, body=None):
 
 
 def main():
+    global SERVER
     ap = argparse.ArgumentParser()
     ap.add_argument("what", choices=["show", "merge"])
     ap.add_argument("--email"); ap.add_argument("--phone"); ap.add_argument("--sdid")
     ap.add_argument("--keep"); ap.add_argument("--absorb"); ap.add_argument("--really", action="store_true")
     ap.add_argument("--server", default=SERVER); ap.add_argument("--key-file", default="~/.stardust-upload-key")
     a = ap.parse_args()
-    global SERVER; SERVER = a.server.rstrip("/")
+    SERVER = a.server.rstrip("/")
     key = open(os.path.expanduser(a.key_file)).read().strip()
     if a.what == "show":
         q = {"sdid": a.sdid} if a.sdid else {"channel": "email", "address": a.email} if a.email else {"channel": "sms", "address": a.phone}

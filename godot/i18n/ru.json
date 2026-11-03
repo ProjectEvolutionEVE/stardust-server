@@ -969,5 +969,10 @@
  "Your SDID": "Ваш SDID",
  "Your SDID: %s": "Ваш SDID: %s",
  "OK": "ОК",
- "Stay": "Остаться"
+ "Stay": "Остаться",
+ "Paste": "Вставить",
+ "Copy the code from your message first, then tap Paste.": "Сначала скопируйте код из сообщения, затем нажмите «Вставить».",
+ "Enter your code": "Введите код",
+ "Use a different number or email": "Другой номер или почта",
+ "We sent a 6-digit code to %s.": "Мы отправили 6-значный код на %s."
 }

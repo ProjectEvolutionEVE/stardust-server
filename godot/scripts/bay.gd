@@ -519,6 +519,8 @@ func _say(text: String, library := false) -> void:
 
 # ── steering: press and hold anywhere on the screen (not on a button) ──
 func _unhandled_input(ev: InputEvent) -> void:
+	if ev.device == InputEvent.DEVICE_ID_EMULATION:
+		return    # on a phone each touch also arrives as a copied mouse event; counting both made one press a double-tap
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT or ev is InputEventScreenTouch:
 		if ev.pressed and warp.is_empty():      # double-tap: lock what's under the tap and fly there
 			var now := Time.get_ticks_msec() / 1000.0

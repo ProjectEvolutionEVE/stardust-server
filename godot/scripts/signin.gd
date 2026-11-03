@@ -17,6 +17,11 @@ var code: LineEdit
 var send: Button
 var verify: Button
 var keep: CheckBox
+var title: Label
+var sent_to: Label
+var again: Button
+var change: Button
+var paste: Button             # one tap fills the code from a copied message, no keypad needed (Eric 11-03)
 var status: Label
 var retry: Button
 var join: CheckBox            # offers to add a new sign-in to the SDID this phone knows (Eric 11-03)
@@ -27,10 +32,12 @@ func _ready() -> void:
 	box = Ui.screen(self)
 	adding = Session.adding_contact
 	if adding:
-		box.add_child(Ui.label("Add a phone or email", 40, Ui.GOLD))
+		title = Ui.label("Add a phone or email", 40, Ui.GOLD)
+		box.add_child(title)
 		box.add_child(Ui.label("A code proves it's yours. Then either one signs you in to your SDID.", 22, Ui.MUTED))
 	else:
-		box.add_child(Ui.label("Sign in", 44, Ui.GOLD))
+		title = Ui.label("Sign in", 44, Ui.GOLD)
+		box.add_child(title)
 		box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
 	var lang_label := Ui.label("Your language", 22, Ui.MUTED)
 	box.add_child(lang_label)
@@ -85,12 +92,35 @@ func _ready() -> void:
 	code.max_length = 6
 	code.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER   # the number pad: iOS then offers the code from Messages or Mail (ios/plugins/otc)
 	code.text_changed.connect(_on_code)
-	code.visible = false
-	box.add_child(code)
+	var code_row := HBoxContainer.new()
+	code_row.add_theme_constant_override("separation", 12)
+	code.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	code_row.add_child(code)
+	paste = Ui.button("Paste", false)
+	paste.custom_minimum_size = Vector2(170, 72)
+	paste.add_theme_font_size_override("font_size", 24)
+	paste.pressed.connect(_paste_code)
+	code_row.add_child(paste)
+	code_row.visible = false
+	box.add_child(code_row)
 	verify = Ui.button("Wake up")
 	verify.visible = false
 	verify.pressed.connect(_verify)
 	box.add_child(verify)
+	# the code step (Eric 11-03: the keypad covered the code box): once a code is sent, only these show, at the top of the
+	# screen, so the keypad can never cover them; as the browser game's "Enter your code" screen
+	sent_to = Ui.label("", 22, Ui.MUTED)
+	sent_to.visible = false
+	box.add_child(sent_to)
+	box.move_child(sent_to, 1)
+	again = Ui.button("Send a new code", false)
+	again.visible = false
+	again.pressed.connect(_send)
+	box.add_child(again)
+	change = Ui.button("Use a different number or email", false)
+	change.visible = false
+	change.pressed.connect(func(): get_tree().reload_current_scene())
+	box.add_child(change)
 	var saved := Session.remembered()
 	if adding:
 		var have := []
@@ -232,6 +262,19 @@ func _on_code(t: String) -> void:
 		_hide_keypad()
 
 
+## Paste: the 6 digits from whatever was copied (the whole message is fine).
+func _paste_code() -> void:
+	var digits := ""
+	for ch in DisplayServer.clipboard_get():
+		if ch >= "0" and ch <= "9":
+			digits += ch
+	if digits.length() < 6:
+		Ui.error(self, "Copy the code from your message first, then tap Paste.")
+		return
+	code.text = digits.left(6)
+	_hide_keypad()
+
+
 func _hide_keypad() -> void:
 	var f := get_viewport().gui_get_focus_owner()
 	if f:
@@ -241,6 +284,8 @@ func _hide_keypad() -> void:
 
 ## A tap anywhere outside the box being typed in puts the keypad away (Eric 11-03).
 func _input(e: InputEvent) -> void:
+	if e.device == InputEvent.DEVICE_ID_EMULATION:
+		return
 	if (e is InputEventScreenTouch or e is InputEventMouseButton) and e.pressed:
 		var f := get_viewport().gui_get_focus_owner()
 		if f is LineEdit and not f.get_global_rect().has_point(e.position):
@@ -261,9 +306,23 @@ func _send() -> void:
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
-	code.visible = true
+	if not adding and keep.button_pressed:   # remembered as soon as the code is sent, not only after a full sign-in
+		Session.remember(channel, address.text.strip_edges(), _region())
+	_code_step(str(r.data.get("to", address.text.strip_edges())))
+
+
+func _code_step(to: String) -> void:
+	for c in box.get_children():
+		c.visible = false
+	title.text = tr("Enter your code")
+	title.visible = true
+	sent_to.text = tr("We sent a 6-digit code to %s.") % to
+	sent_to.visible = true
+	code.get_parent().visible = true
+	code.text = ""
 	verify.visible = true
-	send.text = tr("Send a new code")
+	again.visible = true
+	change.visible = true
 	code.grab_focus()
 
 

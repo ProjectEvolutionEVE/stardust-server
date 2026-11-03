@@ -232,6 +232,8 @@ class Chooser extends Control:
 	## A tap (not a drag) on a row: the middle row is chosen, any other row rolls to the middle.
 	var _press_v := 0.0
 	func _row_input(e: InputEvent, k: int) -> void:
+		if e.device == InputEvent.DEVICE_ID_EMULATION:
+			return    # a phone's touch also arrives as a copied mouse event: count it once
 		if (e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT) or e is InputEventScreenTouch:
 			if e.pressed:
 				_press_v = scroll.scroll_vertical

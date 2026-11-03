@@ -969,5 +969,10 @@
  "Your SDID": "Tu SDID",
  "Your SDID: %s": "Tu SDID: %s",
  "OK": "Aceptar",
- "Stay": "Quedarme"
+ "Stay": "Quedarme",
+ "Paste": "Pegar",
+ "Copy the code from your message first, then tap Paste.": "Copia primero el código de tu mensaje y luego toca Pegar.",
+ "Enter your code": "Ingresa tu código",
+ "Use a different number or email": "Usar otro número o correo",
+ "We sent a 6-digit code to %s.": "Enviamos un código de 6 dígitos a %s."
 }

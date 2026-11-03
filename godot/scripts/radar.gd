@@ -39,6 +39,8 @@ func toggle() -> void:
 
 
 func _gui_input(ev: InputEvent) -> void:      # tap the scope: the next range
+	if ev.device == InputEvent.DEVICE_ID_EMULATION:
+		return    # on a phone each touch also arrives as a copied mouse event; counting both made one press a double-tap
 	if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT \
 			or ev is InputEventScreenTouch and ev.pressed:
 		range_i = (range_i + 1) % RANGES.size()
