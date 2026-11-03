@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "まずメッセージのコードをコピーしてから、貼り付けをタップしてください。",
  "Enter your code": "コードを入力",
  "Use a different number or email": "別の番号またはメールを使う",
- "We sent a 6-digit code to %s.": "%s に6桁のコードを送りました。"
+ "We sent a 6-digit code to %s.": "%s に6桁のコードを送りました。",
+ "All": "すべて",
+ "Raw ores": "原鉱石",
+ "Kind:": "種類:",
+ "Structural & Frames": "構造・フレーム",
+ "Electrical & Electronics": "電気・電子",
+ "Power & Fuel": "動力・燃料",
+ "Magnets & Motors": "磁石・モーター",
+ "Heat & Radiation Shielding": "耐熱・放射線遮蔽",
+ "Life Support & Growing": "生命維持・栽培",
+ "Chemicals & Catalysts": "化学品・触媒",
+ "Building & Ceramics": "建築・セラミック",
+ "Cutting & Wear": "切削・耐摩耗"
 }

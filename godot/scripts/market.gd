@@ -401,7 +401,7 @@ func _render_filters() -> void:
 		c.queue_free()
 	var opts := [["", tr("All"), null], ["ore", tr("Raw ores"), null]]
 	for g in groups:
-		opts.append([g.code, g.name, g.color])
+		opts.append([g.code, _group_name(g), g.color])
 	for o in opts:
 		var b := Button.new()
 		b.text = o[1]
@@ -425,6 +425,15 @@ func _render_filters() -> void:
 				_pick(shown[0].item)
 			_render_board())
 		filter_box.add_child(b)
+
+
+## A colour group's name in the player's language (the server sends English).
+func _group_name(g: Dictionary) -> String:
+	var names := {"structural": tr("Structural & Frames"), "electrical": tr("Electrical & Electronics"),
+		"power": tr("Power & Fuel"), "magnetic": tr("Magnets & Motors"), "shielding": tr("Heat & Radiation Shielding"),
+		"life": tr("Life Support & Growing"), "chemical": tr("Chemicals & Catalysts"), "building": tr("Building & Ceramics"),
+		"tools": tr("Cutting & Wear")}
+	return names.get(g.code, g.name)
 
 
 ## A small colour square for a button.
@@ -489,7 +498,7 @@ func _render_board() -> void:
 	for it in ores:
 		board_box.add_child(_board_row(it, colour))
 	for g in groups:
-		board_box.add_child(_section(g.name, g.color))
+		board_box.add_child(_section(_group_name(g), g.color))
 		for it in items:
 			if g.code in it.get("groups", []):
 				board_box.add_child(_board_row(it, colour))

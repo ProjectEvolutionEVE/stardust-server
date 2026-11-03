@@ -974,5 +974,17 @@
  "Copy the code from your message first, then tap Paste.": "먼저 메시지의 코드를 복사한 다음 붙여넣기를 누르세요.",
  "Enter your code": "코드 입력",
  "Use a different number or email": "다른 번호나 이메일 사용",
- "We sent a 6-digit code to %s.": "%s(으)로 6자리 코드를 보냈습니다."
+ "We sent a 6-digit code to %s.": "%s(으)로 6자리 코드를 보냈습니다.",
+ "All": "전체",
+ "Raw ores": "원광석",
+ "Kind:": "종류:",
+ "Structural & Frames": "구조·프레임",
+ "Electrical & Electronics": "전기·전자",
+ "Power & Fuel": "동력·연료",
+ "Magnets & Motors": "자석·모터",
+ "Heat & Radiation Shielding": "열·방사선 차폐",
+ "Life Support & Growing": "생명 유지·재배",
+ "Chemicals & Catalysts": "화학약품·촉매",
+ "Building & Ceramics": "건축·세라믹",
+ "Cutting & Wear": "절삭·내마모"
 }
