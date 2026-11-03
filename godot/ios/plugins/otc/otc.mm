@@ -1,65 +1,86 @@
 // Security-code AutoFill on the iPhone (Eric 11-03): when a sign-in code arrives by text or email, iOS offers it above
-// the keyboard ("From Messages: 123456") and one tap fills the box, as in every other app. Godot's keyboard field never
-// tells iOS it wants a one-time code, so iOS never offered it. The sign-in code box is the only field that opens the
-// number pad, so whenever Godot's field opens the number pad we mark it as a one-time-code field. Godot sets the field's
-// content type itself, so it is set again after Godot opens the field, which is then reloaded.
+// the keypad ("From Messages: 123456") and one tap fills the box, as in every other app.
+//
+// iOS offers codes only to a standard text field (UITextField) marked as a one-time-code field. Godot types through its
+// own hidden UITextView, which iOS never offers a code to, even when marked and visible (checked on Eric's iPhone, 11-03).
+// So when Godot opens the number pad (only the sign-in code box uses it), a standard field takes the keypad instead:
+// invisible, marked as a one-time-code field. What it receives (typed, pasted or AutoFilled) is passed on to Godot's
+// field as if typed, so the code box fills; at 6 digits the keypad closes. When Godot closes its keypad, so does ours.
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #include <stdio.h>
 #include <stdarg.h>
 
-// DIAGNOSTIC 11-03: everything is also written to Documents/otc-log.txt in the app, fetched over the cable afterwards.
+// Messages go to the device console (xcrun devicectl device process launch --console). To log to a file on the phone
+// for a test, also append to Documents/otc-log.txt here and fetch it with xcrun devicectl device copy from.
 static void otc_print(const char *fmt, ...) {
-    char buf[1024];
-    va_list ap; va_start(ap, fmt); vsnprintf(buf, sizeof buf, fmt, ap); va_end(ap);
-    fputs(buf, stderr);
-    NSString *dir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    FILE *f = fopen([[dir stringByAppendingPathComponent:@"otc-log.txt"] UTF8String], "a");
-    if (f) { fputs(buf, f); fclose(f); }
+    va_list ap; va_start(ap, fmt); vfprintf(stderr, fmt, ap); va_end(ap);
 }
 
-static BOOL otc_is_code(id self) {
-    UIKeyboardType k = [(id<UITextInputTraits>)self keyboardType];
+@interface StardustCodeField : UITextField
+@property (nonatomic, weak) UITextView *godot;      // Godot's own keyboard field, the one the game listens to
+@property (nonatomic, copy) NSString *sent;          // what has already been passed on to Godot
+@end
+
+static StardustCodeField *otc_field;
+static BOOL otc_taking;                              // true while our field takes the keypad over from Godot's
+static BOOL (*otc_original_become_with)(id, SEL, NSString *, NSInteger, NSInteger);
+static BOOL (*otc_original_resign)(id, SEL);
+
+@implementation StardustCodeField
+- (void)changed {
+    NSString *now = self.text ?: @"";
+    NSString *was = self.sent ?: @"";
+    // pass the difference on to Godot as typing: delete what changed, then type the rest
+    NSUInteger same = 0;
+    while (same < now.length && same < was.length && [now characterAtIndex:same] == [was characterAtIndex:same]) same++;
+    for (NSUInteger i = same; i < was.length; i++) [self.godot deleteBackward];
+    if (now.length > same) [self.godot insertText:[now substringFromIndex:same]];
+    self.sent = now;
+    otc_print("[otc] code field: %lu characters passed to Godot\n", (unsigned long)now.length);
+    if (now.length >= 6) [self resignFirstResponder];   // all 6 in: the keypad goes away
+}
+@end
+
+static BOOL otc_is_code(id view) {
+    UIKeyboardType k = [(id<UITextInputTraits>)view keyboardType];
     return k == UIKeyboardTypeNumberPad || k == UIKeyboardTypeASCIICapableNumberPad;
 }
 
-static void otc_log(id self, const char *where) {
-    UITextView *v = (UITextView *)self;
-    otc_print("[otc] %s keyboardType=%ld contentType=%s hidden=%d first=%d frame=%s autocorrect=%ld\n", where,
-            (long)v.keyboardType, v.textContentType ? v.textContentType.UTF8String : "nil", v.hidden, v.isFirstResponder,
-            NSStringFromCGRect(v.frame).UTF8String, (long)v.autocorrectionType);
-}
-
-// iOS offers AutoFill only to a field that is on screen, and Godot keeps its field hidden at zero size. For the code box
-// it's shown at 2x2 points with clear text, cursor and background: still invisible, but iOS now treats it as a field.
-static void otc_show_for_autofill(UITextView *v, BOOL code) {
-    if (code) {   // DIAGNOSTIC 11-03: fully visible white box near the top, to learn whether visibility is what blocks AutoFill
-        v.hidden = NO;
-        v.frame = CGRectMake(20, 52, 300, 40);
-        v.alpha = 1.0;
-        v.backgroundColor = UIColor.whiteColor;
-        v.textColor = UIColor.blackColor;
-        v.tintColor = UIColor.blueColor;
-    } else {
-        v.hidden = YES;
-        v.frame = CGRectZero;
-    }
-}
-
-static BOOL (*otc_original_become_with)(id, SEL, NSString *, NSInteger, NSInteger);
 static BOOL otc_become_with(id self, SEL _cmd, NSString *s, NSInteger a, NSInteger b) {
-    if (otc_is_code(self))
-        [(UITextView *)self setTextContentType:UITextContentTypeOneTimeCode];
-    otc_show_for_autofill((UITextView *)self, otc_is_code(self));
-    otc_log(self, "before");
     BOOL r = otc_original_become_with(self, _cmd, s, a, b);
-    otc_show_for_autofill((UITextView *)self, otc_is_code(self));
-    if (otc_is_code(self) && ![((UITextView *)self).textContentType isEqualToString:UITextContentTypeOneTimeCode]) {
-        [(UITextView *)self setTextContentType:UITextContentTypeOneTimeCode];
-        [(UITextView *)self reloadInputViews];
+    if (!otc_is_code(self)) return r;
+    UITextView *g = (UITextView *)self;
+    if (!otc_field) {
+        otc_field = [[StardustCodeField alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        otc_field.keyboardType = UIKeyboardTypeNumberPad;
+        otc_field.textContentType = UITextContentTypeOneTimeCode;
+        otc_field.autocorrectionType = UITextAutocorrectionTypeNo;
+        otc_field.textColor = UIColor.clearColor;
+        otc_field.tintColor = UIColor.clearColor;
+        otc_field.backgroundColor = UIColor.clearColor;
+        [otc_field addTarget:otc_field action:@selector(changed) forControlEvents:UIControlEventEditingChanged];
     }
-    otc_log(self, "after");
+    if (otc_field.superview != g.superview) {
+        [otc_field removeFromSuperview];
+        [g.superview addSubview:otc_field];
+    }
+    otc_field.godot = g;
+    otc_field.text = s ?: @"";
+    otc_field.sent = otc_field.text;
+    otc_taking = YES;
+    BOOL took = [otc_field becomeFirstResponder];
+    otc_taking = NO;
+    otc_print("[otc] code box: standard field took the keypad=%d\n", took);
     return r;
+}
+
+static BOOL otc_resign(id self, SEL _cmd) {
+    if (!otc_taking && otc_field.isFirstResponder && otc_field.godot == self) {
+        otc_print("[otc] Godot closed its keypad: closing ours\n");
+        [otc_field resignFirstResponder];
+    }
+    return otc_original_resign(self, _cmd);
 }
 
 static IMP otc_swap(Class c, SEL sel, IMP imp) {
@@ -71,33 +92,17 @@ static IMP otc_swap(Class c, SEL sel, IMP imp) {
     return old;
 }
 
-static void otc_log_pasteboard(const char *where) {
-    UIPasteboard *p = UIPasteboard.generalPasteboard;   // types and hasStrings never trigger the paste prompt
-    otc_print("[otc] pasteboard at %s: hasStrings=%d items=%ld types=%s\n", where, p.hasStrings, (long)p.numberOfItems,
-            [[p.pasteboardTypes componentsJoinedByString:@","] UTF8String]);
-}
-
-static void (*otc_original_paste)(id, SEL, id);
-static void otc_paste(id self, SEL _cmd, id sender) {
-    otc_log_pasteboard("field paste");
-    otc_original_paste(self, _cmd, sender);
-    otc_print("[otc] field text after paste: %lu chars\n", (unsigned long)((UITextView *)self).text.length);
-}
-
 @interface StardustOneTimeCode : NSObject
 @end
 
 @implementation StardustOneTimeCode
 + (void)load {
     Class c = NSClassFromString(@"GDTKeyboardInputView");   // Godot's hidden keyboard field
-    otc_print("[otc] load: GDTKeyboardInputView %s\n", c ? "found" : "NOT FOUND");
-    if (!c) return;
+    if (!c) { otc_print("[otc] Godot's keyboard field not found\n"); return; }
     otc_original_become_with = (BOOL (*)(id, SEL, NSString *, NSInteger, NSInteger))
         otc_swap(c, @selector(becomeFirstResponderWithString:cursorStart:cursorEnd:), (IMP)otc_become_with);
-    otc_print("[otc] hook: becomeFirstResponderWithString %s\n", otc_original_become_with ? "ok" : "MISSING");
-    otc_original_paste = (void (*)(id, SEL, id))otc_swap(c, @selector(paste:), (IMP)otc_paste);
-    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:nil
-        usingBlock:^(NSNotification *n) { otc_log_pasteboard("app active"); }];
+    otc_original_resign = (BOOL (*)(id, SEL))otc_swap(c, @selector(resignFirstResponder), (IMP)otc_resign);
+    otc_print("[otc] ready: open=%d close=%d\n", otc_original_become_with != NULL, otc_original_resign != NULL);
 }
 @end
 

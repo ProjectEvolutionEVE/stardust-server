@@ -264,16 +264,15 @@ func _on_code(t: String) -> void:
 
 ## Paste: the 6 digits from whatever was copied (the whole message is fine).
 func _paste_code() -> void:
-	var clip := DisplayServer.clipboard_get()
-	var line := "[otc] Paste button: clipboard has %d characters, %d digits" % [clip.length(), clip.count("0") + clip.count("1") + clip.count("2") + clip.count("3") + clip.count("4") + clip.count("5") + clip.count("6") + clip.count("7") + clip.count("8") + clip.count("9")]
-	printerr(line)
-	var f := FileAccess.open("user://otc-gd-log.txt", FileAccess.READ_WRITE if FileAccess.file_exists("user://otc-gd-log.txt") else FileAccess.WRITE)
-	if f:
-		f.seek_end()
-		f.store_line(Time.get_datetime_string_from_system() + " " + line + " | code box now: " + str(code.text.length()))
-	_on_code(clip)
-	if code.text.length() != 6:
+	var digits := ""
+	for ch in DisplayServer.clipboard_get():
+		if ch >= "0" and ch <= "9":
+			digits += ch
+	if digits.length() < 6:
 		Ui.error(self, "Copy the code from your message first, then tap Paste.")
+		return
+	code.text = digits.left(6)
+	_hide_keypad()
 
 
 func _hide_keypad() -> void:
@@ -307,6 +306,8 @@ func _send() -> void:
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
+	if not adding and keep.button_pressed:   # remembered as soon as the code is sent, not only after a full sign-in
+		Session.remember(channel, address.text.strip_edges(), _region())
 	_code_step(str(r.data.get("to", address.text.strip_edges())))
 
 
