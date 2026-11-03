@@ -1,0 +1,37 @@
+"""Shared Human-Robot Navigation: how a person and an automatic system can steer one vehicle together."""
+CODE = 'navigation5_shared_control'
+BOOK = {
+    "title": 'Shared Human-Robot Navigation',
+    "subtitle": 'Operator input, blending with autopilot, trust, safety, and the interface',
+    "chapters": [
+        ('Two drivers at once',
+         'In shared control, a person and an automatic system both send steering commands to one vehicle. The machine can fix small errors and avoid obstacles. The person still chooses where to go.'),
+        ('Blending the inputs',
+         'The system mixes the human command with its own plan. A common approach gives the person more weight when the path is clear and more weight to the machine when an obstacle is near. The mix changes smoothly so the vehicle never jerks.'),
+        ('Trust',
+         'The person must trust the system enough to let it help, but not so much that they stop paying attention. If the system helps too little, the person does all the work. If it helps too much, the person may not notice when something goes wrong.'),
+        ('Safety',
+         'The system must always be able to stop or hand control back. Safe designs check for dangers at a rate faster than the vehicle can move. A clear warning gives the person time to take over.'),
+        ('The interface',
+         'A good display shows what the system is about to do and why. A joystick, wheel, or touch screen should feel natural for the task. Confusing controls cause mistakes even when the software is perfect.'),
+        ('Testing it',
+         'Tests use both simulated runs and real trials with people of different skill levels. Engineers record how often the person takes over, how quickly they react, and whether the vehicle stayed inside safe limits. The results decide how much help the system should give.'),
+    ],
+    "test": [
+        ('What is shared control?',
+         [('a', 'A person and an automatic system both guide one vehicle'), ('b', 'Two vehicles share one fuel tank'), ('c', 'A map is printed on two sheets'), ('d', 'Many people vote on each turn')],
+         'a'),
+        ('How does a common blending method change the mix?',
+         [('a', 'It always uses only the machine'), ('b', 'It ignores the person completely'), ('c', 'It shifts weight between the person and the machine as the path changes'), ('d', 'It picks the mix at random')],
+         'c'),
+        ('What goes wrong if a system helps too much?',
+         [('a', 'The vehicle becomes lighter'), ('b', 'The road is removed from the map'), ('c', 'The person may stop paying attention when something goes wrong'), ('d', 'The person gains more fuel')],
+         'c'),
+        ('Why must a shared system be able to hand control back?',
+         [('a', 'So the person can sleep'), ('b', 'So a person can take over safely when needed'), ('c', 'So the vehicle can change colour'), ('d', 'So the map updates faster')],
+         'b'),
+        ('What do engineers record in real trials?',
+         [('a', 'Only the weather'), ('b', 'The names of the testers'), ('c', 'How often the person takes over and how fast they react'), ('d', 'The price of the vehicle')],
+         'c'),
+    ],
+}

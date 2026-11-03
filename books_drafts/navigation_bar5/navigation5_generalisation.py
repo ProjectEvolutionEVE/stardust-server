@@ -1,0 +1,37 @@
+"""Cartographic Generalisation: how a map is simplified for a smaller scale without losing what matters."""
+CODE = 'navigation5_generalisation'
+BOOK = {
+    "title": 'Cartographic Generalisation',
+    "subtitle": 'Simplification, selection, displacement, scale change, algorithms, and quality',
+    "chapters": [
+        ('Less detail at a smaller scale',
+         'A map of a whole country cannot show every house. Cartographers must simplify the detail for the scale they use. This process is called generalisation, and it keeps the map readable.'),
+        ('Simplification',
+         'Simplification removes small bends and points from a line while keeping its overall shape. A coastline drawn at a small scale looks smoother than the real one. The shape must still look right to the reader.'),
+        ('Selection',
+         'Selection chooses which features to keep. A small town may matter on a regional map, while a single house does not. The choice follows rules about importance and space.'),
+        ('Displacement',
+         'When two features would crowd each other, one may be moved a little to make room. A road and a river may be pushed apart so both can be seen. Moving features must not break the true position too far.'),
+        ('Algorithms',
+         'Computers use algorithms to simplify lines, merge areas, and select features. Well-known methods remove points that fall within a set distance of the line. Each method has trade-offs in speed and accuracy.'),
+        ('Quality',
+         'A good generalised map is clear, accurate enough for its purpose, and free of confusing overlaps. Cartographers check the result by eye and by measurement. A map that looks neat but misleads has failed.'),
+    ],
+    "test": [
+        ('What is cartographic generalisation?',
+         [('a', 'Painting a map in one colour'), ('b', 'Printing a map on fabric'), ('c', 'Simplifying detail for the scale a map uses'), ('d', 'Counting the people in a city')],
+         'c'),
+        ('What does simplification do to a line?',
+         [('a', 'Adds random loops to it'), ('b', 'Turns it into a dot'), ('c', 'Removes small bends while keeping its overall shape'), ('d', 'Makes it longer')],
+         'c'),
+        ('What is selection in mapmaking?',
+         [('a', 'Choosing which features to keep for the map'), ('b', 'Choosing the paper colour'), ('c', 'Choosing the printer'), ('d', "Choosing the reader's age")],
+         'a'),
+        ('Why might a feature be displaced?',
+         [('a', 'So the feature can leave the map'), ('b', 'So the scale becomes larger'), ('c', 'So two crowded features can both be seen'), ('d', 'So the feature can change its name')],
+         'c'),
+        ('What makes a generalised map good?',
+         [('a', 'It has as much detail as possible'), ('b', 'It is clear, accurate enough for its use, and free of confusing overlaps'), ('c', 'It has no features at all'), ('d', 'It is printed in the largest size')],
+         'b'),
+    ],
+}

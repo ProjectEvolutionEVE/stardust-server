@@ -1,0 +1,37 @@
+"""The Board of Longitude: the British commission that offered a large prize for a practical way to find longitude at sea."""
+CODE = 'navigation5_board_longitude'
+BOOK = {
+    "title": 'The Board of Longitude',
+    "subtitle": 'The prize, the commissioners, evaluation, disputes, outcomes, and lessons',
+    "chapters": [
+        ('A problem at sea',
+         'Finding latitude at sea was fairly easy, but finding longitude was hard. Longitude needs an accurate clock that keeps the time of a reference place. Losing a ship over a small error in longitude was a real danger.'),
+        ('The prize',
+         'The British Parliament passed the Longitude Act in 1714. It offered prizes of up to twenty thousand pounds for a practical method. The size of the prize depended on how accurate the method proved to be.'),
+        ('The commissioners',
+         'A board of commissioners was set up to judge the proposals. They included scientists, naval officers, and public figures of the time. The board sought advice from experts and tested the claims that came in.'),
+        ('Evaluation',
+         'Proposals were judged by sea trials and by tests on land. Clocks had to keep time through heat, cold, and the motion of a ship. Lunar methods were also judged against the tables of the day.'),
+        ('Disputes',
+         'The work was not free of quarrels. Some inventors felt the board was slow or unfair, and some claims were argued for years. Disputes over payment and credit were common.'),
+        ('Outcomes and lessons',
+         'John Harrison built marine clocks that met the standard, and his H4 proved very accurate on a voyage to Jamaica in 1761. Later clocks based on his work became the standard for sea navigation. The story shows how a clear prize and fair tests can drive real progress.'),
+    ],
+    "test": [
+        ('What problem did the Longitude Act of 1714 address?',
+         [('a', 'Finding longitude at sea'), ('b', 'Building bridges over rivers'), ('c', 'Printing maps in colour'), ('d', 'Growing crops in cold lands')],
+         'a'),
+        ('Why was finding longitude at sea hard?',
+         [('a', 'Sailors could not see the stars at all'), ('b', 'Ships could not carry any instruments'), ('c', 'It needed an accurate clock that kept the time of a reference place'), ('d', 'The sea had no edges')],
+         'c'),
+        ('What was the largest prize offered?',
+         [('a', 'Twenty pounds'), ('b', 'Two hundred thousand pounds'), ('c', 'Twenty pence'), ('d', 'Twenty thousand pounds')],
+         'd'),
+        ('How were the proposals judged?',
+         [('a', 'By a single guess from the board'), ('b', 'By the colour of the proposal'), ('c', 'By sea trials and tests on land'), ('d', 'By the length of the title')],
+         'c'),
+        ('Which inventor built marine clocks that met the standard?',
+         [('a', 'Isaac Newton'), ('b', 'Edmond Halley'), ('c', 'Captain Cook'), ('d', 'John Harrison')],
+         'd'),
+    ],
+}

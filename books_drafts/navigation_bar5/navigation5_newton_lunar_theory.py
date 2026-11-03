@@ -1,0 +1,37 @@
+"""Newton and the Lunar Theory: how the inverse-square law explains the Moon's path, and why its small departures from a simple ellipse mattered for navigation."""
+CODE = 'navigation5_newton_lunar_theory'
+BOOK = {
+    "title": 'Newton and the Lunar Theory',
+    "subtitle": "The Moon's motion, the inverse-square law, perturbations, lunar tables, navigation, and legacy",
+    "chapters": [
+        ('A falling apple and a moving Moon',
+         'Isaac Newton showed that the same force that pulls an apple to the ground also holds the Moon in its orbit. This idea was a major step in science. It tied the motion of the sky to the motion of things on Earth.'),
+        ('The inverse-square law',
+         "Newton's law of gravity says the pull between two bodies falls off with the square of the distance between them. Doubling the distance cuts the pull to a quarter. This law explains why the Moon moves as it does."),
+        ('Perturbations',
+         "The Moon does not follow a perfect ellipse around the Earth. The Sun's pull changes its path in small, regular ways. These small changes are called perturbations."),
+        ('Lunar tables',
+         'Navigators needed to know where the Moon would be at each hour. Astronomers built lunar tables that predicted its position from the theory. Accurate tables were a key tool for finding longitude at sea.'),
+        ('Navigation',
+         "The Moon moves against the background of the stars, about its own width each hour. Sailors could measure the Moon's angle from a known star and compare it with the tables. This gave the time at a reference place and so the longitude."),
+        ('Legacy',
+         "Newton's work on the Moon set a model for how careful theory can predict the sky. Later mathematicians refined the lunar theory for centuries. The same ideas still help plan spacecraft paths today."),
+    ],
+    "test": [
+        ('What did Newton show about the Moon?',
+         [('a', 'The Moon is made of cheese'), ('b', 'The Moon has no gravity at all'), ('c', 'The same force that pulls an apple also holds the Moon in orbit'), ('d', 'The Moon moves in a square')],
+         'c'),
+        ('What happens to the pull of gravity when the distance doubles?',
+         [('a', 'It doubles'), ('b', 'It stays the same'), ('c', 'It rises to four times'), ('d', 'It falls to a quarter')],
+         'd'),
+        ("What are perturbations in the Moon's motion?",
+         [('a', "Small regular changes caused by the Sun's pull"), ('b', "Large changes caused by the Moon's colour"), ('c', 'Sounds made by the tides'), ('d', 'Ropes that hold the Moon in place')],
+         'a'),
+        ('Why did navigators need lunar tables?',
+         [('a', 'To count the number of stars'), ('b', 'To paint the sails'), ('c', 'To know where the Moon would be at each hour'), ('d', 'To measure the depth of the sea')],
+         'c'),
+        ('How could sailors use the Moon to find longitude?',
+         [('a', 'By listening for its sound at night'), ('b', 'By counting its craters at sea'), ('c', 'By measuring its angle from a known star and checking the tables'), ('d', 'By waiting for it to fall into the sea')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Hyperspectral Unmixing: how a pixel that holds several materials is split into its parts using known spectral signatures."""
+CODE = 'navigation5_hyperspectral'
+BOOK = {
+    "title": 'Hyperspectral Unmixing',
+    "subtitle": 'Mixed pixels, endmembers, abundances, spectral libraries, calibration, and classes',
+    "chapters": [
+        ('Many colours of light',
+         'A hyperspectral sensor measures light in many narrow bands, often hundreds of them. Each material reflects light in its own pattern across these bands. That pattern is its spectral signature.'),
+        ('Mixed pixels',
+         'A single pixel on the ground may cover grass, soil, and a little concrete. Its reading is a mix of all three signatures. Unmixing tries to sort out how much of each material is inside the pixel.'),
+        ('Endmembers',
+         'Endmembers are the pure materials that make up the mixture. Analysts choose them from the image or from a library of known signatures. Choosing good endmembers is one of the hardest steps.'),
+        ('Abundances',
+         'Abundances are the fractions of each endmember in a pixel. Good results give fractions that are positive and add up to one. These fractions can be drawn as a map for each material.'),
+        ('Spectral libraries',
+         'A spectral library is a collection of measured signatures for known materials. Labs measure them under controlled light and record their conditions. A library lets a scientist compare the image with known materials.'),
+        ('Calibration and classes',
+         'The image must be calibrated so that its readings match real reflectance. Once calibrated, the pixels can be grouped into classes such as water, forest, or city. Classes help turn a large image into a clear map.'),
+    ],
+    "test": [
+        ('What does a hyperspectral sensor measure?',
+         [('a', 'Light in many narrow bands'), ('b', 'Only the loudness of sound'), ('c', 'The weight of rocks'), ('d', 'The speed of the wind')],
+         'a'),
+        ('Why is a pixel called mixed?',
+         [('a', 'It is always painted two colours'), ('b', 'It holds a sound and a picture'), ('c', 'It can contain more than one material'), ('d', 'It stores two separate maps')],
+         'c'),
+        ('What are endmembers?',
+         [('a', 'The pure materials that make up a mixture'), ('b', 'The edges of the map sheet'), ('c', 'The last pixels in each row'), ('d', 'The people who print the images')],
+         'a'),
+        ('What should good abundance fractions do?',
+         [('a', 'Stay positive and add up to one'), ('b', 'Add up to one hundred thousand'), ('c', 'Always equal zero'), ('d', 'Change sign each day')],
+         'a'),
+        ('Why is calibration needed?',
+         [('a', 'So the sensor can float'), ('b', 'So the image can be printed in gold'), ('c', 'So pixels can be removed'), ('d', 'So the readings match real reflectance')],
+         'd'),
+    ],
+}

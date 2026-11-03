@@ -1,0 +1,37 @@
+"""Spatial Autocorrelation: how to test whether things that are close together tend to be alike, using Moran's I."""
+CODE = 'navigation5_spatial_autocorrelation'
+BOOK = {
+    "title": 'Spatial Autocorrelation',
+    "subtitle": "Moran's I, neighbours, tests, clusters, interpretation, and limits",
+    "chapters": [
+        ('Near things are alike',
+         "Tobler's first law of geography says that near things tend to be more alike than distant things. Spatial autocorrelation measures how strongly this holds in a set of data. It is a key idea in spatial statistics."),
+        ('Neighbours',
+         'Before measuring, an analyst must define which places are neighbours. Common choices are places that share a border, or places within a set distance. The choice shapes the result, so it must be stated clearly.'),
+        ("Moran's I",
+         'Patrick Moran introduced his statistic in 1950. Its value is usually between minus one and plus one. Values near plus one mean similar values sit together, values near minus one mean they sit apart, and values near zero mean a random pattern.'),
+        ('Tests',
+         'A test compares the observed value with what random arrangements would give. A small p-value suggests the pattern is unlikely to be random. The test answers whether a pattern exists, not why it exists.'),
+        ('Clusters',
+         'Local versions of the statistic show where clusters of high or low values sit. These local tests help find hot spots and cold spots. Each local result still needs checking against the chance of many tests.'),
+        ('Interpretation and limits',
+         'A strong pattern does not prove a cause. Data that is not independent, or areas of very different size, can mislead the result. Careful analysts state the assumptions and test them.'),
+    ],
+    "test": [
+        ("What does Tobler's first law of geography say?",
+         [('a', 'Near things tend to be more alike than distant things'), ('b', 'All maps must use the same scale'), ('c', 'Every town has one river'), ('d', 'Distance has no effect on anything')],
+         'a'),
+        ('What must an analyst define before measuring autocorrelation?',
+         [('a', 'Which places count as neighbours'), ('b', 'The colour of the map'), ('c', 'The name of the mapmaker'), ('d', 'The number of pages in the report')],
+         'a'),
+        ("What does a Moran's I value near plus one suggest?",
+         [('a', 'Values are random'), ('b', 'Similar values sit far apart'), ('c', 'Similar values sit close together'), ('d', 'The data is empty')],
+         'c'),
+        ('What does a small p-value suggest in the test?',
+         [('a', 'The data is always correct'), ('b', 'The observed pattern is unlikely to be random'), ('c', 'The places are the same size'), ('d', 'There are no neighbours')],
+         'b'),
+        ('What does a strong autocorrelation pattern not prove by itself?',
+         [('a', 'That a cause exists'), ('b', 'That the data has some pattern'), ('c', 'That values are close together'), ('d', 'That the test ran')],
+         'a'),
+    ],
+}

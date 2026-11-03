@@ -1,0 +1,37 @@
+"""Cloud Masking in Imagery: finding and marking clouds and their shadows so that they do not spoil the ground measurements."""
+CODE = 'navigation5_cloud_masking'
+BOOK = {
+    "title": 'Cloud Masking in Imagery',
+    "subtitle": 'Cloud detection, shadows, thresholds, time series, gaps, and validation',
+    "chapters": [
+        ('Clouds hide the ground',
+         'Clouds block the view of the ground and change the light that reaches the sensor. A cloud can make a field look bright or dark, and it can hide a flood or a fire. A cloud mask marks these pixels so that they can be left out.'),
+        ('Cloud detection',
+         'Clouds are usually bright and cold in thermal bands, and they often have a smooth, white look in visible bands. Detection rules combine several of these clues. Each rule is tuned to the sensor and the season.'),
+        ('Shadows',
+         'A cloud casts a shadow on the ground beside it. Shadows are dark and can look like water or forest. A good mask finds the shadow as well as the cloud, using the sun and cloud positions.'),
+        ('Thresholds',
+         'Many mask methods use thresholds on brightness or temperature. A threshold that is too strict misses thin clouds. A threshold that is too loose marks bright sand and snow as cloud. Careful testing sets the balance.'),
+        ('Time series and gaps',
+         'A series of images can fill gaps left by clouds. When one date is clouded, a clear date from nearby can stand in. The mask tells the analyst which dates to use for each place.'),
+        ('Validation',
+         'Validation compares the mask with a set of hand-checked pixels. The result shows how often clouds were missed and how often clear ground was wrongly marked. Users report these numbers with any study that depends on the mask.'),
+    ],
+    "test": [
+        ('What does a cloud mask do?',
+         [('a', 'It adds clouds to the picture'), ('b', 'It paints the sky red'), ('c', 'It marks cloud pixels so they can be left out'), ('d', 'It removes the sensor')],
+         'c'),
+        ('Why do clouds look different in a thermal band?',
+         [('a', 'Clouds are always hot in every band'), ('b', 'Clouds are usually cold and bright in thermal bands'), ('c', 'Thermal bands cannot see clouds'), ('d', 'Clouds turn into sound in thermal bands')],
+         'b'),
+        ('Why must a good mask find cloud shadows too?',
+         [('a', 'Shadows are the only thing that matters'), ('b', 'Shadows are always bright'), ('c', 'Shadows can look like water or forest and be wrongly used'), ('d', 'Shadows make the image lighter')],
+         'c'),
+        ('What happens if a threshold is too loose?',
+         [('a', 'Bright sand and snow may be wrongly marked as cloud'), ('b', 'Every cloud is always found'), ('c', 'The image becomes a sound'), ('d', 'The map becomes larger')],
+         'a'),
+        ('How can a clear date fill a gap in a series?',
+         [('a', 'It makes the clouds disappear from the sky'), ('b', 'It changes the place to another country'), ('c', 'It prints the gap in colour'), ('d', 'It can stand in for a clouded date at the same place')],
+         'd'),
+    ],
+}

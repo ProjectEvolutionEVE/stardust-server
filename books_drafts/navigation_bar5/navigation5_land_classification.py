@@ -1,0 +1,37 @@
+"""Machine Learning Land Classification: teaching a computer to label each part of a satellite image as a type of land."""
+CODE = 'navigation5_land_classification'
+BOOK = {
+    "title": 'Machine Learning Land Classification',
+    "subtitle": 'Training samples, features, classifiers, accuracy, overfitting, and maps',
+    "chapters": [
+        ('Teaching by example',
+         'Land classification labels each pixel of an image as a type of land, such as water, forest, farm, or city. A machine learning model learns these labels from examples that people have checked. Good examples make a good model.'),
+        ('Training samples',
+         'Training samples are places where the true land type is known, such as from a field visit or a trusted map. They must cover the range of each class. A model trained on only one kind of farm will struggle on another.'),
+        ('Features',
+         'A feature is a measurement the model uses, such as the colour in each band, the texture, or the height. Good features separate the classes clearly. Adding many weak features can confuse the model rather than help it.'),
+        ('Classifiers',
+         'A classifier is the rule that turns the features into a label. Common choices include decision trees, support vector machines, and neural networks. Each has its own strengths and needs its own care.'),
+        ('Accuracy and overfitting',
+         'Accuracy is measured on samples the model has not seen. A model that scores very well on its training samples but poorly on new ones has overfitted. Holding back a test set of samples gives an honest measure.'),
+        ('Maps',
+         'The finished model is applied to every pixel in the image. The result is a land cover map. Users check the map against reference data and report the accuracy and the known confusions between classes.'),
+    ],
+    "test": [
+        ('What does land classification label?',
+         [('a', 'Each road as a colour'), ('b', 'Each pixel as a type of land'), ('c', 'Each cloud as a number'), ('d', 'Each sensor as a city')],
+         'b'),
+        ('Why must training samples cover the range of each class?',
+         [('a', 'So the model is made heavier'), ('b', 'So the model does not struggle on unseen kinds of land'), ('c', 'So the image is printed larger'), ('d', 'So no test is ever needed')],
+         'b'),
+        ('What is a feature in this method?',
+         [('a', 'A measurement the model uses, such as colour or texture'), ('b', 'A decoration on the map edge'), ('c', 'A person who checks the map'), ('d', 'A type of printer ink')],
+         'a'),
+        ('What is overfitting?',
+         [('a', 'Scoring well on training samples but poorly on new ones'), ('b', 'Using too few features'), ('c', 'Printing the map too large'), ('d', 'Checking the results against reference data')],
+         'a'),
+        ('Why is a test set held back?',
+         [('a', 'To make the model train twice as fast'), ('b', 'To remove the labels from the map'), ('c', 'To give an honest measure on samples the model has not seen'), ('d', 'To give the model a holiday')],
+         'c'),
+    ],
+}

@@ -1,0 +1,37 @@
+"""Radiometric Calibration of Sensors: how a sensor's readings are tied to known light levels so that its measurements can be trusted."""
+CODE = 'navigation5_radiometric_calibration'
+BOOK = {
+    "title": 'Radiometric Calibration of Sensors',
+    "subtitle": 'Reference targets, gain, offset, drift, vicarious calibration, and standards',
+    "chapters": [
+        ('Making readings honest',
+         'A sensor records a number for each pixel, but the number means nothing until it is tied to a known amount of light. Radiometric calibration sets that link. Without it, two sensors cannot be compared.'),
+        ('Reference targets',
+         'Calibration often uses targets with known reflectance, such as large flat panels of a set brightness. The sensor views the target under known light, and the readings are compared with the expected values. The difference shows how the sensor must be adjusted.'),
+        ('Gain and offset',
+         'Gain is how strongly the sensor amplifies the light it receives. Offset is a fixed value added to every reading, even in darkness. A calibration sets both so that the readings match the true radiance.'),
+        ('Drift',
+         'Sensors change slowly over time because of heat, ageing, and damage from space. This slow change is called drift. Regular checks catch drift before it spoils long records.'),
+        ('Vicarious calibration',
+         'Vicarious calibration uses natural targets on the ground, such as deserts, lakes, or snow fields, measured at the same time as the satellite passes. Ground teams measure these targets with trusted instruments. The satellite is then checked against these measurements.'),
+        ('Standards',
+         'Agencies follow published standards for calibration so results can be compared across missions. Standards describe the targets, the methods, and the reports. Following them lets users combine data from many sensors over many years.'),
+    ],
+    "test": [
+        ('What does radiometric calibration tie the sensor readings to?',
+         [('a', "The name of the sensor's designer"), ('b', 'The weight of the satellite'), ('c', 'The number of pixels in the image'), ('d', 'A known amount of light')],
+         'd'),
+        ('What is a reference target?',
+         [('a', 'A surface with known reflectance used to check the sensor'), ('b', 'The target a hunter aims at'), ('c', 'A printed name on a map'), ('d', 'A goal in a football match')],
+         'a'),
+        ('What is offset in a sensor?',
+         [('a', 'The distance between two pixels'), ('b', 'A fixed value added to every reading'), ('c', 'The colour of the lens'), ('d', 'The time of the image')],
+         'b'),
+        ('What is drift?',
+         [('a', 'A quick change in the weather'), ('b', 'A slow change in the sensor over time'), ('c', 'A map being moved to a new place'), ('d', 'The speed of a boat')],
+         'b'),
+        ('What is vicarious calibration?',
+         [('a', 'Replacing the sensor every day'), ('b', 'Removing all the sensor data'), ('c', 'Checking the satellite against natural ground targets measured on the ground'), ('d', 'Painting the satellite white')],
+         'c'),
+    ],
+}

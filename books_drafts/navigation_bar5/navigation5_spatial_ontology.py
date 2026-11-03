@@ -1,0 +1,37 @@
+"""Spatial Ontologies: how places, features, and their relations are defined so that different systems can share and reason about them."""
+CODE = 'navigation5_spatial_ontology'
+BOOK = {
+    "title": 'Spatial Ontologies',
+    "subtitle": 'Concepts, relations, vocabularies, reasoning, standards, and interoperability',
+    "chapters": [
+        ('Naming things carefully',
+         'An ontology is a formal description of the things in a field and how they relate. In geography, it defines terms such as river, road, and boundary. Clear definitions help different systems agree on what the data means.'),
+        ('Concepts and relations',
+         'A concept is a kind of thing, such as a bridge or a park. A relation links concepts, for example a bridge crosses a river. Relations let a system answer questions the data does not state directly.'),
+        ('Vocabularies',
+         'A vocabulary is a shared list of terms with agreed meanings. Map makers often use one vocabulary for land use and another for roads. Agreed vocabularies make it easier to combine data from many sources.'),
+        ('Reasoning',
+         'A reasoning system uses the rules of an ontology to draw new conclusions. If every national park is a protected area, a park found in the data is also known to be protected. The rules must be written carefully to avoid wrong conclusions.'),
+        ('Standards',
+         'Standards bodies publish shared ontologies and encodings for spatial data. Following a standard lets software from different makers work together. Standards also help keep data useful over many years.'),
+        ('Interoperability',
+         'Interoperability is the ability of two systems to exchange data and use it correctly. Ontologies support this by giving the same meaning to the same term. Without shared meaning, the data may still move but it can be misread.'),
+    ],
+    "test": [
+        ('What is an ontology in geography?',
+         [('a', 'A type of compass'), ('b', 'A map of the sea floor only'), ('c', 'A printing method'), ('d', 'A formal description of things and how they relate')],
+         'd'),
+        ('What is a relation in an ontology?',
+         [('a', 'A family tree of mapmakers'), ('b', 'A link between concepts, such as a bridge crossing a river'), ('c', 'The distance between two towns'), ('d', 'A colour scheme')],
+         'b'),
+        ('Why do systems use shared vocabularies?',
+         [('a', 'So the terms can be hidden'), ('b', 'So they agree on the meaning of terms'), ('c', 'So the data can be printed in black'), ('d', 'So the list gets longer every day')],
+         'b'),
+        ('What can a reasoning system do with ontology rules?',
+         [('a', 'Paint the map automatically'), ('b', 'Remove all relations'), ('c', 'Draw new conclusions from known facts'), ('d', 'Stop the computer from working')],
+         'c'),
+        ('What does interoperability mean?',
+         [('a', 'Two maps are printed on one page'), ('b', 'One system is switched off'), ('c', 'Two systems can exchange data and use it correctly'), ('d', 'Data is kept in a locked box')],
+         'c'),
+    ],
+}

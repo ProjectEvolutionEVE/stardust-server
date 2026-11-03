@@ -1,0 +1,37 @@
+"""Maury's Wind and Current Charts: how Matthew Fontaine Maury gathered ships' logbooks and turned them into charts that saved sailing time."""
+CODE = 'navigation5_maury_charts'
+BOOK = {
+    "title": "Maury's Wind and Current Charts",
+    "subtitle": 'Logbooks, pilot charts, routes, pooled data, savings, and legacy',
+    "chapters": [
+        ('Logbooks as data',
+         'Ships kept logbooks with the wind, the currents, and the course each day. Matthew Fontaine Maury, an American naval officer, saw that these records held a great deal of useful knowledge. He set out to gather them and make sense of them.'),
+        ('Pilot charts',
+         'Maury turned the pooled records into pilot charts. These charts showed the usual winds and currents for each month across the oceans. A sailor could plan a route using the patterns that others had recorded.'),
+        ('Routes',
+         'The charts suggested routes that took advantage of winds and currents. A ship could often sail a shorter or faster path by following the best seasonal winds. Captains who used the charts found their voyages quicker.'),
+        ('Pooled data',
+         "The strength of the charts came from pooling data from many ships. One ship's record is small, but thousands together show a clear pattern. Maury encouraged captains to fill in their logs in a common form."),
+        ('Savings',
+         'The time saved on long voyages was worth a great deal in money and in lives. Maury estimated large savings in sailing days across the fleets that used his charts. These savings helped persuade governments and merchants to support the project.'),
+        ('Legacy',
+         "Maury's work helped found modern oceanography and the idea of shared scientific data collection. Later programmes continued to collect ship observations. His charts remain a clear example of turning ordinary records into useful knowledge."),
+    ],
+    "test": [
+        ("What did ships' logbooks record?",
+         [('a', 'The wind, the currents, and the course each day'), ('b', 'The names of the passengers only'), ('c', 'The price of cargo'), ('d', 'The colours of the sails')],
+         'a'),
+        ("What did Maury's pilot charts show?",
+         [('a', 'The positions of the ports only'), ('b', 'The height of the waves at a single moment'), ('c', "The names of the ship's dogs"), ('d', 'The usual winds and currents for each month')],
+         'd'),
+        ('Why was pooling data from many ships valuable?',
+         [('a', 'Only one ship could ever be right'), ('b', 'It made the logbooks lighter'), ('c', 'It stopped the sea from moving'), ('d', 'Thousands of records together show a clear pattern')],
+         'd'),
+        ('What did the charts often suggest?',
+         [('a', 'Routes that used the best seasonal winds and currents'), ('b', 'Routes that avoided all wind'), ('c', 'Routes on dry land only'), ('d', 'Routes that were always the longest')],
+         'a'),
+        ('What scientific field did Maury help to found?',
+         [('a', 'Modern bread baking'), ('b', 'Modern oceanography'), ('c', 'Modern glassmaking'), ('d', 'Modern weaving')],
+         'b'),
+    ],
+}
