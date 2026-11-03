@@ -969,5 +969,7 @@
  "Your SDID": "你的 SDID",
  "Your SDID: %s": "你的 SDID：%s",
  "OK": "好",
- "Stay": "留下"
+ "Stay": "留下",
+ "Paste": "貼上",
+ "Copy the code from your message first, then tap Paste.": "請先複製訊息中的驗證碼，再點「貼上」。"
 }

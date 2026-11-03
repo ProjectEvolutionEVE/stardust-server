@@ -969,5 +969,7 @@
  "Your SDID": "معرّف SDID الخاص بك",
  "Your SDID: %s": "معرّف SDID الخاص بك: %s",
  "OK": "حسناً",
- "Stay": "البقاء"
+ "Stay": "البقاء",
+ "Paste": "لصق",
+ "Copy the code from your message first, then tap Paste.": "انسخ الرمز من رسالتك أولاً، ثم اضغط لصق."
 }

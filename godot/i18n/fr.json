@@ -969,5 +969,7 @@
  "Your SDID": "Ton SDID",
  "Your SDID: %s": "Ton SDID : %s",
  "OK": "OK",
- "Stay": "Rester"
+ "Stay": "Rester",
+ "Paste": "Coller",
+ "Copy the code from your message first, then tap Paste.": "Copie d'abord le code de ton message, puis touche Coller."
 }

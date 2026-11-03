@@ -969,5 +969,7 @@
  "Your SDID": "내 SDID",
  "Your SDID: %s": "내 SDID: %s",
  "OK": "확인",
- "Stay": "머무르기"
+ "Stay": "머무르기",
+ "Paste": "붙여넣기",
+ "Copy the code from your message first, then tap Paste.": "먼저 메시지의 코드를 복사한 다음 붙여넣기를 누르세요."
 }

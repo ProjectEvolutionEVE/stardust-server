@@ -17,6 +17,7 @@ var code: LineEdit
 var send: Button
 var verify: Button
 var keep: CheckBox
+var paste: Button             # one tap fills the code from a copied message, no keypad needed (Eric 11-03)
 var status: Label
 var retry: Button
 var join: CheckBox            # offers to add a new sign-in to the SDID this phone knows (Eric 11-03)
@@ -85,8 +86,17 @@ func _ready() -> void:
 	code.max_length = 6
 	code.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER   # the number pad: iOS then offers the code from Messages or Mail (ios/plugins/otc)
 	code.text_changed.connect(_on_code)
-	code.visible = false
-	box.add_child(code)
+	var code_row := HBoxContainer.new()
+	code_row.add_theme_constant_override("separation", 12)
+	code.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	code_row.add_child(code)
+	paste = Ui.button("Paste", false)
+	paste.custom_minimum_size = Vector2(170, 72)
+	paste.add_theme_font_size_override("font_size", 24)
+	paste.pressed.connect(_paste_code)
+	code_row.add_child(paste)
+	code_row.visible = false
+	box.add_child(code_row)
 	verify = Ui.button("Wake up")
 	verify.visible = false
 	verify.pressed.connect(_verify)
@@ -232,6 +242,13 @@ func _on_code(t: String) -> void:
 		_hide_keypad()
 
 
+## Paste: the 6 digits from whatever was copied (the whole message is fine).
+func _paste_code() -> void:
+	_on_code(DisplayServer.clipboard_get())
+	if code.text.length() != 6:
+		Ui.error(self, "Copy the code from your message first, then tap Paste.")
+
+
 func _hide_keypad() -> void:
 	var f := get_viewport().gui_get_focus_owner()
 	if f:
@@ -263,7 +280,7 @@ func _send() -> void:
 	if not r.ok:
 		Ui.error(self, r.error)
 		return
-	code.visible = true
+	code.get_parent().visible = true
 	verify.visible = true
 	send.text = tr("Send a new code")
 	code.grab_focus()

@@ -969,5 +969,7 @@
  "Your SDID": "Deine SDID",
  "Your SDID: %s": "Deine SDID: %s",
  "OK": "OK",
- "Stay": "Bleiben"
+ "Stay": "Bleiben",
+ "Paste": "Einfügen",
+ "Copy the code from your message first, then tap Paste.": "Kopiere zuerst den Code aus deiner Nachricht, dann tippe auf Einfügen."
 }

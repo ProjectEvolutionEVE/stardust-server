@@ -969,5 +969,7 @@
  "Your SDID": "Tu SDID",
  "Your SDID: %s": "Tu SDID: %s",
  "OK": "Aceptar",
- "Stay": "Quedarme"
+ "Stay": "Quedarme",
+ "Paste": "Pegar",
+ "Copy the code from your message first, then tap Paste.": "Copia primero el código de tu mensaje y luego toca Pegar."
 }

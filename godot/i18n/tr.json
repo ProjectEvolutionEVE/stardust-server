@@ -969,5 +969,7 @@
  "Your SDID": "SDID'in",
  "Your SDID: %s": "SDID'in: %s",
  "OK": "Tamam",
- "Stay": "Kal"
+ "Stay": "Kal",
+ "Paste": "Yapıştır",
+ "Copy the code from your message first, then tap Paste.": "Önce mesajındaki kodu kopyala, sonra Yapıştır'a dokun."
 }

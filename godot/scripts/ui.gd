@@ -16,6 +16,27 @@ func _ready() -> void:
 	set_language(Session.pref("lang", "en"))
 
 
+## Keep what's being typed in above the phone's keypad (Eric 11-03: the keypad covered the code box): while a keypad
+## is up, the whole screen slides up just enough to show the focused box and the button under it; it slides back after.
+var _lift := 0.0
+
+
+func _process(dt: float) -> void:
+	var vp := get_viewport()
+	var want := 0.0
+	var kh := DisplayServer.virtual_keyboard_get_height()
+	var f := vp.gui_get_focus_owner()
+	if kh > 0 and f is LineEdit:
+		var vh := vp.get_visible_rect().size.y
+		var keypad := float(kh) * vh / float(DisplayServer.window_get_size().y)
+		var need := f.get_global_rect().end.y + 110.0          # the box, and room for the button under it
+		want = maxf(0.0, need - (vh - keypad))
+	_lift += (want - _lift) * minf(1.0, dt * 12.0)
+	if absf(_lift - want) < 0.5:
+		_lift = want
+	vp.canvas_transform = Transform2D(0.0, Vector2(0.0, -_lift))
+
+
 func set_language(code: String) -> void:
 	TranslationServer.set_locale(code.replace("-", "_"))
 
