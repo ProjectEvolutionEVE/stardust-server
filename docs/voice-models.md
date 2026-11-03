@@ -20,6 +20,14 @@ Keep this file, `VOICE_BY_LANG` and the recording script in step.
 | Sumiko Ito - Crisp | `0yh9saSHWVy78QG1HfNs` | ja | not yet written down: check in ElevenLabs |
 | Sara - Soft, Expressive, and Warm (chosen by Eric 10-27) | by name (library ID `XTa3iQyMA6f1qrI4F6kZ`; a My Voices copy has its own ID) | ar | Arabic, Modern Standard (verified badge in the Voice Library) |
 
+**Hindi and the other Indian languages: Sarvam, not ElevenLabs.** Eric picked Sarvam **Bulbul v3, speaker `priya`** on
+2026-09-30, from the six samples in `Inara-Voice/Stardust-TerraDeleta_Inara_hi_Sarvam-samples/` (Priya, Neha, Kavya,
+Shreya, Ritu, Simran): *"authoritative, clean and clear."* The others were too slow, too sensual or too young, and one
+had overlapping, doubled vocals. Use Priya for the other Indian languages too (bn, mr, te, ta planned). Check every
+render for doubled or overlapping audio. Sarvam's translation (Mayura) was too literal on game terms ("Recovery",
+"sweep the field"), so a game-term glossary comes first. Cost then: Bulbul about ₹3 per 1,000 characters. (Record found
+11-03 in the Signal in the Noise notes, the same Inara; no ElevenLabs Hindi voice was ever chosen.)
+
 **Arabic (10-26):**
 - The 179 Arabic lines now on the server were recorded in Lily by mistake, and Lily is not verified in Arabic.
 - Once Eric picks an Arabic voice, add it above and to `VOICE_BY_LANG`, then re-record into a fresh folder:

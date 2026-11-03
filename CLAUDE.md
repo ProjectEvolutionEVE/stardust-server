@@ -221,7 +221,7 @@ The full record is in the `quavara-docs` repository:
 41. **Languages: what gets translated, and in what order (Eric 10-27).**
     - **Library books and tests are text only, never voiced.** Arabic is the first language to translate them into: first the Library subjects and bars 1-2 of every career, then bar 3, then bars 4-5. They're stored in their own folder with the same answer letters; the game falls back to English where a book isn't translated yet.
     - **Inara's voice in Arabic** is for the intro (its 4 narration parts) and all of Inara's in-game lines and COMMS (the 179 lines). The voice is Sara (Eric 10-27).
-    - **Hindi for Inara (Eric 10-28), a good-faith add:** record her 179 lines in Hindi with a **Sarvam** voice (Eric picks one of the six samples in `~/Desktop/Inara Hindi voice samples/`: Kavya, Neha, Priya, Ritu, Shreya, Simran), from a spoken-words Hindi script (`docs/inara-lines/hi.json`), then switch `hi` on in `voice.py`. Eric will post about it on Sarvam's Discord. After the weekly reset (Nov 1).
+    - **Hindi for Inara (Eric 10-28), a good-faith add:** record her 179 lines in Hindi with the **Sarvam** voice **Priya** (Bulbul v3, speaker `priya`; Eric picked her from the six samples on 09-30: "authoritative, clean and clear"; docs/voice-models.md), from a spoken-words Hindi script (`docs/inara-lines/hi.json`), then switch `hi` on in `voice.py`. Eric will post about it on Sarvam's Discord. After the weekly reset (Nov 1).
     - **The Arabic audiobook of the novel "Stardust - Inara" comes last,** only if the ElevenLabs credits allow.
 
 ### Still open: these ARE Eric's to answer
