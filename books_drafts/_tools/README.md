@@ -9,6 +9,8 @@
    remove __pycache__; run test_server.py on the test database; commit; push.
 Pacing (Eric 10-27): before each batch check usage. Wait for the reset if the 5-hour window is past about 55%; stop for
 the week past 90% weekly. Measured on the Max plan: about 25% of a 5-hour window and 3.5-4% weekly per career.
+On the Pro plan (Medicine, 11-03): about 45% of a 5-hour window and about 16% weekly per career, so start a career
+only at a fresh window.
 Done: Flight, Business, Mining, Engineering, Computing (10-27), Medicine (11-03). Left: Navigation, Science.
 Tests: the test environment lives in ~/.local/share/stardust-test/ (venv + Postgres on port 5544, database dfgtest),
 not in a scratch folder (macOS cleans /private/tmp).
