@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "C'est déjà l'une de tes connexions.",
  "Those are the same account.": "C'est le même compte.",
  "Your SDID": "Ton SDID",
- "Your SDID: %s": "Ton SDID : %s"
+ "Your SDID: %s": "Ton SDID : %s",
+ "OK": "OK",
+ "Stay": "Rester"
 }

@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "這已經是你的登入方式之一。",
  "Those are the same account.": "這是同一個帳號。",
  "Your SDID": "你的 SDID",
- "Your SDID: %s": "你的 SDID：%s"
+ "Your SDID: %s": "你的 SDID：%s",
+ "OK": "好",
+ "Stay": "留下"
 }

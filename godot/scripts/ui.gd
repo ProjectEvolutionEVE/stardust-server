@@ -78,11 +78,55 @@ func picker(title := "") -> WheelPicker:
 
 
 func error(parent: Node, text: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = "Stardust"
-	d.dialog_text = tr(text)
-	parent.add_child(d)
-	d.popup_centered()
+	dialog(parent, "Stardust", text, [["OK", true, Callable()]])
+
+
+## Every pop-up box in the app (Eric 11-03: look like the rest of the buttons and tabs): the screen dims, and a dark
+## panel with a gold border holds a gold title, the message, and the app's own buttons, side by side.
+## buttons: [[label, primary, callable], …]; any button closes the box, then runs its callable (if any).
+func dialog(parent: Node, title: String, text: String, buttons: Array) -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 60
+	parent.get_tree().root.add_child(layer)
+	var root := Control.new()
+	root.size = parent.get_viewport().get_visible_rect().size
+	root.layout_direction = Control.LAYOUT_DIRECTION_LOCALE
+	layer.add_child(root)
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.6)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(dim)
+	var centre := CenterContainer.new()
+	centre.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(centre)
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(600, 0)
+	var st := StyleBoxFlat.new()
+	st.bg_color = PANEL
+	st.border_color = GOLD
+	st.set_border_width_all(2)
+	st.set_corner_radius_all(16)
+	st.set_content_margin_all(24)
+	panel.add_theme_stylebox_override("panel", st)
+	centre.add_child(panel)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 18)
+	panel.add_child(v)
+	v.add_child(label(title, 30, GOLD))
+	v.add_child(label(text, 24))
+	var row: BoxContainer = HBoxContainer.new() if buttons.size() <= 2 else VBoxContainer.new()   # three or more stack
+	row.add_theme_constant_override("separation", 12)
+	v.add_child(row)
+	for b in buttons:
+		var btn := button(str(b[0]), b[1])
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.add_theme_font_size_override("font_size", 24)
+		var run: Callable = b[2]
+		btn.pressed.connect(func():
+			layer.queue_free()
+			if run.is_valid():
+				run.call())
+		row.add_child(btn)
 
 
 ## Whole numbers with thousands commas, as the browser shows them ("12,345"); "—" when there's none.

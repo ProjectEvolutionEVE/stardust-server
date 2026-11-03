@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "이미 등록된 로그인 방법입니다.",
  "Those are the same account.": "같은 계정입니다.",
  "Your SDID": "내 SDID",
- "Your SDID: %s": "내 SDID: %s"
+ "Your SDID: %s": "내 SDID: %s",
+ "OK": "확인",
+ "Stay": "머무르기"
 }

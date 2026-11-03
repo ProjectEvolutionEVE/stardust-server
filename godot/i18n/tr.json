@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "Bu zaten giriş yollarından biri.",
  "Those are the same account.": "Bunlar aynı hesap.",
  "Your SDID": "SDID'in",
- "Your SDID: %s": "SDID'in: %s"
+ "Your SDID: %s": "SDID'in: %s",
+ "OK": "Tamam",
+ "Stay": "Kal"
 }

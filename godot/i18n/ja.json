@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "それはすでにあなたのサインイン方法です。",
  "Those are the same account.": "同じアカウントです。",
  "Your SDID": "あなたのSDID",
- "Your SDID: %s": "あなたのSDID：%s"
+ "Your SDID: %s": "あなたのSDID：%s",
+ "OK": "OK",
+ "Stay": "とどまる"
 }

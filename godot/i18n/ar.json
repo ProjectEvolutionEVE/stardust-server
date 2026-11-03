@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "هذا من وسائل دخولك بالفعل.",
  "Those are the same account.": "هذان الحساب نفسه.",
  "Your SDID": "معرّف SDID الخاص بك",
- "Your SDID: %s": "معرّف SDID الخاص بك: %s"
+ "Your SDID: %s": "معرّف SDID الخاص بك: %s",
+ "OK": "حسناً",
+ "Stay": "البقاء"
 }

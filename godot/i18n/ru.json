@@ -967,5 +967,7 @@
  "That's already one of your sign-ins.": "Это уже один из ваших способов входа.",
  "Those are the same account.": "Это один и тот же аккаунт.",
  "Your SDID": "Ваш SDID",
- "Your SDID: %s": "Ваш SDID: %s"
+ "Your SDID: %s": "Ваш SDID: %s",
+ "OK": "ОК",
+ "Stay": "Остаться"
 }

@@ -320,12 +320,7 @@ func _library_alert(box: VBoxContainer, sk: Dictionary) -> void:
 
 ## Leaving the quarters (rule 19): two places only, the Starship Library or the Docking Bay.
 func _exit() -> void:
-	var d := ConfirmationDialog.new()
-	d.title = tr("Exit Private Quarters")
-	d.dialog_text = tr("Where to?")
-	d.ok_button_text = tr("Starship Library")
-	d.cancel_button_text = tr("Docking Bay")
-	d.confirmed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
-	d.canceled.connect(func(): get_tree().change_scene_to_file("res://scenes/bay.tscn"))
-	add_child(d)
-	d.popup_centered()
+	Ui.dialog(self, "Exit Private Quarters", "Where to?", [
+		["Starship Library", true, func(): get_tree().change_scene_to_file("res://scenes/library.tscn")],
+		["Docking Bay", true, func(): get_tree().change_scene_to_file("res://scenes/bay.tscn")],
+		["Stay", false, Callable()]])

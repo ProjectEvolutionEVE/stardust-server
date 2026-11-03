@@ -57,19 +57,13 @@ func _save(go: Button) -> void:
 		Session.me = me.data
 	Session.call_on_enter = "welcome"
 	# one SDID for every way they sign in (Eric 11-03): offer the other one now, so a phone and an email never make two accounts
-	var d := ConfirmationDialog.new()
-	d.title = tr("Your SDID")
 	var has_email := false
 	for x in Session.me.get("sign_ins", []):
 		has_email = has_email or x.channel == "email"
-	d.dialog_text = tr("Add your phone too? Then either one signs you in to the same account.") if has_email \
-		else tr("Add your email too? Then either one signs you in to the same account.")
-	d.ok_button_text = tr("Add it")
-	d.cancel_button_text = tr("Not now")
-	d.confirmed.connect(func():
-		Session.adding_contact = true
-		Session.after_contact = "res://scenes/quarters.tscn"
-		get_tree().change_scene_to_file("res://scenes/signin.tscn"))
-	d.canceled.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
-	add_child(d)
-	d.popup_centered()
+	Ui.dialog(self, "Your SDID", "Add your phone too? Then either one signs you in to the same account." if has_email
+			else "Add your email too? Then either one signs you in to the same account.", [
+		["Not now", false, func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn")],
+		["Add it", true, func():
+			Session.adding_contact = true
+			Session.after_contact = "res://scenes/quarters.tscn"
+			get_tree().change_scene_to_file("res://scenes/signin.tscn")]])
