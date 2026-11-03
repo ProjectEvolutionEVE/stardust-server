@@ -12,6 +12,7 @@ import store as ST
 import blueprints as BP
 import library_books as LB
 import minerals as MN
+import materials_refining as MR
 import archives as AR
 import careers as CAR
 
@@ -21,12 +22,24 @@ def _catalogue_chapters():
     for m in BP.MATERIALS.values():
         by.setdefault(m["category"], []).append(m)
     out = [("About this catalogue",
-            "Every raw material in the game, in the refined or working form designers build with, with its real density in "
-            "kilograms per cubic metre. Weight on the blueprint form is worked out from these. Some values are still being "
-            "checked against more sources.")]
+            "Every raw material in the game, in the refined or working form designers build with. For each: its real "
+            "density in kilograms per cubic metre (weight on the blueprint form is worked out from these); where it comes "
+            "from, with the share of each debris-field ore that smelting turns into it; how it is smelted or refined; and "
+            "what it is used for in the real world. What you build from them aboard is yours to design. Some values are "
+            "still being checked against more sources.")]
+    # the colour chart (Eric 11-03): each kind of component and every material that serves it, for planning a blueprint
+    out.append(("The colour chart", "Every material belongs to one or more kinds of component, each with its own colour, "
+                "so you can see at a glance what a design will need. The first kind listed for a material is its main colour.\n\n"
+                + "\n\n".join(f"■ {g['name']} ({g['colour_name']}): {g['for']}.\n   "
+                                + ", ".join(m["name"] for c, m in BP.MATERIALS.items() if g["code"] in MR.COMPONENTS[c])
+                                for g in MR.GROUP.values())))
     for cat, ms in by.items():
-        out.append((cat[:1].upper() + cat[1:], "\n".join(
-            f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "") for m in ms)))
+        # each material's entry (Eric 11-03): density, where it comes from, how it's made, what it's for (materials_refining.py)
+        out.append((cat[:1].upper() + cat[1:], "\n\n".join(
+            f"• {m['name']}: {m['density_kg_m3']:,} kg/m³" + (f" ({m['state']})" if m.get("state") else "")
+            + "\n   Kind: " + ", ".join(f"{g['name']} ({g['colour_name']})" for g in MR.groups_of(m["code"]))
+            + "\n   Where from: {}\n   How it's made: {}\n   Used for: {}".format(*MR.entry(m["code"]))
+            + "\n   On the market: " + _market_line(m["code"]) for m in ms)))
     # the minerals as they are found in the debris fields (minerals.py, Eric 10-19), with what smelting yields (rule 27)
     for tier, title in ((1, "In the debris fields: common rock, metal and ice"), (2, "In the debris fields: ores"),
                         (3, "In the debris fields: shock and space minerals")):
@@ -35,6 +48,12 @@ def _catalogue_chapters():
             + (f". Real facts: {m['note']} Game role: {MN.GAME_ROLE[m['code']]}" if m["code"] in MN.GAME_ROLE else "")
             for m in MN.MINERALS.values() if m["tier"] == tier)))
     return out
+
+
+def _market_line(code):
+    if code in MR.SAME_AS:
+        return f"trades as {MN.MINERALS[MR.SAME_AS[code]]['name']}, its debris-field form."
+    return f"in {MR.listing(code)[0] // 1000} kg lots."
 
 
 def book(code, lang=None):
@@ -47,7 +66,8 @@ def book(code, lang=None):
         b = dict(b, title=tr.get("title", b["title"]), subtitle=tr.get("subtitle", b["subtitle"]))
         chapters = tr["chapters"]
     return {"code": code, "title": b["title"], "subtitle": b["subtitle"], "reference": b.get("reference", False),
-            "chapters": [{"title": t, "text": x} for t, x in chapters], "questions": len(b["test"]), "pass_mark": LB.PASS_MARK}
+            "chapters": [{"title": t, "text": x} for t, x in chapters], "questions": len(b["test"]), "pass_mark": LB.PASS_MARK,
+            **({"groups": list(MR.GROUP.values())} if code == "catalogue" else {})}
 
 
 async def ensure_book_types(conn):
