@@ -65,6 +65,7 @@ var sleep_panel: ColorRect
 var sleep_bars: Label
 var sleep_at := 0.0
 var quarters_btn: Button
+var deck_btn: Button                             # up to the Maintenance Deck (Eric 11-03)
 # FUEL (rule 38, Eric 10-25): the WSC's craft comes with fuel, topped up at every return to the Starship. Out in space it
 # ticks down slowly (more slowly when stopped); run dry and Inara has you towed home, for a pretty penny.
 const FUEL_FLY_H := 6.0           # hours of flying on a full tank
@@ -399,6 +400,9 @@ func _hud() -> void:
 	quarters_btn = _hud_button("Quarters", Vector2(24, 1140), Vector2(176, 51), 11, "")
 	quarters_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
 	root.add_child(quarters_btn)
+	deck_btn = _hud_button("Maintenance Deck", Vector2(212, 1140), Vector2(176, 51), 11, "")
+	deck_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/deck.tscn"))
+	root.add_child(deck_btn)
 	marks = Marks.new()
 	marks.bay = self
 	marks.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -566,6 +570,7 @@ func _process(dt: float) -> void:
 	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
 	edge.queue_redraw()
 	quarters_btn.visible = docked
+	deck_btn.visible = docked
 	_fuel_tick(dt, now)
 	sleep_btn.visible = _can_sleep()
 	if sleep_panel.visible and now > sleep_at and Session.token != "":   # the bars as they refill, once a minute

@@ -1262,6 +1262,62 @@ console.log(JSON.stringify(out));"""
     r = await cl.post("/api/dfg/tow", headers=TW, json={}); j = await r.json()
     after = (await (await cl.get("/api/dfg/bank", headers=TW)).json())["credits"]
     check("a tow home costs the tow fee", r.status == 200 and j["charged"] == 1500 and after == before - 1500)
+    # The Maintenance Deck (Eric 11-03): build an approved design from the cargo hold, then smelt ore in it
+    import workshop as WSM
+    KM = {"X-Dev-Player": "kilnmaker"}
+    async with cl.app["pool"].acquire() as c:
+        kp = await ST.ensure_player(c, "dev:kilnmaker", "kilnmaker")
+        kform = {"name": "Clay brick kiln", "kind": "tool", "origin": "new", "problem": "Nothing aboard can heat ore hot enough to smelt it.",
+                 "does": "A box of dried clay bricks with an iron-nickel coil, heated by the Starship's power.", "fits": "the Maintenance Deck",
+                 "improves": "makes smelting possible", "books": ["ceramics"], "how": "Lay the bricks, wind the coil inside, connect it.",
+                 "parts": [{"name": "Bricks", "materials": [{"item": "mat-clay", "grams": 40000}]},
+                           {"name": "Coil", "materials": [{"item": "mat-native-iron-nickel", "grams": 2000}]}], "build_minutes": 60}
+        ksid = await BP.save_draft(c, kp, kform); await BP.submit(c, kp, ksid)
+        kcode = await BP.approve(c, ksid, "Eric")
+        cargo = await c.fetchval("SELECT id FROM locations WHERE player_id=$1 AND kind='starship_cargo'", kp)
+    j = await (await cl.get("/api/dfg/deck", headers=KM)).json()
+    kb = [b for b in j["buildable"] if b["design"] == kcode]
+    check("the designer can build their approved design (they hold the original)", len(kb) == 1 and not kb[0]["ready"])
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode})
+    check("building needs the design's library tests first", r.status == 422 and "Ceramics" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,'ceramics',5,5) ON CONFLICT DO NOTHING", kp)
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode})
+    check("building needs its materials in the cargo hold", r.status == 422 and "Not enough" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await WSM.ensure_types(c)
+        for code, g in (("mat-clay", 50000), ("iron-nickel", 2500), ("copper", 100000)):
+            await c.execute("INSERT INTO stacks(location_id, item_code, qty) VALUES($1,$2,$3) ON CONFLICT (location_id, item_code) DO UPDATE SET qty=EXCLUDED.qty", cargo, code, g)
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode}); j = await r.json()
+    async with cl.app["pool"].acquire() as c:
+        left = {x["item_code"]: x["qty"] for x in await c.fetch("SELECT item_code, qty FROM stacks WHERE location_id=$1", cargo)}
+    check("a build takes its materials when it starts (native iron-nickel counts as its raw form)",
+          r.status == 200 and left["mat-clay"] == 10000 and left["iron-nickel"] == 500 and j["receipt"]["code"].startswith("WSC-"))
+    check("the build isn't finished before its time", not j["deck"]["machines"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE workshop_jobs SET ends_at=now() - interval '1 second' WHERE player_id=$1", kp)
+        await WSM.tick(c)
+        await WSM.mark_furnace(c, ksid, 50, 120)
+    j = await (await cl.get("/api/dfg/deck", headers=KM)).json()
+    kiln = [m for m in j["machines"] if m["item"].startswith("design-")]
+    check("after its time the kiln stands on the Maintenance Deck, marked a furnace", len(kiln) == 1 and kiln[0]["furnace"]["batch_kg"] == 50)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 50})
+    check("smelting needs the Metallurgy pass", r.status == 422 and "Metallurgy" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,'metallurgy',5,5) ON CONFLICT DO NOTHING", kp)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 60})
+    check("a batch can't be bigger than the furnace takes", r.status == 422)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 50}); j = await r.json()
+    check("50 kg of chalcopyrite gives 17.3 kg of copper, 15.2 of iron, the rest slag (rule 27)",
+          r.status == 200 and abs(j["gives_kg"]["mat-copper"] - 17.31) < 0.05 and abs(sum(j["gives_kg"].values()) - 50) < 0.01)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 10})
+    check("one batch at a time in a furnace", r.status == 422 and "already" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE workshop_jobs SET ends_at=now() - interval '1 second' WHERE player_id=$1 AND done_at IS NULL", kp)
+        await WSM.tick(c)
+        left = {x["item_code"]: x["qty"] for x in await c.fetch("SELECT item_code, qty FROM stacks WHERE location_id=$1", cargo)}
+    check("the metal and slag land in the cargo hold when the batch is done",
+          left["copper"] == 50000 and abs(left["mat-copper"] - 17310) < 50 and left["mat-iron"] > 15000 and 17000 < left["slag"] < 18000)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

@@ -369,7 +369,7 @@ CREATE INDEX IF NOT EXISTS blueprint_messages_sub ON blueprint_messages(submissi
 DO $$ BEGIN
   ALTER TABLE locations DROP CONSTRAINT IF EXISTS locations_kind_check;
   ALTER TABLE locations ADD CONSTRAINT locations_kind_check CHECK (kind IN ('starship_cargo','private_quarters','lockbox',
-    'hangar','ship_hold','colony_storage','filing_cabinet','bookshelf'));
+    'hangar','ship_hold','colony_storage','filing_cabinet','bookshelf','maintenance_deck'));   -- + the Maintenance Deck (11-03)
 END $$;
 CREATE UNIQUE INDEX IF NOT EXISTS locations_one_in_quarters ON locations(player_id, kind) WHERE kind IN ('filing_cabinet','bookshelf');
 INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
@@ -809,3 +809,24 @@ CREATE TABLE IF NOT EXISTS device_links (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   revoked_at TIMESTAMPTZ
 );
+
+-- The Maintenance Deck (Eric 11-03, rule 25; workshop.py): above the docking bay's flight deck, where craft are serviced
+-- and players set up their own small furnaces in a partitioned smelting area. Each player's space there has a size
+-- (rule 10). Builds and smelting batches run in real time as jobs.
+-- (its location kind is added to the list in the v4 block above, which runs on every start)
+CREATE UNIQUE INDEX IF NOT EXISTS locations_one_deck ON locations(player_id) WHERE kind = 'maintenance_deck';
+CREATE TABLE IF NOT EXISTS workshop_jobs (
+  id         BIGSERIAL PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind       TEXT NOT NULL CHECK (kind IN ('build','smelt')),
+  detail     JSONB NOT NULL,                       -- what goes in, what comes out
+  started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  ends_at    TIMESTAMPTZ NOT NULL,                 -- real time: never sped up
+  done_at    TIMESTAMPTZ,
+  receipt    TEXT
+);
+CREATE INDEX IF NOT EXISTS workshop_jobs_due ON workshop_jobs(ends_at) WHERE done_at IS NULL;
+CREATE INDEX IF NOT EXISTS workshop_jobs_player ON workshop_jobs(player_id, ends_at DESC);
+INSERT INTO settings(key, value, note) VALUES
+  ('deck_m3', 20, 'Each player''s space on the Maintenance Deck, m³ (Eric 11-03: small smelters take hardly any space; first setting)')
+ON CONFLICT (key) DO NOTHING;
