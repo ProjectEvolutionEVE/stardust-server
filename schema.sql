@@ -794,3 +794,18 @@ INSERT INTO settings(key, value, note) VALUES
   ('skill_step_factor',    0.6, 'Each bar up gains this times the bar before it (rule 32)'),
   ('skill_gold_bonus_pct', 10,  'A gold bar gains this % more than its silver (rule 32)')
 ON CONFLICT (key) DO NOTHING;
+
+-- v-SDID (Eric 11-03): one SDID per player (the account number, SD-XXXX-XXXX-XXXX) holds every way they sign in, a
+-- phone AND an email (both in `logins`). A player adds the other one at sign-up, later from the Bed, or when signing in
+-- on a phone that already knows their SDID. Two accounts the same person made are combined by the crew (staff only):
+-- the absorbed account keeps its data but can no longer be signed into; `merged_into` points to the SDID kept.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS merged_into BIGINT REFERENCES players(id);
+-- A key the app keeps on the phone after a sign-in, so the phone can offer "add this email to SD-XXXX?" later, even after
+-- signing out. It proves only that this phone was signed in to that SDID; the server never stores anything about the
+-- phone itself (rule 4: the phone number or email is the only personal information kept). Only a hash is kept.
+CREATE TABLE IF NOT EXISTS device_links (
+  key_hash   TEXT PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  revoked_at TIMESTAMPTZ
+);

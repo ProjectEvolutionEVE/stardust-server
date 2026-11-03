@@ -134,7 +134,7 @@ func cell_seed(i: int, j: int, k: int) -> int:
 
 
 static func label_of(f: Dictionary) -> String:
-	return {"large": "Large field", "medium": "Field", "small": "Small field", "tiny": "Tiny field"}[f.size]
+	return {"large": TranslationServer.translate("Large field"), "medium": TranslationServer.translate("Field"), "small": TranslationServer.translate("Small field"), "tiny": TranslationServer.translate("Tiny field")}[f.size]
 
 
 ## Where the autopilot parks: in front of the field, outside it, so the whole field stays in view while you work it.
@@ -328,7 +328,7 @@ func show_piece(f: Dictionary, i: int, xf = null) -> void:
 func material(key: String) -> Array:
 	for m in MATERIALS:
 		if m[0] == key:
-			return m
+			return [m[0], tr(m[1]), m[2], m[3]]
 	return [key, key, 1.0, ""]
 
 

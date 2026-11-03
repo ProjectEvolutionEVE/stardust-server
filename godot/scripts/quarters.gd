@@ -64,6 +64,8 @@ func _ready() -> void:
 		t.add_child(Ui.label("Coming to the app soon. Open it in the browser game for now.", 24, Ui.MUTED))
 		tabs.add_child(t)
 	tabs.add_child(preload("res://scripts/cabinet.gd").new())
+	for i in tabs.get_tab_count():                 # node names stay English (code finds tabs by them); the title is translated
+		tabs.set_tab_title(i, tr(tabs.get_child(i).name))
 	tabs.tab_changed.connect(func(_i): _closeup())
 	closet.visibility_changed.connect(func():
 		if closet.is_visible_in_tree():
@@ -96,7 +98,7 @@ func _room() -> Control:
 	pic.stretch_mode = TextureRect.STRETCH_SCALE
 	for s in SPOTS:
 		var b := Button.new()
-		b.text = s[0]
+		b.text = tr(s[0])
 		b.add_theme_font_size_override("font_size", 17)
 		var st := StyleBoxFlat.new()
 		st.bg_color = Color(Ui.BG, 0.7)
@@ -170,9 +172,9 @@ func render_closet(data: Dictionary) -> void:
 	list.add_theme_constant_override("separation", 10)
 	scroll.add_child(list)
 	var worn = data.get("uniform")
-	list.add_child(_uniform_row(null, "Trainee coveralls", "Trainee", null, [], worn == null, true))
+	list.add_child(_uniform_row(null, tr("Trainee coveralls"), tr("Trainee"), null, [], worn == null, true))
 	for c in data.careers:
-		var skill: String = " · skill +%s%%" % Ui.dec(float(c.skill_pct), 2) if float(c.skill_pct) > 0 else ""
+		var skill: String = tr(" · skill +%s%%") % Ui.dec(float(c.skill_pct), 2) if float(c.skill_pct) > 0 else ""
 		list.add_child(_uniform_row(c.code, c.name, str(c.title) + skill, c.colour, c.bars, worn == c.code, c.studied))
 
 
@@ -180,16 +182,16 @@ func _uniform_row(code, name: String, sub: String, colour, bars: Array, worn: bo
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	row.add_child(Ui.swatch(colour, 40))
-	var b := Ui.button(name + "  ·  " + sub, false)
+	var b := Ui.button(tr("%s  ·  %s") % [name, sub], false)
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.clip_text = true
 	b.add_theme_font_size_override("font_size", 22)
 	b.disabled = worn or not open
 	if not open:
-		b.text = name + "  ·  not studied yet"
+		b.text = tr("%s  ·  not studied yet") % name
 	if worn:   # the uniform being worn: a bold green check and a green-highlighted box (Eric 10-27)
-		b.text = "✔  " + name + "  ·  " + sub + "   (wearing)"
+		b.text = tr("✔  %s  ·  %s   (wearing)") % [name, sub]
 		var hl := StyleBoxFlat.new()
 		hl.bg_color = Color(Ui.GREEN, 0.18)
 		hl.border_color = Ui.GREEN
@@ -263,6 +265,19 @@ func _bed(me: Dictionary) -> VBoxContainer:
 		bed.add_child(p)
 	if me.get("warning", "") != "" and me.get("warning") != null:
 		bed.add_child(Ui.label(str(me.warning), 24, Ui.GOLD))
+	# the player's SDID and every way they sign in to it (Eric 11-03)
+	if str(me.get("sdid", "")) != "":
+		bed.add_child(Ui.label(tr("Your SDID: %s") % str(me.sdid), 22, Ui.GOLD))
+		var ways := []
+		for x in me.get("sign_ins", []):
+			ways.append(("📱 " if x.channel == "sms" else "✉️ ") + str(x.shown))
+		bed.add_child(Ui.label(tr("Signs in with: %s") % ", ".join(ways), 20, Ui.MUTED))
+		var add := Ui.button("Add a phone or email", false)
+		add.pressed.connect(func():
+			Session.adding_contact = true
+			Session.after_contact = "res://scenes/quarters.tscn"
+			get_tree().change_scene_to_file("res://scenes/signin.tscn"))
+		bed.add_child(add)
 	var out := Ui.button("Sign out (go to sleep)", false)
 	out.pressed.connect(_sign_out.bind(out))
 	bed.add_child(out)
@@ -279,7 +294,7 @@ func _sign_out(out: Button) -> void:
 ## Skills come from the library first (Eric 10-23): while any is missing, the quarters say where to go and what for.
 func _library_alert(box: VBoxContainer, sk: Dictionary) -> void:
 	var need := []
-	for k in [["fly", "Pilot Basic Training Handbook (to fly)"], ["mine", "Mining (to mine)"], ["sell", "Trading & Markets (to sell)"]]:
+	for k in [["fly", tr("Pilot Basic Training Handbook (to fly)")], ["mine", tr("Mining (to mine)")], ["sell", tr("Trading & Markets (to sell)")]]:
 		if not sk.get(k[0], false):
 			need.append(k[1])
 	if need.is_empty():
@@ -296,7 +311,7 @@ func _library_alert(box: VBoxContainer, sk: Dictionary) -> void:
 	v.add_theme_constant_override("separation", 10)
 	panel.add_child(v)
 	v.add_child(Ui.label("Report to the Starship Library", 28, Ui.GOLD))
-	v.add_child(Ui.label("Study and pass: " + ", ".join(need) + ".", 22))
+	v.add_child(Ui.label(tr("Study and pass: %s.") % ", ".join(need), 22))
 	var go := Ui.button("Go to the Library")
 	go.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	v.add_child(go)
@@ -305,12 +320,7 @@ func _library_alert(box: VBoxContainer, sk: Dictionary) -> void:
 
 ## Leaving the quarters (rule 19): two places only, the Starship Library or the Docking Bay.
 func _exit() -> void:
-	var d := ConfirmationDialog.new()
-	d.title = "Exit Private Quarters"
-	d.dialog_text = "Where to?"
-	d.ok_button_text = "Starship Library"
-	d.cancel_button_text = "Docking Bay"
-	d.confirmed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
-	d.canceled.connect(func(): get_tree().change_scene_to_file("res://scenes/bay.tscn"))
-	add_child(d)
-	d.popup_centered()
+	Ui.dialog(self, "Exit Private Quarters", "Where to?", [
+		["Starship Library", true, func(): get_tree().change_scene_to_file("res://scenes/library.tscn")],
+		["Docking Bay", true, func(): get_tree().change_scene_to_file("res://scenes/bay.tscn")],
+		["Stay", false, Callable()]])

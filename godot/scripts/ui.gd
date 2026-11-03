@@ -9,7 +9,19 @@ const MUTED := Color("8a94a6")
 const GREEN := Color("4cc38a")        # done: a passed test, a chosen answer
 
 
+## Languages (Eric 11-02): everything written in the app follows the player's language. Every phrase is wrapped in tr()
+## and translated in i18n/ui.csv (the English text is the key; Godot makes one translation per column). Arabic lays the
+## screens out right to left. The game's language codes (zh-TW, pt) become Godot's locales (zh_TW, pt).
+func _ready() -> void:
+	set_language(Session.pref("lang", "en"))
+
+
+func set_language(code: String) -> void:
+	TranslationServer.set_locale(code.replace("-", "_"))
+
+
 func screen(root: Control) -> VBoxContainer:
+	root.layout_direction = Control.LAYOUT_DIRECTION_LOCALE   # right to left when the language is (Arabic)
 	var bg := ColorRect.new()
 	bg.color = BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -27,7 +39,7 @@ func screen(root: Control) -> VBoxContainer:
 
 func label(text: String, size := 26, color := TEXT) -> Label:
 	var l := Label.new()
-	l.text = text
+	l.text = tr(text)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
@@ -36,7 +48,7 @@ func label(text: String, size := 26, color := TEXT) -> Label:
 
 func button(text: String, primary := true) -> Button:
 	var b := Button.new()
-	b.text = text
+	b.text = tr(text)
 	b.custom_minimum_size = Vector2(0, 76)
 	b.add_theme_font_size_override("font_size", 28)
 	var s := StyleBoxFlat.new()
@@ -52,25 +64,69 @@ func button(text: String, primary := true) -> Button:
 
 func field(placeholder: String) -> LineEdit:
 	var e := LineEdit.new()
-	e.placeholder_text = placeholder
+	e.placeholder_text = tr(placeholder)
 	e.custom_minimum_size = Vector2(0, 72)
 	e.add_theme_font_size_override("font_size", 28)
 	return e
 
 
-func picker() -> OptionButton:
-	var o := OptionButton.new()
-	o.custom_minimum_size = Vector2(0, 72)
-	o.add_theme_font_size_override("font_size", 26)
+## The app's dropdown: a search box and a scroll wheel with the middle item highlighted (scripts/wheel_picker.gd).
+func picker(title := "") -> WheelPicker:
+	var o := WheelPicker.new()
+	o.title = tr(title)
 	return o
 
 
 func error(parent: Node, text: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = "Stardust"
-	d.dialog_text = text
-	parent.add_child(d)
-	d.popup_centered()
+	dialog(parent, "Stardust", text, [["OK", true, Callable()]])
+
+
+## Every pop-up box in the app (Eric 11-03: look like the rest of the buttons and tabs): the screen dims, and a dark
+## panel with a gold border holds a gold title, the message, and the app's own buttons, side by side.
+## buttons: [[label, primary, callable], …]; any button closes the box, then runs its callable (if any).
+func dialog(parent: Node, title: String, text: String, buttons: Array) -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 60
+	parent.get_tree().root.add_child(layer)
+	var root := Control.new()
+	root.size = parent.get_viewport().get_visible_rect().size
+	root.layout_direction = Control.LAYOUT_DIRECTION_LOCALE
+	layer.add_child(root)
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.6)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(dim)
+	var centre := CenterContainer.new()
+	centre.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(centre)
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(600, 0)
+	var st := StyleBoxFlat.new()
+	st.bg_color = PANEL
+	st.border_color = GOLD
+	st.set_border_width_all(2)
+	st.set_corner_radius_all(16)
+	st.set_content_margin_all(24)
+	panel.add_theme_stylebox_override("panel", st)
+	centre.add_child(panel)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 18)
+	panel.add_child(v)
+	v.add_child(label(title, 30, GOLD))
+	v.add_child(label(text, 24))
+	var row: BoxContainer = HBoxContainer.new() if buttons.size() <= 2 else VBoxContainer.new()   # three or more stack
+	row.add_theme_constant_override("separation", 12)
+	v.add_child(row)
+	for b in buttons:
+		var btn := button(str(b[0]), b[1])
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.add_theme_font_size_override("font_size", 24)
+		var run: Callable = b[2]
+		btn.pressed.connect(func():
+			layer.queue_free()
+			if run.is_valid():
+				run.call())
+		row.add_child(btn)
 
 
 ## Whole numbers with thousands commas, as the browser shows them ("12,345"); "—" when there's none.
@@ -105,7 +161,7 @@ func when(iso: String, style := "time") -> String:
 	var d := Time.get_datetime_dict_from_unix_time(int(t))
 	var hm := "%02d:%02d" % [d.hour, d.minute]
 	const MON := ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-	var day := "%s %d" % [MON[d.month - 1], d.day]
+	var day := "%s %d" % [tr(MON[d.month - 1]), d.day]
 	match style:
 		"short":
 			return day + ", " + hm
@@ -146,3 +202,45 @@ func swatch(hex, size := 28) -> ColorRect:
 	c.custom_minimum_size = Vector2(size, size)
 	c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	return c
+
+
+## Receipts are documented proof (rule 13; Eric 10-28): every player's saved copies go to their own device's Documents
+## folder, in a folder anyone can recognise, "Stardust Receipts".
+const RECEIPTS_FOLDER := "Stardust Receipts"
+
+
+func receipts_dir() -> String:
+	var dir := OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).path_join(RECEIPTS_FOLDER)
+	DirAccess.make_dir_recursive_absolute(dir)
+	return dir
+
+
+## Save a receipt. On a computer the system's Save window opens in Stardust Receipts (the player may still choose
+## elsewhere); on a phone it's written straight there. `done` gets the saved path, or "" if it couldn't be written.
+func save_receipt(parent: Node, code: String, text: String, done: Callable) -> void:
+	var file := "stardust-receipt-%s.txt" % code
+	if OS.has_feature("mobile"):
+		done.call(_write_receipt(receipts_dir().path_join(file), text))
+		return
+	var d := FileDialog.new()
+	d.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	d.access = FileDialog.ACCESS_FILESYSTEM
+	d.use_native_dialog = true
+	d.current_dir = receipts_dir()
+	d.current_file = file
+	d.filters = PackedStringArray(["*.txt ; Receipt"])
+	d.file_selected.connect(func(path: String):
+		done.call(_write_receipt(path, text))
+		d.queue_free())
+	d.canceled.connect(d.queue_free)
+	parent.add_child(d)
+	d.popup_centered_ratio(0.8)
+
+
+func _write_receipt(path: String, text: String) -> String:
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if not f:
+		return ""
+	f.store_string(text)
+	f.close()
+	return path

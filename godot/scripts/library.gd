@@ -62,7 +62,7 @@ func render(data: Dictionary) -> void:
 	for s in START:
 		var b: Dictionary = books.get(s[0], {})
 		if not b.is_empty():
-			_book_row(b, SKILL_WORD[s[1]])
+			_book_row(b, tr(SKILL_WORD[s[1]]))
 	if data.has("careers"):
 		body.add_child(Ui.label("Careers", 30, Ui.GOLD))
 		body.add_child(Ui.label("Each bar is earned by the number of a career's books you pass: 5, then 20, 65, 185 and 510 in all. Many Library subjects count toward more than one career. A bar is gold when every test that earned it is perfect; retake any test to turn silver gold.", 22, Ui.MUTED))
@@ -79,7 +79,7 @@ func _career(c: Dictionary, worn: bool) -> void:
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 12)
 	head.add_child(Ui.swatch(c.colour))
-	var name := Ui.button("%s  ·  %s%s" % [c.name, c.title, "  (wearing)" if worn else ""], false)
+	var name := Ui.button((tr("%s  ·  %s  (wearing)") if worn else tr("%s  ·  %s")) % [c.name, c.title], false)
 	name.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name.add_theme_font_size_override("font_size", 24)
@@ -94,11 +94,11 @@ func _career(c: Dictionary, worn: bool) -> void:
 	body.add_child(shelf)
 	name.pressed.connect(func(): shelf.visible = not shelf.visible)
 	if float(c.skill_pct) > 0:
-		shelf.add_child(Ui.label("%s skill: +%s%%" % [c.name, Ui.dec(float(c.skill_pct), 2)], 22, Ui.GREEN))
+		shelf.add_child(Ui.label(tr("%s skill: +%s%%") % [c.name, Ui.dec(float(c.skill_pct), 2)], 22, Ui.GREEN))
 	for bar in c.bars:
 		var medal = bar.get("medal")
-		var state: String = ("Gold" if medal == "gold" else "Silver") if medal != null else "Not yet"
-		shelf.add_child(Ui.label("Bar %d · %s · %s" % [int(bar.bar), bar.title, state], 26,
+		var state: String = (tr("Gold") if medal == "gold" else tr("Silver")) if medal != null else tr("Not yet")
+		shelf.add_child(Ui.label(tr("Bar %d · %s · %s") % [int(bar.bar), bar.title, state], 26,
 			Ui.GOLD if medal == "gold" else (Ui.SILVER if medal == "silver" else Ui.TEXT)))
 		shelf.add_child(Ui.label(str(bar.note), 20, Ui.MUTED))
 		var saved := body
@@ -112,11 +112,11 @@ func _career(c: Dictionary, worn: bool) -> void:
 func _book_row(b: Dictionary, unlocks: String) -> void:
 	var text: String = b.title
 	if b.passed:
-		text = "✓ " + text + "  (" + str(b.score) + ")"
+		text = tr("✓ %s  (%s)") % [text, str(b.score)]
 	elif unlocks != "":
-		text += "  · unlocks " + unlocks
+		text = tr("%s  · unlocks %s") % [text, unlocks]
 	if not b.written:
-		text += "  · being written"
+		text = tr("%s  · being written") % text
 	var btn := Ui.button(text, false)
 	if b.passed:   # a completed book shows green
 		var g := StyleBoxFlat.new()
@@ -168,8 +168,8 @@ func _test(code: String) -> void:
 	if not r.ok:
 		body.add_child(Ui.label(r.error, 24, Ui.GOLD))
 		return
-	body.add_child(Ui.label(r.data.title + ": test", 32, Ui.GOLD))
-	body.add_child(Ui.label("Pick one answer for each. %d of %d passes." % [r.data.pass_mark, r.data.questions.size()], 22, Ui.MUTED))
+	body.add_child(Ui.label(tr("%s: test") % r.data.title, 32, Ui.GOLD))
+	body.add_child(Ui.label(tr("Pick one answer for each. %d of %d passes.") % [r.data.pass_mark, r.data.questions.size()], 22, Ui.MUTED))
 	var picks := {}
 	for q in r.data.questions:
 		body.add_child(Ui.label(q.question, 26))
@@ -194,7 +194,7 @@ func _test(code: String) -> void:
 
 func _mark(code: String, picks: Dictionary, total: int) -> void:
 	if picks.size() < total:
-		Ui.error(self, "Answer every question first.")
+		Ui.error(self, tr("Answer every question first."))
 		return
 	var r := await Api.call_api("POST", "/api/dfg/library/test", {"book": code, "answers": picks})
 	_clear()
@@ -202,7 +202,7 @@ func _mark(code: String, picks: Dictionary, total: int) -> void:
 		body.add_child(Ui.label(r.error, 24, Ui.GOLD))
 		return
 	var passed: bool = r.data.passed
-	body.add_child(Ui.label("Passed: %d of %d" % [r.data.score, r.data.of] if passed else "Not yet: %d of %d" % [r.data.score, r.data.of], 34, Ui.GOLD))
+	body.add_child(Ui.label((tr("Passed: %d of %d") if passed else tr("Not yet: %d of %d")) % [r.data.score, r.data.of], 34, Ui.GOLD))
 	for q in r.data.review:
 		body.add_child(Ui.label(("✓ " if q.right else "✗ ") + q.question, 22, Ui.TEXT if q.right else Ui.MUTED))
 	if passed:
