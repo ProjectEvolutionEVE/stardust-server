@@ -2,6 +2,7 @@
 
 ## ★ LATEST (2026-11-03): read this part first
 Eric may lose Claude access after 11-05 (Pro plan; payment due). Everything needed to carry on is here.
+**Cloud session credits:** $42 left, expiring 11-05 2:59 AM EST; Eric: start using them on 11-04 (they go fast).
 
 **Where things stand:**
 - **Merged to main:** materials catalogue and colour chart (PR #29), iPhone fixes (#30), UI phrases in 12 languages (#31).
