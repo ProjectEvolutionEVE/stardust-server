@@ -14,6 +14,12 @@ Eric may lose Claude access after 11-05 (Pro plan; payment due). Everything need
   Listen-back checks in its `_checks/` folder. Long lines need `WHISPER_VAD=1` (Whisper cuts off long Devanagari).
 - **3DOS is shut down** (6 launch agents disabled, nothing deleted; report in that session).
 
+**Afternoon 11-03:** Navigation (#33) and Medicine (#32) merged. Open for Eric: **#34 building and smelting on the Maintenance Deck**, **#35 Science bars 4-5** (every career now has 5 bars). Hindi check done: all lines complete; only FAQ-033's "4.2" is uncertain.
+**Next (Eric 11-03: Godot app only, never the browser game):**
+- The **drafting room in the Godot app** (port static/quarters.js's blueprint form: /api/dfg/blueprints/*), so players can design the first kiln in the app.
+- **Inara talks far less in the Godot app than in the browser game** (Eric 11-03): port every spoken moment (static/*.js `V.say(...)` / `V.story(...)`) into godot/scripts/voice.gd and the screens that trigger them.
+- Eric's kiln: approve and mark it a furnace on the live database (`review.py approve ID`, `review.py furnace ID KG MINUTES`), each only with his go.
+
 **Next, in order:**
 1. Finish the Hindi check; re-record only real faults (run `tools/inara-record.py --list` first: never pay twice).
    Then switch `hi` on in `voice.py`, upload the set, open the PR for this branch.
