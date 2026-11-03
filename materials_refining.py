@@ -198,6 +198,12 @@ COMPONENTS = {
 }
 
 
+def groups_codes(item):
+    """A market item's colours: a refined material's own, or those of the material its debris-field item already is."""
+    same = {v: k for k, v in SAME_AS.items()}
+    return COMPONENTS.get(item) or COMPONENTS.get(same.get(item), [])
+
+
 def groups_of(code):
     return [GROUP[g] for g in COMPONENTS.get(code, [])]
 

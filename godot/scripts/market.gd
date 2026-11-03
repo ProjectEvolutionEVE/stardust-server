@@ -374,6 +374,10 @@ func _shown() -> Array:
 	for it in items:
 		if filter == "" or (filter == "ore" and not it.get("refined", false)) or filter in it.get("groups", []):
 			out.append(it)
+	if filter != "" and filter != "ore":    # those whose main colour this is come first, then those that also carry it
+		var main := out.filter(func(it): return it.groups[0] == filter)
+		main.append_array(out.filter(func(it): return it.groups[0] != filter))
+		return main
 	return out
 
 
@@ -467,6 +471,8 @@ func _pick(code: String) -> void:
 	await _load_item()
 
 
+## The board, grouped by colour (Eric 11-03): with no filter, the raw ores first, then a section per kind of component
+## listing every material of that colour (a material with several colours appears in each of its sections).
 func _render_board() -> void:
 	if not board_box.visible:
 		return
@@ -474,24 +480,51 @@ func _render_board() -> void:
 	var colour := {}
 	for g in groups:
 		colour[g.code] = g.color
-	for it in _shown():
-		var ch := float(it.get("change_24h_pct", 0))
-		var b := Button.new()
-		if not it.get("groups", []).is_empty():           # every colour the material carries, main colour first
-			var hexes: Array = []
-			for g in it.groups:
-				hexes.append(colour.get(g, "8a94a6"))
-			b.icon = _dots(hexes)
-		b.flat = true
-		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.add_theme_font_size_override("font_size", 20)
-		b.text = tr("%s%s   %s (%s%.2f%%)   bid %s · ask %s") % ["▶ " if it.item == sel else "", it.name, Ui.num(it.last),
-			"+" if ch >= 0 else "", ch, Ui.num(it.bid), Ui.num(it.ask)]
-		var col: Color = Ui.GOLD if it.item == sel else Ui.TEXT
-		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
-			b.add_theme_color_override(c, col)
-		b.pressed.connect(func(): _pick(it.item))
-		board_box.add_child(b)
+	if filter != "":
+		for it in _shown():
+			board_box.add_child(_board_row(it, colour))
+		return
+	var ores := items.filter(func(it): return not it.get("refined", false))
+	board_box.add_child(_section(tr("Raw ores"), null))
+	for it in ores:
+		board_box.add_child(_board_row(it, colour))
+	for g in groups:
+		board_box.add_child(_section(g.name, g.color))
+		for it in items:
+			if g.code in it.get("groups", []):
+				board_box.add_child(_board_row(it, colour))
+
+
+func _section(title: String, hex) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 10)
+	if hex != null:
+		h.add_child(Ui.swatch(hex, 24))
+	var l := Ui.label(title, 24, Color(str(hex)) if hex != null else Ui.GOLD)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(l)
+	h.custom_minimum_size = Vector2(0, 56)       # a little space above each colour's section
+	return h
+
+
+func _board_row(it: Dictionary, colour: Dictionary) -> Button:
+	var ch := float(it.get("change_24h_pct", 0))
+	var b := Button.new()
+	if not it.get("groups", []).is_empty():           # every colour the material carries, main colour first
+		var hexes: Array = []
+		for g in it.groups:
+			hexes.append(colour.get(g, "8a94a6"))
+		b.icon = _dots(hexes)
+	b.flat = true
+	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b.add_theme_font_size_override("font_size", 20)
+	b.text = tr("%s%s   %s (%s%.2f%%)   bid %s · ask %s") % ["▶ " if it.item == sel else "", it.name, Ui.num(it.last),
+		"+" if ch >= 0 else "", ch, Ui.num(it.bid), Ui.num(it.ask)]
+	var col: Color = Ui.GOLD if it.item == sel else Ui.TEXT
+	for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		b.add_theme_color_override(c, col)
+	b.pressed.connect(func(): _pick(it.item))
+	return b
 
 
 func _render_head() -> void:

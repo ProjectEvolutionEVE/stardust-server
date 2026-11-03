@@ -243,7 +243,7 @@ async def board(conn):
         out.append({"item": r["code"], "name": r["name"], "lot_kg": r["trade_unit"] / ST.G_PER_KG, "bid": r["bid"], "ask": r["ask"], "last": last,
                     "change_24h_pct": round(100.0 * (last - base) / base, 2) if base else 0.0,
                     "volume_24h": r["volume_24h"], "available": r["available"], "floor": r["floor_price"],
-                    "refined": r["code"] in MR.MATERIALS, "groups": MR.COMPONENTS.get(r["code"], [])})
+                    "refined": r["code"] in MR.MATERIALS, "groups": MR.groups_codes(r["code"])})
     return out
 
 

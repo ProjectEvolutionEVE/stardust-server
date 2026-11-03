@@ -911,7 +911,7 @@ async def main():
     check("refined materials trade too (Eric 11-03), each with its colour groups; the four that ARE their ore aren't listed twice",
           board["mat-copper"]["refined"] and board["mat-copper"]["groups"] == ["electrical"] and board["mat-copper"]["lot_kg"] == 10
           and board["mat-copper"]["last"] == 350 and board["mat-copper"]["floor"] == 175 and not board["iron"]["refined"]
-          and not set(MR.SAME_AS) & set(board) and {g["code"] for g in j["groups"]} == set(MR.GROUP)
+          and not set(MR.SAME_AS) & set(board) and board["water-ice"]["groups"] == ["life", "shielding", "power"] and {g["code"] for g in j["groups"]} == set(MR.GROUP)
           and all(board[c]["groups"] for c in MR.LISTED))
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "sell", "type": "limit", "qty": 1, "price": 99})
     check("an ask under the floor is refused", r.status == 422 and "floor" in (await r.json())["error"])
