@@ -1329,6 +1329,33 @@ console.log(JSON.stringify(out));"""
         left = {x["item_code"]: x["qty"] for x in await c.fetch("SELECT item_code, qty FROM stacks WHERE location_id=$1", cargo)}
     check("the metal and slag land in the cargo hold when the batch is done",
           left["copper"] == 50000 and abs(left["mat-copper"] - 17310) < 50 and left["mat-iron"] > 15000 and 17000 < left["slag"] < 18000)
+    # Renting more cargo space (Eric 11-04, rule 10): 10,000 a week to the WSC doubles the space
+    import storage_rent as SRM
+    RT = {"X-Dev-Player": "renter"}
+    j = await (await cl.get("/api/dfg/storage", headers=RT)).json()
+    check("cargo space starts at 12 m³, and renting costs 10,000 a week", j["capacity_m3"] == 12 and j["weekly"] == 10000 and not j["rental"])
+    r = await cl.post("/api/dfg/storage/rent", headers=RT, json={})
+    check("a new player can't afford the first week", r.status == 422)
+    async with cl.app["pool"].acquire() as c:
+        rp = await ST.ensure_player(c, "dev:renter", "renter")
+        async with c.transaction():
+            await ST.transfer(c, await ST.system_account(c, "mint"), await ST.account_of(c, rp), 20000, "test", {})
+    c0 = j["credits"] + 20000
+    r = await cl.post("/api/dfg/storage/rent", headers=RT, json={}); j = await r.json()
+    check("renting doubles the space to 24 m³ and takes 10,000", r.status == 200 and j["capacity_m3"] == 24 and j["credits"] == c0 - 10000
+          and j["receipt"]["code"].startswith("WSC-"))
+    r = await cl.post("/api/dfg/storage/rent", headers=RT, json={})
+    check("one rental at a time", r.status == 422)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE storage_rentals SET next_charge_at=now() - interval '1 minute' WHERE player_id=$1", rp)
+        await SRM.tick(c)
+    j = await (await cl.get("/api/dfg/storage", headers=RT)).json()
+    check("the next week is taken on its date", j["rental"]["weeks_paid"] == 2 and j["credits"] == c0 - 20000)
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE storage_rentals SET next_charge_at=now() - interval '1 minute' WHERE player_id=$1", rp)
+        await SRM.tick(c)
+    j = await (await cl.get("/api/dfg/storage", headers=RT)).json()
+    check("a week that can't be paid ends it, and the space goes back to 12 m³", j["rental"] is None and j["capacity_m3"] == 12)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

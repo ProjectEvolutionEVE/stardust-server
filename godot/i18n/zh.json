@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "例如：在维修甲板上独立存在",
  "◀ Library": "◀ 图书馆",
  "📐 Design a new blueprint": "📐 设计新蓝图",
- "📐 Drafting room: design a blueprint": "📐 制图室：设计蓝图"
+ "📐 Drafting room: design a blueprint": "📐 制图室：设计蓝图",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "再加 %s m³，每周 %s 积分，每周付给 WSC，直到你取消。你有 %s 积分。",
+ "Extra cargo space, one week": "额外货舱空间，一周",
+ "GO TO MY DESK": "去我的书桌",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Inara：我们来腾出点空间吧，飞行员。可以在你书桌上的市场终端卖掉一些存放的物资，或者向星舰租更多空间：每周 10,000 积分，空间翻倍。",
+ "RENT MORE SPACE": "租更多空间",
+ "Rent it": "租用",
+ "Rent more cargo space": "租更多货舱空间",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "已租用：你在舱内的空间现为 %s m³。再点一次卸货，把剩下的转移过去。",
+ "You already rent extra cargo space.": "你已经租了额外货舱空间。",
+ "You don't have enough credits for the first week.": "你的积分不够支付第一周。",
+ "You don't rent extra cargo space.": "你没有租额外货舱空间。"
 }

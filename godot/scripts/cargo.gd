@@ -45,6 +45,8 @@ var x_sum: Label
 var x_rcpt: Label
 var x_done: Button
 var x_save: Button
+var x_desk: Button                                # space full: Inara sends the pilot to the Desk's Market terminal (Eric 11-04)
+var x_rent: Button                                # … or the Starship rents more space (rule 10)
 
 
 func _init() -> void:
@@ -428,6 +430,14 @@ func _xfer_panel(root: Control) -> void:
 	x_save = bay._hud_button("SAVE RECEIPT", Vector2(24, 730), Vector2(300, 64), 32, "")
 	x_save.pressed.connect(_save_receipt)
 	x_panel.add_child(x_save)
+	x_desk = bay._hud_button("GO TO MY DESK", Vector2(24, 650), Vector2(300, 64), 32, "")
+	x_desk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))   # the market is at the Desk (rule 20)
+	x_desk.visible = false
+	x_panel.add_child(x_desk)
+	x_rent = bay._hud_button("RENT MORE SPACE", Vector2(336, 650), Vector2(300, 64), 32, "")
+	x_rent.pressed.connect(_ask_rent)
+	x_rent.visible = false
+	x_panel.add_child(x_rent)
 	x_done = bay._hud_button("DONE", Vector2(336, 730), Vector2(300, 64), 32, "")
 	x_done.pressed.connect(close_xfer)
 	x_panel.add_child(x_done)
@@ -444,6 +454,8 @@ func start_unload() -> void:
 	x_rcpt.text = ""
 	x_save.visible = false
 	x_done.visible = false
+	x_desk.visible = false
+	x_rent.visible = false
 	x_panel.visible = true
 	if net:   # signed in: the cargo office (the server) does the transfer and issues the receipt; the bars then show it
 		var x := xfer
@@ -561,9 +573,12 @@ func _finish_xfer(stopped: bool) -> void:
 		x_title.text = tr("TRANSFER STOPPED")
 		x_now.text = tr("You launched. %d of %d pieces moved; the rest are still in your hold.") % [x.n, x.start]
 	elif x.full:
+		x_desk.visible = net
+		x_rent.visible = net
 		x_title.text = tr("STARSHIP SPACE FULL")
 		x_now.text = (tr("%d of %d pieces moved. Your space aboard is full, so %d piece stays in your hold.") if cargo.size() == 1
 			else tr("%d of %d pieces moved. Your space aboard is full, so %d pieces stay in your hold.")) % [x.n, x.start, cargo.size()]
+
 	else:
 		x_title.text = tr("TRANSFER COMPLETE")
 		x_title.add_theme_color_override("font_color", Color("7fe0a8"))
@@ -578,6 +593,8 @@ func _finish_xfer(stopped: bool) -> void:
 			sum += "%s · + %s\n" % [tr(m[1]), fmt_kg(x.moved[m[0]])]
 	if x.gems > 0:
 		sum += tr("💎 Near-flawless diamond · + %d to your lockbox") % x.gems + "\n"
+	if x.full and net:   # Inara steps in (Eric 11-04, rule 10): sell at the Desk's Market terminal, or rent more space
+		sum = tr("Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.") + "\n\n" + sum
 	x_sum.text = sum
 	if x.has("server"):
 		_apply_inventory(x.server.get("inventory", {}))   # the server's figures are the truth
@@ -641,6 +658,32 @@ func _save_receipt() -> void:
 			bay._say(tr("RECEIPT SAVED\n%s is in %s on your device, and in the filing cabinet in your quarters.") % [rc.code, path.get_base_dir().get_file()])
 		else:
 			bay._say(tr("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there.")))
+
+
+## Rent more cargo space from the Starship (Eric 11-04, rule 10): doubles the space for 10,000 credits a week, to the WSC.
+func _ask_rent() -> void:
+	var st: Dictionary = await Api.call_api("GET", "/api/dfg/storage")
+	if not st.ok:
+		bay._say(st.error)
+		return
+	if st.data.get("rental") != null:
+		bay._say(tr("You already rent extra cargo space."))
+		return
+	Ui.dialog(bay.hud_root, tr("Rent more cargo space"),
+		tr("%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.") % [
+			Ui.dec(float(st.data.adds_m3), 0), Ui.num(int(st.data.weekly)), Ui.num(int(st.data.credits))],
+		[["Not now", false, Callable()], ["Rent it", true, _rent]])
+
+
+func _rent() -> void:
+	var r: Dictionary = await Api.call_api("POST", "/api/dfg/storage/rent", {})
+	if not r.ok:
+		bay._say(r.error)
+		return
+	store.cap = float(r.data.capacity_m3)
+	x_rent.visible = false
+	x_sum.text = tr("Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.") % Ui.dec(store.cap, 0)
+	_render_xfer(0.0)
 
 
 func close_xfer() -> void:

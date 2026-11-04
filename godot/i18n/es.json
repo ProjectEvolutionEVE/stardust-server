@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "p. ej. Funciona por sí solo en la Cubierta de mantenimiento",
  "◀ Library": "◀ Biblioteca",
  "📐 Design a new blueprint": "📐 Diseñar un nuevo plano",
- "📐 Drafting room: design a blueprint": "📐 Sala de dibujo: diseña un plano"
+ "📐 Drafting room: design a blueprint": "📐 Sala de dibujo: diseña un plano",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "%s m³ más por %s créditos a la semana, pagados a la WSC cada semana hasta que lo canceles. Tienes %s créditos.",
+ "Extra cargo space, one week": "Espacio de carga extra, una semana",
+ "GO TO MY DESK": "IR A MI ESCRITORIO",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Inara: Vamos a liberar algo de espacio, piloto. Vende parte de lo que has almacenado en la terminal del Mercado de tu escritorio, o alquila más espacio en la nave estelar: el doble de espacio por 10.000 créditos a la semana.",
+ "RENT MORE SPACE": "ALQUILAR MÁS ESPACIO",
+ "Rent it": "Alquilarlo",
+ "Rent more cargo space": "Alquilar más espacio de carga",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Alquilado: tu espacio a bordo ahora es de %s m³. Toca DESCARGAR otra vez para mover el resto.",
+ "You already rent extra cargo space.": "Ya alquilas espacio de carga extra.",
+ "You don't have enough credits for the first week.": "No tienes créditos suficientes para la primera semana.",
+ "You don't rent extra cargo space.": "No alquilas espacio de carga extra."
 }

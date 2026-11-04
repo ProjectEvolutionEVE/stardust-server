@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "مثل: يقوم بذاته في سطح الصيانة",
  "◀ Library": "◀ المكتبة",
  "📐 Design a new blueprint": "📐 صمّم مخططاً جديداً",
- "📐 Drafting room: design a blueprint": "📐 غرفة الرسم: صمّم مخططاً"
+ "📐 Drafting room: design a blueprint": "📐 غرفة الرسم: صمّم مخططاً",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "%s m³ إضافية مقابل %s أرصدة أسبوعياً، تُدفع إلى WSC كل أسبوع إلى أن تلغيها. لديك %s أرصدة.",
+ "Extra cargo space, one week": "مساحة شحن إضافية، أسبوع واحد",
+ "GO TO MY DESK": "اذهب إلى مكتبي",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "إنارا: لنُخلِ بعض المساحة أيها الطيار. بِع بعض ما خزّنته في محطة السوق على مكتبك، أو استأجر مساحة أكبر من السفينة: ضعف المساحة مقابل 10,000 رصيد أسبوعياً.",
+ "RENT MORE SPACE": "استأجر مساحة أكبر",
+ "Rent it": "استأجرها",
+ "Rent more cargo space": "استأجر مساحة شحن أكبر",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "تم الاستئجار: أصبحت مساحتك على متن السفينة %s m³. اضغط تفريغ مرة أخرى لنقل الباقي.",
+ "You already rent extra cargo space.": "أنت تستأجر مساحة شحن إضافية بالفعل.",
+ "You don't have enough credits for the first week.": "ليس لديك أرصدة كافية للأسبوع الأول.",
+ "You don't rent extra cargo space.": "أنت لا تستأجر مساحة شحن إضافية."
 }

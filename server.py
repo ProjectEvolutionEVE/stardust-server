@@ -80,6 +80,7 @@ import archives as AR
 import voice as VO
 import lending as LN
 import craft as CR
+import storage_rent as SR
 import workshop as WS
 import accounts as ACC
 import hmac
@@ -387,6 +388,25 @@ async def deck_post(request):
         return _json({**out, "deck": await WS.status(conn, pid)})
 
 
+async def storage_get(request):
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await SR.status(conn, pid))
+
+
+async def storage_post(request):
+    """Rent more cargo space (Eric 11-04, rule 10): op=rent, or op=renew {auto_renew} to keep or cancel it."""
+    op, b = request.match_info["op"], await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        receipt = None
+        if op == "rent":
+            receipt = await SR.rent(conn, pid)
+        else:
+            await SR.set_renew(conn, pid, b.get("auto_renew"))
+        return _json({**await SR.status(conn, pid), "receipt": receipt})
+
+
 async def craft_get(request):
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
@@ -610,11 +630,12 @@ async def _startup(app):
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
     app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
     app["craft"] = asyncio.create_task(CR.run(app))       # weekly craft-lease payments (rule 38)
+    app["storage"] = asyncio.create_task(SR.run(app))     # weekly cargo-space rent (Eric 11-04)
     app["workshop"] = asyncio.create_task(WS.run(app))    # builds and smelting batches finish on time (Eric 11-03)
 
 
 async def _cleanup(app):
-    for k in ("bank", "auctions", "lending", "craft", "workshop"):
+    for k in ("bank", "auctions", "lending", "craft", "workshop", "storage"):
         app[k].cancel()
         try:
             await app[k]
@@ -920,6 +941,8 @@ def make_app():
     app.router.add_post("/api/dfg/tow", tow)
     app.router.add_get("/api/dfg/craft", craft_get)
     app.router.add_post("/api/dfg/craft/{op:lease|renew|flight}", craft_post)
+    app.router.add_get("/api/dfg/storage", storage_get)
+    app.router.add_post("/api/dfg/storage/{op:rent|renew}", storage_post)
     app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)

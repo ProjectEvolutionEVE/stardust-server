@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "예: 정비 갑판에서 독립적으로 작동한다",
  "◀ Library": "◀ 도서관",
  "📐 Design a new blueprint": "📐 새 설계도 만들기",
- "📐 Drafting room: design a blueprint": "📐 제도실: 설계도 만들기"
+ "📐 Drafting room: design a blueprint": "📐 제도실: 설계도 만들기",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "%s m³ 추가, 주 %s 크레딧. 해지할 때까지 매주 WSC에 납부해요. 보유 크레딧은 %s이에요.",
+ "Extra cargo space, one week": "추가 화물 공간, 1주",
+ "GO TO MY DESK": "내 책상으로 가기",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Inara: 공간을 좀 비워 봐요, 파일럿. 책상의 시장 단말기에서 보관 중인 물건을 팔거나, 우주선에서 공간을 더 빌리세요. 주 10,000 크레딧에 공간이 두 배가 돼요.",
+ "RENT MORE SPACE": "공간 더 빌리기",
+ "Rent it": "빌리기",
+ "Rent more cargo space": "화물 공간 더 빌리기",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "임대 완료: 이제 선내 내 공간은 %s m³예요. 나머지를 옮기려면 하역을 다시 누르세요.",
+ "You already rent extra cargo space.": "이미 추가 화물 공간을 빌리고 있어요.",
+ "You don't have enough credits for the first week.": "첫 주 요금에 필요한 크레딧이 부족해요.",
+ "You don't rent extra cargo space.": "추가 화물 공간을 빌리고 있지 않아요."
 }
