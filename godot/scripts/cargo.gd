@@ -291,7 +291,7 @@ func build(root: Control) -> void:
 	pick_btn.visible = false
 	pick_btn.pressed.connect(_cycle_pick)
 	root.add_child(pick_btn)
-	unload_btn = bay._hud_button("UNLOAD", Vector2(256, 1120), Vector2(208, 64), 32, "")
+	unload_btn = bay._hud_button("UNLOAD", Vector2(212, 1072), Vector2(176, 60), 32, "")   # right above the Maintenance Deck button (Eric 11-04)
 	unload_btn.add_theme_font_size_override("font_size", 21)
 	unload_btn.visible = false
 	unload_btn.pressed.connect(start_unload)
