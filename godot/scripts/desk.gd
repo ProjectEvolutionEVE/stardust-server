@@ -86,7 +86,8 @@ func load_desk() -> void:
 const LEDGER_WHAT := {"start": "Starting credits", "bank_deposit": "Deposit to the Starship Bank",
 	"bank_withdraw": "Withdrawal from the Starship Bank", "bank_loan": "Loan from the Starship Bank", "bank_repay": "Loan payment",
 	"blueprint_print": "Printing blueprint copies", "auction_fee": "WSC auction fee", "tow": "Tow back to the Starship",
-	"flight_time": "Flight time (50 an hour)", "craft_lease": "Craft lease, one week"}
+	"flight_time": "Flight time (50 an hour)", "craft_lease": "Craft lease, one week",
+	"storage_rent": "Extra cargo space, one week"}
 
 
 func _ledger(box: VBoxContainer) -> void:

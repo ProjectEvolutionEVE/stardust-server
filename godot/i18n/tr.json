@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "örn. Bakım Güvertesi'nde tek başına durur",
  "◀ Library": "◀ Kütüphane",
  "📐 Design a new blueprint": "📐 Yeni bir plan tasarla",
- "📐 Drafting room: design a blueprint": "📐 Çizim odası: bir plan tasarla"
+ "📐 Drafting room: design a blueprint": "📐 Çizim odası: bir plan tasarla",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "Haftada %s kredi karşılığında %s m³ daha; sen iptal edene kadar her hafta WSC'ye ödenir. %s kredin var.",
+ "Extra cargo space, one week": "Ek yük alanı, bir hafta",
+ "GO TO MY DESK": "MASAMA GİT",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Inara: Biraz yer açalım, Pilot. Masandaki Piyasa terminalinde depoladıklarının bir kısmını sat ya da Yıldız Gemisi'nden daha fazla alan kirala: haftada 10.000 krediye iki katı alan.",
+ "RENT MORE SPACE": "DAHA FAZLA ALAN KİRALA",
+ "Rent it": "Kirala",
+ "Rent more cargo space": "Daha fazla yük alanı kirala",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Kiralandı: gemideki alanın artık %s m³. Geri kalanı taşımak için BOŞALT'a tekrar dokun.",
+ "You already rent extra cargo space.": "Zaten ek yük alanı kiralıyorsun.",
+ "You don't have enough credits for the first week.": "İlk hafta için yeterli kredin yok.",
+ "You don't rent extra cargo space.": "Ek yük alanı kiralamıyorsun."
 }

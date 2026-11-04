@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "напр. Работает отдельно на Технической палубе",
  "◀ Library": "◀ Библиотека",
  "📐 Design a new blueprint": "📐 Создать новый чертёж",
- "📐 Drafting room: design a blueprint": "📐 Чертёжная: создай чертёж"
+ "📐 Drafting room: design a blueprint": "📐 Чертёжная: создай чертёж",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "Ещё %s м³ за %s кредитов в неделю, платить WSC каждую неделю, пока не отменишь. У тебя %s кредитов.",
+ "Extra cargo space, one week": "Дополнительное место в трюме, одна неделя",
+ "GO TO MY DESK": "К МОЕМУ СТОЛУ",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Инара: Давай освободим немного места, пилот. Продай часть своих запасов в терминале рынка у своего стола или арендуй больше места на Звездолёте: вдвое больше места за 10 000 кредитов в неделю.",
+ "RENT MORE SPACE": "АРЕНДОВАТЬ БОЛЬШЕ МЕСТА",
+ "Rent it": "Арендовать",
+ "Rent more cargo space": "Арендовать больше места в трюме",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Арендовано: твоё место на борту теперь %s м³. Нажми ВЫГРУЗИТЬ ещё раз, чтобы переместить остальное.",
+ "You already rent extra cargo space.": "Ты уже арендуешь дополнительное место в трюме.",
+ "You don't have enough credits for the first week.": "У тебя не хватает кредитов на первую неделю.",
+ "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме."
 }

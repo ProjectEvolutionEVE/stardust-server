@@ -1080,5 +1080,16 @@
  "e.g. Stands alone on the Maintenance Deck": "例: 整備デッキで単体で動作する",
  "◀ Library": "◀ 図書館",
  "📐 Design a new blueprint": "📐 新しい設計図を作る",
- "📐 Drafting room: design a blueprint": "📐 製図室: 設計図を作る"
+ "📐 Drafting room: design a blueprint": "📐 製図室: 設計図を作る",
+ "%s m³ more for %s credits a week, paid to the WSC each week until you cancel it. You have %s credits.": "さらに%s m³を週%sクレジットで。解約するまで毎週WSCに支払います。所持金は%sクレジットです。",
+ "Extra cargo space, one week": "追加の貨物スペース(1週間)",
+ "GO TO MY DESK": "デスクへ行く",
+ "Inara: Let's free up some room, Pilot. Sell some of what you've stored at the Market terminal at your desk, or rent more space from the Starship: double the space for 10,000 credits a week.": "Inara: スペースを空けましょう、パイロット。デスクのマーケット端末で保管中の品を売るか、スターシップの追加スペースを借りましょう。週10,000クレジットで広さが2倍になります。",
+ "RENT MORE SPACE": "スペースを追加で借りる",
+ "Rent it": "借りる",
+ "Rent more cargo space": "貨物スペースを追加で借りる",
+ "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "レンタル完了:船内のスペースは%s m³になりました。残りを移すには、もう一度「荷降ろし」をタップしてください。",
+ "You already rent extra cargo space.": "追加の貨物スペースはすでに借りています。",
+ "You don't have enough credits for the first week.": "最初の1週間分のクレジットが足りません。",
+ "You don't rent extra cargo space.": "追加の貨物スペースは借りていません。"
 }

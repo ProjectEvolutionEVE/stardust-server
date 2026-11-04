@@ -830,3 +830,23 @@ CREATE INDEX IF NOT EXISTS workshop_jobs_player ON workshop_jobs(player_id, ends
 INSERT INTO settings(key, value, note) VALUES
   ('deck_m3', 20, 'Each player''s space on the Maintenance Deck, m³ (Eric 11-03: small smelters take hardly any space; first setting)')
 ON CONFLICT (key) DO NOTHING;
+
+-- Renting more cargo space (Eric 11-04, rule 10; storage_rent.py): 10,000 credits a week to the WSC doubles a player's
+-- space in the Starship's cargo hold. One rental at a time; renews weekly until cancelled or unpaid.
+CREATE TABLE IF NOT EXISTS storage_rentals (
+  id             BIGSERIAL PRIMARY KEY,
+  player_id      BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  adds_m3        NUMERIC(12,4) NOT NULL,
+  started_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  next_charge_at TIMESTAMPTZ NOT NULL,
+  weeks_paid     INT NOT NULL DEFAULT 0,
+  auto_renew     BOOLEAN NOT NULL DEFAULT true,
+  ended_at       TIMESTAMPTZ,
+  end_reason     TEXT
+);
+CREATE UNIQUE INDEX IF NOT EXISTS storage_rentals_one ON storage_rentals(player_id) WHERE ended_at IS NULL;
+CREATE INDEX IF NOT EXISTS storage_rentals_due ON storage_rentals(next_charge_at) WHERE ended_at IS NULL;
+INSERT INTO settings(key, value, note) VALUES
+  ('storage_rent_week', 10000, 'Renting more cargo space: credits a week, paid to the WSC (Eric 11-04, rule 10)'),
+  ('storage_rent_m3',   12,    'How much more space one rental gives, m³ (Eric 11-04: it doubles the cargo space)')
+ON CONFLICT (key) DO NOTHING;
