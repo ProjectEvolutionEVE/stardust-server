@@ -4,6 +4,9 @@
 
 ## 1. Game Overview
 
+*The player-run economy of EVE Online meets the creativity of Minecraft: mine real ores, smelt them, design your own
+blueprints, and trade on a live market.*
+
 **Stardust - Terra Deleta** is a real-time space life sim and economy game. The inner planets of our solar system are
 gone; their remains circle the Sun as four rings of debris. Players live aboard the research starship WSC Alexander von
 Humboldt, parked beside a mysterious wormhole beyond Jupiter, and build a life and a career from what they find, learn,
