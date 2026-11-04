@@ -10,8 +10,8 @@ Registry rows: `~/Quavara/CURRENT.md`, under "Speech-to-text ear" and "Voice cer
 - No key is needed, and nothing leaves the iMac.
 
 ```
-~/.local/share/inara-stt/wenv/bin/python tools/voice-stt/whisper_run.py ar ~/Desktop/inara-ar/raw ~/Desktop/inara-ar-check/whisper-large-v3.txt
-python3 tools/voice-stt/compare.py docs/inara-lines/ar.json ~/Desktop/inara-ar-check/whisper-large-v3.txt
+~/.local/share/inara-stt/wenv/bin/python tools/voice-stt/whisper_run.py ar "~/Desktop/Stardust - Terra Deleta/Inara-Voice/Stardust-TerraDeleta_Inara_ar_Sara/raw" "~/Desktop/Stardust - Terra Deleta/Inara-Voice/Stardust-TerraDeleta_Inara_ar_Sara_checks/"whisper-large-v3.txt
+python3 tools/voice-stt/compare.py docs/inara-lines/ar.json "~/Desktop/Stardust - Terra Deleta/Inara-Voice/Stardust-TerraDeleta_Inara_ar_Sara_checks/"whisper-large-v3.txt
 ```
 
 The runner resumes where it stopped. The comparer handles Arabic text: it strips vowel marks, unifies the alef and ya

@@ -6,14 +6,16 @@ line through ElevenLabs (recorded files only; never live speech for players, rul
   raw/<ID>.mp3    the voice as ElevenLabs made it
   radio/<ID>.mp3  the Tower radio sound, the same method as Signal's: 380-3200 Hz band, compressor, light hiss (needs ffmpeg)
 Lines with a live number in them ({distance}) are skipped: the distance-free versions are recorded instead.
-A line already saved with the same words (here or in ~/Desktop/inara-<lang>) is never recorded again; it asks before paying.\nLines must be spoken words only: numbers spelled out, no quotes, brackets or symbols (Eric 10-27).
+A line already saved with the same words (here or in the language's folder, tools/voice_paths.py) is never recorded again; it asks before paying.\nLines must be spoken words only: numbers spelled out, no quotes, brackets or symbols (Eric 10-27).
 The API key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printed or saved.
 
     python3 tools/inara-record.py --list            # count the lines and characters, record nothing
-    python3 tools/inara-record.py                   # record everything into ~/Desktop/inara-en
-    python3 tools/inara-record.py --lang de         # German, from docs/inara-lines/de.json, into ~/Desktop/inara-de
+    python3 tools/inara-record.py                   # record everything into the English folder (tools/voice_paths.py)
+    python3 tools/inara-record.py --lang de         # German, from docs/inara-lines/de.json, into the German folder
 """
 import argparse, getpass, json, os, re, shutil, subprocess, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DOCS = [os.path.join(HERE, "..", "docs", f) for f in ("inara-recording-script.md", "inara-tower-dialog.md")]
@@ -21,10 +23,16 @@ MODEL = "eleven_multilingual_v2"
 # Inara's voice per language, hand-picked by Eric 10-19 (docs/voice-models.md is the master list). A language not here
 # has no voice chosen yet, and nothing is recorded for it until Eric picks one.
 VOICE_BY_LANG = {"en": "lily", "zh": "lily", "de": "lily", "pl": "lily",
-                 "es": "kate 1", "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
-                 "ru": "MOgsVr0EwwxqQs5cNDhu",     # Julia
-                 "ja": "0yh9saSHWVy78QG1HfNs",     # Sumiko Ito - Crisp
+                 "es": "johanna",                  # Johanna - Podcast Host (Latin American Spanish, verified; Eric 10-28)
+                 "fr": "kate 1", "ko": "kate 1", "tr": "kate 1", "pt-BR": "kate 1",
+                 "ru": "julia",                    # Julia (library ID MOgsVr0EwwxqQs5cNDhu; by name, as a My Voices copy has its own ID)
+                 "ja": "sumiko",                   # Sumiko Ito - Crisp (library ID 0yh9saSHWVy78QG1HfNs)
                  "ar": "sara - soft"}     # Sara - Soft, Expressive, and Warm (Modern Standard Arabic; Eric 10-27)
+# Indian languages are voiced by Sarvam, not ElevenLabs (Eric 09-30: Bulbul v3 speaker priya, "authoritative, clean and
+# clear"; docs/voice-models.md). The text comes from Claude's translation by the glossary, never Sarvam's translator.
+SARVAM_BY_LANG = {"hi": ("priya", "hi-IN")}
+SARVAM_MODEL = "bulbul:v3"
+SARVAM_KEY_FILE = "~/Quavara/Quavril/tools/.sarvam.env"     # Eric's Sarvam account key (SARVAM_API_KEY=...)
 RADIO = ("highpass=f=380,lowpass=f=3200,acompressor=threshold=-18dB:ratio=4:attack=5:release=80[v];"
          "anoisesrc=color=white:amplitude=0.006[n];[v][n]amix=inputs=2:duration=first:dropout_transition=0:normalize=0")
 
@@ -60,6 +68,16 @@ def call(url, key, body=None):
     return urllib.request.urlopen(req, timeout=120).read()
 
 
+def mark_done(folder, k, text):
+    """Record a line in lines.json the moment its file is saved, so a run cut off midway (a dropped connection, 11-03)
+    never pays for it again. lines.json used to be written only at the end, and a resumed Hindi run re-recorded 108 lines."""
+    p = os.path.join(folder, "lines.json")
+    try: saved = json.load(open(p))
+    except Exception: saved = {}
+    saved[k] = text
+    json.dump(saved, open(p, "w"), indent=1, ensure_ascii=False)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--list", action="store_true")
@@ -68,14 +86,18 @@ def main():
     ap.add_argument("--voice", help="override the voice: the start of its name in My Voices, or its voice ID. Normally leave it"
                                     " out: each language's voice comes from VOICE_BY_LANG (docs/voice-models.md)")
     ap.add_argument("--speed", type=float, help="ElevenLabs speed, 0.7 to 1.2")
-    ap.add_argument("--key-file", default="~/.stardust-elevenlabs-key", help="file holding the API key for the account to use")
+    ap.add_argument("--key-file", default="~/.stardust-elevenlabs-sara-key",
+                    help="file holding the API key. Default: Inara's voice account (key ...6e7e, Eric 10-28: it has Lily, Sara and "
+                         "Johanna). ~/.stardust-elevenlabs-key (...dec6) is a different account, not for Inara.")
     ap.add_argument("--ids", help="record only these line IDs (comma-separated), e.g. a voice test before the full set")
     ap.add_argument("--force", action="store_true", help="record even if the voice isn't verified in this language (Eric's call only)")
     ap.add_argument("--yes", action="store_true", help="skip the 'pay for it?' question")
+    ap.add_argument("--new-voice", action="store_true", help="a new voice for this language: record every line again into "
+                    "--out, ignoring the old recordings (they were in another voice)")
     ap.add_argument("--stability", type=float, help="0 to 1; higher = steadier delivery")
     a = ap.parse_args()
-    a.out = a.out or os.path.expanduser(f"~/Desktop/inara-{a.lang}")
-    a.voice = a.voice or VOICE_BY_LANG.get(a.lang)
+    a.out = os.path.expanduser(a.out) if a.out else VP.voice_dir(a.lang)
+    a.voice = a.voice or VOICE_BY_LANG.get(a.lang) or (SARVAM_BY_LANG.get(a.lang) or [None])[0]
     if not a.voice and not a.list:
         sys.exit(f"No voice is chosen for '{a.lang}' yet (docs/voice-models.md). Eric picks one; then add it to VOICE_BY_LANG.")
     # Every language, English too, records from docs/inara-lines/<lang>.json: the spoken-words script (Eric 10-27)
@@ -83,15 +105,17 @@ def main():
     if a.ids:
         L = {k: v for k, v in L.items() if k in set(a.ids.split(","))}
     # Never pay twice (Eric 10-27, after a whole set was recorded again into a fresh folder): a line counts as recorded
-    # if this folder OR the language's main folder (~/Desktop/inara-<lang>, the set that gets uploaded) already has it
+    # if this folder OR the language's main folder (VP.voice_dir, the set that gets uploaded) already has it
     # with the SAME words. A line found only in the main folder is copied over, not recorded. A line whose words
     # changed is recorded again.
     def saved_text(folder):
         try: return json.load(open(os.path.join(folder, "lines.json")))
         except Exception: return {}
-    main_dir = os.path.expanduser(f"~/Desktop/inara-{a.lang}")
+    main_dir = VP.voice_dir(a.lang)
     have = {}
-    for folder in dict.fromkeys([a.out, main_dir]):
+    if a.new_voice and os.path.abspath(os.path.expanduser(a.out)) == os.path.abspath(main_dir):
+        sys.exit(f"With --new-voice, record into a fresh folder (--out '{VP.voice_dir(a.lang)}-new'), so the old set stays until the new one is checked.")
+    for folder in ([a.out] if a.new_voice else dict.fromkeys([a.out, main_dir])):
         said = saved_text(folder)
         for k, v in L.items():
             f = os.path.join(folder, "raw", k + ".mp3")
@@ -113,6 +137,8 @@ def main():
         return
     ff = shutil.which("ffmpeg")
     if not ff: print("ffmpeg isn't installed, so only the raw files will be made; the radio versions can be added later.")
+    if a.lang in SARVAM_BY_LANG:
+        return sarvam(a, L, todo, ff)
     key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     kf = os.path.expanduser(a.key_file)
     if not key and os.path.exists(kf):      # the same key file make_intro.py uses
@@ -167,13 +193,58 @@ def main():
         except urllib.error.HTTPError as e:
             sys.exit(f"Stopped at {k}: ElevenLabs said {e.code} {e.reason}. Everything before it is saved; run again to continue.")
         open(raw, "wb").write(audio)
+        mark_done(a.out, k, text)
         print(f"  {n}/{len(todo)} {k}", flush=True)
     if ff:
         for k in L:
             raw, rad = os.path.join(a.out, "raw", k + ".mp3"), os.path.join(a.out, "radio", k + ".mp3")
             if os.path.exists(raw) and (k in todo or not os.path.exists(rad)):
                 subprocess.run([ff, "-loglevel", "error", "-y", "-i", raw, "-filter_complex", RADIO, rad], check=True)
-    json.dump(L, open(os.path.join(a.out, "lines.json"), "w"), indent=1, ensure_ascii=False)
+    for k in L:
+        if os.path.exists(os.path.join(a.out, "raw", k + ".mp3")): mark_done(a.out, k, L[k])
+    print(f"Done. Files are in {a.out} (raw/ and radio/), with lines.json listing every line.")
+
+
+def sarvam(a, L, todo, ff):
+    """Record with Sarvam (Indian languages). The key comes from SARVAM_API_KEY or SARVAM_KEY_FILE; never printed."""
+    if not ff: sys.exit("ffmpeg is needed to turn Sarvam's audio into mp3. Nothing was recorded or charged.")
+    speaker, code = SARVAM_BY_LANG[a.lang]
+    key = os.environ.get("SARVAM_API_KEY", "").strip()
+    kf = os.path.expanduser(SARVAM_KEY_FILE)
+    if not key and os.path.exists(kf):
+        key = next((l.split("=", 1)[1].strip() for l in open(kf) if l.startswith("SARVAM_API_KEY=")), "")
+    if not key: key = getpass.getpass("Sarvam API key (hidden): ").strip()
+    print(f"Voice: Sarvam {SARVAM_MODEL}, speaker {speaker} ({code})")
+    os.makedirs(os.path.join(a.out, "raw"), exist_ok=True); os.makedirs(os.path.join(a.out, "radio"), exist_ok=True)
+    if todo and not a.yes:
+        if input(f"Record {len(todo)} line(s), {sum(map(len, todo.values())):,} characters, in {speaker}? "
+                 "Type yes to pay for it: ").strip().lower() != "yes":
+            sys.exit("Nothing was recorded or charged.")
+    import base64, tempfile
+    for n, (k, text) in enumerate(todo.items(), 1):
+        req = urllib.request.Request("https://api.sarvam.ai/text-to-speech", data=json.dumps(
+            {"text": text, "target_language_code": code, "speaker": speaker, "model": SARVAM_MODEL}).encode(),
+            headers={"api-subscription-key": key, "Content-Type": "application/json"})
+        try:
+            res = json.load(urllib.request.urlopen(req, timeout=120))
+        except urllib.error.HTTPError as e:
+            sys.exit(f"Stopped at {k}: Sarvam said {e.code} {e.read().decode('utf-8', 'replace')[:200]}. "
+                     "Everything before it is saved; run again to continue.")
+        with tempfile.NamedTemporaryFile(suffix=".wav") as w:
+            w.write(b"".join(base64.b64decode(x) for x in res["audios"])); w.flush()
+            subprocess.run([ff, "-loglevel", "error", "-y", "-i", w.name, "-codec:a", "libmp3lame", "-q:a", "3",
+                            os.path.join(a.out, "raw", k + ".mp3")], check=True)
+        mark_done(a.out, k, text)
+        print(f"  {n}/{len(todo)} {k}", flush=True)
+    for k in L:
+        raw, rad = os.path.join(a.out, "raw", k + ".mp3"), os.path.join(a.out, "radio", k + ".mp3")
+        if os.path.exists(raw) and (k in todo or not os.path.exists(rad)):
+            subprocess.run([ff, "-loglevel", "error", "-y", "-i", raw, "-filter_complex", RADIO, rad], check=True)
+    saved = {}
+    try: saved = json.load(open(os.path.join(a.out, "lines.json")))
+    except Exception: pass
+    saved.update(L)
+    json.dump(saved, open(os.path.join(a.out, "lines.json"), "w"), indent=1, ensure_ascii=False)
     print(f"Done. Files are in {a.out} (raw/ and radio/), with lines.json listing every line.")
 
 

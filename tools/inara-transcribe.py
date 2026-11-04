@@ -3,7 +3,7 @@
 Claude can compare what the voice actually said against the script. Internal checking only; nothing reaches players.
 The key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printed or saved.
 
-    python3 tools/inara-transcribe.py ~/Desktop/inara-language-samples/kate-1
+    python3 tools/inara-transcribe.py "$HOME/Desktop/Stardust - Terra Deleta/Inara-Voice/voice-samples/kate-1"
 """
 import getpass, json, os, sys, uuid, urllib.request
 

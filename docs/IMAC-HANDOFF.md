@@ -1,6 +1,35 @@
 # Stardust – Terra Deleta: handoff brief for Claude on Eric's iMac
 
-## ★ LATEST (2026-10-27): read this part first
+## ★ LATEST (2026-11-03): read this part first
+Eric may lose Claude access after 11-05 (Pro plan; payment due). Everything needed to carry on is here.
+**Cloud session credits:** $42 left, expiring 11-05 2:59 AM EST; Eric: start using them on 11-04 (they go fast).
+
+**Where things stand:**
+- **Merged to main:** materials catalogue and colour chart (PR #29), iPhone fixes (#30), UI phrases in 12 languages (#31).
+- **Open PR #32 (`claude/medicine-bars45`), Eric merges:** Medicine bars 4-5 (445 books).
+- **This branch, `claude/voice-folders` (pushed, no PR yet):** rule 41 (Hindi = Sarvam Bulbul v3 **priya**, Eric
+  09-30; one language at a time, its remaining bars in one pass), `docs/inara-lines/glossary.hi.json`,
+  `docs/inara-lines/hi.json` (179 lines, translated by Claude, not by Sarvam), the recorder's Sarvam path.
+- **Hindi recorded:** all 179 lines in `~/Desktop/Stardust - Terra Deleta/Inara-Voice/Stardust-TerraDeleta_Inara_hi_Priya/`.
+  Listen-back checks in its `_checks/` folder. Long lines need `WHISPER_VAD=1` (Whisper cuts off long Devanagari).
+- **3DOS is shut down** (6 launch agents disabled, nothing deleted; report in that session).
+
+**Afternoon 11-03:** Navigation (#33) and Medicine (#32) merged. Open for Eric: **#34 building and smelting on the Maintenance Deck**, **#35 Science bars 4-5** (every career now has 5 bars). Hindi check done: all lines complete; only FAQ-033's "4.2" is uncertain.
+**Next (Eric 11-03: Godot app only, never the browser game):**
+- The **drafting room in the Godot app** (port static/quarters.js's blueprint form: /api/dfg/blueprints/*), so players can design the first kiln in the app.
+- **Inara talks far less in the Godot app than in the browser game** (Eric 11-03): port every spoken moment (static/*.js `V.say(...)` / `V.story(...)`) into godot/scripts/voice.gd and the screens that trigger them.
+- Eric's kiln: approve and mark it a furnace on the live database (`review.py approve ID`, `review.py furnace ID KG MINUTES`), each only with his go.
+
+**Next, in order:**
+1. Finish the Hindi check; re-record only real faults (run `tools/inara-record.py --list` first: never pay twice).
+   Then switch `hi` on in `voice.py`, upload the set, open the PR for this branch.
+2. English bars 4-5 for **Navigation**, then **Science** (same method as Medicine; one career is about 45% of a
+   5-hour window and 16% of the week on Pro).
+3. Arabic bars 3-5 in one pass, after the weekly reset; the Arabic intro's 4 narration parts; a native-speaker check.
+4. Later: 16 server messages with numbers are English only; titles by study focus (rule 32); in-app account
+   deletion (needed for the App Store).
+
+## Earlier (2026-10-27)
 - **Every ruling** is in CLAUDE.md (rules 1-41).
 - **Every tool and path** is in `~/Quavara/CURRENT.md`.
 - **The full transcript** of the long 10-24 to 10-27 session is archived at

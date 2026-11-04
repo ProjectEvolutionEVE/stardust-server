@@ -3,11 +3,13 @@
 full recording in each. Steam's most-used languages (Valve's full-year 2024 figures, plus Polish from the 2025 survey).
 The same three approved lines as the English sample (INARA-TWR-004, STORY-001, STORY-002), translated by Claude.
 Recorded files only. The key comes from ELEVENLABS_API_KEY or a hidden prompt; it is never printed or saved.
-Saves ~/Desktop/inara-language-samples/<code>.mp3
+Saves Inara-Voice/voice-samples/<voice>/<code>.mp3 (tools/voice_paths.py)
 
     python3 tools/inara-language-samples.py
 """
 import argparse, getpass, re, json, os, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 SAMPLES = {
     "zh-CN": "离开舰首了。祝你在星环里好运。你现在身处一艘探索型科学研究星舰上，见习生。这里的每个人都是从最底层做起的。我也一样。",
@@ -46,7 +48,7 @@ print(f"Voice: {lily[0]['name']}")
 SAMPLES = {k: v for k, v in SAMPLES.items() if k in a.langs.split(",")}
 vset = {k: v for k, v in (("speed", a.speed), ("stability", a.stability)) if v is not None}
 tag = "".join(f"-{k}{v}" for k, v in vset.items())
-out = os.path.expanduser(f"~/Desktop/inara-language-samples/{a.voice.replace(' ', '-')}{tag}"); os.makedirs(out, exist_ok=True)
+out = os.path.join(VP.ROOT, "voice-samples", f"{a.voice.replace(' ', '-')}{tag}"); os.makedirs(out, exist_ok=True)
 print(f"{len(SAMPLES)} samples, {sum(map(len, SAMPLES.values())):,} characters.")
 for code, text in SAMPLES.items():
     p = os.path.join(out, code + ".mp3")
