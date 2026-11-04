@@ -31,6 +31,9 @@ Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   GET  /api/dfg/health    no sign-in needed
 The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints/options   kinds, library books, materials with densities, limits
+  GET  /api/dfg/deck                 the Maintenance Deck: machines, what can be built, ores, jobs (Eric 11-03)
+  POST /api/dfg/deck/build           {design}: build an approved design from the cargo hold's materials
+  POST /api/dfg/deck/smelt           {furnace, ore, kg}: one batch of ore in a furnace (Metallurgy pass)
   GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
@@ -77,6 +80,7 @@ import archives as AR
 import voice as VO
 import lending as LN
 import craft as CR
+import workshop as WS
 import accounts as ACC
 import hmac
 from datetime import datetime
@@ -358,6 +362,31 @@ async def rest(request):
         return _json(await _me(conn, pid))
 
 
+async def deck_get(request):
+    """The Maintenance Deck (Eric 11-03): the player's machines, what they can build, their ores, and running jobs."""
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await WS.status(conn, pid))
+
+
+async def deck_post(request):
+    """Build a design (op=build, design) or load a furnace with ore (op=smelt, furnace, ore, kg)."""
+    op, b = request.match_info["op"], await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if op == "build":
+            out = await WS.build(conn, pid, str(b.get("design", "")))
+        elif op == "smelt":
+            try:
+                fid, kg = int(b.get("furnace")), float(b.get("kg"))
+            except (TypeError, ValueError):
+                raise ST.Refused("Choose a furnace and how much ore to smelt.")
+            out = await WS.smelt(conn, pid, fid, str(b.get("ore", "")), kg)
+        else:
+            raise web.HTTPNotFound()
+        return _json({**out, "deck": await WS.status(conn, pid)})
+
+
 async def craft_get(request):
     async with request.app["pool"].acquire() as conn:
         pid = await _player(conn, request)
@@ -576,14 +605,16 @@ async def _startup(app):
         await conn.execute(SCHEMA)
         await LIB.ensure_book_types(conn)                  # each written library book is an item type
         await MR.ensure_market(conn)                       # refined materials trade on the market (Eric 11-03)
+        await WS.ensure_types(conn)                        # slag and smelted metals (Eric 11-03)
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
     app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
     app["craft"] = asyncio.create_task(CR.run(app))       # weekly craft-lease payments (rule 38)
+    app["workshop"] = asyncio.create_task(WS.run(app))    # builds and smelting batches finish on time (Eric 11-03)
 
 
 async def _cleanup(app):
-    for k in ("bank", "auctions", "lending", "craft"):
+    for k in ("bank", "auctions", "lending", "craft", "workshop"):
         app[k].cancel()
         try:
             await app[k]
@@ -857,6 +888,8 @@ def make_app():
     app.router.add_post("/api/dfg/market/order", market_order)
     app.router.add_post("/api/dfg/market/cancel", market_cancel)
     app.router.add_get("/api/dfg/blueprints/options", bp_options)
+    app.router.add_get("/api/dfg/deck", deck_get)
+    app.router.add_post(r"/api/dfg/deck/{op:build|smelt}", deck_post)
     app.router.add_get("/api/dfg/blueprints", bp_mine)
     app.router.add_get("/api/dfg/blueprints/{id}", bp_detail)
     app.router.add_post("/api/dfg/blueprints/save", bp_save)

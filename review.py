@@ -6,6 +6,8 @@
     python3 review.py changes ID "what"         send it back with the changes needed
     python3 review.py approve ID ["note"]       approve it: it becomes a design that can be built and sold
     python3 review.py reject ID "why"           turn it down
+    python3 review.py furnace ID KG MINUTES     mark an approved design as a furnace: KG of ore a batch, MINUTES a batch
+                                                (the team sets these from the design, Eric 11-03; workshop.py)
 
 Needs DATABASE_URL (the game's database). The designer sees every note as from "The review team"; the name given in
 REVIEWER (default "Review team") is kept on the record only."""
@@ -13,10 +15,11 @@ import asyncio, json, os, sys
 import asyncpg
 import blueprints as BP
 import store as ST
+import workshop as WS
 
 
 async def main(args):
-    if not args or args[0] not in ("list", "show", "ask", "changes", "approve", "reject"):
+    if not args or args[0] not in ("list", "show", "ask", "changes", "approve", "reject", "furnace"):
         raise SystemExit(__doc__)
     who = os.environ.get("REVIEWER", "Review team")
     conn = await asyncpg.connect(os.environ["DATABASE_URL"])
@@ -31,6 +34,12 @@ async def main(args):
             return
         sid = int(args[1])
         text = " ".join(args[2:]).strip()
+        if cmd == "furnace":
+            if len(args) != 4:
+                raise SystemExit("review.py furnace ID KG MINUTES")
+            product = await WS.mark_furnace(conn, sid, args[2], args[3])
+            print(f"#{sid} ({product}) is a furnace: {float(args[2]):g} kg of ore a batch, {int(args[3])} minutes a batch.")
+            return
         if cmd == "show":
             s = await conn.fetchrow("SELECT * FROM blueprint_submissions WHERE id=$1", sid)
             if not s:
