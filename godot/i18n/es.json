@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "No tienes créditos suficientes para la primera semana.",
  "You don't rent extra cargo space.": "No alquilas espacio de carga extra.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "No se pudo guardar una copia en este dispositivo. El recibo está a salvo aquí, en tu archivador.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NO SE PUDO GUARDAR\nNo se pudo guardar una copia en este dispositivo. El recibo está a salvo en tu archivador."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NO SE PUDO GUARDAR\nNo se pudo guardar una copia en este dispositivo. El recibo está a salvo en tu archivador.",
+ "Draft saved.": "Borrador guardado.",
+ "Its name": "Su nombre",
+ "What kind of thing it is": "Qué tipo de cosa es"
 }

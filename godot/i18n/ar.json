@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "ليس لديك أرصدة كافية للأسبوع الأول.",
  "You don't rent extra cargo space.": "أنت لا تستأجر مساحة شحن إضافية.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "تعذّر حفظ نسخة على هذا الجهاز. الإيصال نفسه محفوظ هنا في خزانة ملفاتك.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "تعذّر الحفظ\nتعذّر حفظ نسخة على هذا الجهاز. الإيصال نفسه محفوظ في خزانة ملفاتك."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "تعذّر الحفظ\nتعذّر حفظ نسخة على هذا الجهاز. الإيصال نفسه محفوظ في خزانة ملفاتك.",
+ "Draft saved.": "حُفظت المسودة.",
+ "Its name": "اسمه",
+ "What kind of thing it is": "ما نوعه"
 }

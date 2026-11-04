@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "У тебя не хватает кредитов на первую неделю.",
  "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Не удалось сохранить копию на этом устройстве. Сама квитанция в сохранности здесь, в вашем шкафу для документов.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "НЕ СОХРАНЕНО\nНе удалось сохранить копию на этом устройстве. Сама квитанция в сохранности в вашем шкафу для документов."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "НЕ СОХРАНЕНО\nНе удалось сохранить копию на этом устройстве. Сама квитанция в сохранности в вашем шкафу для документов.",
+ "Draft saved.": "Черновик сохранён.",
+ "Its name": "Название",
+ "What kind of thing it is": "Что это за вещь"
 }

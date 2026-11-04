@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "İlk hafta için yeterli kredin yok.",
  "You don't rent extra cargo space.": "Ek yük alanı kiralamıyorsun.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Bu cihaza bir kopya kaydedilemedi. Makbuzun kendisi burada, dosya dolabında güvende.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "KAYDEDİLEMEDİ\nBu cihaza bir kopya kaydedilemedi. Makbuzun kendisi dosya dolabında güvende."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "KAYDEDİLEMEDİ\nBu cihaza bir kopya kaydedilemedi. Makbuzun kendisi dosya dolabında güvende.",
+ "Draft saved.": "Taslak kaydedildi.",
+ "Its name": "Adı",
+ "What kind of thing it is": "Ne tür bir şey olduğu"
 }

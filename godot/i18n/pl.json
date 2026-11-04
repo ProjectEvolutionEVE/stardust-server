@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "Nie masz dość kredytów na pierwszy tydzień.",
  "You don't rent extra cargo space.": "Nie wynajmujesz dodatkowego miejsca w ładowni.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Nie udało się zapisać kopii na tym urządzeniu. Samo pokwitowanie jest bezpieczne tutaj, w twojej szafce na dokumenty.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NIE ZAPISANO\nNie udało się zapisać kopii na tym urządzeniu. Samo pokwitowanie jest bezpieczne w twojej szafce na dokumenty."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NIE ZAPISANO\nNie udało się zapisać kopii na tym urządzeniu. Samo pokwitowanie jest bezpieczne w twojej szafce na dokumenty.",
+ "Draft saved.": "Szkic zapisany.",
+ "Its name": "Nazwa",
+ "What kind of thing it is": "Jakiego rodzaju to rzecz"
 }

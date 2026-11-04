@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "你的積分不夠支付第一週。",
  "You don't rent extra cargo space.": "你沒有租額外貨艙空間。",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "無法在此裝置上儲存副本。收據本身安全地保存在你的檔案櫃裡。",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "無法儲存\n無法在此裝置上儲存副本。收據本身安全地保存在你的檔案櫃裡。"
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "無法儲存\n無法在此裝置上儲存副本。收據本身安全地保存在你的檔案櫃裡。",
+ "Draft saved.": "草稿已儲存。",
+ "Its name": "名稱",
+ "What kind of thing it is": "它屬於哪一類"
 }

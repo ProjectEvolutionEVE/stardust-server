@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "最初の1週間分のクレジットが足りません。",
  "You don't rent extra cargo space.": "追加の貨物スペースは借りていません。",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "この端末にコピーを保存できませんでした。領収書そのものはここ、ファイルキャビネットに保管されています。",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "保存できませんでした\nこの端末にコピーを保存できませんでした。領収書そのものはファイルキャビネットに保管されています。"
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "保存できませんでした\nこの端末にコピーを保存できませんでした。領収書そのものはファイルキャビネットに保管されています。",
+ "Draft saved.": "下書きを保存しました。",
+ "Its name": "名前",
+ "What kind of thing it is": "どんな種類のものか"
 }

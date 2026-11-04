@@ -1093,5 +1093,8 @@
  "You don't have enough credits for the first week.": "Tu n'as pas assez de crédits pour la première semaine.",
  "You don't rent extra cargo space.": "Tu ne loues pas d'espace de soute supplémentaire.",
  "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Impossible d'enregistrer une copie sur cet appareil. Le reçu lui-même est en sécurité ici, dans ton classeur.",
- "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "ÉCHEC DE L'ENREGISTREMENT\nImpossible d'enregistrer une copie sur cet appareil. Le reçu lui-même est en sécurité dans ton classeur."
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "ÉCHEC DE L'ENREGISTREMENT\nImpossible d'enregistrer une copie sur cet appareil. Le reçu lui-même est en sécurité dans ton classeur.",
+ "Draft saved.": "Brouillon enregistré.",
+ "Its name": "Son nom",
+ "What kind of thing it is": "Quel genre de chose c'est"
 }
