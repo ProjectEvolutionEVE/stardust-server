@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Loué : ton espace à bord est maintenant de %s m³. Touche DÉCHARGER de nouveau pour déplacer le reste.",
  "You already rent extra cargo space.": "Tu loues déjà de l'espace de soute supplémentaire.",
  "You don't have enough credits for the first week.": "Tu n'as pas assez de crédits pour la première semaine.",
- "You don't rent extra cargo space.": "Tu ne loues pas d'espace de soute supplémentaire."
+ "You don't rent extra cargo space.": "Tu ne loues pas d'espace de soute supplémentaire.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Impossible d'enregistrer une copie sur cet appareil. Le reçu lui-même est en sécurité ici, dans ton classeur.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "ÉCHEC DE L'ENREGISTREMENT\nImpossible d'enregistrer une copie sur cet appareil. Le reçu lui-même est en sécurité dans ton classeur.",
+ "Draft saved.": "Brouillon enregistré.",
+ "Its name": "Son nom",
+ "What kind of thing it is": "Quel genre de chose c'est",
+ "+ Add another part (made separately)": "+ Ajouter une autre pièce (fabriquée à part)",
+ "+ Another material": "+ Un autre matériau",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "La plupart des plans n'ont besoin que d'une pièce : nommez-la, puis indiquez chaque matériau qui la compose et sa quantité. N'ajoutez une autre pièce que pour un élément fabriqué à part. Le poids et la taille sont calculés à partir des vrais matériaux.",
+ "PART %d": "PIÈCE %d",
+ "Part %d": "Pièce %d",
+ "What it's made of, and how much": "De quoi elle est faite, et en quelle quantité",
+ "What this part is called": "Le nom de cette pièce",
+ "e.g. Kiln body": "ex. Corps du four",
+ "a name for this part": "un nom pour cette pièce",
+ "at least one material": "au moins un matériau",
+ "an amount for every material": "une quantité pour chaque matériau",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

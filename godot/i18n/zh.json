@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "已租用：你在舱内的空间现为 %s m³。再点一次卸货，把剩下的转移过去。",
  "You already rent extra cargo space.": "你已经租了额外货舱空间。",
  "You don't have enough credits for the first week.": "你的积分不够支付第一周。",
- "You don't rent extra cargo space.": "你没有租额外货舱空间。"
+ "You don't rent extra cargo space.": "你没有租额外货舱空间。",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "无法在此设备上保存副本。收据本身安全地保存在你的文件柜里。",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "无法保存\n无法在此设备上保存副本。收据本身安全地保存在你的文件柜里。",
+ "Draft saved.": "草稿已保存。",
+ "Its name": "名称",
+ "What kind of thing it is": "它属于哪一类",
+ "+ Add another part (made separately)": "+ 再加一个部件（单独制作的）",
+ "+ Another material": "+ 再加一种材料",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "大多数设计只需要一个部件：给它起个名字，然后列出它用到的每种材料和用量。只有单独制作的部分才需要再加一个部件。重量和体积按真实材料计算。",
+ "PART %d": "部件 %d",
+ "Part %d": "部件 %d",
+ "What it's made of, and how much": "它用什么做成，用量多少",
+ "What this part is called": "这个部件叫什么",
+ "e.g. Kiln body": "例如：窑体",
+ "a name for this part": "这个部件的名称",
+ "at least one material": "至少一种材料",
+ "an amount for every material": "每种材料的用量",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

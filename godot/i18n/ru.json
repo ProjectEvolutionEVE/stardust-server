@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Арендовано: твоё место на борту теперь %s м³. Нажми ВЫГРУЗИТЬ ещё раз, чтобы переместить остальное.",
  "You already rent extra cargo space.": "Ты уже арендуешь дополнительное место в трюме.",
  "You don't have enough credits for the first week.": "У тебя не хватает кредитов на первую неделю.",
- "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме."
+ "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Не удалось сохранить копию на этом устройстве. Сама квитанция в сохранности здесь, в вашем шкафу для документов.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "НЕ СОХРАНЕНО\nНе удалось сохранить копию на этом устройстве. Сама квитанция в сохранности в вашем шкафу для документов.",
+ "Draft saved.": "Черновик сохранён.",
+ "Its name": "Название",
+ "What kind of thing it is": "Что это за вещь",
+ "+ Add another part (made separately)": "+ Добавить ещё одну деталь (делается отдельно)",
+ "+ Another material": "+ Ещё материал",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "Большинству чертежей нужна только одна деталь: дайте ей название, затем перечислите каждый материал, из которого она сделана, и сколько его. Добавляйте ещё одну деталь, только если она делается отдельно. Вес и размер рассчитываются по реальным материалам.",
+ "PART %d": "ДЕТАЛЬ %d",
+ "Part %d": "Деталь %d",
+ "What it's made of, and how much": "Из чего сделана и сколько",
+ "What this part is called": "Как называется эта деталь",
+ "e.g. Kiln body": "напр. Корпус печи",
+ "a name for this part": "название этой детали",
+ "at least one material": "хотя бы один материал",
+ "an amount for every material": "количество каждого материала",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

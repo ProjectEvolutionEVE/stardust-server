@@ -370,6 +370,8 @@ async def main():
     r = await cl.get("/api/dfg/ship", headers=H); sh = await r.json()
     check("after unloading, the ship's state shows the storage by material and no pieces aboard",
           sh["pieces"] == [] and abs(sh["storage"]["kg"]["gold"] - 54.04) < 0.001)
+    check("the ship's state sends each stored material's density, so the app counts its space as the server does",
+          sh["storage"]["density"].get("gold") == 19300)
     r = await cl.get("/api/dfg/ship", headers=H); j = await r.json()
     check("the ship view agrees: 0 m³ used", j["ship"]["used_m3"] == 0 and j["cargo"] == [])
 

@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "임대 완료: 이제 선내 내 공간은 %s m³예요. 나머지를 옮기려면 하역을 다시 누르세요.",
  "You already rent extra cargo space.": "이미 추가 화물 공간을 빌리고 있어요.",
  "You don't have enough credits for the first week.": "첫 주 요금에 필요한 크레딧이 부족해요.",
- "You don't rent extra cargo space.": "추가 화물 공간을 빌리고 있지 않아요."
+ "You don't rent extra cargo space.": "추가 화물 공간을 빌리고 있지 않아요.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "이 기기에 사본을 저장하지 못했습니다. 영수증 자체는 여기 서류 캐비닛에 안전하게 있습니다.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "저장 실패\n이 기기에 사본을 저장하지 못했습니다. 영수증 자체는 서류 캐비닛에 안전하게 있습니다.",
+ "Draft saved.": "초안이 저장되었습니다.",
+ "Its name": "이름",
+ "What kind of thing it is": "어떤 종류인지",
+ "+ Add another part (made separately)": "+ 다른 부품 추가 (따로 만드는 것)",
+ "+ Another material": "+ 다른 재료",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "대부분의 설계는 부품 하나면 됩니다. 이름을 붙이고, 그것을 만드는 모든 재료와 양을 적으세요. 따로 만드는 부품이 있을 때만 부품을 추가하세요. 무게와 크기는 실제 재료로 계산됩니다.",
+ "PART %d": "부품 %d",
+ "Part %d": "부품 %d",
+ "What it's made of, and how much": "무엇으로 만들고, 얼마나 드는지",
+ "What this part is called": "이 부품의 이름",
+ "e.g. Kiln body": "예: 가마 본체",
+ "a name for this part": "이 부품의 이름",
+ "at least one material": "재료 하나 이상",
+ "an amount for every material": "모든 재료의 양",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

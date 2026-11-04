@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Alugado: seu espaço a bordo agora é de %s m³. Toque em DESCARREGAR de novo para mover o resto.",
  "You already rent extra cargo space.": "Você já aluga espaço de carga extra.",
  "You don't have enough credits for the first week.": "Você não tem créditos suficientes para a primeira semana.",
- "You don't rent extra cargo space.": "Você não aluga espaço de carga extra."
+ "You don't rent extra cargo space.": "Você não aluga espaço de carga extra.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Não foi possível salvar uma cópia neste aparelho. O recibo em si está seguro aqui, no seu arquivo.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NÃO FOI POSSÍVEL SALVAR\nNão foi possível salvar uma cópia neste aparelho. O recibo em si está seguro no seu arquivo.",
+ "Draft saved.": "Rascunho salvo.",
+ "Its name": "O nome",
+ "What kind of thing it is": "Que tipo de coisa é",
+ "+ Add another part (made separately)": "+ Adicionar outra peça (feita à parte)",
+ "+ Another material": "+ Outro material",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "A maioria dos projetos precisa de só uma peça: dê um nome a ela e depois liste cada material de que é feita e a quantidade. Adicione outra peça só para algo feito à parte. O peso e o tamanho são calculados a partir dos materiais reais.",
+ "PART %d": "PEÇA %d",
+ "Part %d": "Peça %d",
+ "What it's made of, and how much": "Do que é feita, e quanto",
+ "What this part is called": "Como esta peça se chama",
+ "e.g. Kiln body": "ex.: Corpo do forno",
+ "a name for this part": "um nome para esta peça",
+ "at least one material": "pelo menos um material",
+ "an amount for every material": "uma quantidade para cada material",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

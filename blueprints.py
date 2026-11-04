@@ -171,8 +171,12 @@ def check_form(form):
             if not form.get("changes"):
                 out.append("what's different from it")
     for i, part in enumerate(form.get("parts") or []):
-        if not part.get("name") or not part.get("materials"):
-            out.append(f"part {i + 1}: its name and at least one material")
+        # one thing missing per line, so it's clear what to fill in (Eric 11-04: the joint message read as "add
+        # another material", and he added a second part for the copper already listed)
+        if not part.get("name"):
+            out.append(f"part {i + 1}: a name for this part")
+        if not part.get("materials"):
+            out.append(f"part {i + 1}: at least one material")
         for m in part.get("materials") or []:
             if not isinstance(m.get("grams"), int) or m["grams"] <= 0:
                 out.append(f"part {i + 1}: an amount for every material")

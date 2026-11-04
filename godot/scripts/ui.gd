@@ -210,7 +210,12 @@ const RECEIPTS_FOLDER := "Stardust Receipts"
 
 
 func receipts_dir() -> String:
-	var dir := OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).path_join(RECEIPTS_FOLDER)
+	# On the iPhone the system Documents lookup can come back empty, leaving a path the app can't write (Eric 11-04: "it
+	# cannot be saved"). The app's own user folder IS its Documents folder there, the one the Files app shows.
+	var docs := OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
+	if docs == "" or OS.has_feature("mobile"):
+		docs = OS.get_user_data_dir()
+	var dir := docs.path_join(RECEIPTS_FOLDER)
 	DirAccess.make_dir_recursive_absolute(dir)
 	return dir
 

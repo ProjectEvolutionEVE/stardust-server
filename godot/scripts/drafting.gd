@@ -18,6 +18,20 @@ var w := {}                         # the form's inputs
 var parts_box: VBoxContainer
 var total_lbl: Label
 var busy := false
+# Easier to fill in on a phone (Eric 11-04: "I missed the name the first time … I spent a lot of time and even lost
+# some text trying to remove the keypad and slide the page lower"): every box to fill in is tinted with a gold edge;
+# a wide gold scroll bar; drag anywhere on the page to scroll (even over a box); tap a box to type in it, tap anywhere
+# else to put the keyboard away; the page keeps the box you're typing in above the keyboard; drafts save themselves.
+var scroll: ScrollContainer
+var spacer: Control
+var press_at := Vector2.ZERO
+var pressing := false
+var dragging := false
+var dirty := false
+var kb_h := -1.0
+const DRAG_START := 14.0
+const FILL := Color("1c2740")
+const FILL_FOCUS := Color("24324f")
 
 
 func _ready() -> void:
@@ -26,19 +40,33 @@ func _ready() -> void:
 	box.add_child(top)
 	var back := Ui.button("◀ Library", false)
 	back.custom_minimum_size = Vector2(190, 64)
-	back.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/library.tscn"))
+	back.pressed.connect(func():
+		await _autosave()
+		get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	top.add_child(back)
 	var t := Ui.label("  DRAFTING ROOM", 32, Ui.GOLD)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(t)
-	var scroll := ScrollContainer.new()
+	scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_child(scroll)
+	_wide_bar(scroll.get_v_scroll_bar())
+	get_tree().node_added.connect(_on_node_added)
+	var t_auto := Timer.new()
+	t_auto.wait_time = 15.0
+	t_auto.autostart = true
+	t_auto.timeout.connect(_autosave)
+	add_child(t_auto)
 	body = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation", 14)
-	scroll.add_child(body)
+	var pad := MarginContainer.new()          # keeps the text clear of the wide scroll bar
+	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pad.add_theme_constant_override("margin_right", 60)
+	pad.mouse_filter = Control.MOUSE_FILTER_PASS
+	scroll.add_child(pad)
+	pad.add_child(body)
 	_list()
 
 
@@ -155,6 +183,7 @@ func _form() -> void:
 	msg = _text("", 22, Ui.GOLD)
 
 	_q(1, "What is it called, and what kind of thing is it?")
+	body.add_child(_text("Its name", 20, Ui.MUTED))
 	var name := Ui.field("e.g. Clay brick kiln")
 	name.text = str(f.get("name", "") if f.get("name") != null else "")
 	name.max_length = int(opts.limits.text.name)
@@ -162,6 +191,7 @@ func _form() -> void:
 	body.add_child(name)
 	w.name = name
 	var kinds: Array = opts.kinds.map(func(k): return [k.code, k.name])
+	body.add_child(_text("What kind of thing it is", 20, Ui.MUTED))
 	w.kind = _pick(kinds, str(f.get("kind", "")), edit, "Choose the kind…")
 	body.add_child(w.kind)
 
@@ -211,7 +241,7 @@ func _form() -> void:
 			body.add_child(cb)
 			w.books.append(cb)
 
-	_q(8, "Its parts and materials", tr("Each part, with the materials it's made of and how much. Its weight and size are worked out from the real materials."))
+	_q(8, "Its parts and materials", tr("Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials."))
 	parts_box = VBoxContainer.new()
 	parts_box.add_theme_constant_override("separation", 12)
 	body.add_child(parts_box)
@@ -221,7 +251,7 @@ func _form() -> void:
 	for p in plist:
 		_part(p, edit)
 	if edit:
-		var addp := _small("+ Add a part")
+		var addp := _small("+ Add another part (made separately)")
 		addp.pressed.connect(func(): _part({}, true))
 		body.add_child(addp)
 	total_lbl = _text("", 22, Ui.TEXT)
@@ -268,8 +298,12 @@ func _form() -> void:
 		wd.pressed.connect(_withdraw)
 		body.add_child(wd)
 	var back := _small("Back to my blueprints")
-	back.pressed.connect(_list)
+	back.pressed.connect(func():
+		await _autosave()
+		_list())
 	body.add_child(back)
+	_add_spacer()
+	dirty = false
 
 
 func _notes() -> void:
@@ -292,19 +326,40 @@ func _notes() -> void:
 
 
 ## One part: its name and its material rows (material, kg).
+## Each part is its own card (Eric 11-04: the part's name box looked like one more material): PART 1, its name, then
+## "What it's made of" with one line per material.
 func _part(p: Dictionary, edit: bool) -> void:
+	var card := PanelContainer.new()
+	var cs := StyleBoxFlat.new()
+	cs.bg_color = Ui.PANEL
+	cs.border_color = Color(Ui.GOLD, 0.35)
+	cs.set_border_width_all(1)
+	cs.set_corner_radius_all(12)
+	cs.content_margin_left = 16
+	cs.content_margin_right = 16
+	cs.content_margin_top = 14
+	cs.content_margin_bottom = 14
+	card.add_theme_stylebox_override("panel", cs)
+	card.mouse_filter = Control.MOUSE_FILTER_PASS
+	parts_box.add_child(card)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	parts_box.add_child(box)
-	var pn := Ui.field("Part name, e.g. Bricks")
+	card.add_child(box)
+	var head := Ui.label("", 22, Ui.GOLD)
+	box.add_child(head)
+	card.set_meta("head", head)
+	box.add_child(_text("What this part is called", 20, Ui.MUTED))
+	var pn := Ui.field("e.g. Kiln body")
 	pn.text = str(p.get("name", "") if p.get("name") != null else "")
 	pn.editable = edit
 	box.add_child(pn)
-	box.set_meta("name", pn)
+	card.set_meta("name", pn)
+	box.add_child(_text("What it's made of, and how much", 20, Ui.MUTED))
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", 8)
 	box.add_child(rows)
-	box.set_meta("rows", rows)
+	card.set_meta("rows", rows)
+	_renumber.call_deferred()
 	var mats: Array = p.get("materials", []) if p.get("materials") != null else []
 	if mats.is_empty():
 		mats = [{}]
@@ -313,13 +368,13 @@ func _part(p: Dictionary, edit: bool) -> void:
 	if edit:
 		var h := HBoxContainer.new()
 		box.add_child(h)
-		var am := _small("+ Add a material")
+		var am := _small("+ Another material")
 		am.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		am.pressed.connect(func(): _mat_row(rows, {}, true))
 		h.add_child(am)
 		var rp := _small("Remove this part")
 		rp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		rp.pressed.connect(func(): box.queue_free(); _total.call_deferred())
+		rp.pressed.connect(func(): card.queue_free(); _total.call_deferred(); _renumber.call_deferred())
 		h.add_child(rp)
 
 
@@ -416,9 +471,10 @@ func _save() -> void:
 		msg.text = r.error
 		return
 	d = r.data
+	dirty = false
 	_form()
 	var miss: Array = d.get("missing", [])
-	msg.text = tr("Saved. Ready to send to the review team.") if miss.is_empty() else tr("Saved. Still to answer: %s.") % ", ".join(miss.map(func(x): return tr(str(x))))
+	msg.text = tr("Saved. Ready to send to the review team.") if miss.is_empty() else tr("Saved. Still to answer: %s.") % ", ".join(miss.map(_missing_text))
 
 
 func _submit() -> void:
@@ -465,3 +521,203 @@ func _withdraw() -> void:
 		msg.text = r.error
 		return
 	_list()
+
+
+## The scroll bar, wide enough to grab with a thumb, with a gold handle.
+func _wide_bar(bar: VScrollBar) -> void:
+	bar.custom_minimum_size.x = 44
+	var track := StyleBoxFlat.new()
+	track.bg_color = Ui.PANEL
+	track.set_corner_radius_all(14)
+	track.content_margin_left = 6
+	track.content_margin_right = 6
+	bar.add_theme_stylebox_override("scroll", track)
+	bar.add_theme_stylebox_override("scroll_focus", track)
+	for k in ["grabber", "grabber_highlight", "grabber_pressed"]:
+		var g := StyleBoxFlat.new()
+		g.bg_color = Ui.GOLD if k == "grabber" else Ui.GOLD.lightened(0.2)
+		g.set_corner_radius_all(12)
+		g.content_margin_left = 16
+		g.content_margin_right = 16
+		bar.add_theme_stylebox_override(k, g)
+
+
+## Room below the form for the keyboard, so the last boxes can be scrolled up above it.
+func _add_spacer() -> void:
+	spacer = Control.new()
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(spacer)
+	kb_h = -1.0
+
+
+func _fill_style(c: Color, edge: float, wide: int) -> StyleBoxFlat:
+	var st := StyleBoxFlat.new()
+	st.bg_color = c
+	st.border_color = Color(Ui.GOLD, edge)
+	st.set_border_width_all(wide)
+	st.set_corner_radius_all(10)
+	st.content_margin_left = 16
+	st.content_margin_right = 16
+	st.content_margin_top = 10
+	st.content_margin_bottom = 10
+	return st
+
+
+## Every box to fill in: tinted, with a gold edge (brighter while typing in it), so none is missed.
+func _on_node_added(n: Node) -> void:
+	if not body or not body.is_ancestor_of(n):
+		return
+	if n is LineEdit or n is TextEdit:
+		_setup_box.call_deferred(n)
+	elif n is WheelPicker:
+		n.item_selected.connect(func(_i): dirty = true)
+	elif n is CheckBox:
+		n.toggled.connect(func(_on): dirty = true)
+
+
+func _setup_box(e: Control) -> void:
+	if not is_instance_valid(e):
+		return
+	var on: bool = e.editable
+	if on:
+		e.add_theme_stylebox_override("normal", _fill_style(FILL, 0.55, 2))
+		e.add_theme_stylebox_override("focus", _fill_style(FILL_FOCUS, 1.0, 3))
+	e.add_theme_color_override("font_placeholder_color", Color(Ui.MUTED, 0.7))
+	# A box takes touches only while it is being typed in; otherwise a drag over it scrolls the page.
+	e.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	e.focus_entered.connect(func():
+		e.mouse_filter = Control.MOUSE_FILTER_STOP
+		_show_box.call_deferred(e))
+	e.focus_exited.connect(func(): e.mouse_filter = Control.MOUSE_FILTER_IGNORE)
+	if on:
+		e.text_changed.connect(func(_t = null): dirty = true)
+
+
+## Bring the box being typed in near the top of the page, clear of the keyboard.
+func _show_box(e: Control) -> void:
+	if is_instance_valid(e) and scroll and e.is_inside_tree():
+		var y := e.global_position.y - body.global_position.y
+		scroll.scroll_vertical = int(maxf(0.0, y - 110.0))
+
+
+func _boxes(n: Node, out: Array) -> Array:
+	for c in n.get_children():
+		if (c is LineEdit or c is TextEdit) and c.is_visible_in_tree() and c.editable:
+			out.append(c)
+		_boxes(c, out)
+	return out
+
+
+func _input(ev: InputEvent) -> void:
+	if scroll == null or not is_visible_in_tree():
+		return
+	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
+		if ev.pressed:
+			pressing = scroll.get_global_rect().has_point(ev.position) and ev.position.x < scroll.get_global_rect().end.x - 50
+			dragging = false
+			press_at = ev.position
+		elif pressing:
+			pressing = false
+			if dragging:
+				dragging = false
+				get_viewport().set_input_as_handled()
+				return
+			_tap(ev.position)
+	elif ev is InputEventMouseMotion and pressing:
+		if not dragging and absf(ev.position.y - press_at.y) > DRAG_START:
+			dragging = true
+			# let go of whatever the finger first touched (a button, a box), so lifting it doesn't press it
+			var up := InputEventMouseButton.new()
+			up.button_index = MOUSE_BUTTON_LEFT
+			up.pressed = false
+			up.position = Vector2(-4000, -4000)
+			up.global_position = up.position
+			get_viewport().push_input(up)
+		if dragging:
+			scroll.scroll_vertical -= int(ev.relative.y)
+			get_viewport().set_input_as_handled()
+
+
+## A tap on a box starts typing in it; a tap anywhere else puts the keyboard away.
+func _tap(at: Vector2) -> void:
+	var fo := get_viewport().gui_get_focus_owner()
+	for e in _boxes(body, []):
+		if e.get_global_rect().has_point(at):
+			if e != fo:
+				e.grab_focus()
+				if e is LineEdit:
+					e.caret_column = e.text.length()
+				else:
+					var last: int = e.get_line_count() - 1
+					e.set_caret_line(last)
+					e.set_caret_column(e.get_line(last).length())
+			return
+	if fo is LineEdit or fo is TextEdit:
+		fo.release_focus()
+
+
+func _process(_dt: float) -> void:
+	if spacer == null or not is_instance_valid(spacer):
+		return
+	var kb := float(DisplayServer.virtual_keyboard_get_height())
+	if kb != kb_h:
+		kb_h = kb
+		var win := float(DisplayServer.window_get_size().y)
+		var scale := get_viewport_rect().size.y / win if win > 0 else 1.0
+		spacer.custom_minimum_size.y = kb * scale
+		var fo := get_viewport().gui_get_focus_owner()
+		if kb > 0 and (fo is LineEdit or fo is TextEdit):
+			_show_box.call_deferred(fo)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_autosave()
+
+
+## Drafts save themselves (every 15 seconds while there are changes, and on leaving), so no typing is ever lost.
+func _autosave() -> void:
+	if not dirty or busy or not w.has("name"):
+		return
+	if not (d.is_empty() or bool(d.get("editable", false))):
+		return
+	var form := _gather()
+	if d.is_empty() and str(form.get("name", "")).strip_edges() == "" and \
+			["problem", "does", "fits", "improves", "how"].all(func(k): return str(form.get(k, "")).strip_edges() == ""):
+		return                        # nothing written yet: don't start an empty draft
+	busy = true
+	var payload := {"form": form}
+	if not d.is_empty():
+		payload.id = d.id
+	var r := await Api.call_api("POST", "/api/dfg/blueprints/save", payload)
+	busy = false
+	if r.ok:
+		dirty = false
+		var keep_msgs = d.get("messages", [])
+		d = r.data
+		if not d.has("messages"):
+			d.messages = keep_msgs
+		if is_instance_valid(msg):
+			msg.text = tr("Draft saved.")
+
+
+func _renumber() -> void:
+	var n := 0
+	for c in parts_box.get_children():
+		if c.is_queued_for_deletion() or not c.has_meta("head"):
+			continue
+		n += 1
+		c.get_meta("head").text = tr("PART %d") % n
+
+
+# what the server can say a part still needs (listed here so they are translated)
+const PART_NEEDS := ["a name for this part", "at least one material", "an amount for every material"]
+
+
+## The server's "part 2: a name for this part" becomes "Part 2: a name for this part" in the player's language.
+func _missing_text(x) -> String:
+	var t := str(x)
+	var m := RegEx.create_from_string("^part (\\d+): (.+)$").search(t)
+	if m:
+		return tr("Part %d") % int(m.get_string(1)) + ": " + tr(m.get_string(2))
+	return tr(t)

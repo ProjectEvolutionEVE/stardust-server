@@ -1091,5 +1091,22 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Wynajęto: twoje miejsce na pokładzie to teraz %s m³. Stuknij ROZŁADUJ jeszcze raz, by przenieść resztę.",
  "You already rent extra cargo space.": "Już wynajmujesz dodatkowe miejsce w ładowni.",
  "You don't have enough credits for the first week.": "Nie masz dość kredytów na pierwszy tydzień.",
- "You don't rent extra cargo space.": "Nie wynajmujesz dodatkowego miejsca w ładowni."
+ "You don't rent extra cargo space.": "Nie wynajmujesz dodatkowego miejsca w ładowni.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Nie udało się zapisać kopii na tym urządzeniu. Samo pokwitowanie jest bezpieczne tutaj, w twojej szafce na dokumenty.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NIE ZAPISANO\nNie udało się zapisać kopii na tym urządzeniu. Samo pokwitowanie jest bezpieczne w twojej szafce na dokumenty.",
+ "Draft saved.": "Szkic zapisany.",
+ "Its name": "Nazwa",
+ "What kind of thing it is": "Jakiego rodzaju to rzecz",
+ "+ Add another part (made separately)": "+ Dodaj kolejną część (robioną osobno)",
+ "+ Another material": "+ Kolejny materiał",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "Większość projektów potrzebuje tylko jednej części: nazwij ją, a potem wypisz każdy materiał, z którego jest zrobiona, i ile go trzeba. Kolejną część dodaj tylko dla elementu robionego osobno. Waga i rozmiar są liczone z prawdziwych materiałów.",
+ "PART %d": "CZĘŚĆ %d",
+ "Part %d": "Część %d",
+ "What it's made of, and how much": "Z czego jest zrobiona i ile",
+ "What this part is called": "Jak nazywa się ta część",
+ "e.g. Kiln body": "np. Korpus pieca",
+ "a name for this part": "nazwa tej części",
+ "at least one material": "co najmniej jeden materiał",
+ "an amount for every material": "ilość każdego materiału",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }
