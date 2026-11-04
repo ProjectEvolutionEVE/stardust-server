@@ -384,7 +384,7 @@ func _mat_row(rows: VBoxContainer, m: Dictionary, edit: bool) -> void:
 	rows.add_child(h)
 	var items := []
 	for x in opts.materials:
-		items.append([x.code, str(x.name) + "  ·  " + tr(str(x.category))])
+		items.append([x.code, tr(str(x.name)) + "  ·  " + tr(str(x.category))])
 	var mp := _pick(items, str(m.get("item", "")), edit, "Choose a material…")
 	mp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mp.item_selected.connect(func(_i): _total())
@@ -712,6 +712,29 @@ func _renumber() -> void:
 
 # what the server can say a part still needs (listed here so they are translated)
 const PART_NEEDS := ["a name for this part", "at least one material", "an amount for every material"]
+
+# the server's form choices and missing answers (blueprints.py kinds, origins, books, materials, questions), listed so they are translated
+const FORM_CHOICES := [
+	"A part (fits onto a ship or machine)", "A tool or machine", "A ship", "Something else", "Brand new",
+	"An upgrade to something", "A newer version or model", "Raw materials and processing", "Prospecting & Geology",
+	"Mining", "Metallurgy", "Assaying", "Refining & Chemistry", "Ceramics & Glassmaking", "Making things",
+	"Engineering & Drafting", "Fabrication", "Electronics", "Power Systems", "Business and trading",
+	"Trading & Markets", "Commodities", "Logistics & Hauling", "Contracts & Services", "Bookkeeping", "Appraisal",
+	"Ship and survival", "Pilot Basic Training Handbook", "Ship Maintenance & Repair", "Life Support",
+	"Health & Fitness", "Botany & Hydroponics", "Combat (arrives with the military track)",
+	"Advanced Aerial Combat Strategies", "Earth habitats", "Farming & Soils", "Water Management", "Forestry",
+	"Construction", "Iron", "Nickel", "Native iron-nickel (meteoritic metal)", "Cobalt", "Copper", "Aluminium",
+	"Titanium", "Magnesium", "Zinc", "Tin", "Lead", "Chromium", "Manganese", "Tungsten", "Molybdenum", "Lithium",
+	"Silver", "Gold", "Platinum", "Palladium", "Iridium", "Silicon", "Carbon (graphite)", "Diamond (rough)", "Boron",
+	"Sulfur", "Phosphorus", "Neodymium (rare earth)", "Dysprosium (rare earth)", "Water ice", "Hydrogen", "Oxygen",
+	"Nitrogen", "Methane", "Ammonia", "Carbon dioxide", "Helium-3", "Sand (silica sand, bulk)", "Clay", "Limestone",
+	"Basalt", "Soil (bulk)", "Timber - softwood (Douglas-fir)", "Timber - hardwood (white oak)", "Uranium", "Thorium",
+	"metal", "precious metal", "electronics / structure", "rare earth", "ice / volatile", "habitat building", "energy",
+	"its name", "what kind of thing it is", "whether it's brand new, an upgrade, or a newer version or model",
+	"what it is and the problem it solves", "everything it does, in detail", "what it fits",
+	"what it improves, and by how much", "the library books it requires", "its parts and materials", "how it's built",
+	"how long it takes to build", "what it builds on", "what's different from it"
+]
 
 
 ## The server's "part 2: a name for this part" becomes "Part 2: a name for this part" in the player's language.
