@@ -1108,5 +1108,14 @@
  "a name for this part": "这个部件的名称",
  "at least one material": "至少一种材料",
  "an amount for every material": "每种材料的用量",
- "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$",
+ "Inara": "伊娜拉",
+ "The review team": "审核团队",
+ "There is a communication waiting for you at your desk.": "你的桌上有一条通讯在等你。",
+ "There is a communication waiting for you back at your desk in your quarters.": "你住舱的桌上有一条通讯在等你。",
+ "📐 Open this blueprint": "📐 打开这份蓝图",
+ "The review team has a question about your blueprint": "审核团队对你的蓝图有一个问题",
+ "The review team asks for changes to your blueprint": "审核团队要求修改你的蓝图",
+ "Your blueprint is approved": "你的蓝图已获批准",
+ "The review team has turned down your blueprint": "审核团队拒绝了你的蓝图"
 }

@@ -249,3 +249,20 @@ func _write_receipt(path: String, text: String) -> String:
 	f.store_string(text)
 	f.close()
 	return path
+
+
+## Inara's notice when a COMMS message is waiting (Eric 11-04): "There is a communication waiting for you back at your
+## desk in your quarters." Once per new message. Text only for now: her spoken lines are recorded files (rule 15).
+func comms_notice(parent: Node, in_quarters := false) -> void:
+	var r := await Api.call_api("GET", "/api/dfg/comms")
+	if not r.ok or int(r.data.get("unread", 0)) == 0 or not is_instance_valid(parent):
+		return
+	var newest := 0
+	for c in r.data.comms:
+		if not c.read:
+			newest = maxi(newest, int(c.id))
+	if newest <= Session.comms_told:
+		return
+	Session.comms_told = newest
+	dialog(parent, "Inara", tr("There is a communication waiting for you at your desk.") if in_quarters
+		else tr("There is a communication waiting for you back at your desk in your quarters."), [["OK", true, Callable()]])

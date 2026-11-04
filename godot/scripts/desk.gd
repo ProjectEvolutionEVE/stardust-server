@@ -40,7 +40,10 @@ func load_desk() -> void:
 	for c in body.get_children():
 		c.queue_free()
 	body.add_child(_heading("COMMS"))
-	body.add_child(Ui.label("No messages yet. News from Starship Central Command and job postings will arrive here.", 22, Ui.MUTED))
+	var comms := VBoxContainer.new()
+	comms.add_theme_constant_override("separation", 8)
+	body.add_child(comms)
+	_comms(comms)
 	body.add_child(_heading("WALLET"))
 	var wallet := Ui.label("Loading…", 26)
 	body.add_child(wallet)
@@ -232,3 +235,43 @@ func _amount(g: Dictionary) -> String:
 	if int(g.get("set_aside", 0)):
 		s2 += " · " + tr("%d set aside") % int(g.set_aside)
 	return s2
+
+
+# the titles the server gives COMMS messages (listed here so they are translated)
+const COMMS_TITLES := ["The review team has a question about your blueprint", "The review team asks for changes to your blueprint",
+	"Your blueprint is approved", "The review team has turned down your blueprint"]
+
+
+## COMMS (Eric 11-04): the game's own messages, newest first. A review-team note opens its blueprint right here, to
+## adjust and resubmit; the drafting room's back button comes back to the Desk.
+func _comms(box: VBoxContainer) -> void:
+	var r := await Api.call_api("GET", "/api/dfg/comms")
+	if not is_instance_valid(box):
+		return
+	var list: Array = r.data.get("comms", []) if r.ok else []
+	if list.is_empty():
+		box.add_child(Ui.label("No messages yet. News from Starship Central Command and job postings will arrive here.", 22, Ui.MUTED))
+		return
+	for c in list:
+		var link: Dictionary = c.get("link", {})
+		var head := ("● " if not c.read else "") + tr(str(c.title))
+		if link.has("name"):
+			head += ": " + str(link.name)
+		var l := Ui.label(head, 22, Ui.GOLD if not c.read else Ui.TEXT)
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		box.add_child(l)
+		if str(c.body) != "":
+			var bl := Ui.label(tr("The review team") + ": " + str(c.body), 20, Ui.MUTED)
+			bl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			box.add_child(bl)
+		if link.has("blueprint"):
+			var b := Ui.button("📐 Open this blueprint", false)
+			var cid := int(c.id)
+			var bid := int(link.blueprint)
+			b.pressed.connect(func():
+				await Api.call_api("POST", "/api/dfg/comms/read", {"id": cid})
+				Session.open_blueprint = bid
+				get_tree().change_scene_to_file("res://scenes/drafting.tscn"))
+			box.add_child(b)
+		elif not c.read:
+			Api.call_api("POST", "/api/dfg/comms/read", {"id": int(c.id)})

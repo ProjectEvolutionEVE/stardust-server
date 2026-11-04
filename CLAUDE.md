@@ -121,6 +121,7 @@ The full record is in the `quavara-docs` repository:
     - The Starship posts **job openings** aboard the ship. Like the real world, some need higher qualifications: education, a test with certification, and experience.
     - Postings arrive in the **incoming COMMS** list in each player's Private Quarters, alongside news from the game: upcoming updates, and messages from Starship Central Command.
     - **COMMS come only from the game, never from another player** (see rule 8).
+    - **Built (Eric 11-04, `comms.py`):** the review team's notes on a blueprint (question, changes, approval, turned down) arrive in the designer's COMMS at the Desk, with a button that opens the design right there to adjust and resubmit. Inara tells the player when one is waiting ("There is a communication waiting for you back at your desk in your quarters"), on screen for now; a spoken line needs recording first. The review team gets an email for each submission and each designer's answer (`DFG_REVIEW_EMAIL`).
     - A player earns a higher rank or a new career by **learning and passing achievement or skills tests through the Starship library**.
 17. **Platform (10-11): browser first, then a Godot phone app.**
 18. **Sign-in emails go through Resend (10-11),** the same service Quavara uses.

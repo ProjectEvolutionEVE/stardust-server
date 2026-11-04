@@ -91,6 +91,7 @@ var voiced := {}                 # this session's once-only moments (first stron
 
 
 func _ready() -> void:
+	Ui.comms_notice.call_deferred(self)          # Inara: a COMMS message is waiting (Eric 11-04)
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
 	e.background_mode = Environment.BG_COLOR

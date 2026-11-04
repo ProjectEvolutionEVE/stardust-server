@@ -1108,5 +1108,14 @@
  "a name for this part": "bu parça için bir ad",
  "at least one material": "en az bir malzeme",
  "an amount for every material": "her malzeme için bir miktar",
- "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$",
+ "Inara": "Inara",
+ "The review team": "İnceleme ekibi",
+ "There is a communication waiting for you at your desk.": "Masanda seni bekleyen bir mesaj var.",
+ "There is a communication waiting for you back at your desk in your quarters.": "Kamarandaki masanda seni bekleyen bir mesaj var.",
+ "📐 Open this blueprint": "📐 Bu planı aç",
+ "The review team has a question about your blueprint": "İnceleme ekibinin planınla ilgili bir sorusu var",
+ "The review team asks for changes to your blueprint": "İnceleme ekibi planında değişiklik istiyor",
+ "Your blueprint is approved": "Planın onaylandı",
+ "The review team has turned down your blueprint": "İnceleme ekibi planını reddetti"
 }

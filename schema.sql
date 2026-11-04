@@ -362,6 +362,19 @@ CREATE TABLE IF NOT EXISTS blueprint_messages (
 );
 CREATE INDEX IF NOT EXISTS blueprint_messages_sub ON blueprint_messages(submission_id, at);
 
+-- COMMS (Eric 11-04): the game's own messages to a player, read at the Desk. Never from another player (rule 8).
+CREATE TABLE IF NOT EXISTS comms (
+  id        BIGSERIAL PRIMARY KEY,
+  player_id BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind      TEXT NOT NULL,                       -- 'review' (the blueprint review team) for now
+  title     TEXT NOT NULL,
+  body      TEXT NOT NULL DEFAULT '',
+  link      JSONB NOT NULL DEFAULT '{}',          -- e.g. {"blueprint": 3}: what the message opens
+  at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+  read_at   TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS comms_player ON comms(player_id, at DESC);
+
 -- v4 (10-11): where things are kept inside Private Quarters (Eric). The filing cabinet holds every blueprint and,
 -- inside it, the lockbox for small personal effects and valuables; the bookshelf holds library books checked out.
 -- Raw materials stay in the Starship's cargo hold. Existing players get the new places, and their lockbox moves

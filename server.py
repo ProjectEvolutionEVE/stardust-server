@@ -37,6 +37,8 @@ The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
+  GET  /api/dfg/comms                the game's messages to the player (COMMS at the Desk), newest first, and how many
+  POST /api/dfg/comms/read {id}      are unread · mark one read (Eric 11-04: the review team's notes arrive here)
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
 The Starship Library (rules 22, 24; library.py):
   GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
@@ -73,6 +75,7 @@ import market as M
 import materials_refining as MR
 import bank as BANK
 import blueprints as BP
+import comms as CM
 import serials as SER
 import auctions as AU
 import library as LIB
@@ -728,6 +731,18 @@ async def bp_save(request):
         return _json(await BP.detail(conn, pid, sid))
 
 
+async def comms_inbox(request):
+    async with request.app["pool"].acquire() as conn:
+        return _json(await CM.inbox(conn, await _player(conn, request)))
+
+
+async def comms_read(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        await CM.mark_read(conn, await _player(conn, request), int(b.get("id") or 0))
+        return _json({"ok": True})
+
+
 REVIEW_EMAIL = os.environ.get("DFG_REVIEW_EMAIL", "")
 RAILWAY_IDS = "-p db65aefa-8e13-4c8f-9e93-ba62864645e6 -e production -s game-server"
 
@@ -947,6 +962,8 @@ def make_app():
     app.router.add_post(r"/api/dfg/deck/{op:build|smelt}", deck_post)
     app.router.add_get("/api/dfg/blueprints", bp_mine)
     app.router.add_get("/api/dfg/blueprints/{id}", bp_detail)
+    app.router.add_get("/api/dfg/comms", comms_inbox)
+    app.router.add_post("/api/dfg/comms/read", comms_read)
     app.router.add_post("/api/dfg/blueprints/save", bp_save)
     app.router.add_post("/api/dfg/blueprints/submit", bp_submit)
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
