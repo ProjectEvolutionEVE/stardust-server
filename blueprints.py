@@ -12,6 +12,7 @@ The form itself is rule 23 (Eric 10-11): what it is and the problem it solves; e
 fits and what it improves; the library books it requires; each part with its materials and amounts; how it's built and
 how long it takes. Weight and size come from the real densities in materials.json, never typed in."""
 import json
+import comms as CM
 from pathlib import Path
 import store as ST
 import serials as SER
@@ -234,6 +235,11 @@ async def submit(conn, pid, sid):
         return v
 
 
+async def _tell(conn, s, title, note):
+    """The designer hears from the review team in their COMMS, with the design to open (Eric 11-04)."""
+    await CM.send(conn, s["designer_id"], "review", title, note, {"blueprint": s["id"], "name": s["title"]})
+
+
 async def ask(conn, sid, reviewer, question):
     """A reviewer asks the designer a question. The blueprint stays with the reviewers."""
     async with conn.transaction():
@@ -242,6 +248,7 @@ async def ask(conn, sid, reviewer, question):
             raise ST.Refused("Only a submitted blueprint can be asked about.")
         await conn.execute("INSERT INTO blueprint_messages(submission_id, from_reviewer, kind, body, version) VALUES($1,$2,'question',$3,$4)",
                            sid, reviewer, question, s["version"])
+        await _tell(conn, s, "The review team has a question about your blueprint", question)
 
 
 async def reply(conn, pid, sid, body):
@@ -267,6 +274,7 @@ async def request_changes(conn, sid, reviewer, what):
         await conn.execute("INSERT INTO blueprint_messages(submission_id, from_reviewer, kind, body, version) VALUES($1,$2,'change_request',$3,$4)",
                            sid, reviewer, what, s["version"])
         await conn.execute("UPDATE blueprint_submissions SET status='changes_requested', updated_at=now() WHERE id=$1", sid)
+        await _tell(conn, s, "The review team asks for changes to your blueprint", what)
 
 
 async def approve(conn, sid, reviewer, note="Approved."):
@@ -303,6 +311,7 @@ async def approve(conn, sid, reviewer, note="Approved."):
         await conn.execute("UPDATE blueprint_submissions SET status='approved', item_code=$2, updated_at=now() WHERE id=$1", sid, design)
         await SER.assign_model(conn, design, product)          # its model code, and the designer's original with its serial
         await SER.issue_original(conn, s["designer_id"], design)
+        await _tell(conn, s, "Your blueprint is approved", note)
         return design
 
 
@@ -314,6 +323,7 @@ async def reject(conn, sid, reviewer, why):
         await conn.execute("INSERT INTO blueprint_messages(submission_id, from_reviewer, kind, body, version) VALUES($1,$2,'decision',$3,$4)",
                            sid, reviewer, why, s["version"])
         await conn.execute("UPDATE blueprint_submissions SET status='rejected', updated_at=now() WHERE id=$1", sid)
+        await _tell(conn, s, "The review team has turned down your blueprint", why)
 
 
 async def withdraw(conn, pid, sid):

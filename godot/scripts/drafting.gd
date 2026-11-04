@@ -38,11 +38,17 @@ func _ready() -> void:
 	var box := Ui.screen(self)
 	var top := HBoxContainer.new()
 	box.add_child(top)
-	var back := Ui.button("◀ Library", false)
+	var from_desk := Session.open_blueprint
+	Session.open_blueprint = 0
+	var back := Ui.button("◀ Desk" if from_desk else "◀ Library", false)
 	back.custom_minimum_size = Vector2(190, 64)
 	back.pressed.connect(func():
 		await _autosave()
-		get_tree().change_scene_to_file("res://scenes/library.tscn"))
+		if from_desk:
+			Session.quarters_tab = "Desk"
+			get_tree().change_scene_to_file("res://scenes/quarters.tscn")
+		else:
+			get_tree().change_scene_to_file("res://scenes/library.tscn"))
 	top.add_child(back)
 	var t := Ui.label("  DRAFTING ROOM", 32, Ui.GOLD)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -67,7 +73,10 @@ func _ready() -> void:
 	pad.mouse_filter = Control.MOUSE_FILTER_PASS
 	scroll.add_child(pad)
 	pad.add_child(body)
-	_list()
+	if from_desk:
+		_open(from_desk)
+	else:
+		_list()
 
 
 func _clear() -> void:
