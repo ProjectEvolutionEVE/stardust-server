@@ -6,6 +6,9 @@ extends Control
 ## the one video format Godot plays: video/intro.ogv, 960x540.
 
 const VIDEO := "res://video/intro.ogv"
+## The same film narrated in the player's voice language where it's recorded (Eric 11-04: Arabic and Hindi first):
+## video/intro-<voice set>.ogv, built by make_intro_video.py <lang>. Everyone else sees the English.
+const VOICED_INTROS := ["ar", "hi"]
 const AUTO_GO := 8.0        # seconds after the end before the game goes on by itself
 
 var player: VideoStreamPlayer
@@ -20,7 +23,9 @@ func _ready() -> void:
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	player = VideoStreamPlayer.new()
-	player.stream = load(VIDEO)
+	var vset := str(Session.me.get("voice_set", ""))
+	var own := "res://video/intro-%s.ogv" % vset
+	player.stream = load(own if VOICED_INTROS.has(vset) and ResourceLoader.exists(own) else VIDEO)
 	player.expand = true
 	# 16:9 picture, as wide as the screen, centred (sizes from the viewport: this Control isn't laid out yet)
 	var vs := get_viewport_rect().size

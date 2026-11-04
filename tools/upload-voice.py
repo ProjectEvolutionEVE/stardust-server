@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import voice_paths as VP   # where each language's recordings live (Eric 11-03)
 
 SERVER = "https://game-server-production-9863.up.railway.app"
-SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja", "ar"}
+SETS = {"en", "zh", "de", "pl", "es", "fr", "ko", "tr", "pt-BR", "ru", "ja", "ar", "hi"}
 RADIO = ("INARA-TWR-", "INARA-RING-", "INARA-TOWER-")
 # Tower lines spoken aboard the ship (waking, bedtime, library tests, market order, blueprint sent): plain, with the chime
 ABOARD = {"INARA-TWR-%03d" % n for n in (42, 43, 44, 45, 49, 50, 51, 53)}

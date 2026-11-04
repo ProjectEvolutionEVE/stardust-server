@@ -65,3 +65,6 @@ hardest lines (round-trip 96.8%-100%, clean tails).
 **Spoken-words rule (Eric 10-27):** voice scripts spell out every number and carry no quotes, brackets or other symbols. A Whisper check of the two hardest Arabic lines found Sara misreading the numbers: 1800 was heard as 1200, and 1.6, 1.2, 1.0 and 1.92 came out garbled. All 22 Arabic lines with digits or symbols were rewritten in `docs/inara-lines/ar.json` (4,751 characters to re-record). FAQ-026 no longer reads out the sample receipt code. The other languages' scripts still have digits (20-29 lines each); they need the same rewrite before any re-recording.
 
 **Which account (Eric 10-28):** Inara's voices are recorded on the ElevenLabs account whose API key ends **6e7e**, saved in `~/.stardust-elevenlabs-sara-key` (the recorder's default). It has Lily, Sara and Johanna. The key in `~/.stardust-elevenlabs-key` (...dec6) is a different account with neither Johanna nor Kate 1: don't use it for Inara.
+
+
+**Intro narration (11-04):** the 4 intro parts recorded in Arabic (Sara, eleven_multilingual_v2, 1,267 characters) and Hindi (Sarvam priya, 1,574 characters) by `Inara-Novel/make_intro_lang.py`; files in `Inara-Novel/Audiobook/intro/<lang>/`.
