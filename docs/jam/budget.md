@@ -1,7 +1,7 @@
 # Stardust - Terra Deleta: Game Budget
 
-*Zoud GameLab Financial Literacy Jam. Blanks marked ▢ are Eric's to fill in. Prices marked "est." are published list
-prices or typical market rates as of late 2026, to be confirmed before submitting.*
+*Zoud GameLab Financial Literacy Jam. Amounts spent come from Rise Solutions' receipts; the 12-month plan uses typical
+market rates as of late 2026, as ranges to be confirmed with quotes.*
 
 ## 1. Where the project stands
 
@@ -21,7 +21,7 @@ Built by Eric with AI models as the development team, so most of the cost so far
 | Anthropic Claude (Pro plan) | Code, game server, library books and tests, documents | $20 (the game's share is about a third) |
 | xAI Grok (X Premium) | Intro video clips and imagery | $0 in this period (earlier months $8) |
 | ElevenLabs (Creator plan, two accounts) | Inara's recorded voice in 12 languages, the intro narration | $44 |
-| Sarvam AI | Inara's Hindi voice | ▢ (usage; the bill wasn't readable) |
+| Sarvam AI | Inara's Hindi voice | about $1.30 (₹115 for 38,900 characters, Nov 3-4) |
 | Railway (Pro plan) | Game server and database, hosting the voice files | $20 (shared with other projects) |
 | Twilio and Resend | Sign-in codes by text and email | $20 (Resend; shared) |
 | Domain and email | risesolutions-llc.com | $0 in this period (no receipt since June) |
@@ -39,7 +39,7 @@ earlier projects. That learning made this build possible; it is not counted abov
 | Anthropic Claude | $20 (Pro), moving to $200 (Max), plus usage | development, writing, the library books |
 | ElevenLabs Creator (two accounts) | $44 | recorded voices |
 | X Premium (Grok) | $8 | video clips and imagery |
-| Sarvam AI | usage | Hindi voice |
+| Sarvam AI | usage (about $1.30 so far) | Hindi voice |
 | DeepL Pro | $32.50 | translation |
 | Railway Pro | $20 | game and app servers |
 | Hetzner | about $78 | servers and backups |
