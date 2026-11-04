@@ -17,7 +17,7 @@ const RCPT_CHARS := "23456789ABCDEFGHJKMNPQRSTVWXYZ"
 var bay: Node
 var hold := {"name": "Starter hold", "dims": [1.6, 1.2, 1.0]}
 var cargo: Array = []                            # pieces aboard
-var store := {"cap": STORE_CAP, "kg": {}}
+var store := {"cap": STORE_CAP, "kg": {}, "dens": {}}   # dens: the server's density for each stored material
 var session_id := ""
 var net := false
 var queue: Array = []                            # collects waiting for the server, in order
@@ -89,7 +89,9 @@ func mat_name(key: String) -> String:
 func store_used() -> float:
 	var v := 0.0
 	for m in store.kg:
-		v += store.kg[m] / float(bay.debris.material(m)[2])
+		# the server's density first: refined goods (clay, copper…) aren't in the flight's list of debris materials,
+		# whose fallback of 1.0 counted them as water and overfilled the bar (Eric 11-04: 12.539 of 12 m³)
+		v += store.kg[m] / float(store.dens.get(m, bay.debris.material(m)[2]))
 	return v
 
 
@@ -112,6 +114,7 @@ func apply_ship(j: Dictionary) -> void:
 	if j.has("storage"):
 		store.cap = float(j.storage.capacity_m3)
 		store.kg = j.storage.kg.duplicate()
+		store.dens = j.storage.get("density", {}).duplicate()
 	render_hold()
 
 
@@ -425,16 +428,16 @@ func _xfer_panel(root: Control) -> void:
 	sc.add_child(x_sum)
 	x_rcpt = Ui.label("", 18, Ui.TEXT)
 	x_rcpt.position = Vector2(24, 552)
-	x_rcpt.size = Vector2(612, 170)
+	x_rcpt.size = Vector2(612, 116)              # room below for Inara's two buttons when the space is full
 	x_panel.add_child(x_rcpt)
 	x_save = bay._hud_button("SAVE RECEIPT", Vector2(24, 730), Vector2(300, 64), 32, "")
 	x_save.pressed.connect(_save_receipt)
 	x_panel.add_child(x_save)
-	x_desk = bay._hud_button("GO TO MY DESK", Vector2(24, 650), Vector2(300, 64), 32, "")
+	x_desk = bay._hud_button("GO TO MY DESK", Vector2(24, 672), Vector2(300, 52), 32, "")   # under the receipt text, above SAVE and DONE
 	x_desk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))   # the market is at the Desk (rule 20)
 	x_desk.visible = false
 	x_panel.add_child(x_desk)
-	x_rent = bay._hud_button("RENT MORE SPACE", Vector2(336, 650), Vector2(300, 64), 32, "")
+	x_rent = bay._hud_button("RENT MORE SPACE", Vector2(336, 672), Vector2(300, 52), 32, "")
 	x_rent.pressed.connect(_ask_rent)
 	x_rent.visible = false
 	x_panel.add_child(x_rent)

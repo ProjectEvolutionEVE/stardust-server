@@ -485,7 +485,7 @@ async def _state(conn, pid):
     pieces = await conn.fetch("""SELECT id, material, dim_a, dim_b, dim_c, volume_m3, box_m3, mass_kg, flawless FROM cargo
                                  WHERE ship_id=$1 AND unloaded_at IS NULL ORDER BY id""", s["id"])
     store = await conn.fetchrow("SELECT id, capacity_m3 FROM locations WHERE player_id=$1 AND kind='starship_cargo'", pid)
-    kept = await conn.fetch("""SELECT s.item_code, s.qty + s.held AS g FROM stacks s JOIN item_types t ON t.code=s.item_code
+    kept = await conn.fetch("""SELECT s.item_code, s.qty + s.held AS g, t.density_kg_m3 FROM stacks s JOIN item_types t ON t.code=s.item_code
                                WHERE s.location_id=$1 AND t.base_unit='g' AND s.qty + s.held > 0""", store["id"])
     return {"ship": {"hull": s["hull"], "hold_dims_m": hold, "hold_m3": round(hold[0] * hold[1] * hold[2], 4),
                      "used_m3": round(used, 4), "credits": credits},
@@ -497,7 +497,9 @@ async def _state(conn, pid):
                         "flawless": r["flawless"]}
                        for r in pieces],
             "storage": {"capacity_m3": float(store["capacity_m3"]),
-                        "kg": {r["item_code"]: r["g"] / ST.G_PER_KG for r in kept}}}
+                        "kg": {r["item_code"]: r["g"] / ST.G_PER_KG for r in kept},
+                        # each material's real density, so the app counts refined goods' space as the server does (Eric 11-04)
+                        "density": {r["item_code"]: float(r["density_kg_m3"]) for r in kept if r["density_kg_m3"]}}}
 
 
 async def start_session(request):
