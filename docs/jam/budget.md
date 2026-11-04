@@ -49,6 +49,7 @@ earlier projects. That learning made this build possible; it is not counted abov
 | Metricool | about $22 (list price) | social media scheduling and analytics |
 | Starlink | $130 | internet |
 | Porkbun | about $11 a year per domain | domains |
+| Cloudflare | free plan; domains $26 a year (kerlume.com and kerlume.co) | DNS, web delivery, domains |
 | Groq, Deepgram, Twilio, GitHub | free tiers or usage so far | AI speed, speech-to-text, sign-in texts, code |
 | **Total** | **about $400 a month (about $580 with Claude Max)** | |
 
