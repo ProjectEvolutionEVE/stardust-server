@@ -48,7 +48,13 @@ smelt ore into metal and build approved designs at the Maintenance Deck → rest
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise; 4 of 5 correct to pass, and retakes any time);
   each bar takes more study than the last.
 - **Uniforms:** every career a player studies has its uniform in their closet, its bars in gold or silver. They wear one
-  at a time, and the worn uniform's skill bonus gives added in-game benefits, so they dress for the day's work.
+  at a time, and only the worn uniform's skill bonus counts, so they dress for the day's work. Gold bars give a slightly
+  bigger bonus than silver, and each bar adds a little less than the one before. What the bonuses do:
+  - **Mining:** collecting goes faster.
+  - **Flight:** fuel lasts longer, and the scanner slowly reaches farther, so debris comes into view sooner.
+  - **Engineering:** printing blueprint copies costs less.
+  - **Science, fifth bar in gold:** the miner can choose which raw material to collect from a field, so when one runs
+    short on the market and its price spikes, they can fill the hold with it.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
   finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 13 languages, including Arabic and Hindi.
 
