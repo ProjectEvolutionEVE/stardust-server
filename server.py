@@ -61,7 +61,7 @@ Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST
   (each story beat once per player) · PUT /api/dfg/admin/voice/<set>/<ID>.mp3 and GET /api/dfg/admin/voice/manifest
   (header X-Upload-Key = env DFG_UPLOAD_KEY). Files live in VOICE_DIR (default /data/voice, a Railway volume).
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
-import os, json, uuid, secrets
+import os, re, json, uuid, secrets
 from pathlib import Path
 import asyncpg
 import aiohttp
@@ -109,6 +109,13 @@ def _json(data, status=200):
     return web.json_response(data, status=status)
 
 
+_ORIGIN_RE = re.compile(r"^(https://[a-z0-9-]+(\.[a-z0-9-]+)*\.(itch\.zone|hwcdn\.net)|http://(localhost|127\.0\.0\.1)(:\d+)?)$")
+
+
+def _origin_ok(origin):
+    return origin in ALLOWED_ORIGINS or bool(_ORIGIN_RE.match(origin))
+
+
 @web.middleware
 async def cors(request, handler):
     origin = request.headers.get("Origin", "")
@@ -121,10 +128,10 @@ async def cors(request, handler):
             resp = _json({"error": str(e)}, 401)
         except (G.Refused, ST.Refused, AUTH.Refused, M.Refused) as e:
             resp = _json({"error": str(e)}, 422)
-    if origin in ALLOWED_ORIGINS:
+    if _origin_ok(origin):
         resp.headers["Access-Control-Allow-Origin"] = origin
         resp.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
-        resp.headers["Access-Control-Allow-Methods"] = "GET, POST"
+        resp.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
         resp.headers["Vary"] = "Origin"
     if request.path.startswith("/play/"):
         # the game's own files: browsers must check for a newer copy every time, or players keep yesterday's game
