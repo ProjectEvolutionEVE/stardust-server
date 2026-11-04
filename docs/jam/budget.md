@@ -7,7 +7,9 @@ prices or typical market rates as of late 2026, to be confirmed before submittin
 
 Already built and running: the Godot app (flight, true-scale solar system, debris fields, scanner, collecting and
 unloading, the live market and blueprint auctions, the Starship Library, the Starship Bank with savings, term deposits,
-loans and savings goals, the Desk ledger) and the game server on Railway. Spent to date: ▢
+loans and savings goals, the Desk ledger, cargo-space rental, the Maintenance Deck for smelting and building, the
+drafting room with blueprint review and COMMS) and the game server on Railway. The app and Inara's voice are in 13
+languages, including Arabic and Hindi; 191 library books are already in Arabic. Spent to date: ▢
 
 ## 2. Plan and phases
 
@@ -32,7 +34,7 @@ loans and savings goals, the Desk ledger) and the game server on Railway. Spent 
 | Stores | Steam Direct fee | $100 per game | |
 | Legal | Trademark clearance; age and privacy review (EU, UK, US) | ▢ (attorney quote) | Before launch |
 | Marketing | Trailer, store pages, community | ▢ | |
-| Localization | Arabic and other languages (text) | ▢ | For the UAE / Arab-region audience |
+| Localization | The remaining library books in Arabic, then the other languages (text) | ▢ | 191 Arabic books done; for the UAE / Arab-region audience |
 | **Total** | | ▢ | |
 
 ## 4. How jam development funding would be used

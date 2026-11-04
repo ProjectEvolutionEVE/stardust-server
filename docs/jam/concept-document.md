@@ -1,4 +1,4 @@
-# Stardust - Terra Deleta: Game Concept Document (DRAFT for Eric)
+# Stardust - Terra Deleta: Game Concept Document
 
 *Zoud GameLab Financial Literacy Jam · theme: Make FinLit Fun*
 
@@ -18,7 +18,7 @@ waits on the other side.
 
 **Inara.** The lead character of the novel *Stardust - Inara*: an officer in the Starship's command centre, the Tower, and the one voice that talks the player through the whole game: launch
 clearances, finds, warnings, and the story as it unfolds. She likes fireflies, and keeps
-an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 12 languages, including Arabic.
+an old shirt that still smells of cedar, for someone she hopes to find again. Players hear her in 13 languages, including Arabic and Hindi.
 
 **The story before the game** is the novel *Stardust - Inara*: it ends where the game begins. It is offered in the game in text and as an audiobook. A short
 illustrated, voiced slideshow tells the backstory before a new player's first launch.
@@ -28,24 +28,27 @@ illustrated, voiced slideshow tells the backstory before a new player's first la
 - **Audience:** a general audience of players who like exploration, crafting and economies; also anyone who wants to
   get better with money without being lectured.
 - **What's different:** money is not a minigame here. It is the life of the ship. Every career, every trip and every
-  meal runs on choices about earning, saving, spending and borrowing, with real consequences that unfold in real time.
+  build runs on choices about earning, saving, spending and borrowing, with real consequences that unfold in real time.
 
 ## 2. Core Gameplay
 
 **The loop:** wake up in your quarters → study in the Starship Library to earn the skills you need → fly out to a debris
 ring → find a field with your scanner (a hiss, a rising tone, two bearings to lock it) → collect real-sized pieces of ore
 that must fit your hold → warp home and unload them with a receipt → sell on a live market, or save, invest and plan →
-rest, because your body has limits.
+smelt ore into metal and build approved designs at the Maintenance Deck → rest, because your body has limits.
 
 - **Objectives:** build a career and a life: rise through a career's five bars (Pilot to Captain, Trader to CEO, and
   more), afford a better ship or a production plant, reach long-term goals.
 - **The biggest decision comes first: your career.** What you choose to study decides your path.
 - **Everyday challenges and decisions:** which ring and field to work; what fits your hold; sell now or wait for a better price;
-  save, lock credits in a term deposit, or borrow.
+  save, lock credits in a term deposit, or borrow; when the cargo hold is full, sell to make room or rent more space.
+- **Players design what gets built.** Any player can draw up a blueprint in the drafting room (what it is, what it's
+  made of, how it's built); the game's review team reads it and sends notes back to the player's COMMS at their desk.
+  An approved design gets a serial number, can be built at the Maintenance Deck, and its copies are sold at auction.
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise; 4 of 5 correct to pass, and retakes any time);
   each bar takes more study than the last.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
-  finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 12 languages, including Arabic.
+  finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 13 languages, including Arabic and Hindi.
 
 ## 3. Financial Literacy Integration
 
@@ -58,10 +61,12 @@ Financial concepts are the game's systems, not quizzes bolted on:
 | Saving and goals | Savings goals at the Starship Bank ("a new ship: 2,010 of 5,000") with progress bars. |
 | Interest earned | A savings account and 2, 4 and 8-week term deposits; closing a term early gives up the interest. |
 | Borrowing and debt | The Bank weighs each loan (standing, income, debt, purpose) and shows the full cost before you sign. |
-| Good debt vs bad debt | A loan for a bigger hold pays for itself; a loan for snacks is gone tomorrow, and costs more. |
+| Good debt vs bad debt | A loan for a bigger hold pays for itself; a loan spent on something used up today is gone tomorrow, and still costs more. |
 | Paying off early | The payoff amount includes interest only to today, so paying early visibly saves credits. |
 | Credit standing | On-time payments raise it (cheaper, bigger loans); late payments add fees and lower it. |
 | Records | Every transfer gives a receipt with a code anyone can verify. |
+| Renting vs owning | Extra cargo space costs 10,000 credits a week, paid up front: worth it only if the extra cargo earns more. |
+| Fees and pricing | Printing blueprint copies has a setup fee and a per-copy cost; designers learn to price above their cost. |
 | Risk and patience | Market prices move; selling everything at the bottom costs you. |
 | Delayed gratification | Saving toward a named goal instead of spending now; a term deposit pays more for waiting. |
 
@@ -69,7 +74,7 @@ Every career's library books also teach money in that field (a miner's uneven in
 research project), so whichever path a player chooses, they learn to manage money in it.
 
 **What players should take away:** money decisions compound over time; borrowing is a tool that must earn more than it
-costs; saving toward a named goal works; paying debt early saves money; short-term treats have long-term costs.
+costs; saving toward a named goal works; paying debt early saves money; spending for today has long-term costs.
 
 ## 4. Visual Style & Player Experience
 
@@ -78,7 +83,8 @@ costs; saving toward a named goal works; paying debt early saves money; short-te
   view, like a pilot's heads-up display.
 - **Tone:** calm, curious and hopeful: rebuilding after loss, learning, and making a life far from home.
 - **Interface and accessibility:** big touch controls for one thumb on a phone; sound cues backed by visual ones (the
-  scanner bar, the gold rim cue, on-screen messages alongside what Inara says); Inara's voice in 12 languages including Arabic, or none.
+  scanner bar, the gold rim cue, on-screen messages alongside what Inara says); the app in 13 languages, with Arabic laid
+  out right to left; Inara's voice in 13 languages including Arabic and Hindi, or none.
 - **Inclusive by design:** players choose a name from the game's list and a rank they earn, no real names; no player
   chat (a safe, quiet universe); suitable for a general audience.
 
@@ -89,8 +95,13 @@ closet, bookshelf, filing cabinet); the Starship Library with books and five-que
 every career**, wired to the career ladders, so a player can rise from Trainee to the top of their field; the 3D
 Starship and docking bay; the true-scale solar system, warp, radar and fuel; debris fields, scanner, collecting and
 unloading; the live market and blueprint auctions; the Starship Bank with savings, term deposits, loans and savings
-goals; flight time paid to the WSC; resting in bed or in the cockpit; Inara in 12 languages; the illustrated, voiced
-intro.
+goals; flight time paid to the WSC; renting extra cargo space; the Maintenance Deck, where ore is smelted into metal and
+approved designs are built; the drafting room, blueprint review and COMMS at the desk; resting in bed or in the cockpit;
+Inara in 13 languages; the illustrated, voiced intro (also in Arabic and Hindi).
+
+**Languages at the jam.** The app, its menus and Inara's lines are in 13 languages. **The library books and their tests
+are in English for the jam**: 191 of them (the Library subjects and the first career books) are already in
+Arabic, and the rest of the books in Arabic and the other languages are a planned upgrade after the jam.
 
 **A future companion game: Stardust - Terra Nova.** The colonisation of the New Earth on the other side of the wormhole,
 on the ground. It shares the same WSC Bank and market, so resources gathered in space are sold to players on the
