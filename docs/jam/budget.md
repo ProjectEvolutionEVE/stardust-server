@@ -106,5 +106,12 @@ Stardust - Terra Deleta is successful enough to offset the cost.
 
 ## 6. Revenue model (for commercial potential)
 
-▢ Eric to decide. Options that fit the game's rules (credits never come from real money, rule 2): a one-time purchase,
-or free to start with a paid full version. In-game credits are never sold.
+**Free to start, then a small monthly subscription.** Anyone can download and play free: the Trainee stage and the
+first bar of every career. A small monthly subscription (about $4.99 a month, to be set before launch) opens the full
+game: all five bars of every career, the drafting room and building at the Maintenance Deck.
+
+- **A steady, known income:** a small subscription from players who stay is worth more than chasing new buyers every
+  month, and it grows with the same players whose servers it pays for.
+- **Fair by design:** in-game credits are never sold and can never be bought with real money, so no one can pay to
+  win. What players earn, they earn by playing, which is the money lesson the game teaches.
+- **Room to reach everyone:** the free start lets students, families and schools play without paying.

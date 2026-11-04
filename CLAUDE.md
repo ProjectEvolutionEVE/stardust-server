@@ -237,6 +237,11 @@ The full record is in the `quavara-docs` repository:
     is reached that way, and its villages, towns and cities each open a deeper setting on a server of its own. Today's
     game is one shared world on one server.
 
+43. **Revenue model (Eric 11-04): free to start, then a small monthly subscription.** "Nothing large, but better to
+    keep a known revenue stream than to keep chasing new customers." First proposal (budget, to set before launch): the
+    Trainee stage and the first bar of every career free; about $4.99 a month for the full game. Credits are never sold
+    (rule 2).
+
 ### Still open: these ARE Eric's to answer
 0. **Price list (10-11):** Eric said yes to a simple game price list (not real-world ratios), each floor at half the starting price, approved once and then the market sets prices. Live now, whole credits per lot: iron ore 200 per 100 kg (floor 100), copper ore 600 per 100 kg (300), silver ore 300 per 10 kg (150), native gold 200 per kg (100), industrial diamond 100 per kg (50); near-flawless diamond 250,000 per stone (125,000), not yet traded. Eric may change any number. Blueprint printing: setup fee 100 once, 10 per copy (Eric 10-11, rule 23).
 1. **The game's name: CHOSEN (Eric 10-13): "Stardust - Terra Deleta"** (and "Stardust - Terra Nova" for the land game). Still to do: attorney trademark clearance before launch. ("Earth2.0" was dropped: it conflicts with an existing "EARTH 2" filing.)
