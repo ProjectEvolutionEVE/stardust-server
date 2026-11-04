@@ -1096,5 +1096,17 @@
  "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "KAYDEDİLEMEDİ\nBu cihaza bir kopya kaydedilemedi. Makbuzun kendisi dosya dolabında güvende.",
  "Draft saved.": "Taslak kaydedildi.",
  "Its name": "Adı",
- "What kind of thing it is": "Ne tür bir şey olduğu"
+ "What kind of thing it is": "Ne tür bir şey olduğu",
+ "+ Add another part (made separately)": "+ Başka bir parça ekle (ayrı yapılan)",
+ "+ Another material": "+ Başka bir malzeme",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "Çoğu tasarım tek bir parçaya ihtiyaç duyar: ona bir ad verin, sonra yapıldığı her malzemeyi ve miktarını yazın. Yalnızca ayrı yapılan bir parça için başka bir parça ekleyin. Ağırlık ve boyut gerçek malzemelerden hesaplanır.",
+ "PART %d": "PARÇA %d",
+ "Part %d": "Parça %d",
+ "What it's made of, and how much": "Neyden yapıldığı ve ne kadar",
+ "What this part is called": "Bu parçanın adı",
+ "e.g. Kiln body": "örn. Fırın gövdesi",
+ "a name for this part": "bu parça için bir ad",
+ "at least one material": "en az bir malzeme",
+ "an amount for every material": "her malzeme için bir miktar",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

@@ -1096,5 +1096,17 @@
  "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "تعذّر الحفظ\nتعذّر حفظ نسخة على هذا الجهاز. الإيصال نفسه محفوظ في خزانة ملفاتك.",
  "Draft saved.": "حُفظت المسودة.",
  "Its name": "اسمه",
- "What kind of thing it is": "ما نوعه"
+ "What kind of thing it is": "ما نوعه",
+ "+ Add another part (made separately)": "+ أضف جزءًا آخر (يُصنع منفصلًا)",
+ "+ Another material": "+ مادة أخرى",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "معظم التصاميم تحتاج جزءًا واحدًا فقط: سمِّه، ثم اذكر كل مادة يُصنع منها وكميتها. أضف جزءًا آخر فقط لقطعة تُصنع منفصلة. يُحسب الوزن والحجم من المواد الحقيقية.",
+ "PART %d": "الجزء %d",
+ "Part %d": "الجزء %d",
+ "What it's made of, and how much": "مِمَّ يُصنع، وبأي كمية",
+ "What this part is called": "اسم هذا الجزء",
+ "e.g. Kiln body": "مثلًا: جسم الفرن",
+ "a name for this part": "اسمًا لهذا الجزء",
+ "at least one material": "مادة واحدة على الأقل",
+ "an amount for every material": "كمية لكل مادة",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

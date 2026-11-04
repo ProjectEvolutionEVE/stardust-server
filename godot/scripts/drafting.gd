@@ -241,7 +241,7 @@ func _form() -> void:
 			body.add_child(cb)
 			w.books.append(cb)
 
-	_q(8, "Its parts and materials", tr("Each part, with the materials it's made of and how much. Its weight and size are worked out from the real materials."))
+	_q(8, "Its parts and materials", tr("Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials."))
 	parts_box = VBoxContainer.new()
 	parts_box.add_theme_constant_override("separation", 12)
 	body.add_child(parts_box)
@@ -251,7 +251,7 @@ func _form() -> void:
 	for p in plist:
 		_part(p, edit)
 	if edit:
-		var addp := _small("+ Add a part")
+		var addp := _small("+ Add another part (made separately)")
 		addp.pressed.connect(func(): _part({}, true))
 		body.add_child(addp)
 	total_lbl = _text("", 22, Ui.TEXT)
@@ -326,19 +326,40 @@ func _notes() -> void:
 
 
 ## One part: its name and its material rows (material, kg).
+## Each part is its own card (Eric 11-04: the part's name box looked like one more material): PART 1, its name, then
+## "What it's made of" with one line per material.
 func _part(p: Dictionary, edit: bool) -> void:
+	var card := PanelContainer.new()
+	var cs := StyleBoxFlat.new()
+	cs.bg_color = Ui.PANEL
+	cs.border_color = Color(Ui.GOLD, 0.35)
+	cs.set_border_width_all(1)
+	cs.set_corner_radius_all(12)
+	cs.content_margin_left = 16
+	cs.content_margin_right = 16
+	cs.content_margin_top = 14
+	cs.content_margin_bottom = 14
+	card.add_theme_stylebox_override("panel", cs)
+	card.mouse_filter = Control.MOUSE_FILTER_PASS
+	parts_box.add_child(card)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	parts_box.add_child(box)
-	var pn := Ui.field("Part name, e.g. Bricks")
+	card.add_child(box)
+	var head := Ui.label("", 22, Ui.GOLD)
+	box.add_child(head)
+	card.set_meta("head", head)
+	box.add_child(_text("What this part is called", 20, Ui.MUTED))
+	var pn := Ui.field("e.g. Kiln body")
 	pn.text = str(p.get("name", "") if p.get("name") != null else "")
 	pn.editable = edit
 	box.add_child(pn)
-	box.set_meta("name", pn)
+	card.set_meta("name", pn)
+	box.add_child(_text("What it's made of, and how much", 20, Ui.MUTED))
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", 8)
 	box.add_child(rows)
-	box.set_meta("rows", rows)
+	card.set_meta("rows", rows)
+	_renumber.call_deferred()
 	var mats: Array = p.get("materials", []) if p.get("materials") != null else []
 	if mats.is_empty():
 		mats = [{}]
@@ -347,13 +368,13 @@ func _part(p: Dictionary, edit: bool) -> void:
 	if edit:
 		var h := HBoxContainer.new()
 		box.add_child(h)
-		var am := _small("+ Add a material")
+		var am := _small("+ Another material")
 		am.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		am.pressed.connect(func(): _mat_row(rows, {}, true))
 		h.add_child(am)
 		var rp := _small("Remove this part")
 		rp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		rp.pressed.connect(func(): box.queue_free(); _total.call_deferred())
+		rp.pressed.connect(func(): card.queue_free(); _total.call_deferred(); _renumber.call_deferred())
 		h.add_child(rp)
 
 
@@ -453,7 +474,7 @@ func _save() -> void:
 	dirty = false
 	_form()
 	var miss: Array = d.get("missing", [])
-	msg.text = tr("Saved. Ready to send to the review team.") if miss.is_empty() else tr("Saved. Still to answer: %s.") % ", ".join(miss.map(func(x): return tr(str(x))))
+	msg.text = tr("Saved. Ready to send to the review team.") if miss.is_empty() else tr("Saved. Still to answer: %s.") % ", ".join(miss.map(_missing_text))
 
 
 func _submit() -> void:
@@ -678,3 +699,25 @@ func _autosave() -> void:
 			d.messages = keep_msgs
 		if is_instance_valid(msg):
 			msg.text = tr("Draft saved.")
+
+
+func _renumber() -> void:
+	var n := 0
+	for c in parts_box.get_children():
+		if c.is_queued_for_deletion() or not c.has_meta("head"):
+			continue
+		n += 1
+		c.get_meta("head").text = tr("PART %d") % n
+
+
+# what the server can say a part still needs (listed here so they are translated)
+const PART_NEEDS := ["a name for this part", "at least one material", "an amount for every material"]
+
+
+## The server's "part 2: a name for this part" becomes "Part 2: a name for this part" in the player's language.
+func _missing_text(x) -> String:
+	var t := str(x)
+	var m := RegEx.create_from_string("^part (\\d+): (.+)$").search(t)
+	if m:
+		return tr("Part %d") % int(m.get_string(1)) + ": " + tr(m.get_string(2))
+	return tr(t)

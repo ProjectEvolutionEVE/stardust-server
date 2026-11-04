@@ -1096,5 +1096,17 @@
  "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NO SE PUDO GUARDAR\nNo se pudo guardar una copia en este dispositivo. El recibo está a salvo en tu archivador.",
  "Draft saved.": "Borrador guardado.",
  "Its name": "Su nombre",
- "What kind of thing it is": "Qué tipo de cosa es"
+ "What kind of thing it is": "Qué tipo de cosa es",
+ "+ Add another part (made separately)": "+ Añadir otra pieza (hecha por separado)",
+ "+ Another material": "+ Otro material",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "La mayoría de los diseños necesitan solo una pieza: ponle nombre y luego indica cada material del que está hecha y cuánto. Añade otra pieza solo si se fabrica por separado. El peso y el tamaño se calculan con los materiales reales.",
+ "PART %d": "PIEZA %d",
+ "Part %d": "Pieza %d",
+ "What it's made of, and how much": "De qué está hecha y cuánto",
+ "What this part is called": "Cómo se llama esta pieza",
+ "e.g. Kiln body": "p. ej. Cuerpo del horno",
+ "a name for this part": "un nombre para esta pieza",
+ "at least one material": "al menos un material",
+ "an amount for every material": "una cantidad para cada material",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }

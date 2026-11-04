@@ -1096,5 +1096,17 @@
  "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "保存できませんでした\nこの端末にコピーを保存できませんでした。領収書そのものはファイルキャビネットに保管されています。",
  "Draft saved.": "下書きを保存しました。",
  "Its name": "名前",
- "What kind of thing it is": "どんな種類のものか"
+ "What kind of thing it is": "どんな種類のものか",
+ "+ Add another part (made separately)": "+ 別の部品を追加（別に作るもの）",
+ "+ Another material": "+ 別の材料",
+ "Most designs need only one part: name it, then list every material it's made of and how much. Add another part only for a piece made separately. Weight and size are worked out from the real materials.": "ほとんどの設計に必要な部品は1つだけです。名前を付け、それを作る材料と量をすべて書いてください。別に作る部品があるときだけ、部品を追加します。重さと大きさは実際の材料から計算されます。",
+ "PART %d": "部品 %d",
+ "Part %d": "部品 %d",
+ "What it's made of, and how much": "何でできているか、その量",
+ "What this part is called": "この部品の名前",
+ "e.g. Kiln body": "例：窯の本体",
+ "a name for this part": "この部品の名前",
+ "at least one material": "材料を1つ以上",
+ "an amount for every material": "すべての材料の量",
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
 }
