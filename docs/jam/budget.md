@@ -18,15 +18,18 @@ Built by Eric with AI models as the development team, so most of the cost so far
 | Item | What it paid for | Spent |
 |---|---|---|
 | Eric's time | Design, story, direction, testing, every decision: counted at 60 hours a week since Oct 11 (about 210 hours; his real hours run 12-20 a day) at $75 an hour | about $15,750 (in kind) |
-| Anthropic Claude (plan and usage) | Code, game server, library books and tests, documents | ▢ |
-| xAI Grok | Intro video clips and imagery | ▢ |
-| ElevenLabs (Creator plan) | Inara's recorded voice in 12 languages, the intro narration | ▢ |
-| Sarvam AI | Inara's Hindi voice | ▢ |
-| Railway | Game server and database, hosting the voice files | ▢ |
-| Twilio and Resend | Sign-in codes by text and email | ▢ |
-| Domain and email | risesolutions-llc.com | ▢ |
+| Anthropic Claude (Pro plan) | Code, game server, library books and tests, documents | $20 (the game's share is about a third) |
+| xAI Grok (X Premium) | Intro video clips and imagery | $0 in this period (earlier months $8) |
+| ElevenLabs (Creator plan, two accounts) | Inara's recorded voice in 12 languages, the intro narration | $44 |
+| Sarvam AI | Inara's Hindi voice | ▢ (usage; the bill wasn't readable) |
+| Railway (Pro plan) | Game server and database, hosting the voice files | $20 (shared with other projects) |
+| Twilio and Resend | Sign-in codes by text and email | $20 (Resend; shared) |
+| Domain and email | risesolutions-llc.com | ▢ (owned before the game?) |
 | Apple developer account | iPhone testing (free Personal Team so far) | $0 |
-| **Total spent** | | ▢ |
+| **Total spent** | | **about $100 in cash, plus about $15,750 of Eric's time in kind** |
+
+Before the game began, Eric spent about $3,000-$4,000 on AI tools (June to September) learning to build with them on
+earlier projects. That learning made this build possible; it is not counted above.
 
 ## 3. Plan and phases (with a sponsor)
 
@@ -55,7 +58,7 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Community | Community manager, part time | $25,000-$35,000 |
 | Localization | The remaining library books in Arabic (about 1.7 million words) with native-speaker review | $50,000-$85,000 |
 | Localization | The app and books in further languages, in order of player demand | $20,000-$60,000 |
-| AI tools | Development and writing models (plans and usage) | $5,000-$25,000 |
+| AI tools | Development and writing models: Claude Max ($200 a month) plus usage, and other models | $5,000-$25,000 |
 | Servers | Railway game server, database, backups and file delivery, growing with players | $5,000-$25,000 |
 | Sign-in | Text codes (about $0.05 each) and email | $2,000-$10,000 |
 | Stores | Apple ($99 a year), Google Play ($25 once), Steam ($100 per game) | about $250 |
