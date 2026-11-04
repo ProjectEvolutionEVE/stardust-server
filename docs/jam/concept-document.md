@@ -47,6 +47,8 @@ smelt ore into metal and build approved designs at the Maintenance Deck → rest
   An approved design gets a serial number, can be built at the Maintenance Deck, and its copies are sold at auction.
 - **Progression:** library books and five-question tests earn career bars (gold for a perfect score, silver otherwise; 4 of 5 correct to pass, and retakes any time);
   each bar takes more study than the last.
+- **Uniforms:** every career a player studies has its uniform in their closet, its bars in gold or silver. They wear one
+  at a time, and the worn uniform's skill bonus gives added in-game benefits, so they dress for the day's work.
 - **Why it's fun:** a true-scale solar system, a scanner you play by ear, a Starship you dock with by autopilot, rare
   finds (one diamond in 100,000 is near-flawless), and Inara, the officer in the Tower who talks you through it in 13 languages, including Arabic and Hindi.
 
@@ -92,7 +94,9 @@ costs; saving toward a named goal works; paying debt early saves money; spending
 
 **What ships for the jam:** the game on phones and on PC. Sign-in; Private Quarters (bed, desk with the ledger,
 closet, bookshelf, filing cabinet); the Starship Library with books and five-question tests for **all five bars of
-every career**, wired to the career ladders, so a player can rise from Trainee to the top of their field; the 3D
+every career**, wired to the career ladders, so a player can rise from Trainee to the top of their field; each bar, gold for a
+perfect record or silver, earns that career's uniform in the closet, and the uniform a player chooses to wear gives its
+career's skill bonus, with added in-game benefits; the 3D
 Starship and docking bay; the true-scale solar system, warp, radar and fuel; debris fields, scanner, collecting and
 unloading; the live market and blueprint auctions; the Starship Bank with savings, term deposits, loans and savings
 goals; flight time paid to the WSC; renting extra cargo space; the Maintenance Deck, where ore is smelted into metal and
