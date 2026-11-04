@@ -17,6 +17,7 @@ var closet: VBoxContainer
 
 
 func _ready() -> void:
+	Ui.comms_notice.call_deferred(self, true)          # Inara: a COMMS message is waiting (Eric 11-04)
 	var me: Dictionary = Session.me
 	var box := Ui.screen(self)
 	# the close-up of the open tab fills the screen behind it, darkened so the text stays readable

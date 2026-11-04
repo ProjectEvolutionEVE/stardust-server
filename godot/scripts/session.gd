@@ -66,6 +66,10 @@ func _key() -> String:
 
 ## What Inara rings about when the quarters open: "wake" after signing in, "welcome" after first setup.
 var call_on_enter := ""
+## A COMMS message opens a blueprint at the Desk (Eric 11-04): the drafting room opens it straight away, and its
+## back button returns to the Desk. comms_told: the newest message Inara has already mentioned.
+var open_blueprint := 0
+var comms_told := 0
 
 
 ## "Remember me" (Eric 10-24): the player may keep their email or phone on this device, encrypted with the same device key,

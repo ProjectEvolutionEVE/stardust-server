@@ -12,6 +12,7 @@ var busy := false
 
 
 func _ready() -> void:
+	Ui.comms_notice.call_deferred(self)          # Inara: a COMMS message is waiting (Eric 11-04)
 	var box := Ui.screen(self)
 	var top := HBoxContainer.new()
 	box.add_child(top)

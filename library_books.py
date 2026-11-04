@@ -141,10 +141,14 @@ BOOKS = {
         "subtitle": "Flying, finding and collecting with your starter craft",
         "chapters": [
             ("Flying",
-             "Press and hold anywhere (a finger, or the left mouse button). Holding flies you forward, and the screen "
-             "works like a joystick from where you pressed: pull back to raise the nose, push up to dip it, right or left "
-             "to bank. Let go and you drift to a stop. On a keyboard: W and S forward and back, A and D slide, R and F up "
-             "and down, Q and E roll, Shift boosts, Space brakes."),
+             "Speed is set with the throttle: the up and down arrows on the right of the screen. Each tap of the up "
+             "arrow adds 10%, each tap of the down arrow takes 10% away, and 0% brings you to a stop. To steer, press "
+             "and hold anywhere: the screen works like a joystick from where you pressed. Pull back to raise the nose, "
+             "push up to dip it, right or left to bank. Let go and the turning stops. The side thrusters, the left and "
+             "right arrows at the bottom left, turn you in place while you hold position, to line up on a target "
+             "without drifting. Hold BOOST for more speed. On a keyboard: W and S throttle up and down, the left and "
+             "right arrow keys are the side thrusters, A and D slide, R and F up and down, Q and E roll, Shift boosts, "
+             "Space brakes."),
             ("The scanner",
              "Listen. A soft hiss means nothing ahead. A tone rises out of it as you point at a debris field, higher and "
              "clearer the closer you aim and the nearer you get. Point dead at a return to take a bearing, move off to "
@@ -165,14 +169,15 @@ BOOKS = {
              "space is limited: when it's full, the rest stays in your hold. Every unload gives you a receipt."),
         ],
         "test": [
-            ("How do you fly forward?",
-             [("a", "Shake the device"), ("b", "Press and hold"), ("c", "Type the destination"), ("d", "Say \"go\"")], "b"),
+            ("How do you speed up or slow down?",
+             [("a", "Shake the device"), ("b", "Tap the throttle's up and down arrows"), ("c", "Type the destination"),
+              ("d", "Say \"go\"")], "b"),
+            ("How do you turn in place while holding position?",
+             [("a", "The side thrusters"), ("b", "Warp"), ("c", "Unload"), ("d", "Double-tap the Starship")], "a"),
             ("What does a rising tone from the scanner mean?",
              [("a", "Your hold is full"), ("b", "You're pointing at a debris field"), ("c", "The Starship is calling"), ("d", "Low fuel")], "b"),
             ("How does a field lock?",
              [("a", "Two bearings from different places cross"), ("b", "You fly into it"), ("c", "You wait an hour"), ("d", "Inara locks it for you")], "a"),
-            ("Which pieces can come aboard?",
-             [("a", "Every piece"), ("b", "Only gold"), ("c", "Pieces whose shape fits your hold, with room left"), ("d", "Only the biggest")], "c"),
             ("Where does your ore go when you unload?",
              [("a", "Straight to the market"), ("b", "Your own space in the Starship's cargo hold"), ("c", "Overboard"), ("d", "Your bed")], "b"),
         ],

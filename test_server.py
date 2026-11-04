@@ -456,6 +456,14 @@ async def main():
         except ST.Refused:
             check("approving a missing blueprint refused", True)
         code = await BP.approve(c, sid, "Eric", "Approved. Nice work.")
+        import comms as CM
+        box = await CM.inbox(c, p1)
+        titles = [x["title"] for x in box["comms"]]
+        check("COMMS: the designer hears each review step (question, changes, approval)", box["unread"] == 3
+              and titles[0] == "Your blueprint is approved" and box["comms"][0]["link"].get("blueprint") == sid
+              and "The review team asks for changes to your blueprint" in titles)
+        await CM.mark_read(c, p1, box["comms"][0]["id"])
+        check("COMMS: reading one lowers the unread count", (await CM.inbox(c, p1))["unread"] == 2)
         ins = {r["item_code"]: r["qty"] for r in await c.fetch(
             "SELECT i.item_code, i.qty FROM recipe_inputs i JOIN recipes r ON r.id=i.recipe_id WHERE r.blueprint_code=$1", code)}
         check("approved: its recipe adds up every part's materials", ins == {"mat-copper": 540, "mat-gold": 8, "mat-silver": 20, "mat-iron": 2000})

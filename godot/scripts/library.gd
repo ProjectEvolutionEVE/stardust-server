@@ -10,6 +10,7 @@ var body: VBoxContainer
 
 
 func _ready() -> void:
+	Ui.comms_notice.call_deferred(self)          # Inara: a COMMS message is waiting (Eric 11-04)
 	var outer := Ui.screen(self)
 	var top := HBoxContainer.new()
 	var title := Ui.label("Starship Library", 40, Ui.GOLD)

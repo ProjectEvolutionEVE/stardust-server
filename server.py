@@ -37,6 +37,8 @@ The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
+  GET  /api/dfg/comms                the game's messages to the player (COMMS at the Desk), newest first, and how many
+  POST /api/dfg/comms/read {id}      are unread · mark one read (Eric 11-04: the review team's notes arrive here)
   POST /api/dfg/blueprints/print     {id, copies[, quote]} → print a run of copies (setup fee once, then per copy)
 The Starship Library (rules 22, 24; library.py):
   GET  /api/dfg/library  the shelves · GET /library/book/{code} read · POST /library/checkout|return {book}
@@ -59,7 +61,7 @@ Inara's recorded lines (Eric 10-20; voice.py): GET /voice/<set>/<ID>.mp3 · POST
   (each story beat once per player) · PUT /api/dfg/admin/voice/<set>/<ID>.mp3 and GET /api/dfg/admin/voice/manifest
   (header X-Upload-Key = env DFG_UPLOAD_KEY). Files live in VOICE_DIR (default /data/voice, a Railway volume).
 Every collect is re-checked here (game.py): mass from real density, shape fit, room left, and collecting speed."""
-import os, json, uuid, secrets
+import os, re, json, uuid, secrets
 from pathlib import Path
 import asyncpg
 import aiohttp
@@ -73,6 +75,7 @@ import market as M
 import materials_refining as MR
 import bank as BANK
 import blueprints as BP
+import comms as CM
 import serials as SER
 import auctions as AU
 import library as LIB
@@ -106,6 +109,13 @@ def _json(data, status=200):
     return web.json_response(data, status=status)
 
 
+_ORIGIN_RE = re.compile(r"^(https://[a-z0-9-]+(\.[a-z0-9-]+)*\.(itch\.zone|hwcdn\.net)|http://(localhost|127\.0\.0\.1)(:\d+)?)$")
+
+
+def _origin_ok(origin):
+    return origin in ALLOWED_ORIGINS or bool(_ORIGIN_RE.match(origin))
+
+
 @web.middleware
 async def cors(request, handler):
     origin = request.headers.get("Origin", "")
@@ -118,10 +128,10 @@ async def cors(request, handler):
             resp = _json({"error": str(e)}, 401)
         except (G.Refused, ST.Refused, AUTH.Refused, M.Refused) as e:
             resp = _json({"error": str(e)}, 422)
-    if origin in ALLOWED_ORIGINS:
+    if _origin_ok(origin):
         resp.headers["Access-Control-Allow-Origin"] = origin
         resp.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
-        resp.headers["Access-Control-Allow-Methods"] = "GET, POST"
+        resp.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
         resp.headers["Vary"] = "Origin"
     if request.path.startswith("/play/"):
         # the game's own files: browsers must check for a newer copy every time, or players keep yesterday's game
@@ -728,6 +738,18 @@ async def bp_save(request):
         return _json(await BP.detail(conn, pid, sid))
 
 
+async def comms_inbox(request):
+    async with request.app["pool"].acquire() as conn:
+        return _json(await CM.inbox(conn, await _player(conn, request)))
+
+
+async def comms_read(request):
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        await CM.mark_read(conn, await _player(conn, request), int(b.get("id") or 0))
+        return _json({"ok": True})
+
+
 REVIEW_EMAIL = os.environ.get("DFG_REVIEW_EMAIL", "")
 RAILWAY_IDS = "-p db65aefa-8e13-4c8f-9e93-ba62864645e6 -e production -s game-server"
 
@@ -947,6 +969,8 @@ def make_app():
     app.router.add_post(r"/api/dfg/deck/{op:build|smelt}", deck_post)
     app.router.add_get("/api/dfg/blueprints", bp_mine)
     app.router.add_get("/api/dfg/blueprints/{id}", bp_detail)
+    app.router.add_get("/api/dfg/comms", comms_inbox)
+    app.router.add_post("/api/dfg/comms/read", comms_read)
     app.router.add_post("/api/dfg/blueprints/save", bp_save)
     app.router.add_post("/api/dfg/blueprints/submit", bp_submit)
     app.router.add_post("/api/dfg/blueprints/reply", bp_reply)
