@@ -78,8 +78,7 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Audio | Inara's recorded voice in every language (ElevenLabs, Sarvam) | $2,000-$5,000 |
 | Quality | QA and playtesting across ages, regions and devices | $20,000-$30,000 |
 | Community | Community manager, part time | $25,000-$35,000 |
-| Localization | The remaining library books in Arabic (about 1.7 million words) with native-speaker review | $50,000-$85,000 |
-| Localization | The app and books in further languages, in order of player demand | $20,000-$60,000 |
+| Localization | Every library book and test in all 12 of the app's other languages (about 1.7 million words each): AI translation (about $100 a language) plus a native speaker spot-checking each language and every test question (about $5,000-$8,000 a language) | $60,000-$100,000 |
 | AI tools | Development and writing models: Claude Max ($200 a month) plus usage, and other models | $5,000-$25,000 |
 | Servers | Railway game server, database, backups and file delivery, growing with players | $5,000-$25,000 |
 | Sign-in | Text codes (about $0.05 each) and email | $2,000-$10,000 |
@@ -92,7 +91,7 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Accounting | Accounting software (e.g. QuickBooks) | $500-$1,200 |
 | Live operations | Monitoring: server health and an AI watching the logs, the economy and unusual activity around the clock | $3,000-$12,000 |
 | Contingency | About 10% for the unexpected | $40,000-$75,000 |
-| **Total (12 months)** | | **about $600,000-$1,000,000** |
+| **Total (12 months)** | | **about $590,000-$955,000** |
 
 **Taxes.** Income tax depends on profit, so it is set aside from revenue rather than budgeted here. App stores collect
 and pay sales tax and VAT on purchases in most countries, and keep 15-30% of each sale as their fee.
@@ -102,8 +101,8 @@ and pay sales tax and VAT on purchases in most countries, and keep 15-30% of eac
 In order of what moves the game furthest, fastest:
 1. **People who multiply what's already built:** a senior Godot developer and a 3D artist, so the working systems get
    the look and polish of a top store game.
-2. **Arabic first, done properly:** the remaining library books translated and reviewed by native speakers, for the
-   UAE and Arab-region audience the jam serves.
+2. **Every book in every language:** the library books and tests in all 12 of the app's other languages, Arabic first
+   for the UAE and Arab-region audience the jam serves, each checked by native speakers.
 3. **Playtesting with real players** of every age and background, so the money lessons land and the economy is fair.
 4. **Launch:** store releases on phones, then PC and web, with a marketing push built around Inara and the story.
 5. **Running costs** that grow with players: servers, sign-in, voice and AI tools.
