@@ -25,8 +25,9 @@ Built by Eric with AI models as the development team, so most of the cost so far
 | Railway (Pro plan) | Game server and database, hosting the voice files | $20 (shared with other projects) |
 | Twilio and Resend | Sign-in codes by text and email | $20 (Resend; shared) |
 | Domain and email | risesolutions-llc.com | ▢ (owned before the game?) |
+| Internet (Starlink) | The connection everything is built and tested over | $130 (a month; shared) |
 | Apple developer account | iPhone testing (free Personal Team so far) | $0 |
-| **Total spent** | | **about $100 in cash, plus about $15,750 of Eric's time in kind** |
+| **Total spent** | | **about $230 in cash, plus about $15,750 of Eric's time in kind** |
 
 Before the game began, Eric spent about $3,000-$4,000 on AI tools (June to September) learning to build with them on
 earlier projects. That learning made this build possible; it is not counted above.
@@ -62,10 +63,11 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Servers | Railway game server, database, backups and file delivery, growing with players | $5,000-$25,000 |
 | Sign-in | Text codes (about $0.05 each) and email | $2,000-$10,000 |
 | Stores | Apple ($99 a year), Google Play ($25 once), Steam ($100 per game) | about $250 |
+| Operations | Internet (Starlink, $130 a month) | $1,560 |
 | Legal | Trademark clearance and filings (US, EU, UK, UAE); privacy and age review; contracts | $15,000-$40,000 |
 | Marketing | Trailer, store pages, streamers and creators, launch campaign | $40,000-$100,000 |
 | Contingency | About 10% for the unexpected | $40,000-$75,000 |
-| **Total (12 months)** | | **about $565,000-$920,000** |
+| **Total (12 months)** | | **about $566,000-$922,000** |
 
 ## 5. How sponsor funding would be used
 
