@@ -32,6 +32,26 @@ Built by Eric with AI models as the development team, so most of the cost so far
 Before the game began, Eric spent about $3,000-$4,000 on AI tools (June to September) learning to build with them on
 earlier projects. That learning made this build possible; it is not counted above.
 
+**Rise Solutions' monthly tool stack** (all its projects, from the receipts; the game's share is in the table above):
+
+| Service | Monthly | What it's for |
+|---|---|---|
+| Anthropic Claude | $20 (Pro), moving to $200 (Max), plus usage | development, writing, the library books |
+| ElevenLabs Creator (two accounts) | $44 | recorded voices |
+| X Premium (Grok) | $8 | video clips and imagery |
+| Sarvam AI | usage | Hindi voice |
+| DeepL Pro | $32.50 | translation |
+| Railway Pro | $20 | game and app servers |
+| Hetzner | about $78 | servers and backups |
+| Netlify | $20 | websites |
+| Google Cloud | about $5 (usage) | speech and APIs |
+| Resend | $20 | email |
+| Metricool | about $22 (list price) | social media scheduling and analytics |
+| Starlink | $130 | internet |
+| Porkbun | about $11 a year per domain | domains |
+| Groq, Deepgram, Twilio, GitHub | free tiers or usage so far | AI speed, speech-to-text, sign-in texts, code |
+| **Total** | **about $400 a month (about $580 with Claude Max)** | |
+
 ## 3. Plan and phases (with a sponsor)
 
 | Phase | What's delivered | Time |
