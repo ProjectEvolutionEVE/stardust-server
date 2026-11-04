@@ -21,14 +21,14 @@ func _launch(go: Button) -> void:
 	if Session.token == "":
 		get_tree().change_scene_to_file("res://scenes/signin.tscn")
 		return
-	go.text = "Contacting the Starship…"
+	go.text = tr("Contacting the Starship…")
 	var r := await Api.call_api("GET", "/api/dfg/me")
 	if r.ok:
 		Session.me = r.data
 		Session.call_on_enter = "wake"
 		get_tree().change_scene_to_file("res://scenes/intro.tscn")   # the intro plays at every sign-in (Eric 10-27)
 	elif r.code == 0:   # no answer: keep the sign-in, let the player try again
-		go.text = "Launch"
+		go.text = tr("Launch")
 		go.disabled = false
 		Ui.error(self, r.error)
 	else:

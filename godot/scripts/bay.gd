@@ -65,6 +65,7 @@ var sleep_panel: ColorRect
 var sleep_bars: Label
 var sleep_at := 0.0
 var quarters_btn: Button
+var deck_btn: Button                             # up to the Maintenance Deck (Eric 11-03)
 # FUEL (rule 38, Eric 10-25): the WSC's craft comes with fuel, topped up at every return to the Starship. Out in space it
 # ticks down slowly (more slowly when stopped); run dry and Inara has you towed home, for a pretty penny.
 const FUEL_FLY_H := 6.0           # hours of flying on a full tank
@@ -133,7 +134,7 @@ func _wake_parked() -> void:
 	org = sol.to_local_d(pk.pos)
 	cam.position = Vector3.ZERO
 	Session.me.parked = null
-	_say("You wake in your cockpit, right where you left your craft.")
+	_say(tr("You wake in your cockpit, right where you left your craft."))
 	Voice.ring(hud_root, Voice.moment("wake"))
 	if Session.token != "":
 		Api.call_api("POST", "/api/dfg/rest", {"unpark": true})
@@ -186,10 +187,10 @@ func _fuel_tick(dt: float, now: float) -> void:
 		for mark in [25, 10]:
 			if fuel <= mark and fuel_warned > mark:
 				fuel_warned = mark
-				_say("INARA\nFuel at %d%%. Time to head home to the Starship." % mark)
+				_say(tr("INARA\nFuel at %d%%. Time to head home to the Starship.") % mark)
 		if fuel <= 0.0:
 			_tow()
-	fuel_label.text = "FUEL %d%%" % ceili(fuel)
+	fuel_label.text = tr("FUEL %d%%") % ceili(fuel)
 	var c := Color("7fe0a8") if fuel > 25.0 else (Color(1.0, 0.81, 0.42) if fuel > 10.0 else Color("e5605a"))
 	fuel_label.add_theme_color_override("font_color", c)
 	fuel_fill.color = c
@@ -209,7 +210,7 @@ func _tow() -> void:
 	warp = {}
 	vel = Vector3.ZERO
 	_set_throttle(0)
-	_say("INARA\nYou're out of fuel. Sit tight, I'm sending a tow to bring you in. It won't be cheap.")
+	_say(tr("INARA\nYou're out of fuel. Sit tight, I'm sending a tow to bring you in. It won't be cheap."))
 	await get_tree().create_timer(6.0).timeout
 	var charged := 0
 	if Session.token != "":
@@ -220,7 +221,7 @@ func _tow() -> void:
 	fuel = 100.0
 	fuel_warned = 100
 	towing = false
-	_say("TOWED HOME\nThe tow cost you %s credits. Keep an eye on your fuel." % Ui.num(charged))
+	_say(tr("TOWED HOME\nThe tow cost you %s credits. Keep an eye on your fuel.") % Ui.num(charged))
 
 
 # ── RESTING IN THE COCKPIT (Eric 10-24): stopped out in space, sleep at half the bed's rate, or sign out right here ──
@@ -233,10 +234,10 @@ func _sleep() -> void:
 	sleep_panel.move_to_front()          # over every instrument
 	sleep_panel.visible = true
 	holding = false
-	sleep_bars.text = "Resting…"
+	sleep_bars.text = tr("Resting…")
 	Voice.say("sleep")
 	if Session.token == "":
-		sleep_bars.text = "Not signed in: your rest isn't kept."
+		sleep_bars.text = tr("Not signed in: your rest isn't kept.")
 		return
 	var r: Dictionary = await Api.call_api("POST", "/api/dfg/rest", {"asleep": true, "place": "cockpit"})
 	_show_bars(r)
@@ -248,7 +249,7 @@ func _show_bars(r: Dictionary) -> void:
 		return
 	Session.me = r.data
 	var b: Dictionary = r.data.get("bars", {})
-	sleep_bars.text = "Stamina %d%% · Energy %d%% · Focus %d%%" % [roundi(b.get("stamina", 0)), roundi(b.get("energy", 0)), roundi(b.get("focus", 0))]
+	sleep_bars.text = tr("Stamina %d%% · Energy %d%% · Focus %d%%") % [roundi(b.get("stamina", 0)), roundi(b.get("energy", 0)), roundi(b.get("focus", 0))]
 
 
 func _refresh_bars() -> void:
@@ -399,6 +400,9 @@ func _hud() -> void:
 	quarters_btn = _hud_button("Quarters", Vector2(24, 1140), Vector2(176, 51), 11, "")
 	quarters_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn"))
 	root.add_child(quarters_btn)
+	deck_btn = _hud_button("Maintenance Deck", Vector2(212, 1140), Vector2(176, 51), 11, "")
+	deck_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/deck.tscn"))
+	root.add_child(deck_btn)
 	marks = Marks.new()
 	marks.bay = self
 	marks.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -445,7 +449,7 @@ func _hud() -> void:
 	mute_btn.pressed.connect(func():
 		sound.muted = not sound.muted
 		Voice.set_muted(sound.muted)
-		mute_btn.text = "Muted" if sound.muted else "Sound on")
+		mute_btn.text = tr("Muted") if sound.muted else tr("Sound on"))
 	root.add_child(mute_btn)
 
 
@@ -474,7 +478,7 @@ class Glyph extends Control:
 
 func _hud_button(text: String, at: Vector2, sz: Vector2, radius: int, shape: String) -> Button:
 	var b := Button.new()
-	b.text = text
+	b.text = tr(text)
 	b.position = at
 	b.size = sz
 	b.focus_mode = Control.FOCUS_NONE
@@ -508,7 +512,7 @@ func _paint(b: Button, g: Glyph, c: Color, radius: int) -> void:
 
 func _set_throttle(n: int) -> void:
 	throttle = clampi(n, 0, 10)
-	thr_label.text = "Throttle %d%%" % (throttle * 10)
+	thr_label.text = tr("Throttle %d%%") % (throttle * 10)
 
 
 func _say(text: String, library := false) -> void:
@@ -519,6 +523,8 @@ func _say(text: String, library := false) -> void:
 
 # ── steering: press and hold anywhere on the screen (not on a button) ──
 func _unhandled_input(ev: InputEvent) -> void:
+	if ev.device == InputEvent.DEVICE_ID_EMULATION:
+		return    # on a phone each touch also arrives as a copied mouse event; counting both made one press a double-tap
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT or ev is InputEventScreenTouch:
 		if ev.pressed and warp.is_empty():      # double-tap: lock what's under the tap and fly there
 			var now := Time.get_ticks_msec() / 1000.0
@@ -564,6 +570,7 @@ func _process(dt: float) -> void:
 	edge.on = not band.is_empty() and band.out > 1.0 and warp.is_empty() and not docked
 	edge.queue_redraw()
 	quarters_btn.visible = docked
+	deck_btn.visible = docked
 	_fuel_tick(dt, now)
 	sleep_btn.visible = _can_sleep()
 	if sleep_panel.visible and now > sleep_at and Session.token != "":   # the bars as they refill, once a minute
@@ -575,13 +582,13 @@ func _process(dt: float) -> void:
 	scan_bar.size.x = 432.0 * scan_strength
 	var me := _me()
 	if not warp.is_empty():
-		status.text = "WARP · " + warp.label
+		status.text = tr("WARP · %s") % warp.label
 	info.text = ""
 	if not docked:
 		var here = sol.ring_of(sol.to_world_d(me))
-		info.text = "%.1f m/s · %.3f AU from the Sun" % [vel.length(), Solar.length(Solar.sub(me, sol.sun_l)) / Solar.AU]
+		info.text = tr("%.1f m/s · %.3f AU from the Sun") % [vel.length(), Solar.length(Solar.sub(me, sol.sun_l)) / Solar.AU]
 		if here != null:
-			info.text = here.name + " · " + info.text
+			info.text = tr(here.name) + " · " + info.text
 	# approach distance: to whatever the scanner is tracking
 	var p = null
 	if not docked and warp.is_empty():
@@ -605,7 +612,7 @@ func _fly(dt: float) -> void:
 		if not Session.me.get("skills", {}).get("fly", false):
 			_set_throttle(0)
 			holding = false
-			_say("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly.", true)
+			_say(tr("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly."), true)
 		else:
 			docked = false
 			Voice.say("launch")              # cleared for launch
@@ -633,17 +640,17 @@ func _fly(dt: float) -> void:
 			lock.dock = 2
 			lock.pos = Solar.vec3d(ship.DOCK.aftMouth if lock.aft else ship.DOCK.mouth)
 			lock.stop_at = 22.0
-			lock.name = "Starship · docking"
+			lock.name = tr("Starship · docking")
 			Voice.say("approach")
 			if throttle > 0:
 				_set_throttle(0)
-			_say("Tractor beam has control. Throttle set to zero.")
+			_say(tr("Tractor beam has control. Throttle set to zero."))
 		elif lock.get("dock", 0) == 2 and d < lock.stop_at:
 			var aft: bool = lock.aft
 			lock = {}
 			_dock(aft)
 			Voice.say("docked")
-			_say("DOCKED\nWelcome home. Your Market terminal is at the Desk in your quarters.")
+			_say(tr("DOCKED\nWelcome home. Your Market terminal is at the Desk in your quarters."))
 			return
 		elif auto and lock.get("dock", 0) == 0 and d < lock.stop_at:
 			lock.auto = false
@@ -652,7 +659,7 @@ func _fly(dt: float) -> void:
 			parked = true
 			if lock.get("field"):
 				Voice.say("parked")
-			_say("Holding position: " + lock.name)
+			_say(tr("Holding position: %s") % lock.name)
 			if lock.get("field"):
 				lock.field.known = true
 		elif not auto and not parked and lock.get("field") and lock.field.known and d > lock.stop_at * 4.0:
@@ -695,7 +702,7 @@ func _watch_ring(now: float) -> void:
 			Voice.say("ring%d" % Solar.RINGS.find(here))
 			if first:
 				Voice.story(hud_root, "ring")
-			_say("INARA\nYou're in the " + here.name + ". Debris all around you. Start sweeping.")
+			_say(tr("INARA\nYou're in the %s. Debris all around you. Start sweeping.") % tr(here.name))
 		inara_t = 0.0
 		return
 	if work_ring == null:
@@ -709,7 +716,7 @@ func _watch_ring(now: float) -> void:
 		if inara_t == 0.0:
 			Voice.say("drift%d" % Solar.RINGS.find(work_ring))
 		inara_t = now + 15.0
-		_say("INARA\nYou're drifting out of the %s, %s outside it. Turn back toward the debris." % [work_ring.name, Solar.fmt_dist(out)])
+		_say(tr("INARA\nYou're drifting out of the %s, %s outside it. Turn back toward the debris.") % [tr(work_ring.name), Solar.fmt_dist(out)])
 
 
 ## Where you are against a ring's band (BAND: 25 km either side of its line, 6 km above and below): how far out, which
@@ -755,10 +762,10 @@ func _lock_at(at: Vector2) -> void:
 		if not lock.is_empty() and not lock.auto:
 			lock.auto = true
 			return
-		_say("Nothing to lock there. Double-tap a field or landmark you can see.")
+		_say(tr("Nothing to lock there. Double-tap a field or landmark you can see."))
 		return
 	if Solar.length(Solar.sub(best.pos, me)) > FAR_FLY:
-		_say(best.name + " is too far to fly. Use WARP.")
+		_say(tr("%s is too far to fly. Use WARP.") % best.name)
 		return
 	if not lock.is_empty() and lock.pos == best.pos:   # tapped what's already locked: go
 		lock.auto = true
@@ -773,7 +780,7 @@ func _lock_at(at: Vector2) -> void:
 ## Docking (Eric 10-23): the bay is open at both ends, so the autopilot comes in from whichever end you are nearer.
 func _dock_lock() -> Dictionary:
 	var aft: bool = _me()[2] < -26.0
-	return {"name": "Starship", "pos": Solar.vec3d(ship.DOCK.aftApproach if aft else ship.DOCK.approach), "aim": [0.0, 0.0, 0.0],
+	return {"name": tr("Starship"), "pos": Solar.vec3d(ship.DOCK.aftApproach if aft else ship.DOCK.approach), "aim": [0.0, 0.0, 0.0],
 		"stop_at": 14.0, "dock": 1, "aft": aft}
 
 
@@ -828,7 +835,7 @@ func _scan(dt: float) -> void:
 					voiced.bearing = true
 					Voice.say("bearing")
 				sound.ping(660.0)
-				_say("BEARING TAKEN\nMove off to one side, then sweep this return again to fix its position.")
+				_say(tr("BEARING TAKEN\nMove off to one side, then sweep this return again to fix its position."))
 			else:
 				var from: Array = bearings[best.id]
 				var moved := Solar.length(Solar.sub(me, from))
@@ -836,21 +843,21 @@ func _scan(dt: float) -> void:
 				if moved > maxf(35.0, dist * 0.12) and a1.angle_to(sv.normalized()) > deg_to_rad(2.5):
 					_fix_field(best)
 	if docked:
-		status.text = "DOCKED · throttle up to launch"
+		status.text = tr("DOCKED · throttle up to launch")
 	elif lock.get("dock", 0) > 0:
-		status.text = "DOCKING · in under the stern" if lock.aft else "DOCKING · under the bow"
+		status.text = tr("DOCKING · in under the stern") if lock.aft else tr("DOCKING · under the bow")
 	elif lock.get("parked", false):
-		status.text = "HOLDING POSITION · in front of the field" if lock.get("field") else "HOLDING POSITION · " + lock.name
+		status.text = tr("HOLDING POSITION · in front of the field") if lock.get("field") else tr("HOLDING POSITION · %s") % lock.name
 	elif lock.get("auto", false):
-		status.text = "AUTOPILOT · hold to take the controls"
+		status.text = tr("AUTOPILOT · hold to take the controls")
 	elif lock.get("field"):
-		status.text = "LOCKED · double-tap to fly there"
+		status.text = tr("LOCKED · double-tap to fly there")
 	elif not scan_best.is_empty() and bearings.has(scan_best.id) and scan_strength > 0.2:
-		status.text = "BEARING 1 OF 2 · move and sweep again"
+		status.text = tr("BEARING 1 OF 2 · move and sweep again")
 	elif scan_strength > 0.25:
-		status.text = "RETURN"
+		status.text = tr("RETURN")
 	else:
-		status.text = "SWEEPING"
+		status.text = tr("SWEEPING")
 	sound.scanner(-1.0 if quiet else scan_strength)
 
 
@@ -859,7 +866,7 @@ func _fix_field(f: Dictionary) -> void:
 	lock = {"name": Debris.label_of(f), "pos": f.center, "stop_at": Debris.stand_off(f), "auto": false, "field": f}
 	sound.chime()
 	Voice.say("locked")
-	_say("FIELD LOCKED\nScanner quiet. Double-tap to fly there.")
+	_say(tr("FIELD LOCKED\nScanner quiet. Double-tap to fly there."))
 
 
 ## FIELD CUE (Eric 10-11): while the stick is held, a faint glow on its rim shows which way the nearest uncleared field
@@ -896,12 +903,12 @@ const Debris := preload("res://scripts/debris.gd")
 
 
 func _dests() -> Array:
-	var d := [{"key": "starship", "label": "Starship", "note": "home · by the wormhole"}]
+	var d := [{"key": "starship", "label": tr("Starship"), "note": tr("home · by the wormhole")}]
 	for rg in Solar.RINGS:
-		d.append({"key": rg.key, "label": rg.name, "ring": rg, "note": "%.3f AU from the Sun" % rg.au})
-	d.append({"key": "wormhole", "label": "Wormhole", "note": "3,000,000 km beyond Jupiter"})
+		d.append({"key": rg.key, "label": tr(rg.name), "ring": rg, "note": tr("%.3f AU from the Sun") % rg.au})
+	d.append({"key": "wormhole", "label": tr("Wormhole"), "note": tr("3,000,000 km beyond Jupiter")})
 	for g in Solar.GIANTS:
-		d.append({"key": g.name.to_lower(), "label": g.name, "note": "%.3f AU from the Sun" % g.au})
+		d.append({"key": g.name.to_lower(), "label": tr(g.name), "note": tr("%.3f AU from the Sun") % g.au})
 	return d
 
 
@@ -971,7 +978,7 @@ func _warp_menu() -> void:
 		t.position = Vector2(16, 8)
 		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(t)
-		var coords := ("arrive at longitude %.1f°" if d.has("ring") else "longitude %.1f°") % _lon_deg(p)
+		var coords := (tr("arrive at longitude %.1f°") if d.has("ring") else tr("longitude %.1f°")) % _lon_deg(p)
 		var n := Ui.label(d.note + " · " + coords, 16, Ui.MUTED)
 		n.autowrap_mode = TextServer.AUTOWRAP_OFF
 		n.position = Vector2(16, 42)
@@ -992,18 +999,18 @@ func _warp_menu() -> void:
 
 func start_warp(d: Dictionary) -> void:
 	if docked and not Session.me.get("skills", {}).get("fly", false):    # warping out of the bay is flying too
-		_say("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly.", true)
+		_say(tr("LIBRARY FIRST\nPass the Pilot Basic Training Handbook test before you can fly."), true)
 		return
 	var warp_cost := FUEL_WARP / (1.0 + Session.skill("flight"))
 	if fuel < warp_cost:
-		_say("Not enough fuel to warp. Fly home, or wait for a tow.")
+		_say(tr("Not enough fuel to warp. Fly home, or wait for a tow."))
 		return
 	fuel -= warp_cost
 	var to := _dest_point(d)
 	var from := _me()
 	var dist := Solar.length(Solar.sub(to, from))
 	if dist < 20000.0:
-		_say("You're already there.")
+		_say(tr("You're already there."))
 		return
 	# bend the route around the Sun if the straight line passes within 0.25 AU of it
 	var via = null
@@ -1068,13 +1075,13 @@ func _warp_tick(dt: float) -> void:
 		Voice.say("warp%d" % Solar.RINGS.find(w.d.ring))
 		if first:
 			Voice.story(hud_root, "ring")
-		_say("INARA\nDropping out in the " + w.d.ring.name + ". Debris all around you. Start sweeping.")
+		_say(tr("INARA\nDropping out in the %s. Debris all around you. Start sweeping.") % tr(w.d.ring.name))
 	elif w.d.key == "starship":
 		cam.look_at(cam.position + Solar.vec(Solar.sub([0.0, 0.0, 0.0], _me())), Vector3.UP)     # turned to face her
 		Voice.say("arrived")
-		_say("ARRIVED\nThe Starship is ahead. Double-tap it to come aboard.")
+		_say(tr("ARRIVED\nThe Starship is ahead. Double-tap it to come aboard."))
 	else:
-		_say("ARRIVED\n" + w.label)
+		_say(tr("ARRIVED\n%s") % w.label)
 
 
 ## Labels on the landmarks (browser .mk): a small ring and "name · distance"; off screen, a diamond at the edge pointing
@@ -1104,7 +1111,7 @@ class Marks extends Control:
 		var lms: Array = bay.sol.landmarks.duplicate()
 		if not bay.band.is_empty() and bay.band.out > 1.0 and bay.warp.is_empty():   # outside the band: point the way back
 			bay._band_node.position = bay.Solar.vec(bay.Solar.sub(bay.band.point, bay.org)).limit_length(300000.0)
-			lms.append({"name": "Back to the " + bay.band.ring.name, "node": bay._band_node, "pos": bay.band.point, "rad": 0.0, "color": Color(1.0, 0.81, 0.42)})
+			lms.append({"name": tr("Back to the %s") % tr(bay.band.ring.name), "node": bay._band_node, "pos": bay.band.point, "rad": 0.0, "color": Color(1.0, 0.81, 0.42)})
 		for l in lms:
 			var n: Node3D = l.node
 			var v: Vector3 = inv * n.global_position
@@ -1168,7 +1175,7 @@ class Marks extends Control:
 					var at := Vector2((x + 1.0) / 2.0 * W, (1.0 - y) / 2.0 * H)
 					var g := Color("7fe0a8")
 					draw_rect(Rect2(at - Vector2(31, 31), Vector2(62, 62)), g, false, 2.5)
-					var t: String = ("AUTOPILOT · " if lk.get("auto", false) else ("HOLDING · " if lk.get("parked", false) else "LOCKED · ")) \
+					var t: String = (tr("AUTOPILOT · ") if lk.get("auto", false) else (tr("HOLDING · ") if lk.get("parked", false) else tr("LOCKED · "))) \
 						+ lk.name + " · " + bay.Solar.fmt_dist(bay.Solar.length(bay.Solar.sub(lk.pos, me)))
 					var tw2 := font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 					draw_string(font, at + Vector2(-tw2 / 2.0, 58), t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(0, 0, 0, 0.85))

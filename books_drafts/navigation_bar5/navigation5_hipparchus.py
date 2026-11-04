@@ -1,0 +1,37 @@
+"""Hipparchus and the Star Catalogue: how an ancient astronomer recorded star positions and noticed that the stars had moved against the equinoxes."""
+CODE = 'navigation5_hipparchus'
+BOOK = {
+    "title": 'Hipparchus and the Star Catalogue',
+    "subtitle": 'Star positions, the coordinate system, observations, the magnitude scale, influence, and errors',
+    "chapters": [
+        ('A careful observer',
+         'Hipparchus was a Greek astronomer who worked on the island of Rhodes around 150 BC. He made careful observations of the sky and is often called the founder of scientific astronomy. His work set a standard for later astronomers.'),
+        ('Star positions',
+         'Hipparchus recorded the positions of many stars, and his catalogue is often counted at around eight hundred and fifty stars. He measured their places using angles on the sky. Later writers used his list as a base for their own catalogues.'),
+        ('The coordinate system',
+         "To give each star a place, he used a system of angles similar in spirit to latitude and longitude. A star's position could then be stated clearly and checked by others. This made it possible to compare observations across years."),
+        ('Observations',
+         'He compared his own star positions with older records. He found that the positions of the stars had shifted against the equinoxes. This discovery is now called the precession of the equinoxes.'),
+        ('The magnitude scale',
+         'Hipparchus is credited with an early scale of brightness, in which the brightest stars were of the first size. Later writers, such as Ptolemy, extended this into a scale of six magnitudes. The idea is still used in modern astronomy.'),
+        ('Influence and errors',
+         'His work shaped astronomy for centuries, and later astronomers built on his catalogue. Some of his measurements were rough by modern standards. Historians judge his work by the care it showed in an age without telescopes.'),
+    ],
+    "test": [
+        ('Where did Hipparchus work on his observations?',
+         [('a', 'The city of Rome'), ('b', 'The valley of the Thames'), ('c', 'The island of Rhodes'), ('d', 'The deserts of Peru')],
+         'c'),
+        ('About how many stars is his catalogue often counted at?',
+         [('a', 'Around eight'), ('b', 'Around eight million'), ('c', 'Around eight hundred and fifty'), ('d', 'Exactly one hundred')],
+         'c'),
+        ('What discovery did Hipparchus make from comparing old and new records?',
+         [('a', 'The orbit of Mars'), ('b', 'The shape of the Moon'), ('c', 'The distance to the Sun in metres'), ('d', 'The precession of the equinoxes')],
+         'd'),
+        ('Which later writer extended the brightness scale into six magnitudes?',
+         [('a', 'Eratosthenes'), ('b', 'Ptolemy'), ('c', 'Euler'), ('d', 'Galileo')],
+         'b'),
+        ('What helped later astronomers compare observations across years?',
+         [('a', 'A clear system of angles to state star positions'), ('b', "A list of the astronomers' favourite foods"), ('c', 'A map with no stars'), ('d', 'A ban on writing records')],
+         'a'),
+    ],
+}

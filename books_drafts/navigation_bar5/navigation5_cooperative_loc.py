@@ -1,0 +1,37 @@
+"""Cooperative Localisation: how several vehicles measure distances between each other to find their positions together."""
+CODE = 'navigation5_cooperative_loc'
+BOOK = {
+    "title": 'Cooperative Localisation',
+    "subtitle": 'Ranges between vehicles, shared networks, error sharing, and when the method fails',
+    "chapters": [
+        ('Finding yourself with help',
+         'A vehicle that cannot see satellites can still learn where it is by working with its neighbours. Each vehicle measures how far away the others are. Together the group can fix its positions even when no single vehicle knows its place well.'),
+        ('Measuring ranges',
+         'Vehicles often measure ranges with radio or acoustic signals, by timing how long a message takes to arrive. Seawater quickly absorbs radio signals, so underwater systems use sound while air systems use radio. Each measured range becomes a rule that the positions must follow.'),
+        ('Building the network',
+         'Each vehicle is a node in a network of links, and each link carries a measured range. The more links there are, the more the group can check itself. A network with too few links leaves some positions unfixed.'),
+        ('Sharing errors',
+         'Every measurement carries some error. When vehicles share their estimates and the errors behind them, each one can correct its own position. Careful sharing stops a mistake from spreading unchecked through the group.'),
+        ('Constraints',
+         'A vehicle can only move as fast and as far as its own body allows, and the group must agree with the laws of motion. Constraints such as known speeds, known depths, or fixed anchors make the estimates more reliable. A map of fixed points helps the group stay honest.'),
+        ('Failure and benefit',
+         'The method is strong when the group is well spread out and the links are clear. It fails when vehicles bunch together in a line or when the signals are blocked. Engineers test these cases before trusting the system, because a lost link can quietly ruin the estimate.'),
+    ],
+    "test": [
+        ('What does a vehicle measure in cooperative localisation?',
+         [('a', 'How far away the other vehicles are'), ('b', 'The colour of its neighbours'), ('c', 'The temperature of the seabed'), ('d', 'The number of its passengers')],
+         'a'),
+        ('Why do underwater systems often use sound for ranges?',
+         [('a', 'Seawater quickly absorbs radio signals'), ('b', 'Sound travels faster than radio in water'), ('c', 'Sound is silent and needs no power'), ('d', 'Sound stops the vehicle from drifting')],
+         'a'),
+        ('What happens when the network has too few links?',
+         [('a', 'Every position becomes exact'), ('b', 'The vehicles fly faster'), ('c', 'Some positions stay unfixed'), ('d', 'The network grows by itself')],
+         'c'),
+        ('What is the purpose of sharing error estimates?',
+         [('a', 'To hide the mistakes from the group'), ('b', 'To make the signals louder'), ('c', 'To reduce the number of vehicles'), ('d', 'To let each vehicle correct its own position')],
+         'd'),
+        ('When does the method tend to fail?',
+         [('a', 'When the vehicles bunch together in a line'), ('b', 'When the vehicles are well spread out'), ('c', 'When the links are many and clear'), ('d', 'When there is a fixed anchor')],
+         'a'),
+    ],
+}

@@ -39,6 +39,8 @@ func toggle() -> void:
 
 
 func _gui_input(ev: InputEvent) -> void:      # tap the scope: the next range
+	if ev.device == InputEvent.DEVICE_ID_EMULATION:
+		return    # on a phone each touch also arrives as a copied mouse event; counting both made one press a double-tap
 	if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT \
 			or ev is InputEventScreenTouch and ev.pressed:
 		range_i = (range_i + 1) % RANGES.size()
@@ -111,18 +113,18 @@ func _draw() -> void:
 			if bay.lock.get("field") and bay.lock.field.id == fl.id:
 				draw_arc(c + v, big + 5.0, 0.0, TAU, 24, Color("7fe0a8"), 1.5, true)
 	# landmarks; past the edge they wait on the rim
-	var marks := [["Sun", [0.0, 0.0, 0.0], Color("ffcf6b")], ["Starship", bay.sol.sp, Color("7fb0ff")],
-		["Wormhole", bay.sol.wh_w, Color("b49cff")]]
+	var marks := [[tr("Sun"), [0.0, 0.0, 0.0], Color("ffcf6b")], [tr("Starship"), bay.sol.sp, Color("7fb0ff")],
+		[tr("Wormhole"), bay.sol.wh_w, Color("b49cff")]]
 	for g in Solar.GIANTS:
-		marks.append([g.name, bay.sol.giant_w(g), Color("d9a441")])
+		marks.append([tr(g.name), bay.sol.giant_w(g), Color("d9a441")])
 	if rng > 1e9:
-		marks.append(["You", me_w, Color("7fe0a8")])
+		marks.append([tr("You"), me_w, Color("7fe0a8")])
 	var placed: Array = []
 	for m in marks:
 		var v: Vector2 = to_scope.call(m[1])
 		var on := v.length() <= R
 		if not on:
-			if rng < 1e6 and m[0] != "Starship":
+			if rng < 1e6 and m[0] != tr("Starship"):
 				continue                         # up close, only the Starship points the way home from the rim
 			v = v.normalized() * R
 		var col: Color = m[2]
@@ -135,7 +137,7 @@ func _draw() -> void:
 		draw_string(font, at, m[0], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(col, 0.85))
 	if rng < 1e9:                                # you, at the centre, nose up
 		draw_colored_polygon(PackedVector2Array([c + Vector2(0, -7), c + Vector2(5, 5), c + Vector2(-5, 5)]), Color("7fe0a8"))
-	var txt := "RANGE %s · tap to change" % RANGES[range_i][1]
+	var txt := tr("RANGE %s · tap to change") % RANGES[range_i][1]
 	var tw := font.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
 	draw_string(font, Vector2(c.x - tw / 2.0, c.y + R + 22.0), txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(RED, 0.9))
 

@@ -1,0 +1,37 @@
+"""GNSS Reflectometry: using satellite navigation signals that bounce off the sea, soil, and ice to measure the surface below."""
+CODE = 'navigation5_gnss_reflectometry'
+BOOK = {
+    "title": 'GNSS Reflectometry',
+    "subtitle": 'Reflected signals, sea state, soil moisture, ice, sensors, and uses',
+    "chapters": [
+        ('Signals that bounce',
+         'Navigation satellites send signals down to the Earth all the time. Some signals bounce off the surface before they reach a receiver. GNSS reflectometry studies these bounced signals to learn about the ground or sea below.'),
+        ('Reflected signals',
+         'A receiver that sees both the direct and the reflected signal can compare them. The timing, strength, and shape of the reflection carry information about the surface. Special receivers are built to collect these weak echoes.'),
+        ('Sea state',
+         'Rough sea scatters the reflected signal in many directions, while calm sea reflects it more cleanly. By measuring this change, scientists can estimate wind and wave conditions over the ocean. This helps with weather and ship routing.'),
+        ('Soil moisture',
+         'Wet soil reflects signals differently from dry soil. Measuring these changes over fields and forests gives an estimate of soil moisture. Farmers and water managers can use such maps.'),
+        ('Ice',
+         'Ice and snow change the strength and pattern of reflected signals. Studies of ice can show where it is melting or forming. The method works even when clouds cover the area.'),
+        ('Sensors and uses',
+         'The sensors are often small and cheap, which makes them useful for many small satellites. Their data supports weather forecasts, drought monitoring, and studies of sea ice. Each use needs careful calibration against trusted measurements.'),
+    ],
+    "test": [
+        ('What does GNSS reflectometry study?',
+         [('a', 'The sound of rain on a roof'), ('b', 'The shape of clouds only'), ('c', 'The paint on ships'), ('d', 'Navigation signals that bounce off the surface')],
+         'd'),
+        ('How does rough sea change the reflected signal?',
+         [('a', 'It scatters the signal in many directions'), ('b', 'It makes the signal disappear for good'), ('c', 'It turns the signal into light'), ('d', 'It makes the signal faster than light')],
+         'a'),
+        ('What can reflected signals reveal about soil?',
+         [('a', 'The price of seeds'), ('b', 'The number of farm animals'), ('c', 'The name of the farmer'), ('d', 'Soil moisture')],
+         'd'),
+        ('Why is the method useful when clouds cover an area?',
+         [('a', 'Clouds make the signals stronger'), ('b', 'Ice and surface changes can still be sensed through them'), ('c', 'Clouds stop all satellites'), ('d', 'Clouds are always absent in this method')],
+         'b'),
+        ('Why must these sensors be calibrated?',
+         [('a', 'So they can change colour'), ('b', 'So their readings can be checked against trusted measurements'), ('c', 'So they stop working at night'), ('d', 'So they weigh less')],
+         'b'),
+    ],
+}

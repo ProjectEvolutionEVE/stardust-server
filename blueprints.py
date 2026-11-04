@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import store as ST
 import serials as SER
+import materials_refining as MR
 import auctions as AU
 
 # Materials a design is made of: the refined or working form of each raw material, with its real density (a copy of the
@@ -67,7 +68,9 @@ async def options(conn):
     return {"kinds": [{"code": k, "name": v} for k, v in KINDS.items()],
             "origins": [{"code": k, "name": v} for k, v in ORIGINS.items()], "bases": await bases(conn),
             "books": [{"group": g, "books": [{"code": c, "name": n} for c, n in b]} for g, b in BOOKS],
-            "materials": [{k: m[k] for k in ("code", "name", "category", "density_kg_m3", "state")} for m in MATERIALS.values()],
+            "materials": [dict({k: m[k] for k in ("code", "name", "category", "density_kg_m3", "state")},
+                               groups=MR.COMPONENTS[m["code"]]) for m in MATERIALS.values()],
+            "groups": list(MR.GROUP.values()),          # the colour chart (Eric 11-03)
             "limits": {"text": TEXT, "parts": MAX_PARTS, "materials_per_part": MAX_MATERIALS, "max_minutes": MAX_MINUTES}}
 
 

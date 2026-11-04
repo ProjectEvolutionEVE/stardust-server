@@ -1,0 +1,37 @@
+"""Detecting Ships in Radar Imagery: finding vessels in radar pictures of the sea, separating them from clutter, and matching them to AIS reports."""
+CODE = 'navigation5_sar_ship_detection'
+BOOK = {
+    "title": 'Detecting Ships in Radar Imagery',
+    "subtitle": 'Sea clutter, detection thresholds, AIS matching, false alarms, use for routing, and privacy',
+    "chapters": [
+        ('Radar sees through cloud',
+         'Radar satellites can image the sea day and night and through most clouds. A ship is often bright in a radar picture because metal reflects radar strongly. This makes radar a useful way to find ships far from shore.'),
+        ('Sea clutter',
+         'The sea itself also returns radar signals, and waves can make bright patches that look like ships. This background noise is called sea clutter. Detection methods must separate ships from the clutter around them.'),
+        ('Detection thresholds',
+         'A detector marks any spot that is brighter than its surroundings by a set amount. The threshold controls how bright a spot must be. Set too low, it marks waves. Set too high, it misses small ships.'),
+        ('AIS matching',
+         'Many ships send automatic identification system messages that give their position and name. Analysts match radar detections with these messages. A detection with no matching message may be a ship that is not transmitting.'),
+        ('False alarms',
+         'Oil platforms, rocks, and wave patterns can cause false alarms. Analysts check each detection with other images or records. A small number of false alarms is normal in any real system.'),
+        ('Routing and privacy',
+         'Ship detections help track fishing fleets, improve safety, and plan routes in busy seas. The same data can reveal where people travel and work. Good use limits who sees the data and how long it is kept.'),
+    ],
+    "test": [
+        ('Why do radar satellites help find ships?',
+         [('a', 'They can see colours clearly in the dark only'), ('b', 'They run on the surface of the sea'), ('c', 'They can read ship names through the hull'), ('d', 'They can image the sea day and night through most clouds')],
+         'd'),
+        ('What is sea clutter?',
+         [('a', 'A pile of rubbish on the shore'), ('b', 'Radar returns from the sea that can look like ships'), ('c', 'A type of fish net'), ('d', 'A list of ship names')],
+         'b'),
+        ('What happens if the detection threshold is set too low?',
+         [('a', 'Every ship is always found'), ('b', 'The radar turns off'), ('c', 'Waves may be marked as ships'), ('d', 'The sea becomes calm')],
+         'c'),
+        ('What is the purpose of AIS matching?',
+         [('a', 'To paint the ships in new colours'), ('b', 'To link radar detections with ships that report their position'), ('c', 'To remove the sea from the image'), ('d', 'To count the sailors on board')],
+         'b'),
+        ('Why must the use of ship data be limited?',
+         [('a', 'It is too small to store'), ('b', 'It only shows the weather'), ('c', 'It never describes a ship'), ('d', 'It can reveal where people travel and work')],
+         'd'),
+    ],
+}

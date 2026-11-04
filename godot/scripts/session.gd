@@ -5,7 +5,14 @@ extends Node
 const SAVE_PATH := "user://session.dat"
 
 var token := ""
-var me: Dictionary = {}
+var me: Dictionary = {}:
+	set(v):
+		me = v
+		if str(v.get("language", "")) != "":
+			Ui.set_language(str(v.language))   # everything on screen follows the player's language (Eric 11-02)
+		var d := device()
+		if str(v.get("sdid", "")) != "" and d.get("sdid", "") == v.sdid and d.get("title", "") != v.get("title", ""):
+			set_device(str(d.key), str(v.sdid), str(v.get("title", "")))   # keep the name on the phone's join offer current
 
 
 func _ready() -> void:
@@ -26,6 +33,7 @@ func signed_in(new_token: String, new_me: Dictionary) -> void:
 func clear() -> void:
 	token = ""
 	me = {}
+	adding_contact = false
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(SAVE_PATH)
 
@@ -87,3 +95,68 @@ func forget() -> void:
 
 ## Which quarters tab opens next, e.g. "Desk" when coming back from the Market terminal.
 var quarters_tab := ""
+
+
+## The language and country picked on the sign-in screen, kept on this device (not personal: the browser keeps them too).
+const PREFS_PATH := "user://prefs.cfg"
+
+
+func pref(key: String, default: String = "") -> String:
+	var c := ConfigFile.new()
+	return str(c.get_value("signin", key, default)) if c.load(PREFS_PATH) == OK else default
+
+
+func set_pref(key: String, value: String) -> void:
+	var c := ConfigFile.new()
+	c.load(PREFS_PATH)
+	c.set_value("signin", key, value)
+	c.save(PREFS_PATH)
+
+
+## The sign-up lists (languages, countries, names) kept on this device, so sign-in fills at once even when the Starship is
+## slow to answer; refreshed from the server each time it does.
+const OPTIONS_PATH := "user://signup-options.json"
+
+
+func cached_options() -> Dictionary:
+	if not FileAccess.file_exists(OPTIONS_PATH):
+		return {}
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(OPTIONS_PATH))
+	return d if d is Dictionary else {}
+
+
+func cache_options(d: Dictionary) -> void:
+	var f := FileAccess.open(OPTIONS_PATH, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify(d))
+
+
+## The lists: from this device at once if kept, else from the server (waiting up to 45 s: it can be slow to wake).
+func signup_options() -> Dictionary:
+	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false, 45.0)
+	if r.ok:
+		cache_options(r.data)
+		return r.data
+	return cached_options()
+
+
+## The phone remembers the SDID it was last signed in to (Eric 11-03), even after signing out: a key from the server that
+## proves only that, kept encrypted like the sign-in. With it, signing in with a NEW phone or email can join that SDID.
+const DEVICE_PATH := "user://device.dat"
+## Set before opening the sign-in screen to add a phone or email to the signed-in SDID, and where to go afterwards.
+var adding_contact := false
+var after_contact := "res://scenes/quarters.tscn"
+
+
+func device() -> Dictionary:
+	if not FileAccess.file_exists(DEVICE_PATH):
+		return {}
+	var f := FileAccess.open_encrypted_with_pass(DEVICE_PATH, FileAccess.READ, _key())
+	var d: Variant = JSON.parse_string(f.get_as_text()) if f else null
+	return d if d is Dictionary else {}
+
+
+func set_device(key: String, sdid: String, title: String) -> void:
+	var f := FileAccess.open_encrypted_with_pass(DEVICE_PATH, FileAccess.WRITE, _key())
+	if f:
+		f.store_string(JSON.stringify({"key": key, "sdid": sdid, "title": title}))

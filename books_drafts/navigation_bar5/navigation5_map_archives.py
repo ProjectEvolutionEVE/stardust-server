@@ -1,0 +1,37 @@
+"""Map Archives and Digitisation: how old maps are scanned, placed on the Earth, described, and kept for the future."""
+CODE = 'navigation5_map_archives'
+BOOK = {
+    "title": 'Map Archives and Digitisation',
+    "subtitle": 'Historic maps, scanning, georeferencing, metadata, access, and preservation',
+    "chapters": [
+        ('Old maps as records',
+         'Historic maps record how land, towns, and coasts looked in the past. They are valuable to historians, planners, and families. Archives keep them safe so that future people can study them.'),
+        ('Scanning',
+         "Scanning turns a paper map into a digital image. The scan must be sharp enough to show fine lines and labels. Archivists set the resolution and colour settings with the map's condition in mind."),
+        ('Georeferencing',
+         "Georeferencing places a scanned map onto the Earth's surface. The archivist picks points on the old map that can be found today, such as church towers or coast corners. The map is then stretched and placed to match those points."),
+        ('Metadata',
+         'Metadata describes the map. It records the title, the date, the maker, the scale, and the place shown. Good metadata helps people find the map and understand what it is.'),
+        ('Access',
+         'Archives decide who may see and use each map. Some maps can be shared freely, while others have licence limits or are kept for careful study. Clear rules protect both the maps and the people who use them.'),
+        ('Preservation',
+         'Paper and ink decay with light, damp, and handling. Archives store maps in stable conditions and keep several digital copies in safe places. A plan for preservation must last longer than any single machine or program.'),
+    ],
+    "test": [
+        ('Why are historic maps valuable?',
+         [('a', 'They show how places looked in the past'), ('b', 'They are always printed in gold'), ('c', "They predict next year's weather"), ('d', 'They replace modern roads')],
+         'a'),
+        ('What does scanning do?',
+         [('a', 'It makes the paper heavier'), ('b', 'It erases the labels'), ('c', 'It turns a paper map into a digital image'), ('d', 'It folds the map into a box')],
+         'c'),
+        ('What is georeferencing?',
+         [('a', 'Writing a map in a foreign language'), ('b', 'Painting the paper blue'), ('c', "Placing a scanned map onto the Earth's surface"), ('d', 'Selling the map at a market')],
+         'c'),
+        ('What does metadata record?',
+         [('a', 'The title, date, maker, scale, and place of the map'), ('b', 'The name of the paper mill only'), ('c', 'The number of coffee cups used'), ('d', 'The colour of the archive door')],
+         'a'),
+        ('Why do archives keep several digital copies in safe places?',
+         [('a', 'So the paper can be sold twice'), ('b', 'So the map survives if one machine or site fails'), ('c', 'So the copies can be lost on purpose'), ('d', 'So the maps can be printed in colour')],
+         'b'),
+    ],
+}

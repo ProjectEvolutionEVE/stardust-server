@@ -61,7 +61,7 @@ func load_desk() -> void:
 	mk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/market.tscn"))
 	body.add_child(mk)
 	body.add_child(_heading("STARSHIP BANK"))
-	body.add_child(Ui.label("Savings, term deposits, loans and your savings goals (rule 36).", 22, Ui.MUTED))
+	body.add_child(Ui.label("Savings, term deposits, loans and your savings goals.", 22, Ui.MUTED))
 	var bk := Ui.button("🏦 Open the Starship Bank")
 	bk.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/bank.tscn"))
 	body.add_child(bk)
@@ -71,9 +71,9 @@ func load_desk() -> void:
 		items.add_child(Ui.label(r.error, 22, Ui.GOLD))
 		return
 	var inv: Dictionary = r.data
-	wallet.text = Ui.num(inv.credits) + " credits"
+	wallet.text = tr("%s credits") % Ui.num(inv.credits)
 	if int(inv.get("credits_set_aside", 0)) > 0:
-		wallet.text += "  (+" + Ui.num(inv.credits_set_aside) + " set aside for orders and bids)"
+		wallet.text += "  " + tr("(+%s set aside for orders and bids)") % Ui.num(inv.credits_set_aside)
 	var all: Array = inv.get("places", [])
 	var tops := all.filter(func(p): return p.get("inside") == null)
 	tops.sort_custom(_by_place)
@@ -116,10 +116,10 @@ func _describe(e: Dictionary) -> String:
 	var ch := int(e.change)
 	match str(e.reason):
 		"trade":
-			return ("Sold " if ch > 0 else "Bought ") + "%s × %s" % [str(ref.get("qty", "")), str(ref.get("item", "")).capitalize()]
+			return (tr("Sold %s × %s") if ch > 0 else tr("Bought %s × %s")) % [str(ref.get("qty", "")), str(ref.get("item", "")).capitalize()]
 		"auction":
-			return "Blueprint copy sold at auction" if ch > 0 else "Won a blueprint copy at auction"
-	return LEDGER_WHAT.get(str(e.reason), str(e.reason).capitalize())
+			return tr("Blueprint copy sold at auction") if ch > 0 else tr("Won a blueprint copy at auction")
+	return tr(LEDGER_WHAT[str(e.reason)]) if LEDGER_WHAT.has(str(e.reason)) else str(e.reason).capitalize()
 
 
 func _ledger_row(date: String, what: String, cin: String, cout: String, bal: String, c: Color) -> HBoxContainer:
@@ -158,9 +158,9 @@ func _folder(p: Dictionary, all: Array, depth: int) -> VBoxContainer:
 	var space := ""
 	if p.get("capacity_m3") != null:
 		var u := float(p.get("used_m3", 0))
-		space = ("under 0.01" if u > 0 and u < 0.01 else Ui.dec(u, 2)) + " of " + Ui.dec(float(p.capacity_m3), 2) + " m³ used"
+		space = tr("%s of %s m³ used") % [tr("under 0.01") if u > 0 and u < 0.01 else Ui.dec(u, 2), Ui.dec(float(p.capacity_m3), 2)]
 	elif p.get("capacity_slots") != null:
-		space = "%d of %d bays used" % [int(p.get("used_slots", 0)), int(p.capacity_slots)]
+		space = tr("%d of %d bays used") % [int(p.get("used_slots", 0)), int(p.capacity_slots)]
 	var f := VBoxContainer.new()
 	f.add_theme_constant_override("separation", 6)
 	var head := Button.new()
@@ -170,8 +170,8 @@ func _folder(p: Dictionary, all: Array, depth: int) -> VBoxContainer:
 	head.add_theme_font_size_override("font_size", 24)
 	for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 		head.add_theme_color_override(c, Ui.TEXT)
-	var title: String = str(PLACE_ICON.get(p.kind, "📁")) + " " + str(PLACE_NAME.get(p.kind, p.name))
-	var meta := ("%d item%s" % [n, "" if n == 1 else "s"]) if n else "empty"
+	var title: String = str(PLACE_ICON.get(p.kind, "📁")) + " " + str(tr(PLACE_NAME[p.kind]) if PLACE_NAME.has(p.kind) else p.name)
+	var meta := ((tr("%d item") if n == 1 else tr("%d items")) % n) if n else tr("empty")
 	if space != "":
 		meta += " · " + space
 	f.add_child(head)
@@ -187,12 +187,12 @@ func _folder(p: Dictionary, all: Array, depth: int) -> VBoxContainer:
 		var nm: String = i.name
 		var d: Variant = i.get("details", {})
 		if d is Dictionary and d.has("serial"):
-			nm += "\nSerial " + str(d.serial)
-		v.add_child(_row(nm, "set aside" if i.get("set_aside") else "1"))
+			nm += "\n" + tr("Serial %s") % str(d.serial)
+		v.add_child(_row(nm, tr("set aside") if i.get("set_aside") else "1"))
 	for d in designs:
-		v.add_child(_row(str(d.title) + " (your design)", str(DESIGN_STATUS.get(d.status, d.status))))
+		v.add_child(_row(tr("%s (your design)") % str(d.title), tr(DESIGN_STATUS[d.status]) if DESIGN_STATUS.has(d.status) else str(d.status)))
 	if n == 0 and kids.is_empty():
-		v.add_child(Ui.label(str(PLACE_EMPTY.get(p.kind, "Empty.")), 20, Ui.MUTED))
+		v.add_child(Ui.label(tr(PLACE_EMPTY.get(p.kind, "Empty.")), 20, Ui.MUTED))
 	for k in kids:
 		v.add_child(_folder(k, all, depth + 1))
 	var open: bool = p.kind == "starship_cargo"
@@ -223,11 +223,11 @@ func _amount(g: Dictionary) -> String:
 		var s := (Ui.dec(kg / 1000.0, 2) + " t") if kg >= 1000 else (Ui.dec(kg, 1) + " kg")
 		var pcs := int(g.get("pieces", 0))
 		if pcs:
-			s += " · %d piece%s" % [pcs, "" if pcs == 1 else "s"]
+			s += " · " + (tr("%d piece") if pcs == 1 else tr("%d pieces")) % pcs
 		if float(g.get("kg_set_aside", 0)) > 0:
-			s += " · " + Ui.num(g.kg_set_aside) + " kg set aside for an order"
+			s += " · " + tr("%s kg set aside for an order") % Ui.num(g.kg_set_aside)
 		return s
 	var s2 := str(int(g.get("count", 0)))
 	if int(g.get("set_aside", 0)):
-		s2 += " · %d set aside" % int(g.set_aside)
+		s2 += " · " + tr("%d set aside") % int(g.set_aside)
 	return s2

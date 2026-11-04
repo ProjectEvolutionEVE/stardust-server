@@ -1,0 +1,37 @@
+"""High-Definition Maps for Vehicles: maps precise enough to show each lane, and how they are kept up to date."""
+CODE = 'navigation5_hd_maps'
+BOOK = {
+    "title": 'High-Definition Maps for Vehicles',
+    "subtitle": 'Lane-level data, updates, localisation, layers, costs, and privacy',
+    "chapters": [
+        ('More detail than a road map',
+         'A normal road map shows roads as lines. A high-definition map shows each lane, its edges, its markings, and its signs. The extra detail helps a vehicle know exactly which lane it is in.'),
+        ('Layers of data',
+         'These maps are built in layers. One layer holds the road shape, another the lane lines, and another the fixed objects such as poles and signs. A vehicle reads only the layers it needs.'),
+        ('Localisation',
+         'The vehicle matches what its sensors see against the stored map. When the match is good, the vehicle knows its position very precisely. When the match is poor, it must rely on other sensors.'),
+        ('Keeping it up to date',
+         'Roads change when lanes are repainted, signs move, or works close a road. Map makers collect new data and update the changed parts. An old map can mislead a vehicle, so update rules matter.'),
+        ('Costs',
+         'Collecting and checking lane-level data takes time, equipment, and people. Storing and sending large map files also costs money. Makers must weigh the benefit of detail against these costs.'),
+        ('Privacy',
+         'Vehicles that collect data on their trips can record where people go. Good designs remove identity from the data and keep only what the map needs. People should know what is collected and why.'),
+    ],
+    "test": [
+        ('What does a high-definition map show that a normal road map does not?',
+         [('a', 'The weather at each town'), ('b', 'The price of fuel'), ('c', 'Each lane and its markings'), ('d', 'The names of drivers')],
+         'c'),
+        ('What are the layers in these maps used for?',
+         [('a', 'To let a vehicle read only the layers it needs'), ('b', 'To hide the road from the vehicle'), ('c', 'To make the file print in colour'), ('d', 'To count the number of trees')],
+         'a'),
+        ('How does a vehicle use the stored map to find its position?',
+         [('a', 'It guesses from the radio music'), ('b', 'It asks the nearest shop'), ('c', 'It matches what its sensors see against the map'), ('d', 'It turns off its sensors')],
+         'c'),
+        ('Why must the map be updated?',
+         [('a', 'Because roads and signs change over time'), ('b', 'Because maps wear out like paper'), ('c', 'Because vehicles need new colours'), ('d', 'Because the sun moves')],
+         'a'),
+        ('What is a privacy step for trip data?',
+         [('a', 'Keep the identity of the traveller in the data'), ('b', 'Remove identity and keep only what the map needs'), ('c', 'Share every trip with everyone'), ('d', 'Store trips on paper only')],
+         'b'),
+    ],
+}

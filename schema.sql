@@ -369,7 +369,7 @@ CREATE INDEX IF NOT EXISTS blueprint_messages_sub ON blueprint_messages(submissi
 DO $$ BEGIN
   ALTER TABLE locations DROP CONSTRAINT IF EXISTS locations_kind_check;
   ALTER TABLE locations ADD CONSTRAINT locations_kind_check CHECK (kind IN ('starship_cargo','private_quarters','lockbox',
-    'hangar','ship_hold','colony_storage','filing_cabinet','bookshelf'));
+    'hangar','ship_hold','colony_storage','filing_cabinet','bookshelf','maintenance_deck'));   -- + the Maintenance Deck (11-03)
 END $$;
 CREATE UNIQUE INDEX IF NOT EXISTS locations_one_in_quarters ON locations(player_id, kind) WHERE kind IN ('filing_cabinet','bookshelf');
 INSERT INTO locations(player_id, kind, name, capacity_m3, parent_id)
@@ -793,4 +793,40 @@ INSERT INTO settings(key, value, note) VALUES
   ('skill_start_gain',     10,  'Career skill gain of a silver bar 1, in % (rule 32; first setting to tune)'),
   ('skill_step_factor',    0.6, 'Each bar up gains this times the bar before it (rule 32)'),
   ('skill_gold_bonus_pct', 10,  'A gold bar gains this % more than its silver (rule 32)')
+ON CONFLICT (key) DO NOTHING;
+
+-- v-SDID (Eric 11-03): one SDID per player (the account number, SD-XXXX-XXXX-XXXX) holds every way they sign in, a
+-- phone AND an email (both in `logins`). A player adds the other one at sign-up, later from the Bed, or when signing in
+-- on a phone that already knows their SDID. Two accounts the same person made are combined by the crew (staff only):
+-- the absorbed account keeps its data but can no longer be signed into; `merged_into` points to the SDID kept.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS merged_into BIGINT REFERENCES players(id);
+-- A key the app keeps on the phone after a sign-in, so the phone can offer "add this email to SD-XXXX?" later, even after
+-- signing out. It proves only that this phone was signed in to that SDID; the server never stores anything about the
+-- phone itself (rule 4: the phone number or email is the only personal information kept). Only a hash is kept.
+CREATE TABLE IF NOT EXISTS device_links (
+  key_hash   TEXT PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  revoked_at TIMESTAMPTZ
+);
+
+-- The Maintenance Deck (Eric 11-03, rule 25; workshop.py): above the docking bay's flight deck, where craft are serviced
+-- and players set up their own small furnaces in a partitioned smelting area. Each player's space there has a size
+-- (rule 10). Builds and smelting batches run in real time as jobs.
+-- (its location kind is added to the list in the v4 block above, which runs on every start)
+CREATE UNIQUE INDEX IF NOT EXISTS locations_one_deck ON locations(player_id) WHERE kind = 'maintenance_deck';
+CREATE TABLE IF NOT EXISTS workshop_jobs (
+  id         BIGSERIAL PRIMARY KEY,
+  player_id  BIGINT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  kind       TEXT NOT NULL CHECK (kind IN ('build','smelt')),
+  detail     JSONB NOT NULL,                       -- what goes in, what comes out
+  started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  ends_at    TIMESTAMPTZ NOT NULL,                 -- real time: never sped up
+  done_at    TIMESTAMPTZ,
+  receipt    TEXT
+);
+CREATE INDEX IF NOT EXISTS workshop_jobs_due ON workshop_jobs(ends_at) WHERE done_at IS NULL;
+CREATE INDEX IF NOT EXISTS workshop_jobs_player ON workshop_jobs(player_id, ends_at DESC);
+INSERT INTO settings(key, value, note) VALUES
+  ('deck_m3', 20, 'Each player''s space on the Maintenance Deck, m³ (Eric 11-03: small smelters take hardly any space; first setting)')
 ON CONFLICT (key) DO NOTHING;

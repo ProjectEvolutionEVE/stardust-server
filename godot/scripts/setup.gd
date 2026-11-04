@@ -2,9 +2,9 @@ extends Control
 ## First sign-in: a name from the game's lists and a language. Names are never typed (rule 6).
 
 var opts := {}
-var first: OptionButton
-var last: OptionButton
-var lang: OptionButton
+var first: WheelPicker
+var last: WheelPicker
+var lang: WheelPicker
 var langs: Array = []
 
 
@@ -12,18 +12,19 @@ func _ready() -> void:
 	var box := Ui.screen(self)
 	box.add_child(Ui.label("Welcome aboard, Trainee", 40, Ui.GOLD))
 	box.add_child(Ui.label("Choose your name and language.", 24, Ui.MUTED))
-	first = Ui.picker()
-	last = Ui.picker()
-	lang = Ui.picker()
+	first = Ui.picker("First name")
+	last = Ui.picker("Last name")
+	lang = Ui.picker("Your language")
 	for w in [first, last, lang]:
 		box.add_child(w)
 	var go := Ui.button("Report for duty")
 	go.pressed.connect(_save.bind(go))
 	box.add_child(go)
-	var r := await Api.call_api("GET", "/api/dfg/signup-options", {}, false)
-	if not r.ok:
-		Ui.error(self, r.error)
+	var d := await Session.signup_options()
+	if d.is_empty():
+		Ui.error(self, "The Starship isn't answering. Check your connection, then open the game again.")
 		return
+	var r := {"data": d}
 	for n in r.data.first_names:
 		first.add_item(n)
 	for n in r.data.last_names:
@@ -33,8 +34,12 @@ func _ready() -> void:
 		var l: Dictionary = langs[i]
 		lang.add_item("%s %s" % [l.get("flag", ""), l.get("native", l.name)] + ("" if l.supported else " (soon)"))
 		lang.set_item_disabled(i, not l.supported)
-		if l.code == "en":
+		if l.code == Session.pref("lang", "en"):   # the language picked on the sign-in screen
 			lang.select(i)
+	if lang.selected < 0:
+		for i in langs.size():
+			if langs[i].code == "en":
+				lang.select(i)
 
 
 func _save(go: Button) -> void:
@@ -51,4 +56,14 @@ func _save(go: Button) -> void:
 	if me.ok:
 		Session.me = me.data
 	Session.call_on_enter = "welcome"
-	get_tree().change_scene_to_file("res://scenes/quarters.tscn")
+	# one SDID for every way they sign in (Eric 11-03): offer the other one now, so a phone and an email never make two accounts
+	var has_email := false
+	for x in Session.me.get("sign_ins", []):
+		has_email = has_email or x.channel == "email"
+	Ui.dialog(self, "Your SDID", "Add your phone too? Then either one signs you in to the same account." if has_email
+			else "Add your email too? Then either one signs you in to the same account.", [
+		["Not now", false, func(): get_tree().change_scene_to_file("res://scenes/quarters.tscn")],
+		["Add it", true, func():
+			Session.adding_contact = true
+			Session.after_contact = "res://scenes/quarters.tscn"
+			get_tree().change_scene_to_file("res://scenes/signin.tscn")]])

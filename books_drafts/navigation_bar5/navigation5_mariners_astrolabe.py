@@ -1,0 +1,37 @@
+"""The Mariner's Astrolabe: a simple instrument that let sailors read their latitude from the height of the Sun or a star above the horizon."""
+CODE = 'navigation5_mariners_astrolabe'
+BOOK = {
+    "title": "The Mariner's Astrolabe",
+    "subtitle": 'The instrument, latitude readings, design, use, variants, and decline',
+    "chapters": [
+        ('A ring and a sight',
+         "The mariner's astrolabe was a metal instrument that a sailor held up to the sky. It measured the height of a star or the Sun above the horizon. From that height, the sailor could work out his latitude."),
+        ('Latitude readings',
+         "Latitude is the distance north or south of the equator. At noon, the Sun's height depends on the latitude and the season. A sailor who knew the Sun's height for the day could find his latitude from the reading."),
+        ('Design',
+         'The instrument had a ring marked in degrees, a pivoting arm, and sights to line up with the star or the Sun. It was often made of brass and worn on a cord or a stand. A good instrument was clear to read in rough weather.'),
+        ('Use',
+         'The sailor held the instrument steady, lined up the sight, and read the angle on the scale. Using it on a moving ship was hard, so sailors took several readings and used the average. Skill and patience mattered as much as the tool.'),
+        ('Variants',
+         'Different makers and navies used many variants of the instrument. Some had larger scales, and others had simpler designs for quick readings. The basic idea stayed the same across the variants.'),
+        ('Decline',
+         'The astrolabe lost its place as better tools came along. The sextant, which gave more precise readings, became the standard. Latitude could then be found with less effort, and the older instrument was set aside.'),
+    ],
+    "test": [
+        ("What did the mariner's astrolabe measure?",
+         [('a', 'The height of a star or the Sun above the horizon'), ('b', 'The speed of the wind'), ('c', 'The depth of the sea'), ('d', 'The weight of the cargo')],
+         'a'),
+        ('What is latitude?',
+         [('a', 'Distance east or west of London'), ('b', "The height of a ship's mast"), ('c', 'Distance north or south of the equator'), ('d', 'The speed of the current')],
+         'c'),
+        ('What was the astrolabe usually made of?',
+         [('a', 'Brass'), ('b', 'Paper'), ('c', 'Glass only'), ('d', 'Wood that floats')],
+         'a'),
+        ('Why did sailors take several readings?',
+         [('a', 'Because the instrument has no scale'), ('b', 'Because the Sun never moves'), ('c', 'Because readings must be sent by post'), ('d', 'Because a moving ship makes a single reading hard to trust')],
+         'd'),
+        ('What tool later became the standard for precise readings?',
+         [('a', 'The telescope with no mount'), ('b', 'The sundial in a garden'), ('c', 'The compass rose painted on a wall'), ('d', 'The sextant')],
+         'd'),
+    ],
+}

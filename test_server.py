@@ -183,6 +183,55 @@ async def main():
     check("setup done: 'Trainee Dan McCollough', English", j["title"] == "Trainee Dan McCollough" and j["language"] == "en" and not j["needs_setup"])
     r = await cl.post("/api/dfg/me/setup", headers=T, json={"first_name": "Lu", "last_name": "Chong", "language": "en"})
     check("the name can't be changed again by setup", r.status == 422)
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "ar"}); j = await r.json()
+    check("the language can be changed any time (Eric 11-02)", r.status == 200 and j["language"] == "ar" and j["voice_set"] == "ar")
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "sw"})
+    check("a language marked coming soon can't be chosen", r.status == 422)
+    r = await cl.post("/api/dfg/me/language", headers=T, json={"language": "en"})
+    # ---- one SDID, every way a player signs in (Eric 11-03) ----
+    async def code_for(ch, addr):
+        return (await (await cl.post("/api/dfg/auth/start", json={"channel": ch, "address": addr})).json())["dev_code"]
+    r = await cl.get("/api/dfg/me", headers=T); j = await r.json(); sdid = j["sdid"]
+    check("/me shows the SDID and the sign-ins, masked", sdid.startswith("SD-") and j["sign_ins"] == [{"channel": "sms", "shown": "+1 ••• 0123"}])
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "email", "address": "dan@example.com"}); c1 = (await r.json())["dev_code"]
+    r = await cl.post("/api/dfg/me/contact/verify", headers=T, json={"channel": "email", "address": "dan@example.com", "code": "000000" if c1 != "000000" else "111111"})
+    check("adding an email: a wrong code is refused", r.status == 422)
+    r = await cl.post("/api/dfg/me/contact/verify", headers=T, json={"channel": "email", "address": "dan@example.com", "code": c1}); j = await r.json()
+    check("adding an email from inside the account: the SDID now has both", r.status == 200 and len(j["sign_ins"]) == 2 and j["sign_ins"][1]["shown"] == "d•••@example.com")
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "dan@example.com", "code": await code_for("email", "dan@example.com")}); j = await r.json()
+    check("signing in with the added email opens the same SDID", j["me"]["sdid"] == sdid and not j["new_player"] and j["device_key"])
+    dkey = j["device_key"]
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "sms", "address": PH})
+    check("a sign-in already on the SDID can't be added again", r.status == 422)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "other@example.com", "code": await code_for("email", "other@example.com")})
+    other = await r.json()
+    r = await cl.post("/api/dfg/me/contact/start", headers=T, json={"channel": "email", "address": "other@example.com"})
+    check("another player's email can't be added (the crew combines accounts)", r.status == 422 and "own Stardust account" in (await r.json())["error"])
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "third@example.com", "code": await code_for("email", "third@example.com"),
+                                                    "link": True, "device_key": dkey}); j = await r.json()
+    check("a phone that knows the SDID: a new email, 'yes, add it', joins the same SDID", j["linked"] and not j["new_player"] and j["me"]["sdid"] == sdid)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fourth@example.com", "code": await code_for("email", "fourth@example.com"),
+                                                    "device_key": dkey}); fourth = await r.json()
+    check("…and 'no' (or a made-up key) makes a separate account", fourth["new_player"] and fourth["me"]["sdid"] != sdid)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fifth@example.com", "code": await code_for("email", "fifth@example.com"),
+                                                    "link": True, "device_key": "made-up"}); j = await r.json()
+    check("a made-up device key never joins anyone's SDID", j["new_player"] and j["me"]["sdid"] != sdid)
+    r = await cl.get("/api/dfg/admin/account", params={"sdid": sdid})
+    check("the crew's account tool needs the upload key", r.status == 403)
+    os.environ["DFG_UPLOAD_KEY"] = "merge-key"; K = {"X-Upload-Key": "merge-key"}
+    r = await cl.get("/api/dfg/admin/account", params={"channel": "email", "address": "fourth@example.com"}, headers=K); j = await r.json()
+    check("the crew can see what an account holds (tests passed, credits, sign-ins)", r.status == 200 and j["sdid"] == fourth["me"]["sdid"] and "tests_passed" in j)
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"]}); j = await r.json()
+    check("a merge is a dry run unless told otherwise", j.get("dry_run") and j["absorb"]["sign_ins"][0]["address"] == "fourth@example.com")
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"], "dry_run": False}); j = await r.json()
+    check("merging moves the absorbed account's sign-ins to the SDID kept", j.get("merged") and len(j["keep"]["sign_ins"]) == 4)
+    r = await cl.get("/api/dfg/me", headers={"Authorization": "Bearer " + fourth["token"]})
+    check("the absorbed account's old sign-in no longer works", r.status == 401)
+    r = await cl.post("/api/dfg/auth/verify", json={"channel": "email", "address": "fourth@example.com", "code": await code_for("email", "fourth@example.com")}); j = await r.json()
+    check("its email now opens the SDID kept", j["me"]["sdid"] == sdid and not j["new_player"])
+    r = await cl.post("/api/dfg/admin/merge", headers=K, json={"keep": sdid, "absorb": fourth["me"]["sdid"], "dry_run": False})
+    check("an account already merged can't be merged again", r.status == 404)
+    os.environ.pop("DFG_UPLOAD_KEY", None)
     S.AUTH.DEV = False
     r = await cl.get("/api/dfg/ship", headers=T); check("the token works for the game (the new player has a ship)", r.status == 200)
     r = await cl.get("/api/dfg/ship", headers={"Authorization": "Bearer not-a-real-token"}); check("a made-up token is refused", r.status == 401)
@@ -408,6 +457,8 @@ async def main():
     check("form options: kinds, library books, 46 materials with densities",
           r.status == 200 and len(o["materials"]) == 46 and any(b["code"] == "metallurgy" for g in o["books"] for b in g["books"])
           and all(m["density_kg_m3"] > 0 for m in o["materials"]))
+    check("the form shows each material's colour groups, and the colour chart", len(o["groups"]) == 9
+          and all(m["groups"] for m in o["materials"]) and next(m for m in o["materials"] if m["code"] == "mat-silver")["groups"] == ["electrical"])
     r = await cl.post("/api/dfg/blueprints/save", headers=HB, json={"form": {"name": "Clay furnace", "kind": "tool"}}); d = await r.json()
     check("a half-filled draft saves, and lists what's still missing", r.status == 200 and d["status"] == "draft" and d["editable"]
           and any("problem it solves" in x for x in d["missing"]) and any("library books" in x for x in d["missing"]))
@@ -447,8 +498,8 @@ async def main():
     async with cl.app["pool"].acquire() as c:
         code = await BP.approve(c, bid, "Eric", "Approved.")
         t = await c.fetchrow("SELECT kind, tradeable, density_kg_m3 FROM item_types WHERE code='mat-clay'")
-    check("approval makes the materials known items (clay, 2610 kg/m³, not on the market yet)",
-          code == f"bp-{bid}" and t["kind"] == "resource" and not t["tradeable"] and float(t["density_kg_m3"]) == 2610)
+    check("approval's materials are known items (clay, 2610 kg/m³, traded on the market since Eric 11-03)",
+          code == f"bp-{bid}" and t["kind"] == "resource" and t["tradeable"] and float(t["density_kg_m3"]) == 2610)
     r = await cl.post("/api/dfg/blueprints/withdraw", headers=HB, json={"id": bid})
     check("a decided blueprint can't be withdrawn", r.status == 422)
     # serial numbers (Eric 10-11): a model code per design; the original and every printed copy carry a unique serial
@@ -610,6 +661,13 @@ async def main():
     r = await cl.get("/api/dfg/library/book/catalogue", headers=HL); j = await r.json()
     check("the Raw Materials Catalogue lists every material and every debris-field mineral with its density",
           r.status == 200 and sum(c["text"].count("kg/m³") for c in j["chapters"]) == 46 + len(MN.MINERALS))
+    _cat = "\n".join(c["text"] for c in j["chapters"])
+    check("the catalogue's colour chart: every kind of component with its colour, every material's kinds and market lot",
+          len(j["groups"]) == 9 and _cat.count("Kind: ") == 46 and _cat.count("On the market: ") == 46
+          and "■ Electrical & Electronics (yellow)" in _cat and "trades as Water ice" in _cat)
+    check("every catalogue material says where it comes from, how it's smelted or refined, and what it's used for",
+          all(_cat.count(k) == 46 for k in ("Where from:", "How it's made:", "Used for:"))
+          and "Copper ore (chalcopyrite) CuFeS₂, 34.63%" in _cat and "Hall-Héroult" in _cat)
     r = await cl.get("/api/dfg/library/book/farming", headers=HL)
     check("a book still being written can't be opened", r.status == 404)
     r = await cl.get("/api/dfg/library/test/prospecting", headers=HL); j = await r.json()
@@ -845,10 +903,16 @@ async def main():
     import market as M, bank as BANKM, random as _r
     r = await cl.get("/api/dfg/market", headers=H); j = await r.json()
     board = {i["item"]: i for i in j["items"]}
+    import materials_refining as MR
     check("the board lists every debris-field mineral with floors, and says the bank trades too",
-          set(board) == set(MN.MINERALS) and board["gold"]["floor"] == 100
+          set(board) == set(MN.MINERALS) | set(MR.LISTED) and board["gold"]["floor"] == 100
           and board["iron"]["last"] == 200 and board["iron"]["lot_kg"] == 100 and board["silver"]["lot_kg"] == 10
           and board["gold"]["lot_kg"] == 1 and "bank trades" in j["note"])
+    check("refined materials trade too (Eric 11-03), each with its colour groups; the four that ARE their ore aren't listed twice",
+          board["mat-copper"]["refined"] and board["mat-copper"]["groups"] == ["electrical"] and board["mat-copper"]["lot_kg"] == 10
+          and board["mat-copper"]["last"] == 350 and board["mat-copper"]["floor"] == 175 and not board["iron"]["refined"]
+          and not set(MR.SAME_AS) & set(board) and board["water-ice"]["groups"] == ["life", "shielding", "power"] and {g["code"] for g in j["groups"]} == set(MR.GROUP)
+          and all(board[c]["groups"] for c in MR.LISTED))
     r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "gold", "side": "sell", "type": "limit", "qty": 1, "price": 99})
     check("an ask under the floor is refused", r.status == 422 and "floor" in (await r.json())["error"])
     async with cl.app["pool"].acquire() as c:
@@ -858,6 +922,11 @@ async def main():
         gold_bid = await c.fetchval("SELECT max(price) FROM orders WHERE item_code='gold' AND side='buy' AND status='open'")
         gold_last = await M.last_price(c, "gold")
     check("the bank's desks trade with each other: real trades on the tape", n_trades >= 25)
+    r = await cl.post("/api/dfg/market/order", headers=H, json={"item": "mat-copper", "side": "buy", "type": "instant", "qty": 1}); j = await r.json()
+    check("refined copper can be bought from the bank in a 10 kg lot, with a receipt",
+          r.status == 200 and sum(f["qty"] for f in j["fills"]) == 1 and j["receipt"]["lot_kg"] == 10)
+    r = await cl.get("/api/dfg/market/mine", headers=H)
+    check("and it sits in the cargo hold, ready to sell again", (await r.json())["holdings"]["mat-copper"]["lots"] == 1)
     check("the bank keeps a standing bid 10% under the last price (never under the floor)",
           gold_bid == max(100, int(gold_last * 0.9)))
     async with cl.app["pool"].acquire() as c:
@@ -1193,6 +1262,62 @@ console.log(JSON.stringify(out));"""
     r = await cl.post("/api/dfg/tow", headers=TW, json={}); j = await r.json()
     after = (await (await cl.get("/api/dfg/bank", headers=TW)).json())["credits"]
     check("a tow home costs the tow fee", r.status == 200 and j["charged"] == 1500 and after == before - 1500)
+    # The Maintenance Deck (Eric 11-03): build an approved design from the cargo hold, then smelt ore in it
+    import workshop as WSM
+    KM = {"X-Dev-Player": "kilnmaker"}
+    async with cl.app["pool"].acquire() as c:
+        kp = await ST.ensure_player(c, "dev:kilnmaker", "kilnmaker")
+        kform = {"name": "Clay brick kiln", "kind": "tool", "origin": "new", "problem": "Nothing aboard can heat ore hot enough to smelt it.",
+                 "does": "A box of dried clay bricks with an iron-nickel coil, heated by the Starship's power.", "fits": "the Maintenance Deck",
+                 "improves": "makes smelting possible", "books": ["ceramics"], "how": "Lay the bricks, wind the coil inside, connect it.",
+                 "parts": [{"name": "Bricks", "materials": [{"item": "mat-clay", "grams": 40000}]},
+                           {"name": "Coil", "materials": [{"item": "mat-native-iron-nickel", "grams": 2000}]}], "build_minutes": 60}
+        ksid = await BP.save_draft(c, kp, kform); await BP.submit(c, kp, ksid)
+        kcode = await BP.approve(c, ksid, "Eric")
+        cargo = await c.fetchval("SELECT id FROM locations WHERE player_id=$1 AND kind='starship_cargo'", kp)
+    j = await (await cl.get("/api/dfg/deck", headers=KM)).json()
+    kb = [b for b in j["buildable"] if b["design"] == kcode]
+    check("the designer can build their approved design (they hold the original)", len(kb) == 1 and not kb[0]["ready"])
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode})
+    check("building needs the design's library tests first", r.status == 422 and "Ceramics" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,'ceramics',5,5) ON CONFLICT DO NOTHING", kp)
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode})
+    check("building needs its materials in the cargo hold", r.status == 422 and "Not enough" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await WSM.ensure_types(c)
+        for code, g in (("mat-clay", 50000), ("iron-nickel", 2500), ("copper", 100000)):
+            await c.execute("INSERT INTO stacks(location_id, item_code, qty) VALUES($1,$2,$3) ON CONFLICT (location_id, item_code) DO UPDATE SET qty=EXCLUDED.qty", cargo, code, g)
+    r = await cl.post("/api/dfg/deck/build", headers=KM, json={"design": kcode}); j = await r.json()
+    async with cl.app["pool"].acquire() as c:
+        left = {x["item_code"]: x["qty"] for x in await c.fetch("SELECT item_code, qty FROM stacks WHERE location_id=$1", cargo)}
+    check("a build takes its materials when it starts (native iron-nickel counts as its raw form)",
+          r.status == 200 and left["mat-clay"] == 10000 and left["iron-nickel"] == 500 and j["receipt"]["code"].startswith("WSC-"))
+    check("the build isn't finished before its time", not j["deck"]["machines"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE workshop_jobs SET ends_at=now() - interval '1 second' WHERE player_id=$1", kp)
+        await WSM.tick(c)
+        await WSM.mark_furnace(c, ksid, 50, 120)
+    j = await (await cl.get("/api/dfg/deck", headers=KM)).json()
+    kiln = [m for m in j["machines"] if m["item"].startswith("design-")]
+    check("after its time the kiln stands on the Maintenance Deck, marked a furnace", len(kiln) == 1 and kiln[0]["furnace"]["batch_kg"] == 50)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 50})
+    check("smelting needs the Metallurgy pass", r.status == 422 and "Metallurgy" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("INSERT INTO library_passes(player_id, book_code, score, of_total) VALUES($1,'metallurgy',5,5) ON CONFLICT DO NOTHING", kp)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 60})
+    check("a batch can't be bigger than the furnace takes", r.status == 422)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 50}); j = await r.json()
+    check("50 kg of chalcopyrite gives 17.3 kg of copper, 15.2 of iron, the rest slag (rule 27)",
+          r.status == 200 and abs(j["gives_kg"]["mat-copper"] - 17.31) < 0.05 and abs(sum(j["gives_kg"].values()) - 50) < 0.01)
+    r = await cl.post("/api/dfg/deck/smelt", headers=KM, json={"furnace": kiln[0]["id"], "ore": "copper", "kg": 10})
+    check("one batch at a time in a furnace", r.status == 422 and "already" in (await r.json())["error"])
+    async with cl.app["pool"].acquire() as c:
+        await c.execute("UPDATE workshop_jobs SET ends_at=now() - interval '1 second' WHERE player_id=$1 AND done_at IS NULL", kp)
+        await WSM.tick(c)
+        left = {x["item_code"]: x["qty"] for x in await c.fetch("SELECT item_code, qty FROM stacks WHERE location_id=$1", cargo)}
+    check("the metal and slag land in the cargo hold when the batch is done",
+          left["copper"] == 50000 and abs(left["mat-copper"] - 17310) < 50 and left["mat-iron"] > 15000 and 17000 < left["slag"] < 18000)
     async with cl.app["pool"].acquire() as c:
         problems = await ST.audit(c)
     check("audit: every credit accounted for " + (str(problems) if problems else ""), problems == [])

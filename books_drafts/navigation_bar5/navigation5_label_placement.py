@@ -1,0 +1,37 @@
+"""Automatic Label Placement: how a computer chooses where to write names on a map without them crashing into each other."""
+CODE = 'navigation5_label_placement'
+BOOK = {
+    "title": 'Automatic Label Placement',
+    "subtitle": 'Candidate positions, cost functions, conflicts, optimisation, aesthetics, and tools',
+    "chapters": [
+        ('Writing names on a map',
+         'Every map needs names, and each name must sit close to the feature it describes. When many names crowd together, some overlap and become unreadable. Automatic placement tries to solve this for the computer.'),
+        ('Candidate positions',
+         'For each feature, the computer lists several places where its label could sit, such as above, below, left, or right. Each candidate is a possible answer. A point feature usually has more candidates than a long line.'),
+        ('Cost functions',
+         'A cost function gives each candidate a score. Positions that cover other labels or features cost more. Positions that sit close to the feature and read easily cost less.'),
+        ('Conflicts',
+         'Two labels conflict when they overlap, or when a label covers an important feature such as a road junction. Conflicts are the main problem to remove. A good result has as few conflicts as possible.'),
+        ('Optimisation',
+         'The computer searches for the set of positions with the lowest total cost. Exact search is often too slow for a full map, so the program uses good approximate methods. The result should be fast enough to redraw as the map changes.'),
+        ('Aesthetics and tools',
+         'Labels should look balanced and orderly, not scattered at random. Mapmakers review the result and fix the few places where a human eye sees a better answer. Many mapping tools now offer automatic placement with manual adjustment.'),
+    ],
+    "test": [
+        ('What is a candidate position for a label?',
+         [('a', 'A possible place where the label could sit'), ('b', 'A type of printer ink'), ('c', 'A name for a river'), ('d', 'A kind of map projection')],
+         'a'),
+        ('What does a cost function do?',
+         [('a', 'Sets the price of the map'), ('b', 'Scores each candidate position'), ('c', 'Counts the number of roads'), ('d', 'Chooses the colour of the sea')],
+         'b'),
+        ('What is a label conflict?',
+         [('a', 'Two maps are printed on one sheet'), ('b', 'A label is too short'), ('c', 'Two labels overlap or hide an important feature'), ('d', 'A label is written in a second language')],
+         'c'),
+        ('Why do programs use approximate methods for placement?',
+         [('a', 'Exact answers are always wrong'), ('b', 'Approximate answers are cheaper to print'), ('c', 'Exact search can be too slow for a full map'), ('d', 'Labels cannot be moved at all')],
+         'c'),
+        ('What do mapmakers often do after automatic placement?',
+         [('a', 'Throw away the map'), ('b', 'Remove every label'), ('c', 'Print the map in black only'), ('d', 'Review the result and adjust the few weak spots by hand')],
+         'd'),
+    ],
+}

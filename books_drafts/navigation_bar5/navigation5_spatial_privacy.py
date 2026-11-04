@@ -1,0 +1,37 @@
+"""Spatial Privacy in Location Data: why a few location points can reveal a person, and how data can be shared more safely."""
+CODE = 'navigation5_spatial_privacy'
+BOOK = {
+    "title": 'Spatial Privacy in Location Data',
+    "subtitle": 'Location traces, re-identification, aggregation, differential privacy, rules, and policy',
+    "chapters": [
+        ('Where you have been',
+         'A location trace is a record of where a device or person was over time. It can show home, work, and daily habits. Because it is so personal, it needs careful protection.'),
+        ('Re-identification',
+         'A study by de Montjoye and colleagues in 2013 found that four rough location points were enough to single out most people in a mobility data set. Names removed from a trace can often be found again from the pattern of places. Removing names alone is not enough.'),
+        ('Aggregation',
+         "Combining many people into one count can hide individual trips. Totals for a whole neighbourhood reveal less than a single person's route. Aggregation must be large enough that no one can be picked out."),
+        ('Differential privacy',
+         'Differential privacy adds carefully measured random noise to results. The noise hides whether any one person is included, while the overall pattern stays useful. The amount of noise is a trade-off between privacy and accuracy.'),
+        ('Rules',
+         'Laws in many countries set limits on collecting and sharing location data. People often have rights to see, correct, or delete their data. Organisations must explain their purpose and keep the data only as long as needed.'),
+        ('Policy',
+         'Good policy asks what the data is for before it is gathered. It limits who can see raw traces and records each access. Regular reviews keep the policy up to date as methods change.'),
+    ],
+    "test": [
+        ('What is a location trace?',
+         [('a', 'A record of where a device or person was over time'), ('b', 'A type of road sign'), ('c', 'A paper map of a single room'), ('d', 'A list of weather stations')],
+         'a'),
+        ('What did the 2013 study by de Montjoye and colleagues find?',
+         [('a', 'Four rough location points could single out most people'), ('b', 'Location data is always anonymous'), ('c', 'Only one point is ever needed'), ('d', 'People never move between places')],
+         'a'),
+        ('Why does aggregation help privacy?',
+         [('a', 'It makes each person easier to find'), ('b', 'Totals can hide an individual route'), ('c', 'It adds names to the data'), ('d', 'It doubles the number of trips')],
+         'b'),
+        ('What does differential privacy do?',
+         [('a', 'Removes the whole data set'), ('b', 'Shows every name in bold'), ('c', 'Sends the data to every user'), ('d', 'Adds measured random noise so one person cannot be detected')],
+         'd'),
+        ('What rights do many people have over their location data?',
+         [('a', 'To see, correct, or delete their data'), ('b', "To sell other people's traces"), ('c', 'To keep the data secret from themselves'), ('d', 'To ignore the laws')],
+         'a'),
+    ],
+}

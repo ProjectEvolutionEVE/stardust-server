@@ -1,0 +1,37 @@
+"""Change Detection in Image Series: how to find real changes on the ground between images, and how to avoid false alarms."""
+CODE = 'navigation5_change_detection'
+BOOK = {
+    "title": 'Change Detection in Image Series',
+    "subtitle": 'Image pairs, thresholds, radiometric matching, false alarms, time series, and reporting',
+    "chapters": [
+        ('Spotting what moved',
+         'Change detection compares images of the same place taken at different times. It helps find new buildings, cut forests, floods, and damage after a storm. The goal is to tell real change from ordinary variation.'),
+        ('Image pairs',
+         'The simplest method compares two images directly, pixel by pixel. The difference between the two values shows where something changed. Both images must cover the same area in the same grid.'),
+        ('Thresholds',
+         'A threshold decides how large a difference counts as a change. A low threshold catches small changes but also catches noise. A high threshold misses real changes. Analysts choose the threshold by testing it on known cases.'),
+        ('Radiometric matching',
+         'Two images may differ in brightness because of the sun angle, the season, or the sensor. Radiometric matching adjusts one image to look like the other before comparison. Without it, the method reports changes that never happened.'),
+        ('False alarms',
+         'A false alarm is a change reported where none happened. Shadows, clouds, and seasonal crops are common causes. Analysts remove false alarms with masks and by checking the changes against other sources.'),
+        ('Time series and reporting',
+         'A series of many images shows how a change grows or fades over time. Good reports list the method, the threshold, the matching steps, and the known errors. Clear reporting lets others repeat the work.'),
+    ],
+    "test": [
+        ('What does change detection compare?',
+         [('a', 'Two different countries on one map'), ('b', 'The sounds of two cities'), ('c', 'Two sets of printed labels'), ('d', 'Images of the same place taken at different times')],
+         'd'),
+        ('What does a threshold decide?',
+         [('a', 'The colour of the image frame'), ('b', 'How large a difference counts as a change'), ('c', 'The name of the satellite'), ('d', 'The price of the data')],
+         'b'),
+        ('Why is radiometric matching needed?',
+         [('a', 'Brightness can differ for reasons other than real change'), ('b', 'To make the images smaller'), ('c', 'To delete the clouds only'), ('d', 'To print the images in black')],
+         'a'),
+        ('What is a false alarm?',
+         [('a', 'A change reported where none happened'), ('b', 'A change that was clearly detected and checked'), ('c', 'A map with no changes at all'), ('d', 'A sound made by the sensor')],
+         'a'),
+        ('What should a good report include?',
+         [('a', 'Only the best picture'), ('b', 'The method, the threshold, the matching steps, and known errors'), ('c', 'Nothing about the data'), ('d', 'A list of the favourite colours')],
+         'b'),
+    ],
+}

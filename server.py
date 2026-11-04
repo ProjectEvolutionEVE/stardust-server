@@ -6,6 +6,11 @@ Sign-up and sign-in (the game's own accounts, Eric 10-11; see auth.py):
   POST /api/dfg/auth/start      {channel:'sms'|'email', address, region} → a 6-digit code is sent
   POST /api/dfg/auth/verify     {channel, address, code} → {token, new_player, me}. Signing in = waking up in bed.
   POST /api/dfg/me/setup        {first_name, last_name, language} → a new player's one-time choices
+  POST /api/dfg/me/language     {language} → change the player's language any time (Eric 11-02)
+  POST /api/dfg/me/contact/start|verify  {channel, address, region[, code]} → add a phone or email to the player's SDID
+  (Eric 11-03); /auth/verify with {link: true, device_key} adds a new sign-in to the SDID the phone already knows
+  GET /api/dfg/admin/account?channel&address|sdid · POST /api/dfg/admin/merge {keep, absorb, dry_run}  (crew only,
+  header X-Upload-Key): what an account holds, and moving one SDID's sign-ins to another (tools/merge-accounts.py)
   GET  /api/dfg/me              rank and name, language, location (Private Quarters or Cockpit), body bars and warning, skills
   POST /api/dfg/auth/signout    going to bed: the character sleeps and this device's sign-in ends. With {place:'cockpit',
                                 pos:[x,y,z]} it sleeps in the cockpit out in space instead, and wakes there (Eric 10-24)
@@ -26,6 +31,9 @@ Everything below needs a signed-in player ("Authorization: Bearer <token>"):
   GET  /api/dfg/health    no sign-in needed
 The blueprint form (rule 23; blueprints.py):
   GET  /api/dfg/blueprints/options   kinds, library books, materials with densities, limits
+  GET  /api/dfg/deck                 the Maintenance Deck: machines, what can be built, ores, jobs (Eric 11-03)
+  POST /api/dfg/deck/build           {design}: build an approved design from the cargo hold's materials
+  POST /api/dfg/deck/smelt           {furnace, ore, kg}: one batch of ore in a furnace (Metallurgy pass)
   GET  /api/dfg/blueprints           the player's designs · GET /api/dfg/blueprints/{id} one design, its weight and size
   POST /api/dfg/blueprints/save      {id?, form} → a draft · /submit {id, form?} → to the reviewers
   POST /api/dfg/blueprints/reply     {id, body} → answer the reviewers · /withdraw {id}
@@ -61,6 +69,7 @@ import auth as AUTH
 import body as BODY
 import names as NAMES
 import market as M
+import materials_refining as MR
 import bank as BANK
 import blueprints as BP
 import serials as SER
@@ -71,6 +80,9 @@ import archives as AR
 import voice as VO
 import lending as LN
 import craft as CR
+import workshop as WS
+import accounts as ACC
+import hmac
 from datetime import datetime
 import asyncio
 
@@ -146,7 +158,8 @@ async def _me(conn, pid):
             "asleep": p["asleep"], "rest_place": p["rest_place"], "parked": json.loads(p["parked"]) if p["parked"] else None,
             "bars": bars, "ability": BODY.ability(min(bars.values())), "warning": BODY.warning(bars),
             "skills": await LIB.skills(conn, pid),
-            "uniform": career["code"], "career": career}     # fly / mine / sell, each earned in the library (Eric 10-23)
+            "uniform": career["code"], "career": career,
+            "sdid": p["account_no"], "sign_ins": await ACC.sign_ins(conn, pid)}   # one SDID, every way they sign in (Eric 11-03)     # fly / mine / sell, each earned in the library (Eric 10-23)
 
 
 async def signup_options(request):
@@ -172,6 +185,13 @@ async def auth_verify(request):
             raise AUTH.Refused("That code isn't right, or it has expired. Ask for a new one.")
         addr = AUTH.normalize(channel, body.get("address"), body.get("region"))
         pid = await conn.fetchval("SELECT player_id FROM logins WHERE channel=$1 AND address=$2", channel, addr)
+        linked = False
+        if pid is None and body.get("link"):
+            # a phone that already knows an SDID, and the player said yes: this new sign-in joins it (Eric 11-03)
+            pid = await ACC.from_device_key(conn, body.get("device_key"))
+            if pid is not None:
+                await ACC.link(conn, pid, channel, addr)
+                linked = True
         new = pid is None
         if new:
             pid = await ST.ensure_player(conn, "p:" + secrets.token_hex(12))
@@ -181,8 +201,9 @@ async def auth_verify(request):
         async with conn.transaction():
             await BODY.set_state(conn, pid, asleep=False)            # wake up
         token = await AUTH.issue_token(conn, pid)
-        await log_event(conn, pid, "signup" if new else "signin", channel=channel)
-        return _json({"token": token, "new_player": new, "me": await _me(conn, pid)})
+        await log_event(conn, pid, "signup" if new else ("link" if linked else "signin"), channel=channel)
+        return _json({"token": token, "new_player": new, "linked": linked, "device_key": await ACC.device_key(conn, pid),
+                      "me": await _me(conn, pid)})
 
 
 async def me(request):
@@ -207,6 +228,85 @@ async def me_setup(request):
         if not done:
             raise ST.Refused("Your name is already set.")
         await log_event(conn, pid, "setup", language=lang)
+        return _json(await _me(conn, pid))
+
+
+async def contact_start(request):
+    """Add a phone or email to the signed-in player's SDID (Eric 11-03), step 1: send it a code."""
+    b = await request.json()
+    channel = b.get("channel")
+    if channel not in ("sms", "email"):
+        raise ST.Refused("Choose phone or email.")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        addr = AUTH.normalize(channel, b.get("address"), b.get("region"))
+        who = await ACC.owner(conn, channel, addr)
+        if who == pid:
+            raise ST.Refused("That's already one of your sign-ins.")
+        if who is not None:
+            raise ST.Refused("That phone or email already has its own Stardust account. The crew can combine the two: contact support from the game's page.")
+        return _json(await AUTH.start(conn, channel, b.get("address"), _ip(request), b.get("region")))
+
+
+async def contact_verify(request):
+    """Step 2: the code proves it's theirs; the phone or email is added to their SDID."""
+    b = await request.json()
+    channel = b.get("channel")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if not await AUTH.check(conn, channel, b.get("address"), b.get("code"), b.get("region")):
+            raise AUTH.Refused("That code isn't right, or it has expired. Ask for a new one.")
+        await ACC.link(conn, pid, channel, AUTH.normalize(channel, b.get("address"), b.get("region")))
+        await log_event(conn, pid, "link", channel=channel)
+        return _json(await _me(conn, pid))
+
+
+def _crew(request):
+    """The crew's tools use the upload key (X-Upload-Key = env DFG_UPLOAD_KEY), never a player's sign-in."""
+    want = os.environ.get("DFG_UPLOAD_KEY", "")
+    if not (want and hmac.compare_digest(request.headers.get("X-Upload-Key", "").encode(), want.encode())):
+        raise web.HTTPForbidden()
+
+
+async def admin_account(request):
+    """The crew: what the account behind a phone or email holds (tools/merge-accounts.py)."""
+    _crew(request)
+    q = request.query
+    async with request.app["pool"].acquire() as conn:
+        if q.get("sdid"):
+            pid = await conn.fetchval("SELECT id FROM players WHERE account_no=$1", q["sdid"].strip().upper())
+        else:
+            pid = await ACC.owner(conn, q.get("channel"), AUTH.normalize(q.get("channel"), q.get("address"), q.get("region")))
+        if pid is None:
+            return _json({"error": "No account has that sign-in."}, 404)
+        return _json(await ACC.summary(conn, pid))
+
+
+async def admin_merge(request):
+    """The crew: move every sign-in of one SDID to another (Eric 11-03). dry_run shows what would move."""
+    _crew(request)
+    b = await request.json()
+    async with request.app["pool"].acquire() as conn:
+        keep = await conn.fetchval("SELECT id FROM players WHERE account_no=$1 AND merged_into IS NULL", b.get("keep"))
+        absorb = await conn.fetchval("SELECT id FROM players WHERE account_no=$1 AND merged_into IS NULL", b.get("absorb"))
+        if keep is None or absorb is None:
+            return _json({"error": "Both SDIDs must exist and not already be merged."}, 404)
+        if b.get("dry_run", True):
+            return _json({"dry_run": True, "keep": await ACC.summary(conn, keep), "absorb": await ACC.summary(conn, absorb)})
+        moved = await ACC.merge_sign_ins(conn, keep, absorb)
+        await log_event(conn, keep, "merge", absorbed=b.get("absorb"), sign_ins=len(moved))
+        return _json({"merged": True, "moved": moved, "keep": await ACC.summary(conn, keep)})
+
+
+async def me_language(request):
+    """Change the player's language any time (Eric 11-02: everything written or spoken follows the language picked)."""
+    lang = (await request.json()).get("language")
+    if lang not in LANG_CODES:
+        raise ST.Refused("Choose your language from the list. Languages marked coming soon can't be chosen yet.")
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        await conn.execute("UPDATE players SET language=$2 WHERE id=$1", pid, lang)
+        await log_event(conn, pid, "language", language=lang)
         return _json(await _me(conn, pid))
 
 
@@ -260,6 +360,31 @@ async def rest(request):
                     raise ST.Refused("Sleep in your bed or in your cockpit.")
                 await BODY.set_state(conn, pid, asleep=b.get("asleep") is True, place=place)
         return _json(await _me(conn, pid))
+
+
+async def deck_get(request):
+    """The Maintenance Deck (Eric 11-03): the player's machines, what they can build, their ores, and running jobs."""
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        return _json(await WS.status(conn, pid))
+
+
+async def deck_post(request):
+    """Build a design (op=build, design) or load a furnace with ore (op=smelt, furnace, ore, kg)."""
+    op, b = request.match_info["op"], await request.json()
+    async with request.app["pool"].acquire() as conn:
+        pid = await _player(conn, request)
+        if op == "build":
+            out = await WS.build(conn, pid, str(b.get("design", "")))
+        elif op == "smelt":
+            try:
+                fid, kg = int(b.get("furnace")), float(b.get("kg"))
+            except (TypeError, ValueError):
+                raise ST.Refused("Choose a furnace and how much ore to smelt.")
+            out = await WS.smelt(conn, pid, fid, str(b.get("ore", "")), kg)
+        else:
+            raise web.HTTPNotFound()
+        return _json({**out, "deck": await WS.status(conn, pid)})
 
 
 async def craft_get(request):
@@ -479,14 +604,17 @@ async def _startup(app):
     async with app["pool"].acquire() as conn:
         await conn.execute(SCHEMA)
         await LIB.ensure_book_types(conn)                  # each written library book is an item type
+        await MR.ensure_market(conn)                       # refined materials trade on the market (Eric 11-03)
+        await WS.ensure_types(conn)                        # slag and smelted metals (Eric 11-03)
     app["bank"] = asyncio.create_task(BANK.run(app))      # the Starship bank keeps the market moving (rule 21)
     app["auctions"] = asyncio.create_task(AU.run(app))    # blueprint auctions open and close on time
     app["lending"] = asyncio.create_task(LN.run(app))     # loan payments are taken on their dates (rule 36)
     app["craft"] = asyncio.create_task(CR.run(app))       # weekly craft-lease payments (rule 38)
+    app["workshop"] = asyncio.create_task(WS.run(app))    # builds and smelting batches finish on time (Eric 11-03)
 
 
 async def _cleanup(app):
-    for k in ("bank", "auctions", "lending", "craft"):
+    for k in ("bank", "auctions", "lending", "craft", "workshop"):
         app[k].cancel()
         try:
             await app[k]
@@ -499,7 +627,8 @@ async def _cleanup(app):
 async def market_board(request):
     async with request.app["pool"].acquire() as conn:
         await _player(conn, request)
-        return _json({"items": await M.board(conn), "note": "The Starship bank trades on this market too."})
+        return _json({"items": await M.board(conn), "groups": list(MR.GROUP.values()),
+                      "note": "The Starship bank trades on this market too."})
 
 
 async def market_item(request):
@@ -759,6 +888,8 @@ def make_app():
     app.router.add_post("/api/dfg/market/order", market_order)
     app.router.add_post("/api/dfg/market/cancel", market_cancel)
     app.router.add_get("/api/dfg/blueprints/options", bp_options)
+    app.router.add_get("/api/dfg/deck", deck_get)
+    app.router.add_post(r"/api/dfg/deck/{op:build|smelt}", deck_post)
     app.router.add_get("/api/dfg/blueprints", bp_mine)
     app.router.add_get("/api/dfg/blueprints/{id}", bp_detail)
     app.router.add_post("/api/dfg/blueprints/save", bp_save)
@@ -792,6 +923,11 @@ def make_app():
     app.router.add_post("/api/dfg/bank/{op:deposit|withdraw|loan/quote|loan/take|loan/pay|goal|goal/drop}", bank_post)
     app.router.add_get("/api/dfg/me", me)
     app.router.add_post("/api/dfg/me/setup", me_setup)
+    app.router.add_post("/api/dfg/me/language", me_language)
+    app.router.add_post("/api/dfg/me/contact/start", contact_start)
+    app.router.add_post("/api/dfg/me/contact/verify", contact_verify)
+    app.router.add_get("/api/dfg/admin/account", admin_account)
+    app.router.add_post("/api/dfg/admin/merge", admin_merge)
     app.router.add_post("/api/dfg/voice/heard", voice_heard)
     app.router.add_get(r"/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.serve)
     app.router.add_put(r"/api/dfg/admin/voice/{set}/{id:INARA-[A-Z]+-\d{3}}.mp3", VO.upload)

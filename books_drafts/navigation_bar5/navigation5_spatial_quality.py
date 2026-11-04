@@ -1,0 +1,37 @@
+"""Spatial Data Quality Measures: how to describe how accurate, complete, consistent, and well documented a map dataset is."""
+CODE = 'navigation5_spatial_quality'
+BOOK = {
+    "title": 'Spatial Data Quality Measures',
+    "subtitle": 'Accuracy, completeness, logical consistency, lineage, metadata, and reporting',
+    "chapters": [
+        ('Knowing how good the data is',
+         'Every map dataset has errors. A good user asks how large the errors are, where they sit, and whether they matter for the task. Quality measures give a clear and honest answer to these questions.'),
+        ('Accuracy',
+         'Positional accuracy measures how close a feature sits to its true place. Attribute accuracy measures whether the labels and values are right. Both are checked by comparing the data with a trusted reference.'),
+        ('Completeness',
+         'Completeness asks whether all the features that should be in the dataset are really there. A map missing half its streets is incomplete, even if the streets it shows are exact. Completeness is often judged against a known list or a reference survey.'),
+        ('Logical consistency',
+         'Logical consistency checks that the data follows its own rules. A road should not end in the middle of nowhere, and a building should sit in one parcel. Software can test many of these rules automatically.'),
+        ('Lineage and metadata',
+         'Lineage records where the data came from and how it was made. Metadata describes the dataset, including its date, its scale, and its quality. Without these, a user cannot judge whether the data suits a new task.'),
+        ('Reporting',
+         'A quality report states the measures used, the test results, and the limits of the data. It is written in plain terms so that users can decide for themselves. An honest report is worth more than a clean-looking map with no notes.'),
+    ],
+    "test": [
+        ('What does positional accuracy measure?',
+         [('a', 'How close a feature sits to its true place'), ('b', 'The number of colours on the map'), ('c', 'The age of the printer'), ('d', 'The speed of the internet')],
+         'a'),
+        ('What does completeness ask?',
+         [('a', 'Whether all the features that should be present are there'), ('b', 'Whether the map is bound in leather'), ('c', 'Whether the map is printed in full colour'), ('d', 'Whether the map has a title')],
+         'a'),
+        ('What is logical consistency?',
+         [('a', 'Whether the data is written in capital letters'), ('b', 'Whether the data follows its own rules'), ('c', 'Whether the map has a border'), ('d', 'Whether the data is stored on paper')],
+         'b'),
+        ('What does lineage record?',
+         [('a', 'The favourite tool of the mapmaker'), ('b', 'The price of the map'), ('c', 'Where the data came from and how it was made'), ('d', 'The weather on the day of printing')],
+         'c'),
+        ('What should a quality report do?',
+         [('a', 'Hide any errors from the reader'), ('b', 'Show only the best parts of the data'), ('c', 'State the measures used, the results, and the limits'), ('d', 'Replace the data with a drawing')],
+         'c'),
+    ],
+}

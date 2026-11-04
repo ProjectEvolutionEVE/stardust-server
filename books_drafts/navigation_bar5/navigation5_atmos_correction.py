@@ -1,0 +1,37 @@
+"""Atmospheric Correction of Imagery: removing the haze of air and particles so that a satellite image shows the true surface."""
+CODE = 'navigation5_atmos_correction'
+BOOK = {
+    "title": 'Atmospheric Correction of Imagery',
+    "subtitle": 'Scattering, aerosols, radiative transfer, surface reflectance, tools, and checks',
+    "chapters": [
+        ('The air sits in the way',
+         'A satellite does not see the ground directly. Its light passes through the air twice, once going down and once coming back up. The air adds a haze that changes the colours of the image.'),
+        ('Scattering',
+         'Air molecules scatter short blue wavelengths more than long red ones. This is why the sky looks blue. Scattering adds a layer of extra light that must be removed before the ground can be compared over time.'),
+        ('Aerosols',
+         'Aerosols are tiny particles such as dust, smoke, and sea salt. They scatter and absorb light in ways that depend on their size and amount. The amount of aerosol can change from one day to the next.'),
+        ('Radiative transfer',
+         'Radiative transfer models calculate how light moves through the atmosphere. They use the sun angle, the sensor angle, and the state of the air. The models give the correction needed for each band.'),
+        ('Surface reflectance',
+         'Surface reflectance is the fraction of light that the ground itself reflects. It is the quantity that lets scientists compare images taken on different days. Correct reflectance makes a field in June comparable with the same field in September.'),
+        ('Tools and checks',
+         'Many software tools perform atmospheric correction with standard models. Analysts check the result against ground measurements taken by reference instruments. A correction that looks good on one image may fail on another, so checks are needed for each scene.'),
+    ],
+    "test": [
+        ('What does the air do to a satellite image?',
+         [('a', 'It makes the image louder'), ('b', 'It removes all the ground detail'), ('c', 'It adds a haze that changes the colours'), ('d', 'It turns the image into a sound')],
+         'c'),
+        ('Why does the sky look blue?',
+         [('a', 'The sky is painted blue by the sun'), ('b', 'Blue light is made in the clouds'), ('c', 'Red light is absorbed by the ground'), ('d', 'Air scatters short blue wavelengths more than long red ones')],
+         'd'),
+        ('What are aerosols?',
+         [('a', 'Tiny particles such as dust, smoke, and sea salt'), ('b', 'Large rocks in the upper air'), ('c', 'Gases that never change'), ('d', 'Sound waves from cities')],
+         'a'),
+        ('What is surface reflectance?',
+         [('a', 'The shine of the satellite panels'), ('b', 'The height of the nearest cloud'), ('c', 'The number of satellites in orbit'), ('d', 'The fraction of light that the ground itself reflects')],
+         'd'),
+        ('Why must checks be made for each scene?',
+         [('a', 'Every image is identical'), ('b', 'A correction that works on one image may fail on another'), ('c', 'Checks are never needed'), ('d', 'Scenes change colour once a year')],
+         'b'),
+    ],
+}

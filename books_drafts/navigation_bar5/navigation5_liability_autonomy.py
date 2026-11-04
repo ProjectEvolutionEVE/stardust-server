@@ -1,0 +1,37 @@
+"""Liability for Autonomous Navigation: who answers for a self-guiding vehicle when something goes wrong, and how records help."""
+CODE = 'navigation5_liability_autonomy'
+BOOK = {
+    "title": 'Liability for Autonomous Navigation',
+    "subtitle": 'Responsibility, logs, standards, insurance, investigations, and policy',
+    "chapters": [
+        ('Who is responsible',
+         'When a self-guiding vehicle causes harm, people ask who is to blame. The answer may fall on the maker, the operator, the owner, or the software supplier. Laws differ from place to place, so the answer is not always clear.'),
+        ('Keeping logs',
+         'A vehicle that records its sensor readings, decisions, and warnings gives investigators a trail. Good logs record the time, the data, and the action taken. Without logs, it is hard to learn what happened.'),
+        ('Standards',
+         'Standards set shared methods for testing and safety. Following a recognised standard shows that a maker took reasonable care. Standards also help buyers compare products fairly.'),
+        ('Insurance',
+         'Insurers study the risk of a vehicle before they offer cover. They look at its design, its testing, and its record. A clear record of safe operation can lower the cost of cover.'),
+        ('Investigations',
+         'After an accident, an investigator reviews the logs, the maintenance records, and the vehicle design. The aim is to find the cause and prevent a repeat. Fair investigations look at the whole system, not one part alone.'),
+        ('Policy',
+         'Governments and companies set policy on testing, licensing, and reporting. Good policy balances safety with the benefits of new technology. It should be clear to the public and easy to update as the technology changes.'),
+    ],
+    "test": [
+        ('Who might be held responsible when a self-guiding vehicle causes harm?',
+         [('a', 'Only the weather'), ('b', 'Nobody, ever'), ('c', 'The maker, the operator, the owner, or the software supplier'), ('d', 'The passengers only')],
+         'c'),
+        ('Why are logs useful after an accident?',
+         [('a', 'They give investigators a record of sensor readings and decisions'), ('b', 'They make the vehicle faster'), ('c', 'They replace the need for brakes'), ('d', 'They are used to paint the vehicle')],
+         'a'),
+        ('What does following a recognised standard show?',
+         [('a', 'That the vehicle cannot fail'), ('b', 'That the price is fair'), ('c', 'That the road is new'), ('d', 'That the maker took reasonable care')],
+         'd'),
+        ('What do insurers look at before they offer cover?',
+         [('a', 'The design, testing, and record of safe operation'), ('b', 'The colour of the vehicle'), ('c', "The owner's favourite music"), ('d', 'The number of windows')],
+         'a'),
+        ('What is the aim of a fair investigation?',
+         [('a', 'To find a single person to blame quickly'), ('b', 'To find the cause and prevent a repeat'), ('c', 'To close the road forever'), ('d', 'To hide the logs')],
+         'b'),
+    ],
+}

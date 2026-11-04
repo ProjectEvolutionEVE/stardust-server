@@ -1,0 +1,37 @@
+"""Graph Theory of Transport Networks: how the shape of a network shows its strengths, weak points, and design choices."""
+CODE = 'navigation5_transport_graphs'
+BOOK = {
+    "title": 'Graph Theory of Transport Networks',
+    "subtitle": 'Nodes, centrality, connectivity, planarity, network design, and resilience',
+    "chapters": [
+        ('Nodes and links',
+         'A transport network has nodes, such as stations or airports, and links, such as tracks or flight routes. Graph theory gives a clear language for describing how these parts fit together. The shape of the graph tells much about how the network behaves.'),
+        ('Centrality',
+         'Centrality measures how important a node is. A node with many links, or one that lies on many shortest routes, carries a lot of traffic. Planners use these measures to find key hubs.'),
+        ('Connectivity',
+         'Connectivity asks whether every node can reach every other. A network can have strong links in some parts and weak links in others. A single cut can split a poorly connected network into pieces.'),
+        ('Planarity',
+         "A planar graph can be drawn on a flat surface with no lines crossing. Road networks are almost planar, but bridges and tunnels allow crossings without junctions. Euler's work on the bridges of Königsberg in 1736 started this line of thought."),
+        ('Network design',
+         'Designers add links where demand is high and where a second route adds safety. Adding a link costs money and space, so every link must earn its place. Good designs balance cost and service.'),
+        ('Resilience',
+         'Resilience is how well a network keeps working when parts fail. Redundant routes give a backup when one link is closed. Planners test the network by removing key links and checking what is left.'),
+    ],
+    "test": [
+        ('What is a node in a transport network?',
+         [('a', 'A place such as a station or airport'), ('b', 'The speed of a train'), ('c', 'The fare paid by a passenger'), ('d', 'The colour of a road sign')],
+         'a'),
+        ('What does centrality measure?',
+         [('a', 'The height of a bridge'), ('b', 'The number of tickets sold'), ('c', 'How important a node is for traffic'), ('d', 'The age of the network')],
+         'c'),
+        ('What is a planar graph?',
+         [('a', 'A graph drawn on a sphere only'), ('b', 'A graph with no links'), ('c', 'A graph of the sky'), ('d', 'A graph that can be drawn on a flat surface without crossing lines')],
+         'd'),
+        ('What did Euler study in 1736?',
+         [('a', 'The motion of the planets only'), ('b', 'The first railway timetable'), ('c', 'The bridges of Königsberg'), ('d', 'The colours of maps')],
+         'c'),
+        ('What does resilience describe?',
+         [('a', 'How well a network keeps working when parts fail'), ('b', 'How cheap the tickets are'), ('c', 'How many nodes the network has'), ('d', 'How fast the trains are painted')],
+         'a'),
+    ],
+}

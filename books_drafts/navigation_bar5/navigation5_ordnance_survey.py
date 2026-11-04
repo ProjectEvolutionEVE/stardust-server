@@ -1,0 +1,37 @@
+"""The Ordnance Survey: Britain's national mapping agency, its start in a time of military need, its one-inch maps, its national grid, and its move into digital data."""
+CODE = 'navigation5_ordnance_survey'
+BOOK = {
+    "title": 'The Ordnance Survey',
+    "subtitle": 'Its origin, the military role, the one-inch maps, the national grid, the digital age, and funding',
+    "chapters": [
+        ('A survey begins',
+         'The Ordnance Survey began in 1791 as a mapping project for the British government. It was set up in part because of concern about possible invasion. Accurate maps of the south coast were seen as a matter of national defence.'),
+        ('A military role',
+         'For much of its early life the survey was linked to the army, and its surveyors were often soldiers. Its maps were made to help plan the defence of the country. This military link shaped its methods and its early priorities.'),
+        ('The one-inch maps',
+         "The one-inch to the mile maps became one of the survey's best known series. They gave walkers, travellers, and planners a clear picture of the countryside. Many people still know the look of these classic sheets."),
+        ('The national grid',
+         'The national grid was introduced in the 1930s and gave every place a simple reference. A grid reference can be read quickly and given by telephone or radio. It became the common language of British maps.'),
+        ('The digital age',
+         'In later decades, the survey moved from paper to digital data. Its maps are now stored as detailed databases that can be updated, searched, and combined. Digital data supports planning, emergency response, and many apps.'),
+        ('Funding',
+         'The survey is funded by government and sells many of its products to businesses and the public. Its funding has changed over time as the technology and the market have changed. The agency must balance public benefit with its costs.'),
+    ],
+    "test": [
+        ('In what year did the Ordnance Survey begin?',
+         [('a', '1791'), ('b', '1991'), ('c', '1691'), ('d', '1891')],
+         'a'),
+        ('Why was the survey linked to military needs?',
+         [('a', 'Maps were only used for sailing'), ('b', 'Accurate maps helped plan the defence of the country'), ('c', 'Soldiers were not allowed to read maps'), ('d', 'The army owned the paper mills')],
+         'b'),
+        ('What were the one-inch maps known for?',
+         [('a', 'Showing the depth of the sea'), ('b', 'Recording the weather each day'), ('c', 'Giving a clear picture of the countryside for walkers and travellers'), ('d', 'Listing the names of ships')],
+         'c'),
+        ('What did the national grid give to every place?',
+         [('a', 'A simple grid reference'), ('b', 'A new name'), ('c', 'A colour on the map'), ('d', 'A ticket to travel')],
+         'a'),
+        ('What change did the survey make in the digital age?',
+         [('a', 'It stopped making maps altogether'), ('b', 'It sold all its data for scrap'), ('c', 'It returned to hand drawing only'), ('d', 'It moved from paper to detailed digital databases')],
+         'd'),
+    ],
+}
