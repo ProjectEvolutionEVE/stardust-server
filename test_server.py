@@ -384,6 +384,17 @@ async def main():
         await c.execute("UPDATE locations SET capacity_m3=0.003 WHERE player_id=$1 AND kind='starship_cargo'", p3)
     r = await cl.post("/api/dfg/unload", headers=H3, json={"docked": True}); j = await r.json()
     check("storage full: 2 pieces fit, 1 stays aboard", j["unloaded_pieces"] == 2 and j["left_aboard"] == 1 and j["storage_full"])
+    # a piece too big for the space left no longer blocks smaller ones behind it (Eric 11-04)
+    async with cl.app["pool"].acquire() as c:
+        big = await c.fetchval("SELECT id FROM cargo WHERE player_id=$1 AND unloaded_at IS NULL", p3)
+        await c.execute("UPDATE cargo SET mass_kg=1000 WHERE id=$1", big)          # the oldest one aboard, now far too big
+        used3 = float(await ST.used_m3(c, await c.fetchval("SELECT id FROM locations WHERE player_id=$1 AND kind='starship_cargo'", p3)))
+        await c.execute("UPDATE locations SET capacity_m3=$2 WHERE player_id=$1 AND kind='starship_cargo'", p3, used3 + 0.002)
+    await asyncio.sleep(2.05)
+    await cl.post("/api/dfg/collect", headers=H3, json=dict(gold, session_id=sid3))
+    r = await cl.post("/api/dfg/unload", headers=H3, json={"docked": True}); j = await r.json()
+    check("a too-big piece stays aboard while the smaller one behind it goes in",
+          j["unloaded_pieces"] == 1 and j["left_aboard"] == 1 and big not in j["moved"])
 
     async with cl.app["pool"].acquire() as c:
         a1 = await c.fetchval("SELECT a.id FROM accounts a JOIN players p ON p.id=a.player_id WHERE p.player_key LIKE '%tester1'")

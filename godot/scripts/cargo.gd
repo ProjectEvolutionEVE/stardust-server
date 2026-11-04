@@ -461,6 +461,12 @@ func start_unload() -> void:
 			_finish_xfer(false)
 			return
 		x.server = r.data
+		# the cargo office skips a piece too big for the space left and takes smaller ones: show those leaving first
+		var ids: Array = r.data.get("moved", [])
+		if not ids.is_empty():
+			var first: Array = cargo.filter(func(p): return ids.has(p.get("id")))
+			var rest: Array = cargo.filter(func(p): return not ids.has(p.get("id")))
+			cargo = first + rest
 		if int(r.data.get("unloaded_pieces", 0)) == 0:
 			x.full = r.data.get("storage_full", false)
 			_finish_xfer(false)
