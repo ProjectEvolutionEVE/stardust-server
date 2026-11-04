@@ -1108,5 +1108,14 @@
  "a name for this part": "이 부품의 이름",
  "at least one material": "재료 하나 이상",
  "an amount for every material": "모든 재료의 양",
- "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$",
+ "Inara": "이나라",
+ "The review team": "검토팀",
+ "There is a communication waiting for you at your desk.": "책상에 통신이 와 있습니다.",
+ "There is a communication waiting for you back at your desk in your quarters.": "숙소의 책상에 통신이 와 있습니다.",
+ "📐 Open this blueprint": "📐 이 설계도 열기",
+ "The review team has a question about your blueprint": "검토팀이 설계도에 대해 질문했습니다",
+ "The review team asks for changes to your blueprint": "검토팀이 설계도 수정을 요청했습니다",
+ "Your blueprint is approved": "설계도가 승인되었습니다",
+ "The review team has turned down your blueprint": "검토팀이 설계도를 반려했습니다"
 }

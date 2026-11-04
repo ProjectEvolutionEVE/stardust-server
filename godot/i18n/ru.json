@@ -1108,5 +1108,14 @@
  "a name for this part": "название этой детали",
  "at least one material": "хотя бы один материал",
  "an amount for every material": "количество каждого материала",
- "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$",
+ "Inara": "Инара",
+ "The review team": "Команда проверки",
+ "There is a communication waiting for you at your desk.": "У вас на столе ждёт сообщение.",
+ "There is a communication waiting for you back at your desk in your quarters.": "У вас на столе в каюте ждёт сообщение.",
+ "📐 Open this blueprint": "📐 Открыть этот чертёж",
+ "The review team has a question about your blueprint": "У команды проверки есть вопрос о вашем чертеже",
+ "The review team asks for changes to your blueprint": "Команда проверки просит внести изменения в ваш чертёж",
+ "Your blueprint is approved": "Ваш чертёж одобрен",
+ "The review team has turned down your blueprint": "Команда проверки отклонила ваш чертёж"
 }

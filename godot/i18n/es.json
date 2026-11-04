@@ -1108,5 +1108,14 @@
  "a name for this part": "un nombre para esta pieza",
  "at least one material": "al menos un material",
  "an amount for every material": "una cantidad para cada material",
- "^part (\\d+): (.+)$": "^part (\\d+): (.+)$"
+ "^part (\\d+): (.+)$": "^part (\\d+): (.+)$",
+ "Inara": "Inara",
+ "The review team": "El equipo de revisión",
+ "There is a communication waiting for you at your desk.": "Hay una comunicación esperándote en tu escritorio.",
+ "There is a communication waiting for you back at your desk in your quarters.": "Hay una comunicación esperándote en el escritorio de tus aposentos.",
+ "📐 Open this blueprint": "📐 Abrir este plano",
+ "The review team has a question about your blueprint": "El equipo de revisión tiene una pregunta sobre tu plano",
+ "The review team asks for changes to your blueprint": "El equipo de revisión pide cambios en tu plano",
+ "Your blueprint is approved": "Tu plano está aprobado",
+ "The review team has turned down your blueprint": "El equipo de revisión ha rechazado tu plano"
 }
