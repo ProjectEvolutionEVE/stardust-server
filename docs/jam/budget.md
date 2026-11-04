@@ -17,7 +17,7 @@ Built by Eric with AI models as the development team, so most of the cost so far
 
 | Item | What it paid for | Spent |
 |---|---|---|
-| Eric's time | Design, story, direction, testing, every decision (about ▢ hours) | ▢ (in-kind) |
+| Eric's time | Design, story, direction, testing, every decision: counted at 60 hours a week since Oct 11 (about 210 hours; his real hours run 12-20 a day) at $75 an hour | about $15,750 (in kind) |
 | Anthropic Claude (plan and usage) | Code, game server, library books and tests, documents | ▢ |
 | xAI Grok | Intro video clips and imagery | ▢ |
 | ElevenLabs (Creator plan) | Inara's recorded voice in 12 languages, the intro narration | ▢ |
@@ -44,7 +44,7 @@ with quotes. They assume a remote team and contractors rather than an office.
 
 | Category | Item | 12 months (est.) |
 |---|---|---|
-| Team | Eric, founder and creative director | ▢ |
+| Team | Eric, founder and creative director, full time | $120,000 |
 | Team | Senior game developer (Godot), full time | $90,000-$120,000 |
 | Team | Backend and infrastructure engineer, half time | $50,000-$70,000 |
 | Art | 3D artist: ships, Starship interiors, quarters, characters (contract) | $40,000-$60,000 |
@@ -62,7 +62,7 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Legal | Trademark clearance and filings (US, EU, UK, UAE); privacy and age review; contracts | $15,000-$40,000 |
 | Marketing | Trailer, store pages, streamers and creators, launch campaign | $40,000-$100,000 |
 | Contingency | About 10% for the unexpected | $40,000-$75,000 |
-| **Total (12 months)** | | **about $445,000-$800,000, plus Eric's own line** |
+| **Total (12 months)** | | **about $565,000-$920,000** |
 
 ## 5. How sponsor funding would be used
 
