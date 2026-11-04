@@ -24,7 +24,7 @@ Built by Eric with AI models as the development team, so most of the cost so far
 | Sarvam AI | Inara's Hindi voice | ▢ (usage; the bill wasn't readable) |
 | Railway (Pro plan) | Game server and database, hosting the voice files | $20 (shared with other projects) |
 | Twilio and Resend | Sign-in codes by text and email | $20 (Resend; shared) |
-| Domain and email | risesolutions-llc.com | ▢ (owned before the game?) |
+| Domain and email | risesolutions-llc.com | $0 in this period (no receipt since June) |
 | Internet (Starlink) | The connection everything is built and tested over | $130 (a month; shared) |
 | Apple developer account | iPhone testing (free Personal Team so far) | $0 |
 | **Total spent** | | **about $230 in cash, plus about $15,750 of Eric's time in kind** |
@@ -86,8 +86,15 @@ with quotes. They assume a remote team and contractors rather than an office.
 | Operations | Internet (Starlink, $130 a month) | $1,560 |
 | Legal | Trademark clearance and filings (US, EU, UK, UAE); privacy and age review; contracts | $15,000-$40,000 |
 | Marketing | Trailer, store pages, streamers and creators, launch campaign | $40,000-$100,000 |
+| Payroll | Employer payroll taxes and benefits for the employed team (about 15-25% of their pay) | $25,000-$55,000 |
+| Accounting | Bookkeeping and a CPA for tax filings | $3,000-$8,000 |
+| Accounting | Accounting software (e.g. QuickBooks) | $500-$1,200 |
+| Live operations | Monitoring: server health and an AI watching the logs, the economy and unusual activity around the clock | $3,000-$12,000 |
 | Contingency | About 10% for the unexpected | $40,000-$75,000 |
-| **Total (12 months)** | | **about $566,000-$922,000** |
+| **Total (12 months)** | | **about $600,000-$1,000,000** |
+
+**Taxes.** Income tax depends on profit, so it is set aside from revenue rather than budgeted here. App stores collect
+and pay sales tax and VAT on purchases in most countries, and keep 15-30% of each sale as their fee.
 
 ## 5. How sponsor funding would be used
 
