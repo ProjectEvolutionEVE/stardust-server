@@ -190,7 +190,8 @@ async def used_m3(conn, location_id):
 
 async def unload(conn, pid):
     """Unload the active ship's hold into the player's space in the Starship's cargo hold. Each piece becomes grams
-    of its material. Pieces go in oldest first until that space is full; the rest stay aboard."""
+    of its material. Pieces go in oldest first; a piece too big for the space left stays aboard and the next one is
+    tried, so smaller pieces still fill the gap (Eric 11-04: one big piece used to block the whole unload)."""
     async with conn.transaction():
         ship = await active_ship(conn, pid, lock=True)
         store = await conn.fetchrow("SELECT id, capacity_m3 FROM locations WHERE player_id=$1 AND kind='starship_cargo' FOR UPDATE", pid)
@@ -209,7 +210,7 @@ async def unload(conn, pid):
                 into = lockbox if await used_m3(conn, lockbox["id"]) + vol <= float(lockbox["capacity_m3"]) + 1e-9 else None
                 if not into:
                     if used + vol > cap + 1e-9:
-                        break
+                        continue
                     used += vol
                 iid = await conn.fetchval("""INSERT INTO items(item_code, owner_id, location_id, attrs)
                                              VALUES('diamond-flawless',$1,$2,$3) RETURNING id""",
@@ -223,7 +224,7 @@ async def unload(conn, pid):
             g = int(round(float(p["mass_kg"]) * G_PER_KG))
             need = g / G_PER_KG / float(p["density_kg_m3"])
             if used + need > cap + 1e-9:
-                break
+                continue
             used += need
             await conn.execute("""INSERT INTO stacks(location_id, item_code, qty) VALUES($1,$2,$3)
                                   ON CONFLICT (location_id, item_code) DO UPDATE SET qty = stacks.qty + EXCLUDED.qty""",
@@ -244,7 +245,8 @@ async def unload(conn, pid):
                 "space_used_m3": round(used, 4), "space_total_m3": round(cap, 4)})
         return {"unloaded_pieces": len(moved), "left_aboard": len(pieces) - len(moved),
                 "unloaded_kg": {k: v / G_PER_KG for k, v in grams_by.items()},
-                "storage_full": len(moved) < len(pieces), "near_flawless_diamonds": gems, "receipt": receipt}
+                "storage_full": len(moved) < len(pieces), "near_flawless_diamonds": gems, "receipt": receipt,
+                "moved": moved}                       # which pieces went, so the app shows the right ones leaving
 
 
 async def inventory(conn, pid):
