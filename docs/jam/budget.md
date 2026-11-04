@@ -75,6 +75,10 @@ In order of what moves the game furthest, fastest:
 4. **Launch:** store releases on phones, then PC and web, with a marketing push built around Inara and the story.
 5. **Running costs** that grow with players: servers, sign-in, voice and AI tools.
 
+**A side note on the engine.** Stardust - Terra Deleta is built in Godot, which is free and suits a mobile-first game.
+For the future companion game, Stardust - Terra Nova, we may consider Unreal Engine for a showcase-level 3D world, if
+Stardust - Terra Deleta is successful enough to offset the cost.
+
 ## 6. Revenue model (for commercial potential)
 
 ▢ Eric to decide. Options that fit the game's rules (credits never come from real money, rule 2): a one-time purchase,
