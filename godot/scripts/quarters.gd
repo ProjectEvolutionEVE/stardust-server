@@ -322,5 +322,5 @@ func _library_alert(box: VBoxContainer, sk: Dictionary) -> void:
 func _exit() -> void:
 	Ui.dialog(self, "Exit Private Quarters", "Where to?", [
 		["Starship Library", true, func(): get_tree().change_scene_to_file("res://scenes/library.tscn")],
-		["Docking Bay", true, func(): get_tree().change_scene_to_file("res://scenes/bay.tscn")],
+		["Docking Bay", true, func(): Voice.say("bay"); get_tree().change_scene_to_file("res://scenes/bay.tscn")],   # as the browser (V.say bay)
 		["Stay", false, Callable()]])

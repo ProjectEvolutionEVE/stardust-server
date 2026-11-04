@@ -32,6 +32,7 @@ func _ready() -> void:
 	body.add_theme_constant_override("separation", 14)
 	scroll.add_child(body)
 	_shelves()
+	Voice.story(self, "library")                       # her library story beat, heard once (as the browser)
 
 
 func _clear() -> void:
@@ -57,6 +58,9 @@ func render(data: Dictionary) -> void:
 	for g in data.shelves:
 		for b in g.books:
 			books[b.code] = b
+	var dr := Ui.button("📐 Drafting room: design a blueprint", false)      # rule 23 (Eric 11-04: in the app)
+	dr.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/drafting.tscn"))
+	body.add_child(dr)
 	body.add_child(Ui.label("Start here", 30, Ui.GOLD))
 	body.add_child(Ui.label("Every Trainee learns these first. Each test you pass unlocks its skill.", 22, Ui.MUTED))
 	for s in START:
@@ -229,6 +233,9 @@ func _mark(code: String, picks: Dictionary, total: int) -> void:
 		body.add_child(Ui.label(r.error, 24, Ui.GOLD))
 		return
 	var passed: bool = r.data.passed
+	Voice.say("pass" if passed else "fail")           # as the browser: her word on the result, then (once) the test beat
+	if passed:
+		Voice.story(self, "test")
 	body.add_child(Ui.label((tr("Passed: %d of %d") if passed else tr("Not yet: %d of %d")) % [r.data.score, r.data.of], 34, Ui.GOLD))
 	for q in r.data.review:
 		body.add_child(Ui.label(("✓ " if q.right else "✗ ") + q.question, 22, Ui.TEXT if q.right else Ui.MUTED))
