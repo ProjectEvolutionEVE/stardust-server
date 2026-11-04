@@ -62,6 +62,7 @@ Every collect is re-checked here (game.py): mass from real density, shape fit, r
 import os, json, uuid, secrets
 from pathlib import Path
 import asyncpg
+import aiohttp
 from aiohttp import web
 import game as G
 import store as ST
@@ -727,6 +728,33 @@ async def bp_save(request):
         return _json(await BP.detail(conn, pid, sid))
 
 
+REVIEW_EMAIL = os.environ.get("DFG_REVIEW_EMAIL", "")
+RAILWAY_IDS = "-p db65aefa-8e13-4c8f-9e93-ba62864645e6 -e production -s game-server"
+
+
+async def _tell_review(sid, title, what):
+    """Email the review team when a blueprint needs them (Eric 11-04: "How will I know if any submission is
+    pending?"): which design and the commands to paste into Terminal. Never the designer's contact details (rule 4).
+    Sent only when DFG_REVIEW_EMAIL is set; a failure never stops the player's submission."""
+    if not (REVIEW_EMAIL and AUTH.RESEND_KEY and AUTH.EMAIL_FROM):
+        return
+    steps = (f"1. Open the game server's console (paste into Terminal):\n   railway ssh {RAILWAY_IDS}\n\n"
+             f"2. Then paste:\n   cd /app && python3 review.py show {sid}\n\n"
+             f"3. Answer it:\n   python3 review.py changes {sid} \"what to fix\"\n   python3 review.py approve {sid}\n"
+             f"   python3 review.py reject {sid} \"why\"\n\n"
+             f"Everything waiting: python3 review.py list")
+    msg = {"from": AUTH.EMAIL_FROM, "to": [REVIEW_EMAIL], "subject": f"Blueprint #{sid} {what}: {title}",
+           "text": f"Blueprint #{sid} \"{title}\" {what}.\n\n{steps}\n"}
+    try:
+        async with aiohttp.ClientSession() as s:
+            async with s.post("https://api.resend.com/emails", json=msg, timeout=aiohttp.ClientTimeout(total=15),
+                              headers={"Authorization": f"Bearer {AUTH.RESEND_KEY}"}) as r:
+                if r.status >= 300:
+                    print(f"review email refused: status {r.status}", flush=True)
+    except Exception as e:
+        print(f"review email failed: {type(e).__name__}", flush=True)
+
+
 async def bp_submit(request):
     b = await request.json()
     async with request.app["pool"].acquire() as conn:
@@ -735,7 +763,9 @@ async def bp_submit(request):
         if b.get("form") is not None:                  # save the latest answers first, then send them
             await BP.save_draft(conn, pid, b["form"], sid)
         await BP.submit(conn, pid, sid)
-        return _json(await BP.detail(conn, pid, sid))
+        d = await BP.detail(conn, pid, sid)
+        asyncio.create_task(_tell_review(sid, d.get("title", ""), "is waiting for review"))
+        return _json(d)
 
 
 async def bp_reply(request):
@@ -744,7 +774,9 @@ async def bp_reply(request):
         pid = await _player(conn, request)
         sid = _bp_id(b)
         await BP.reply(conn, pid, sid, b.get("body"))
-        return _json(await BP.detail(conn, pid, sid))
+        d = await BP.detail(conn, pid, sid)
+        asyncio.create_task(_tell_review(sid, d.get("title", ""), "has an answer from its designer"))
+        return _json(d)
 
 
 async def bp_print(request):
