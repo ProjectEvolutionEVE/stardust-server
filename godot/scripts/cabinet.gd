@@ -278,5 +278,5 @@ func _save(code: String, text: String, msg: Label) -> void:
 			msg.text = tr("Saved: %s › %s") % [path.get_base_dir().get_file(), path.get_file()]
 			msg.add_theme_color_override("font_color", Ui.GREEN)
 		else:
-			msg.text = tr("Couldn't save. Your receipt is still in the receipts log in your quarters. Try again from there.")
+			msg.text = tr("Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.")
 			msg.add_theme_color_override("font_color", Ui.GOLD))

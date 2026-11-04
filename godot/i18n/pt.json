@@ -1091,5 +1091,7 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Alugado: seu espaço a bordo agora é de %s m³. Toque em DESCARREGAR de novo para mover o resto.",
  "You already rent extra cargo space.": "Você já aluga espaço de carga extra.",
  "You don't have enough credits for the first week.": "Você não tem créditos suficientes para a primeira semana.",
- "You don't rent extra cargo space.": "Você não aluga espaço de carga extra."
+ "You don't rent extra cargo space.": "Você não aluga espaço de carga extra.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Não foi possível salvar uma cópia neste aparelho. O recibo em si está seguro aqui, no seu arquivo.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "NÃO FOI POSSÍVEL SALVAR\nNão foi possível salvar uma cópia neste aparelho. O recibo em si está seguro no seu arquivo."
 }

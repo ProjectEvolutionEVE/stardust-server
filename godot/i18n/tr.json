@@ -1091,5 +1091,7 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Kiralandı: gemideki alanın artık %s m³. Geri kalanı taşımak için BOŞALT'a tekrar dokun.",
  "You already rent extra cargo space.": "Zaten ek yük alanı kiralıyorsun.",
  "You don't have enough credits for the first week.": "İlk hafta için yeterli kredin yok.",
- "You don't rent extra cargo space.": "Ek yük alanı kiralamıyorsun."
+ "You don't rent extra cargo space.": "Ek yük alanı kiralamıyorsun.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Bu cihaza bir kopya kaydedilemedi. Makbuzun kendisi burada, dosya dolabında güvende.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "KAYDEDİLEMEDİ\nBu cihaza bir kopya kaydedilemedi. Makbuzun kendisi dosya dolabında güvende."
 }

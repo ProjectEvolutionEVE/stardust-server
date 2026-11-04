@@ -1091,5 +1091,7 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "已租用：你在舱内的空间现为 %s m³。再点一次卸货，把剩下的转移过去。",
  "You already rent extra cargo space.": "你已经租了额外货舱空间。",
  "You don't have enough credits for the first week.": "你的积分不够支付第一周。",
- "You don't rent extra cargo space.": "你没有租额外货舱空间。"
+ "You don't rent extra cargo space.": "你没有租额外货舱空间。",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "无法在此设备上保存副本。收据本身安全地保存在你的文件柜里。",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "无法保存\n无法在此设备上保存副本。收据本身安全地保存在你的文件柜里。"
 }

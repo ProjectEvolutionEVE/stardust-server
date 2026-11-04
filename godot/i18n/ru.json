@@ -1091,5 +1091,7 @@
  "Rented: your space aboard is now %s m³. Tap UNLOAD again to move the rest.": "Арендовано: твоё место на борту теперь %s м³. Нажми ВЫГРУЗИТЬ ещё раз, чтобы переместить остальное.",
  "You already rent extra cargo space.": "Ты уже арендуешь дополнительное место в трюме.",
  "You don't have enough credits for the first week.": "У тебя не хватает кредитов на первую неделю.",
- "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме."
+ "You don't rent extra cargo space.": "Ты не арендуешь дополнительное место в трюме.",
+ "Couldn't save a copy to this device. The receipt itself is safe here in your filing cabinet.": "Не удалось сохранить копию на этом устройстве. Сама квитанция в сохранности здесь, в вашем шкафу для документов.",
+ "COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.": "НЕ СОХРАНЕНО\nНе удалось сохранить копию на этом устройстве. Сама квитанция в сохранности в вашем шкафу для документов."
 }

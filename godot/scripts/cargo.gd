@@ -660,7 +660,7 @@ func _save_receipt() -> void:
 		if path != "":
 			bay._say(tr("RECEIPT SAVED\n%s is in %s on your device, and in the filing cabinet in your quarters.") % [rc.code, path.get_base_dir().get_file()])
 		else:
-			bay._say(tr("COULDN'T SAVE\nYour receipt is still in the filing cabinet in your quarters. Try again from there.")))
+			bay._say(tr("COULDN'T SAVE\nCouldn't save a copy to this device. The receipt itself is safe in your filing cabinet.")))
 
 
 ## Rent more cargo space from the Starship (Eric 11-04, rule 10): doubles the space for 10,000 credits a week, to the WSC.
