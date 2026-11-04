@@ -45,6 +45,8 @@ Stardust - Terra Deleta comes from a small independent studio. The apps are not 
 
 The novel *Stardust - Inara* is the story before the game, and it ends where the game begins. Follow Inara Worthington's journey to the Tower of the WSC Alexander von Humboldt. Download the free PDF on this page.
 
+Also free: the full audiobook (all 39 chapters, one .m4b file, about 650 MB), narrated in Inara's voice.
+
 ## How to play
 
 - **Sign in** with your email address or phone number. The game sends you a one-time code. There are no passwords.
@@ -62,6 +64,7 @@ The novel *Stardust - Inara* is the story before the game, and it ends where the
 - [Concept Document](https://github.com/ProjectEvolutionEVE/stardust-jam/blob/main/Stardust-Terra-Deleta-Concept-Document.pdf)
 - [Budget](https://github.com/ProjectEvolutionEVE/stardust-jam/blob/main/Stardust-Terra-Deleta-Budget.pdf)
 - The novel (free PDF): on this page
+- The audiobook (free .m4b): on this page
 
 ---
 
