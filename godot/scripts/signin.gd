@@ -39,6 +39,18 @@ func _ready() -> void:
 		title = Ui.label("Sign in", 44, Ui.GOLD)
 		box.add_child(title)
 		box.add_child(Ui.label("No passwords. A 6-digit code to your phone or email.", 22, Ui.MUTED))
+
+		# === TEMPORARY JAM / GUEST MODE (remove after jam) ===
+		var guest_btn := Ui.button("Play without signing in (Jam mode)", false)
+		guest_btn.pressed.connect(func():
+			Session.token = "jam-guest"
+			Session.me = {"id": "guest", "name": "Jam Guest"}
+			get_tree().change_scene_to_file("res://scenes/intro.tscn")
+		)
+		box.add_child(guest_btn)
+		box.add_child(Ui.label(" ", 12, Ui.MUTED))  # small spacer
+		# === END JAM MODE ===
+
 	var lang_label := Ui.label("Your language", 22, Ui.MUTED)
 	box.add_child(lang_label)
 	lang = Ui.picker("Your language")
@@ -86,6 +98,8 @@ func _ready() -> void:
 	join.visible = not adding and str(dev.get("key", "")) != ""
 	box.add_child(join)
 	send = Ui.button("")
+	send.pressed.connect(_send)
+	box.add_child(send)
 	send.pressed.connect(_send)
 	box.add_child(send)
 	code = Ui.field("6-digit code")
